@@ -35,6 +35,20 @@ Status legend: [ ] not started · [~] in progress · [x] done
   - [ ] Group D: D1–D5 (familiar shapes)
   - [ ] Group E: E1–E2 (full classification)
 - [ ] Fine-tune taxonomy based on using the app (ongoing)
+- [ ] Add explicit prerequisites per family (which families must be mastered first)
+- [ ] Add variation dimensions per family: what varies / what is constant / discriminating feature
+  - This gives the session logic enough to sequence families intelligently
+  - Based on variation theory (Marton) — the framework behind Chinese bianshi teaching
+
+---
+
+## Research to lean on
+
+- [ ] Read Arcavi (1994) "Symbol Sense" — closest academic description of Skill 1+2 combined
+- [ ] Read Hoch & Dreyfus (2004–2006) "Structure Sense" — directly maps to Skill 2
+- [ ] Study variation theory / bianshi practice for exercise design principles
+  - Contrast, Generalization, Separation, Fusion as design dimensions
+  - Chinese teachers use this explicitly; it's the "why" behind their better results
 
 ---
 
