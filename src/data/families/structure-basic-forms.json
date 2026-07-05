@@ -1,0 +1,57 @@
+[
+  {
+    "kind": "classification",
+    "id": "structure.sum",
+    "group": "basic-forms",
+    "title": "Sum",
+    "metaPatterns": ["M1"],
+    "note": "The last operation applied is addition. The chunks are the terms being added.",
+    "examples": ["a + b", "3x + 2y", "(x+1) + (x-1)"],
+    "answer": "sum",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.difference",
+    "group": "basic-forms",
+    "title": "Difference",
+    "metaPatterns": ["M1"],
+    "note": "The last operation applied is subtraction. The chunks are the two terms.",
+    "examples": ["a - b", "3x - 2y", "(x+1) - (x-1)"],
+    "answer": "difference",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.product",
+    "group": "basic-forms",
+    "title": "Product",
+    "metaPatterns": ["M1", "M2"],
+    "note": "The last operation applied is multiplication. The chunks are the factors.",
+    "examples": ["ab", "3(x+1)", "(x+1)(x-1)"],
+    "answer": "product",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.quotient",
+    "group": "basic-forms",
+    "title": "Quotient",
+    "metaPatterns": ["M1"],
+    "note": "The last operation applied is division. The chunks are numerator and denominator.",
+    "examples": ["\\frac{a}{b}", "\\frac{x+1}{x-1}", "\\frac{3x}{2y}"],
+    "answer": "quotient",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.power",
+    "group": "basic-forms",
+    "title": "Power",
+    "metaPatterns": ["M1"],
+    "note": "The last operation applied is raising to a power. Identify the base and the exponent.",
+    "examples": ["a^2", "(x+1)^2", "2^x"],
+    "answer": "power",
+    "pitfalls": []
+  }
+]

@@ -1,0 +1,61 @@
+[
+  {
+    "kind": "classification",
+    "id": "structure.difference-of-squares",
+    "group": "familiar-shapes",
+    "title": "Difference of two squares",
+    "priority": 6,
+    "metaPatterns": ["M1"],
+    "note": "Dominant operation: a difference. The shape is special — both chunks are perfect squares (9 = 3², 4x² = (2x)²). Recognising it unlocks factoring as (a+b)(a−b).",
+    "examples": ["a^2 - b^2", "x^2 - 9", "(x+1)^2 - (x-1)^2", "4x^2 - 25"],
+    "answer": "difference",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.perfect-square-trinomial",
+    "group": "familiar-shapes",
+    "title": "Perfect square trinomial",
+    "priority": 10,
+    "metaPatterns": ["M1"],
+    "note": "Dominant operation: a sum of three terms. The shape is special: the middle term is twice the product of the roots of the outer terms. Recognising it unlocks writing as (a±b)².",
+    "examples": ["a^2 + 2ab + b^2", "a^2 - 2ab + b^2", "x^2 + 6x + 9", "x^2 - 4x + 4"],
+    "answer": "sum",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.common-factor",
+    "group": "familiar-shapes",
+    "title": "Common factor",
+    "priority": 8,
+    "metaPatterns": ["M1", "M4"],
+    "note": "Dominant operation: a sum. The shape is special: all chunks share a factor (3, a, 2x, (x+1)). Recognising it unlocks factoring it out.",
+    "examples": ["3x + 6", "ax + ay", "6x^2 + 4x", "a(x+1) + b(x+1)"],
+    "answer": "sum",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.linear-form",
+    "group": "familiar-shapes",
+    "title": "Linear form",
+    "metaPatterns": [],
+    "note": "Dominant operation: a sum. Highest power is 1 — one variable term and one constant. The linear shape.",
+    "examples": ["3x + 2", "ax + b", "-x + 5"],
+    "answer": "sum",
+    "pitfalls": []
+  },
+  {
+    "kind": "classification",
+    "id": "structure.quadratic-form",
+    "group": "familiar-shapes",
+    "title": "Quadratic form",
+    "priority": 10,
+    "metaPatterns": ["M1", "M4"],
+    "note": "Dominant operation: a sum. Highest power is 2 — the quadratic shape. Recognising it gates all of quadratic algebra.",
+    "examples": ["x^2 + 3x + 2", "ax^2 + bx + c", "x^2 - 5x"],
+    "answer": "sum",
+    "pitfalls": []
+  }
+]

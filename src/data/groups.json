@@ -1,0 +1,17 @@
+{
+  "notation": [
+    { "slug": "multiplication", "title": "Multiplication Notation" },
+    { "slug": "minus-sign", "title": "The Minus Sign", "blurb": "One notation, three distinct roles: subtraction, negation, and multiply-by-(-1). The single highest-priority group." },
+    { "slug": "brackets", "title": "Brackets" },
+    { "slug": "exponents", "title": "Exponent & Root Notation" },
+    { "slug": "fractions", "title": "Division & Fraction Notation" },
+    { "slug": "commutativity", "title": "Commutativity & Order" }
+  ],
+  "structure": [
+    { "slug": "basic-forms", "title": "The Five Basic Forms", "blurb": "Recognition in unambiguous cases. Foundation before the misleading forms." },
+    { "slug": "misleading-forms", "title": "Misleading Surface Forms", "blurb": "Where a visible operation distracts from the dominant one. The core of Skill 2." },
+    { "slug": "chunking", "title": "Chunking" },
+    { "slug": "familiar-shapes", "title": "Familiar Shapes" },
+    { "slug": "full-classification", "title": "Full Classification" }
+  ]
+}

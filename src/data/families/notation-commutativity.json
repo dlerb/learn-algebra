@@ -1,0 +1,45 @@
+[
+  {
+    "kind": "equivalence",
+    "id": "notation.addition-commutative",
+    "group": "commutativity",
+    "title": "Addition is commutative",
+    "metaPatterns": [],
+    "note": "Order does not matter for addition: a + b = b + a.",
+    "equivalents": ["a + b", "b + a"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.multiplication-commutative",
+    "group": "commutativity",
+    "title": "Multiplication is commutative",
+    "metaPatterns": ["M1"],
+    "note": "Order does not matter for multiplication: ab = ba.",
+    "equivalents": ["ab", "ba"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.subtraction-not-commutative",
+    "group": "commutativity",
+    "title": "Subtraction is not commutative",
+    "priority": 10,
+    "metaPatterns": ["M2"],
+    "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
+    "equivalents": ["a - b", "-(b - a)"],
+    "pitfalls": ["b - a"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.division-not-commutative",
+    "group": "commutativity",
+    "title": "Division is not commutative",
+    "priority": 10,
+    "conditions": "b ≠ 0",
+    "metaPatterns": [],
+    "note": "Division does not commute: a/b is not b/a. (a/b = a·(1/b).)",
+    "equivalents": ["\\frac{a}{b}", "a \\cdot \\frac{1}{b}"],
+    "pitfalls": ["\\frac{b}{a}"]
+  }
+]

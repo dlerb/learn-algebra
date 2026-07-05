@@ -1,0 +1,46 @@
+[
+  {
+    "kind": "equivalence",
+    "id": "notation.division-variants",
+    "group": "fractions",
+    "title": "Division notation variants",
+    "conditions": "b ≠ 0",
+    "metaPatterns": [],
+    "note": "Division has many faces: a÷b = a/b = a·(1/b) = a·b⁻¹. All the same object.",
+    "equivalents": ["a \\div b", "\\frac{a}{b}", "a \\cdot \\frac{1}{b}", "a \\cdot b^{-1}"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.fraction-as-reciprocal-product",
+    "group": "fractions",
+    "title": "Fraction as multiplication by a reciprocal",
+    "conditions": "b ≠ 0",
+    "metaPatterns": [],
+    "note": "Dividing by b is multiplying by 1/b: a/b = a·(1/b). This is why dividing by a fraction means multiplying by its reciprocal.",
+    "equivalents": ["\\frac{a}{b}", "a \\cdot \\frac{1}{b}"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.divide-by-one",
+    "group": "fractions",
+    "title": "Dividing by 1",
+    "metaPatterns": [],
+    "note": "Dividing by 1 changes nothing: a/1 = a.",
+    "equivalents": ["\\frac{a}{1}", "a"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.splitting-a-fraction",
+    "group": "fractions",
+    "title": "Splitting a fraction over addition",
+    "priority": 11,
+    "conditions": "c ≠ 0",
+    "metaPatterns": ["M5"],
+    "note": "You may split a sum in the numerator: (a+b)/c = a/c + b/c. You may NOT split the denominator: a/(b+c) is not a/b + a/c.",
+    "equivalents": ["\\frac{a+b}{c}", "\\frac{a}{c} + \\frac{b}{c}"],
+    "pitfalls": []
+  }
+]

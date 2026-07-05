@@ -1,0 +1,62 @@
+[
+  {
+    "kind": "decomposition",
+    "id": "structure.chunks-in-sum",
+    "group": "chunking",
+    "title": "Chunks in a sum or difference",
+    "metaPatterns": ["M3"],
+    "note": "Break at the + and − signs, keeping each sign with its term. Each product like 3x stays whole.",
+    "examples": [
+      { "expr": "3x + 2y - z", "chunks": ["3x", "2y", "-z"], "op": "sum" },
+      { "expr": "ab - cd + ef", "chunks": ["ab", "-cd", "ef"], "op": "sum" }
+    ],
+    "pitfalls": [
+      { "chunks": ["3", "x", "2y", "z"], "why": "splitting 3x into 3 and x instead of keeping the product as one chunk" }
+    ]
+  },
+  {
+    "kind": "decomposition",
+    "id": "structure.chunks-in-product",
+    "group": "chunking",
+    "title": "Chunks in a product",
+    "metaPatterns": ["M2"],
+    "note": "Break at the multiplication points. Each bracket is one factor.",
+    "examples": [
+      { "expr": "3 \\cdot x \\cdot (x+1)", "chunks": ["3", "x", "(x+1)"], "op": "product" },
+      { "expr": "2x(x-1)(x+2)", "chunks": ["2x", "(x-1)", "(x+2)"], "op": "product" }
+    ],
+    "pitfalls": []
+  },
+  {
+    "kind": "decomposition",
+    "id": "structure.implicit-chunking",
+    "group": "chunking",
+    "title": "Implicit chunking — multiplication precedence",
+    "priority": 3,
+    "metaPatterns": ["M3"],
+    "note": "There are no brackets, but multiplication binds tighter than +. Read the implicit chunks: 3x and 2y.",
+    "examples": [
+      { "expr": "3x + 2y", "chunks": ["3x", "2y"], "op": "sum" },
+      { "expr": "a^2 b + a b^2", "chunks": ["a^2 b", "a b^2"], "op": "sum" }
+    ],
+    "pitfalls": [
+      { "chunks": ["3", "x", "2", "y"], "why": "not reading the implicit multiplication that binds 3 and x into one chunk" }
+    ]
+  },
+  {
+    "kind": "decomposition",
+    "id": "structure.bracket-as-chunk",
+    "group": "chunking",
+    "title": "Bracket as a single chunk",
+    "priority": 3,
+    "metaPatterns": ["M2"],
+    "note": "Resist expanding — treat the whole bracket as one object.",
+    "examples": [
+      { "expr": "3(x+1) - 2(x-1)", "chunks": ["3(x+1)", "2(x-1)"], "op": "difference" },
+      { "expr": "(x+1)(x-1)", "chunks": ["(x+1)", "(x-1)"], "op": "product" }
+    ],
+    "pitfalls": [
+      { "chunks": ["3", "x", "1", "2", "x", "1"], "why": "expanding the brackets instead of keeping each as one chunk" }
+    ]
+  }
+]

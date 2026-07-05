@@ -1,0 +1,76 @@
+[
+  {
+    "kind": "equivalence",
+    "id": "notation.negative-numbers",
+    "group": "minus-sign",
+    "title": "Negative numbers and the unary minus",
+    "metaPatterns": ["M2"],
+    "note": "A negative number and its parenthesised form are the same object: -3 and (-3) are identical, and both equal 0 - 3.",
+    "equivalents": ["-3", "(-3)", "0 - 3"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.subtraction-as-adding-opposite",
+    "group": "minus-sign",
+    "title": "Subtracting vs. adding a negative",
+    "priority": 9,
+    "metaPatterns": ["M2"],
+    "note": "Subtracting is the same as adding the opposite: a - b = a + (-b). The minus and the number belong together.",
+    "equivalents": ["a - b", "a + (-b)", "a + (-1) \\cdot b"],
+    "pitfalls": ["a + b"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.minus-over-sum",
+    "group": "minus-sign",
+    "title": "Distributing a negative over a sum",
+    "priority": 4,
+    "metaPatterns": ["M2", "M3"],
+    "note": "The minus distributes to every term inside: -(a+b) = -a - b, not -a + b.",
+    "equivalents": ["-(a + b)", "-a - b"],
+    "pitfalls": ["-a + b"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.minus-over-difference",
+    "group": "minus-sign",
+    "title": "Distributing a negative over a difference",
+    "priority": 1,
+    "metaPatterns": ["M2", "M3"],
+    "note": "The minus flips the sign of every term inside the bracket. -(a-b) = -a+b, not -a-b.",
+    "equivalents": ["-(a - b)", "-a + b", "b - a"],
+    "pitfalls": ["-a - b"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.double-negative",
+    "group": "minus-sign",
+    "title": "Double negative",
+    "priority": 6,
+    "metaPatterns": ["M2"],
+    "note": "Two minuses make a plus: subtracting a negative adds. a-(-b) = a+b, not a-b. (Likewise -(-a) = a.)",
+    "equivalents": ["a - (-b)", "a + b"],
+    "pitfalls": ["a - b"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.negative-times-negative",
+    "group": "minus-sign",
+    "title": "Negative times negative",
+    "metaPatterns": ["M1", "M2"],
+    "note": "A negative times a negative is positive: (-a)(-b) = ab, not -ab. (One negative factor gives a negative: (-a)(b) = -ab.)",
+    "equivalents": ["(-a)(-b)", "ab"],
+    "pitfalls": ["-ab"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.minus-on-fraction",
+    "group": "minus-sign",
+    "title": "Minus in front of a fraction",
+    "metaPatterns": ["M2", "M5"],
+    "note": "A single minus on a fraction can sit out front, on the numerator, or on the denominator — all equal. But -a/b is not (-a)/(-b).",
+    "equivalents": ["-\\frac{a}{b}", "\\frac{-a}{b}", "\\frac{a}{-b}"],
+    "pitfalls": ["\\frac{-a}{-b}"]
+  }
+]

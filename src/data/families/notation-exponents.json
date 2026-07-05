@@ -1,0 +1,88 @@
+[
+  {
+    "kind": "equivalence",
+    "id": "notation.exponent-as-repeated-product",
+    "group": "exponents",
+    "title": "Exponent as repeated multiplication",
+    "metaPatterns": ["M1"],
+    "note": "A power is repeated multiplication: a² = a·a, a³ = a·a·a, a¹ = a.",
+    "equivalents": ["a^2", "a \\cdot a"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.coefficient-vs-exponent",
+    "group": "exponents",
+    "title": "Coefficient vs. exponent",
+    "metaPatterns": ["M1"],
+    "note": "2a means a+a; it is not a². (And a² = a·a is not 2a.) The two forms that look most alike mean the most different things.",
+    "equivalents": ["2a", "a + a"],
+    "pitfalls": ["a^2"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.negated-square-vs-negative-base",
+    "group": "exponents",
+    "title": "Negative base vs. negated square",
+    "priority": 2,
+    "metaPatterns": ["M4"],
+    "note": "The exponent binds before the minus: -a² = -(a²), which is negative. That differs from (-a)² = a², which is positive. E.g. -3² = -9 but (-3)² = 9.",
+    "equivalents": ["-a^2", "-(a^2)"],
+    "pitfalls": ["(-a)^2", "a^2"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.power-of-a-product",
+    "group": "exponents",
+    "title": "Exponent on a product",
+    "priority": 8,
+    "metaPatterns": ["M4"],
+    "note": "A power on a bracket applies to every factor: (ab)² = a²b², and (2x)² = 4x². Without the bracket, ab² means a·b² — the exponent hits b only.",
+    "equivalents": ["(ab)^2", "a^2 b^2"],
+    "pitfalls": ["ab^2"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.zero-and-one-exponent",
+    "group": "exponents",
+    "title": "Zero and one as exponents",
+    "conditions": "a ≠ 0",
+    "metaPatterns": [],
+    "note": "Any nonzero base to the power 0 is 1: a⁰ = 1, not 0. And a¹ = a.",
+    "equivalents": ["a^0", "1"],
+    "pitfalls": ["0"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.negative-exponent",
+    "group": "exponents",
+    "title": "Negative exponent as a reciprocal",
+    "conditions": "a ≠ 0",
+    "metaPatterns": ["M4"],
+    "note": "A negative exponent means reciprocal, not a negative number: a⁻ⁿ = 1/aⁿ. So a⁻¹ = 1/a, and 1/a⁻ⁿ = aⁿ.",
+    "equivalents": ["a^{-n}", "\\frac{1}{a^n}"],
+    "pitfalls": ["-a^n"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.fractional-exponent-root",
+    "group": "exponents",
+    "title": "Fractional exponent as a root",
+    "conditions": "a > 0",
+    "metaPatterns": ["M4"],
+    "note": "A fractional exponent is a root: the denominator is the root index, the numerator the power.",
+    "equivalents": ["a^{m/n}", "\\sqrt[n]{a^m}", "(\\sqrt[n]{a})^m"],
+    "pitfalls": ["\\sqrt[m]{a^n}"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.negative-fractional-exponent",
+    "group": "exponents",
+    "title": "Negative fractional exponent",
+    "conditions": "a > 0",
+    "metaPatterns": ["M4"],
+    "note": "Combine the two rules: a^(-m/n) = 1 / (nth root of aᵐ). The minus gives the reciprocal, the fraction gives the root.",
+    "equivalents": ["a^{-m/n}", "\\frac{1}{\\sqrt[n]{a^m}}", "\\frac{1}{a^{m/n}}"],
+    "pitfalls": ["\\sqrt[n]{a^m}"]
+  }
+]

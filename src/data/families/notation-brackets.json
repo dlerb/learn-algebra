@@ -1,0 +1,55 @@
+[
+  {
+    "kind": "equivalence",
+    "id": "notation.bracket-types",
+    "group": "brackets",
+    "title": "Bracket types are interchangeable",
+    "metaPatterns": [],
+    "note": "Round, square, and curly brackets group in exactly the same way: (a+b), [a+b] and {a+b} are identical.",
+    "equivalents": ["(a + b)", "[a + b]", "\\{a + b\\}"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.redundant-brackets",
+    "group": "brackets",
+    "title": "Redundant brackets",
+    "metaPatterns": [],
+    "note": "Brackets around something already whole can be dropped: ((a+b)) = (a+b) = a+b, and (x) = x.",
+    "equivalents": ["((a + b))", "(a + b)", "a + b"],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.precedence-brackets",
+    "group": "brackets",
+    "title": "Brackets and order of operations",
+    "priority": 7,
+    "metaPatterns": [],
+    "note": "Multiplication happens before addition: a + b·c means a + (b·c). A bracket changes the meaning: (a+b)·c is different.",
+    "equivalents": ["a + b \\cdot c", "a + bc"],
+    "pitfalls": ["(a + b) \\cdot c", "(a + b)c"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.fraction-bar-grouping",
+    "group": "brackets",
+    "title": "Implicit brackets in the fraction bar",
+    "priority": 7,
+    "conditions": "c ≠ 0",
+    "metaPatterns": ["M5"],
+    "note": "The fraction bar groups the whole numerator: (a+b)/c is all of a+b over c. It is not a + b/c.",
+    "equivalents": ["\\frac{a+b}{c}", "(a+b) \\div c"],
+    "pitfalls": ["a + \\frac{b}{c}"]
+  },
+  {
+    "kind": "equivalence",
+    "id": "notation.minus-as-times-negative-one",
+    "group": "brackets",
+    "title": "Minus before a bracket = ×(−1)",
+    "metaPatterns": ["M2", "M3"],
+    "note": "A minus in front of a bracket means multiply the whole bracket by -1: -(a+b) = (-1)(a+b) = -a-b.",
+    "equivalents": ["-(a + b)", "(-1)(a + b)", "-a - b"],
+    "pitfalls": ["-a + b"]
+  }
+]
