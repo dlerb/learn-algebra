@@ -23,13 +23,18 @@ interface CardVM {
   conditions?: string
   note: string
   metas: string[]
+  requires: string[]
   equivChain?: string
-  equivPitfalls?: string[]
+  equivPitfalls?: { latex: string; revise: string[] }[]
   classExamples?: string[]
   classAnswer?: string
-  classPitfalls?: { answer: string; why: string }[]
+  classPitfalls?: { answer: string; why: string; revise: string[] }[]
   decomp?: { expr: string; chunks: string[]; op: string }[]
-  decompPitfalls?: { why: string }[]
+  decompPitfalls?: { why: string; revise: string[] }[]
+}
+
+function familyTitle(id: string): string {
+  return families.find(f => f.id === id)?.title ?? id
 }
 
 function toVM(f: Family): CardVM {
@@ -38,18 +43,32 @@ function toVM(f: Family): CardVM {
     id: f.id, title: f.title, kind: f.kind, priority: f.priority,
     conditions: f.conditions, note: f.note,
     metas: f.metaPatterns.map(m => metaLabel(ns, m)),
+    requires: f.requires.map(familyTitle),
   }
   if (f.kind === 'equivalence') {
     return {
       ...base,
       equivChain: f.equivalents.join(' = '),
-      equivPitfalls: f.pitfalls.map(p => `${f.equivalents[0]} \\neq ${p}`),
+      equivPitfalls: f.pitfalls.map(p => ({
+        latex: `${f.equivalents[0]} \\neq ${p.expr}`,
+        revise: (p.revise ?? []).map(familyTitle),
+      })),
     }
   }
   if (f.kind === 'classification') {
-    return { ...base, classExamples: f.examples, classAnswer: f.answer, classPitfalls: f.pitfalls }
+    return {
+      ...base, classExamples: f.examples, classAnswer: f.answer,
+      classPitfalls: f.pitfalls.map(p => ({
+        answer: p.answer, why: p.why, revise: (p.revise ?? []).map(familyTitle),
+      })),
+    }
   }
-  return { ...base, decomp: f.examples, decompPitfalls: f.pitfalls }
+  return {
+    ...base, decomp: f.examples,
+    decompPitfalls: f.pitfalls.map(p => ({
+      why: p.why, revise: (p.revise ?? []).map(familyTitle),
+    })),
+  }
 }
 
 const sections = computed(() =>
@@ -119,19 +138,27 @@ function hasErrors(c: CardVM): boolean {
 
             <div v-if="hasErrors(c)" class="errors">
               <template v-if="c.equivPitfalls">
-                <div v-for="(p, i) in c.equivPitfalls" :key="i" class="err"><MathExpr :latex="p" /></div>
+                <div v-for="(p, i) in c.equivPitfalls" :key="i" class="err">
+                  <MathExpr :latex="p.latex" />
+                  <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
+                </div>
               </template>
               <template v-else-if="c.classPitfalls">
                 <div v-for="(p, i) in c.classPitfalls" :key="i" class="err">
                   not <strong>{{ p.answer }}</strong> — {{ p.why }}
+                  <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.decompPitfalls">
-                <div v-for="(p, i) in c.decompPitfalls" :key="i" class="err">{{ p.why }}</div>
+                <div v-for="(p, i) in c.decompPitfalls" :key="i" class="err">
+                  {{ p.why }}
+                  <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
+                </div>
               </template>
             </div>
 
             <p class="note">{{ c.note }}</p>
+            <div v-if="c.requires.length" class="reqs">requires: {{ c.requires.join(' · ') }}</div>
             <div v-if="c.metas.length" class="metas">
               <span v-for="(m, i) in c.metas" :key="i" class="meta-chip">{{ m }}</span>
             </div>
@@ -169,7 +196,9 @@ function hasErrors(c: CardVM): boolean {
 .opname { font-size: .72rem; color: #6b7280; margin-left: .25rem; }
 .errors { margin: .5rem 0; padding: .5rem .6rem; background: #fef2f2; border-left: 3px solid #ef4444; border-radius: 4px; overflow-x: auto; }
 .err { font-size: .85rem; color: #7f1d1d; margin: .15rem 0; }
+.revise { font-size: .75rem; color: #9f1239; font-style: italic; margin-left: .4rem; }
 .note { font-size: .82rem; color: #4b5563; margin: .5rem 0 .4rem; }
+.reqs { font-size: .75rem; color: #6b7280; margin: 0 0 .35rem; }
 .metas { display: flex; flex-wrap: wrap; gap: .3rem; }
 .meta-chip { font-size: .7rem; padding: .12rem .45rem; background: #f3f4f6; color: #4b5563; border-radius: 999px; }
 </style>

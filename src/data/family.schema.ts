@@ -25,6 +25,7 @@ const core = {
   group: z.string(),                    // group slug, e.g. "minus-sign"; must exist in groups.json
   title: z.string(),
   priority: z.number().int().positive().optional(),  // authored drilling rank within the skill; lower = earlier; omit = unranked
+  requires: z.array(z.string()).default([]),        // DIRECT prerequisites (family ids, cross-skill allowed) — author the transitive reduction, not the closure
   metaPatterns: z.array(z.string()).default([]),    // e.g. ["M2"] — refs a meta-pattern in metapatterns.json
   note: z.string(),                     // one/two-line explanation shown in feedback
   conditions: z.string().optional(),    // domain caveat, e.g. "a > 0" (roots)
@@ -33,6 +34,16 @@ const core = {
 // Every kind has a CORRECT half (varies by kind) and an ERROR half (`pitfalls` —
 // the "this is exactly what you must not do" content). The error half keeps the
 // same field name across kinds; only its shape differs.
+//
+// Any pitfall may carry `revise`: family ids to send the student to when this
+// SPECIFIC error fires — for errors that point at a sharper gap than the
+// family-level `requires`. Omit it where `requires` + metaPatterns suffice.
+
+// An equivalence pitfall is authored as a bare LaTeX string, or as an object
+// when it carries `revise`. Normalized to object form on parse.
+const equivPitfall = z
+  .union([z.string(), z.object({ expr: z.string(), revise: z.array(z.string()).min(1) })])
+  .transform((p): { expr: string; revise?: string[] } => (typeof p === 'string' ? { expr: p } : p))
 
 export const family = z.discriminatedUnion('kind', [
   // EQUIVALENCE — a set of forms that are all EQUAL (same value for all inputs).
@@ -42,7 +53,7 @@ export const family = z.discriminatedUnion('kind', [
     kind: z.literal('equivalence'),
     ...core,
     equivalents: z.array(z.string()).min(2),   // ≥2 so a SAME pair can be drawn
-    pitfalls: z.array(z.string()).default([]),  // non-equal forms
+    pitfalls: z.array(equivPitfall).default([]),  // non-equal forms
   }),
 
   // CLASSIFICATION — one expression, name its dominant operation. Skill 2.
@@ -53,7 +64,11 @@ export const family = z.discriminatedUnion('kind', [
     ...core,
     examples: z.array(z.string()).min(1),
     answer: dominantOp,
-    pitfalls: z.array(z.object({ answer: dominantOp, why: z.string() })).default([]),
+    pitfalls: z.array(z.object({
+      answer: dominantOp,
+      why: z.string(),
+      revise: z.array(z.string()).min(1).optional(),
+    })).default([]),
   }),
 
   // DECOMPOSITION — break an expression into its chunks. Skill 2 group C.
@@ -66,7 +81,11 @@ export const family = z.discriminatedUnion('kind', [
       chunks: z.array(z.string()).min(2),   // the correct chunking
       op: dominantOp,                       // dominant op between the chunks
     })).min(1),
-    pitfalls: z.array(z.object({ chunks: z.array(z.string()), why: z.string() })).default([]),
+    pitfalls: z.array(z.object({
+      chunks: z.array(z.string()),
+      why: z.string(),
+      revise: z.array(z.string()).min(1).optional(),
+    })).default([]),
   }),
 ])
 
@@ -131,6 +150,63 @@ export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsF
     for (const m of f.metaPatterns) {
       if (!metas[ns].some(mp => mp.id === m)) {
         throw new Error(`Family "${f.id}" references unknown ${ns} meta-pattern "${m}".`)
+      }
+    }
+  }
+}
+
+// ── Family links: requires (family-level) + revise (pitfall-level) ──────────
+// `requires` lists a family's direct prerequisites; `revise` on a pitfall names
+// the families that train the specific discrimination that error reveals. Both
+// hold family ids. The requires graph must be acyclic and must agree with the
+// authored drilling order: a prerequisite is drilled strictly earlier, so its
+// priority must be strictly lower, and a ranked family may not require an
+// unranked one (unranked = "remaining", i.e. after everything ranked).
+
+function reviseTargets(f: Family): string[] {
+  const pitfalls: { revise?: string[] }[] = f.pitfalls
+  return pitfalls.flatMap(p => p.revise ?? [])
+}
+
+export function validateFamilyLinks(families: Family[]): void {
+  const byId = new Map(families.map(f => [f.id, f]))
+
+  for (const f of families) {
+    for (const r of f.requires) {
+      if (!byId.has(r)) throw new Error(`Family "${f.id}" requires unknown family "${r}".`)
+    }
+    for (const r of reviseTargets(f)) {
+      if (!byId.has(r)) throw new Error(`A pitfall of "${f.id}" revises unknown family "${r}".`)
+    }
+  }
+
+  // Acyclicity of `requires` (DFS, reporting the cycle path).
+  const state = new Map<string, 'visiting' | 'done'>()
+  function visit(id: string, path: string[]): void {
+    if (state.get(id) === 'done') return
+    if (state.get(id) === 'visiting') {
+      throw new Error(`Cycle in requires: ${[...path, id].join(' → ')}`)
+    }
+    state.set(id, 'visiting')
+    for (const r of byId.get(id)!.requires) visit(r, [...path, id])
+    state.set(id, 'done')
+  }
+  for (const f of families) visit(f.id, [])
+
+  // Priority consistency with the graph (see block comment above).
+  for (const f of families) {
+    if (f.priority === undefined) continue
+    for (const r of f.requires) {
+      const req = byId.get(r)!
+      if (req.priority === undefined) {
+        throw new Error(
+          `Family "${f.id}" (priority ${f.priority}) requires unranked "${r}" — `
+          + `rank the prerequisite earlier or unrank the dependent.`)
+      }
+      if (req.priority >= f.priority) {
+        throw new Error(
+          `Family "${f.id}" (priority ${f.priority}) requires "${r}" (priority ${req.priority}) — `
+          + `a prerequisite must be ranked strictly earlier.`)
       }
     }
   }

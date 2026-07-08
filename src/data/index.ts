@@ -3,7 +3,7 @@
 // here immediately with the offending id named.
 import {
   parseFamilies, groupsFile, metaPatternsFile,
-  validateUniqueIds, validateGroupRefs, validateMetaPatternRefs,
+  validateUniqueIds, validateGroupRefs, validateMetaPatternRefs, validateFamilyLinks,
   type Family, type GroupsFile, type MetaPatternsFile,
 } from './family.schema'
 import groupsRaw from './groups.json'
@@ -42,3 +42,4 @@ export const families: Family[] = parseFamilies(familyFiles.flat())
 validateUniqueIds(families)
 validateGroupRefs(families, groups)
 validateMetaPatternRefs(families, metaPatterns)
+validateFamilyLinks(families)

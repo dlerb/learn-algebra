@@ -24,7 +24,8 @@ Status legend: [ ] not started · [~] in progress · [x] done
 - [ ] **Decide Familiar-Shapes representation.** The D-group (difference-of-squares, perfect-square, quadratic, …) fits `classification` poorly — the real skill is "name the shape," which the dominant-op `answer` can't express. Options: a `shape` field, or a new recognition `kind`. Currently authored as classification with the shape in the note.
 - [ ] Add distractors to pure-notation families whose `pitfalls` are empty (bracket-types, commutativity, division-variants, …) — needed before they can generate "DIFFERENT" drill items.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).
-- [ ] Add prerequisites per family (which must be mastered first) — sequencing layer.
+- [~] Prerequisites as a graph: `requires` (direct prerequisites, transitively reduced) plus validators (refs exist, acyclic, priority consistency) are in the schema — authoring the actual links across all families is open. The graph is a v1 hypothesis until drill data confirms it.
+- [ ] Pitfall-level `revise` refs where an error points at a sharper gap than the family's `requires` (schema supports it on all three kinds; author only where family-level links aren't precise enough).
 - [ ] Per-family variation dimensions (what varies / constant / discriminating feature) — variation theory (Marton / bianshi).
 
 ---
@@ -37,6 +38,8 @@ Status legend: [ ] not started · [~] in progress · [x] done
 - [ ] `kind → available exercises` lookup table in code
 - [ ] Generation params: per-family, which letters vary over which pools (respect shared binding for equivalence, independent for classification)
 - [ ] Substitute on the MathJSON tree via Compute Engine (installed, unused) — avoids raw-LaTeX string-collision
+- [ ] Degeneracy checks on generated items: a drawn DIFFERENT pair must be verifiably non-equal (e.g. `b = 0` makes `-a+b` equal `-a-b`); respect `conditions`
+- [ ] Family workbench (dev-only view): family card + live-generated drill items + degeneracy warnings — build after the generator exists
 
 ---
 
@@ -65,7 +68,8 @@ Status legend: [ ] not started · [~] in progress · [x] done
 - [ ] `package.json` name is still `tmp`; README is the stock Vite template
 - [ ] Mobile layout polish (large tap targets, phone-readable)
 - [ ] PWA setup (installable, offline)
-- [ ] CI step running the schema validators over the JSON
+- [ ] JSON Schema for IDE authoring: generate via `z.toJSONSchema(family, { io: 'input' })`, register in `.vscode/settings.json` (`json.schemas`) for `src/data/families/*.json` — autocomplete + inline validation while editing
+- [ ] `pnpm validate` script running the schema + graph validators from the CLI; run it in CI (later also Compute Engine checks: equivalents mutually equal, pitfalls non-equal, at sampled points)
 
 ---
 
