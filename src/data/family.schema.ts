@@ -162,6 +162,9 @@ export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsF
 // authored drilling order: a prerequisite is drilled strictly earlier, so its
 // priority must be strictly lower, and a ranked family may not require an
 // unranked one (unranked = "remaining", i.e. after everything ranked).
+// Ranks are meaningful only WITHIN a skill; across skills the progression is
+// fixed (structure builds on notation, never the reverse), so a cross-skill
+// edge is checked for direction only, not rank.
 
 function reviseTargets(f: Family): string[] {
   const pitfalls: { revise?: string[] }[] = f.pitfalls
@@ -195,9 +198,17 @@ export function validateFamilyLinks(families: Family[]): void {
 
   // Priority consistency with the graph (see block comment above).
   for (const f of families) {
-    if (f.priority === undefined) continue
     for (const r of f.requires) {
       const req = byId.get(r)!
+      if (namespaceOf(f.id) !== namespaceOf(req.id)) {
+        if (namespaceOf(f.id) === 'notation') {
+          throw new Error(
+            `Family "${f.id}" (notation) requires "${r}" (structure) — `
+            + `cross-skill dependencies must point from structure to notation.`)
+        }
+        continue  // structure → notation: always consistent, ranks not comparable
+      }
+      if (f.priority === undefined) continue
       if (req.priority === undefined) {
         throw new Error(
           `Family "${f.id}" (priority ${f.priority}) requires unranked "${r}" — `

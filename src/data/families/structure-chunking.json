@@ -4,6 +4,7 @@
     "id": "structure.chunks-in-sum",
     "group": "chunking",
     "title": "Chunks in a sum or difference",
+    "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": ["M3"],
     "note": "Break at the + and − signs, keeping each sign with its term. Each product like 3x stays whole.",
     "examples": [
@@ -19,6 +20,7 @@
     "id": "structure.chunks-in-product",
     "group": "chunking",
     "title": "Chunks in a product",
+    "requires": ["notation.product-with-brackets"],
     "metaPatterns": ["M2"],
     "note": "Break at the multiplication points. Each bracket is one factor.",
     "examples": [
@@ -32,7 +34,8 @@
     "id": "structure.implicit-chunking",
     "group": "chunking",
     "title": "Implicit chunking — multiplication precedence",
-    "priority": 3,
+    "priority": 8,
+    "requires": ["notation.precedence-brackets"],
     "metaPatterns": ["M3"],
     "note": "There are no brackets, but multiplication binds tighter than +. Read the implicit chunks: 3x and 2y.",
     "examples": [
@@ -48,7 +51,8 @@
     "id": "structure.bracket-as-chunk",
     "group": "chunking",
     "title": "Bracket as a single chunk",
-    "priority": 3,
+    "priority": 8,
+    "requires": ["notation.product-with-brackets"],
     "metaPatterns": ["M2"],
     "note": "Resist expanding — treat the whole bracket as one object.",
     "examples": [
