@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
-import { families, groups, metaPatterns } from '../data'
+import { families, groups, metaPatterns, rawById } from '../data'
 import { namespaceOf, type Family, type Namespace } from '../data/family.schema'
+
+// 'groups' = thematic sections (default); 'order' = one flat list per skill,
+// sorted by drilling priority — for reviewing the sequence itself.
+const viewMode = ref<'groups' | 'order'>('groups')
 
 const namespaces: { key: Namespace; label: string }[] = [
   { key: 'notation', label: 'Skill 1 · Notation Fluency' },
@@ -19,6 +23,8 @@ interface CardVM {
   id: string
   title: string
   kind: string
+  group: string
+  json: string
   priority?: number
   conditions?: string
   note: string
@@ -40,8 +46,9 @@ function familyTitle(id: string): string {
 function toVM(f: Family): CardVM {
   const ns = namespaceOf(f.id)
   const base = {
-    id: f.id, title: f.title, kind: f.kind, priority: f.priority,
+    id: f.id, title: f.title, kind: f.kind, group: f.group, priority: f.priority,
     conditions: f.conditions, note: f.note,
+    json: JSON.stringify(rawById.get(f.id), null, 2),
     metas: f.metaPatterns.map(m => metaLabel(ns, m)),
     requires: f.requires.map(familyTitle),
   }
@@ -71,18 +78,30 @@ function toVM(f: Family): CardVM {
   }
 }
 
+const byPriority = (a: Family, b: Family) =>
+  (a.priority ?? 999) - (b.priority ?? 999) || a.title.localeCompare(b.title)
+
 const sections = computed(() =>
   namespaces.map(nsDef => ({
     ...nsDef,
-    groups: groups[nsDef.key]
-      .map(g => ({
-        ...g,
-        cards: families
-          .filter(f => namespaceOf(f.id) === nsDef.key && f.group === g.slug)
-          .sort((a, b) => (a.priority ?? 999) - (b.priority ?? 999) || a.title.localeCompare(b.title))
-          .map(toVM),
-      }))
-      .filter(g => g.cards.length > 0),
+    groups: viewMode.value === 'order'
+      ? [{
+          slug: 'order', title: 'Drilling order',
+          blurb: 'All families of this skill, ranked first, unranked ("remaining") after.',
+          cards: families
+            .filter(f => namespaceOf(f.id) === nsDef.key)
+            .sort(byPriority)
+            .map(toVM),
+        }]
+      : groups[nsDef.key]
+          .map(g => ({
+            ...g,
+            cards: families
+              .filter(f => namespaceOf(f.id) === nsDef.key && f.group === g.slug)
+              .sort(byPriority)
+              .map(toVM),
+          }))
+          .filter(g => g.cards.length > 0),
   })).filter(s => s.groups.length > 0),
 )
 
@@ -96,6 +115,10 @@ function hasErrors(c: CardVM): boolean {
     <header class="tax-head">
       <h1>Taxonomy</h1>
       <p>Every expression family, as reference. Green = the true forms; red = the typical error.</p>
+      <div class="mode">
+        <button :class="{ active: viewMode === 'groups' }" @click="viewMode = 'groups'">by group</button>
+        <button :class="{ active: viewMode === 'order' }" @click="viewMode = 'order'">drilling order</button>
+      </div>
     </header>
 
     <section v-for="ns in sections" :key="ns.key" class="skill">
@@ -113,9 +136,11 @@ function hasErrors(c: CardVM): boolean {
               <h4>{{ c.title }}</h4>
               <div class="badges">
                 <span v-if="c.priority" class="badge prio">#{{ c.priority }}</span>
+                <span v-if="viewMode === 'order'" class="badge group">{{ c.group }}</span>
                 <span class="badge kind">{{ c.kind }}</span>
               </div>
             </div>
+            <code class="fam-id">{{ c.id }}</code>
             <div v-if="c.conditions" class="cond">for {{ c.conditions }}</div>
 
             <div class="correct">
@@ -162,6 +187,10 @@ function hasErrors(c: CardVM): boolean {
             <div v-if="c.metas.length" class="metas">
               <span v-for="(m, i) in c.metas" :key="i" class="meta-chip">{{ m }}</span>
             </div>
+            <details class="json">
+              <summary>json</summary>
+              <pre>{{ c.json }}</pre>
+            </details>
           </article>
         </div>
       </div>
@@ -172,7 +201,10 @@ function hasErrors(c: CardVM): boolean {
 <style scoped>
 .tax { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 4rem; color: #1f2937; }
 .tax-head h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 .25rem; }
-.tax-head p { color: #6b7280; margin: 0 0 1rem; }
+.tax-head p { color: #6b7280; margin: 0 0 .6rem; }
+.mode { display: flex; gap: .4rem; margin-bottom: 1rem; }
+.mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; }
+.mode button.active { background: #111827; border-color: #111827; color: #fff; }
 .skill > h2 { font-size: 1.15rem; font-weight: 700; margin: 2rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid #111827; }
 .group-head { margin: 1.25rem 0 .5rem; }
 .group-head h3 { font-size: 1rem; font-weight: 700; margin: 0; }
@@ -185,6 +217,8 @@ function hasErrors(c: CardVM): boolean {
 .badge { font-size: .68rem; padding: .1rem .4rem; border-radius: 999px; white-space: nowrap; }
 .badge.prio { background: #111827; color: #fff; }
 .badge.kind { background: #eef2ff; color: #4338ca; }
+.badge.group { background: #f3f4f6; color: #4b5563; }
+.fam-id { font-size: .7rem; color: #9ca3af; }
 .cond { font-size: .78rem; color: #6b7280; font-style: italic; margin-top: .2rem; }
 .correct { margin: .6rem 0; padding: .5rem .6rem; background: #f0fdf4; border-left: 3px solid #22c55e; border-radius: 4px; overflow-x: auto; }
 .examples { display: flex; flex-wrap: wrap; gap: .35rem .9rem; }
@@ -201,4 +235,7 @@ function hasErrors(c: CardVM): boolean {
 .reqs { font-size: .75rem; color: #6b7280; margin: 0 0 .35rem; }
 .metas { display: flex; flex-wrap: wrap; gap: .3rem; }
 .meta-chip { font-size: .7rem; padding: .12rem .45rem; background: #f3f4f6; color: #4b5563; border-radius: 999px; }
+.json { margin-top: .5rem; }
+.json summary { font-size: .7rem; color: #9ca3af; cursor: pointer; user-select: none; }
+.json pre { font-size: .72rem; line-height: 1.45; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: .5rem .6rem; overflow-x: auto; margin: .3rem 0 0; }
 </style>

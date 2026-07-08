@@ -39,7 +39,15 @@ const familyFiles: unknown[][] = [
 
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)
 export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
-export const families: Family[] = parseFamilies(familyFiles.flat())
+
+const rawEntries = familyFiles.flat()
+export const families: Family[] = parseFamilies(rawEntries)
+
+// Raw authored entries by id — for the inspection view, which shows the JSON
+// exactly as written in the file, not the parsed/normalized form.
+export const rawById = new Map<string, unknown>(
+  rawEntries.map(e => [(e as { id: string }).id, e]),
+)
 
 validateUniqueIds(families)
 validateGroupRefs(families, groups)

@@ -16,10 +16,15 @@ Status legend: [ ] not started · [~] in progress · [x] done
 - [x] Load-time validation: schema, unique ids, group refs, meta-pattern refs (throws with offending id)
 - [x] Read-only card view (`TaxonomyView.vue`) — green true-forms vs red pitfalls
 - [x] Retired the old pre-refactor path (families.ts, generator, SessionView, old schema docs)
+- [x] Dependency graph: `requires` + pitfall-level `revise` in schema, graph validators, ~70 edges authored; notation ranked as a strict 1–28 sequence, structure 1–15, consistent with the DAG
+- [x] Misconception wave (2026-07-08): 10 new families (like-terms/conjoining group, embedded-minus pair, multiplying-into-a-bracket, power-of-a-sum, roots pair, no-cancelling-in-a-sum) + meta-pattern M6 (linearity illusion) — 64 families total
+- [x] Card view as inspection tool: drilling-order mode, family ids on cards, per-card raw-JSON disclosure
 
 ---
 
 ## Content — Open items
+
+- [~] **Teacher inspection pass over all 64 families** (content, notes, ranks 1–28, requires edges) — use the card view's drilling-order mode + json disclosure. Adjustments from this pass come before the vertical slice.
 
 - [ ] **Decide Familiar-Shapes representation.** The D-group (difference-of-squares, perfect-square, quadratic, …) fits `classification` poorly — the real skill is "name the shape," which the dominant-op `answer` can't express. Options: a `shape` field, or a new recognition `kind`. Currently authored as classification with the shape in the note.
 - [ ] Add distractors to pure-notation families whose `pitfalls` are empty (bracket-types, commutativity, division-variants, …) — needed before they can generate "DIFFERENT" drill items.
