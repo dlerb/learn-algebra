@@ -1,6 +1,7 @@
 {
   "notation": [
     { "slug": "multiplication", "title": "Multiplication Notation" },
+    { "slug": "like-terms", "title": "Like & Unlike Terms", "blurb": "Which sums collapse into one term and which stay open. Conjoining — forcing 2+3x into 5x — is the classic closure error." },
     { "slug": "minus-sign", "title": "The Minus Sign", "blurb": "One notation, three distinct roles: subtraction, negation, and multiply-by-(-1). The single highest-priority group." },
     { "slug": "brackets", "title": "Brackets" },
     { "slug": "exponents", "title": "Exponent & Root Notation" },

@@ -25,7 +25,7 @@
     "id": "notation.subtraction-not-commutative",
     "group": "commutativity",
     "title": "Subtraction is not commutative",
-    "priority": 10,
+    "priority": 23,
     "requires": ["notation.minus-over-difference"],
     "metaPatterns": ["M2"],
     "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
@@ -37,11 +37,12 @@
     "id": "notation.division-not-commutative",
     "group": "commutativity",
     "title": "Division is not commutative",
-    "priority": 10,
+    "priority": 24,
     "conditions": "b ≠ 0",
+    "requires": ["notation.division-variants"],
     "metaPatterns": [],
-    "note": "Division does not commute: a/b is not b/a. (a/b = a·(1/b).)",
-    "equivalents": ["\\frac{a}{b}", "a \\cdot \\frac{1}{b}"],
+    "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",
+    "equivalents": ["a \\div b", "\\frac{a}{b}"],
     "pitfalls": ["\\frac{b}{a}"]
   }
 ]

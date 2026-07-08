@@ -24,11 +24,9 @@ Status legend: [ ] not started · [~] in progress · [x] done
 - [ ] **Decide Familiar-Shapes representation.** The D-group (difference-of-squares, perfect-square, quadratic, …) fits `classification` poorly — the real skill is "name the shape," which the dominant-op `answer` can't express. Options: a `shape` field, or a new recognition `kind`. Currently authored as classification with the shape in the note.
 - [ ] Add distractors to pure-notation families whose `pitfalls` are empty (bracket-types, commutativity, division-variants, …) — needed before they can generate "DIFFERENT" drill items.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).
-- [~] Prerequisites as a graph: `requires` + validators in schema; first authoring pass done (~60 edges); structure basic forms ranked 1–5, later structure ranks shifted +5. The graph is a v1 hypothesis until drill data confirms it. **Open flags** (edges omitted because they contradict the drilling order — decide each):
-  - Unranked notation foundations under ranked families: B1 negative-numbers (under A3/B3/B5), E1 division-variants (under C4, F4), D1 exponent-as-repeated-product (under D4); also structure: chunks-in-sum (under implicit-chunking), linear-form (under quadratic-form). Rank them or declare assumed knowledge.
-  - Order inversions: double-negative(6) builds on subtraction-as-adding-opposite(9); coefficient-negative-one(3) on explicit-vs-implicit-product(5); negated-square(2) on coefficient-negative-one(3).
-  - Equal ranks block intra-rank edges (A2 on A1, both 5) — allow equality in the validator if co-drilled pairs are wanted.
-  - E1 contains `a·b⁻¹` (presupposes negative exponents → near-cycle with D-negative-exponent); E2 equivalents ⊂ E1; F4 equivalents duplicate E2 (its real content is the pitfall b/a).
+- [~] Prerequisites as a graph: `requires` + validators in schema; graph fully authored and priority-consistent. Notation renumbered to a topological order 1–17 (B1→2, D1→5, E1→12; order inversions fixed: B2 now before B5, A1 moved to 1, A2 to 8); structure basic forms 1–5, linear-form 14 with quadratic-form requiring it. E1/E2/F4 de-duplicated (E1 = pure notation incl. `a : b`; `a·b⁻¹` removed from E1; F4 equivalents no longer duplicate E2). The graph is a v1 hypothesis until drill data confirms it.
+  - Open: chunks-in-sum vs implicit-chunking overlap substantially (same example expressions, different emphasis) — merge or sharpen the contrast.
+  - Open: C5 minus-before-bracket stays unranked; it is the justification family for B3/B4 (carried by meta-pattern M2/M3), drilled later or not at all — confirm.
 - [ ] Pitfall-level `revise` refs where an error points at a sharper gap than the family's `requires` (schema supports it on all three kinds; author only where family-level links aren't precise enough).
 - [ ] Per-family variation dimensions (what varies / constant / discriminating feature) — variation theory (Marton / bianshi).
 

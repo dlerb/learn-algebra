@@ -9,6 +9,7 @@ import {
 import groupsRaw from './groups.json'
 import metasRaw from './metapatterns.json'
 import notationMultiplication from './families/notation-multiplication.json'
+import notationLikeTerms from './families/notation-like-terms.json'
 import notationMinusSign from './families/notation-minus-sign.json'
 import notationBrackets from './families/notation-brackets.json'
 import notationExponents from './families/notation-exponents.json'
@@ -23,6 +24,7 @@ import structureFullClassification from './families/structure-full-classificatio
 // Per-group family files. Add new groups here as they are authored.
 const familyFiles: unknown[][] = [
   notationMultiplication as unknown[],
+  notationLikeTerms as unknown[],
   notationMinusSign as unknown[],
   notationBrackets as unknown[],
   notationExponents as unknown[],

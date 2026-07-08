@@ -9,7 +9,9 @@
     { "id": "M4", "title": "Exponents bind tighter than coefficients and signs",
       "text": "-a^2 means -(a^2), not (-a)^2. The exponent applies first, the minus after." },
     { "id": "M5", "title": "The fraction bar is a bracket",
-      "text": "Everything above the line is one grouped object, everything below another. a + b/c and (a+b)/c are different things." }
+      "text": "Everything above the line is one grouped object, everything below another. a + b/c and (a+b)/c are different things." },
+    { "id": "M6", "title": "Only multiplication distributes over a sum",
+      "text": "a(b+c) = ab + ac, and dividing by c works too (it is multiplying by 1/c). Nothing else distributes: (a+b)^2 is not a^2 + b^2, the root of a+b is not the sum of the roots, and a single term of a sum cannot be cancelled." }
   ],
   "structure": [
     { "id": "M1", "title": "The dominant operation is the last one applied",
