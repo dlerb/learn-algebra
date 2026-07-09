@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
+import RichText from '../components/RichText.vue'
 import { families, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
 import { loc, namespaceOf, type Family, type Namespace } from '../data/family.schema'
 import { lang } from '../lang'
@@ -166,7 +167,7 @@ function hasErrors(c: CardVM): boolean {
               </div>
             </div>
             <code class="fam-id">{{ c.id }}</code>
-            <div v-if="c.conditions" class="cond">for {{ c.conditions }}</div>
+            <div v-if="c.conditions" class="cond">for <MathExpr :latex="c.conditions" /></div>
 
             <div class="correct">
               <MathExpr v-if="c.equivChain" :latex="c.equivChain" display />
@@ -196,21 +197,21 @@ function hasErrors(c: CardVM): boolean {
               </template>
               <template v-else-if="c.classPitfalls">
                 <div v-for="(p, i) in c.classPitfalls" :key="i" class="err">
-                  not <strong>{{ p.answer }}</strong> — {{ p.why }}
+                  not <strong>{{ p.answer }}</strong> — <RichText :text="p.why" />
                   <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.decompPitfalls">
                 <div v-for="(p, i) in c.decompPitfalls" :key="i" class="err">
-                  {{ p.why }}
+                  <RichText :text="p.why" />
                   <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
             </div>
 
-            <p class="note">{{ c.note }}</p>
+            <p class="note"><RichText :text="c.note" /></p>
             <div v-if="c.requires.length" class="reqs">requires: {{ c.requires.join(' · ') }}</div>
             <div v-if="c.metas.length" class="chip-row">
               <span class="chip-label">meta</span>

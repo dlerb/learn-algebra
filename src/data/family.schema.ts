@@ -48,8 +48,8 @@ const core = {
   metaPatterns: z.array(z.string()).default([]),    // e.g. ["M2"] — refs a meta-pattern in metapatterns.json
   justifiedBy: z.array(z.string()).default([]),     // law ids (laws.json) that make the true forms true; empty = pure convention
   conventions: z.array(z.string()).default([]),     // convention ids (conventions.json) the family exercises
-  note: localizedString,                // one/two-line explanation shown in feedback
-  conditions: z.string().optional(),    // domain caveat NOT already carried by a cited law, e.g. "a > 0"
+  note: localizedString,                // one/two-line explanation shown in feedback — prose with inline $…$ KaTeX
+  conditions: z.string().optional(),    // domain caveat NOT already carried by a cited law — pure LaTeX, e.g. "a > 0", "b \\ne 0"
 }
 
 // Every kind has a CORRECT half (varies by kind) and an ERROR half (`pitfalls` —
@@ -208,7 +208,7 @@ export const lawDef = z.object({
   sort: lawSort,
   name: localizedString,
   latex: z.string(),                            // the statement, KaTeX
-  conditions: z.string().optional(),            // domain condition, e.g. "b \\ne 0"; families citing the law inherit it
+  conditions: z.string().optional(),            // domain condition, pure LaTeX, e.g. "b \\ne 0"; families citing the law inherit it
   basedOn: z.array(z.string()).default([]),     // definitions only
   derivedFrom: z.array(z.string()).default([]), // theorems only
   note: localizedString.optional(),
@@ -384,6 +384,24 @@ export function auditCoverage(
   uncited('Laws', laws.filter(l => l.sort !== 'axiom').map(l => l.id), citedLaws)  // axioms may be reached only via theorems
   uncited('Conventions', conventions.map(c => c.id), citedConvs)
   uncited('Error patterns', errors.map(e => e.id), citedErrs)
+
+  // Prose format contract: text with inline $…$ KaTeX. Improvised unicode
+  // math in prose (2x², √, ÷ …) predates the contract; count what remains
+  // to migrate. Conditions are excluded — they are pure LaTeX, not prose.
+  const unicodeMath = /[²³¹⁰ⁿ⁻√÷×·−≠≥≤½]/
+  const locVals = (ls?: LocalizedString): string[] => ls ? [ls.en, ls.de ?? ''] : []
+  const countDirty = (fields: string[][]) => fields.filter(f => f.some(s => unicodeMath.test(s))).length
+  const dirty = {
+    'family notes': countDirty(families.map(f => locVals(f.note))),
+    'pitfall whys': countDirty(families.flatMap(f =>
+      (f.pitfalls as { why?: LocalizedString }[]).filter(p => p.why).map(p => locVals(p.why)))),
+    'law notes': countDirty(laws.filter(l => l.note).map(l => locVals(l.note))),
+    'convention texts': countDirty(conventions.map(c => locVals(c.text))),
+    'error texts': countDirty(errors.map(e => locVals(e.text))),
+    'meta-pattern texts': countDirty([...metas.notation, ...metas.structure].map(m => locVals(m.text))),
+  }
+  const parts = Object.entries(dirty).filter(([, n]) => n > 0).map(([k, n]) => `${k}: ${n}`)
+  if (parts.length > 0) lines.push(`Prose fields with unmigrated unicode math (→ inline $…$): ${parts.join(', ')}`)
   return lines
 }
 

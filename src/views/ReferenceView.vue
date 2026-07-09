@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
+import RichText from '../components/RichText.vue'
 import { laws, conventions, errorPatterns } from '../data'
 import { loc, type LawDef, type ErrorDef } from '../data/family.schema'
 import { lang } from '../lang'
@@ -80,12 +81,12 @@ const errorSections = computed(() => [
             </div>
             <code class="slug">{{ l.id }}</code>
             <div class="statement"><MathExpr :latex="l.latex" display /></div>
-            <div v-if="l.conditions" class="cond">for {{ l.conditions }}</div>
+            <div v-if="l.conditions" class="cond">for <MathExpr :latex="l.conditions" /></div>
             <div v-if="l.links.length" class="links">
               {{ l.linkWord }}:
               <span v-for="(x, i) in l.links" :key="i" class="chip">{{ x }}</span>
             </div>
-            <p v-if="l.note" class="note">{{ l.note }}</p>
+            <p v-if="l.note" class="note"><RichText :text="l.note" /></p>
           </article>
         </div>
       </div>
@@ -101,7 +102,7 @@ const errorSections = computed(() => [
             <span class="badge code conv">{{ c.code }}</span>
           </div>
           <code class="slug">{{ c.id }}</code>
-          <p class="note">{{ c.text }}</p>
+          <p class="note"><RichText :text="c.text" /></p>
         </article>
       </div>
     </section>
@@ -117,7 +118,7 @@ const errorSections = computed(() => [
               <span class="badge code err">{{ e.code }}</span>
             </div>
             <code class="slug">{{ e.id }}</code>
-            <p class="note">{{ e.text }}</p>
+            <p class="note"><RichText :text="e.text" /></p>
             <div v-if="e.instances.length" class="instances">
               <div v-for="(x, i) in e.instances" :key="i" class="wrong"><MathExpr :latex="x" /></div>
             </div>

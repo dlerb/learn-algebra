@@ -7,7 +7,7 @@
     "priority": 1,
     "metaPatterns": ["meta.juxtaposition"],
     "conventions": ["conv.juxtaposition", "conv.canonical-order"],
-    "note": "Symbols next to each other, or joined by · or ×, all mean multiply. 3x is a product — not a two-digit number, and not 3 + x.",
+    "note": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product — not a two-digit number, and not $3 + x$.",
     "equivalents": ["3 \\times x", "3 \\cdot x", "3x", "x \\cdot 3", "(3)(x)"],
     "pitfalls": [{ "expr": "3 + x", "cites": ["mis.juxtaposition-as-plus"] }]
   },

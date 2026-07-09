@@ -38,7 +38,7 @@
     "group": "commutativity",
     "title": "Division is not commutative",
     "priority": 24,
-    "conditions": "b ≠ 0",
+    "conditions": "b \\ne 0",
     "requires": ["notation.division-variants"],
     "metaPatterns": [],
     "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",

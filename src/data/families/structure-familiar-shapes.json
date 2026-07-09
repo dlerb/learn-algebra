@@ -9,7 +9,7 @@
     "metaPatterns": ["meta.dominant-op-last"],
     "justifiedBy": ["thm.difference-of-squares"],
     "conventions": ["conv.precedence", "conv.exponent-scope"],
-    "note": "Dominant operation: a difference. The shape is special — both chunks are perfect squares (9 = 3², 4x² = (2x)²). Recognising it unlocks factoring as (a+b)(a−b).",
+    "note": "Dominant operation: a difference. The shape is special — both chunks are perfect squares ($9 = 3^2$, $4x^2 = (2x)^2$). Recognising it unlocks factoring as $(a+b)(a-b)$.",
     "examples": ["a^2 - b^2", "x^2 - 9", "(x+1)^2 - (x-1)^2", "4x^2 - 25"],
     "answer": "difference",
     "pitfalls": []

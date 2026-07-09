@@ -72,7 +72,15 @@ chips and discussion, never identity: families cite slugs, not codes.
    authored assignment but over-generates true-but-beside-the-point extras.
    The audit checks the subset relation (an authored meta-pattern a tagged
    family's coordinates can't support = missing tag or misfit citation).
-9. **Localization.** Prose fields (names, texts, notes, family titles,
+9. **Prose format contract.** Prose fields (notes, whys, texts) are plain
+   text with inline `$…$` KaTeX — deliberately NOT markdown: the one feature
+   prose needs is math, and the `$` contract avoids a parser, HTML injection,
+   and sanitization (rendered by `RichText.vue`, ~20 lines, no dependency).
+   Forward-compatible: markdown-it + KaTeX uses the same delimiters, so the
+   contract survives if real markdown needs ever appear. `conditions` fields
+   are NOT prose — they are pure LaTeX, rendered directly. Improvised unicode
+   math (`2x²`, `√`) predates the contract; the audit counts what remains.
+10. **Localization.** Prose fields (names, texts, notes, family titles,
    pitfall explanations) are `LocalizedString`: a plain string (= English) or
    `{ en, de }`, with English fallback so nothing renders blank; `de` means
    Schweizer Hochdeutsch. LaTeX math is language-neutral and never
@@ -159,3 +167,9 @@ standard id scheme (slug ids `meta.…`, globally unique across namespaces;
 `{en, de}` — the text is the student-facing feedback takeaway). Family
 `metaPatterns` arrays cite slugs. Derivation experiment recorded in design
 decision 8; authored-⊆-derived added to the audit.
+
+**2026-07-09 (rev. 5, prose format contract):** prose = text with inline
+`$…$` KaTeX (design decision 9), markdown considered and rejected;
+`conditions` migrated to pure LaTeX everywhere; all layer-file texts and the
+tagged families' notes migrated; audit counts remaining unicode-math prose
+(16 family notes + 2 whys at time of writing).

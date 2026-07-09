@@ -9,7 +9,7 @@
     "metaPatterns": ["meta.juxtaposition"],
     "justifiedBy": ["thm.collect-like-terms"],
     "conventions": ["conv.juxtaposition"],
-    "note": "2 + 3x is a finished object — it does not collapse to 5x. Only like terms combine (x + x = 2x); 2 and 3x are not like.",
+    "note": "$2 + 3x$ is a finished object — it does not collapse to $5x$. Only like terms combine ($x + x = 2x$); $2$ and $3x$ are not like.",
     "equivalents": ["2 + 3x", "3x + 2"],
     "pitfalls": [{ "expr": "5x", "cites": ["anti.conjoining"] }]
   },
