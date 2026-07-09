@@ -212,10 +212,17 @@ function hasErrors(c: CardVM): boolean {
 
             <p class="note">{{ c.note }}</p>
             <div v-if="c.requires.length" class="reqs">requires: {{ c.requires.join(' · ') }}</div>
-            <div v-if="c.metas.length || c.laws.length || c.conventions.length" class="metas">
-              <span v-for="(m, i) in c.metas" :key="'m' + i" class="meta-chip">{{ m }}</span>
-              <span v-for="(l, i) in c.laws" :key="'l' + i" class="meta-chip law-chip">{{ l }}</span>
-              <span v-for="(cv, i) in c.conventions" :key="'c' + i" class="meta-chip conv-chip">{{ cv }}</span>
+            <div v-if="c.metas.length" class="chip-row">
+              <span class="chip-label">meta</span>
+              <span v-for="(m, i) in c.metas" :key="i" class="meta-chip">{{ m }}</span>
+            </div>
+            <div v-if="c.laws.length" class="chip-row">
+              <span class="chip-label">laws</span>
+              <span v-for="(l, i) in c.laws" :key="i" class="meta-chip law-chip">{{ l }}</span>
+            </div>
+            <div v-if="c.conventions.length" class="chip-row">
+              <span class="chip-label">conv</span>
+              <span v-for="(cv, i) in c.conventions" :key="i" class="meta-chip conv-chip">{{ cv }}</span>
             </div>
             <details class="json">
               <summary>json</summary>
@@ -267,7 +274,8 @@ function hasErrors(c: CardVM): boolean {
 .revise { font-size: .75rem; color: #9f1239; font-style: italic; margin-left: .4rem; }
 .note { font-size: .82rem; color: #4b5563; margin: .5rem 0 .4rem; }
 .reqs { font-size: .75rem; color: #6b7280; margin: 0 0 .35rem; }
-.metas { display: flex; flex-wrap: wrap; gap: .3rem; }
+.chip-row { display: flex; flex-wrap: wrap; gap: .3rem; align-items: baseline; margin-top: .25rem; }
+.chip-label { font-size: .68rem; color: #9ca3af; min-width: 2.2rem; }
 .meta-chip { font-size: .7rem; padding: .12rem .45rem; background: #f3f4f6; color: #4b5563; border-radius: 999px; }
 .json { margin-top: .5rem; }
 .json summary { font-size: .7rem; color: #9ca3af; cursor: pointer; user-select: none; }
