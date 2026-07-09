@@ -161,9 +161,10 @@ export function validateGroupRefs(families: Family[], groups: GroupsFile): void 
 // metapatterns.json, namespaced; families reference them by id ("M2").
 
 export const metaPatternDef = z.object({
-  id: z.string(),      // "M1".."M6"
-  title: z.string(),
-  text: z.string(),
+  id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // globally unique slug, like every other id
+  code: z.string(),    // display code "M1".."M6" — the classroom name, unique per namespace only
+  title: localizedString,
+  text: localizedString,                  // the student-facing takeaway line in drill feedback
   refs: z.array(z.string()).default([]),  // law/convention/error ids this pattern digests — keeps the classroom voice linked to the layer it summarizes
 })
 export type MetaPatternDef = z.infer<typeof metaPatternDef>
@@ -176,6 +177,11 @@ export type MetaPatternsFile = z.infer<typeof metaPatternsFile>
 
 // Cross-check: every metaPattern a family references must exist in its namespace.
 export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsFile): void {
+  // Slug ids must be globally unique even though the file is namespaced.
+  const all = [...metas.notation, ...metas.structure].map(m => m.id)
+  const dup = all.find((id, i) => all.indexOf(id) !== i)
+  if (dup) throw new Error(`Duplicate meta-pattern id "${dup}" across namespaces.`)
+
   for (const f of families) {
     const ns = namespaceOf(f.id)
     for (const m of f.metaPatterns) {
@@ -344,12 +350,29 @@ export function validateLayerRefs(
 // error — so this warns, it does not throw.
 
 export function auditCoverage(
-  families: Family[], laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
+  families: Family[], metas: MetaPatternsFile,
+  laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
 ): string[] {
   const lines: string[] = []
   const untagged = families.filter(f => f.justifiedBy.length === 0 && f.conventions.length === 0)
   if (untagged.length > 0) {
     lines.push(`${untagged.length}/${families.length} families have no layer coordinates yet (justifiedBy/conventions).`)
+  }
+
+  // Authored ⊆ derived: on a tagged family, every authored meta-pattern should
+  // be reachable from the family's coordinates via the pattern's refs.
+  // (Authored stays curation — this only catches a missing tag or a
+  // meta-pattern citation that doesn't fit the family.)
+  for (const f of families) {
+    if (f.justifiedBy.length === 0 && f.conventions.length === 0) continue
+    const coords = new Set([...f.justifiedBy, ...f.conventions, ...citeTargets(f)])
+    const unsupported = f.metaPatterns.filter(mid => {
+      const mp = metas[namespaceOf(f.id)].find(m => m.id === mid)
+      return mp !== undefined && !mp.refs.some(r => coords.has(r))
+    })
+    if (unsupported.length > 0) {
+      lines.push(`"${f.id}" cites meta-patterns its coordinates don't support: ${unsupported.join(', ')}`)
+    }
   }
   const citedLaws = new Set(families.flatMap(f => f.justifiedBy))
   const citedConvs = new Set(families.flatMap(f => f.conventions))

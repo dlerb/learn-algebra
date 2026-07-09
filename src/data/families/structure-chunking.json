@@ -5,7 +5,7 @@
     "group": "chunking",
     "title": "Chunks in a sum or difference",
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["M3"],
+    "metaPatterns": ["meta.multiplication-binds-tighter"],
     "note": "Break at the + and − signs, keeping each sign with its term. Each product like 3x stays whole.",
     "examples": [
       { "expr": "3x + 2y - z", "chunks": ["3x", "2y", "-z"], "op": "sum" },
@@ -21,7 +21,7 @@
     "group": "chunking",
     "title": "Chunks in a product",
     "requires": ["notation.product-with-brackets"],
-    "metaPatterns": ["M2"],
+    "metaPatterns": ["meta.bracket-chunk"],
     "note": "Break at the multiplication points. Each bracket is one factor.",
     "examples": [
       { "expr": "3 \\cdot x \\cdot (x+1)", "chunks": ["3", "x", "(x+1)"], "op": "product" },
@@ -36,7 +36,7 @@
     "title": "Implicit chunking — multiplication precedence",
     "priority": 8,
     "requires": ["notation.precedence-brackets"],
-    "metaPatterns": ["M3"],
+    "metaPatterns": ["meta.multiplication-binds-tighter"],
     "note": "There are no brackets, but multiplication binds tighter than +. Read the implicit chunks: 3x and 2y.",
     "examples": [
       { "expr": "3x + 2y", "chunks": ["3x", "2y"], "op": "sum" },
@@ -53,7 +53,7 @@
     "title": "Bracket as a single chunk",
     "priority": 8,
     "requires": ["notation.product-with-brackets"],
-    "metaPatterns": ["M2"],
+    "metaPatterns": ["meta.bracket-chunk"],
     "note": "Resist expanding — treat the whole bracket as one object.",
     "examples": [
       { "expr": "3(x+1) - 2(x-1)", "chunks": ["3(x+1)", "2(x-1)"], "op": "difference" },

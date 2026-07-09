@@ -15,7 +15,7 @@
     "group": "commutativity",
     "title": "Multiplication is commutative",
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "note": "Order does not matter for multiplication: ab = ba.",
     "equivalents": ["ab", "ba"],
     "pitfalls": []
@@ -27,7 +27,7 @@
     "title": "Subtraction is not commutative",
     "priority": 23,
     "requires": ["notation.minus-over-difference"],
-    "metaPatterns": ["M2"],
+    "metaPatterns": ["meta.three-minuses"],
     "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
     "equivalents": ["a - b", "-(b - a)"],
     "pitfalls": ["b - a"]

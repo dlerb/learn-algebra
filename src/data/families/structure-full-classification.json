@@ -5,7 +5,7 @@
     "group": "full-classification",
     "title": "Same value, different dominant operation",
     "requires": ["structure.difference", "structure.product"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.dominant-op-last"],
     "note": "These are equal in value but have different dominant operations: x²−1 is a difference, (x+1)(x−1) is a product. Rewriting changes the dominant operation — the heart of Skill 3.",
     "equivalents": ["x^2 - 1", "(x+1)(x-1)"],
     "pitfalls": []

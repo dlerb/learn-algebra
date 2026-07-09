@@ -6,7 +6,7 @@
     "title": "A number plus a term stays open",
     "priority": 11,
     "requires": ["notation.repeated-addition"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "justifiedBy": ["thm.collect-like-terms"],
     "conventions": ["conv.juxtaposition"],
     "note": "2 + 3x is a finished object — it does not collapse to 5x. Only like terms combine (x + x = 2x); 2 and 3x are not like.",
@@ -20,7 +20,7 @@
     "title": "Terms with different variables stay open",
     "priority": 12,
     "requires": ["notation.number-plus-term"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "note": "3x + 2y cannot combine into one term — x and y are different objects. 5xy would be a product, something else entirely.",
     "equivalents": ["3x + 2y", "2y + 3x"],
     "pitfalls": ["5xy"]
@@ -32,7 +32,7 @@
     "title": "A power plus a term stays open",
     "priority": 13,
     "requires": ["notation.exponent-as-repeated-product", "notation.number-plus-term"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "note": "x² + x has two unlike terms — it is not x³. Exponents grow when powers are multiplied (x² · x = x³), never when they are added.",
     "equivalents": ["x^2 + x", "x + x^2"],
     "pitfalls": ["x^3"]

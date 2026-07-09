@@ -5,7 +5,7 @@
     "group": "multiplication",
     "title": "Explicit vs. implicit multiplication",
     "priority": 1,
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "conventions": ["conv.juxtaposition", "conv.canonical-order"],
     "note": "Symbols next to each other, or joined by · or ×, all mean multiply. 3x is a product — not a two-digit number, and not 3 + x.",
     "equivalents": ["3 \\times x", "3 \\cdot x", "3x", "x \\cdot 3", "(3)(x)"],
@@ -18,7 +18,7 @@
     "title": "Multiplication with brackets",
     "priority": 14,
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["M1", "M3"],
+    "metaPatterns": ["meta.juxtaposition", "meta.implicit-op-before-bracket"],
     "note": "A number against a bracket means multiply: 2(x+1) is 2 times (x+1), not 2 + (x+1).",
     "equivalents": ["2 \\times (x+1)", "2 \\cdot (x+1)", "2(x+1)", "(x+1) \\cdot 2"],
     "pitfalls": ["2 + (x+1)"]
@@ -30,7 +30,7 @@
     "title": "Coefficient of −1",
     "priority": 3,
     "requires": ["notation.explicit-vs-implicit-product", "notation.negative-numbers"],
-    "metaPatterns": ["M1", "M2"],
+    "metaPatterns": ["meta.juxtaposition", "meta.three-minuses"],
     "note": "An invisible coefficient of -1 means negate: (-1)a, -1a and -a are the same object. (Similarly a coefficient of 1 is invisible: 1x = x.)",
     "equivalents": ["(-1) \\cdot a", "(-1)a", "-1a", "-a"],
     "pitfalls": []
@@ -41,7 +41,7 @@
     "group": "multiplication",
     "title": "Coefficient of 0",
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "note": "Zero times anything is zero: 0x = 0, regardless of x. It is not x.",
     "equivalents": ["0 \\cdot x", "0x", "0"],
     "pitfalls": ["x"]
@@ -53,7 +53,7 @@
     "title": "Repeated addition vs. multiplication",
     "priority": 10,
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "note": "Adding a term to itself scales it: x + x = 2x (and x+x+x = 3x). Do not confuse with x·x = x².",
     "equivalents": ["x + x", "2x"],
     "pitfalls": ["x^2"]

@@ -69,6 +69,6 @@ validateErrors(errorPatterns, laws, conventions)
 validateLayerRefs(families, metaPatterns, laws, conventions, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.
-for (const line of auditCoverage(families, laws, conventions, errorPatterns)) {
+for (const line of auditCoverage(families, metaPatterns, laws, conventions, errorPatterns)) {
   console.info(`[audit] ${line}`)
 }

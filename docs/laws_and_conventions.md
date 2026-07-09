@@ -64,7 +64,14 @@ chips and discussion, never identity: families cite slugs, not codes.
 8. **Meta-patterns are the student-facing digest of these lists**, not a
    third independent taxonomy. Each meta-pattern carries `refs` to the
    law/convention/error ids it summarizes, so the classroom voice cannot
-   drift from the layer it digests.
+   drift from the layer it digests. They follow the same id scheme as
+   everything else (slug `meta.…` + display code M1–M6) and are localized —
+   their `text` is the takeaway line a student reads in drill feedback.
+   Assignment to families stays **authored** (curation), never derived from
+   refs (coverage): tested empirically 2026-07-09, derivation recovers every
+   authored assignment but over-generates true-but-beside-the-point extras.
+   The audit checks the subset relation (an authored meta-pattern a tagged
+   family's coordinates can't support = missing tag or misfit citation).
 9. **Localization.** Prose fields (names, texts, notes, family titles,
    pitfall explanations) are `LocalizedString`: a plain string (= English) or
    `{ en, de }`, with English fallback so nothing renders blank; `de` means
@@ -145,3 +152,10 @@ slimmed to rationale; in-app Laws & Conventions view renders the cards.
 names and extended: `thm.power-same-base-quotient` added (was missing
 entirely — second gap the layer work surfaced), root rules named as the
 same-exponent / power-of-a-power laws for roots.
+
+**2026-07-09 (rev. 4, meta-pattern migration):** meta-patterns moved to the
+standard id scheme (slug ids `meta.…`, globally unique across namespaces;
+"M1" kept as per-namespace display code) and localized (title/text now
+`{en, de}` — the text is the student-facing feedback takeaway). Family
+`metaPatterns` arrays cite slugs. Derivation experiment recorded in design
+decision 8; authored-⊆-derived added to the audit.

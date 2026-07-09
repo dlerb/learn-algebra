@@ -6,7 +6,7 @@
     "title": "Exponent as repeated multiplication",
     "priority": 6,
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "note": "A power is repeated multiplication: a² = a·a, a³ = a·a·a, a¹ = a.",
     "equivalents": ["a^2", "a \\cdot a"],
     "pitfalls": []
@@ -17,7 +17,7 @@
     "group": "exponents",
     "title": "Coefficient vs. exponent",
     "requires": ["notation.repeated-addition", "notation.exponent-as-repeated-product"],
-    "metaPatterns": ["M1"],
+    "metaPatterns": ["meta.juxtaposition"],
     "justifiedBy": ["def.integer-multiple", "def.power"],
     "conventions": ["conv.juxtaposition", "conv.invisible-one"],
     "note": "2a means a+a; it is not a². (And a² = a·a is not 2a.) The two forms that look most alike mean the most different things.",
@@ -31,7 +31,7 @@
     "title": "Negative base vs. negated square",
     "priority": 7,
     "requires": ["notation.coefficient-negative-one", "notation.exponent-as-repeated-product"],
-    "metaPatterns": ["M4"],
+    "metaPatterns": ["meta.exponent-binds-tighter"],
     "note": "The exponent binds before the minus: -a² = -(a²), which is negative. That differs from (-a)² = a², which is positive. E.g. -3² = -9 but (-3)² = 9.",
     "equivalents": ["-a^2", "-(a^2)"],
     "pitfalls": ["(-a)^2", "a^2"]
@@ -43,7 +43,7 @@
     "title": "Exponent on a product",
     "priority": 21,
     "requires": ["notation.product-with-brackets", "notation.exponent-as-repeated-product"],
-    "metaPatterns": ["M4"],
+    "metaPatterns": ["meta.exponent-binds-tighter"],
     "note": "A power on a bracket applies to every factor: (ab)² = a²b², and (2x)² = 4x². Without the bracket, ab² means a·b² — the exponent hits b only.",
     "equivalents": ["(ab)^2", "a^2 b^2"],
     "pitfalls": ["ab^2"]
@@ -67,7 +67,7 @@
     "title": "Negative exponent as a reciprocal",
     "conditions": "a ≠ 0",
     "requires": ["notation.exponent-as-repeated-product", "notation.division-variants"],
-    "metaPatterns": ["M4"],
+    "metaPatterns": ["meta.exponent-binds-tighter"],
     "note": "A negative exponent means reciprocal, not a negative number: a⁻ⁿ = 1/aⁿ. So a⁻¹ = 1/a, and 1/a⁻ⁿ = aⁿ.",
     "equivalents": ["a^{-n}", "\\frac{1}{a^n}"],
     "pitfalls": ["-a^n"]
@@ -79,7 +79,7 @@
     "title": "Fractional exponent as a root",
     "conditions": "a > 0",
     "requires": ["notation.exponent-as-repeated-product"],
-    "metaPatterns": ["M4"],
+    "metaPatterns": ["meta.exponent-binds-tighter"],
     "note": "A fractional exponent is a root: the denominator is the root index, the numerator the power.",
     "equivalents": ["a^{m/n}", "\\sqrt[n]{a^m}", "(\\sqrt[n]{a})^m"],
     "pitfalls": ["\\sqrt[m]{a^n}"]
@@ -91,7 +91,7 @@
     "title": "Negative fractional exponent",
     "conditions": "a > 0",
     "requires": ["notation.negative-exponent", "notation.fractional-exponent-root"],
-    "metaPatterns": ["M4"],
+    "metaPatterns": ["meta.exponent-binds-tighter"],
     "note": "Combine the two rules: a^(-m/n) = 1 / (nth root of aᵐ). The minus gives the reciprocal, the fraction gives the root.",
     "equivalents": ["a^{-m/n}", "\\frac{1}{\\sqrt[n]{a^m}}", "\\frac{1}{a^{m/n}}"],
     "pitfalls": ["\\sqrt[n]{a^m}"]
@@ -103,7 +103,7 @@
     "title": "Exponent on a sum",
     "priority": 22,
     "requires": ["notation.exponent-as-repeated-product", "notation.product-with-brackets"],
-    "metaPatterns": ["M6"],
+    "metaPatterns": ["meta.only-multiplication-distributes"],
     "justifiedBy": ["def.power", "thm.binomial-square"],
     "conventions": ["conv.exponent-scope"],
     "note": "A power does not distribute over +: (a+b)² means (a+b)(a+b), which is not a² + b². Contrast (ab)² = a²b² — over × it works, over + it never does.",
@@ -118,7 +118,7 @@
     "priority": 28,
     "conditions": "a ≥ 0, b ≥ 0",
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["M6"],
+    "metaPatterns": ["meta.only-multiplication-distributes"],
     "note": "A root splits over ×: √(ab) = √a · √b.",
     "equivalents": ["\\sqrt{ab}", "\\sqrt{a} \\cdot \\sqrt{b}"],
     "pitfalls": []
@@ -131,7 +131,7 @@
     "priority": 29,
     "conditions": "a ≥ 0, b ≥ 0",
     "requires": ["notation.root-of-a-product"],
-    "metaPatterns": ["M6"],
+    "metaPatterns": ["meta.only-multiplication-distributes"],
     "note": "A root does NOT split over +: √(a+b) is not √a + √b. Try a = 9, b = 16: √25 = 5, but 3 + 4 = 7.",
     "equivalents": ["\\sqrt{a+b}", "\\sqrt{b+a}"],
     "pitfalls": ["\\sqrt{a} + \\sqrt{b}"]

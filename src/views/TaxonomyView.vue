@@ -16,7 +16,7 @@ const namespaces: { key: Namespace; label: string }[] = [
 
 function metaLabel(ns: Namespace, id: string): string {
   const m = metaPatterns[ns].find(mp => mp.id === id)
-  return m ? `${m.id} · ${m.title}` : id
+  return m ? `${m.code} · ${loc(m.title, lang.value)}` : id
 }
 
 // Layer coordinates (laws/conventions) and error-pattern cites, shown as
