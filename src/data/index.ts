@@ -2,12 +2,17 @@
 // duplicate id, a dangling group, or a dangling meta-pattern reference throws
 // here immediately with the offending id named.
 import {
-  parseFamilies, groupsFile, metaPatternsFile,
+  parseFamilies, groupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
   validateUniqueIds, validateGroupRefs, validateMetaPatternRefs, validateFamilyLinks,
+  validateLaws, validateErrors, validateLayerRefs, auditCoverage,
   type Family, type GroupsFile, type MetaPatternsFile,
+  type LawDef, type ConventionDef, type ErrorDef,
 } from './family.schema'
 import groupsRaw from './groups.json'
 import metasRaw from './metapatterns.json'
+import lawsRaw from './laws.json'
+import conventionsRaw from './conventions.json'
+import errorsRaw from './errors.json'
 import notationMultiplication from './families/notation-multiplication.json'
 import notationLikeTerms from './families/notation-like-terms.json'
 import notationMinusSign from './families/notation-minus-sign.json'
@@ -40,6 +45,12 @@ const familyFiles: unknown[][] = [
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)
 export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
 
+// Layers 1+2 (docs/laws_and_conventions.md): the coordinate system families
+// live in — laws justify, conventions locate, error patterns name the wrong.
+export const laws: LawDef[] = (lawsRaw as unknown[]).map(l => lawDef.parse(l))
+export const conventions: ConventionDef[] = (conventionsRaw as unknown[]).map(c => conventionDef.parse(c))
+export const errorPatterns: ErrorDef[] = (errorsRaw as unknown[]).map(e => errorDef.parse(e))
+
 const rawEntries = familyFiles.flat()
 export const families: Family[] = parseFamilies(rawEntries)
 
@@ -53,3 +64,11 @@ validateUniqueIds(families)
 validateGroupRefs(families, groups)
 validateMetaPatternRefs(families, metaPatterns)
 validateFamilyLinks(families)
+validateLaws(laws)
+validateErrors(errorPatterns, laws, conventions)
+validateLayerRefs(families, metaPatterns, laws, conventions, errorPatterns)
+
+// Matrix audit — a report, not a validator: empty cells are questions.
+for (const line of auditCoverage(families, laws, conventions, errorPatterns)) {
+  console.info(`[audit] ${line}`)
+}

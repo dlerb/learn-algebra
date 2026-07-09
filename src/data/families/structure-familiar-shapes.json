@@ -7,6 +7,8 @@
     "priority": 11,
     "requires": ["structure.difference", "notation.power-of-a-product"],
     "metaPatterns": ["M1"],
+    "justifiedBy": ["thm.difference-of-squares"],
+    "conventions": ["conv.precedence", "conv.exponent-scope"],
     "note": "Dominant operation: a difference. The shape is special — both chunks are perfect squares (9 = 3², 4x² = (2x)²). Recognising it unlocks factoring as (a+b)(a−b).",
     "examples": ["a^2 - b^2", "x^2 - 9", "(x+1)^2 - (x-1)^2", "4x^2 - 25"],
     "answer": "difference",

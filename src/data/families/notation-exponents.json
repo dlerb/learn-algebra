@@ -18,9 +18,11 @@
     "title": "Coefficient vs. exponent",
     "requires": ["notation.repeated-addition", "notation.exponent-as-repeated-product"],
     "metaPatterns": ["M1"],
+    "justifiedBy": ["def.integer-multiple", "def.power"],
+    "conventions": ["conv.juxtaposition", "conv.invisible-one"],
     "note": "2a means a+a; it is not a². (And a² = a·a is not 2a.) The two forms that look most alike mean the most different things.",
     "equivalents": ["2a", "a + a"],
-    "pitfalls": ["a^2"]
+    "pitfalls": [{ "expr": "a^2", "cites": ["anti.repetition-confusion"] }]
   },
   {
     "kind": "equivalence",
@@ -102,9 +104,11 @@
     "priority": 22,
     "requires": ["notation.exponent-as-repeated-product", "notation.product-with-brackets"],
     "metaPatterns": ["M6"],
+    "justifiedBy": ["def.power", "thm.binomial-square"],
+    "conventions": ["conv.exponent-scope"],
     "note": "A power does not distribute over +: (a+b)² means (a+b)(a+b), which is not a² + b². Contrast (ab)² = a²b² — over × it works, over + it never does.",
     "equivalents": ["(a+b)^2", "(a+b)(a+b)"],
-    "pitfalls": ["a^2 + b^2"]
+    "pitfalls": [{ "expr": "a^2 + b^2", "cites": ["anti.linearity"] }]
   },
   {
     "kind": "equivalence",

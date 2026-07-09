@@ -49,14 +49,30 @@
   },
   {
     "kind": "equivalence",
+    "id": "notation.no-splitting-the-denominator",
+    "group": "fractions",
+    "title": "A sum in the denominator does not split",
+    "requires": ["notation.splitting-a-fraction"],
+    "metaPatterns": ["M5", "M6"],
+    "justifiedBy": ["thm.split-numerator"],
+    "conventions": ["conv.fraction-bar"],
+    "note": "Splitting works over the numerator only. c/(a+b) is c divided by the whole chunk a+b — it is not c/a + c/b. (Check with numbers: 12/(2+4) = 2, but 12/2 + 12/4 = 9.)",
+    "conditions": "a+b ≠ 0",
+    "equivalents": ["\\frac{c}{a+b}", "c \\div (a+b)"],
+    "pitfalls": [{ "expr": "\\frac{c}{a} + \\frac{c}{b}", "cites": ["anti.linearity"] }]
+  },
+  {
+    "kind": "equivalence",
     "id": "notation.no-cancelling-in-a-sum",
     "group": "fractions",
     "title": "No cancelling inside a sum",
     "priority": 26,
     "requires": ["notation.splitting-a-fraction"],
     "metaPatterns": ["M5", "M6"],
+    "justifiedBy": ["thm.split-numerator", "thm.cancel-common-factor"],
+    "conventions": ["conv.fraction-bar"],
     "note": "You cannot cancel the 3 against one term of the numerator: (3x+2)/3 = x + 2/3, not x + 2. Cancelling needs a common factor of the WHOLE numerator.",
     "equivalents": ["\\frac{3x+2}{3}", "x + \\frac{2}{3}"],
-    "pitfalls": ["x + 2"]
+    "pitfalls": [{ "expr": "x + 2", "cites": ["anti.linearity"] }]
   }
 ]

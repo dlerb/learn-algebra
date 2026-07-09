@@ -15,6 +15,25 @@ import { z } from 'zod'
 export const dominantOp = z.enum(['sum', 'difference', 'product', 'quotient', 'power'])
 export type DominantOp = z.infer<typeof dominantOp>
 
+// ── Localization ─────────────────────────────────────────────────────────────
+// Prose fields are LocalizedString: authored as a plain string (= English) or
+// as { en, de }. English is the fallback so untranslated content never renders
+// blank; "de" means Schweizer Hochdeutsch. LaTeX math is language-neutral and
+// never localized.
+
+export const langs = ['en', 'de'] as const
+export type Lang = (typeof langs)[number]
+
+export const localizedString = z.union([
+  z.string().transform((s): { en: string; de?: string } => ({ en: s })),
+  z.object({ en: z.string(), de: z.string().optional() }),
+])
+export type LocalizedString = z.output<typeof localizedString>
+
+export function loc(ls: LocalizedString, lang: Lang): string {
+  return ls[lang] ?? ls.en
+}
+
 // Fields shared by every family, regardless of kind.
 // The id's namespace ("notation." | "structure.") IS the skill — no separate
 // skill field. Skill-3 relevance ("flag") is dropped; it will be recaptured when
@@ -23,12 +42,14 @@ const core = {
   id: z.string().regex(/^(notation|structure)\.[a-z0-9-]+$/,
     'id must be "notation.<slug>" or "structure.<slug>" (lowercase, kebab-case)'),
   group: z.string(),                    // group slug, e.g. "minus-sign"; must exist in groups.json
-  title: z.string(),
+  title: localizedString,
   priority: z.number().int().positive().optional(),  // authored drilling rank within the skill; lower = earlier; omit = unranked
   requires: z.array(z.string()).default([]),        // DIRECT prerequisites (family ids, cross-skill allowed) — author the transitive reduction, not the closure
   metaPatterns: z.array(z.string()).default([]),    // e.g. ["M2"] — refs a meta-pattern in metapatterns.json
-  note: z.string(),                     // one/two-line explanation shown in feedback
-  conditions: z.string().optional(),    // domain caveat, e.g. "a > 0" (roots)
+  justifiedBy: z.array(z.string()).default([]),     // law ids (laws.json) that make the true forms true; empty = pure convention
+  conventions: z.array(z.string()).default([]),     // convention ids (conventions.json) the family exercises
+  note: localizedString,                // one/two-line explanation shown in feedback
+  conditions: z.string().optional(),    // domain caveat NOT already carried by a cited law, e.g. "a > 0"
 }
 
 // Every kind has a CORRECT half (varies by kind) and an ERROR half (`pitfalls` —
@@ -38,12 +59,19 @@ const core = {
 // Any pitfall may carry `revise`: family ids to send the student to when this
 // SPECIFIC error fires — for errors that point at a sharper gap than the
 // family-level `requires`. Omit it where `requires` + metaPatterns suffice.
+// Any pitfall may carry `cites`: error-pattern ids (errors.json) naming WHY
+// the wrong form tempts — a false law, a misreading, or one of each.
 
 // An equivalence pitfall is authored as a bare LaTeX string, or as an object
-// when it carries `revise`. Normalized to object form on parse.
+// when it carries `revise` or `cites`. Normalized to object form on parse.
 const equivPitfall = z
-  .union([z.string(), z.object({ expr: z.string(), revise: z.array(z.string()).min(1) })])
-  .transform((p): { expr: string; revise?: string[] } => (typeof p === 'string' ? { expr: p } : p))
+  .union([z.string(), z.object({
+    expr: z.string(),
+    revise: z.array(z.string()).min(1).optional(),
+    cites: z.array(z.string()).min(1).optional(),
+  })])
+  .transform((p): { expr: string; revise?: string[]; cites?: string[] } =>
+    (typeof p === 'string' ? { expr: p } : p))
 
 export const family = z.discriminatedUnion('kind', [
   // EQUIVALENCE — a set of forms that are all EQUAL (same value for all inputs).
@@ -66,8 +94,9 @@ export const family = z.discriminatedUnion('kind', [
     answer: dominantOp,
     pitfalls: z.array(z.object({
       answer: dominantOp,
-      why: z.string(),
+      why: localizedString,
       revise: z.array(z.string()).min(1).optional(),
+      cites: z.array(z.string()).min(1).optional(),
     })).default([]),
   }),
 
@@ -83,8 +112,9 @@ export const family = z.discriminatedUnion('kind', [
     })).min(1),
     pitfalls: z.array(z.object({
       chunks: z.array(z.string()),
-      why: z.string(),
+      why: localizedString,
       revise: z.array(z.string()).min(1).optional(),
+      cites: z.array(z.string()).min(1).optional(),
     })).default([]),
   }),
 ])
@@ -131,9 +161,10 @@ export function validateGroupRefs(families: Family[], groups: GroupsFile): void 
 // metapatterns.json, namespaced; families reference them by id ("M2").
 
 export const metaPatternDef = z.object({
-  id: z.string(),      // "M1".."M5"
+  id: z.string(),      // "M1".."M6"
   title: z.string(),
   text: z.string(),
+  refs: z.array(z.string()).default([]),  // law/convention/error ids this pattern digests — keeps the classroom voice linked to the layer it summarizes
 })
 export type MetaPatternDef = z.infer<typeof metaPatternDef>
 
@@ -153,6 +184,184 @@ export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsF
       }
     }
   }
+}
+
+// ── Laws (layer 1) ───────────────────────────────────────────────────────────
+// The logical skeleton of school algebra (docs/laws_and_conventions.md). Three
+// sorts: axiom (accepted, no links), definition (carries `basedOn` — what it
+// presupposes), theorem (carries `derivedFrom` — what proves it). The id
+// prefix mirrors the sort so a derivation chain reads like a proof. `code` is
+// the short display code matching the doc (A1, D3, T11).
+
+export const lawSort = z.enum(['axiom', 'definition', 'theorem'])
+export type LawSort = z.infer<typeof lawSort>
+
+export const lawDef = z.object({
+  id: z.string().regex(/^(ax|def|thm)\.[a-z0-9-]+$/),
+  code: z.string(),
+  sort: lawSort,
+  name: localizedString,
+  latex: z.string(),                            // the statement, KaTeX
+  conditions: z.string().optional(),            // domain condition, e.g. "b \\ne 0"; families citing the law inherit it
+  basedOn: z.array(z.string()).default([]),     // definitions only
+  derivedFrom: z.array(z.string()).default([]), // theorems only
+  note: localizedString.optional(),
+})
+export type LawDef = z.output<typeof lawDef>
+
+const lawPrefixOfSort: Record<LawSort, string> = { axiom: 'ax', definition: 'def', theorem: 'thm' }
+
+export function validateLaws(laws: LawDef[]): void {
+  const byId = new Map(laws.map(l => [l.id, l]))
+  if (byId.size !== laws.length) throw new Error('Duplicate law id.')
+
+  for (const l of laws) {
+    if (!l.id.startsWith(lawPrefixOfSort[l.sort] + '.')) {
+      throw new Error(`Law "${l.id}" has sort "${l.sort}" but a mismatching id prefix.`)
+    }
+    if (l.sort !== 'definition' && l.basedOn.length > 0) {
+      throw new Error(`Law "${l.id}" (${l.sort}) may not carry basedOn — definitions only.`)
+    }
+    if (l.sort !== 'theorem' && l.derivedFrom.length > 0) {
+      throw new Error(`Law "${l.id}" (${l.sort}) may not carry derivedFrom — theorems only.`)
+    }
+    if (l.sort === 'theorem' && l.derivedFrom.length === 0) {
+      throw new Error(`Theorem "${l.id}" must name what it is derived from.`)
+    }
+    for (const r of [...l.basedOn, ...l.derivedFrom]) {
+      if (!byId.has(r)) throw new Error(`Law "${l.id}" links to unknown law "${r}".`)
+    }
+  }
+
+  // Acyclicity over basedOn ∪ derivedFrom (DFS, reporting the cycle path).
+  const state = new Map<string, 'visiting' | 'done'>()
+  function visit(id: string, path: string[]): void {
+    if (state.get(id) === 'done') return
+    if (state.get(id) === 'visiting') {
+      throw new Error(`Cycle in law graph: ${[...path, id].join(' → ')}`)
+    }
+    state.set(id, 'visiting')
+    const l = byId.get(id)!
+    for (const r of [...l.basedOn, ...l.derivedFrom]) visit(r, [...path, id])
+    state.set(id, 'done')
+  }
+  for (const l of laws) visit(l.id, [])
+}
+
+// ── Conventions (layer 2) ────────────────────────────────────────────────────
+// The agreed rules of the writing system — no truth value. `code` = N1..N12.
+
+export const conventionDef = z.object({
+  id: z.string().regex(/^conv\.[a-z0-9-]+$/),
+  code: z.string(),
+  name: localizedString,
+  text: localizedString,
+})
+export type ConventionDef = z.output<typeof conventionDef>
+
+// ── Error patterns ───────────────────────────────────────────────────────────
+// First-class citizens of the error space: ONE addressable list that pitfalls
+// cite, so drill data can be analyzed per error pattern from day one. Sorts:
+// false-law (`of` = the true laws it distorts) and misreading (`of` = the
+// conventions it violates). `code` = Ā1..Ā5 / R1..R15.
+
+export const errorSort = z.enum(['false-law', 'misreading'])
+export type ErrorSort = z.infer<typeof errorSort>
+
+export const errorDef = z.object({
+  id: z.string().regex(/^(anti|mis)\.[a-z0-9-]+$/),
+  code: z.string(),
+  sort: errorSort,
+  of: z.array(z.string()).default([]),
+  name: localizedString,
+  text: localizedString,
+  instances: z.array(z.string()).default([]),   // typical wrong forms, KaTeX
+})
+export type ErrorDef = z.output<typeof errorDef>
+
+export function validateErrors(errors: ErrorDef[], laws: LawDef[], conventions: ConventionDef[]): void {
+  const lawIds = new Set(laws.map(l => l.id))
+  const convIds = new Set(conventions.map(c => c.id))
+  const seen = new Set<string>()
+  for (const e of errors) {
+    if (seen.has(e.id)) throw new Error(`Duplicate error id "${e.id}".`)
+    seen.add(e.id)
+    const wantPrefix = e.sort === 'false-law' ? 'anti.' : 'mis.'
+    if (!e.id.startsWith(wantPrefix)) {
+      throw new Error(`Error "${e.id}" has sort "${e.sort}" but a mismatching id prefix.`)
+    }
+    const pool = e.sort === 'false-law' ? lawIds : convIds
+    const poolName = e.sort === 'false-law' ? 'law' : 'convention'
+    for (const r of e.of) {
+      if (!pool.has(r)) throw new Error(`Error "${e.id}" is "of" unknown ${poolName} "${r}".`)
+    }
+  }
+}
+
+// ── Cross-layer references from families and meta-patterns ──────────────────
+// `justifiedBy` → laws; `conventions` → conventions; pitfall `cites` → error
+// patterns; meta-pattern `refs` → any of the three.
+
+function citeTargets(f: Family): string[] {
+  const pitfalls: { cites?: string[] }[] = f.pitfalls
+  return pitfalls.flatMap(p => p.cites ?? [])
+}
+
+export function validateLayerRefs(
+  families: Family[], metas: MetaPatternsFile,
+  laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
+): void {
+  const lawIds = new Set(laws.map(l => l.id))
+  const convIds = new Set(conventions.map(c => c.id))
+  const errIds = new Set(errors.map(e => e.id))
+
+  for (const f of families) {
+    for (const r of f.justifiedBy) {
+      if (!lawIds.has(r)) throw new Error(`Family "${f.id}" is justifiedBy unknown law "${r}".`)
+    }
+    for (const r of f.conventions) {
+      if (!convIds.has(r)) throw new Error(`Family "${f.id}" references unknown convention "${r}".`)
+    }
+    for (const r of citeTargets(f)) {
+      if (!errIds.has(r)) throw new Error(`A pitfall of "${f.id}" cites unknown error pattern "${r}".`)
+    }
+  }
+  for (const ns of ['notation', 'structure'] as const) {
+    for (const m of metas[ns]) {
+      for (const r of m.refs) {
+        if (!lawIds.has(r) && !convIds.has(r) && !errIds.has(r)) {
+          throw new Error(`Meta-pattern ${ns}/${m.id} refs unknown id "${r}".`)
+        }
+      }
+    }
+  }
+}
+
+// ── Matrix audit ─────────────────────────────────────────────────────────────
+// The completeness report, not a validator: which families have no coordinates
+// yet, and which laws / conventions / error patterns no family uses. An empty
+// cell is a QUESTION (gap, or deliberately inert?), never automatically an
+// error — so this warns, it does not throw.
+
+export function auditCoverage(
+  families: Family[], laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
+): string[] {
+  const lines: string[] = []
+  const untagged = families.filter(f => f.justifiedBy.length === 0 && f.conventions.length === 0)
+  if (untagged.length > 0) {
+    lines.push(`${untagged.length}/${families.length} families have no layer coordinates yet (justifiedBy/conventions).`)
+  }
+  const citedLaws = new Set(families.flatMap(f => f.justifiedBy))
+  const citedConvs = new Set(families.flatMap(f => f.conventions))
+  const citedErrs = new Set(families.flatMap(citeTargets))
+  const uncited = (kind: string, ids: string[], cited: Set<string>) => {
+    const free = ids.filter(id => !cited.has(id))
+    if (free.length > 0) lines.push(`${kind} cited by no family: ${free.join(', ')}`)
+  }
+  uncited('Laws', laws.filter(l => l.sort !== 'axiom').map(l => l.id), citedLaws)  // axioms may be reached only via theorems
+  uncited('Conventions', conventions.map(c => c.id), citedConvs)
+  uncited('Error patterns', errors.map(e => e.id), citedErrs)
+  return lines
 }
 
 // ── Family links: requires (family-level) + revise (pitfall-level) ──────────

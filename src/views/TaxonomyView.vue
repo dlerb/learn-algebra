@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
-import { families, groups, metaPatterns, rawById } from '../data'
-import { namespaceOf, type Family, type Namespace } from '../data/family.schema'
+import { families, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
+import { loc, namespaceOf, type Family, type Namespace } from '../data/family.schema'
+import { lang } from '../lang'
 
 // 'groups' = thematic sections (default); 'order' = one flat list per skill,
 // sorted by drilling priority — for reviewing the sequence itself.
@@ -18,6 +19,16 @@ function metaLabel(ns: Namespace, id: string): string {
   return m ? `${m.id} · ${m.title}` : id
 }
 
+// Layer coordinates (laws/conventions) and error-pattern cites, shown as
+// "code · name" chips. Ids not found fall back to the raw id.
+const layerNames = new Map(
+  [...laws, ...conventions, ...errorPatterns].map(x => [x.id, x] as const),
+)
+function layerLabel(id: string): string {
+  const x = layerNames.get(id)
+  return x ? `${x.code} · ${loc(x.name, lang.value)}` : id
+}
+
 // Flatten each family into a dumb view-model so the template needs no narrowing.
 interface CardVM {
   id: string
@@ -30,27 +41,32 @@ interface CardVM {
   note: string
   metas: string[]
   requires: string[]
+  laws: string[]
+  conventions: string[]
   equivChain?: string
-  equivPitfalls?: { latex: string; revise: string[] }[]
+  equivPitfalls?: { latex: string; revise: string[]; cites: string[] }[]
   classExamples?: string[]
   classAnswer?: string
-  classPitfalls?: { answer: string; why: string; revise: string[] }[]
+  classPitfalls?: { answer: string; why: string; revise: string[]; cites: string[] }[]
   decomp?: { expr: string; chunks: string[]; op: string }[]
-  decompPitfalls?: { why: string; revise: string[] }[]
+  decompPitfalls?: { why: string; revise: string[]; cites: string[] }[]
 }
 
 function familyTitle(id: string): string {
-  return families.find(f => f.id === id)?.title ?? id
+  const f = families.find(f => f.id === id)
+  return f ? loc(f.title, lang.value) : id
 }
 
 function toVM(f: Family): CardVM {
   const ns = namespaceOf(f.id)
   const base = {
-    id: f.id, title: f.title, kind: f.kind, group: f.group, priority: f.priority,
-    conditions: f.conditions, note: f.note,
+    id: f.id, title: loc(f.title, lang.value), kind: f.kind, group: f.group,
+    priority: f.priority, conditions: f.conditions, note: loc(f.note, lang.value),
     json: JSON.stringify(rawById.get(f.id), null, 2),
     metas: f.metaPatterns.map(m => metaLabel(ns, m)),
     requires: f.requires.map(familyTitle),
+    laws: f.justifiedBy.map(layerLabel),
+    conventions: f.conventions.map(layerLabel),
   }
   if (f.kind === 'equivalence') {
     return {
@@ -59,6 +75,7 @@ function toVM(f: Family): CardVM {
       equivPitfalls: f.pitfalls.map(p => ({
         latex: `${f.equivalents[0]} \\neq ${p.expr}`,
         revise: (p.revise ?? []).map(familyTitle),
+        cites: (p.cites ?? []).map(layerLabel),
       })),
     }
   }
@@ -66,20 +83,25 @@ function toVM(f: Family): CardVM {
     return {
       ...base, classExamples: f.examples, classAnswer: f.answer,
       classPitfalls: f.pitfalls.map(p => ({
-        answer: p.answer, why: p.why, revise: (p.revise ?? []).map(familyTitle),
+        answer: p.answer, why: loc(p.why, lang.value),
+        revise: (p.revise ?? []).map(familyTitle),
+        cites: (p.cites ?? []).map(layerLabel),
       })),
     }
   }
   return {
     ...base, decomp: f.examples,
     decompPitfalls: f.pitfalls.map(p => ({
-      why: p.why, revise: (p.revise ?? []).map(familyTitle),
+      why: loc(p.why, lang.value),
+      revise: (p.revise ?? []).map(familyTitle),
+      cites: (p.cites ?? []).map(layerLabel),
     })),
   }
 }
 
 const byPriority = (a: Family, b: Family) =>
-  (a.priority ?? 999) - (b.priority ?? 999) || a.title.localeCompare(b.title)
+  (a.priority ?? 999) - (b.priority ?? 999)
+  || loc(a.title, lang.value).localeCompare(loc(b.title, lang.value))
 
 const sections = computed(() =>
   namespaces.map(nsDef => ({
@@ -118,6 +140,9 @@ function hasErrors(c: CardVM): boolean {
       <div class="mode">
         <button :class="{ active: viewMode === 'groups' }" @click="viewMode = 'groups'">by group</button>
         <button :class="{ active: viewMode === 'order' }" @click="viewMode = 'order'">drilling order</button>
+        <span class="mode-gap" />
+        <button :class="{ active: lang === 'de' }" @click="lang = 'de'">de</button>
+        <button :class="{ active: lang === 'en' }" @click="lang = 'en'">en</button>
       </div>
     </header>
 
@@ -165,18 +190,21 @@ function hasErrors(c: CardVM): boolean {
               <template v-if="c.equivPitfalls">
                 <div v-for="(p, i) in c.equivPitfalls" :key="i" class="err">
                   <MathExpr :latex="p.latex" />
+                  <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.classPitfalls">
                 <div v-for="(p, i) in c.classPitfalls" :key="i" class="err">
                   not <strong>{{ p.answer }}</strong> — {{ p.why }}
+                  <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.decompPitfalls">
                 <div v-for="(p, i) in c.decompPitfalls" :key="i" class="err">
                   {{ p.why }}
+                  <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
@@ -184,8 +212,10 @@ function hasErrors(c: CardVM): boolean {
 
             <p class="note">{{ c.note }}</p>
             <div v-if="c.requires.length" class="reqs">requires: {{ c.requires.join(' · ') }}</div>
-            <div v-if="c.metas.length" class="metas">
-              <span v-for="(m, i) in c.metas" :key="i" class="meta-chip">{{ m }}</span>
+            <div v-if="c.metas.length || c.laws.length || c.conventions.length" class="metas">
+              <span v-for="(m, i) in c.metas" :key="'m' + i" class="meta-chip">{{ m }}</span>
+              <span v-for="(l, i) in c.laws" :key="'l' + i" class="meta-chip law-chip">{{ l }}</span>
+              <span v-for="(cv, i) in c.conventions" :key="'c' + i" class="meta-chip conv-chip">{{ cv }}</span>
             </div>
             <details class="json">
               <summary>json</summary>
@@ -205,6 +235,10 @@ function hasErrors(c: CardVM): boolean {
 .mode { display: flex; gap: .4rem; margin-bottom: 1rem; }
 .mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; }
 .mode button.active { background: #111827; border-color: #111827; color: #fff; }
+.mode-gap { width: .6rem; }
+.cites { font-size: .72rem; color: #b91c1c; margin-left: .4rem; }
+.law-chip { background: #ecfdf5; color: #047857; }
+.conv-chip { background: #eff6ff; color: #1d4ed8; }
 .skill > h2 { font-size: 1.15rem; font-weight: 700; margin: 2rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid #111827; }
 .group-head { margin: 1.25rem 0 .5rem; }
 .group-head h3 { font-size: 1rem; font-weight: 700; margin: 0; }

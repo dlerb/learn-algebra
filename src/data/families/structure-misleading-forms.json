@@ -22,6 +22,7 @@
     "priority": 7,
     "requires": ["structure.product", "notation.product-with-brackets"],
     "metaPatterns": ["M2"],
+    "conventions": ["conv.brackets-group", "conv.precedence"],
     "note": "The + is trapped inside a chunk (the bracket). The dominant operation is the multiplication outside — a product.",
     "examples": ["3(x+1)", "2x(x-1)", "(x+1)(x-1)"],
     "answer": "product",

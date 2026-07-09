@@ -1,25 +1,34 @@
 {
   "notation": [
     { "id": "M1", "title": "Juxtaposition means multiplication",
-      "text": "Anything written next to anything else, with no symbol between, means multiply: 3x, 2(x+1), (a+1)(a-1), xy are all products." },
+      "text": "Anything written next to anything else, with no symbol between, means multiply: 3x, 2(x+1), (a+1)(a-1), xy are all products.",
+      "refs": ["conv.juxtaposition"] },
     { "id": "M2", "title": "The minus sign is one of three things",
-      "text": "Binary subtraction (a - b), unary negation (-a), or multiply-by-(-1) in front of a bracket -(...). When a minus confuses you, ask which of the three it is." },
+      "text": "Binary subtraction (a - b), unary negation (-a), or multiply-by-(-1) in front of a bracket -(...). When a minus confuses you, ask which of the three it is.",
+      "refs": ["conv.minus-roles", "thm.negative-one-times"] },
     { "id": "M3", "title": "Brackets carry an implicit operation in front",
-      "text": "No explicit symbol before a bracket means multiplication (M1). A minus before a bracket means times (-1) (M2)." },
+      "text": "No explicit symbol before a bracket means multiplication (M1). A minus before a bracket means times (-1) (M2).",
+      "refs": ["conv.brackets-group", "conv.juxtaposition"] },
     { "id": "M4", "title": "Exponents bind tighter than coefficients and signs",
-      "text": "-a^2 means -(a^2), not (-a)^2. The exponent applies first, the minus after." },
+      "text": "-a^2 means -(a^2), not (-a)^2. The exponent applies first, the minus after.",
+      "refs": ["conv.exponent-scope", "conv.precedence"] },
     { "id": "M5", "title": "The fraction bar is a bracket",
-      "text": "Everything above the line is one grouped object, everything below another. a + b/c and (a+b)/c are different things." },
+      "text": "Everything above the line is one grouped object, everything below another. a + b/c and (a+b)/c are different things.",
+      "refs": ["conv.fraction-bar"] },
     { "id": "M6", "title": "Only multiplication distributes over a sum",
-      "text": "a(b+c) = ab + ac, and dividing by c works too (it is multiplying by 1/c). Nothing else distributes: (a+b)^2 is not a^2 + b^2, the root of a+b is not the sum of the roots, and a single term of a sum cannot be cancelled." }
+      "text": "a(b+c) = ab + ac, and dividing by c works too (it is multiplying by 1/c). Nothing else distributes: (a+b)^2 is not a^2 + b^2, the root of a+b is not the sum of the roots, and a single term of a sum cannot be cancelled.",
+      "refs": ["ax.distributivity", "anti.linearity"] }
   ],
   "structure": [
     { "id": "M1", "title": "The dominant operation is the last one applied",
-      "text": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks." },
+      "text": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
+      "refs": ["conv.precedence"] },
     { "id": "M2", "title": "Brackets make a chunk",
-      "text": "Whatever is inside brackets is a single object. The dominant operation is always outside all brackets." },
+      "text": "Whatever is inside brackets is a single object. The dominant operation is always outside all brackets.",
+      "refs": ["conv.brackets-group"] },
     { "id": "M3", "title": "Multiplication binds tighter than addition and subtraction",
-      "text": "In 3x + 2y the multiplication is used up inside the terms; the dominant operation is the +. It is a sum, not a product." },
+      "text": "In 3x + 2y the multiplication is used up inside the terms; the dominant operation is the +. It is a sum, not a product.",
+      "refs": ["conv.precedence"] },
     { "id": "M4", "title": "The dominant operation determines which tools apply",
       "text": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation." }
   ]

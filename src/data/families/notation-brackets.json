@@ -40,9 +40,10 @@
     "conditions": "c ≠ 0",
     "requires": ["notation.division-variants"],
     "metaPatterns": ["M5"],
+    "conventions": ["conv.fraction-bar"],
     "note": "The fraction bar groups the whole numerator: (a+b)/c is all of a+b over c. It is not a + b/c.",
     "equivalents": ["\\frac{a+b}{c}", "(a+b) \\div c"],
-    "pitfalls": ["a + \\frac{b}{c}"]
+    "pitfalls": [{ "expr": "a + \\frac{b}{c}", "cites": ["mis.fraction-bar-grouping-lost"] }]
   },
   {
     "kind": "equivalence",
@@ -51,9 +52,11 @@
     "title": "Minus before a bracket = ×(−1)",
     "requires": ["notation.coefficient-negative-one", "notation.product-with-brackets"],
     "metaPatterns": ["M2", "M3"],
+    "justifiedBy": ["thm.negative-one-times", "thm.minus-over-sum"],
+    "conventions": ["conv.minus-roles", "conv.brackets-group"],
     "note": "A minus in front of a bracket means multiply the whole bracket by -1: -(a+b) = (-1)(a+b) = -a-b.",
     "equivalents": ["-(a + b)", "(-1)(a + b)", "-a - b"],
-    "pitfalls": ["-a + b"]
+    "pitfalls": [{ "expr": "-a + b", "cites": ["anti.partial-distribution", "mis.minus-roles-confused"] }]
   },
   {
     "kind": "equivalence",
