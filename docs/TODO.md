@@ -26,7 +26,39 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 Skill-1 (notation) content pass declared done 2026-07-09. The 21 structure
 families are already authored (classification / decomposition / 1 equivalence);
-this pass completes them the way skill 1 was completed:
+this pass completes them the way skill 1 was completed.
+
+**Working hypotheses going in** (from the 2026-07-09 discussion — skill 1's
+deep structure was laws + conventions; skill 2's is the **expression tree**):
+
+- Dominant operation = root node; chunks = subtrees; classification = naming
+  the root; decomposition = reading one level; the conventions (precedence,
+  brackets, fraction bar, exponent scope) are the parsing rules from written
+  string to tree. The tree is to skill 2 what the tower is to skill 1.
+- Expect the five-way answer set (sum/difference/product/quotient/power) to
+  come under pressure: `def.subtraction` collapses difference into sum
+  (`structure.leading-minus` already answers "sum" for $-3x+2y$),
+  `def.division` collapses quotient into product. Likely outcome: keep five
+  (school-honest — students see five), but RECORD the collapse, as D3 records
+  "provable but taught as definition."
+- Familiar shapes are named TREE TEMPLATES ($a^2-b^2$ as pattern) — a
+  different sort from root-naming, which is why `classification` fits them
+  poorly. Expect the representation decision to produce a small named-shapes
+  layer, analogous to the error-pattern elevation.
+- The chunks-in-sum vs implicit-chunking overlap should dissolve once trees
+  are the coordinate system: same tree operation through different devices.
+- None of this is throwaway: MathJSON (Compute Engine, installed) IS the
+  expression tree — this layer is the data structure the generator's
+  degeneracy checks and the chunk-marking exercise need anyway.
+
+**Deadline note:** the vertical slice's critical path does NOT run through
+skill 2 — Same-or-Different drills equivalence (= notation) families first;
+Name-the-Structure and chunk-marking are later exercise types. If the dive
+sprawls, start the slice on skill-1 content in parallel. Quietly startable
+anytime (slice-critical): German notes for early-rank notation families,
+distractors for empty-pitfall families in ranks 1–20.
+
+**The pass itself:**
 
 - [ ] **Decide Familiar-Shapes representation** (blocking the rest of the D-group pass). The group (difference-of-squares, perfect-square, quadratic, …) fits `classification` poorly — the real skill is "name the shape," which the dominant-op `answer` can't express. Options: a `shape` field, or a new recognition `kind`. Currently authored as classification with the shape in the note.
 - [ ] **Resolve chunks-in-sum vs implicit-chunking overlap** (same example expressions, different emphasis) — merge or sharpen the contrast.
