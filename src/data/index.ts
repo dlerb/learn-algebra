@@ -4,7 +4,7 @@
 import {
   parseFamilies, groupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
   validateUniqueIds, validateGroupRefs, validateMetaPatternRefs, validateFamilyLinks,
-  validateLaws, validateErrors, validateLayerRefs, auditCoverage,
+  validateLaws, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
   type Family, type GroupsFile, type MetaPatternsFile,
   type LawDef, type ConventionDef, type ErrorDef,
 } from './family.schema'
@@ -67,6 +67,7 @@ validateFamilyLinks(families)
 validateLaws(laws)
 validateErrors(errorPatterns, laws, conventions)
 validateLayerRefs(families, metaPatterns, laws, conventions, errorPatterns)
+validateLatexCompiles(families, metaPatterns, laws, conventions, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.
 for (const line of auditCoverage(families, metaPatterns, laws, conventions, errorPatterns)) {

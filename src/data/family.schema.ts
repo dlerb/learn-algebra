@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import katex from 'katex'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Family schema — the single source of truth for BOTH the runtime validator and
@@ -470,6 +471,72 @@ export function validateFamilyLinks(families: Family[]): void {
           + `a prerequisite must be ranked strictly earlier.`)
       }
     }
+  }
+}
+
+// ── LaTeX compile check ──────────────────────────────────────────────────────
+// Every latex field and every inline $…$ segment in prose must compile. The
+// views render with throwOnError: false, so a typo'd escape would otherwise
+// show up as red mush in some card — this fails loudly at load time with the
+// owning id and field named instead.
+
+const mathSegments = (s: string): string[] =>
+  [...s.matchAll(/\$([^$]+)\$/g)].map(m => m[1])
+
+function proseMath(ls?: LocalizedString): string[] {
+  return ls ? [ls.en, ls.de ?? ''].flatMap(mathSegments) : []
+}
+
+export function validateLatexCompiles(
+  families: Family[], metas: MetaPatternsFile,
+  laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
+): void {
+  const failures: string[] = []
+  function check(owner: string, field: string, latex: string): void {
+    try {
+      katex.renderToString(latex, { throwOnError: true })
+    } catch (e) {
+      failures.push(`${owner} ${field}: ${(e as Error).message}`)
+    }
+  }
+
+  for (const f of families) {
+    if (f.conditions) check(f.id, 'conditions', f.conditions)
+    for (const m of proseMath(f.note)) check(f.id, 'note', m)
+    if (f.kind === 'equivalence') {
+      f.equivalents.forEach((x, i) => check(f.id, `equivalents[${i}]`, x))
+      f.pitfalls.forEach((p, i) => check(f.id, `pitfalls[${i}]`, p.expr))
+    } else if (f.kind === 'classification') {
+      f.examples.forEach((x, i) => check(f.id, `examples[${i}]`, x))
+      f.pitfalls.forEach((p, i) =>
+        proseMath(p.why).forEach(m => check(f.id, `pitfalls[${i}].why`, m)))
+    } else {
+      f.examples.forEach((ex, i) => {
+        check(f.id, `examples[${i}].expr`, ex.expr)
+        ex.chunks.forEach((c, j) => check(f.id, `examples[${i}].chunks[${j}]`, c))
+      })
+      f.pitfalls.forEach((p, i) => {
+        p.chunks.forEach((c, j) => check(f.id, `pitfalls[${i}].chunks[${j}]`, c))
+        proseMath(p.why).forEach(m => check(f.id, `pitfalls[${i}].why`, m))
+      })
+    }
+  }
+  for (const l of laws) {
+    check(l.id, 'latex', l.latex)
+    if (l.conditions) check(l.id, 'conditions', l.conditions)
+    proseMath(l.note).forEach(m => check(l.id, 'note', m))
+  }
+  for (const c of conventions) proseMath(c.text).forEach(m => check(c.id, 'text', m))
+  for (const e of errors) {
+    e.instances.forEach((x, i) => check(e.id, `instances[${i}]`, x))
+    proseMath(e.text).forEach(m => check(e.id, 'text', m))
+  }
+  for (const ns of ['notation', 'structure'] as const) {
+    for (const m of metas[ns]) proseMath(m.text).forEach(s => check(m.id, 'text', s))
+  }
+
+  if (failures.length > 0) {
+    throw new Error(`LaTeX compile failures:\n${failures.join('\n')}`)
   }
 }
 

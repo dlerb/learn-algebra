@@ -80,6 +80,9 @@ chips and discussion, never identity: families cite slugs, not codes.
    contract survives if real markdown needs ever appear. `conditions` fields
    are NOT prose — they are pure LaTeX, rendered directly. Improvised unicode
    math (`2x²`, `√`) predates the contract; the audit counts what remains.
+   A load-time compile check runs every latex field and every `$…$` segment
+   through KaTeX with `throwOnError: true` — a typo'd escape fails at startup
+   with its id and field named, instead of rendering as red mush in a card.
 10. **Localization.** Prose fields (names, texts, notes, family titles,
    pitfall explanations) are `LocalizedString`: a plain string (= English) or
    `{ en, de }`, with English fallback so nothing renders blank; `de` means
