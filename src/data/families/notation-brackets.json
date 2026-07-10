@@ -30,7 +30,7 @@
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": [],
     "conventions": ["conv.precedence", "conv.brackets-group"],
-    "note": "Multiplication happens before addition: a + b·c means a + (b·c). A bracket changes the meaning: (a+b)·c is different.",
+    "note": "Multiplication happens before addition: $a + b \\cdot c$ means $a + (b \\cdot c)$. A bracket changes the meaning: $(a+b) \\cdot c$ is different.",
     "equivalents": ["a + b \\cdot c", "a + bc"],
     "pitfalls": [{ "expr": "(a + b) \\cdot c", "cites": ["mis.precedence-ignored"] }, { "expr": "(a + b)c", "cites": ["mis.precedence-ignored"] }]
   },

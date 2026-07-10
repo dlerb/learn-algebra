@@ -36,7 +36,7 @@
     "requires": ["notation.exponent-as-repeated-product", "notation.number-plus-term"],
     "metaPatterns": [],
     "justifiedBy": ["thm.collect-like-terms"],
-    "note": "x² + x has two unlike terms — it is not x³. Exponents grow when powers are multiplied (x² · x = x³), never when they are added.",
+    "note": "$x^2 + x$ has two unlike terms — it is not $x^3$. Exponents grow when powers are multiplied ($x^2 \\cdot x = x^3$), never when they are added.",
     "equivalents": ["x^2 + x", "x + x^2"],
     "pitfalls": [{ "expr": "x^3", "cites": ["anti.conjoining"] }]
   }

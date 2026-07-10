@@ -61,7 +61,7 @@
     "metaPatterns": ["meta.juxtaposition"],
     "justifiedBy": ["def.integer-multiple"],
     "conventions": ["conv.juxtaposition"],
-    "note": "Adding a term to itself scales it: x + x = 2x (and x+x+x = 3x). Do not confuse with x·x = x².",
+    "note": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Do not confuse with $x \\cdot x = x^2$.",
     "equivalents": ["x + x", "2x"],
     "pitfalls": [{ "expr": "x^2", "cites": ["anti.repetition-confusion"] }]
   }

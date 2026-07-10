@@ -8,7 +8,7 @@
     "conditions": "b \\ne 0",
     "metaPatterns": [],
     "conventions": ["conv.division-signs"],
-    "note": "Division has many faces: a÷b = a:b = a/b. All the same object. (The colon is the primary-school division sign.)",
+    "note": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
     "equivalents": ["a \\div b", "a : b", "\\frac{a}{b}"],
     "pitfalls": [{ "expr": "b : a", "cites": ["anti.commute-everything"] }]
   },
@@ -21,7 +21,7 @@
     "requires": ["notation.division-variants"],
     "metaPatterns": [],
     "justifiedBy": ["def.division"],
-    "note": "Dividing by b is multiplying by 1/b: a/b = a·(1/b). This is why dividing by a fraction means multiplying by its reciprocal.",
+    "note": "Dividing by $b$ is multiplying by $1/b$: $a/b = a \\cdot (1/b)$. This is why dividing by a fraction means multiplying by its reciprocal.",
     "equivalents": ["\\frac{a}{b}", "a \\cdot \\frac{1}{b}"],
     "pitfalls": []
   },

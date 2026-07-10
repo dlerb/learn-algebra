@@ -8,7 +8,7 @@
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": [],
     "justifiedBy": ["def.power"],
-    "note": "A power is repeated multiplication: a² = a·a, a³ = a·a·a, a¹ = a.",
+    "note": "A power is repeated multiplication: $a^2 = a \\cdot a$, $a^3 = a \\cdot a \\cdot a$, $a^1 = a$.",
     "equivalents": ["a^2", "a \\cdot a"],
     "pitfalls": [{ "expr": "2a", "cites": ["anti.repetition-confusion"] }]
   },
@@ -34,7 +34,7 @@
     "requires": ["notation.coefficient-negative-one", "notation.exponent-as-repeated-product"],
     "metaPatterns": ["meta.exponent-binds-tighter"],
     "conventions": ["conv.exponent-scope", "conv.precedence"],
-    "note": "The exponent binds before the minus: -a² = -(a²), which is negative. That differs from (-a)² = a², which is positive. E.g. -3² = -9 but (-3)² = 9.",
+    "note": "The exponent binds before the minus: $-a^2 = -(a^2)$, which is negative. That differs from $(-a)^2 = a^2$, which is positive. E.g. $-3^2 = -9$ but $(-3)^2 = 9$.",
     "equivalents": ["-a^2", "-(a^2)"],
     "pitfalls": [{ "expr": "(-a)^2", "cites": ["mis.exponent-scope"] }, { "expr": "a^2", "cites": ["mis.exponent-scope"] }]
   },
@@ -48,7 +48,7 @@
     "metaPatterns": ["meta.exponent-binds-tighter"],
     "justifiedBy": ["thm.power-same-exponent"],
     "conventions": ["conv.exponent-scope"],
-    "note": "A power on a bracket applies to every factor: (ab)² = a²b², and (2x)² = 4x². Without the bracket, ab² means a·b² — the exponent hits b only.",
+    "note": "A power on a bracket applies to every factor: $(ab)^2 = a^2 b^2$, and $(2x)^2 = 4x^2$. Without the bracket, $ab^2$ means $a \\cdot b^2$ — the exponent hits $b$ only.",
     "equivalents": ["(ab)^2", "a^2 b^2"],
     "pitfalls": [{ "expr": "ab^2", "cites": ["mis.exponent-scope"] }]
   },
@@ -61,7 +61,7 @@
     "requires": ["notation.exponent-as-repeated-product"],
     "metaPatterns": [],
     "justifiedBy": ["def.extended-exponents"],
-    "note": "Any nonzero base to the power 0 is 1: a⁰ = 1, not 0. And a¹ = a.",
+    "note": "Any nonzero base to the power 0 is 1: $a^0 = 1$, not $0$. And $a^1 = a$.",
     "equivalents": ["a^0", "1"],
     "pitfalls": ["0"]
   },
@@ -75,7 +75,7 @@
     "metaPatterns": ["meta.exponent-binds-tighter"],
     "justifiedBy": ["def.extended-exponents"],
     "conventions": ["conv.exponent-scope"],
-    "note": "A negative exponent means reciprocal, not a negative number: a⁻ⁿ = 1/aⁿ. So a⁻¹ = 1/a, and 1/a⁻ⁿ = aⁿ.",
+    "note": "A negative exponent means reciprocal, not a negative number: $a^{-n} = 1/a^n$. So $a^{-1} = 1/a$, and $1/a^{-n} = a^n$.",
     "equivalents": ["a^{-n}", "\\frac{1}{a^n}"],
     "pitfalls": ["-a^n"]
   },
@@ -132,7 +132,7 @@
     "metaPatterns": ["meta.only-multiplication-distributes"],
     "justifiedBy": ["thm.root-of-product"],
     "conventions": ["conv.root-groups"],
-    "note": "A root splits over ×: √(ab) = √a · √b.",
+    "note": "A root splits over $\\times$: $\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$.",
     "equivalents": ["\\sqrt{ab}", "\\sqrt{a} \\cdot \\sqrt{b}"],
     "pitfalls": [{ "expr": "\\sqrt{a} + \\sqrt{b}", "cites": ["anti.linearity"] }]
   },
@@ -146,7 +146,7 @@
     "requires": ["notation.root-of-a-product"],
     "metaPatterns": ["meta.only-multiplication-distributes"],
     "conventions": ["conv.root-groups"],
-    "note": "A root does NOT split over +: √(a+b) is not √a + √b. Try a = 9, b = 16: √25 = 5, but 3 + 4 = 7.",
+    "note": "A root does NOT split over $+$: $\\sqrt{a+b}$ is not $\\sqrt{a} + \\sqrt{b}$. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, but $3 + 4 = 7$.",
     "equivalents": ["\\sqrt{a+b}", "\\sqrt{b+a}"],
     "pitfalls": [{ "expr": "\\sqrt{a} + \\sqrt{b}", "cites": ["anti.linearity"] }]
   }
