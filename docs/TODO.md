@@ -19,12 +19,14 @@ Status legend: [ ] not started · [~] in progress · [x] done
 - [x] Dependency graph: `requires` + pitfall-level `revise` in schema, graph validators, ~70 edges authored; notation ranked as a strict 1–28 sequence, structure 1–15, consistent with the DAG
 - [x] Misconception wave (2026-07-08): 10 new families (like-terms/conjoining group, embedded-minus pair, multiplying-into-a-bracket, power-of-a-sum, roots pair, no-cancelling-in-a-sum) + meta-pattern M6 (linearity illusion) — 64 families total
 - [x] Card view as inspection tool: drilling-order mode, family ids on cards, per-card raw-JSON disclosure
+- [x] **Skill-1 (notation) content COMPLETE (2026-07-10):** all 44 notation families carry law/convention coordinates (`justifiedBy` / `conventions`); cited distractors added wherever a tempting wrong form exists (the empty pitfalls that remain — the basic-identity families like `divide-by-one`, `bracket-types`, the commutativity pair — are distractor-free *by decision*, not omission); all 12 remaining notation notes migrated to the inline `$…$` prose contract. Notation audit now reads 0 untagged, 0 unmigrated prose. Commits `5bba71c`→`8b77b2c`. Two loose threads deferred (both incremental, see Skill-1 leftovers): German family prose, and 4 exponent-extension distractors left uncited (no matching error pattern exists yet).
 
 ---
 
 ## NEXT SESSION — Skill 2 (structure) content pass
 
-Skill-1 (notation) content pass declared done 2026-07-09. The 21 structure
+Skill-1 (notation) content is **fully complete** as of 2026-07-10 (tags +
+distractors + prose contract — see the Done section). The 21 structure
 families are already authored (classification / decomposition / 1 equivalence);
 this pass completes them the way skill 1 was completed.
 
@@ -51,12 +53,14 @@ deep structure was laws + conventions; skill 2's is the **expression tree**):
   expression tree — this layer is the data structure the generator's
   degeneracy checks and the chunk-marking exercise need anyway.
 
-**Deadline note:** the vertical slice's critical path does NOT run through
-skill 2 — Same-or-Different drills equivalence (= notation) families first;
-Name-the-Structure and chunk-marking are later exercise types. If the dive
-sprawls, start the slice on skill-1 content in parallel. Quietly startable
-anytime (slice-critical): German notes for early-rank notation families,
-distractors for empty-pitfall families in ranks 1–20.
+**Timeline note (corrected 2026-07-10):** the earlier "students need it ~Sept /
+school starts mid-Aug" deadline was LLM-invented, not the user's — real algebra
+training starts later in the semester, so time is not the binding constraint.
+The user works **bottom-up by preference**: finish a layer properly before the
+next vertical step. Notation content is now fully done, so there is no skill-1
+backfill left to parallelize; the vertical slice's critical path still runs
+through notation equivalence families (Same-or-Different first), which are
+drill-ready. Sequencing is the user's call, not deadline-driven.
 
 **The pass itself:**
 
@@ -67,12 +71,16 @@ distractors for empty-pitfall families in ranks 1–20.
 - [ ] **Empty pitfalls in structure** (12 families): for the 5 basic forms that may be fine (no tempting wrong label); for the shapes group it isn't — decide per card.
 - [ ] Decomposition drill format is still undefined (generator section) — the chunking group's data should be inspected with that open question in mind.
 
-## Content — Skill 1 leftovers (non-blocking, incremental)
+## Content — Skill 1 leftovers
 
-- [ ] Tag the 36 untagged notation families (audit counts down; fold into any later pass).
-- [ ] Migrate the 12 notation notes still in unicode math to `$…$`.
-- [ ] Add distractors to pure-notation families whose `pitfalls` are empty (12 families: bracket-types, commutativity, division-variants, …) — needed before they can generate "DIFFERENT" drill items.
-- [ ] German translations of family notes/whys (incremental; layer files and meta-patterns are already bilingual).
+Notation content is **complete (2026-07-10)** — the tagging, prose-migration,
+and distractor items below are done. Only incremental threads remain.
+
+- [x] Tag the 36 untagged notation families → all 44 now carry coordinates (0 untagged).
+- [x] Migrate the 12 notation notes in unicode math to `$…$` → notation prose fully on the contract.
+- [x] Distractors for empty-pitfall notation families → cited where a tempting wrong form fits; remaining empties (basic identities: `divide-by-one`, `bracket-types`, `redundant-brackets`, commutativity pair, `fraction-as-reciprocal-product`, `splitting-a-fraction`) are distractor-free by decision.
+- [ ] German translations of family notes/whys (incremental & cross-skill — better as one bilingual pass over notation + structure; layer files and meta-patterns already bilingual).
+- [ ] Cite the 4 uncited exponent-extension distractors (`zero-and-one-exponent`, `negative-exponent`, `fractional-exponent-root`, `negative-fractional-exponent`) — blocked on an error pattern that fits, not on authoring.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).
 - [~] Prerequisites as a graph: `requires` + validators in schema; graph fully authored and priority-consistent (notation strict 1–29 after the 2026-07-09 insertion; structure basic forms 1–5, linear-form 14 with quadratic-form requiring it). The graph is a v1 hypothesis until drill data confirms it.
   - Open: `notation.minus-as-times-negative-one` stays unranked; it is the justification family for minus-over-sum/subtracting-a-sum (carried by meta.three-minuses / meta.implicit-op-before-bracket), drilled later or not at all — confirm.
