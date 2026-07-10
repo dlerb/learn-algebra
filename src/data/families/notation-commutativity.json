@@ -28,9 +28,11 @@
     "priority": 23,
     "requires": ["notation.minus-over-difference"],
     "metaPatterns": ["meta.three-minuses"],
+    "justifiedBy": ["def.subtraction"],
+    "conventions": ["conv.minus-roles"],
     "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
     "equivalents": ["a - b", "-(b - a)"],
-    "pitfalls": ["b - a"]
+    "pitfalls": [{ "expr": "b - a", "cites": ["anti.commute-everything"] }]
   },
   {
     "kind": "equivalence",
@@ -41,8 +43,10 @@
     "conditions": "b \\ne 0",
     "requires": ["notation.division-variants"],
     "metaPatterns": [],
+    "justifiedBy": ["def.division"],
+    "conventions": ["conv.division-signs"],
     "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",
     "equivalents": ["a \\div b", "\\frac{a}{b}"],
-    "pitfalls": ["\\frac{b}{a}"]
+    "pitfalls": [{ "expr": "\\frac{b}{a}", "cites": ["anti.commute-everything"] }]
   }
 ]

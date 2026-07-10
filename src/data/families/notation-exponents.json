@@ -46,9 +46,11 @@
     "priority": 21,
     "requires": ["notation.product-with-brackets", "notation.exponent-as-repeated-product"],
     "metaPatterns": ["meta.exponent-binds-tighter"],
+    "justifiedBy": ["thm.power-same-exponent"],
+    "conventions": ["conv.exponent-scope"],
     "note": "A power on a bracket applies to every factor: (ab)² = a²b², and (2x)² = 4x². Without the bracket, ab² means a·b² — the exponent hits b only.",
     "equivalents": ["(ab)^2", "a^2 b^2"],
-    "pitfalls": ["ab^2"]
+    "pitfalls": [{ "expr": "ab^2", "cites": ["mis.exponent-scope"] }]
   },
   {
     "kind": "equivalence",
@@ -121,9 +123,11 @@
     "conditions": "a \\ge 0, b \\ge 0",
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": ["meta.only-multiplication-distributes"],
+    "justifiedBy": ["thm.root-of-product"],
+    "conventions": ["conv.root-groups"],
     "note": "A root splits over ×: √(ab) = √a · √b.",
     "equivalents": ["\\sqrt{ab}", "\\sqrt{a} \\cdot \\sqrt{b}"],
-    "pitfalls": []
+    "pitfalls": [{ "expr": "\\sqrt{a} + \\sqrt{b}", "cites": ["anti.linearity"] }]
   },
   {
     "kind": "equivalence",
@@ -134,8 +138,9 @@
     "conditions": "a \\ge 0, b \\ge 0",
     "requires": ["notation.root-of-a-product"],
     "metaPatterns": ["meta.only-multiplication-distributes"],
+    "conventions": ["conv.root-groups"],
     "note": "A root does NOT split over +: √(a+b) is not √a + √b. Try a = 9, b = 16: √25 = 5, but 3 + 4 = 7.",
     "equivalents": ["\\sqrt{a+b}", "\\sqrt{b+a}"],
-    "pitfalls": ["\\sqrt{a} + \\sqrt{b}"]
+    "pitfalls": [{ "expr": "\\sqrt{a} + \\sqrt{b}", "cites": ["anti.linearity"] }]
   }
 ]

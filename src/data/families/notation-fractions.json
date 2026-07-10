@@ -44,6 +44,8 @@
     "conditions": "c \\ne 0",
     "requires": ["notation.fraction-bar-grouping"],
     "metaPatterns": ["meta.fraction-bar-brackets", "meta.only-multiplication-distributes"],
+    "justifiedBy": ["thm.split-numerator", "ax.distributivity"],
+    "conventions": ["conv.fraction-bar"],
     "note": "You may split a sum in the numerator: (a+b)/c = a/c + b/c. You may NOT split the denominator: a/(b+c) is not a/b + a/c.",
     "equivalents": ["\\frac{a+b}{c}", "\\frac{a}{c} + \\frac{b}{c}"],
     "pitfalls": []
