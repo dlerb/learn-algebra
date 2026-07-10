@@ -19,9 +19,10 @@
     "priority": 14,
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": ["meta.juxtaposition", "meta.implicit-op-before-bracket"],
+    "conventions": ["conv.juxtaposition", "conv.brackets-group"],
     "note": "A number against a bracket means multiply: 2(x+1) is 2 times (x+1), not 2 + (x+1).",
     "equivalents": ["2 \\times (x+1)", "2 \\cdot (x+1)", "2(x+1)", "(x+1) \\cdot 2"],
-    "pitfalls": ["2 + (x+1)"]
+    "pitfalls": [{ "expr": "2 + (x+1)", "cites": ["mis.juxtaposition-as-plus"] }]
   },
   {
     "kind": "equivalence",
@@ -31,9 +32,11 @@
     "priority": 3,
     "requires": ["notation.explicit-vs-implicit-product", "notation.negative-numbers"],
     "metaPatterns": ["meta.juxtaposition", "meta.three-minuses"],
+    "justifiedBy": ["thm.negative-one-times"],
+    "conventions": ["conv.invisible-one", "conv.juxtaposition"],
     "note": "An invisible coefficient of -1 means negate: (-1)a, -1a and -a are the same object. (Similarly a coefficient of 1 is invisible: 1x = x.)",
     "equivalents": ["(-1) \\cdot a", "(-1)a", "-1a", "-a"],
-    "pitfalls": []
+    "pitfalls": [{ "expr": "-1 + a", "cites": ["mis.juxtaposition-as-plus"] }]
   },
   {
     "kind": "equivalence",
@@ -54,8 +57,10 @@
     "priority": 10,
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": ["meta.juxtaposition"],
+    "justifiedBy": ["def.integer-multiple"],
+    "conventions": ["conv.juxtaposition"],
     "note": "Adding a term to itself scales it: x + x = 2x (and x+x+x = 3x). Do not confuse with x·x = x².",
     "equivalents": ["x + x", "2x"],
-    "pitfalls": ["x^2"]
+    "pitfalls": [{ "expr": "x^2", "cites": ["anti.repetition-confusion"] }]
   }
 ]

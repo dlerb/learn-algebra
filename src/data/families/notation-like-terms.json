@@ -21,9 +21,11 @@
     "priority": 12,
     "requires": ["notation.number-plus-term"],
     "metaPatterns": ["meta.juxtaposition"],
+    "justifiedBy": ["thm.collect-like-terms"],
+    "conventions": ["conv.juxtaposition"],
     "note": "3x + 2y cannot combine into one term — x and y are different objects. 5xy would be a product, something else entirely.",
     "equivalents": ["3x + 2y", "2y + 3x"],
-    "pitfalls": ["5xy"]
+    "pitfalls": [{ "expr": "5xy", "cites": ["anti.conjoining"] }]
   },
   {
     "kind": "equivalence",
@@ -32,9 +34,10 @@
     "title": "A power plus a term stays open",
     "priority": 13,
     "requires": ["notation.exponent-as-repeated-product", "notation.number-plus-term"],
-    "metaPatterns": ["meta.juxtaposition"],
+    "metaPatterns": [],
+    "justifiedBy": ["thm.collect-like-terms"],
     "note": "x² + x has two unlike terms — it is not x³. Exponents grow when powers are multiplied (x² · x = x³), never when they are added.",
     "equivalents": ["x^2 + x", "x + x^2"],
-    "pitfalls": ["x^3"]
+    "pitfalls": [{ "expr": "x^3", "cites": ["anti.conjoining"] }]
   }
 ]

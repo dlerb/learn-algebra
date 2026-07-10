@@ -27,9 +27,10 @@
     "priority": 18,
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": [],
+    "conventions": ["conv.precedence", "conv.brackets-group"],
     "note": "Multiplication happens before addition: a + b·c means a + (b·c). A bracket changes the meaning: (a+b)·c is different.",
     "equivalents": ["a + b \\cdot c", "a + bc"],
-    "pitfalls": ["(a + b) \\cdot c", "(a + b)c"]
+    "pitfalls": [{ "expr": "(a + b) \\cdot c", "cites": ["mis.precedence-ignored"] }, { "expr": "(a + b)c", "cites": ["mis.precedence-ignored"] }]
   },
   {
     "kind": "equivalence",
@@ -66,8 +67,10 @@
     "priority": 15,
     "requires": ["notation.product-with-brackets"],
     "metaPatterns": ["meta.implicit-op-before-bracket", "meta.only-multiplication-distributes"],
+    "justifiedBy": ["ax.distributivity"],
+    "conventions": ["conv.juxtaposition", "conv.brackets-group"],
     "note": "Multiplication distributes to every term inside: 2(x+1) = 2x + 2, not 2x + 1. The 2 hits both the x and the 1.",
     "equivalents": ["2(x + 1)", "2x + 2"],
-    "pitfalls": ["2x + 1"]
+    "pitfalls": [{ "expr": "2x + 1", "cites": ["anti.partial-distribution"] }]
   }
 ]

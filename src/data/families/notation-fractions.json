@@ -7,9 +7,10 @@
     "priority": 19,
     "conditions": "b \\ne 0",
     "metaPatterns": [],
+    "conventions": ["conv.division-signs"],
     "note": "Division has many faces: a÷b = a:b = a/b. All the same object. (The colon is the primary-school division sign.)",
     "equivalents": ["a \\div b", "a : b", "\\frac{a}{b}"],
-    "pitfalls": []
+    "pitfalls": [{ "expr": "b : a", "cites": ["anti.commute-everything"] }]
   },
   {
     "kind": "equivalence",

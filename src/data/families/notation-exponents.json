@@ -6,10 +6,11 @@
     "title": "Exponent as repeated multiplication",
     "priority": 6,
     "requires": ["notation.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.juxtaposition"],
+    "metaPatterns": [],
+    "justifiedBy": ["def.power"],
     "note": "A power is repeated multiplication: a² = a·a, a³ = a·a·a, a¹ = a.",
     "equivalents": ["a^2", "a \\cdot a"],
-    "pitfalls": []
+    "pitfalls": [{ "expr": "2a", "cites": ["anti.repetition-confusion"] }]
   },
   {
     "kind": "equivalence",
@@ -32,9 +33,10 @@
     "priority": 7,
     "requires": ["notation.coefficient-negative-one", "notation.exponent-as-repeated-product"],
     "metaPatterns": ["meta.exponent-binds-tighter"],
+    "conventions": ["conv.exponent-scope", "conv.precedence"],
     "note": "The exponent binds before the minus: -a² = -(a²), which is negative. That differs from (-a)² = a², which is positive. E.g. -3² = -9 but (-3)² = 9.",
     "equivalents": ["-a^2", "-(a^2)"],
-    "pitfalls": ["(-a)^2", "a^2"]
+    "pitfalls": [{ "expr": "(-a)^2", "cites": ["mis.exponent-scope"] }, { "expr": "a^2", "cites": ["mis.exponent-scope"] }]
   },
   {
     "kind": "equivalence",
