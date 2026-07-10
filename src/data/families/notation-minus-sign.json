@@ -75,9 +75,11 @@
     "title": "Negative times negative",
     "requires": ["notation.negative-numbers", "notation.explicit-vs-implicit-product"],
     "metaPatterns": ["meta.juxtaposition", "meta.three-minuses"],
+    "justifiedBy": ["thm.sign-rules"],
+    "conventions": ["conv.juxtaposition", "conv.minus-roles"],
     "note": "A negative times a negative is positive: (-a)(-b) = ab, not -ab. (One negative factor gives a negative: (-a)(b) = -ab.)",
     "equivalents": ["(-a)(-b)", "ab"],
-    "pitfalls": ["-ab"]
+    "pitfalls": [{ "expr": "-ab", "cites": ["mis.minus-roles-confused"] }]
   },
   {
     "kind": "equivalence",
@@ -86,9 +88,11 @@
     "title": "Minus in front of a fraction",
     "requires": ["notation.negative-numbers", "notation.division-variants"],
     "metaPatterns": ["meta.three-minuses", "meta.fraction-bar-brackets"],
+    "justifiedBy": ["thm.fraction-sign-moves"],
+    "conventions": ["conv.minus-roles", "conv.fraction-bar"],
     "note": "A single minus on a fraction can sit out front, on the numerator, or on the denominator — all equal. But -a/b is not (-a)/(-b).",
     "equivalents": ["-\\frac{a}{b}", "\\frac{-a}{b}", "\\frac{a}{-b}"],
-    "pitfalls": ["\\frac{-a}{-b}"]
+    "pitfalls": [{ "expr": "\\frac{-a}{-b}", "cites": ["mis.minus-roles-confused"] }]
   },
   {
     "kind": "equivalence",

@@ -5,6 +5,7 @@
     "group": "brackets",
     "title": "Bracket types are interchangeable",
     "metaPatterns": [],
+    "conventions": ["conv.brackets-group"],
     "note": "Round, square, and curly brackets group in exactly the same way: (a+b), [a+b] and {a+b} are identical.",
     "equivalents": ["(a + b)", "[a + b]", "\\{a + b\\}"],
     "pitfalls": []
@@ -15,6 +16,7 @@
     "group": "brackets",
     "title": "Redundant brackets",
     "metaPatterns": [],
+    "conventions": ["conv.brackets-group"],
     "note": "Brackets around something already whole can be dropped: ((a+b)) = (a+b) = a+b, and (x) = x.",
     "equivalents": ["((a + b))", "(a + b)", "a + b"],
     "pitfalls": []

@@ -20,6 +20,7 @@
     "conditions": "b \\ne 0",
     "requires": ["notation.division-variants"],
     "metaPatterns": [],
+    "justifiedBy": ["def.division"],
     "note": "Dividing by b is multiplying by 1/b: a/b = a·(1/b). This is why dividing by a fraction means multiplying by its reciprocal.",
     "equivalents": ["\\frac{a}{b}", "a \\cdot \\frac{1}{b}"],
     "pitfalls": []
@@ -31,6 +32,7 @@
     "title": "Dividing by 1",
     "requires": ["notation.division-variants"],
     "metaPatterns": [],
+    "justifiedBy": ["thm.divide-by-one"],
     "note": "Dividing by 1 changes nothing: a/1 = a.",
     "equivalents": ["\\frac{a}{1}", "a"],
     "pitfalls": []

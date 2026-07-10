@@ -5,6 +5,7 @@
     "group": "commutativity",
     "title": "Addition is commutative",
     "metaPatterns": [],
+    "justifiedBy": ["ax.add-commutative"],
     "note": "Order does not matter for addition: a + b = b + a.",
     "equivalents": ["a + b", "b + a"],
     "pitfalls": []
@@ -16,6 +17,8 @@
     "title": "Multiplication is commutative",
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": ["meta.juxtaposition"],
+    "justifiedBy": ["ax.mul-commutative"],
+    "conventions": ["conv.juxtaposition"],
     "note": "Order does not matter for multiplication: ab = ba.",
     "equivalents": ["ab", "ba"],
     "pitfalls": []

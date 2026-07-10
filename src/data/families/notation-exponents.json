@@ -60,6 +60,7 @@
     "conditions": "a \\ne 0",
     "requires": ["notation.exponent-as-repeated-product"],
     "metaPatterns": [],
+    "justifiedBy": ["def.extended-exponents"],
     "note": "Any nonzero base to the power 0 is 1: a⁰ = 1, not 0. And a¹ = a.",
     "equivalents": ["a^0", "1"],
     "pitfalls": ["0"]
@@ -72,6 +73,8 @@
     "conditions": "a \\ne 0",
     "requires": ["notation.exponent-as-repeated-product", "notation.division-variants"],
     "metaPatterns": ["meta.exponent-binds-tighter"],
+    "justifiedBy": ["def.extended-exponents"],
+    "conventions": ["conv.exponent-scope"],
     "note": "A negative exponent means reciprocal, not a negative number: a⁻ⁿ = 1/aⁿ. So a⁻¹ = 1/a, and 1/a⁻ⁿ = aⁿ.",
     "equivalents": ["a^{-n}", "\\frac{1}{a^n}"],
     "pitfalls": ["-a^n"]
@@ -84,6 +87,8 @@
     "conditions": "a > 0",
     "requires": ["notation.exponent-as-repeated-product"],
     "metaPatterns": ["meta.exponent-binds-tighter"],
+    "justifiedBy": ["def.fractional-exponent"],
+    "conventions": ["conv.exponent-scope"],
     "note": "A fractional exponent is a root: the denominator is the root index, the numerator the power.",
     "equivalents": ["a^{m/n}", "\\sqrt[n]{a^m}", "(\\sqrt[n]{a})^m"],
     "pitfalls": ["\\sqrt[m]{a^n}"]
@@ -96,6 +101,8 @@
     "conditions": "a > 0",
     "requires": ["notation.negative-exponent", "notation.fractional-exponent-root"],
     "metaPatterns": ["meta.exponent-binds-tighter"],
+    "justifiedBy": ["def.extended-exponents", "def.fractional-exponent"],
+    "conventions": ["conv.exponent-scope"],
     "note": "Combine the two rules: a^(-m/n) = 1 / (nth root of aᵐ). The minus gives the reciprocal, the fraction gives the root.",
     "equivalents": ["a^{-m/n}", "\\frac{1}{\\sqrt[n]{a^m}}", "\\frac{1}{a^{m/n}}"],
     "pitfalls": ["\\sqrt[n]{a^m}"]

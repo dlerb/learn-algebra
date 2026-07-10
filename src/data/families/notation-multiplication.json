@@ -45,9 +45,11 @@
     "title": "Coefficient of 0",
     "requires": ["notation.explicit-vs-implicit-product"],
     "metaPatterns": ["meta.juxtaposition"],
+    "justifiedBy": ["thm.zero-product"],
+    "conventions": ["conv.juxtaposition"],
     "note": "Zero times anything is zero: 0x = 0, regardless of x. It is not x.",
     "equivalents": ["0 \\cdot x", "0x", "0"],
-    "pitfalls": ["x"]
+    "pitfalls": [{ "expr": "x", "cites": ["mis.juxtaposition-as-plus"] }]
   },
   {
     "kind": "equivalence",
