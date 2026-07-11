@@ -130,7 +130,7 @@ and distractor items below are done. Only incremental threads remain.
 - [ ] Mobile layout polish (large tap targets, phone-readable)
 - [ ] PWA setup (installable, offline)
 - [ ] JSON Schema for IDE authoring: generate via `z.toJSONSchema(family, { io: 'input' })`, register in `.vscode/settings.json` (`json.schemas`) for `src/data/families/*.json` — autocomplete + inline validation while editing
-- [ ] `pnpm validate` script running the schema + graph validators from the CLI; run it in CI (later also Compute Engine checks: equivalents mutually equal, pitfalls non-equal, at sampled points)
+- [~] `pnpm validate` script (`scripts/validate.ts`, via `vite-node`) — runs the schema + graph validators (import side-effects) **plus** Compute-Engine AST checks on Skill 2 (root op-class vs `answer`/`op`; chunk count vs the tree's maximal root operands). CE first use; kept out of the app bundle. TODO: wire into CI; extend CE checks to Skill 1 (`equivalents` mutually equal, `pitfalls` non-equal at sampled points) and Skill-3 endpoint-grading; add full per-chunk structural match (needs sum/difference + sign reconciliation).
 
 ---
 
@@ -173,6 +173,7 @@ S3 = chains S1 equivalences, located via S2 parsing, toward a target — so it
 - [ ] Research MathLive as input component
 - [ ] Design Skill 3 exercise format (endpoint-graded per above)
 - [ ] Compute Engine for equivalence checking + per-direction normalizers
+- [ ] **Drill "dirty" expressions** — Skill-3 terms will need to contain messy sub-forms (`a/1`, `--a`, unsimplified coefficients) that the student must handle/clean as part of the transformation. Deferred, but a real requirement for the transformation drills.
 - [ ] Add `kind:"transformation"` to schema (`target` field) + `transform.` namespace
 - [ ] Author Skill 3 families; wire the `gateway` shapes as their recognition triggers
 - [ ] **Coefficient-lens chunking** (`2x(x+1) → [2x, (x+1)]`, keeping the coefficient with its variable): operation-relative grouping, the recognition-half of an *expand* move — author as a Skill-3 family. The example was removed from the Skill-2 `structure.chunks-in-product` card on 2026-07-11 (Skill-2 chunking is maximal/flat: `[2, x, (x+1)]`); this is where its coefficient-lens version lands.

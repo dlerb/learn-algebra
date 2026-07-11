@@ -21,7 +21,7 @@ A daily drill tool for first-year Swiss high school students to build automatici
 
 KaTeX is the critical dependency: all expressions must render as proper mathematical notation, not plain text. Every expression in the taxonomy is stored in LaTeX and rendered via KaTeX.
 
-**Planned addition:** Compute Engine (`@cortex-js/compute-engine`) for template substitution via expression trees (MathJSON) and, eventually, Skill 3 equivalence verification. Currently installed but not yet used — template substitution uses simple regex replacement for the MVP.
+**Compute Engine** (`@cortex-js/compute-engine`) parses expressions to MathJSON trees. First use (2026-07-11) is **offline validation only**: `pnpm validate` (`scripts/validate.ts`, run via `vite-node`) derives the AST for every Skill-2 family and cross-checks the hand-authored structure fields against it — root op-class vs `answer`/`op`, and chunk count vs the tree's maximal root operands. Kept out of the app runtime bundle. Still planned: template substitution via the tree (Skill 2/3, avoiding raw-LaTeX collision) and Skill-3 equivalence verification; MVP template substitution is still regex-based. Skill 1 deliberately stays on surface strings — an AST cannot represent `3x` vs `3·x` (same tree).
 
 ---
 
