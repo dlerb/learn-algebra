@@ -130,6 +130,7 @@ and distractor items below are done. Only incremental threads remain.
 - [ ] Mobile layout polish (large tap targets, phone-readable)
 - [ ] PWA setup (installable, offline)
 - [ ] JSON Schema for IDE authoring: generate via `z.toJSONSchema(family, { io: 'input' })`, register in `.vscode/settings.json` (`json.schemas`) for `src/data/families/*.json` — autocomplete + inline validation while editing
+- [ ] Consider renaming the `examples` field for the **`chunking`** kind (`{expr, chunks, op}`): each entry carries its *own* answer, so it's labeled ground-truth data, not illustrative "examples" — `cases` / `items` reads truer. Cosmetic; **bundle it with any future `{expr, ast}` migration** rather than churning it alone (touches schema + `TaxonomyView.vue` + all chunking JSON). Note: `structure` kind's `examples` (multiple exprs sharing one `answer`) is fine as-is — genuine examples of one class.
 - [~] `pnpm validate` script (`scripts/validate.ts`, via `vite-node`) — runs the schema + graph validators (import side-effects) **plus** Compute-Engine AST checks on Skill 2 (root op-class vs `answer`/`op`; chunk count vs the tree's maximal root operands). CE first use; kept out of the app bundle. TODO: wire into CI; extend CE checks to Skill 1 (`equivalents` mutually equal, `pitfalls` non-equal at sampled points) and Skill-3 endpoint-grading; add full per-chunk structural match (needs sum/difference + sign reconciliation).
 
 ---
