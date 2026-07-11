@@ -12,7 +12,7 @@
 
 These form a strict progression. Each step depends on the previous one being solid. Current instruction typically jumps to step 3 without steps 1 and 2 in place — this is the root of the problem.
 
-**Skill 1 — Notation fluency (Read):** The ability to recognize algebraic expressions across varied surface forms. Knowing that `3x`, `3·x`, `3×x`, and `x·3` are the same object. Reading `-(a-b)`, minus signs, and brackets correctly regardless of how they appear.
+**Skill 1 — Notation fluency (Read):** *Static* recognition of when two expressions are — and are not — the same object. Each Skill-1 family is a source-layer statement (a definition, axiom, or theorem) made student-facing: *rendered* through conventions, *equated* by a law. Knowing that `3x`, `3·x`, `3×x`, `x·3` are one object (convention); that `ab = ba` (axiom); that `a² = a·a` (definition); reading `-(a-b)`, minus signs, and brackets correctly however they appear. Just as central are the tempting **non-**equivalences to resist: `a²` is not `2a`, `a²+b²` is not `(a+b)²`. These equivalences are the atoms Skill 3 later chains toward a goal — Skill 1 is knowing them cold, not searching for which to apply.
 
 **Skill 2 — Structural recognition (Classify):** The ability to identify the dominant operation of an expression before acting on it. Seeing `3(x+1) − 2(x−1)` as "fundamentally a subtraction between two products." Classifying the shape first, computing second.
 
