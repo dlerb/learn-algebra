@@ -1,6 +1,7 @@
 [
   {
-    "kind": "classification",
+    "kind": "structure",
+    "gateway": true,
     "id": "structure.difference-of-squares",
     "group": "familiar-shapes",
     "title": "Difference of two squares",
@@ -15,7 +16,8 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
+    "gateway": true,
     "id": "structure.perfect-square-trinomial",
     "group": "familiar-shapes",
     "title": "Perfect square trinomial",
@@ -28,7 +30,8 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
+    "gateway": true,
     "id": "structure.common-factor",
     "group": "familiar-shapes",
     "title": "Common factor",
@@ -41,7 +44,8 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
+    "gateway": true,
     "id": "structure.linear-form",
     "group": "familiar-shapes",
     "title": "Linear form",
@@ -54,7 +58,8 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
+    "gateway": true,
     "id": "structure.quadratic-form",
     "group": "familiar-shapes",
     "title": "Quadratic form",

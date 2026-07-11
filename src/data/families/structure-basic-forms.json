@@ -1,6 +1,6 @@
 [
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.sum",
     "group": "basic-forms",
     "title": "Sum",
@@ -13,7 +13,7 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.difference",
     "group": "basic-forms",
     "title": "Difference",
@@ -26,7 +26,7 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.product",
     "group": "basic-forms",
     "title": "Product",
@@ -39,7 +39,7 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.quotient",
     "group": "basic-forms",
     "title": "Quotient",
@@ -52,7 +52,7 @@
     "pitfalls": []
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.power",
     "group": "basic-forms",
     "title": "Power",

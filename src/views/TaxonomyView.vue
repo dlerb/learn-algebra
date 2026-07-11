@@ -80,7 +80,7 @@ function toVM(f: Family): CardVM {
       })),
     }
   }
-  if (f.kind === 'classification') {
+  if (f.kind === 'structure') {
     return {
       ...base, classExamples: f.examples, classAnswer: f.answer,
       classPitfalls: f.pitfalls.map(p => ({

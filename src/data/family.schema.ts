@@ -85,12 +85,15 @@ export const family = z.discriminatedUnion('kind', [
     pitfalls: z.array(equivPitfall).default([]),  // non-equal forms
   }),
 
-  // CLASSIFICATION — one expression, name its dominant operation. Skill 2.
+  // STRUCTURE — one expression, name its dominant operation. Skill 2.
   // `examples` are DIFFERENT expressions sharing the SAME structural class; each is
   // independently bound. Pitfalls are wrong LABELS plus why they tempt.
+  // `gateway` marks familiar-shape families — classification-with-intent that hinge
+  // Skill 2 → Skill 3 (recognising the shape is the trigger for a transformation).
   z.object({
-    kind: z.literal('classification'),
+    kind: z.literal('structure'),
     ...core,
+    gateway: z.boolean().default(false),
     examples: z.array(z.string()).min(1),
     answer: dominantOp,
     pitfalls: z.array(z.object({
@@ -101,10 +104,10 @@ export const family = z.discriminatedUnion('kind', [
     })).default([]),
   }),
 
-  // DECOMPOSITION — break an expression into its chunks. Skill 2 group C.
+  // CHUNKING — break an expression into its chunks. Skill 2 group C.
   // Not drilled yet (no exercise type maps to it); authored now for the library.
   z.object({
-    kind: z.literal('decomposition'),
+    kind: z.literal('chunking'),
     ...core,
     examples: z.array(z.object({
       expr: z.string(),
@@ -506,7 +509,7 @@ export function validateLatexCompiles(
     if (f.kind === 'equivalence') {
       f.equivalents.forEach((x, i) => check(f.id, `equivalents[${i}]`, x))
       f.pitfalls.forEach((p, i) => check(f.id, `pitfalls[${i}]`, p.expr))
-    } else if (f.kind === 'classification') {
+    } else if (f.kind === 'structure') {
       f.examples.forEach((x, i) => check(f.id, `examples[${i}]`, x))
       f.pitfalls.forEach((p, i) =>
         proseMath(p.why).forEach(m => check(f.id, `pitfalls[${i}].why`, m)))

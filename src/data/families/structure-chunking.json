@@ -1,6 +1,6 @@
 [
   {
-    "kind": "decomposition",
+    "kind": "chunking",
     "id": "structure.chunks-in-sum",
     "group": "chunking",
     "title": "Chunks in a sum or difference",
@@ -16,7 +16,7 @@
     ]
   },
   {
-    "kind": "decomposition",
+    "kind": "chunking",
     "id": "structure.chunks-in-product",
     "group": "chunking",
     "title": "Chunks in a product",
@@ -30,7 +30,7 @@
     "pitfalls": []
   },
   {
-    "kind": "decomposition",
+    "kind": "chunking",
     "id": "structure.implicit-chunking",
     "group": "chunking",
     "title": "Implicit chunking — multiplication precedence",
@@ -47,7 +47,7 @@
     ]
   },
   {
-    "kind": "decomposition",
+    "kind": "chunking",
     "id": "structure.bracket-as-chunk",
     "group": "chunking",
     "title": "Bracket as a single chunk",

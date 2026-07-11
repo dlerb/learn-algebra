@@ -1,6 +1,6 @@
 [
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.sum-of-products",
     "group": "misleading-forms",
     "title": "Sum of products — multiplication is inside the terms",
@@ -15,7 +15,7 @@
     ]
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.product-with-inner-sum",
     "group": "misleading-forms",
     "title": "Product containing a sum — looks like a sum",
@@ -31,7 +31,7 @@
     ]
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.coefficient-times-power",
     "group": "misleading-forms",
     "title": "Coefficient in front of a power",
@@ -47,7 +47,7 @@
     ]
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.leading-minus",
     "group": "misleading-forms",
     "title": "Expression with a leading minus",
@@ -62,7 +62,7 @@
     ]
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.power-with-inner-sum",
     "group": "misleading-forms",
     "title": "Power containing a sum",
@@ -78,7 +78,7 @@
     ]
   },
   {
-    "kind": "classification",
+    "kind": "structure",
     "id": "structure.complex-quotient",
     "group": "misleading-forms",
     "title": "Quotient with a complex numerator or denominator",
