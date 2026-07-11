@@ -34,6 +34,8 @@ Each of the three skills must be trained in isolation before being combined. Exe
 **4. The expression family is the basic unit.**
 The curriculum unit is not the exercise, it's the *expression family*: a set of surface forms that are equivalent or structurally related. Students build automaticity across all variants of a family. New variants are introduced in controlled sequence; old ones are revisited via spaced repetition.
 
+*Corollary — skill membership belongs to families and drills, not to expressions.* Asking whether an expression like `3a(b+c)` "is Skill 1 or Skill 3" is malformed. The *family* `a(b+c) = ab+ac` is Skill 1 (a static equivalence — a fact). `3a(b+c)` is a Skill-3 *drill* that deploys that family (with `a := 3a`) and composes it with another Skill-1 family (regrouping `3a·b → 3ab`). Skill-3 difficulty just *is* how many Skill-1 atoms a drill composes; Skill 1 is the degenerate floor (one atom, bare pattern, recognised not produced). So the Skill-1↔Skill-3 line is a **generation parameter, not a taxonomy decision**: when a family's slots range over single *atoms* it is a Skill-1 recognition drill; when they are filled with *compound or nested* terms that force further normalisation, the same family becomes a Skill-3 drill. Keeping this straight is the filter that stops the taxonomy from bloating with near-duplicate "harder" families.
+
 **5. Controlled sequencing, not flooding.**
 Each skill has its own "three ways to do it" problem. The solution is deliberate ordering — core forms first, variants after, each drilled to automaticity before the next is added.
 

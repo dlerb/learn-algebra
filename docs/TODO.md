@@ -97,7 +97,7 @@ and distractor items below are done. Only incremental threads remain.
 - [ ] `structure` → Name-the-Structure (needs `examples` + `answer`)
 - [ ] `chunking` → Chunk-marking exercise (new format; needs `examples[].chunks`)
 - [ ] `kind → available exercises` lookup table in code
-- [ ] Generation params: per-family, which letters vary over which pools (respect shared binding for equivalence, independent for `structure`)
+- [ ] Generation params: per-family, which letters vary over which pools (respect shared binding for equivalence, independent for `structure`). **The pool choice is the Skill-1↔Skill-3 selector** (atoms → S1 recognition drill; compound/nested → S3 drill of the same family) — see principles.md #4 corollary.
 - [ ] Substitute on the MathJSON tree via Compute Engine (installed, unused) — avoids raw-LaTeX string-collision
 - [ ] Degeneracy checks on generated items: a drawn DIFFERENT pair must be verifiably non-equal (e.g. `b = 0` makes `-a+b` equal `-a-b`); respect `conditions`
 - [ ] Family workbench (dev-only view): family card + live-generated drill items + degeneracy warnings — build after the generator exists
