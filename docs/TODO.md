@@ -8,7 +8,7 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 - [x] Project setup (Vue 3, Vite, Pinia, Naive UI, UnoCSS, KaTeX)
 - [x] Family schema as Zod (`src/data/family.schema.ts`) — single source for validator + `Family` type
-  - [x] `kind` discriminator: `equivalence` (correct forms + `pitfalls`), `classification` (`examples` + `answer` + `pitfalls`), `decomposition` (chunking)
+  - [x] `kind` discriminator: `equivalence` (correct forms + `pitfalls`), `structure` (`examples` + `answer` + `pitfalls`), `chunking` (`examples[].chunks`) — renamed 2026-07-11 from `classification`/`decomposition` to skill-aligned names; frees "decomposition" for Skill 3 (commit 7400524). Skill axis stays on the id-prefix namespace, not `kind`.
   - [x] Exercise type derived from `kind`, not stored; `skill`/`flag`/`code` dropped as redundant
   - [x] Readable slug ids (`notation.<slug>` / `structure.<slug>`); namespace = skill
 - [x] All 54 families authored as JSON, one file per group (`src/data/families/*.json`)
@@ -27,14 +27,14 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 Skill-1 (notation) content is **fully complete** as of 2026-07-10 (tags +
 distractors + prose contract — see the Done section). The 21 structure
-families are already authored (classification / decomposition / 1 equivalence);
+families are already authored (`structure` / `chunking` / 1 equivalence);
 this pass completes them the way skill 1 was completed.
 
 **Working hypotheses going in** (from the 2026-07-09 discussion — skill 1's
 deep structure was laws + conventions; skill 2's is the **expression tree**):
 
-- Dominant operation = root node; chunks = subtrees; classification = naming
-  the root; decomposition = reading one level; the conventions (precedence,
+- Dominant operation = root node; chunks = subtrees; the `structure` kind = naming
+  the root; `chunking` = reading one level; the conventions (precedence,
   brackets, fraction bar, exponent scope) are the parsing rules from written
   string to tree. The tree is to skill 2 what the tower is to skill 1.
 - Expect the five-way answer set (sum/difference/product/quotient/power) to
@@ -44,9 +44,10 @@ deep structure was laws + conventions; skill 2's is the **expression tree**):
   (school-honest — students see five), but RECORD the collapse, as D3 records
   "provable but taught as definition."
 - Familiar shapes are named TREE TEMPLATES ($a^2-b^2$ as pattern) — a
-  different sort from root-naming, which is why `classification` fits them
-  poorly. Expect the representation decision to produce a small named-shapes
-  layer, analogous to the error-pattern elevation.
+  different sort from root-naming, which is why the dominant-op `answer` fits
+  them poorly. RESOLVED 2026-07-11: kept in `structure` but flagged
+  `gateway: true` (Skill 2 → Skill 3 hinge), rather than a separate layer — see
+  the resolved item below.
 - The chunks-in-sum vs implicit-chunking overlap should dissolve once trees
   are the coordinate system: same tree operation through different devices.
 - None of this is throwaway: MathJSON (Compute Engine, installed) IS the
@@ -64,12 +65,12 @@ drill-ready. Sequencing is the user's call, not deadline-driven.
 
 **The pass itself:**
 
-- [ ] **Decide Familiar-Shapes representation** (blocking the rest of the D-group pass). The group (difference-of-squares, perfect-square, quadratic, …) fits `classification` poorly — the real skill is "name the shape," which the dominant-op `answer` can't express. Options: a `shape` field, or a new recognition `kind`. Currently authored as classification with the shape in the note.
+- [x] **Familiar-Shapes representation DECIDED (2026-07-11).** Kept the 5 shapes (difference-of-squares, perfect-square-trinomial, common-factor, linear-form, quadratic-form) in the `structure` kind but flagged `gateway: true` — *classification-with-intent* that hinges Skill 2 → Skill 3 (recognising the shape is the trigger for a transformation). Chose the flag over a separate `kind`/`shape` field: the drill is still "name the dominant operation," the gateway just marks it as a Skill-3 trigger. Schema: `gateway: z.boolean().default(false)` on the structure variant (commit 7400524).
 - [ ] **Resolve chunks-in-sum vs implicit-chunking overlap** (same example expressions, different emphasis) — merge or sharpen the contrast.
-- [ ] **Inspect + tag the 21 structure families** (18 untagged). Expect sparse law coordinates by design — structure is about parsing, so mostly conventions (`conv.brackets-group`, `conv.precedence`, `conv.fraction-bar`, `conv.exponent-scope`); only the shapes group and `same-value-different-structure` cite theorems. Add pitfall `cites` to the classification whys.
+- [ ] **Inspect + tag the 21 structure families** (18 untagged). Expect sparse law coordinates by design — structure is about parsing, so mostly conventions (`conv.brackets-group`, `conv.precedence`, `conv.fraction-bar`, `conv.exponent-scope`); only the shapes group and `same-value-different-structure` cite theorems. Add pitfall `cites` to the `structure` whys.
 - [ ] **Migrate the 4 structure notes** (+ 2 whys) still in unicode math to `$…$` (audit counts them).
 - [ ] **Empty pitfalls in structure** (12 families): for the 5 basic forms that may be fine (no tempting wrong label); for the shapes group it isn't — decide per card.
-- [ ] Decomposition drill format is still undefined (generator section) — the chunking group's data should be inspected with that open question in mind.
+- [ ] `chunking` drill format is still undefined (generator section) — the chunking group's data should be inspected with that open question in mind.
 
 ## Content — Skill 1 leftovers
 
@@ -93,10 +94,10 @@ and distractor items below are done. Only incremental threads remain.
 ## Exercise generators — derive drills from `kind`
 
 - [ ] `equivalence` → Same-or-Different + Odd-One-Out (needs `equivalents` + `pitfalls`)
-- [ ] `classification` → Name-the-Structure (needs `examples` + `answer`)
-- [ ] `decomposition` → Chunk-marking exercise (new format; needs `examples[].chunks`)
+- [ ] `structure` → Name-the-Structure (needs `examples` + `answer`)
+- [ ] `chunking` → Chunk-marking exercise (new format; needs `examples[].chunks`)
 - [ ] `kind → available exercises` lookup table in code
-- [ ] Generation params: per-family, which letters vary over which pools (respect shared binding for equivalence, independent for classification)
+- [ ] Generation params: per-family, which letters vary over which pools (respect shared binding for equivalence, independent for `structure`)
 - [ ] Substitute on the MathJSON tree via Compute Engine (installed, unused) — avoids raw-LaTeX string-collision
 - [ ] Degeneracy checks on generated items: a drawn DIFFERENT pair must be verifiably non-equal (e.g. `b = 0` makes `-a+b` equal `-a-b`); respect `conditions`
 - [ ] Family workbench (dev-only view): family card + live-generated drill items + degeneracy warnings — build after the generator exists
@@ -141,11 +142,36 @@ and distractor items below are done. Only incremental threads remain.
 
 ---
 
-## Deferred — Skill 3 (Manipulation)
+## Deferred — Skill 3 (Transformation / *Umformung*)
 
 Blocked on: math input UX + equivalence verification.
 
+**Design model (2026-07-11 discussion).** Skill 3 is *directed* equivalence:
+Skills 1 and 3 are both equivalence, split as **static** (S1: "these are equal",
+recognition) vs. **dynamic/directed** (S3: "rewrite toward a goal", production).
+S3 = chains S1 equivalences, located via S2 parsing, toward a target — so it
+*requires* both. A S3 family = S1 equivalences + S2 parsing + **a target**.
+
+- The distinction from a S1 *directed* drill is *given-vs-selected* /
+  *isolated-vs-embedded*, not move count: S1 = "know the move" (bare pattern,
+  one forced rewrite, target implicit); S3 = "know when/where/whether" (embedded,
+  selected, sequenced). A single-move-but-embedded problem is already S3.
+- **`target: { direction, done }`** field. `direction` = the named intent
+  (`factor`/`expand`/`combine`/`simplify`/…) and *is* the S3 sub-taxonomy; one
+  family = one direction (multiple valid targets for an expression live *across*
+  families, chosen by the drill). `done` = a **predicate** (combine/simplify have
+  no fixed endpoint); template families like factor `a²−b²` carry a concrete
+  target instead.
+- **Endpoint-graded** — any valid route to the normal form passes. Needs a
+  canonical **normalizer per direction** (equivalence = normalize-both-and-compare;
+  `factor` is the awkward case). `steps` demote to teaching aid, not answer key;
+  map common wrong endpoints to causes in `pitfalls`.
+- New `kind:"transformation"` (greenfield — not yet in schema) + a new id-prefix
+  namespace (e.g. `transform.`). The `structure` `gateway: true` families are the
+  S2→S3 recognition hinge that feeds it.
+
 - [ ] Research MathLive as input component
-- [ ] Design Skill 3 exercise format
-- [ ] Compute Engine for equivalence checking
-- [ ] Define Skill 3 taxonomy; recapture the "also a Skill-3 tool" marker dropped from the schema
+- [ ] Design Skill 3 exercise format (endpoint-graded per above)
+- [ ] Compute Engine for equivalence checking + per-direction normalizers
+- [ ] Add `kind:"transformation"` to schema (`target` field) + `transform.` namespace
+- [ ] Author Skill 3 families; wire the `gateway` shapes as their recognition triggers

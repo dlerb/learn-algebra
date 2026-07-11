@@ -171,6 +171,7 @@ Students must resist "expanding" and instead see the whole bracket as one object
 
 Canonical forms that recur throughout algebra and beyond.
 Recognition of these shapes directly unlocks specific manipulation strategies (Skill 3).
+In the data (2026-07-11) these are the `structure` families flagged `gateway: true` — *classification-with-intent*, the S2→S3 recognition hinge.
 
 ### D1 · Difference of two squares `[S2→S3]`
 ```
