@@ -25,7 +25,7 @@
     "note": "Break at the multiplication points. Each bracket is one factor.",
     "examples": [
       { "expr": "3 \\cdot x \\cdot (x+1)", "chunks": ["3", "x", "(x+1)"], "op": "product" },
-      { "expr": "2x(x-1)(x+2)", "chunks": ["2x", "(x-1)", "(x+2)"], "op": "product" }
+      { "expr": "2x(x-1)(x+2)", "chunks": ["2", "x", "(x-1)", "(x+2)"], "op": "product" }
     ],
     "pitfalls": []
   },

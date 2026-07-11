@@ -175,3 +175,4 @@ S3 = chains S1 equivalences, located via S2 parsing, toward a target — so it
 - [ ] Compute Engine for equivalence checking + per-direction normalizers
 - [ ] Add `kind:"transformation"` to schema (`target` field) + `transform.` namespace
 - [ ] Author Skill 3 families; wire the `gateway` shapes as their recognition triggers
+- [ ] **Coefficient-lens chunking** (`2x(x+1) → [2x, (x+1)]`, keeping the coefficient with its variable): operation-relative grouping, the recognition-half of an *expand* move — author as a Skill-3 family. The example was removed from the Skill-2 `structure.chunks-in-product` card on 2026-07-11 (Skill-2 chunking is maximal/flat: `[2, x, (x+1)]`); this is where its coefficient-lens version lands.
