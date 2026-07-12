@@ -12,7 +12,7 @@
       { "expr": "ab - cd + ef", "chunks": ["ab", "-cd", "ef"], "op": "sum" }
     ],
     "pitfalls": [
-      { "chunks": ["3", "x", "2y", "z"], "why": "splitting 3x into 3 and x instead of keeping the product as one chunk" }
+      { "chunks": ["3", "x", "2y", "z"], "why": "splitting 3x into 3 and x instead of keeping the product as one chunk", "explainedBy": ["sal.implicit-op-overlooked"] }
     ]
   },
   {
@@ -62,7 +62,7 @@
       { "expr": "(x+1)(x-1)", "chunks": ["(x+1)", "(x-1)"], "op": "product" }
     ],
     "pitfalls": [
-      { "chunks": ["3", "x", "1", "2", "x", "1"], "why": "expanding the brackets instead of keeping each as one chunk" }
+      { "chunks": ["3", "x", "1", "2", "x", "1"], "why": "expanding the brackets instead of keeping each as one chunk", "explainedBy": ["mis.bracket-dissolved"] }
     ]
   }
 ]

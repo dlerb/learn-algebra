@@ -66,7 +66,7 @@ validateMetaPatternRefs(families, metaPatterns)
 validateFamilyLinks(families)
 validateLaws(laws)
 validateConventions(conventions)
-validateErrors(errorPatterns, laws, conventions)
+validateErrors(errorPatterns, laws, conventions, metaPatterns)
 validateLayerRefs(families, metaPatterns, laws, conventions, errorPatterns)
 validateLatexCompiles(families, metaPatterns, laws, conventions, errorPatterns)
 

@@ -286,15 +286,21 @@ export function validateConventions(conventions: ConventionDef[]): void {
 
 // ── Error patterns ───────────────────────────────────────────────────────────
 // First-class citizens of the error space: ONE addressable list that pitfalls
-// cite, so drill data can be analyzed per error pattern from day one. Sorts:
-// false-law (`of` = the true laws it distorts) and misreading (`of` = the
-// conventions it violates). `code` = Ā1..Ā5 / R1..R15.
+// cite, so drill data can be analyzed per error pattern from day one. Three
+// sorts, each `corrupts` a different layer:
+//   false-law  (anti.) — corrupts a true LAW it distorts/over-generalizes
+//   misreading (mis.)  — corrupts a CONVENTION it violates
+//   salience   (sal.)  — corrupts a METAPATTERN: parsing by what is visually
+//                        loudest instead of by structure (the negative of a
+//                        perceptual heuristic, e.g. sal.loudest-op-wins is the
+//                        failure of meta.dominant-op-last). Skill-2 specific.
+// `code` = Ā1..Ā5 / R1..R15 / S1..
 
-export const errorSort = z.enum(['false-law', 'misreading'])
+export const errorSort = z.enum(['false-law', 'misreading', 'salience'])
 export type ErrorSort = z.infer<typeof errorSort>
 
 export const errorDef = z.object({
-  id: z.string().regex(/^(anti|mis)\.[a-z0-9-]+$/),
+  id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),
   code: z.string(),
   sort: errorSort,
   corrupts: z.array(z.string()).default([]),
@@ -304,21 +310,27 @@ export const errorDef = z.object({
 })
 export type ErrorDef = z.output<typeof errorDef>
 
-export function validateErrors(errors: ErrorDef[], laws: LawDef[], conventions: ConventionDef[]): void {
-  const lawIds = new Set(laws.map(l => l.id))
-  const convIds = new Set(conventions.map(c => c.id))
+const errorPrefixOfSort: Record<ErrorSort, string> =
+  { 'false-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
+
+export function validateErrors(
+  errors: ErrorDef[], laws: LawDef[], conventions: ConventionDef[], metas: MetaPatternsFile,
+): void {
+  const poolOfSort: Record<ErrorSort, { ids: Set<string>; name: string }> = {
+    'false-law': { ids: new Set(laws.map(l => l.id)), name: 'law' },
+    misreading: { ids: new Set(conventions.map(c => c.id)), name: 'convention' },
+    salience: { ids: new Set([...metas.notation, ...metas.structure].map(m => m.id)), name: 'meta-pattern' },
+  }
   const seen = new Set<string>()
   for (const e of errors) {
     if (seen.has(e.id)) throw new Error(`Duplicate error id "${e.id}".`)
     seen.add(e.id)
-    const wantPrefix = e.sort === 'false-law' ? 'anti.' : 'mis.'
-    if (!e.id.startsWith(wantPrefix)) {
+    if (!e.id.startsWith(errorPrefixOfSort[e.sort])) {
       throw new Error(`Error "${e.id}" has sort "${e.sort}" but a mismatching id prefix.`)
     }
-    const pool = e.sort === 'false-law' ? lawIds : convIds
-    const poolName = e.sort === 'false-law' ? 'law' : 'convention'
+    const pool = poolOfSort[e.sort]
     for (const r of e.corrupts) {
-      if (!pool.has(r)) throw new Error(`Error "${e.id}" is "of" unknown ${poolName} "${r}".`)
+      if (!pool.ids.has(r)) throw new Error(`Error "${e.id}" corrupts unknown ${pool.name} "${r}".`)
     }
   }
 }

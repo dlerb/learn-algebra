@@ -93,5 +93,14 @@
     "name": { "en": "Adjacent signs written unbracketed", "de": "Rechenzeichen ohne Klammern aneinandergereiht" },
     "text": { "en": "Two operation signs written next to each other.",
               "de": "Zwei Rechenzeichen werden direkt nebeneinander geschrieben." },
-    "instances": ["a + -b", "a - -b"] }
+    "instances": ["a + -b", "a - -b"] },
+
+  { "id": "sal.loudest-op-wins", "code": "S1", "sort": "salience", "corrupts": ["meta.dominant-op-last"],
+    "name": { "en": "The loudest operation wins", "de": "Die auffälligste Operation gewinnt" },
+    "text": { "en": "The most visually prominent operation is named as the structure, instead of the dominant (last-applied) one: the $\\cdot$ in $3x + 2y$, or the $+$ trapped inside a bracket in $3(x+1)$.",
+              "de": "Die optisch auffälligste Operation wird als Struktur benannt statt der dominanten (zuletzt ausgeführten): das $\\cdot$ in $3x + 2y$ oder das $+$ in der Klammer von $3(x+1)$." } },
+  { "id": "sal.implicit-op-overlooked", "code": "S2", "sort": "salience", "corrupts": ["meta.multiplication-binds-tighter"],
+    "name": { "en": "The symbol-less operation overlooked", "de": "Die zeichenlose Operation übersehen" },
+    "text": { "en": "An operation with no visible symbol (juxtaposition) is not seen, so a term is split wrong: $3x$ read as the two chunks $3$ and $x$.",
+              "de": "Eine Operation ohne sichtbares Zeichen (Nebeneinanderschreiben) wird übersehen, sodass ein Term falsch zerlegt wird: $3x$ als die zwei Chunks $3$ und $x$ gelesen." } }
 ]
