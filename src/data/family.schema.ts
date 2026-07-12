@@ -269,6 +269,21 @@ export const conventionDef = z.object({
 })
 export type ConventionDef = z.output<typeof conventionDef>
 
+// Ids and display codes must both be unique (mirrors validateLaws/validateErrors).
+// Codes carry a family suffix when one convention is split into tiers — e.g.
+// precedence → N5a (powers bind first) + N5b (point before line) — so the code
+// uniqueness check is what catches a fat-fingered duplicate suffix.
+export function validateConventions(conventions: ConventionDef[]): void {
+  const seenId = new Set<string>()
+  const seenCode = new Set<string>()
+  for (const c of conventions) {
+    if (seenId.has(c.id)) throw new Error(`Duplicate convention id "${c.id}".`)
+    seenId.add(c.id)
+    if (seenCode.has(c.code)) throw new Error(`Duplicate convention code "${c.code}".`)
+    seenCode.add(c.code)
+  }
+}
+
 // ── Error patterns ───────────────────────────────────────────────────────────
 // First-class citizens of the error space: ONE addressable list that pitfalls
 // cite, so drill data can be analyzed per error pattern from day one. Sorts:

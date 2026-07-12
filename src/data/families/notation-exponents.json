@@ -33,7 +33,7 @@
     "priority": 7,
     "requires": ["notation.coefficient-negative-one", "notation.exponent-as-repeated-product"],
     "metaPatterns": ["meta.exponent-binds-tighter"],
-    "conventions": ["conv.exponent-scope", "conv.precedence"],
+    "conventions": ["conv.exponent-scope", "conv.precedence-power"],
     "note": "The exponent binds before the minus: $-a^2 = -(a^2)$, which is negative. That differs from $(-a)^2 = a^2$, which is positive. E.g. $-3^2 = -9$ but $(-3)^2 = 9$.",
     "equivalents": ["-a^2", "-(a^2)"],
     "pitfalls": [{ "expr": "(-a)^2", "cites": ["mis.exponent-scope"] }, { "expr": "a^2", "cites": ["mis.exponent-scope"] }]

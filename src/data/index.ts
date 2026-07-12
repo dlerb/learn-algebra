@@ -4,7 +4,7 @@
 import {
   parseFamilies, groupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
   validateUniqueIds, validateGroupRefs, validateMetaPatternRefs, validateFamilyLinks,
-  validateLaws, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
+  validateLaws, validateConventions, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
   type Family, type GroupsFile, type MetaPatternsFile,
   type LawDef, type ConventionDef, type ErrorDef,
 } from './family.schema'
@@ -65,6 +65,7 @@ validateGroupRefs(families, groups)
 validateMetaPatternRefs(families, metaPatterns)
 validateFamilyLinks(families)
 validateLaws(laws)
+validateConventions(conventions)
 validateErrors(errorPatterns, laws, conventions)
 validateLayerRefs(families, metaPatterns, laws, conventions, errorPatterns)
 validateLatexCompiles(families, metaPatterns, laws, conventions, errorPatterns)
