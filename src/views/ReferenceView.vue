@@ -44,12 +44,12 @@ const conventionCards = computed(() => conventions.map(c => ({
 
 interface ErrVM {
   id: string; code: string; name: string; text: string
-  of: string[]; instances: string[]
+  corrupts: string[]; instances: string[]
 }
 function errVM(e: ErrorDef): ErrVM {
   return {
     id: e.id, code: e.code, name: loc(e.name, lang.value), text: loc(e.text, lang.value),
-    of: e.of.map(label), instances: e.instances,
+    corrupts: e.corrupts.map(label), instances: e.instances,
   }
 }
 const errorSections = computed(() => [
@@ -122,9 +122,9 @@ const errorSections = computed(() => [
             <div v-if="e.instances.length" class="instances">
               <div v-for="(x, i) in e.instances" :key="i" class="wrong"><MathExpr :latex="x" /></div>
             </div>
-            <div v-if="e.of.length" class="links">
+            <div v-if="e.corrupts.length" class="links">
               {{ s.ofWord }}:
-              <span v-for="(x, i) in e.of" :key="i" class="chip">{{ x }}</span>
+              <span v-for="(x, i) in e.corrupts" :key="i" class="chip">{{ x }}</span>
             </div>
           </article>
         </div>

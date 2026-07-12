@@ -46,9 +46,9 @@ const core = {
   title: localizedString,
   priority: z.number().int().positive().optional(),  // authored drilling rank within the skill; lower = earlier; omit = unranked
   requires: z.array(z.string()).default([]),        // DIRECT prerequisites (family ids, cross-skill allowed) — author the transitive reduction, not the closure
-  metaPatterns: z.array(z.string()).default([]),    // e.g. ["M2"] — refs a meta-pattern in metapatterns.json
+  metaPatterns: z.array(z.string()).default([]),    // e.g. ["M2"] — references a meta-pattern in metapatterns.json
   justifiedBy: z.array(z.string()).default([]),     // law ids (laws.json) that make the true forms true; empty = pure convention
-  conventions: z.array(z.string()).default([]),     // convention ids (conventions.json) the family exercises
+  governedBy: z.array(z.string()).default([]),      // convention ids (conventions.json) the family is governed by
   note: localizedString,                // one/two-line explanation shown in feedback — prose with inline $…$ KaTeX
   conditions: z.string().optional(),    // domain caveat NOT already carried by a cited law — pure LaTeX, e.g. "a > 0", "b \\ne 0"
 }
@@ -60,18 +60,18 @@ const core = {
 // Any pitfall may carry `revise`: family ids to send the student to when this
 // SPECIFIC error fires — for errors that point at a sharper gap than the
 // family-level `requires`. Omit it where `requires` + metaPatterns suffice.
-// Any pitfall may carry `cites`: error-pattern ids (errors.json) naming WHY
-// the wrong form tempts — a false law, a misreading, or one of each.
+// Any pitfall may carry `explainedBy`: error-pattern ids (errors.json) naming
+// WHY the wrong form tempts — a false law, a misreading, or one of each.
 
 // An equivalence pitfall is authored as a bare LaTeX string, or as an object
-// when it carries `revise` or `cites`. Normalized to object form on parse.
+// when it carries `revise` or `explainedBy`. Normalized to object form on parse.
 const equivPitfall = z
   .union([z.string(), z.object({
     expr: z.string(),
     revise: z.array(z.string()).min(1).optional(),
-    cites: z.array(z.string()).min(1).optional(),
+    explainedBy: z.array(z.string()).min(1).optional(),
   })])
-  .transform((p): { expr: string; revise?: string[]; cites?: string[] } =>
+  .transform((p): { expr: string; revise?: string[]; explainedBy?: string[] } =>
     (typeof p === 'string' ? { expr: p } : p))
 
 export const family = z.discriminatedUnion('kind', [
@@ -100,7 +100,7 @@ export const family = z.discriminatedUnion('kind', [
       answer: dominantOp,
       why: localizedString,
       revise: z.array(z.string()).min(1).optional(),
-      cites: z.array(z.string()).min(1).optional(),
+      explainedBy: z.array(z.string()).min(1).optional(),
     })).default([]),
   }),
 
@@ -118,7 +118,7 @@ export const family = z.discriminatedUnion('kind', [
       chunks: z.array(z.string()),
       why: localizedString,
       revise: z.array(z.string()).min(1).optional(),
-      cites: z.array(z.string()).min(1).optional(),
+      explainedBy: z.array(z.string()).min(1).optional(),
     })).default([]),
   }),
 ])
@@ -169,7 +169,7 @@ export const metaPatternDef = z.object({
   code: z.string(),    // display code "M1".."M6" — the classroom name, unique per namespace only
   title: localizedString,
   text: localizedString,                  // the student-facing takeaway line in drill feedback
-  refs: z.array(z.string()).default([]),  // law/convention/error ids this pattern digests — keeps the classroom voice linked to the layer it summarizes
+  summarizes: z.array(z.string()).default([]),  // law/convention/error ids this pattern digests — keeps the classroom voice linked to the layer it summarizes
 })
 export type MetaPatternDef = z.infer<typeof metaPatternDef>
 
@@ -297,7 +297,7 @@ export const errorDef = z.object({
   id: z.string().regex(/^(anti|mis)\.[a-z0-9-]+$/),
   code: z.string(),
   sort: errorSort,
-  of: z.array(z.string()).default([]),
+  corrupts: z.array(z.string()).default([]),
   name: localizedString,
   text: localizedString,
   instances: z.array(z.string()).default([]),   // typical wrong forms, KaTeX
@@ -317,19 +317,19 @@ export function validateErrors(errors: ErrorDef[], laws: LawDef[], conventions: 
     }
     const pool = e.sort === 'false-law' ? lawIds : convIds
     const poolName = e.sort === 'false-law' ? 'law' : 'convention'
-    for (const r of e.of) {
+    for (const r of e.corrupts) {
       if (!pool.has(r)) throw new Error(`Error "${e.id}" is "of" unknown ${poolName} "${r}".`)
     }
   }
 }
 
 // ── Cross-layer references from families and meta-patterns ──────────────────
-// `justifiedBy` → laws; `conventions` → conventions; pitfall `cites` → error
-// patterns; meta-pattern `refs` → any of the three.
+// `justifiedBy` → laws; `governedBy` → conventions; pitfall `explainedBy` →
+// error patterns; meta-pattern `summarizes` → any of the three.
 
-function citeTargets(f: Family): string[] {
-  const pitfalls: { cites?: string[] }[] = f.pitfalls
-  return pitfalls.flatMap(p => p.cites ?? [])
+function explainedByTargets(f: Family): string[] {
+  const pitfalls: { explainedBy?: string[] }[] = f.pitfalls
+  return pitfalls.flatMap(p => p.explainedBy ?? [])
 }
 
 export function validateLayerRefs(
@@ -344,18 +344,18 @@ export function validateLayerRefs(
     for (const r of f.justifiedBy) {
       if (!lawIds.has(r)) throw new Error(`Family "${f.id}" is justifiedBy unknown law "${r}".`)
     }
-    for (const r of f.conventions) {
+    for (const r of f.governedBy) {
       if (!convIds.has(r)) throw new Error(`Family "${f.id}" references unknown convention "${r}".`)
     }
-    for (const r of citeTargets(f)) {
-      if (!errIds.has(r)) throw new Error(`A pitfall of "${f.id}" cites unknown error pattern "${r}".`)
+    for (const r of explainedByTargets(f)) {
+      if (!errIds.has(r)) throw new Error(`A pitfall of "${f.id}" is explainedBy unknown error pattern "${r}".`)
     }
   }
   for (const ns of ['notation', 'structure'] as const) {
     for (const m of metas[ns]) {
-      for (const r of m.refs) {
+      for (const r of m.summarizes) {
         if (!lawIds.has(r) && !convIds.has(r) && !errIds.has(r)) {
-          throw new Error(`Meta-pattern ${ns}/${m.id} refs unknown id "${r}".`)
+          throw new Error(`Meta-pattern ${ns}/${m.id} summarizes unknown id "${r}".`)
         }
       }
     }
@@ -373,29 +373,29 @@ export function auditCoverage(
   laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
 ): string[] {
   const lines: string[] = []
-  const untagged = families.filter(f => f.justifiedBy.length === 0 && f.conventions.length === 0)
+  const untagged = families.filter(f => f.justifiedBy.length === 0 && f.governedBy.length === 0)
   if (untagged.length > 0) {
     lines.push(`${untagged.length}/${families.length} families have no layer coordinates yet (justifiedBy/conventions).`)
   }
 
   // Authored ⊆ derived: on a tagged family, every authored meta-pattern should
-  // be reachable from the family's coordinates via the pattern's refs.
+  // be reachable from the family's coordinates via the pattern's summarizes.
   // (Authored stays curation — this only catches a missing tag or a
   // meta-pattern citation that doesn't fit the family.)
   for (const f of families) {
-    if (f.justifiedBy.length === 0 && f.conventions.length === 0) continue
-    const coords = new Set([...f.justifiedBy, ...f.conventions, ...citeTargets(f)])
+    if (f.justifiedBy.length === 0 && f.governedBy.length === 0) continue
+    const coords = new Set([...f.justifiedBy, ...f.governedBy, ...explainedByTargets(f)])
     const unsupported = f.metaPatterns.filter(mid => {
       const mp = metas[namespaceOf(f.id)].find(m => m.id === mid)
-      return mp !== undefined && !mp.refs.some(r => coords.has(r))
+      return mp !== undefined && !mp.summarizes.some(r => coords.has(r))
     })
     if (unsupported.length > 0) {
-      lines.push(`"${f.id}" cites meta-patterns its coordinates don't support: ${unsupported.join(', ')}`)
+      lines.push(`"${f.id}" declares meta-patterns its coordinates don't support: ${unsupported.join(', ')}`)
     }
   }
   const citedLaws = new Set(families.flatMap(f => f.justifiedBy))
-  const citedConvs = new Set(families.flatMap(f => f.conventions))
-  const citedErrs = new Set(families.flatMap(citeTargets))
+  const citedConvs = new Set(families.flatMap(f => f.governedBy))
+  const citedErrs = new Set(families.flatMap(explainedByTargets))
   const uncited = (kind: string, ids: string[], cited: Set<string>) => {
     const free = ids.filter(id => !cited.has(id))
     if (free.length > 0) lines.push(`${kind} cited by no family: ${free.join(', ')}`)

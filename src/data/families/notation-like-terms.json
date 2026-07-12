@@ -8,10 +8,10 @@
     "requires": ["notation.repeated-addition"],
     "metaPatterns": ["meta.juxtaposition"],
     "justifiedBy": ["thm.collect-like-terms"],
-    "conventions": ["conv.juxtaposition"],
+    "governedBy": ["conv.juxtaposition"],
     "note": "$2 + 3x$ is a finished object — it does not collapse to $5x$. Only like terms combine ($x + x = 2x$); $2$ and $3x$ are not like.",
     "equivalents": ["2 + 3x", "3x + 2"],
-    "pitfalls": [{ "expr": "5x", "cites": ["anti.conjoining"] }]
+    "pitfalls": [{ "expr": "5x", "explainedBy": ["anti.conjoining"] }]
   },
   {
     "kind": "equivalence",
@@ -22,10 +22,10 @@
     "requires": ["notation.number-plus-term"],
     "metaPatterns": ["meta.juxtaposition"],
     "justifiedBy": ["thm.collect-like-terms"],
-    "conventions": ["conv.juxtaposition"],
+    "governedBy": ["conv.juxtaposition"],
     "note": "3x + 2y cannot combine into one term — x and y are different objects. 5xy would be a product, something else entirely.",
     "equivalents": ["3x + 2y", "2y + 3x"],
-    "pitfalls": [{ "expr": "5xy", "cites": ["anti.conjoining"] }]
+    "pitfalls": [{ "expr": "5xy", "explainedBy": ["anti.conjoining"] }]
   },
   {
     "kind": "equivalence",
@@ -38,6 +38,6 @@
     "justifiedBy": ["thm.collect-like-terms"],
     "note": "$x^2 + x$ has two unlike terms — it is not $x^3$. Exponents grow when powers are multiplied ($x^2 \\cdot x = x^3$), never when they are added.",
     "equivalents": ["x^2 + x", "x + x^2"],
-    "pitfalls": [{ "expr": "x^3", "cites": ["anti.conjoining"] }]
+    "pitfalls": [{ "expr": "x^3", "explainedBy": ["anti.conjoining"] }]
   }
 ]

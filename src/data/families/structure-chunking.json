@@ -37,7 +37,7 @@
     "priority": 8,
     "requires": ["notation.precedence-brackets"],
     "justifiedBy": ["ax.add-associative", "ax.add-commutative"],
-    "conventions": ["conv.precedence"],
+    "governedBy": ["conv.precedence"],
     "metaPatterns": ["meta.dominant-op-last"],
     "note": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
     "examples": [
@@ -45,7 +45,7 @@
       { "expr": "a^2 b + a b^2", "chunks": ["a^2 b", "a b^2"], "op": "sum" }
     ],
     "pitfalls": [
-      { "chunks": ["3", "x", "2", "y"], "why": "not reading the implicit multiplication that binds 3 and x into one chunk", "cites": ["mis.precedence-ignored"] }
+      { "chunks": ["3", "x", "2", "y"], "why": "not reading the implicit multiplication that binds 3 and x into one chunk", "explainedBy": ["mis.precedence-ignored"] }
     ]
   },
   {

@@ -7,10 +7,10 @@
     "priority": 19,
     "conditions": "b \\ne 0",
     "metaPatterns": [],
-    "conventions": ["conv.division-signs"],
+    "governedBy": ["conv.division-signs"],
     "note": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
     "equivalents": ["a \\div b", "a : b", "\\frac{a}{b}"],
-    "pitfalls": [{ "expr": "b : a", "cites": ["anti.commute-everything"] }]
+    "pitfalls": [{ "expr": "b : a", "explainedBy": ["anti.commute-everything"] }]
   },
   {
     "kind": "equivalence",
@@ -47,7 +47,7 @@
     "requires": ["notation.fraction-bar-grouping"],
     "metaPatterns": ["meta.fraction-bar-brackets", "meta.only-multiplication-distributes"],
     "justifiedBy": ["thm.split-numerator", "ax.distributivity"],
-    "conventions": ["conv.fraction-bar"],
+    "governedBy": ["conv.fraction-bar"],
     "note": "You may split a sum in the numerator: (a+b)/c = a/c + b/c. You may NOT split the denominator: a/(b+c) is not a/b + a/c.",
     "equivalents": ["\\frac{a+b}{c}", "\\frac{a}{c} + \\frac{b}{c}"],
     "pitfalls": []
@@ -61,11 +61,11 @@
     "requires": ["notation.splitting-a-fraction"],
     "metaPatterns": ["meta.fraction-bar-brackets", "meta.only-multiplication-distributes"],
     "justifiedBy": ["thm.split-numerator"],
-    "conventions": ["conv.fraction-bar"],
+    "governedBy": ["conv.fraction-bar"],
     "note": "Splitting works over the numerator only. $c/(a+b)$ is $c$ divided by the whole chunk $a+b$ — it is not $c/a + c/b$. (Check with numbers: $12/(2+4) = 2$, but $12/2 + 12/4 = 9$.)",
     "conditions": "a+b \\ne 0",
     "equivalents": ["\\frac{c}{a+b}", "c \\div (a+b)"],
-    "pitfalls": [{ "expr": "\\frac{c}{a} + \\frac{c}{b}", "cites": ["anti.linearity"] }]
+    "pitfalls": [{ "expr": "\\frac{c}{a} + \\frac{c}{b}", "explainedBy": ["anti.linearity"] }]
   },
   {
     "kind": "equivalence",
@@ -76,9 +76,9 @@
     "requires": ["notation.splitting-a-fraction"],
     "metaPatterns": ["meta.fraction-bar-brackets", "meta.only-multiplication-distributes"],
     "justifiedBy": ["thm.split-numerator", "thm.cancel-common-factor"],
-    "conventions": ["conv.fraction-bar"],
+    "governedBy": ["conv.fraction-bar"],
     "note": "You cannot cancel the 3 against one term of the numerator: $(3x+2)/3 = x + 2/3$, not $x + 2$. Cancelling needs a common factor of the WHOLE numerator.",
     "equivalents": ["\\frac{3x+2}{3}", "x + \\frac{2}{3}"],
-    "pitfalls": [{ "expr": "x + 2", "cites": ["anti.linearity"] }]
+    "pitfalls": [{ "expr": "x + 2", "explainedBy": ["anti.linearity"] }]
   }
 ]

@@ -43,14 +43,14 @@ interface CardVM {
   metas: string[]
   requires: string[]
   laws: string[]
-  conventions: string[]
+  governedBy: string[]
   equivChain?: string
-  equivPitfalls?: { latex: string; revise: string[]; cites: string[] }[]
+  equivPitfalls?: { latex: string; revise: string[]; explainedBy: string[] }[]
   classExamples?: string[]
   classAnswer?: string
-  classPitfalls?: { answer: string; why: string; revise: string[]; cites: string[] }[]
+  classPitfalls?: { answer: string; why: string; revise: string[]; explainedBy: string[] }[]
   decomp?: { expr: string; chunks: string[]; op: string }[]
-  decompPitfalls?: { why: string; revise: string[]; cites: string[] }[]
+  decompPitfalls?: { why: string; revise: string[]; explainedBy: string[] }[]
 }
 
 function familyTitle(id: string): string {
@@ -67,7 +67,7 @@ function toVM(f: Family): CardVM {
     metas: f.metaPatterns.map(m => metaLabel(ns, m)),
     requires: f.requires.map(familyTitle),
     laws: f.justifiedBy.map(layerLabel),
-    conventions: f.conventions.map(layerLabel),
+    governedBy: f.governedBy.map(layerLabel),
   }
   if (f.kind === 'equivalence') {
     return {
@@ -76,7 +76,7 @@ function toVM(f: Family): CardVM {
       equivPitfalls: f.pitfalls.map(p => ({
         latex: `${f.equivalents[0]} \\neq ${p.expr}`,
         revise: (p.revise ?? []).map(familyTitle),
-        cites: (p.cites ?? []).map(layerLabel),
+        explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
   }
@@ -86,7 +86,7 @@ function toVM(f: Family): CardVM {
       classPitfalls: f.pitfalls.map(p => ({
         answer: p.answer, why: loc(p.why, lang.value),
         revise: (p.revise ?? []).map(familyTitle),
-        cites: (p.cites ?? []).map(layerLabel),
+        explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
   }
@@ -95,7 +95,7 @@ function toVM(f: Family): CardVM {
     decompPitfalls: f.pitfalls.map(p => ({
       why: loc(p.why, lang.value),
       revise: (p.revise ?? []).map(familyTitle),
-      cites: (p.cites ?? []).map(layerLabel),
+      explainedBy: (p.explainedBy ?? []).map(layerLabel),
     })),
   }
 }
@@ -191,21 +191,21 @@ function hasErrors(c: CardVM): boolean {
               <template v-if="c.equivPitfalls">
                 <div v-for="(p, i) in c.equivPitfalls" :key="i" class="err">
                   <MathExpr :latex="p.latex" />
-                  <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
+                  <span v-if="p.explainedBy.length" class="cites">{{ p.explainedBy.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.classPitfalls">
                 <div v-for="(p, i) in c.classPitfalls" :key="i" class="err">
                   not <strong>{{ p.answer }}</strong> — <RichText :text="p.why" />
-                  <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
+                  <span v-if="p.explainedBy.length" class="cites">{{ p.explainedBy.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.decompPitfalls">
                 <div v-for="(p, i) in c.decompPitfalls" :key="i" class="err">
                   <RichText :text="p.why" />
-                  <span v-if="p.cites.length" class="cites">{{ p.cites.join(' + ') }}</span>
+                  <span v-if="p.explainedBy.length" class="cites">{{ p.explainedBy.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
@@ -221,9 +221,9 @@ function hasErrors(c: CardVM): boolean {
               <span class="chip-label">laws</span>
               <span v-for="(l, i) in c.laws" :key="i" class="meta-chip law-chip">{{ l }}</span>
             </div>
-            <div v-if="c.conventions.length" class="chip-row">
+            <div v-if="c.governedBy.length" class="chip-row">
               <span class="chip-label">conv</span>
-              <span v-for="(cv, i) in c.conventions" :key="i" class="meta-chip conv-chip">{{ cv }}</span>
+              <span v-for="(cv, i) in c.governedBy" :key="i" class="meta-chip conv-chip">{{ cv }}</span>
             </div>
             <details class="json">
               <summary>json</summary>
