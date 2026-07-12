@@ -77,8 +77,7 @@ no new disambiguation content, it points at what already exists.
 | N1 | `conv.juxtaposition` | juxtaposition means multiplication |
 | N3 | `conv.minus-roles` | one minus symbol, three roles (binary / unary / sign) |
 | N4 | `conv.brackets-group` | brackets group (and override precedence) |
-| N5a | `conv.precedence-power` | powers bind first (power tighter than × ÷) |
-| N5b | `conv.precedence-point-line` | point before line (× ÷ tighter than + −) |
+| N5 | `conv.precedence` | precedence: point before line (× ÷ tighter than + −) |
 | N6 | `conv.fraction-bar` | the fraction bar is a bracket |
 | N7 | `conv.division-signs` | division signs are synonyms |
 | N8 | `conv.exponent-scope` | exponent scope |
@@ -96,8 +95,8 @@ means the rule is variadic and homogeneous.
 
 | id | rank | dominantOp label(s) | astHead | roles | governed by | digest |
 |---|---|---|---|---|---|---|
-| `prod.additive` | 1 | sum, difference | `Add` | *terms* (variadic) | N5b, N3, N12 | M1, M3 |
-| `prod.multiplicative` | 2 | product | `Multiply` | *factors* (variadic) | N1, N5a, N5b, N7 | M3, M1 |
+| `prod.additive` | 1 | sum, difference | `Add` | *terms* (variadic) | N5, N3, N12 | M1, M3 |
+| `prod.multiplicative` | 2 | product | `Multiply` | *factors* (variadic) | N1, N5, N7 | M3, M1 |
 | `prod.fraction` | 2 | quotient | `Divide`/`Rational` | numerator, denominator | N6, N7 | M1, M2 |
 | `prod.power` | 4 | power | `Power` | base, exponent | N8 | M1 |
 | `prod.root` | 4 | *(none — see open q.)* | `Sqrt`/`Root` | radicand, (index) | N9 | M2 |

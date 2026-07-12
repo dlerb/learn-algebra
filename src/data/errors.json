@@ -52,7 +52,7 @@
     "name": { "en": "Redundant brackets left standing", "de": "Überflüssige Klammern bleiben stehen" },
     "text": { "en": "The term stays needlessly complicated. Not a wrong-answer error: a fluency deficit, visible as slowness and clutter.",
               "de": "Der Term bleibt unnötig kompliziert. Kein Fehler mit falschem Resultat: ein Geläufigkeitsdefizit, sichtbar als Langsamkeit und Unordnung." } },
-  { "id": "mis.precedence-ignored", "code": "R7", "sort": "misreading", "of": ["conv.precedence-power", "conv.precedence-point-line"],
+  { "id": "mis.precedence-ignored", "code": "R7", "sort": "misreading", "of": ["conv.precedence"],
     "name": { "en": "Precedence ignored", "de": "Vorrang missachtet" },
     "text": { "en": "Evaluated left to right: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$.",
               "de": "Von links nach rechts gerechnet: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$." },

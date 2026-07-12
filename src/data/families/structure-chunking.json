@@ -37,7 +37,7 @@
     "priority": 8,
     "requires": ["notation.precedence-brackets"],
     "justifiedBy": ["ax.add-associative", "ax.add-commutative"],
-    "conventions": ["conv.precedence-point-line"],
+    "conventions": ["conv.precedence"],
     "metaPatterns": ["meta.dominant-op-last"],
     "note": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
     "examples": [
