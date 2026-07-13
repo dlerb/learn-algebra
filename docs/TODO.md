@@ -12,7 +12,7 @@ Status legend: [ ] not started · [~] in progress · [x] done
   - [x] Exercise type derived from `kind`, not stored; `skill`/`flag`/`code` dropped as redundant
   - [x] Readable slug ids (`notation.<slug>` / `structure.<slug>`); namespace = skill
 - [x] All 54 families authored as JSON, one file per group (`src/data/families/*.json`)
-- [x] Groups + meta-patterns as namespaced data (`groups.json`, `metapatterns.json`), referenced by families
+- [x] Groups + meta-patterns as namespaced data (`familyGroups.json`, `metapatterns.json`), referenced by families
 - [x] Load-time validation: schema, unique ids, group refs, meta-pattern refs (throws with offending id)
 - [x] Read-only card view (`TaxonomyView.vue`) — green true-forms vs red pitfalls
 - [x] Retired the old pre-refactor path (families.ts, generator, SessionView, old schema docs)

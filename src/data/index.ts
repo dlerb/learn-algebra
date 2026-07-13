@@ -8,7 +8,7 @@ import {
   type Family, type GroupsFile, type LawGroupsFile, type ConventionGroupsFile, type MetaPatternsFile,
   type LawDef, type ConventionDef, type ErrorDef,
 } from './family.schema'
-import groupsRaw from './groups.json'
+import groupsRaw from './familyGroups.json'
 import lawGroupsRaw from './lawGroups.json'
 import conventionGroupsRaw from './conventionGroups.json'
 import metasRaw from './metapatterns.json'

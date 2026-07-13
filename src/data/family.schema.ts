@@ -42,7 +42,7 @@ export function loc(ls: LocalizedString, lang: Lang): string {
 const core = {
   id: z.string().regex(/^(notation|structure)\.[a-z0-9-]+$/,
     'id must be "notation.<slug>" or "structure.<slug>" (lowercase, kebab-case)'),
-  group: z.string(),                    // group slug, e.g. "minus-sign"; must exist in groups.json
+  group: z.string(),                    // group slug, e.g. "minus-sign"; must exist in familyGroups.json
   title: localizedString,
   priority: z.number().int().positive().optional(),  // authored drilling rank within the skill; lower = earlier; omit = unranked
   requires: z.array(z.string()).default([]),        // DIRECT prerequisites (family ids, cross-skill allowed) — author the transitive reduction, not the closure
@@ -134,7 +134,7 @@ export function namespaceOf(id: string): Namespace {
 
 // ── Groups ───────────────────────────────────────────────────────────────────
 // Groups organize families into ordered sections in the lookup view. Defined once
-// in groups.json (keyed by namespace: "notation" | "structure"); a family
+// in familyGroups.json (keyed by namespace: "notation" | "structure"); a family
 // references its group by slug. Array order = display order.
 
 export const groupDef = z.object({
@@ -223,8 +223,8 @@ export const lawGroup = z.enum([
 export type LawGroup = z.infer<typeof lawGroup>
 
 // Display registry for the law groups — titles + display order — in its own file
-// (lawGroups.json), mirroring groups.json for families. Kept separate from
-// groups.json because that file is keyed by family namespace, a different axis.
+// (lawGroups.json), mirroring familyGroups.json for families. Kept separate from
+// familyGroups.json because that file is keyed by family namespace, a different axis.
 // The slug set must equal the lawGroup enum exactly, so a title can never drift
 // from a value laws use, nor a group go titleless. `groupDef` is reused (defined
 // above): { slug, title, blurb? }, array order = display order.
