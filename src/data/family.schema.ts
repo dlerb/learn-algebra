@@ -222,6 +222,29 @@ export const lawGroup = z.enum([
 ])
 export type LawGroup = z.infer<typeof lawGroup>
 
+// Display registry for the law groups — titles + display order — in its own file
+// (lawGroups.json), mirroring groups.json for families. Kept separate from
+// groups.json because that file is keyed by family namespace, a different axis.
+// The slug set must equal the lawGroup enum exactly, so a title can never drift
+// from a value laws use, nor a group go titleless. `groupDef` is reused (defined
+// above): { slug, title, blurb? }, array order = display order.
+export const lawGroupsFile = z.array(groupDef)
+export type LawGroupsFile = z.infer<typeof lawGroupsFile>
+
+export function validateLawGroups(registry: GroupDef[]): void {
+  const slugs = registry.map(g => g.slug)
+  const dup = slugs.find((s, i) => slugs.indexOf(s) !== i)
+  if (dup) throw new Error(`Duplicate law-group slug "${dup}".`)
+  const inEnum = new Set<string>(lawGroup.options)
+  const inReg = new Set(slugs)
+  for (const s of inReg) {
+    if (!inEnum.has(s)) throw new Error(`lawGroups.json lists unknown group "${s}" (not in the lawGroup enum).`)
+  }
+  for (const s of inEnum) {
+    if (!inReg.has(s)) throw new Error(`lawGroups.json is missing a title for group "${s}".`)
+  }
+}
+
 export const lawDef = z.object({
   id: z.string().regex(/^(ax|def|thm)\.[a-z0-9-]+$/),
   code: z.string(),

@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { laws, conventions, errorPatterns } from '../data'
+import { laws, lawGroups, conventions, errorPatterns } from '../data'
 import { loc, type LawDef, type ErrorDef, type LawGroup } from '../data/family.schema'
 import { lang } from '../lang'
 
@@ -34,7 +34,8 @@ function lawVM(l: LawDef): LawVM {
 
 // Laws can be sectioned two ways: by `kind` (their place in the tower) or by
 // `group` (the classroom topic — "the power laws", "the fraction laws"). The
-// topic order and titles are authored here; a topic with no laws is dropped.
+// topic titles and display order come from the lawGroups.json registry; a topic
+// with no laws is dropped.
 const groupBy = ref<'kind' | 'topic'>('kind')
 
 const lawKindSections = computed(() => [
@@ -43,19 +44,9 @@ const lawKindSections = computed(() => [
   { title: 'Theorems — with their derivations', items: laws.filter(l => l.kind === 'theorem').map(lawVM) },
 ])
 
-const topicOrder: { group: LawGroup; title: string }[] = [
-  { group: 'addition', title: 'Addition laws' },
-  { group: 'multiplication', title: 'Multiplication laws' },
-  { group: 'distribution', title: 'Distribution' },
-  { group: 'signs', title: 'Sign & minus laws' },
-  { group: 'fractions', title: 'Fraction laws' },
-  { group: 'powers', title: 'Power laws' },
-  { group: 'roots', title: 'Root laws' },
-  { group: 'binomials', title: 'Binomial formulas' },
-]
 const lawTopicSections = computed(() =>
-  topicOrder
-    .map(t => ({ title: t.title, items: laws.filter(l => l.group === t.group).map(lawVM) }))
+  lawGroups
+    .map(t => ({ title: t.title, items: laws.filter(l => l.group === (t.slug as LawGroup)).map(lawVM) }))
     .filter(s => s.items.length > 0),
 )
 

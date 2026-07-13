@@ -1,0 +1,10 @@
+[
+  { "slug": "addition", "title": "Addition laws" },
+  { "slug": "multiplication", "title": "Multiplication laws" },
+  { "slug": "distribution", "title": "Distribution" },
+  { "slug": "signs", "title": "Sign & minus laws" },
+  { "slug": "fractions", "title": "Fraction laws" },
+  { "slug": "powers", "title": "Power laws" },
+  { "slug": "roots", "title": "Root laws" },
+  { "slug": "binomials", "title": "Binomial formulas" }
+]
