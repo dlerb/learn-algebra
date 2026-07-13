@@ -57,7 +57,7 @@ kind-matching id prefix; `code` is display-only, never identity:
 | File | Entry | `kind` values | `group` | id = prefix + slug | `code` |
 |---|---|---|---|---|---|
 | `laws.json` | law | `axiom` · `definition` · `theorem` | ✓ → `lawGroups.json` | `ax.` / `def.` / `thm.` (= kind) | A / D / T |
-| `conventions.json` | convention | — (no kind) | ✓ `reading`·`grouping`·`form` | `conv.` (fixed) | N |
+| `conventions.json` | convention | — (no kind) | ✓ → `conventionGroups.json` | `conv.` (fixed) | N |
 | `errors.json` | error pattern | `false-law` · `misreading` · `salience` | — (derived from `corrupts`) | `anti.` / `mis.` / `sal.` (= kind) | Ā / R / S |
 | `metapatterns.json` | meta-pattern | — (no kind) | — (file keyed by skill) | `meta.` (fixed) | M |
 | `families/<skill>-<group>.json` | family | `equivalence` · `recognition` · `classification` · `chunking` · (`transformation`) | ✓ → `familyGroups.json` | `<kind>.` (= kind) | — (none) |
@@ -70,6 +70,15 @@ values above; each is validated so titles can't drift from the values entries us
 | `lawGroups.json` | laws | flat array (= display order) | `{ slug, title, blurb? }` | must equal the `lawGroup` enum exactly |
 | `conventionGroups.json` | conventions | flat array | `{ slug, title, blurb? }` | must equal the `conventionGroup` enum exactly |
 | `familyGroups.json` | families | by **skill** (`equivalence` / `classification` / `transformation`) | `{ slug, title, blurb? }` | a family's `group` must exist under its skill |
+
+**Group vocabularies** — the slugs each registry defines (titles/blurbs live in the files):
+
+- **`lawGroups.json`** → `addition` · `multiplication` · `distribution` · `signs` · `fractions` · `powers` · `roots` · `binomials`
+- **`conventionGroups.json`** → `reading` · `grouping` · `form`
+- **`familyGroups.json`**, keyed by **skill** (derived from `kind` via `skillOf` — there is no stored skill field):
+  - `equivalence` (Skill 1) → `multiplication` · `like-terms` · `minus-sign` · `brackets` · `exponents` · `fractions` · `commutativity`
+  - `classification` (Skill 2) → `basic-forms` · `misleading-forms` · `chunking` · `familiar-shapes` · `full-classification`
+  - `transformation` (Skill 3) → none yet
 
 Two rules tie it together: (1) **id prefix = `kind`** wherever a kind exists —
 the validator enforces prefix↔kind, exactly as for laws (`ax`/`def`/`thm`);
