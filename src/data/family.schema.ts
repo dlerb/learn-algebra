@@ -231,18 +231,22 @@ export type LawGroup = z.infer<typeof lawGroup>
 export const lawGroupsFile = z.array(groupDef)
 export type LawGroupsFile = z.infer<typeof lawGroupsFile>
 
-export function validateLawGroups(registry: GroupDef[]): void {
+// Shared registry check (used by law and convention group registries): the
+// registry's slug set must equal the group enum's value set exactly — no
+// duplicate, no unknown group, no missing title — so display titles/order can
+// never drift from the values entries actually carry.
+function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[], file: string): void {
   const slugs = registry.map(g => g.slug)
   const dup = slugs.find((s, i) => slugs.indexOf(s) !== i)
-  if (dup) throw new Error(`Duplicate law-group slug "${dup}".`)
-  const inEnum = new Set<string>(lawGroup.options)
+  if (dup) throw new Error(`Duplicate group slug "${dup}" in ${file}.`)
+  const inEnum = new Set<string>(allowed)
   const inReg = new Set(slugs)
-  for (const s of inReg) {
-    if (!inEnum.has(s)) throw new Error(`lawGroups.json lists unknown group "${s}" (not in the lawGroup enum).`)
-  }
-  for (const s of inEnum) {
-    if (!inReg.has(s)) throw new Error(`lawGroups.json is missing a title for group "${s}".`)
-  }
+  for (const s of inReg) if (!inEnum.has(s)) throw new Error(`${file} lists unknown group "${s}".`)
+  for (const s of inEnum) if (!inReg.has(s)) throw new Error(`${file} is missing a title for group "${s}".`)
+}
+
+export function validateLawGroups(registry: GroupDef[]): void {
+  validateGroupRegistry(registry, lawGroup.options, 'lawGroups.json')
 }
 
 export const lawDef = z.object({
@@ -307,6 +311,16 @@ export function validateLaws(laws: LawDef[]): void {
 
 export const conventionGroup = z.enum(['reading', 'grouping', 'form'])
 export type ConventionGroup = z.infer<typeof conventionGroup>
+
+// Display registry for the convention groups — titles + display order + blurbs —
+// its own file (conventionGroups.json), parallel to lawGroups.json. Slug set must
+// equal the conventionGroup enum exactly (see validateGroupRegistry).
+export const conventionGroupsFile = z.array(groupDef)
+export type ConventionGroupsFile = z.infer<typeof conventionGroupsFile>
+
+export function validateConventionGroups(registry: GroupDef[]): void {
+  validateGroupRegistry(registry, conventionGroup.options, 'conventionGroups.json')
+}
 
 export const conventionDef = z.object({
   id: z.string().regex(/^conv\.[a-z0-9-]+$/),

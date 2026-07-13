@@ -1,0 +1,8 @@
+[
+  { "slug": "reading", "title": "Reading the notation",
+    "blurb": "What a symbol — or its absence — stands for: the meaning side of the notation, where most misreadings start." },
+  { "slug": "grouping", "title": "Grouping & precedence",
+    "blurb": "How symbols bind into structure — what forms one chunk, and what binds tighter than what." },
+  { "slug": "form", "title": "Canonical form",
+    "blurb": "Which spellings are legal and which are canonical — pure writing rules, with no truth content of their own." }
+]

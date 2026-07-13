@@ -2,14 +2,15 @@
 // duplicate id, a dangling group, or a dangling meta-pattern reference throws
 // here immediately with the offending id named.
 import {
-  parseFamilies, groupsFile, lawGroupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
-  validateUniqueIds, validateGroupRefs, validateLawGroups, validateMetaPatternRefs, validateFamilyLinks,
+  parseFamilies, groupsFile, lawGroupsFile, conventionGroupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
+  validateUniqueIds, validateGroupRefs, validateLawGroups, validateConventionGroups, validateMetaPatternRefs, validateFamilyLinks,
   validateLaws, validateConventions, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Family, type GroupsFile, type LawGroupsFile, type MetaPatternsFile,
+  type Family, type GroupsFile, type LawGroupsFile, type ConventionGroupsFile, type MetaPatternsFile,
   type LawDef, type ConventionDef, type ErrorDef,
 } from './family.schema'
 import groupsRaw from './groups.json'
 import lawGroupsRaw from './lawGroups.json'
+import conventionGroupsRaw from './conventionGroups.json'
 import metasRaw from './metapatterns.json'
 import lawsRaw from './laws.json'
 import conventionsRaw from './conventions.json'
@@ -45,6 +46,7 @@ const familyFiles: unknown[][] = [
 
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)
 export const lawGroups: LawGroupsFile = lawGroupsFile.parse(lawGroupsRaw)
+export const conventionGroups: ConventionGroupsFile = conventionGroupsFile.parse(conventionGroupsRaw)
 export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
 
 // Layers 1+2 (docs/laws_and_conventions.md): the coordinate system families
@@ -65,6 +67,7 @@ export const rawById = new Map<string, unknown>(
 validateUniqueIds(families)
 validateGroupRefs(families, groups)
 validateLawGroups(lawGroups)
+validateConventionGroups(conventionGroups)
 validateMetaPatternRefs(families, metaPatterns)
 validateFamilyLinks(families)
 validateLaws(laws)

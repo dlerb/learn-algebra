@@ -2,8 +2,8 @@
 import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { laws, lawGroups, conventions, errorPatterns } from '../data'
-import { loc, type LawDef, type ErrorDef, type LawGroup } from '../data/family.schema'
+import { laws, lawGroups, conventions, conventionGroups, errorPatterns } from '../data'
+import { loc, type LawDef, type ConventionDef, type ErrorDef, type LawGroup, type ConventionGroup } from '../data/family.schema'
 import { lang } from '../lang'
 
 // The reference rendering of layers 1+2 (docs/laws_and_conventions.md holds
@@ -55,9 +55,20 @@ const lawTopicSections = computed<LawSection[]>(() =>
 const lawSections = computed(() =>
   groupBy.value === 'kind' ? lawKindSections.value : lawTopicSections.value)
 
-const conventionCards = computed(() => conventions.map(c => ({
-  id: c.id, code: c.code, group: c.group, name: loc(c.name, lang.value), text: loc(c.text, lang.value),
-})))
+// Conventions have no `kind`, only a `group` — so they are sectioned by group
+// (reading / grouping / form), titles and blurbs from conventionGroups.json.
+interface ConvVM { id: string; code: string; group: ConventionGroup; name: string; text: string }
+function convVM(c: ConventionDef): ConvVM {
+  return { id: c.id, code: c.code, group: c.group, name: loc(c.name, lang.value), text: loc(c.text, lang.value) }
+}
+const conventionSections = computed(() =>
+  conventionGroups
+    .map(g => ({
+      title: g.title, blurb: g.blurb,
+      items: conventions.filter(c => c.group === (g.slug as ConventionGroup)).map(convVM),
+    }))
+    .filter(s => s.items.length > 0),
+)
 
 interface ErrVM {
   id: string; code: string; name: string; text: string
@@ -122,18 +133,22 @@ const errorSections = computed(() => [
     <section class="block">
       <h2>Conventions</h2>
       <p class="blurb">No truth value — the honest answer to "why?" is "we agreed to write it that way."</p>
-      <div class="cards">
-        <article v-for="c in conventionCards" :key="c.id" class="card">
-          <div class="card-head">
-            <h4>{{ c.name }}</h4>
-            <span class="badges">
-              <span class="badge topic">{{ c.group }}</span>
-              <span class="badge code conv">{{ c.code }}</span>
-            </span>
-          </div>
-          <code class="slug">{{ c.id }}</code>
-          <p class="note"><RichText :text="c.text" /></p>
-        </article>
+      <div v-for="s in conventionSections" :key="s.title" class="group">
+        <h3>{{ s.title }}</h3>
+        <p v-if="s.blurb" class="blurb">{{ s.blurb }}</p>
+        <div class="cards">
+          <article v-for="c in s.items" :key="c.id" class="card">
+            <div class="card-head">
+              <h4>{{ c.name }}</h4>
+              <span class="badges">
+                <span class="badge topic">{{ c.group }}</span>
+                <span class="badge code conv">{{ c.code }}</span>
+              </span>
+            </div>
+            <code class="slug">{{ c.id }}</code>
+            <p class="note"><RichText :text="c.text" /></p>
+          </article>
+        </div>
       </div>
     </section>
 
