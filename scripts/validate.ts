@@ -41,7 +41,7 @@ const wantClass: Record<string, string> = {
 const issues: string[] = []
 
 for (const f of families) {
-  if (f.kind === 'structure') {
+  if (f.kind === 'classification') {
     // one shared `answer`; every example must share that dominant-op class
     for (const ex of f.examples) {
       const got = astClass(ce.parse(ex, { canonical: true }).operator)

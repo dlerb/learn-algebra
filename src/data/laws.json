@@ -163,6 +163,6 @@
     "name": { "en": "Root and power commute (power-of-a-power law for roots)", "de": "Wurzel und Potenz vertauschbar (Potenz einer Potenz für Wurzeln)" },
     "latex": "\\sqrt[n]{a^m} = (\\sqrt[n]{a})^m", "conditions": "a > 0",
     "derivedFrom": ["def.root", "thm.power-of-power"],
-    "note": { "en": "The two readings of def.fractional-exponent agree — why notation.fractional-exponent-root lists both forms.",
-              "de": "Die beiden Lesarten von def.fractional-exponent stimmen überein — darum führt notation.fractional-exponent-root beide Formen auf." } }
+    "note": { "en": "The two readings of def.fractional-exponent agree — why equivalence.fractional-exponent-root lists both forms.",
+              "de": "Die beiden Lesarten von def.fractional-exponent stimmen überein — darum führt equivalence.fractional-exponent-root beide Formen auf." } }
 ]

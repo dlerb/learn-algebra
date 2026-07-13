@@ -3,20 +3,20 @@ import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { families, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
-import { loc, namespaceOf, type Family, type Namespace } from '../data/family.schema'
+import { loc, skillOf, type Family, type Skill } from '../data/family.schema'
 import { lang } from '../lang'
 
 // 'groups' = thematic sections (default); 'order' = one flat list per skill,
 // sorted by drilling priority — for reviewing the sequence itself.
 const viewMode = ref<'groups' | 'order'>('groups')
 
-const namespaces: { key: Namespace; label: string }[] = [
-  { key: 'notation', label: 'Skill 1 · Notation Fluency' },
-  { key: 'structure', label: 'Skill 2 · Structural Recognition' },
+const skills: { key: Skill; label: string }[] = [
+  { key: 'equivalence', label: 'Skill 1 · Equivalence Fluency' },
+  { key: 'classification', label: 'Skill 2 · Structural Recognition' },
 ]
 
-function metaLabel(ns: Namespace, id: string): string {
-  const m = metaPatterns[ns].find(mp => mp.id === id)
+function metaLabel(sk: Skill, id: string): string {
+  const m = metaPatterns[sk].find(mp => mp.id === id)
   return m ? `${m.code} · ${loc(m.title, lang.value)}` : id
 }
 
@@ -59,17 +59,17 @@ function familyTitle(id: string): string {
 }
 
 function toVM(f: Family): CardVM {
-  const ns = namespaceOf(f.id)
+  const sk = skillOf(f.id)
   const base = {
     id: f.id, title: loc(f.title, lang.value), kind: f.kind, group: f.group,
     priority: f.priority, conditions: f.conditions, note: loc(f.note, lang.value),
     json: JSON.stringify(rawById.get(f.id), null, 2),
-    metas: f.metaPatterns.map(m => metaLabel(ns, m)),
+    metas: f.metaPatterns.map(m => metaLabel(sk, m)),
     requires: f.requires.map(familyTitle),
     laws: f.justifiedBy.map(layerLabel),
     governedBy: f.governedBy.map(layerLabel),
   }
-  if (f.kind === 'equivalence') {
+  if (f.kind === 'equivalence' || f.kind === 'recognition') {
     return {
       ...base,
       equivChain: f.equivalents.join(' = '),
@@ -80,7 +80,7 @@ function toVM(f: Family): CardVM {
       })),
     }
   }
-  if (f.kind === 'structure') {
+  if (f.kind === 'classification') {
     return {
       ...base, classExamples: f.examples, classAnswer: f.answer,
       classPitfalls: f.pitfalls.map(p => ({
@@ -105,22 +105,22 @@ const byPriority = (a: Family, b: Family) =>
   || loc(a.title, lang.value).localeCompare(loc(b.title, lang.value))
 
 const sections = computed(() =>
-  namespaces.map(nsDef => ({
-    ...nsDef,
+  skills.map(skillDef => ({
+    ...skillDef,
     groups: viewMode.value === 'order'
       ? [{
           slug: 'order', title: 'Drilling order',
           blurb: 'All families of this skill, ranked first, unranked ("remaining") after.',
           cards: families
-            .filter(f => namespaceOf(f.id) === nsDef.key)
+            .filter(f => skillOf(f.id) === skillDef.key)
             .sort(byPriority)
             .map(toVM),
         }]
-      : groups[nsDef.key]
+      : groups[skillDef.key]
           .map(g => ({
             ...g,
             cards: families
-              .filter(f => namespaceOf(f.id) === nsDef.key && f.group === g.slug)
+              .filter(f => skillOf(f.id) === skillDef.key && f.group === g.slug)
               .sort(byPriority)
               .map(toVM),
           }))

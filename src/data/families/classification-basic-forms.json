@@ -1,11 +1,11 @@
 [
   {
-    "kind": "structure",
-    "id": "structure.sum",
+    "kind": "classification",
+    "id": "classification.sum",
     "group": "basic-forms",
     "title": "Sum",
     "priority": 1,
-    "requires": ["notation.explicit-vs-implicit-product"],
+    "requires": ["equivalence.explicit-vs-implicit-product"],
     "justifiedBy": ["ax.add-associative", "ax.add-commutative"],
     "governedBy": ["conv.precedence"],
     "metaPatterns": ["meta.dominant-op-last"],
@@ -15,12 +15,12 @@
     "pitfalls": []
   },
   {
-    "kind": "structure",
-    "id": "structure.difference",
+    "kind": "classification",
+    "id": "classification.difference",
     "group": "basic-forms",
     "title": "Difference",
     "priority": 2,
-    "requires": ["notation.explicit-vs-implicit-product"],
+    "requires": ["equivalence.explicit-vs-implicit-product"],
     "metaPatterns": ["meta.dominant-op-last"],
     "note": "The last operation applied is subtraction. The chunks are the two terms.",
     "examples": ["a - b", "3x - 2y", "(x+1) - (x-1)"],
@@ -28,12 +28,12 @@
     "pitfalls": []
   },
   {
-    "kind": "structure",
-    "id": "structure.product",
+    "kind": "classification",
+    "id": "classification.product",
     "group": "basic-forms",
     "title": "Product",
     "priority": 3,
-    "requires": ["notation.explicit-vs-implicit-product", "notation.product-with-brackets"],
+    "requires": ["equivalence.explicit-vs-implicit-product", "equivalence.product-with-brackets"],
     "justifiedBy": ["ax.mul-associative", "ax.mul-commutative"],
     "governedBy": ["conv.juxtaposition", "conv.brackets-group", "conv.precedence"],
     "metaPatterns": ["meta.dominant-op-last"],
@@ -43,12 +43,12 @@
     "pitfalls": []
   },
   {
-    "kind": "structure",
-    "id": "structure.quotient",
+    "kind": "classification",
+    "id": "classification.quotient",
     "group": "basic-forms",
     "title": "Quotient",
     "priority": 4,
-    "requires": ["notation.division-variants"],
+    "requires": ["equivalence.division-variants"],
     "metaPatterns": ["meta.dominant-op-last"],
     "note": "The last operation applied is division. The chunks are numerator and denominator.",
     "examples": ["\\frac{a}{b}", "\\frac{x+1}{x-1}", "\\frac{3x}{2y}"],
@@ -56,12 +56,12 @@
     "pitfalls": []
   },
   {
-    "kind": "structure",
-    "id": "structure.power",
+    "kind": "classification",
+    "id": "classification.power",
     "group": "basic-forms",
     "title": "Power",
     "priority": 5,
-    "requires": ["notation.exponent-as-repeated-product"],
+    "requires": ["equivalence.exponent-as-repeated-product"],
     "justifiedBy": ["def.power"],
     "governedBy": ["conv.exponent-scope"],
     "metaPatterns": ["meta.dominant-op-last"],

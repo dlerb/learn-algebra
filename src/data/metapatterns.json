@@ -1,5 +1,5 @@
 {
-  "notation": [
+  "equivalence": [
     { "id": "meta.juxtaposition", "code": "M1",
       "title": { "en": "Juxtaposition means multiplication", "de": "Nebeneinanderschreiben bedeutet Multiplikation" },
       "text": { "en": "Anything written next to anything else, with no symbol between, means multiply: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ are all products.",
@@ -31,7 +31,7 @@
                 "de": "$a(b+c) = ab + ac$, und Teilen durch $c$ geht auch (es ist Multiplizieren mit $1/c$). Sonst verteilt sich nichts: $(a+b)^2$ ist nicht $a^2 + b^2$, die Wurzel aus $a+b$ ist nicht die Summe der Wurzeln, und ein einzelner Summand lässt sich nicht kürzen." },
       "summarizes": ["ax.distributivity", "anti.linearity"] }
   ],
-  "structure": [
+  "classification": [
     { "id": "meta.dominant-op-last", "code": "M7",
       "title": { "en": "The dominant operation is the last one applied", "de": "Die dominante Operation ist die zuletzt ausgeführte" },
       "text": { "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
@@ -51,5 +51,6 @@
       "title": { "en": "The dominant operation determines which tools apply", "de": "Die dominante Operation bestimmt die Werkzeuge" },
       "text": { "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
                 "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen." } }
-  ]
+  ],
+  "transformation": []
 }

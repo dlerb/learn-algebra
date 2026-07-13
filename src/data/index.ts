@@ -15,33 +15,34 @@ import metasRaw from './metapatterns.json'
 import lawsRaw from './laws.json'
 import conventionsRaw from './conventions.json'
 import errorsRaw from './errors.json'
-import notationMultiplication from './families/notation-multiplication.json'
-import notationLikeTerms from './families/notation-like-terms.json'
-import notationMinusSign from './families/notation-minus-sign.json'
-import notationBrackets from './families/notation-brackets.json'
-import notationExponents from './families/notation-exponents.json'
-import notationFractions from './families/notation-fractions.json'
-import notationCommutativity from './families/notation-commutativity.json'
-import structureBasicForms from './families/structure-basic-forms.json'
-import structureMisleadingForms from './families/structure-misleading-forms.json'
-import structureChunking from './families/structure-chunking.json'
-import structureFamiliarShapes from './families/structure-familiar-shapes.json'
-import structureFullClassification from './families/structure-full-classification.json'
+import equivalenceMultiplication from './families/equivalence-multiplication.json'
+import equivalenceLikeTerms from './families/equivalence-like-terms.json'
+import equivalenceMinusSign from './families/equivalence-minus-sign.json'
+import equivalenceBrackets from './families/equivalence-brackets.json'
+import equivalenceExponents from './families/equivalence-exponents.json'
+import equivalenceFractions from './families/equivalence-fractions.json'
+import equivalenceCommutativity from './families/equivalence-commutativity.json'
+import classificationBasicForms from './families/classification-basic-forms.json'
+import classificationMisleadingForms from './families/classification-misleading-forms.json'
+import classificationChunking from './families/classification-chunking.json'
+import classificationFamiliarShapes from './families/classification-familiar-shapes.json'
+import classificationFullClassification from './families/classification-full-classification.json'
 
-// Per-group family files. Add new groups here as they are authored.
+// Per-group family files (named <skill>-<group>). Add new groups here as they
+// are authored.
 const familyFiles: unknown[][] = [
-  notationMultiplication as unknown[],
-  notationLikeTerms as unknown[],
-  notationMinusSign as unknown[],
-  notationBrackets as unknown[],
-  notationExponents as unknown[],
-  notationFractions as unknown[],
-  notationCommutativity as unknown[],
-  structureBasicForms as unknown[],
-  structureMisleadingForms as unknown[],
-  structureChunking as unknown[],
-  structureFamiliarShapes as unknown[],
-  structureFullClassification as unknown[],
+  equivalenceMultiplication as unknown[],
+  equivalenceLikeTerms as unknown[],
+  equivalenceMinusSign as unknown[],
+  equivalenceBrackets as unknown[],
+  equivalenceExponents as unknown[],
+  equivalenceFractions as unknown[],
+  equivalenceCommutativity as unknown[],
+  classificationBasicForms as unknown[],
+  classificationMisleadingForms as unknown[],
+  classificationChunking as unknown[],
+  classificationFamiliarShapes as unknown[],
+  classificationFullClassification as unknown[],
 ]
 
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)

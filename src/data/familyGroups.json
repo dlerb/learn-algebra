@@ -1,5 +1,5 @@
 {
-  "notation": [
+  "equivalence": [
     { "slug": "multiplication", "title": "Multiplication Notation" },
     { "slug": "like-terms", "title": "Like & Unlike Terms", "blurb": "Which sums collapse into one term and which stay open. Conjoining — forcing 2+3x into 5x — is the classic closure error." },
     { "slug": "minus-sign", "title": "The Minus Sign", "blurb": "One notation, three distinct roles: subtraction, negation, and multiply-by-(-1). The single highest-priority group." },
@@ -8,11 +8,12 @@
     { "slug": "fractions", "title": "Division & Fraction Notation" },
     { "slug": "commutativity", "title": "Commutativity & Order" }
   ],
-  "structure": [
+  "classification": [
     { "slug": "basic-forms", "title": "The Five Basic Forms", "blurb": "Recognition in unambiguous cases. Foundation before the misleading forms." },
     { "slug": "misleading-forms", "title": "Misleading Surface Forms", "blurb": "Where a visible operation distracts from the dominant one. The core of Skill 2." },
     { "slug": "chunking", "title": "Chunking" },
     { "slug": "familiar-shapes", "title": "Familiar Shapes" },
     { "slug": "full-classification", "title": "Full Classification" }
-  ]
+  ],
+  "transformation": []
 }
