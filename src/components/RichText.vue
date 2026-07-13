@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import MathExpr from './MathExpr.vue'
 
 // Renders the prose format contract: plain text with inline $…$ KaTeX
-// (docs/laws_and_conventions.md, design decision 10). Deliberately NOT
+// (docs/content_model.md, design decision 10). Deliberately NOT
 // markdown — no parser, no HTML injection; the one feature prose needs is
 // math. Unpaired $ falls through as literal text.
 

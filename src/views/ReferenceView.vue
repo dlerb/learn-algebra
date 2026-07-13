@@ -6,7 +6,7 @@ import { laws, lawGroups, conventions, conventionGroups, errorPatterns } from '.
 import { loc, type LawDef, type ConventionDef, type ErrorDef, type LawGroup, type ConventionGroup } from '../data/family.schema'
 import { lang } from '../lang'
 
-// The reference rendering of layers 1+2 (docs/laws_and_conventions.md holds
+// The reference rendering of layers 1+2 (docs/content_model.md holds
 // the design rationale; the content itself lives in the JSON and is shown
 // here). Law cards show their place in the tower via basedOn/derivedFrom.
 

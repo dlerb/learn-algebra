@@ -1,5 +1,11 @@
 # Taxonomy — Skill 2: Structural Recognition
 
+> 🗄️ **ARCHIVED (2026-07-13), superseded.** These content tables predate the
+> data model — the families now live in `src/data/families/*.json` (browse them
+> in the app's Taxonomy view). Skill 2 is now the `classification` /
+> `chunking` / `recognition` kinds. Kept for historical reference only; do not
+> edit. Design rationale lives in `docs/content_model.md`.
+
 The goal: before touching an expression, identify its dominant operation and main chunks.
 The drill format is always the same: look, classify, name. No computation.
 

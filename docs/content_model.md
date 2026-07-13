@@ -1,10 +1,12 @@
-# Laws & notation conventions — design rationale
+# Content model — design rationale
 
-Layer 1 (laws) and layer 2 (notation conventions) of the three-layer model.
-The families (layer 3) are curated cells of the laws × conventions matrix,
-selected by classroom reality. Layers 1+2 are the *coordinate system* the
-families live in — they justify and audit the families, they do not generate
-them.
+The rationale for how the algebra content is structured: layer 1 (laws), layer 2
+(notation conventions), the error patterns that shadow them, and the families
+(layer 3) built on top. Families are curated cells of the laws × conventions
+matrix, selected by classroom reality; layers 1+2 are the *coordinate system*
+they live in — they justify and audit the families, they do not generate them.
+(Family `kind`/`group`/derived-`skill` classification lives in the schema and
+the "Two classifiers" section below; this doc records the *why*, not the tables.)
 
 **Source of truth: the JSON files** — `src/data/laws.json` (axioms,
 definitions, theorems), `conventions.json`, `errors.json` (false laws +

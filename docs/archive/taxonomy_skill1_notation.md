@@ -1,5 +1,12 @@
 # Taxonomy — Skill 1: Notation Fluency
 
+> 🗄️ **ARCHIVED (2026-07-13), superseded.** These content tables predate the
+> data model — the families now live in `src/data/families/*.json` (browse them
+> in the app's Taxonomy view), and the id scheme here (`A1`…`F4`, "notation
+> fluency") is obsolete: Skill 1 is now the `equivalence` kind. Kept for
+> historical reference only; do not edit. Design rationale lives in
+> `docs/content_model.md`.
+
 Each family is a training unit. Students drill all surface variants until recognition is automatic.
 
 **Flags:**

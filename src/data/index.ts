@@ -50,7 +50,7 @@ export const lawGroups: LawGroupsFile = lawGroupsFile.parse(lawGroupsRaw)
 export const conventionGroups: ConventionGroupsFile = conventionGroupsFile.parse(conventionGroupsRaw)
 export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
 
-// Layers 1+2 (docs/laws_and_conventions.md): the coordinate system families
+// Layers 1+2 (docs/content_model.md): the coordinate system families
 // live in — laws justify, conventions locate, error patterns name the wrong.
 export const laws: LawDef[] = (lawsRaw as unknown[]).map(l => lawDef.parse(l))
 export const conventions: ConventionDef[] = (conventionsRaw as unknown[]).map(c => conventionDef.parse(c))

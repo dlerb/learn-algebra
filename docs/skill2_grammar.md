@@ -1,9 +1,12 @@
 # Skill 2 — The Grammar (production rules)
 
-Status: **design sketch (2026-07-12), for review.** Not yet built. Once
-`grammar.json` exists it becomes the source of truth and this doc reverts to
-rationale only (no content tables — they would drift), the same way
-`laws_and_conventions.md` relates to `laws.json`.
+> ⚠️ **EXPLORATORY — not built, may never be.** A design sketch (2026-07-12)
+> for a possible Skill-2 backbone. It is under active question and *partly
+> superseded*: precedence turned out to be a *convention*, not "the grammar
+> itself," which undercuts the structural-vs-surface split below. Do not treat
+> this as the current model — it is a proposal on the table. If a `grammar.json`
+> ever gets built, that becomes the source of truth and this reverts to rationale
+> only, the way `content_model.md` relates to `laws.json`.
 
 ## Why this exists
 
@@ -18,7 +21,7 @@ decomposes, disambiguated by the parsing **conventions**. This is the exact
 structural analog of Skill 1:
 
 | | the "atoms" | the disambiguation | the family |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Skill 1** | laws (axioms/defs/theorems) | conventions | curated *law × convention* cell |
 | **Skill 2** | grammar productions | **parsing** conventions | curated *production × obscuring-convention* cell |
 

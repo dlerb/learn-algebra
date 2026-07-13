@@ -1,4 +1,4 @@
-// App-wide language switch (docs/laws_and_conventions.md, design decision 9).
+// App-wide language switch (docs/content_model.md, design decision 9).
 // Prose switches between Schweizer Hochdeutsch and English; math notation does
 // not — it stays Swiss regardless of language.
 import { ref, watch } from 'vue'

@@ -233,7 +233,7 @@ export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsF
 }
 
 // ── Laws (layer 1) ───────────────────────────────────────────────────────────
-// The logical skeleton of school algebra (docs/laws_and_conventions.md). Three
+// The logical skeleton of school algebra (docs/content_model.md). Three
 // kinds: axiom (accepted, no links), definition (carries `basedOn` — what it
 // presupposes), theorem (carries `derivedFrom` — what proves it). `kind` is the
 // intrinsic type of the entry (mirroring the family `kind` discriminant); the id
