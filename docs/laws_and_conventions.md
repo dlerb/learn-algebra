@@ -14,26 +14,55 @@ derivation chains. This document deliberately does NOT duplicate the content
 tables (they would drift); it records the design decisions and the narrative
 that are not data.
 
-Ids are sort-prefixed slugs so a derivation chain reads like a proof:
+Ids are kind-prefixed slugs so a derivation chain reads like a proof:
 `ax.add-commutative`, `def.subtraction`, `thm.collect-like-terms`,
 `conv.juxtaposition`, `anti.linearity`, `mis.exponent-scope`. Each entry also
 carries a short display `code` (A1, D3, T11, N1, Ā1, R7) — display data for
 chips and discussion, never identity: families cite slugs, not codes.
 
+### Two classifiers: `kind` and `group`
+
+Every content entry is classified on at most two independent axes, and the
+files use one word for each so the two never blur:
+
+- **`kind`** — the *intrinsic type* of the entry within its list, the thing that
+  changes its semantics. Laws: `axiom | definition | theorem` (drives the link
+  kind and the id prefix). Errors: `false-law | misreading | salience`. Families:
+  `equivalence | structure | chunking` (the drill discriminant). A list has a
+  `kind` only where a real type distinction exists.
+- **`group`** — a *topical* bucket for browsing, purely display/navigation, and
+  it **cross-cuts** `kind` (the `powers` group holds a definition and five
+  theorems). It is deliberately kept out of the id, because grouping is a soft,
+  revisable call and ids are hard identity cited everywhere.
+
+Applied: **laws** carry `kind` + `group` (topics: addition, multiplication,
+distribution, signs, fractions, powers, roots, binomials). **Conventions** have
+no `kind` — a writing rule has no axiom/definition/theorem analog — only a
+`group` (reading / grouping / form). **Errors** carry `kind`; a topical group is
+left off (mostly derivable from `corrupts`, and it doesn't earn a hand-authored
+field yet). One level only — no `subgroup`: the finest law structure (e.g. the
+three power laws) already lives in the `derivedFrom` lineage.
+
 ---
 
 ## Design decisions
 
-1. **Three sorts of law**: `axiom` (accepted, not proven in school — the list
+1. **Three kinds of law**: `axiom` (accepted, not proven in school — the list
    is school-honest, NOT a minimal axiomatization), `definition` (introduces a
    new operation via old ones; carries `basedOn` — what the definition
    *presupposes*), `theorem` (derivable, carries `derivedFrom` — what *proves*
    it). The two link kinds stay separate because they mean different things;
-   the acyclicity validator runs over their union.
+   the acyclicity validator runs over their union. **Conventions are not in this
+   DAG.** A convention connects to the laws only by *denotation* ("juxtaposition
+   is the notation *for* multiplication") — a different relation from
+   *justification* (`derivedFrom`/`basedOn`): rewrite multiplication as
+   `mul(a,b)` and every proof is unchanged, so the operation does not presuppose
+   the notation and the notation is not proven by the axioms. That link is real
+   but left informal (in prose) for now, deliberately not a field.
 2. **Error patterns are first-class citizens.** False laws and misreadings
    live in ONE addressable list (`errors.json`), because tracking errors is
    what will diagnose what goes wrong in a student's mind. Each entry has a
-   sort — `false-law` (algebra that isn't true, linked via `of` to the true
+   kind — `false-law` (algebra that isn't true, linked via `of` to the true
    law it distorts) or `misreading` (parsing the notation wrong, linked to the
    convention it violates) — and an id that pitfalls cite (`cites`).
    Per-error-pattern analytics thereby work from the first day of drill data;
@@ -45,7 +74,7 @@ chips and discussion, never identity: families cite slugs, not codes.
    "we don't write the 1" is a convention of the writing system.
 5. **`def.integer-multiple` stays a definition.** In a field $3a = a+a+a$ is
    provable from distributivity, but school treats it as the *meaning* of
-   $3a$ — the sorts record how the material is honestly presented in class,
+   $3a$ — the kinds record how the material is honestly presented in class,
    not the minimal axiomatization.
 6. **The permanence principle is named.** The exponent extensions
    (`def.extended-exponents`, `def.fractional-exponent`) are *chosen* so the

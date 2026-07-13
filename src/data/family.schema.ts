@@ -166,7 +166,7 @@ export function validateGroupRefs(families: Family[], groups: GroupsFile): void 
 
 export const metaPatternDef = z.object({
   id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // globally unique slug, like every other id
-  code: z.string(),    // display code "M1".."M6" — the classroom name, unique per namespace only
+  code: z.string(),    // display code "M1".."M10" — the classroom name, globally unique across the file
   title: localizedString,
   text: localizedString,                  // the student-facing takeaway line in drill feedback
   summarizes: z.array(z.string()).default([]),  // law/convention/error ids this pattern digests — keeps the classroom voice linked to the layer it summarizes
@@ -181,10 +181,13 @@ export type MetaPatternsFile = z.infer<typeof metaPatternsFile>
 
 // Cross-check: every metaPattern a family references must exist in its namespace.
 export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsFile): void {
-  // Slug ids must be globally unique even though the file is namespaced.
-  const all = [...metas.notation, ...metas.structure].map(m => m.id)
-  const dup = all.find((id, i) => all.indexOf(id) !== i)
-  if (dup) throw new Error(`Duplicate meta-pattern id "${dup}" across namespaces.`)
+  // Slug ids AND display codes must both be globally unique even though the file
+  // is namespaced (the code is a chip; a duplicate would be ambiguous to read).
+  const all = [...metas.notation, ...metas.structure]
+  const dupId = all.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)
+  if (dupId) throw new Error(`Duplicate meta-pattern id "${dupId}" across namespaces.`)
+  const dupCode = all.map(m => m.code).find((c, i, a) => a.indexOf(c) !== i)
+  if (dupCode) throw new Error(`Duplicate meta-pattern code "${dupCode}" across namespaces.`)
 
   for (const f of families) {
     const ns = namespaceOf(f.id)
@@ -198,18 +201,32 @@ export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsF
 
 // ── Laws (layer 1) ───────────────────────────────────────────────────────────
 // The logical skeleton of school algebra (docs/laws_and_conventions.md). Three
-// sorts: axiom (accepted, no links), definition (carries `basedOn` — what it
-// presupposes), theorem (carries `derivedFrom` — what proves it). The id
-// prefix mirrors the sort so a derivation chain reads like a proof. `code` is
+// kinds: axiom (accepted, no links), definition (carries `basedOn` — what it
+// presupposes), theorem (carries `derivedFrom` — what proves it). `kind` is the
+// intrinsic type of the entry (mirroring the family `kind` discriminant); the id
+// prefix mirrors it so a derivation chain reads like a proof. A separate `group`
+// (topic: signs, fractions, powers …) cross-cuts `kind` for browsing. `code` is
 // the short display code matching the doc (A1, D3, T11).
 
-export const lawSort = z.enum(['axiom', 'definition', 'theorem'])
-export type LawSort = z.infer<typeof lawSort>
+export const lawKind = z.enum(['axiom', 'definition', 'theorem'])
+export type LawKind = z.infer<typeof lawKind>
+
+// Topical group — a display/navigation bucket that cross-cuts `kind` (a group
+// holds definitions and theorems alike). Deliberately NOT in the id: grouping is
+// a soft, revisable call, ids are hard identity cited everywhere. The two power
+// sub-families (same-base / same-exponent / power-of-power) are intentionally
+// left to the derivedFrom lineage rather than a `subgroup` — one level is enough.
+export const lawGroup = z.enum([
+  'addition', 'multiplication', 'distribution',
+  'signs', 'fractions', 'powers', 'roots', 'binomials',
+])
+export type LawGroup = z.infer<typeof lawGroup>
 
 export const lawDef = z.object({
   id: z.string().regex(/^(ax|def|thm)\.[a-z0-9-]+$/),
   code: z.string(),
-  sort: lawSort,
+  kind: lawKind,                                // intrinsic logical type — drives the link kind + id prefix
+  group: lawGroup,                              // topical bucket, cross-cuts kind — display/navigation only
   name: localizedString,
   latex: z.string(),                            // the statement, KaTeX
   conditions: z.string().optional(),            // domain condition, pure LaTeX, e.g. "b \\ne 0"; families citing the law inherit it
@@ -219,23 +236,23 @@ export const lawDef = z.object({
 })
 export type LawDef = z.output<typeof lawDef>
 
-const lawPrefixOfSort: Record<LawSort, string> = { axiom: 'ax', definition: 'def', theorem: 'thm' }
+const lawPrefixOfKind: Record<LawKind, string> = { axiom: 'ax', definition: 'def', theorem: 'thm' }
 
 export function validateLaws(laws: LawDef[]): void {
   const byId = new Map(laws.map(l => [l.id, l]))
   if (byId.size !== laws.length) throw new Error('Duplicate law id.')
 
   for (const l of laws) {
-    if (!l.id.startsWith(lawPrefixOfSort[l.sort] + '.')) {
-      throw new Error(`Law "${l.id}" has sort "${l.sort}" but a mismatching id prefix.`)
+    if (!l.id.startsWith(lawPrefixOfKind[l.kind] + '.')) {
+      throw new Error(`Law "${l.id}" has kind "${l.kind}" but a mismatching id prefix.`)
     }
-    if (l.sort !== 'definition' && l.basedOn.length > 0) {
-      throw new Error(`Law "${l.id}" (${l.sort}) may not carry basedOn — definitions only.`)
+    if (l.kind !== 'definition' && l.basedOn.length > 0) {
+      throw new Error(`Law "${l.id}" (${l.kind}) may not carry basedOn — definitions only.`)
     }
-    if (l.sort !== 'theorem' && l.derivedFrom.length > 0) {
-      throw new Error(`Law "${l.id}" (${l.sort}) may not carry derivedFrom — theorems only.`)
+    if (l.kind !== 'theorem' && l.derivedFrom.length > 0) {
+      throw new Error(`Law "${l.id}" (${l.kind}) may not carry derivedFrom — theorems only.`)
     }
-    if (l.sort === 'theorem' && l.derivedFrom.length === 0) {
+    if (l.kind === 'theorem' && l.derivedFrom.length === 0) {
       throw new Error(`Theorem "${l.id}" must name what it is derived from.`)
     }
     for (const r of [...l.basedOn, ...l.derivedFrom]) {
@@ -259,11 +276,19 @@ export function validateLaws(laws: LawDef[]): void {
 }
 
 // ── Conventions (layer 2) ────────────────────────────────────────────────────
-// The agreed rules of the writing system — no truth value. `code` = N1..N12.
+// The agreed rules of the writing system — no truth value, hence no `kind`
+// (there is no axiom/definition/theorem analog for a notation rule). They carry
+// only a topical `group`: reading (what a mark means), grouping (how marks bind
+// into structure / precedence), or form (legal & canonical writing). `code` =
+// N1..N12.
+
+export const conventionGroup = z.enum(['reading', 'grouping', 'form'])
+export type ConventionGroup = z.infer<typeof conventionGroup>
 
 export const conventionDef = z.object({
   id: z.string().regex(/^conv\.[a-z0-9-]+$/),
   code: z.string(),
+  group: conventionGroup,
   name: localizedString,
   text: localizedString,
 })
@@ -287,7 +312,7 @@ export function validateConventions(conventions: ConventionDef[]): void {
 // ── Error patterns ───────────────────────────────────────────────────────────
 // First-class citizens of the error space: ONE addressable list that pitfalls
 // cite, so drill data can be analyzed per error pattern from day one. Three
-// sorts, each `corrupts` a different layer:
+// kinds, each `corrupts` a different layer:
 //   false-law  (anti.) — corrupts a true LAW it distorts/over-generalizes
 //   misreading (mis.)  — corrupts a CONVENTION it violates
 //   salience   (sal.)  — corrupts a METAPATTERN: parsing by what is visually
@@ -296,13 +321,13 @@ export function validateConventions(conventions: ConventionDef[]): void {
 //                        failure of meta.dominant-op-last). Skill-2 specific.
 // `code` = Ā1..Ā5 / R1..R15 / S1..
 
-export const errorSort = z.enum(['false-law', 'misreading', 'salience'])
-export type ErrorSort = z.infer<typeof errorSort>
+export const errorKind = z.enum(['false-law', 'misreading', 'salience'])
+export type ErrorKind = z.infer<typeof errorKind>
 
 export const errorDef = z.object({
   id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),
   code: z.string(),
-  sort: errorSort,
+  kind: errorKind,
   corrupts: z.array(z.string()).default([]),
   name: localizedString,
   text: localizedString,
@@ -310,13 +335,13 @@ export const errorDef = z.object({
 })
 export type ErrorDef = z.output<typeof errorDef>
 
-const errorPrefixOfSort: Record<ErrorSort, string> =
+const errorPrefixOfKind: Record<ErrorKind, string> =
   { 'false-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
 
 export function validateErrors(
   errors: ErrorDef[], laws: LawDef[], conventions: ConventionDef[], metas: MetaPatternsFile,
 ): void {
-  const poolOfSort: Record<ErrorSort, { ids: Set<string>; name: string }> = {
+  const poolOfKind: Record<ErrorKind, { ids: Set<string>; name: string }> = {
     'false-law': { ids: new Set(laws.map(l => l.id)), name: 'law' },
     misreading: { ids: new Set(conventions.map(c => c.id)), name: 'convention' },
     salience: { ids: new Set([...metas.notation, ...metas.structure].map(m => m.id)), name: 'meta-pattern' },
@@ -325,10 +350,10 @@ export function validateErrors(
   for (const e of errors) {
     if (seen.has(e.id)) throw new Error(`Duplicate error id "${e.id}".`)
     seen.add(e.id)
-    if (!e.id.startsWith(errorPrefixOfSort[e.sort])) {
-      throw new Error(`Error "${e.id}" has sort "${e.sort}" but a mismatching id prefix.`)
+    if (!e.id.startsWith(errorPrefixOfKind[e.kind])) {
+      throw new Error(`Error "${e.id}" has kind "${e.kind}" but a mismatching id prefix.`)
     }
-    const pool = poolOfSort[e.sort]
+    const pool = poolOfKind[e.kind]
     for (const r of e.corrupts) {
       if (!pool.ids.has(r)) throw new Error(`Error "${e.id}" corrupts unknown ${pool.name} "${r}".`)
     }
@@ -412,7 +437,7 @@ export function auditCoverage(
     const free = ids.filter(id => !cited.has(id))
     if (free.length > 0) lines.push(`${kind} cited by no family: ${free.join(', ')}`)
   }
-  uncited('Laws', laws.filter(l => l.sort !== 'axiom').map(l => l.id), citedLaws)  // axioms may be reached only via theorems
+  uncited('Laws', laws.filter(l => l.kind !== 'axiom').map(l => l.id), citedLaws)  // axioms may be reached only via theorems
   uncited('Conventions', conventions.map(c => c.id), citedConvs)
   uncited('Error patterns', errors.map(e => e.id), citedErrs)
 

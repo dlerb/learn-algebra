@@ -26,16 +26,16 @@ function lawVM(l: LawDef): LawVM {
   return {
     id: l.id, code: l.code, name: loc(l.name, lang.value), latex: l.latex,
     conditions: l.conditions,
-    links: (l.sort === 'definition' ? l.basedOn : l.derivedFrom).map(label),
-    linkWord: l.sort === 'definition' ? 'builds on' : 'derived from',
+    links: (l.kind === 'definition' ? l.basedOn : l.derivedFrom).map(label),
+    linkWord: l.kind === 'definition' ? 'builds on' : 'derived from',
     note: l.note ? loc(l.note, lang.value) : undefined,
   }
 }
 
 const lawSections = computed(() => [
-  { title: 'Axioms — accepted, not proven', items: laws.filter(l => l.sort === 'axiom').map(lawVM) },
-  { title: 'Definitions — every further operation is built from these', items: laws.filter(l => l.sort === 'definition').map(lawVM) },
-  { title: 'Theorems — with their derivations', items: laws.filter(l => l.sort === 'theorem').map(lawVM) },
+  { title: 'Axioms — accepted, not proven', items: laws.filter(l => l.kind === 'axiom').map(lawVM) },
+  { title: 'Definitions — every further operation is built from these', items: laws.filter(l => l.kind === 'definition').map(lawVM) },
+  { title: 'Theorems — with their derivations', items: laws.filter(l => l.kind === 'theorem').map(lawVM) },
 ])
 
 const conventionCards = computed(() => conventions.map(c => ({
@@ -53,8 +53,8 @@ function errVM(e: ErrorDef): ErrVM {
   }
 }
 const errorSections = computed(() => [
-  { title: 'False laws — the generative rules of wrong algebra', ofWord: 'distorts', items: errorPatterns.filter(e => e.sort === 'false-law').map(errVM) },
-  { title: 'Misreadings — parsing the notation wrong', ofWord: 'violates', items: errorPatterns.filter(e => e.sort === 'misreading').map(errVM) },
+  { title: 'False laws — the generative rules of wrong algebra', ofWord: 'distorts', items: errorPatterns.filter(e => e.kind === 'false-law').map(errVM) },
+  { title: 'Misreadings — parsing the notation wrong', ofWord: 'violates', items: errorPatterns.filter(e => e.kind === 'misreading').map(errVM) },
 ])
 </script>
 
