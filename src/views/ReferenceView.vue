@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { laws, conventions, errorPatterns } from '../data'
-import { loc, type LawDef, type ErrorDef } from '../data/family.schema'
+import { loc, type LawDef, type ErrorDef, type LawGroup } from '../data/family.schema'
 import { lang } from '../lang'
 
 // The reference rendering of layers 1+2 (docs/laws_and_conventions.md holds
@@ -19,12 +19,12 @@ function label(id: string): string {
 }
 
 interface LawVM {
-  id: string; code: string; name: string; latex: string
+  id: string; code: string; name: string; latex: string; group: LawGroup
   conditions?: string; links: string[]; linkWord: string; note?: string
 }
 function lawVM(l: LawDef): LawVM {
   return {
-    id: l.id, code: l.code, name: loc(l.name, lang.value), latex: l.latex,
+    id: l.id, code: l.code, name: loc(l.name, lang.value), latex: l.latex, group: l.group,
     conditions: l.conditions,
     links: (l.kind === 'definition' ? l.basedOn : l.derivedFrom).map(label),
     linkWord: l.kind === 'definition' ? 'builds on' : 'derived from',
@@ -32,11 +32,35 @@ function lawVM(l: LawDef): LawVM {
   }
 }
 
-const lawSections = computed(() => [
+// Laws can be sectioned two ways: by `kind` (their place in the tower) or by
+// `group` (the classroom topic — "the power laws", "the fraction laws"). The
+// topic order and titles are authored here; a topic with no laws is dropped.
+const groupBy = ref<'kind' | 'topic'>('kind')
+
+const lawKindSections = computed(() => [
   { title: 'Axioms — accepted, not proven', items: laws.filter(l => l.kind === 'axiom').map(lawVM) },
   { title: 'Definitions — every further operation is built from these', items: laws.filter(l => l.kind === 'definition').map(lawVM) },
   { title: 'Theorems — with their derivations', items: laws.filter(l => l.kind === 'theorem').map(lawVM) },
 ])
+
+const topicOrder: { group: LawGroup; title: string }[] = [
+  { group: 'addition', title: 'Addition laws' },
+  { group: 'multiplication', title: 'Multiplication laws' },
+  { group: 'distribution', title: 'Distribution' },
+  { group: 'signs', title: 'Sign & minus laws' },
+  { group: 'fractions', title: 'Fraction laws' },
+  { group: 'powers', title: 'Power laws' },
+  { group: 'roots', title: 'Root laws' },
+  { group: 'binomials', title: 'Binomial formulas' },
+]
+const lawTopicSections = computed(() =>
+  topicOrder
+    .map(t => ({ title: t.title, items: laws.filter(l => l.group === t.group).map(lawVM) }))
+    .filter(s => s.items.length > 0),
+)
+
+const lawSections = computed(() =>
+  groupBy.value === 'kind' ? lawKindSections.value : lawTopicSections.value)
 
 const conventionCards = computed(() => conventions.map(c => ({
   id: c.id, code: c.code, name: loc(c.name, lang.value), text: loc(c.text, lang.value),
@@ -70,14 +94,23 @@ const errorSections = computed(() => [
     </header>
 
     <section class="block">
-      <h2>Laws</h2>
+      <div class="block-head">
+        <h2>Laws</h2>
+        <div class="mode">
+          <button :class="{ active: groupBy === 'kind' }" @click="groupBy = 'kind'">by kind</button>
+          <button :class="{ active: groupBy === 'topic' }" @click="groupBy = 'topic'">by topic</button>
+        </div>
+      </div>
       <div v-for="s in lawSections" :key="s.title" class="group">
         <h3>{{ s.title }}</h3>
         <div class="cards">
           <article v-for="l in s.items" :key="l.id" class="card">
             <div class="card-head">
               <h4>{{ l.name }}</h4>
-              <span class="badge code">{{ l.code }}</span>
+              <span class="badges">
+                <span class="badge topic">{{ l.group }}</span>
+                <span class="badge code">{{ l.code }}</span>
+              </span>
             </div>
             <code class="slug">{{ l.id }}</code>
             <div class="statement"><MathExpr :latex="l.latex" display /></div>
@@ -141,13 +174,17 @@ const errorSections = computed(() => [
 .mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; }
 .mode button.active { background: #111827; border-color: #111827; color: #fff; }
 .block > h2 { font-size: 1.15rem; font-weight: 700; margin: 2rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid #111827; }
+.block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin: 2rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid #111827; }
+.block-head h2 { font-size: 1.15rem; font-weight: 700; margin: 0; }
 .group > h3 { font-size: 1rem; font-weight: 700; margin: 1.25rem 0 .5rem; }
 .blurb { color: #6b7280; font-size: .85rem; margin: .15rem 0 .5rem; }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: .9rem; }
 .card { border: 1px solid #e5e7eb; border-radius: 10px; padding: .85rem .95rem; background: #fff; }
 .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
 .card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; }
+.badges { display: flex; gap: .3rem; align-items: baseline; flex-shrink: 0; }
 .badge { font-size: .68rem; padding: .1rem .4rem; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+.badge.topic { background: #f5f3ff; color: #6d28d9; text-transform: capitalize; }
 .badge.code { background: #ecfdf5; color: #047857; }
 .badge.code.conv { background: #eff6ff; color: #1d4ed8; }
 .badge.code.err { background: #fef2f2; color: #b91c1c; }
