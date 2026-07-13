@@ -8,11 +8,15 @@ them.
 
 **Source of truth: the JSON files** — `src/data/laws.json` (axioms,
 definitions, theorems), `conventions.json`, `errors.json` (false laws +
-misreadings), validated by `family.schema.ts` on load. Browse them in the
-app's **Laws & Conventions view**, which renders the cards, statements, and
-derivation chains. This document deliberately does NOT duplicate the content
-tables (they would drift); it records the design decisions and the narrative
-that are not data.
+misreadings), validated by `family.schema.ts` on load. Group **display**
+metadata (title, order, blurb) lives in sibling registries — `lawGroups.json`
+and `conventionGroups.json` (and `familyGroups.json` for the families) — each
+cross-checked against its group enum so titles can't drift from the values
+entries carry. Browse it all in the app's **Laws & Conventions view**, which
+renders the cards, statements, and derivation chains, and can section laws *by
+kind* or *by topic* and conventions *by group*. This document deliberately does
+NOT duplicate the content tables (they would drift); it records the design
+decisions and the narrative that are not data.
 
 Ids are kind-prefixed slugs so a derivation chain reads like a proof:
 `ax.add-commutative`, `def.subtraction`, `thm.collect-like-terms`,
