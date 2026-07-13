@@ -49,6 +49,35 @@ left off (mostly derivable from `corrupts`, and it doesn't earn a hand-authored
 field yet). One level only — no `subgroup`: the finest law structure (e.g. the
 three power laws) already lives in the `derivedFrom` lineage.
 
+### Files, ids & codes at a glance
+
+**Content files** — each entry carries an id and (where a kind exists) a
+kind-matching id prefix; `code` is display-only, never identity:
+
+| File | Entry | `kind` values | `group` | id = prefix + slug | `code` |
+|---|---|---|---|---|---|
+| `laws.json` | law | `axiom` · `definition` · `theorem` | ✓ → `lawGroups.json` | `ax.` / `def.` / `thm.` (= kind) | A / D / T |
+| `conventions.json` | convention | — (no kind) | ✓ `reading`·`grouping`·`form` | `conv.` (fixed) | N |
+| `errors.json` | error pattern | `false-law` · `misreading` · `salience` | — (derived from `corrupts`) | `anti.` / `mis.` / `sal.` (= kind) | Ā / R / S |
+| `metapatterns.json` | meta-pattern | — (no kind) | — (file keyed by skill) | `meta.` (fixed) | M |
+| `families/<skill>-<group>.json` | family | `equivalence` · `recognition` · `classification` · `chunking` · (`transformation`) | ✓ → `familyGroups.json` | `<kind>.` (= kind) | — (none) |
+
+**Group registries** — display metadata (title, order, blurb) for the `group`
+values above; each is validated so titles can't drift from the values entries use:
+
+| File | Groups for | Keyed by | Entry | Validated against |
+|---|---|---|---|---|
+| `lawGroups.json` | laws | flat array (= display order) | `{ slug, title, blurb? }` | must equal the `lawGroup` enum exactly |
+| `conventionGroups.json` | conventions | flat array | `{ slug, title, blurb? }` | must equal the `conventionGroup` enum exactly |
+| `familyGroups.json` | families | by **skill** (`equivalence` / `classification` / `transformation`) | `{ slug, title, blurb? }` | a family's `group` must exist under its skill |
+
+Two rules tie it together: (1) **id prefix = `kind`** wherever a kind exists —
+the validator enforces prefix↔kind, exactly as for laws (`ax`/`def`/`thm`);
+conventions and meta-patterns have no kind, so they take a fixed prefix. (2) A
+family's **`skill` is derived** from its kind-prefix (`skillOf`), which is why
+family files are named `<skill>-<group>.json` and `familyGroups.json` is keyed by
+skill, not kind.
+
 ---
 
 ## Design decisions
