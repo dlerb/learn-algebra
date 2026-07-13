@@ -2,10 +2,10 @@
 // duplicate id, a dangling group, or a dangling meta-pattern reference throws
 // here immediately with the offending id named.
 import {
-  parseFamilies, groupsFile, lawGroupsFile, conventionGroupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
+  parseFamilies, parseDrills, groupsFile, lawGroupsFile, conventionGroupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
   validateUniqueIds, validateGroupRefs, validateLawGroups, validateConventionGroups, validateMetaPatternRefs, validateFamilyLinks,
-  validateLaws, validateConventions, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Family, type GroupsFile, type LawGroupsFile, type ConventionGroupsFile, type MetaPatternsFile,
+  validateDrills, validateLaws, validateConventions, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
+  type Family, type Drill, type GroupsFile, type LawGroupsFile, type ConventionGroupsFile, type MetaPatternsFile,
   type LawDef, type ConventionDef, type ErrorDef,
 } from './family.schema'
 import groupsRaw from './familyGroups.json'
@@ -27,9 +27,21 @@ import classificationMisleadingForms from './families/classification-misleading-
 import chunkingChunking from './families/chunking-chunking.json'
 import classificationFamiliarShapes from './families/classification-familiar-shapes.json'
 import equivalenceFullClassification from './families/equivalence-full-classification.json'
+import dEquivalenceMultiplication from './drills/equivalence-multiplication.json'
+import dEquivalenceLikeTerms from './drills/equivalence-like-terms.json'
+import dEquivalenceMinusSign from './drills/equivalence-minus-sign.json'
+import dEquivalenceBrackets from './drills/equivalence-brackets.json'
+import dEquivalenceExponents from './drills/equivalence-exponents.json'
+import dEquivalenceFractions from './drills/equivalence-fractions.json'
+import dEquivalenceCommutativity from './drills/equivalence-commutativity.json'
+import dClassificationBasicForms from './drills/classification-basic-forms.json'
+import dClassificationMisleadingForms from './drills/classification-misleading-forms.json'
+import dChunkingChunking from './drills/chunking-chunking.json'
+import dClassificationFamiliarShapes from './drills/classification-familiar-shapes.json'
+import dEquivalenceFullClassification from './drills/equivalence-full-classification.json'
 
-// Per-group family files (named <kind>-<group>). Add new groups here as they
-// are authored.
+// Per-group family files (named <kind>-<group>). Each has a parallel drills/
+// file holding its drill material. Add new groups in both lists.
 const familyFiles: unknown[][] = [
   equivalenceMultiplication as unknown[],
   equivalenceLikeTerms as unknown[],
@@ -45,6 +57,21 @@ const familyFiles: unknown[][] = [
   equivalenceFullClassification as unknown[],
 ]
 
+const drillFiles: unknown[][] = [
+  dEquivalenceMultiplication as unknown[],
+  dEquivalenceLikeTerms as unknown[],
+  dEquivalenceMinusSign as unknown[],
+  dEquivalenceBrackets as unknown[],
+  dEquivalenceExponents as unknown[],
+  dEquivalenceFractions as unknown[],
+  dEquivalenceCommutativity as unknown[],
+  dClassificationBasicForms as unknown[],
+  dClassificationMisleadingForms as unknown[],
+  dChunkingChunking as unknown[],
+  dClassificationFamiliarShapes as unknown[],
+  dEquivalenceFullClassification as unknown[],
+]
+
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)
 export const lawGroups: LawGroupsFile = lawGroupsFile.parse(lawGroupsRaw)
 export const conventionGroups: ConventionGroupsFile = conventionGroupsFile.parse(conventionGroupsRaw)
@@ -58,6 +85,7 @@ export const errorPatterns: ErrorDef[] = (errorsRaw as unknown[]).map(e => error
 
 const rawEntries = familyFiles.flat()
 export const families: Family[] = parseFamilies(rawEntries)
+export const drills: Drill[] = parseDrills(drillFiles.flat())
 
 // Raw authored entries by id — for the inspection view, which shows the JSON
 // exactly as written in the file, not the parsed/normalized form.
@@ -71,11 +99,12 @@ validateLawGroups(lawGroups)
 validateConventionGroups(conventionGroups)
 validateMetaPatternRefs(families, metaPatterns)
 validateFamilyLinks(families)
+validateDrills(drills, families)
 validateLaws(laws)
 validateConventions(conventions)
 validateErrors(errorPatterns, laws, conventions, metaPatterns)
 validateLayerRefs(families, metaPatterns, laws, conventions, errorPatterns)
-validateLatexCompiles(families, metaPatterns, laws, conventions, errorPatterns)
+validateLatexCompiles(families, drills, metaPatterns, laws, conventions, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.
 for (const line of auditCoverage(families, metaPatterns, laws, conventions, errorPatterns)) {

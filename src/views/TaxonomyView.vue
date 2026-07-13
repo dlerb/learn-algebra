@@ -2,8 +2,8 @@
 import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { families, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
-import { loc, type Family } from '../data/family.schema'
+import { families, drills, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
+import { loc, type Family, type Drill } from '../data/family.schema'
 import { lang } from '../lang'
 
 // 'groups' = thematic sections (default); 'order' = one flat list sorted by
@@ -35,6 +35,8 @@ interface CardVM {
   priority?: number
   conditions?: string
   note: string
+  illustration?: string
+  errors: string[]
   metas: string[]
   requires: string[]
   laws: string[]
@@ -53,45 +55,53 @@ function familyTitle(id: string): string {
   return f ? loc(f.title, lang.value) : id
 }
 
+// A family (the strategy) joined with its drill (the material, if any).
+const drillByFamily = new Map<string, Drill>(drills.map(d => [d.family, d]))
+
 function toVM(f: Family): CardVM {
   const base = {
     id: f.id, title: loc(f.title, lang.value), kind: f.kind, group: f.group,
     priority: f.priority, conditions: f.conditions, note: loc(f.note, lang.value),
+    illustration: f.illustration, errors: f.errors.map(layerLabel),
     json: JSON.stringify(rawById.get(f.id), null, 2),
     metas: f.metaPatterns.map(m => metaLabel(m)),
     requires: f.requires.map(familyTitle),
     laws: f.justifiedBy.map(layerLabel),
     governedBy: f.governedBy.map(layerLabel),
   }
-  if (f.kind === 'equivalence') {
+  const d = drillByFamily.get(f.id)
+  if (d?.kind === 'equivalence') {
     return {
       ...base,
-      equivChain: f.equivalents.join(' = '),
-      equivPitfalls: f.pitfalls.map(p => ({
-        latex: `${f.equivalents[0]} \\neq ${p.expr}`,
+      equivChain: d.equivalents.join(' = '),
+      equivPitfalls: d.pitfalls.map(p => ({
+        latex: `${d.equivalents[0]} \\neq ${p.expr}`,
         revise: (p.revise ?? []).map(familyTitle),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
   }
-  if (f.kind === 'classification') {
+  if (d?.kind === 'classification') {
     return {
-      ...base, classExamples: f.examples, classAnswer: f.answer,
-      classPitfalls: f.pitfalls.map(p => ({
+      ...base, classExamples: d.examples, classAnswer: d.answer,
+      classPitfalls: d.pitfalls.map(p => ({
         answer: p.answer, why: loc(p.why, lang.value),
         revise: (p.revise ?? []).map(familyTitle),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
   }
-  return {
-    ...base, decomp: f.examples,
-    decompPitfalls: f.pitfalls.map(p => ({
-      why: loc(p.why, lang.value),
-      revise: (p.revise ?? []).map(familyTitle),
-      explainedBy: (p.explainedBy ?? []).map(layerLabel),
-    })),
+  if (d?.kind === 'chunking') {
+    return {
+      ...base, decomp: d.examples,
+      decompPitfalls: d.pitfalls.map(p => ({
+        why: loc(p.why, lang.value),
+        revise: (p.revise ?? []).map(familyTitle),
+        explainedBy: (p.explainedBy ?? []).map(layerLabel),
+      })),
+    }
   }
+  return base
 }
 
 const byPriority = (a: Family, b: Family) =>
@@ -209,6 +219,10 @@ function hasErrors(c: CardVM): boolean {
               <span class="chip-label">conv</span>
               <span v-for="(cv, i) in c.governedBy" :key="i" class="meta-chip conv-chip">{{ cv }}</span>
             </div>
+            <div v-if="c.errors.length" class="chip-row">
+              <span class="chip-label">errors</span>
+              <span v-for="(er, i) in c.errors" :key="i" class="meta-chip err-chip">{{ er }}</span>
+            </div>
             <details class="json">
               <summary>json</summary>
               <pre>{{ c.json }}</pre>
@@ -230,6 +244,7 @@ function hasErrors(c: CardVM): boolean {
 .cites { font-size: .72rem; color: #b91c1c; margin-left: .4rem; }
 .law-chip { background: #ecfdf5; color: #047857; }
 .conv-chip { background: #eff6ff; color: #1d4ed8; }
+.err-chip { background: #fef2f2; color: #b91c1c; }
 .skill > h2 { font-size: 1.15rem; font-weight: 700; margin: 2rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid #111827; }
 .group-head { margin: 1.25rem 0 .5rem; }
 .group-head h3 { font-size: 1rem; font-weight: 700; margin: 0; }

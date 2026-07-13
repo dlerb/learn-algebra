@@ -1,0 +1,52 @@
+[
+  {
+    "kind": "equivalence",
+    "family": "equivalence.addition-commutative",
+    "equivalents": [
+      "a + b",
+      "b + a"
+    ],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.multiplication-commutative",
+    "equivalents": [
+      "ab",
+      "ba"
+    ],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.subtraction-not-commutative",
+    "equivalents": [
+      "a - b",
+      "-(b - a)"
+    ],
+    "pitfalls": [
+      {
+        "expr": "b - a",
+        "explainedBy": [
+          "anti.commute-everything"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.division-not-commutative",
+    "equivalents": [
+      "a \\div b",
+      "\\frac{a}{b}"
+    ],
+    "pitfalls": [
+      {
+        "expr": "\\frac{b}{a}",
+        "explainedBy": [
+          "anti.commute-everything"
+        ]
+      }
+    ]
+  }
+]

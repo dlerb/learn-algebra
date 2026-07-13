@@ -5,11 +5,18 @@
     "group": "multiplication",
     "title": "Explicit vs. implicit multiplication",
     "priority": 1,
-    "metaPatterns": ["meta.juxtaposition"],
-    "governedBy": ["conv.juxtaposition", "conv.canonical-order"],
     "note": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product — not a two-digit number, and not $3 + x$.",
-    "equivalents": ["3 \\times x", "3 \\cdot x", "3x", "x \\cdot 3", "(3)(x)"],
-    "pitfalls": [{ "expr": "3 + x", "explainedBy": ["mis.juxtaposition-as-plus"] }]
+    "illustration": "3 \\times x = 3 \\cdot x = 3x = x \\cdot 3 = (3)(x)",
+    "metaPatterns": [
+      "meta.juxtaposition"
+    ],
+    "governedBy": [
+      "conv.juxtaposition",
+      "conv.canonical-order"
+    ],
+    "errors": [
+      "mis.juxtaposition-as-plus"
+    ]
   },
   {
     "kind": "equivalence",
@@ -17,12 +24,22 @@
     "group": "multiplication",
     "title": "Multiplication with brackets",
     "priority": 14,
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.juxtaposition", "meta.implicit-op-before-bracket"],
-    "governedBy": ["conv.juxtaposition", "conv.brackets-group"],
     "note": "A number against a bracket means multiply: 2(x+1) is 2 times (x+1), not 2 + (x+1).",
-    "equivalents": ["2 \\times (x+1)", "2 \\cdot (x+1)", "2(x+1)", "(x+1) \\cdot 2"],
-    "pitfalls": [{ "expr": "2 + (x+1)", "explainedBy": ["mis.juxtaposition-as-plus"] }]
+    "illustration": "2 \\times (x+1) = 2 \\cdot (x+1) = 2(x+1) = (x+1) \\cdot 2",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "metaPatterns": [
+      "meta.juxtaposition",
+      "meta.implicit-op-before-bracket"
+    ],
+    "governedBy": [
+      "conv.juxtaposition",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "mis.juxtaposition-as-plus"
+    ]
   },
   {
     "kind": "equivalence",
@@ -30,26 +47,49 @@
     "group": "multiplication",
     "title": "Coefficient of −1",
     "priority": 3,
-    "requires": ["equivalence.explicit-vs-implicit-product", "equivalence.negative-numbers"],
-    "metaPatterns": ["meta.juxtaposition", "meta.three-minuses"],
-    "justifiedBy": ["thm.negative-one-times"],
-    "governedBy": ["conv.invisible-one", "conv.juxtaposition"],
     "note": "An invisible coefficient of -1 means negate: (-1)a, -1a and -a are the same object. (Similarly a coefficient of 1 is invisible: 1x = x.)",
-    "equivalents": ["(-1) \\cdot a", "(-1)a", "-1a", "-a"],
-    "pitfalls": [{ "expr": "-1 + a", "explainedBy": ["mis.juxtaposition-as-plus"] }]
+    "illustration": "(-1) \\cdot a = (-1)a = -1a = -a",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product",
+      "equivalence.negative-numbers"
+    ],
+    "metaPatterns": [
+      "meta.juxtaposition",
+      "meta.three-minuses"
+    ],
+    "justifiedBy": [
+      "thm.negative-one-times"
+    ],
+    "governedBy": [
+      "conv.invisible-one",
+      "conv.juxtaposition"
+    ],
+    "errors": [
+      "mis.juxtaposition-as-plus"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.coefficient-zero",
     "group": "multiplication",
     "title": "Coefficient of 0",
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.juxtaposition"],
-    "justifiedBy": ["thm.zero-product"],
-    "governedBy": ["conv.juxtaposition"],
     "note": "Zero times anything is zero: 0x = 0, regardless of x. It is not x.",
-    "equivalents": ["0 \\cdot x", "0x", "0"],
-    "pitfalls": [{ "expr": "x", "explainedBy": ["mis.juxtaposition-as-plus"] }]
+    "illustration": "0 \\cdot x = 0x = 0",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "metaPatterns": [
+      "meta.juxtaposition"
+    ],
+    "justifiedBy": [
+      "thm.zero-product"
+    ],
+    "governedBy": [
+      "conv.juxtaposition"
+    ],
+    "errors": [
+      "mis.juxtaposition-as-plus"
+    ]
   },
   {
     "kind": "equivalence",
@@ -57,12 +97,22 @@
     "group": "multiplication",
     "title": "Repeated addition vs. multiplication",
     "priority": 10,
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.juxtaposition"],
-    "justifiedBy": ["def.integer-multiple"],
-    "governedBy": ["conv.juxtaposition"],
     "note": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Do not confuse with $x \\cdot x = x^2$.",
-    "equivalents": ["x + x", "2x"],
-    "pitfalls": [{ "expr": "x^2", "explainedBy": ["anti.repetition-confusion"] }]
+    "illustration": "x + x = 2x",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "metaPatterns": [
+      "meta.juxtaposition"
+    ],
+    "justifiedBy": [
+      "def.integer-multiple"
+    ],
+    "governedBy": [
+      "conv.juxtaposition"
+    ],
+    "errors": [
+      "anti.repetition-confusion"
+    ]
   }
 ]

@@ -20,7 +20,7 @@
 // all of that — operand COUNT and coarse op-CLASS — not operand strings/order.
 
 import { ComputeEngine } from '@cortex-js/compute-engine'
-import { families } from '../src/data/index'
+import { drills } from '../src/data/index'
 
 const ce = new ComputeEngine()
 
@@ -40,26 +40,26 @@ const wantClass: Record<string, string> = {
 
 const issues: string[] = []
 
-for (const f of families) {
-  if (f.kind === 'classification') {
+for (const d of drills) {
+  if (d.kind === 'classification') {
     // one shared `answer`; every example must share that dominant-op class
-    for (const ex of f.examples) {
+    for (const ex of d.examples) {
       const got = astClass(ce.parse(ex, { canonical: true }).operator)
-      const want = wantClass[f.answer]
+      const want = wantClass[d.answer]
       if (got !== want)
-        issues.push(`${f.id}: example "${ex}" — answer=${f.answer} (${want}) but AST root is ${got}`)
+        issues.push(`${d.family}: example "${ex}" — answer=${d.answer} (${want}) but AST root is ${got}`)
     }
-  } else if (f.kind === 'chunking') {
+  } else if (d.kind === 'chunking') {
     // each example carries its own op + chunk list
-    for (const ex of f.examples) {
+    for (const ex of d.examples) {
       const p = ce.parse(ex.expr, { canonical: true })
       const got = astClass(p.operator)
       const want = wantClass[ex.op]
       if (got !== want)
-        issues.push(`${f.id}: "${ex.expr}" — op=${ex.op} (${want}) but AST root is ${got}`)
+        issues.push(`${d.family}: "${ex.expr}" — op=${ex.op} (${want}) but AST root is ${got}`)
       const nOps = p.ops?.length ?? 0
       if (nOps !== ex.chunks.length)
-        issues.push(`${f.id}: "${ex.expr}" — ${ex.chunks.length} chunks authored but AST root has ${nOps} operands `
+        issues.push(`${d.family}: "${ex.expr}" — ${ex.chunks.length} chunks authored but AST root has ${nOps} operands `
           + `(${JSON.stringify(p.ops?.map(o => o.toString()))}). Chunks must be the maximal root operands.`)
     }
   }

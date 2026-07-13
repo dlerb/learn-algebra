@@ -4,24 +4,31 @@
     "id": "equivalence.addition-commutative",
     "group": "commutativity",
     "title": "Addition is commutative",
-    "metaPatterns": [],
-    "justifiedBy": ["ax.add-commutative"],
     "note": "Order does not matter for addition: a + b = b + a.",
-    "equivalents": ["a + b", "b + a"],
-    "pitfalls": []
+    "illustration": "a + b = b + a",
+    "justifiedBy": [
+      "ax.add-commutative"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.multiplication-commutative",
     "group": "commutativity",
     "title": "Multiplication is commutative",
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.juxtaposition"],
-    "justifiedBy": ["ax.mul-commutative"],
-    "governedBy": ["conv.juxtaposition"],
     "note": "Order does not matter for multiplication: ab = ba.",
-    "equivalents": ["ab", "ba"],
-    "pitfalls": []
+    "illustration": "ab = ba",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "metaPatterns": [
+      "meta.juxtaposition"
+    ],
+    "justifiedBy": [
+      "ax.mul-commutative"
+    ],
+    "governedBy": [
+      "conv.juxtaposition"
+    ]
   },
   {
     "kind": "equivalence",
@@ -29,13 +36,23 @@
     "group": "commutativity",
     "title": "Subtraction is not commutative",
     "priority": 23,
-    "requires": ["equivalence.minus-over-difference"],
-    "metaPatterns": ["meta.three-minuses"],
-    "justifiedBy": ["def.subtraction"],
-    "governedBy": ["conv.minus-roles"],
     "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
-    "equivalents": ["a - b", "-(b - a)"],
-    "pitfalls": [{ "expr": "b - a", "explainedBy": ["anti.commute-everything"] }]
+    "illustration": "a - b = -(b - a)",
+    "requires": [
+      "equivalence.minus-over-difference"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses"
+    ],
+    "justifiedBy": [
+      "def.subtraction"
+    ],
+    "governedBy": [
+      "conv.minus-roles"
+    ],
+    "errors": [
+      "anti.commute-everything"
+    ]
   },
   {
     "kind": "equivalence",
@@ -43,13 +60,20 @@
     "group": "commutativity",
     "title": "Division is not commutative",
     "priority": 24,
-    "conditions": "b \\ne 0",
-    "requires": ["equivalence.division-variants"],
-    "metaPatterns": [],
-    "justifiedBy": ["def.division"],
-    "governedBy": ["conv.division-signs"],
     "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",
-    "equivalents": ["a \\div b", "\\frac{a}{b}"],
-    "pitfalls": [{ "expr": "\\frac{b}{a}", "explainedBy": ["anti.commute-everything"] }]
+    "illustration": "a \\div b = \\frac{a}{b}",
+    "conditions": "b \\ne 0",
+    "requires": [
+      "equivalence.division-variants"
+    ],
+    "justifiedBy": [
+      "def.division"
+    ],
+    "governedBy": [
+      "conv.division-signs"
+    ],
+    "errors": [
+      "anti.commute-everything"
+    ]
   }
 ]

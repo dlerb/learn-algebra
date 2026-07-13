@@ -1,0 +1,78 @@
+[
+  {
+    "kind": "equivalence",
+    "family": "equivalence.division-variants",
+    "equivalents": [
+      "a \\div b",
+      "a : b",
+      "\\frac{a}{b}"
+    ],
+    "pitfalls": [
+      {
+        "expr": "b : a",
+        "explainedBy": [
+          "anti.commute-everything"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.fraction-as-reciprocal-product",
+    "equivalents": [
+      "\\frac{a}{b}",
+      "a \\cdot \\frac{1}{b}"
+    ],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.divide-by-one",
+    "equivalents": [
+      "\\frac{a}{1}",
+      "a"
+    ],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.splitting-a-fraction",
+    "equivalents": [
+      "\\frac{a+b}{c}",
+      "\\frac{a}{c} + \\frac{b}{c}"
+    ],
+    "pitfalls": []
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.no-splitting-the-denominator",
+    "equivalents": [
+      "\\frac{c}{a+b}",
+      "c \\div (a+b)"
+    ],
+    "pitfalls": [
+      {
+        "expr": "\\frac{c}{a} + \\frac{c}{b}",
+        "explainedBy": [
+          "anti.linearity"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.no-cancelling-in-a-sum",
+    "equivalents": [
+      "\\frac{3x+2}{3}",
+      "x + \\frac{2}{3}"
+    ],
+    "pitfalls": [
+      {
+        "expr": "x + 2",
+        "explainedBy": [
+          "anti.linearity"
+        ]
+      }
+    ]
+  }
+]

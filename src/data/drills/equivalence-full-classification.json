@@ -1,0 +1,11 @@
+[
+  {
+    "kind": "equivalence",
+    "family": "equivalence.same-value-different-structure",
+    "equivalents": [
+      "x^2 - 1",
+      "(x+1)(x-1)"
+    ],
+    "pitfalls": []
+  }
+]

@@ -5,25 +5,43 @@
     "group": "exponents",
     "title": "Exponent as repeated multiplication",
     "priority": 6,
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": [],
-    "justifiedBy": ["def.power"],
     "note": "A power is repeated multiplication: $a^2 = a \\cdot a$, $a^3 = a \\cdot a \\cdot a$, $a^1 = a$.",
-    "equivalents": ["a^2", "a \\cdot a"],
-    "pitfalls": [{ "expr": "2a", "explainedBy": ["anti.repetition-confusion"] }]
+    "illustration": "a^2 = a \\cdot a",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "justifiedBy": [
+      "def.power"
+    ],
+    "errors": [
+      "anti.repetition-confusion"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.coefficient-vs-exponent",
     "group": "exponents",
     "title": "Coefficient vs. exponent",
-    "requires": ["equivalence.repeated-addition", "equivalence.exponent-as-repeated-product"],
-    "metaPatterns": ["meta.juxtaposition"],
-    "justifiedBy": ["def.integer-multiple", "def.power"],
-    "governedBy": ["conv.juxtaposition", "conv.invisible-one"],
     "note": "$2a$ means $a+a$; it is not $a^2$. (And $a^2 = a \\cdot a$ is not $2a$.) The two forms that look most alike mean the most different things.",
-    "equivalents": ["2a", "a + a"],
-    "pitfalls": [{ "expr": "a^2", "explainedBy": ["anti.repetition-confusion"] }]
+    "illustration": "2a = a + a",
+    "requires": [
+      "equivalence.repeated-addition",
+      "equivalence.exponent-as-repeated-product"
+    ],
+    "metaPatterns": [
+      "meta.juxtaposition"
+    ],
+    "justifiedBy": [
+      "def.integer-multiple",
+      "def.power"
+    ],
+    "governedBy": [
+      "conv.juxtaposition",
+      "conv.invisible-one"
+    ],
+    "errors": [
+      "anti.repetition-confusion"
+    ]
   },
   {
     "kind": "equivalence",
@@ -31,12 +49,22 @@
     "group": "exponents",
     "title": "Negative base vs. negated square",
     "priority": 7,
-    "requires": ["equivalence.coefficient-negative-one", "equivalence.exponent-as-repeated-product"],
-    "metaPatterns": ["meta.exponent-binds-tighter"],
-    "governedBy": ["conv.exponent-scope", "conv.minus-roles"],
     "note": "The exponent binds before the minus: $-a^2 = -(a^2)$, which is negative. That differs from $(-a)^2 = a^2$, which is positive. E.g. $-3^2 = -9$ but $(-3)^2 = 9$.",
-    "equivalents": ["-a^2", "-(a^2)"],
-    "pitfalls": [{ "expr": "(-a)^2", "explainedBy": ["mis.exponent-scope"] }, { "expr": "a^2", "explainedBy": ["mis.exponent-scope"] }]
+    "illustration": "-a^2 = -(a^2)",
+    "requires": [
+      "equivalence.coefficient-negative-one",
+      "equivalence.exponent-as-repeated-product"
+    ],
+    "metaPatterns": [
+      "meta.exponent-binds-tighter"
+    ],
+    "governedBy": [
+      "conv.exponent-scope",
+      "conv.minus-roles"
+    ],
+    "errors": [
+      "mis.exponent-scope"
+    ]
   },
   {
     "kind": "equivalence",
@@ -44,68 +72,105 @@
     "group": "exponents",
     "title": "Exponent on a product",
     "priority": 21,
-    "requires": ["equivalence.product-with-brackets", "equivalence.exponent-as-repeated-product"],
-    "metaPatterns": ["meta.exponent-binds-tighter"],
-    "justifiedBy": ["thm.power-same-exponent"],
-    "governedBy": ["conv.exponent-scope"],
     "note": "A power on a bracket applies to every factor: $(ab)^2 = a^2 b^2$, and $(2x)^2 = 4x^2$. Without the bracket, $ab^2$ means $a \\cdot b^2$ — the exponent hits $b$ only.",
-    "equivalents": ["(ab)^2", "a^2 b^2"],
-    "pitfalls": [{ "expr": "ab^2", "explainedBy": ["mis.exponent-scope"] }]
+    "illustration": "(ab)^2 = a^2 b^2",
+    "requires": [
+      "equivalence.product-with-brackets",
+      "equivalence.exponent-as-repeated-product"
+    ],
+    "metaPatterns": [
+      "meta.exponent-binds-tighter"
+    ],
+    "justifiedBy": [
+      "thm.power-same-exponent"
+    ],
+    "governedBy": [
+      "conv.exponent-scope"
+    ],
+    "errors": [
+      "mis.exponent-scope"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.zero-and-one-exponent",
     "group": "exponents",
     "title": "Zero and one as exponents",
-    "conditions": "a \\ne 0",
-    "requires": ["equivalence.exponent-as-repeated-product"],
-    "metaPatterns": [],
-    "justifiedBy": ["def.extended-exponents"],
     "note": "Any nonzero base to the power 0 is 1: $a^0 = 1$, not $0$. And $a^1 = a$.",
-    "equivalents": ["a^0", "1"],
-    "pitfalls": ["0"]
+    "illustration": "a^0 = 1",
+    "conditions": "a \\ne 0",
+    "requires": [
+      "equivalence.exponent-as-repeated-product"
+    ],
+    "justifiedBy": [
+      "def.extended-exponents"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.negative-exponent",
     "group": "exponents",
     "title": "Negative exponent as a reciprocal",
-    "conditions": "a \\ne 0",
-    "requires": ["equivalence.exponent-as-repeated-product", "equivalence.division-variants"],
-    "metaPatterns": ["meta.exponent-binds-tighter"],
-    "justifiedBy": ["def.extended-exponents"],
-    "governedBy": ["conv.exponent-scope"],
     "note": "A negative exponent means reciprocal, not a negative number: $a^{-n} = 1/a^n$. So $a^{-1} = 1/a$, and $1/a^{-n} = a^n$.",
-    "equivalents": ["a^{-n}", "\\frac{1}{a^n}"],
-    "pitfalls": ["-a^n"]
+    "illustration": "a^{-n} = \\frac{1}{a^n}",
+    "conditions": "a \\ne 0",
+    "requires": [
+      "equivalence.exponent-as-repeated-product",
+      "equivalence.division-variants"
+    ],
+    "metaPatterns": [
+      "meta.exponent-binds-tighter"
+    ],
+    "justifiedBy": [
+      "def.extended-exponents"
+    ],
+    "governedBy": [
+      "conv.exponent-scope"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.fractional-exponent-root",
     "group": "exponents",
     "title": "Fractional exponent as a root",
-    "conditions": "a > 0",
-    "requires": ["equivalence.exponent-as-repeated-product"],
-    "metaPatterns": ["meta.exponent-binds-tighter"],
-    "justifiedBy": ["def.fractional-exponent"],
-    "governedBy": ["conv.exponent-scope"],
     "note": "A fractional exponent is a root: the denominator is the root index, the numerator the power.",
-    "equivalents": ["a^{m/n}", "\\sqrt[n]{a^m}", "(\\sqrt[n]{a})^m"],
-    "pitfalls": ["\\sqrt[m]{a^n}"]
+    "illustration": "a^{m/n} = \\sqrt[n]{a^m} = (\\sqrt[n]{a})^m",
+    "conditions": "a > 0",
+    "requires": [
+      "equivalence.exponent-as-repeated-product"
+    ],
+    "metaPatterns": [
+      "meta.exponent-binds-tighter"
+    ],
+    "justifiedBy": [
+      "def.fractional-exponent"
+    ],
+    "governedBy": [
+      "conv.exponent-scope"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.negative-fractional-exponent",
     "group": "exponents",
     "title": "Negative fractional exponent",
-    "conditions": "a > 0",
-    "requires": ["equivalence.negative-exponent", "equivalence.fractional-exponent-root"],
-    "metaPatterns": ["meta.exponent-binds-tighter"],
-    "justifiedBy": ["def.extended-exponents", "def.fractional-exponent"],
-    "governedBy": ["conv.exponent-scope"],
     "note": "Combine the two rules: a^(-m/n) = 1 / (nth root of aᵐ). The minus gives the reciprocal, the fraction gives the root.",
-    "equivalents": ["a^{-m/n}", "\\frac{1}{\\sqrt[n]{a^m}}", "\\frac{1}{a^{m/n}}"],
-    "pitfalls": ["\\sqrt[n]{a^m}"]
+    "illustration": "a^{-m/n} = \\frac{1}{\\sqrt[n]{a^m}} = \\frac{1}{a^{m/n}}",
+    "conditions": "a > 0",
+    "requires": [
+      "equivalence.negative-exponent",
+      "equivalence.fractional-exponent-root"
+    ],
+    "metaPatterns": [
+      "meta.exponent-binds-tighter"
+    ],
+    "justifiedBy": [
+      "def.extended-exponents",
+      "def.fractional-exponent"
+    ],
+    "governedBy": [
+      "conv.exponent-scope"
+    ]
   },
   {
     "kind": "equivalence",
@@ -113,13 +178,25 @@
     "group": "exponents",
     "title": "Exponent on a sum",
     "priority": 22,
-    "requires": ["equivalence.exponent-as-repeated-product", "equivalence.product-with-brackets"],
-    "metaPatterns": ["meta.only-multiplication-distributes"],
-    "justifiedBy": ["def.power", "thm.binomial-square"],
-    "governedBy": ["conv.exponent-scope"],
     "note": "A power does not distribute over $+$: $(a+b)^2$ means $(a+b)(a+b)$, which is not $a^2 + b^2$. Contrast $(ab)^2 = a^2b^2$ — over $\\times$ it works, over $+$ it never does.",
-    "equivalents": ["(a+b)^2", "(a+b)(a+b)"],
-    "pitfalls": [{ "expr": "a^2 + b^2", "explainedBy": ["anti.linearity"] }]
+    "illustration": "(a+b)^2 = (a+b)(a+b)",
+    "requires": [
+      "equivalence.exponent-as-repeated-product",
+      "equivalence.product-with-brackets"
+    ],
+    "metaPatterns": [
+      "meta.only-multiplication-distributes"
+    ],
+    "justifiedBy": [
+      "def.power",
+      "thm.binomial-square"
+    ],
+    "governedBy": [
+      "conv.exponent-scope"
+    ],
+    "errors": [
+      "anti.linearity"
+    ]
   },
   {
     "kind": "equivalence",
@@ -127,14 +204,24 @@
     "group": "exponents",
     "title": "Root of a product",
     "priority": 28,
-    "conditions": "a \\ge 0, b \\ge 0",
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.only-multiplication-distributes"],
-    "justifiedBy": ["thm.root-of-product"],
-    "governedBy": ["conv.root-groups"],
     "note": "A root splits over $\\times$: $\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$.",
-    "equivalents": ["\\sqrt{ab}", "\\sqrt{a} \\cdot \\sqrt{b}"],
-    "pitfalls": [{ "expr": "\\sqrt{a} + \\sqrt{b}", "explainedBy": ["anti.linearity"] }]
+    "illustration": "\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}",
+    "conditions": "a \\ge 0, b \\ge 0",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "metaPatterns": [
+      "meta.only-multiplication-distributes"
+    ],
+    "justifiedBy": [
+      "thm.root-of-product"
+    ],
+    "governedBy": [
+      "conv.root-groups"
+    ],
+    "errors": [
+      "anti.linearity"
+    ]
   },
   {
     "kind": "equivalence",
@@ -142,12 +229,20 @@
     "group": "exponents",
     "title": "Root of a sum",
     "priority": 29,
-    "conditions": "a \\ge 0, b \\ge 0",
-    "requires": ["equivalence.root-of-a-product"],
-    "metaPatterns": ["meta.only-multiplication-distributes"],
-    "governedBy": ["conv.root-groups"],
     "note": "A root does NOT split over $+$: $\\sqrt{a+b}$ is not $\\sqrt{a} + \\sqrt{b}$. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, but $3 + 4 = 7$.",
-    "equivalents": ["\\sqrt{a+b}", "\\sqrt{b+a}"],
-    "pitfalls": [{ "expr": "\\sqrt{a} + \\sqrt{b}", "explainedBy": ["anti.linearity"] }]
+    "illustration": "\\sqrt{a+b} = \\sqrt{b+a}",
+    "conditions": "a \\ge 0, b \\ge 0",
+    "requires": [
+      "equivalence.root-of-a-product"
+    ],
+    "metaPatterns": [
+      "meta.only-multiplication-distributes"
+    ],
+    "governedBy": [
+      "conv.root-groups"
+    ],
+    "errors": [
+      "anti.linearity"
+    ]
   }
 ]

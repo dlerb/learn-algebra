@@ -5,37 +5,44 @@
     "group": "fractions",
     "title": "Division notation variants",
     "priority": 19,
-    "conditions": "b \\ne 0",
-    "metaPatterns": [],
-    "governedBy": ["conv.division-signs"],
     "note": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
-    "equivalents": ["a \\div b", "a : b", "\\frac{a}{b}"],
-    "pitfalls": [{ "expr": "b : a", "explainedBy": ["anti.commute-everything"] }]
+    "illustration": "a \\div b = a : b = \\frac{a}{b}",
+    "conditions": "b \\ne 0",
+    "governedBy": [
+      "conv.division-signs"
+    ],
+    "errors": [
+      "anti.commute-everything"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.fraction-as-reciprocal-product",
     "group": "fractions",
     "title": "Fraction as multiplication by a reciprocal",
-    "conditions": "b \\ne 0",
-    "requires": ["equivalence.division-variants"],
-    "metaPatterns": [],
-    "justifiedBy": ["def.division"],
     "note": "Dividing by $b$ is multiplying by $1/b$: $a/b = a \\cdot (1/b)$. This is why dividing by a fraction means multiplying by its reciprocal.",
-    "equivalents": ["\\frac{a}{b}", "a \\cdot \\frac{1}{b}"],
-    "pitfalls": []
+    "illustration": "\\frac{a}{b} = a \\cdot \\frac{1}{b}",
+    "conditions": "b \\ne 0",
+    "requires": [
+      "equivalence.division-variants"
+    ],
+    "justifiedBy": [
+      "def.division"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.divide-by-one",
     "group": "fractions",
     "title": "Dividing by 1",
-    "requires": ["equivalence.division-variants"],
-    "metaPatterns": [],
-    "justifiedBy": ["thm.divide-by-one"],
     "note": "Dividing by 1 changes nothing: a/1 = a.",
-    "equivalents": ["\\frac{a}{1}", "a"],
-    "pitfalls": []
+    "illustration": "\\frac{a}{1} = a",
+    "requires": [
+      "equivalence.division-variants"
+    ],
+    "justifiedBy": [
+      "thm.divide-by-one"
+    ]
   },
   {
     "kind": "equivalence",
@@ -43,14 +50,23 @@
     "group": "fractions",
     "title": "Splitting a fraction over addition",
     "priority": 25,
-    "conditions": "c \\ne 0",
-    "requires": ["equivalence.fraction-bar-grouping"],
-    "metaPatterns": ["meta.fraction-bar-brackets", "meta.only-multiplication-distributes"],
-    "justifiedBy": ["thm.split-numerator", "ax.distributivity"],
-    "governedBy": ["conv.fraction-bar"],
     "note": "You may split a sum in the numerator: (a+b)/c = a/c + b/c. You may NOT split the denominator: a/(b+c) is not a/b + a/c.",
-    "equivalents": ["\\frac{a+b}{c}", "\\frac{a}{c} + \\frac{b}{c}"],
-    "pitfalls": []
+    "illustration": "\\frac{a+b}{c} = \\frac{a}{c} + \\frac{b}{c}",
+    "conditions": "c \\ne 0",
+    "requires": [
+      "equivalence.fraction-bar-grouping"
+    ],
+    "metaPatterns": [
+      "meta.fraction-bar-brackets",
+      "meta.only-multiplication-distributes"
+    ],
+    "justifiedBy": [
+      "thm.split-numerator",
+      "ax.distributivity"
+    ],
+    "governedBy": [
+      "conv.fraction-bar"
+    ]
   },
   {
     "kind": "equivalence",
@@ -58,14 +74,25 @@
     "group": "fractions",
     "title": "A sum in the denominator does not split",
     "priority": 26,
-    "requires": ["equivalence.splitting-a-fraction"],
-    "metaPatterns": ["meta.fraction-bar-brackets", "meta.only-multiplication-distributes"],
-    "justifiedBy": ["thm.split-numerator"],
-    "governedBy": ["conv.fraction-bar"],
     "note": "Splitting works over the numerator only. $c/(a+b)$ is $c$ divided by the whole chunk $a+b$ — it is not $c/a + c/b$. (Check with numbers: $12/(2+4) = 2$, but $12/2 + 12/4 = 9$.)",
+    "illustration": "\\frac{c}{a+b} = c \\div (a+b)",
     "conditions": "a+b \\ne 0",
-    "equivalents": ["\\frac{c}{a+b}", "c \\div (a+b)"],
-    "pitfalls": [{ "expr": "\\frac{c}{a} + \\frac{c}{b}", "explainedBy": ["anti.linearity"] }]
+    "requires": [
+      "equivalence.splitting-a-fraction"
+    ],
+    "metaPatterns": [
+      "meta.fraction-bar-brackets",
+      "meta.only-multiplication-distributes"
+    ],
+    "justifiedBy": [
+      "thm.split-numerator"
+    ],
+    "governedBy": [
+      "conv.fraction-bar"
+    ],
+    "errors": [
+      "anti.linearity"
+    ]
   },
   {
     "kind": "equivalence",
@@ -73,12 +100,24 @@
     "group": "fractions",
     "title": "No cancelling inside a sum",
     "priority": 27,
-    "requires": ["equivalence.splitting-a-fraction"],
-    "metaPatterns": ["meta.fraction-bar-brackets", "meta.only-multiplication-distributes"],
-    "justifiedBy": ["thm.split-numerator", "thm.cancel-common-factor"],
-    "governedBy": ["conv.fraction-bar"],
     "note": "You cannot cancel the 3 against one term of the numerator: $(3x+2)/3 = x + 2/3$, not $x + 2$. Cancelling needs a common factor of the WHOLE numerator.",
-    "equivalents": ["\\frac{3x+2}{3}", "x + \\frac{2}{3}"],
-    "pitfalls": [{ "expr": "x + 2", "explainedBy": ["anti.linearity"] }]
+    "illustration": "\\frac{3x+2}{3} = x + \\frac{2}{3}",
+    "requires": [
+      "equivalence.splitting-a-fraction"
+    ],
+    "metaPatterns": [
+      "meta.fraction-bar-brackets",
+      "meta.only-multiplication-distributes"
+    ],
+    "justifiedBy": [
+      "thm.split-numerator",
+      "thm.cancel-common-factor"
+    ],
+    "governedBy": [
+      "conv.fraction-bar"
+    ],
+    "errors": [
+      "anti.linearity"
+    ]
   }
 ]

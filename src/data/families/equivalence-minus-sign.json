@@ -5,12 +5,20 @@
     "group": "minus-sign",
     "title": "Negative numbers and the unary minus",
     "priority": 2,
-    "metaPatterns": ["meta.three-minuses"],
-    "justifiedBy": ["def.subtraction"],
-    "governedBy": ["conv.minus-roles"],
     "note": "A negative number and its parenthesised form are the same object: -3 and (-3) are identical, and both equal 0 - 3.",
-    "equivalents": ["-3", "(-3)", "0 - 3"],
-    "pitfalls": [{ "expr": "3 - 0", "explainedBy": ["anti.commute-everything"] }]
+    "illustration": "-3 = (-3) = 0 - 3",
+    "metaPatterns": [
+      "meta.three-minuses"
+    ],
+    "justifiedBy": [
+      "def.subtraction"
+    ],
+    "governedBy": [
+      "conv.minus-roles"
+    ],
+    "errors": [
+      "anti.commute-everything"
+    ]
   },
   {
     "kind": "equivalence",
@@ -18,13 +26,24 @@
     "group": "minus-sign",
     "title": "Subtracting vs. adding a negative",
     "priority": 16,
-    "requires": ["equivalence.coefficient-negative-one"],
-    "metaPatterns": ["meta.three-minuses"],
-    "justifiedBy": ["def.subtraction", "thm.negative-one-times"],
-    "governedBy": ["conv.minus-roles"],
     "note": "Subtracting is the same as adding the opposite: a - b = a + (-b). The minus and the number belong together.",
-    "equivalents": ["a - b", "a + (-b)", "a + (-1) \\cdot b"],
-    "pitfalls": [{ "expr": "a + b", "explainedBy": ["mis.minus-roles-confused"] }]
+    "illustration": "a - b = a + (-b) = a + (-1) \\cdot b",
+    "requires": [
+      "equivalence.coefficient-negative-one"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses"
+    ],
+    "justifiedBy": [
+      "def.subtraction",
+      "thm.negative-one-times"
+    ],
+    "governedBy": [
+      "conv.minus-roles"
+    ],
+    "errors": [
+      "mis.minus-roles-confused"
+    ]
   },
   {
     "kind": "equivalence",
@@ -32,13 +51,26 @@
     "group": "minus-sign",
     "title": "Distributing a negative over a sum",
     "priority": 8,
-    "requires": ["equivalence.coefficient-negative-one"],
-    "metaPatterns": ["meta.three-minuses", "meta.implicit-op-before-bracket"],
-    "justifiedBy": ["thm.minus-over-sum"],
-    "governedBy": ["conv.minus-roles", "conv.brackets-group"],
     "note": "The minus distributes to every term inside: -(a+b) = -a - b, not -a + b.",
-    "equivalents": ["-(a + b)", "-a - b"],
-    "pitfalls": [{ "expr": "-a + b", "explainedBy": ["anti.partial-distribution", "mis.minus-roles-confused"] }]
+    "illustration": "-(a + b) = -a - b",
+    "requires": [
+      "equivalence.coefficient-negative-one"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses",
+      "meta.implicit-op-before-bracket"
+    ],
+    "justifiedBy": [
+      "thm.minus-over-sum"
+    ],
+    "governedBy": [
+      "conv.minus-roles",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "anti.partial-distribution",
+      "mis.minus-roles-confused"
+    ]
   },
   {
     "kind": "equivalence",
@@ -46,13 +78,25 @@
     "group": "minus-sign",
     "title": "Distributing a negative over a difference",
     "priority": 4,
-    "requires": ["equivalence.coefficient-negative-one"],
-    "metaPatterns": ["meta.three-minuses", "meta.implicit-op-before-bracket"],
-    "justifiedBy": ["thm.minus-over-sum"],
-    "governedBy": ["conv.minus-roles", "conv.brackets-group"],
     "note": "The minus flips the sign of every term inside the bracket. -(a-b) = -a+b, not -a-b.",
-    "equivalents": ["-(a - b)", "-a + b", "b - a"],
-    "pitfalls": [{ "expr": "-a - b", "explainedBy": ["anti.partial-distribution"] }]
+    "illustration": "-(a - b) = -a + b = b - a",
+    "requires": [
+      "equivalence.coefficient-negative-one"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses",
+      "meta.implicit-op-before-bracket"
+    ],
+    "justifiedBy": [
+      "thm.minus-over-sum"
+    ],
+    "governedBy": [
+      "conv.minus-roles",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "anti.partial-distribution"
+    ]
   },
   {
     "kind": "equivalence",
@@ -60,39 +104,75 @@
     "group": "minus-sign",
     "title": "Double negative",
     "priority": 17,
-    "requires": ["equivalence.subtraction-as-adding-opposite"],
-    "metaPatterns": ["meta.three-minuses"],
-    "justifiedBy": ["thm.double-negative"],
-    "governedBy": ["conv.minus-roles"],
     "note": "Two minuses make a plus: subtracting a negative adds. a-(-b) = a+b, not a-b. (Likewise -(-a) = a.)",
-    "equivalents": ["a - (-b)", "a + b"],
-    "pitfalls": [{ "expr": "a - b", "explainedBy": ["mis.minus-roles-confused"] }]
+    "illustration": "a - (-b) = a + b",
+    "requires": [
+      "equivalence.subtraction-as-adding-opposite"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses"
+    ],
+    "justifiedBy": [
+      "thm.double-negative"
+    ],
+    "governedBy": [
+      "conv.minus-roles"
+    ],
+    "errors": [
+      "mis.minus-roles-confused"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.negative-times-negative",
     "group": "minus-sign",
     "title": "Negative times negative",
-    "requires": ["equivalence.negative-numbers", "equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.juxtaposition", "meta.three-minuses"],
-    "justifiedBy": ["thm.sign-rules"],
-    "governedBy": ["conv.juxtaposition", "conv.minus-roles"],
     "note": "A negative times a negative is positive: (-a)(-b) = ab, not -ab. (One negative factor gives a negative: (-a)(b) = -ab.)",
-    "equivalents": ["(-a)(-b)", "ab"],
-    "pitfalls": [{ "expr": "-ab", "explainedBy": ["mis.minus-roles-confused"] }]
+    "illustration": "(-a)(-b) = ab",
+    "requires": [
+      "equivalence.negative-numbers",
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "metaPatterns": [
+      "meta.juxtaposition",
+      "meta.three-minuses"
+    ],
+    "justifiedBy": [
+      "thm.sign-rules"
+    ],
+    "governedBy": [
+      "conv.juxtaposition",
+      "conv.minus-roles"
+    ],
+    "errors": [
+      "mis.minus-roles-confused"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.minus-on-fraction",
     "group": "minus-sign",
     "title": "Minus in front of a fraction",
-    "requires": ["equivalence.negative-numbers", "equivalence.division-variants"],
-    "metaPatterns": ["meta.three-minuses", "meta.fraction-bar-brackets"],
-    "justifiedBy": ["thm.fraction-sign-moves"],
-    "governedBy": ["conv.minus-roles", "conv.fraction-bar"],
     "note": "A single minus on a fraction can sit out front, on the numerator, or on the denominator — all equal. But -a/b is not (-a)/(-b).",
-    "equivalents": ["-\\frac{a}{b}", "\\frac{-a}{b}", "\\frac{a}{-b}"],
-    "pitfalls": [{ "expr": "\\frac{-a}{-b}", "explainedBy": ["mis.minus-roles-confused"] }]
+    "illustration": "-\\frac{a}{b} = \\frac{-a}{b} = \\frac{a}{-b}",
+    "requires": [
+      "equivalence.negative-numbers",
+      "equivalence.division-variants"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses",
+      "meta.fraction-bar-brackets"
+    ],
+    "justifiedBy": [
+      "thm.fraction-sign-moves"
+    ],
+    "governedBy": [
+      "conv.minus-roles",
+      "conv.fraction-bar"
+    ],
+    "errors": [
+      "mis.minus-roles-confused"
+    ]
   },
   {
     "kind": "equivalence",
@@ -100,13 +180,25 @@
     "group": "minus-sign",
     "title": "Subtracting a bracketed sum",
     "priority": 9,
-    "requires": ["equivalence.minus-over-sum"],
-    "metaPatterns": ["meta.three-minuses", "meta.implicit-op-before-bracket"],
-    "justifiedBy": ["thm.subtract-a-sum"],
-    "governedBy": ["conv.minus-roles", "conv.brackets-group"],
     "note": "The minus hits every term inside, not just the first: a - (b+c) = a - b - c. Same rule as -(b+c), with a term in front.",
-    "equivalents": ["a - (b + c)", "a - b - c"],
-    "pitfalls": [{ "expr": "a - b + c", "explainedBy": ["anti.partial-distribution"] }]
+    "illustration": "a - (b + c) = a - b - c",
+    "requires": [
+      "equivalence.minus-over-sum"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses",
+      "meta.implicit-op-before-bracket"
+    ],
+    "justifiedBy": [
+      "thm.subtract-a-sum"
+    ],
+    "governedBy": [
+      "conv.minus-roles",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "anti.partial-distribution"
+    ]
   },
   {
     "kind": "equivalence",
@@ -114,12 +206,24 @@
     "group": "minus-sign",
     "title": "Subtracting a bracketed difference",
     "priority": 5,
-    "requires": ["equivalence.minus-over-difference"],
-    "metaPatterns": ["meta.three-minuses", "meta.implicit-op-before-bracket"],
-    "justifiedBy": ["thm.subtract-a-sum"],
-    "governedBy": ["conv.minus-roles", "conv.brackets-group"],
     "note": "The minus flips every sign inside: a - (b-c) = a - b + c, not a - b - c.",
-    "equivalents": ["a - (b - c)", "a - b + c"],
-    "pitfalls": [{ "expr": "a - b - c", "explainedBy": ["anti.partial-distribution"] }]
+    "illustration": "a - (b - c) = a - b + c",
+    "requires": [
+      "equivalence.minus-over-difference"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses",
+      "meta.implicit-op-before-bracket"
+    ],
+    "justifiedBy": [
+      "thm.subtract-a-sum"
+    ],
+    "governedBy": [
+      "conv.minus-roles",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "anti.partial-distribution"
+    ]
   }
 ]

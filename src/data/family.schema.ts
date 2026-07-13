@@ -35,38 +35,41 @@ export function loc(ls: LocalizedString, lang: Lang): string {
   return ls[lang] ?? ls.en
 }
 
-// Fields shared by every family, regardless of kind.
-// The id is prefixed with the family's `kind` (its mental-step type), mirroring
-// how a law id is prefixed by its kind (ax/def/thm). Families have exactly two
-// classifiers: `kind` (category, = id prefix) and `group` (topic). There is no
-// skill axis in the data — the "Skill 1/2/3" framing is a lens the docs and the
-// app apply, not something stored here.
-const core = {
+// A family is a curated STRATEGY/SKILL — NOT drill material. It says what the
+// skill is, why it matters (`note`), one canonical `illustration`, the
+// misconceptions it guards against (`errors` → error-pattern ids), and its links
+// into the law / convention / meta-pattern layers. All the drill-specific
+// material — instances, answers, distractors — lives in the drill layer
+// (drills/*.json), keyed by family id. Uniform shape across kinds: `kind` is a
+// plain category label (= id prefix), not a data-shape discriminant.
+export const familyKind = z.enum(['equivalence', 'classification', 'chunking', 'transformation'])
+export type FamilyKind = z.infer<typeof familyKind>
+
+export const family = z.object({
   id: z.string().regex(/^(equivalence|classification|chunking|transformation)\.[a-z0-9-]+$/,
-    'id must be "<kind>.<slug>" — kind ∈ equivalence|classification|chunking|transformation, slug lowercase kebab-case'),
-  group: z.string(),                    // group slug, e.g. "minus-sign"; must exist in familyGroups.json
+    'id must be "<kind>.<slug>" (kind ∈ equivalence|classification|chunking|transformation)'),
+  kind: familyKind,                     // = id prefix (validated); a plain category label
+  group: z.string(),                    // topic slug; must exist in familyGroups.json
   title: localizedString,
-  priority: z.number().int().positive().optional(),  // authored drilling rank; lower = earlier; omit = unranked
-  requires: z.array(z.string()).default([]),        // DIRECT prerequisites (family ids) — author the transitive reduction, not the closure
-  metaPatterns: z.array(z.string()).default([]),    // e.g. ["M2"] — references a meta-pattern in metapatterns.json
-  justifiedBy: z.array(z.string()).default([]),     // law ids (laws.json) that make the true forms true; empty = pure convention
-  governedBy: z.array(z.string()).default([]),      // convention ids (conventions.json) the family is governed by
-  note: localizedString,                // one/two-line explanation shown in feedback — prose with inline $…$ KaTeX
-  conditions: z.string().optional(),    // domain caveat NOT already carried by a cited law — pure LaTeX, e.g. "a > 0", "b \\ne 0"
-}
+  note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
+  illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
+  priority: z.number().int().positive().optional(),  // authored drilling rank; lower = earlier
+  gateway: z.boolean().default(false),  // recognising this shape triggers a transformation (familiar shapes)
+  requires: z.array(z.string()).default([]),     // DIRECT prerequisite family ids
+  metaPatterns: z.array(z.string()).default([]), // meta-pattern ids (metapatterns.json)
+  justifiedBy: z.array(z.string()).default([]),  // law ids (laws.json)
+  governedBy: z.array(z.string()).default([]),   // convention ids (conventions.json)
+  errors: z.array(z.string()).default([]),       // error-pattern ids — the skill's misconception catalog
+  conditions: z.string().optional(),    // domain caveat, pure LaTeX
+})
+export type Family = z.infer<typeof family>
 
-// Every kind has a CORRECT half (varies by kind) and an ERROR half (`pitfalls` —
-// the "this is exactly what you must not do" content). The error half keeps the
-// same field name across kinds; only its shape differs.
-//
-// Any pitfall may carry `revise`: family ids to send the student to when this
-// SPECIFIC error fires — for errors that point at a sharper gap than the
-// family-level `requires`. Omit it where `requires` + metaPatterns suffice.
-// Any pitfall may carry `explainedBy`: error-pattern ids (errors.json) naming
-// WHY the wrong form tempts — a false law, a misreading, or one of each.
-
-// An equivalence pitfall is authored as a bare LaTeX string, or as an object
-// when it carries `revise` or `explainedBy`. Normalized to object form on parse.
+// ── Drill layer ──────────────────────────────────────────────────────────────
+// Drill material, parked out of the families (drills/*.json). Each drill points
+// at its `family` by id. Discriminated on `kind` for now — that is the shape of
+// the parked material; the real drill layer will likely key on a `format`
+// instead. A pitfall's `explainedBy` names which of the family's `errors` this
+// concrete distractor instantiates (validated ⊆ the family's set).
 const equivPitfall = z
   .union([z.string(), z.object({
     expr: z.string(),
@@ -76,57 +79,35 @@ const equivPitfall = z
   .transform((p): { expr: string; revise?: string[]; explainedBy?: string[] } =>
     (typeof p === 'string' ? { expr: p } : p))
 
-export const family = z.discriminatedUnion('kind', [
-  // EQUIVALENCE — a set of forms that are all EQUAL (same value for all inputs).
-  // The mental step is "produce/know an equal form." The `equivalents` share one
-  // binding: the `a` in every form is the same `a`. Pitfalls are wrong FORMS
-  // (look equal, aren't).
+export const drill = z.discriminatedUnion('kind', [
   z.object({
-    kind: z.literal('equivalence'),
-    ...core,
-    equivalents: z.array(z.string()).min(2),   // ≥2 so a SAME pair can be drawn
-    pitfalls: z.array(equivPitfall).default([]),  // non-equal forms
+    kind: z.literal('equivalence'), family: z.string(),
+    equivalents: z.array(z.string()).min(2),
+    pitfalls: z.array(equivPitfall).default([]),
   }),
-
-  // CLASSIFICATION — one expression, name its dominant operation.
-  // `examples` are DIFFERENT expressions sharing the SAME structural class; each is
-  // independently bound. Pitfalls are wrong LABELS plus why they tempt.
-  // `gateway` marks familiar-shape families — classification-with-intent that hinge
-  // Skill 2 → Skill 3 (recognising the shape is the trigger for a transformation).
   z.object({
-    kind: z.literal('classification'),
-    ...core,
-    gateway: z.boolean().default(false),
+    kind: z.literal('classification'), family: z.string(),
     examples: z.array(z.string()).min(1),
     answer: dominantOp,
     pitfalls: z.array(z.object({
-      answer: dominantOp,
-      why: localizedString,
+      answer: dominantOp, why: localizedString,
       revise: z.array(z.string()).min(1).optional(),
       explainedBy: z.array(z.string()).min(1).optional(),
     })).default([]),
   }),
-
-  // CHUNKING — break an expression into its chunks. Skill 2 group C.
-  // Not drilled yet (no exercise type maps to it); authored now for the library.
   z.object({
-    kind: z.literal('chunking'),
-    ...core,
+    kind: z.literal('chunking'), family: z.string(),
     examples: z.array(z.object({
-      expr: z.string(),
-      chunks: z.array(z.string()).min(2),   // the correct chunking
-      op: dominantOp,                       // dominant op between the chunks
+      expr: z.string(), chunks: z.array(z.string()).min(2), op: dominantOp,
     })).min(1),
     pitfalls: z.array(z.object({
-      chunks: z.array(z.string()),
-      why: localizedString,
+      chunks: z.array(z.string()), why: localizedString,
       revise: z.array(z.string()).min(1).optional(),
       explainedBy: z.array(z.string()).min(1).optional(),
     })).default([]),
   }),
 ])
-
-export type Family = z.infer<typeof family>
+export type Drill = z.infer<typeof drill>
 
 // ── Groups ───────────────────────────────────────────────────────────────────
 // Groups organize families into ordered sections in the lookup view. Defined once
@@ -387,13 +368,8 @@ export function validateErrors(
 }
 
 // ── Cross-layer references from families and meta-patterns ──────────────────
-// `justifiedBy` → laws; `governedBy` → conventions; pitfall `explainedBy` →
-// error patterns; meta-pattern `summarizes` → any of the three.
-
-function explainedByTargets(f: Family): string[] {
-  const pitfalls: { explainedBy?: string[] }[] = f.pitfalls
-  return pitfalls.flatMap(p => p.explainedBy ?? [])
-}
+// `justifiedBy` → laws; `governedBy` → conventions; `errors` → error patterns;
+// meta-pattern `summarizes` → any of the three.
 
 export function validateLayerRefs(
   families: Family[], metas: MetaPatternsFile,
@@ -410,8 +386,8 @@ export function validateLayerRefs(
     for (const r of f.governedBy) {
       if (!convIds.has(r)) throw new Error(`Family "${f.id}" references unknown convention "${r}".`)
     }
-    for (const r of explainedByTargets(f)) {
-      if (!errIds.has(r)) throw new Error(`A pitfall of "${f.id}" is explainedBy unknown error pattern "${r}".`)
+    for (const r of f.errors) {
+      if (!errIds.has(r)) throw new Error(`Family "${f.id}" lists unknown error pattern "${r}".`)
     }
   }
   for (const m of metas) {
@@ -445,7 +421,7 @@ export function auditCoverage(
   // meta-pattern citation that doesn't fit the family.)
   for (const f of families) {
     if (f.justifiedBy.length === 0 && f.governedBy.length === 0) continue
-    const coords = new Set([...f.justifiedBy, ...f.governedBy, ...explainedByTargets(f)])
+    const coords = new Set([...f.justifiedBy, ...f.governedBy, ...f.errors])
     const unsupported = f.metaPatterns.filter(mid => {
       const mp = metas.find(m => m.id === mid)
       return mp !== undefined && !mp.summarizes.some(r => coords.has(r))
@@ -456,7 +432,7 @@ export function auditCoverage(
   }
   const citedLaws = new Set(families.flatMap(f => f.justifiedBy))
   const citedConvs = new Set(families.flatMap(f => f.governedBy))
-  const citedErrs = new Set(families.flatMap(explainedByTargets))
+  const citedErrs = new Set(families.flatMap(f => f.errors))
   const uncited = (kind: string, ids: string[], cited: Set<string>) => {
     const free = ids.filter(id => !cited.has(id))
     if (free.length > 0) lines.push(`${kind} cited by no family: ${free.join(', ')}`)
@@ -473,8 +449,6 @@ export function auditCoverage(
   const countDirty = (fields: string[][]) => fields.filter(f => f.some(s => unicodeMath.test(s))).length
   const dirty = {
     'family notes': countDirty(families.map(f => locVals(f.note))),
-    'pitfall whys': countDirty(families.flatMap(f =>
-      (f.pitfalls as { why?: LocalizedString }[]).filter(p => p.why).map(p => locVals(p.why)))),
     'law notes': countDirty(laws.filter(l => l.note).map(l => locVals(l.note))),
     'convention texts': countDirty(conventions.map(c => locVals(c.text))),
     'error texts': countDirty(errors.map(e => locVals(e.text))),
@@ -492,20 +466,12 @@ export function auditCoverage(
 // old priority/skill-direction consistency check was dropped with the skill
 // axis — `priority` stays a soft authoring hint, no longer cross-validated.)
 
-function reviseTargets(f: Family): string[] {
-  const pitfalls: { revise?: string[] }[] = f.pitfalls
-  return pitfalls.flatMap(p => p.revise ?? [])
-}
-
 export function validateFamilyLinks(families: Family[]): void {
   const byId = new Map(families.map(f => [f.id, f]))
 
   for (const f of families) {
     for (const r of f.requires) {
       if (!byId.has(r)) throw new Error(`Family "${f.id}" requires unknown family "${r}".`)
-    }
-    for (const r of reviseTargets(f)) {
-      if (!byId.has(r)) throw new Error(`A pitfall of "${f.id}" revises unknown family "${r}".`)
     }
   }
 
@@ -537,7 +503,7 @@ function proseMath(ls?: LocalizedString): string[] {
 }
 
 export function validateLatexCompiles(
-  families: Family[], metas: MetaPatternsFile,
+  families: Family[], drills: Drill[], metas: MetaPatternsFile,
   laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
 ): void {
   const failures: string[] = []
@@ -551,22 +517,25 @@ export function validateLatexCompiles(
 
   for (const f of families) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
+    if (f.illustration) check(f.id, 'illustration', f.illustration)
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
-    if (f.kind === 'equivalence') {
-      f.equivalents.forEach((x, i) => check(f.id, `equivalents[${i}]`, x))
-      f.pitfalls.forEach((p, i) => check(f.id, `pitfalls[${i}]`, p.expr))
-    } else if (f.kind === 'classification') {
-      f.examples.forEach((x, i) => check(f.id, `examples[${i}]`, x))
-      f.pitfalls.forEach((p, i) =>
-        proseMath(p.why).forEach(m => check(f.id, `pitfalls[${i}].why`, m)))
+  }
+  for (const d of drills) {
+    if (d.kind === 'equivalence') {
+      d.equivalents.forEach((x, i) => check(d.family, `equivalents[${i}]`, x))
+      d.pitfalls.forEach((p, i) => check(d.family, `pitfalls[${i}]`, p.expr))
+    } else if (d.kind === 'classification') {
+      d.examples.forEach((x, i) => check(d.family, `examples[${i}]`, x))
+      d.pitfalls.forEach((p, i) =>
+        proseMath(p.why).forEach(m => check(d.family, `pitfalls[${i}].why`, m)))
     } else {
-      f.examples.forEach((ex, i) => {
-        check(f.id, `examples[${i}].expr`, ex.expr)
-        ex.chunks.forEach((c, j) => check(f.id, `examples[${i}].chunks[${j}]`, c))
+      d.examples.forEach((ex, i) => {
+        check(d.family, `examples[${i}].expr`, ex.expr)
+        ex.chunks.forEach((c, j) => check(d.family, `examples[${i}].chunks[${j}]`, c))
       })
-      f.pitfalls.forEach((p, i) => {
-        p.chunks.forEach((c, j) => check(f.id, `pitfalls[${i}].chunks[${j}]`, c))
-        proseMath(p.why).forEach(m => check(f.id, `pitfalls[${i}].why`, m))
+      d.pitfalls.forEach((p, i) => {
+        p.chunks.forEach((c, j) => check(d.family, `pitfalls[${i}].chunks[${j}]`, c))
+        proseMath(p.why).forEach(m => check(d.family, `pitfalls[${i}].why`, m))
       })
     }
   }
@@ -587,12 +556,15 @@ export function validateLatexCompiles(
   }
 }
 
-// Every id must be unique across all family files.
+// Every id must be unique, and the id prefix must match the family's `kind`.
 export function validateUniqueIds(families: Family[]): void {
   const seen = new Set<string>()
   for (const f of families) {
     if (seen.has(f.id)) throw new Error(`Duplicate family id "${f.id}".`)
     seen.add(f.id)
+    if (!f.id.startsWith(f.kind + '.')) {
+      throw new Error(`Family "${f.id}" has kind "${f.kind}" but a mismatching id prefix.`)
+    }
   }
 }
 
@@ -606,4 +578,44 @@ export function parseFamilies(raw: unknown[]): Family[] {
     }
     return result.data
   })
+}
+
+// ── Drill validation ─────────────────────────────────────────────────────────
+export function parseDrills(raw: unknown[]): Drill[] {
+  return raw.map((entry, i) => {
+    const result = drill.safeParse(entry)
+    if (!result.success) {
+      const fam = (entry as { family?: string })?.family ?? `index ${i}`
+      throw new Error(`Invalid drill for "${fam}":\n${z.prettifyError(result.error)}`)
+    }
+    return result.data
+  })
+}
+
+// Each drill points at a real family, shares its kind, and every distractor's
+// `explainedBy` / `revise` must resolve — and `explainedBy` must be one of the
+// family's declared `errors` (a distractor can't test a misconception the skill
+// never claims). One drill per family (for now).
+export function validateDrills(drills: Drill[], families: Family[]): void {
+  const byId = new Map(families.map(f => [f.id, f]))
+  const famIds = new Set(byId.keys())
+  const seen = new Set<string>()
+  for (const d of drills) {
+    const f = byId.get(d.family)
+    if (!f) throw new Error(`Drill references unknown family "${d.family}".`)
+    if (seen.has(d.family)) throw new Error(`More than one drill for family "${d.family}".`)
+    seen.add(d.family)
+    if (d.kind !== f.kind) throw new Error(`Drill for "${d.family}" is kind "${d.kind}" but the family is "${f.kind}".`)
+    const declared = new Set(f.errors)
+    for (const p of d.pitfalls) {
+      for (const r of p.revise ?? []) {
+        if (!famIds.has(r)) throw new Error(`Drill "${d.family}" revises unknown family "${r}".`)
+      }
+      for (const r of p.explainedBy ?? []) {
+        if (!declared.has(r)) {
+          throw new Error(`Drill "${d.family}" has a distractor explainedBy "${r}", not in the family's errors.`)
+        }
+      }
+    }
+  }
 }

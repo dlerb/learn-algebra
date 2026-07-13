@@ -4,10 +4,14 @@
     "id": "equivalence.same-value-different-structure",
     "group": "full-classification",
     "title": "Same value, different dominant operation",
-    "requires": ["classification.difference", "classification.product"],
-    "metaPatterns": ["meta.dominant-op-last"],
     "note": "These are equal in value but have different dominant operations: x²−1 is a difference, (x+1)(x−1) is a product. Rewriting changes the dominant operation — the heart of Skill 3.",
-    "equivalents": ["x^2 - 1", "(x+1)(x-1)"],
-    "pitfalls": []
+    "illustration": "x^2 - 1 = (x+1)(x-1)",
+    "requires": [
+      "classification.difference",
+      "classification.product"
+    ],
+    "metaPatterns": [
+      "meta.dominant-op-last"
+    ]
   }
 ]

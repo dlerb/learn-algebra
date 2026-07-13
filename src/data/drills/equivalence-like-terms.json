@@ -1,0 +1,50 @@
+[
+  {
+    "kind": "equivalence",
+    "family": "equivalence.number-plus-term",
+    "equivalents": [
+      "2 + 3x",
+      "3x + 2"
+    ],
+    "pitfalls": [
+      {
+        "expr": "5x",
+        "explainedBy": [
+          "anti.conjoining"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.unlike-variable-terms",
+    "equivalents": [
+      "3x + 2y",
+      "2y + 3x"
+    ],
+    "pitfalls": [
+      {
+        "expr": "5xy",
+        "explainedBy": [
+          "anti.conjoining"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.adding-powers",
+    "equivalents": [
+      "x^2 + x",
+      "x + x^2"
+    ],
+    "pitfalls": [
+      {
+        "expr": "x^3",
+        "explainedBy": [
+          "anti.conjoining"
+        ]
+      }
+    ]
+  }
+]

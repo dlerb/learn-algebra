@@ -4,22 +4,22 @@
     "id": "equivalence.bracket-types",
     "group": "brackets",
     "title": "Bracket types are interchangeable",
-    "metaPatterns": [],
-    "governedBy": ["conv.brackets-group"],
     "note": "Round, square, and curly brackets group in exactly the same way: (a+b), [a+b] and {a+b} are identical.",
-    "equivalents": ["(a + b)", "[a + b]", "\\{a + b\\}"],
-    "pitfalls": []
+    "illustration": "(a + b) = [a + b] = \\{a + b\\}",
+    "governedBy": [
+      "conv.brackets-group"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.redundant-brackets",
     "group": "brackets",
     "title": "Redundant brackets",
-    "metaPatterns": [],
-    "governedBy": ["conv.brackets-group"],
     "note": "Brackets around something already whole can be dropped: ((a+b)) = (a+b) = a+b, and (x) = x.",
-    "equivalents": ["((a + b))", "(a + b)", "a + b"],
-    "pitfalls": []
+    "illustration": "((a + b)) = (a + b) = a + b",
+    "governedBy": [
+      "conv.brackets-group"
+    ]
   },
   {
     "kind": "equivalence",
@@ -27,12 +27,18 @@
     "group": "brackets",
     "title": "Brackets and order of operations",
     "priority": 18,
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": [],
-    "governedBy": ["conv.precedence", "conv.brackets-group"],
     "note": "Multiplication happens before addition: $a + b \\cdot c$ means $a + (b \\cdot c)$. A bracket changes the meaning: $(a+b) \\cdot c$ is different.",
-    "equivalents": ["a + b \\cdot c", "a + bc"],
-    "pitfalls": [{ "expr": "(a + b) \\cdot c", "explainedBy": ["mis.precedence-ignored"] }, { "expr": "(a + b)c", "explainedBy": ["mis.precedence-ignored"] }]
+    "illustration": "a + b \\cdot c = a + bc",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
+    ],
+    "governedBy": [
+      "conv.precedence",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "mis.precedence-ignored"
+    ]
   },
   {
     "kind": "equivalence",
@@ -40,26 +46,49 @@
     "group": "brackets",
     "title": "Implicit brackets in the fraction bar",
     "priority": 20,
-    "conditions": "c \\ne 0",
-    "requires": ["equivalence.division-variants"],
-    "metaPatterns": ["meta.fraction-bar-brackets"],
-    "governedBy": ["conv.fraction-bar"],
     "note": "The fraction bar groups the whole numerator: $(a+b)/c$ is all of $a+b$ over $c$. It is not $a + b/c$.",
-    "equivalents": ["\\frac{a+b}{c}", "(a+b) \\div c"],
-    "pitfalls": [{ "expr": "a + \\frac{b}{c}", "explainedBy": ["mis.fraction-bar-grouping-lost"] }]
+    "illustration": "\\frac{a+b}{c} = (a+b) \\div c",
+    "conditions": "c \\ne 0",
+    "requires": [
+      "equivalence.division-variants"
+    ],
+    "metaPatterns": [
+      "meta.fraction-bar-brackets"
+    ],
+    "governedBy": [
+      "conv.fraction-bar"
+    ],
+    "errors": [
+      "mis.fraction-bar-grouping-lost"
+    ]
   },
   {
     "kind": "equivalence",
     "id": "equivalence.minus-as-times-negative-one",
     "group": "brackets",
     "title": "Minus before a bracket = ×(−1)",
-    "requires": ["equivalence.coefficient-negative-one", "equivalence.product-with-brackets"],
-    "metaPatterns": ["meta.three-minuses", "meta.implicit-op-before-bracket"],
-    "justifiedBy": ["thm.negative-one-times", "thm.minus-over-sum"],
-    "governedBy": ["conv.minus-roles", "conv.brackets-group"],
     "note": "A minus in front of a bracket means multiply the whole bracket by $-1$: $-(a+b) = (-1)(a+b) = -a-b$.",
-    "equivalents": ["-(a + b)", "(-1)(a + b)", "-a - b"],
-    "pitfalls": [{ "expr": "-a + b", "explainedBy": ["anti.partial-distribution", "mis.minus-roles-confused"] }]
+    "illustration": "-(a + b) = (-1)(a + b) = -a - b",
+    "requires": [
+      "equivalence.coefficient-negative-one",
+      "equivalence.product-with-brackets"
+    ],
+    "metaPatterns": [
+      "meta.three-minuses",
+      "meta.implicit-op-before-bracket"
+    ],
+    "justifiedBy": [
+      "thm.negative-one-times",
+      "thm.minus-over-sum"
+    ],
+    "governedBy": [
+      "conv.minus-roles",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "anti.partial-distribution",
+      "mis.minus-roles-confused"
+    ]
   },
   {
     "kind": "equivalence",
@@ -67,12 +96,24 @@
     "group": "brackets",
     "title": "Multiplying into a bracket",
     "priority": 15,
-    "requires": ["equivalence.product-with-brackets"],
-    "metaPatterns": ["meta.implicit-op-before-bracket", "meta.only-multiplication-distributes"],
-    "justifiedBy": ["ax.distributivity"],
-    "governedBy": ["conv.juxtaposition", "conv.brackets-group"],
     "note": "Multiplication distributes to every term inside: 2(x+1) = 2x + 2, not 2x + 1. The 2 hits both the x and the 1.",
-    "equivalents": ["2(x + 1)", "2x + 2"],
-    "pitfalls": [{ "expr": "2x + 1", "explainedBy": ["anti.partial-distribution"] }]
+    "illustration": "2(x + 1) = 2x + 2",
+    "requires": [
+      "equivalence.product-with-brackets"
+    ],
+    "metaPatterns": [
+      "meta.implicit-op-before-bracket",
+      "meta.only-multiplication-distributes"
+    ],
+    "justifiedBy": [
+      "ax.distributivity"
+    ],
+    "governedBy": [
+      "conv.juxtaposition",
+      "conv.brackets-group"
+    ],
+    "errors": [
+      "anti.partial-distribution"
+    ]
   }
 ]

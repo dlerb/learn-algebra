@@ -1,0 +1,90 @@
+[
+  {
+    "kind": "equivalence",
+    "family": "equivalence.explicit-vs-implicit-product",
+    "equivalents": [
+      "3 \\times x",
+      "3 \\cdot x",
+      "3x",
+      "x \\cdot 3",
+      "(3)(x)"
+    ],
+    "pitfalls": [
+      {
+        "expr": "3 + x",
+        "explainedBy": [
+          "mis.juxtaposition-as-plus"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.product-with-brackets",
+    "equivalents": [
+      "2 \\times (x+1)",
+      "2 \\cdot (x+1)",
+      "2(x+1)",
+      "(x+1) \\cdot 2"
+    ],
+    "pitfalls": [
+      {
+        "expr": "2 + (x+1)",
+        "explainedBy": [
+          "mis.juxtaposition-as-plus"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.coefficient-negative-one",
+    "equivalents": [
+      "(-1) \\cdot a",
+      "(-1)a",
+      "-1a",
+      "-a"
+    ],
+    "pitfalls": [
+      {
+        "expr": "-1 + a",
+        "explainedBy": [
+          "mis.juxtaposition-as-plus"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.coefficient-zero",
+    "equivalents": [
+      "0 \\cdot x",
+      "0x",
+      "0"
+    ],
+    "pitfalls": [
+      {
+        "expr": "x",
+        "explainedBy": [
+          "mis.juxtaposition-as-plus"
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "equivalence",
+    "family": "equivalence.repeated-addition",
+    "equivalents": [
+      "x + x",
+      "2x"
+    ],
+    "pitfalls": [
+      {
+        "expr": "x^2",
+        "explainedBy": [
+          "anti.repetition-confusion"
+        ]
+      }
+    ]
+  }
+]

@@ -4,15 +4,16 @@
     "id": "chunking.chunks-in-sum",
     "group": "chunking",
     "title": "Chunks in a sum or difference",
-    "requires": ["equivalence.explicit-vs-implicit-product"],
-    "metaPatterns": ["meta.multiplication-binds-tighter"],
     "note": "Break at the + and − signs, keeping each sign with its term. Each product like 3x stays whole.",
-    "examples": [
-      { "expr": "3x + 2y - z", "chunks": ["3x", "2y", "-z"], "op": "sum" },
-      { "expr": "ab - cd + ef", "chunks": ["ab", "-cd", "ef"], "op": "sum" }
+    "illustration": "3x + 2y - z",
+    "requires": [
+      "equivalence.explicit-vs-implicit-product"
     ],
-    "pitfalls": [
-      { "chunks": ["3", "x", "2y", "z"], "why": "splitting 3x into 3 and x instead of keeping the product as one chunk", "explainedBy": ["sal.implicit-op-overlooked"] }
+    "metaPatterns": [
+      "meta.multiplication-binds-tighter"
+    ],
+    "errors": [
+      "sal.implicit-op-overlooked"
     ]
   },
   {
@@ -20,14 +21,14 @@
     "id": "chunking.chunks-in-product",
     "group": "chunking",
     "title": "Chunks in a product",
-    "requires": ["equivalence.product-with-brackets"],
-    "metaPatterns": ["meta.bracket-chunk"],
     "note": "Break at the multiplication points. Each bracket is one factor.",
-    "examples": [
-      { "expr": "3 \\cdot x \\cdot (x+1)", "chunks": ["3", "x", "(x+1)"], "op": "product" },
-      { "expr": "2x(x-1)(x+2)", "chunks": ["2", "x", "(x-1)", "(x+2)"], "op": "product" }
+    "illustration": "3 \\cdot x \\cdot (x+1)",
+    "requires": [
+      "equivalence.product-with-brackets"
     ],
-    "pitfalls": []
+    "metaPatterns": [
+      "meta.bracket-chunk"
+    ]
   },
   {
     "kind": "chunking",
@@ -35,17 +36,23 @@
     "group": "chunking",
     "title": "Implicit chunking — multiplication precedence",
     "priority": 8,
-    "requires": ["equivalence.precedence-brackets"],
-    "justifiedBy": ["ax.add-associative", "ax.add-commutative"],
-    "governedBy": ["conv.precedence"],
-    "metaPatterns": ["meta.dominant-op-last"],
     "note": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
-    "examples": [
-      { "expr": "3x + 2y", "chunks": ["3x", "2y"], "op": "sum" },
-      { "expr": "a^2 b + a b^2", "chunks": ["a^2 b", "a b^2"], "op": "sum" }
+    "illustration": "3x + 2y",
+    "requires": [
+      "equivalence.precedence-brackets"
     ],
-    "pitfalls": [
-      { "chunks": ["3", "x", "2", "y"], "why": "not reading the implicit multiplication that binds 3 and x into one chunk", "explainedBy": ["mis.precedence-ignored"] }
+    "metaPatterns": [
+      "meta.dominant-op-last"
+    ],
+    "justifiedBy": [
+      "ax.add-associative",
+      "ax.add-commutative"
+    ],
+    "governedBy": [
+      "conv.precedence"
+    ],
+    "errors": [
+      "mis.precedence-ignored"
     ]
   },
   {
@@ -54,15 +61,16 @@
     "group": "chunking",
     "title": "Bracket as a single chunk",
     "priority": 8,
-    "requires": ["equivalence.product-with-brackets"],
-    "metaPatterns": ["meta.bracket-chunk"],
     "note": "Resist expanding — treat the whole bracket as one object.",
-    "examples": [
-      { "expr": "3(x+1) - 2(x-1)", "chunks": ["3(x+1)", "2(x-1)"], "op": "difference" },
-      { "expr": "(x+1)(x-1)", "chunks": ["(x+1)", "(x-1)"], "op": "product" }
+    "illustration": "3(x+1) - 2(x-1)",
+    "requires": [
+      "equivalence.product-with-brackets"
     ],
-    "pitfalls": [
-      { "chunks": ["3", "x", "1", "2", "x", "1"], "why": "expanding the brackets instead of keeping each as one chunk", "explainedBy": ["mis.bracket-dissolved"] }
+    "metaPatterns": [
+      "meta.bracket-chunk"
+    ],
+    "errors": [
+      "mis.bracket-dissolved"
     ]
   }
 ]
