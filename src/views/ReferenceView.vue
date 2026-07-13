@@ -56,7 +56,7 @@ const lawSections = computed(() =>
   groupBy.value === 'kind' ? lawKindSections.value : lawTopicSections.value)
 
 const conventionCards = computed(() => conventions.map(c => ({
-  id: c.id, code: c.code, name: loc(c.name, lang.value), text: loc(c.text, lang.value),
+  id: c.id, code: c.code, group: c.group, name: loc(c.name, lang.value), text: loc(c.text, lang.value),
 })))
 
 interface ErrVM {
@@ -120,13 +120,16 @@ const errorSections = computed(() => [
     </section>
 
     <section class="block">
-      <h2>Notation conventions</h2>
+      <h2>Conventions</h2>
       <p class="blurb">No truth value — the honest answer to "why?" is "we agreed to write it that way."</p>
       <div class="cards">
         <article v-for="c in conventionCards" :key="c.id" class="card">
           <div class="card-head">
             <h4>{{ c.name }}</h4>
-            <span class="badge code conv">{{ c.code }}</span>
+            <span class="badges">
+              <span class="badge topic">{{ c.group }}</span>
+              <span class="badge code conv">{{ c.code }}</span>
+            </span>
           </div>
           <code class="slug">{{ c.id }}</code>
           <p class="note"><RichText :text="c.text" /></p>
