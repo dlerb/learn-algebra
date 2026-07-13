@@ -57,7 +57,7 @@ Session always has a clear end. Students never open the app and face an infinite
 ## Exercise Types
 
 ### Type 1 — Same or Different?
-**Covers:** Skill 1 (notation fluency)
+**Covers:** Skill 1 (equivalence fluency)
 
 Two expressions displayed side by side (or stacked on mobile).
 Student taps SAME or DIFFERENT.
@@ -69,7 +69,7 @@ Student taps SAME or DIFFERENT.
 ```
 
 ### Type 2 — Odd One Out
-**Covers:** Skill 1 (notation fluency, deeper)
+**Covers:** Skill 1 (equivalence fluency, deeper)
 
 Four expressions displayed. Three are equivalent, one is not.
 Student taps the odd one out.
@@ -184,7 +184,7 @@ Allows teacher to target class time at the families where most students are stuc
 ### In scope (v1)
 - Skill 1 exercise types (Type 1 and Type 2)
 - Skill 2 exercise type (Type 3)
-- Taxonomy families A–F (Skill 1) and A–E (Skill 2)
+- Taxonomy families for Skill 1 (`equivalence`) and Skill 2 (`classification` / `chunking` / `recognition`)
 - Spaced repetition and mastery tracking
 - Meta-pattern lookup library
 - Teacher dashboard (read-only)
