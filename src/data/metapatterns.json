@@ -1,5 +1,4 @@
-{
-  "equivalence": [
+[
     { "id": "meta.juxtaposition", "code": "M1",
       "title": { "en": "Juxtaposition means multiplication", "de": "Nebeneinanderschreiben bedeutet Multiplikation" },
       "text": { "en": "Anything written next to anything else, with no symbol between, means multiply: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ are all products.",
@@ -29,9 +28,7 @@
       "title": { "en": "Only multiplication distributes over a sum", "de": "Nur die Multiplikation verteilt sich über eine Summe" },
       "text": { "en": "$a(b+c) = ab + ac$, and dividing by $c$ works too (it is multiplying by $1/c$). Nothing else distributes: $(a+b)^2$ is not $a^2 + b^2$, the root of $a+b$ is not the sum of the roots, and a single term of a sum cannot be cancelled.",
                 "de": "$a(b+c) = ab + ac$, und Teilen durch $c$ geht auch (es ist Multiplizieren mit $1/c$). Sonst verteilt sich nichts: $(a+b)^2$ ist nicht $a^2 + b^2$, die Wurzel aus $a+b$ ist nicht die Summe der Wurzeln, und ein einzelner Summand lässt sich nicht kürzen." },
-      "summarizes": ["ax.distributivity", "anti.linearity"] }
-  ],
-  "classification": [
+      "summarizes": ["ax.distributivity", "anti.linearity"] },
     { "id": "meta.dominant-op-last", "code": "M7",
       "title": { "en": "The dominant operation is the last one applied", "de": "Die dominante Operation ist die zuletzt ausgeführte" },
       "text": { "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
@@ -51,6 +48,4 @@
       "title": { "en": "The dominant operation determines which tools apply", "de": "Die dominante Operation bestimmt die Werkzeuge" },
       "text": { "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
                 "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen." } }
-  ],
-  "transformation": []
-}
+]

@@ -36,17 +36,18 @@ export function loc(ls: LocalizedString, lang: Lang): string {
 }
 
 // Fields shared by every family, regardless of kind.
-// The id is prefixed with the family's `kind` (its mental-step type) — the same
-// value the `kind` field carries, mirroring how a law id is prefixed by its kind
-// (ax/def/thm). The pedagogical `skill` (equivalence | classification |
-// transformation) is DERIVED from the kind via skillOf(), never stored.
+// The id is prefixed with the family's `kind` (its mental-step type), mirroring
+// how a law id is prefixed by its kind (ax/def/thm). Families have exactly two
+// classifiers: `kind` (category, = id prefix) and `group` (topic). There is no
+// skill axis in the data — the "Skill 1/2/3" framing is a lens the docs and the
+// app apply, not something stored here.
 const core = {
-  id: z.string().regex(/^(equivalence|recognition|classification|chunking|transformation)\.[a-z0-9-]+$/,
-    'id must be "<kind>.<slug>" — kind ∈ equivalence|recognition|classification|chunking|transformation, slug lowercase kebab-case'),
+  id: z.string().regex(/^(equivalence|classification|chunking|transformation)\.[a-z0-9-]+$/,
+    'id must be "<kind>.<slug>" — kind ∈ equivalence|classification|chunking|transformation, slug lowercase kebab-case'),
   group: z.string(),                    // group slug, e.g. "minus-sign"; must exist in familyGroups.json
   title: localizedString,
-  priority: z.number().int().positive().optional(),  // authored drilling rank within the skill; lower = earlier; omit = unranked
-  requires: z.array(z.string()).default([]),        // DIRECT prerequisites (family ids, cross-skill allowed) — author the transitive reduction, not the closure
+  priority: z.number().int().positive().optional(),  // authored drilling rank; lower = earlier; omit = unranked
+  requires: z.array(z.string()).default([]),        // DIRECT prerequisites (family ids) — author the transitive reduction, not the closure
   metaPatterns: z.array(z.string()).default([]),    // e.g. ["M2"] — references a meta-pattern in metapatterns.json
   justifiedBy: z.array(z.string()).default([]),     // law ids (laws.json) that make the true forms true; empty = pure convention
   governedBy: z.array(z.string()).default([]),      // convention ids (conventions.json) the family is governed by
@@ -77,9 +78,9 @@ const equivPitfall = z
 
 export const family = z.discriminatedUnion('kind', [
   // EQUIVALENCE — a set of forms that are all EQUAL (same value for all inputs).
-  // The mental step is "produce/know an equal form" (Skill 1 fluency). The
-  // `equivalents` share one binding: the `a` in every form is the same `a`.
-  // Pitfalls are wrong FORMS (look equal, aren't).
+  // The mental step is "produce/know an equal form." The `equivalents` share one
+  // binding: the `a` in every form is the same `a`. Pitfalls are wrong FORMS
+  // (look equal, aren't).
   z.object({
     kind: z.literal('equivalence'),
     ...core,
@@ -87,18 +88,7 @@ export const family = z.discriminatedUnion('kind', [
     pitfalls: z.array(equivPitfall).default([]),  // non-equal forms
   }),
 
-  // RECOGNITION — same data-shape as equivalence (a set of equal forms), but the
-  // mental step is "recognise that differently-built forms have the same value"
-  // (Skill 2). Kept a distinct kind precisely because that step is skill-2, not
-  // skill-1 fluency — this is what dissolves the old notation/structure crossover.
-  z.object({
-    kind: z.literal('recognition'),
-    ...core,
-    equivalents: z.array(z.string()).min(2),
-    pitfalls: z.array(equivPitfall).default([]),
-  }),
-
-  // CLASSIFICATION — one expression, name its dominant operation. Skill 2.
+  // CLASSIFICATION — one expression, name its dominant operation.
   // `examples` are DIFFERENT expressions sharing the SAME structural class; each is
   // independently bound. Pitfalls are wrong LABELS plus why they tempt.
   // `gateway` marks familiar-shape families — classification-with-intent that hinge
@@ -138,29 +128,10 @@ export const family = z.discriminatedUnion('kind', [
 
 export type Family = z.infer<typeof family>
 
-// Skill is DERIVED from the family kind (= the id prefix): the pedagogical
-// grouping over mental-step types. Recognition and chunking are skill-2
-// (classification) steps even though they carry their own kind names. The three
-// skills form a fixed progression equivalence → classification → transformation
-// (a family may depend only on same- or earlier-skill families).
-export type Skill = 'equivalence' | 'classification' | 'transformation'
-const skillOfKind: Record<string, Skill> = {
-  equivalence: 'equivalence',
-  recognition: 'classification',
-  classification: 'classification',
-  chunking: 'classification',
-  transformation: 'transformation',
-}
-export const skillRank: Record<Skill, number> = { equivalence: 1, classification: 2, transformation: 3 }
-export function skillOf(id: string): Skill {
-  return skillOfKind[id.split('.')[0]] ?? 'equivalence'
-}
-
 // ── Groups ───────────────────────────────────────────────────────────────────
 // Groups organize families into ordered sections in the lookup view. Defined once
-// in familyGroups.json (keyed by skill: "equivalence" | "classification" |
-// "transformation"); a family references its group by slug. Array order = display
-// order.
+// in familyGroups.json as a flat list (array order = display order); a family
+// references its group by slug.
 
 export const groupDef = z.object({
   slug: z.string(),
@@ -169,64 +140,48 @@ export const groupDef = z.object({
 })
 export type GroupDef = z.infer<typeof groupDef>
 
-export const groupsFile = z.object({
-  equivalence: z.array(groupDef),
-  classification: z.array(groupDef),
-  transformation: z.array(groupDef),
-})
+export const groupsFile = z.array(groupDef)
 export type GroupsFile = z.infer<typeof groupsFile>
 
-// Cross-check: every family's group slug must exist under its skill.
+// Cross-check: every family's group slug must exist in familyGroups.json.
 export function validateGroupRefs(families: Family[], groups: GroupsFile): void {
+  const slugs = new Set(groups.map(g => g.slug))
   for (const f of families) {
-    const sk = skillOf(f.id)
-    if (!groups[sk].some(g => g.slug === f.group)) {
-      throw new Error(`Family "${f.id}" references unknown ${sk} group "${f.group}".`)
+    if (!slugs.has(f.group)) {
+      throw new Error(`Family "${f.id}" references unknown group "${f.group}".`)
     }
   }
 }
 
 // ── Meta-patterns ────────────────────────────────────────────────────────────
-// The generative decoding rules (Section 0 of each taxonomy). Defined once in
-// metapatterns.json, namespaced; families reference them by id ("M2").
+// The generative decoding rules. A flat list in metapatterns.json; families
+// reference them by id ("meta.…").
 
 export const metaPatternDef = z.object({
   id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // globally unique slug, like every other id
-  code: z.string(),    // display code "M1".."M10" — the classroom name, globally unique across the file
+  code: z.string(),    // display code "M1".."M10" — the classroom name, globally unique
   title: localizedString,
   text: localizedString,                  // the student-facing takeaway line in drill feedback
   summarizes: z.array(z.string()).default([]),  // law/convention/error ids this pattern digests — keeps the classroom voice linked to the layer it summarizes
 })
 export type MetaPatternDef = z.infer<typeof metaPatternDef>
 
-export const metaPatternsFile = z.object({
-  equivalence: z.array(metaPatternDef),
-  classification: z.array(metaPatternDef),
-  transformation: z.array(metaPatternDef),
-})
+export const metaPatternsFile = z.array(metaPatternDef)
 export type MetaPatternsFile = z.infer<typeof metaPatternsFile>
 
-// All meta-patterns across every skill — the flat view for uniqueness checks and
-// cross-layer scans.
-export function allMetas(metas: MetaPatternsFile): MetaPatternDef[] {
-  return [...metas.equivalence, ...metas.classification, ...metas.transformation]
-}
-
-// Cross-check: every metaPattern a family references must exist in its skill.
+// Cross-check: every metaPattern a family references must exist; ids and display
+// codes are globally unique.
 export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsFile): void {
-  // Slug ids AND display codes must both be globally unique even though the file
-  // is keyed by skill (the code is a chip; a duplicate would be ambiguous to read).
-  const all = allMetas(metas)
-  const dupId = all.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)
-  if (dupId) throw new Error(`Duplicate meta-pattern id "${dupId}" across skills.`)
-  const dupCode = all.map(m => m.code).find((c, i, a) => a.indexOf(c) !== i)
-  if (dupCode) throw new Error(`Duplicate meta-pattern code "${dupCode}" across skills.`)
+  const dupId = metas.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)
+  if (dupId) throw new Error(`Duplicate meta-pattern id "${dupId}".`)
+  const dupCode = metas.map(m => m.code).find((c, i, a) => a.indexOf(c) !== i)
+  if (dupCode) throw new Error(`Duplicate meta-pattern code "${dupCode}".`)
 
+  const ids = new Set(metas.map(m => m.id))
   for (const f of families) {
-    const sk = skillOf(f.id)
     for (const m of f.metaPatterns) {
-      if (!metas[sk].some(mp => mp.id === m)) {
-        throw new Error(`Family "${f.id}" references unknown ${sk} meta-pattern "${m}".`)
+      if (!ids.has(m)) {
+        throw new Error(`Family "${f.id}" references unknown meta-pattern "${m}".`)
       }
     }
   }
@@ -382,16 +337,17 @@ export function validateConventions(conventions: ConventionDef[]): void {
 // ── Error patterns ───────────────────────────────────────────────────────────
 // First-class citizens of the error space: ONE addressable list that pitfalls
 // cite, so drill data can be analyzed per error pattern from day one. Three
-// kinds, each `corrupts` a different layer:
-//   false-law  (anti.) — corrupts a true LAW it distorts/over-generalizes
+// kinds (each `corrupts` a different layer; the kind's leading word IS its id
+// prefix — anti-law→anti, misreading→mis, salience→sal):
+//   anti-law   (anti.) — corrupts a true LAW it distorts/over-generalizes
 //   misreading (mis.)  — corrupts a CONVENTION it violates
 //   salience   (sal.)  — corrupts a METAPATTERN: parsing by what is visually
 //                        loudest instead of by structure (the negative of a
 //                        perceptual heuristic, e.g. sal.loudest-op-wins is the
-//                        failure of meta.dominant-op-last). Skill-2 specific.
+//                        failure of meta.dominant-op-last).
 // `code` = Ā1..Ā5 / R1..R15 / S1..
 
-export const errorKind = z.enum(['false-law', 'misreading', 'salience'])
+export const errorKind = z.enum(['anti-law', 'misreading', 'salience'])
 export type ErrorKind = z.infer<typeof errorKind>
 
 export const errorDef = z.object({
@@ -406,15 +362,15 @@ export const errorDef = z.object({
 export type ErrorDef = z.output<typeof errorDef>
 
 const errorPrefixOfKind: Record<ErrorKind, string> =
-  { 'false-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
+  { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
 
 export function validateErrors(
   errors: ErrorDef[], laws: LawDef[], conventions: ConventionDef[], metas: MetaPatternsFile,
 ): void {
   const poolOfKind: Record<ErrorKind, { ids: Set<string>; name: string }> = {
-    'false-law': { ids: new Set(laws.map(l => l.id)), name: 'law' },
+    'anti-law': { ids: new Set(laws.map(l => l.id)), name: 'law' },
     misreading: { ids: new Set(conventions.map(c => c.id)), name: 'convention' },
-    salience: { ids: new Set(allMetas(metas).map(m => m.id)), name: 'meta-pattern' },
+    salience: { ids: new Set(metas.map(m => m.id)), name: 'meta-pattern' },
   }
   const seen = new Set<string>()
   for (const e of errors) {
@@ -458,12 +414,10 @@ export function validateLayerRefs(
       if (!errIds.has(r)) throw new Error(`A pitfall of "${f.id}" is explainedBy unknown error pattern "${r}".`)
     }
   }
-  for (const sk of ['equivalence', 'classification', 'transformation'] as const) {
-    for (const m of metas[sk]) {
-      for (const r of m.summarizes) {
-        if (!lawIds.has(r) && !convIds.has(r) && !errIds.has(r)) {
-          throw new Error(`Meta-pattern ${sk}/${m.id} summarizes unknown id "${r}".`)
-        }
+  for (const m of metas) {
+    for (const r of m.summarizes) {
+      if (!lawIds.has(r) && !convIds.has(r) && !errIds.has(r)) {
+        throw new Error(`Meta-pattern ${m.id} summarizes unknown id "${r}".`)
       }
     }
   }
@@ -493,7 +447,7 @@ export function auditCoverage(
     if (f.justifiedBy.length === 0 && f.governedBy.length === 0) continue
     const coords = new Set([...f.justifiedBy, ...f.governedBy, ...explainedByTargets(f)])
     const unsupported = f.metaPatterns.filter(mid => {
-      const mp = metas[skillOf(f.id)].find(m => m.id === mid)
+      const mp = metas.find(m => m.id === mid)
       return mp !== undefined && !mp.summarizes.some(r => coords.has(r))
     })
     if (unsupported.length > 0) {
@@ -524,7 +478,7 @@ export function auditCoverage(
     'law notes': countDirty(laws.filter(l => l.note).map(l => locVals(l.note))),
     'convention texts': countDirty(conventions.map(c => locVals(c.text))),
     'error texts': countDirty(errors.map(e => locVals(e.text))),
-    'meta-pattern texts': countDirty(allMetas(metas).map(m => locVals(m.text))),
+    'meta-pattern texts': countDirty(metas.map(m => locVals(m.text))),
   }
   const parts = Object.entries(dirty).filter(([, n]) => n > 0).map(([k, n]) => `${k}: ${n}`)
   if (parts.length > 0) lines.push(`Prose fields with unmigrated unicode math (→ inline $…$): ${parts.join(', ')}`)
@@ -534,14 +488,9 @@ export function auditCoverage(
 // ── Family links: requires (family-level) + revise (pitfall-level) ──────────
 // `requires` lists a family's direct prerequisites; `revise` on a pitfall names
 // the families that train the specific discrimination that error reveals. Both
-// hold family ids. The requires graph must be acyclic and must agree with the
-// authored drilling order: a prerequisite is drilled strictly earlier, so its
-// priority must be strictly lower, and a ranked family may not require an
-// unranked one (unranked = "remaining", i.e. after everything ranked).
-// Ranks are meaningful only WITHIN a skill; across skills the progression is
-// fixed (equivalence → classification → transformation; a family may depend only
-// on same- or earlier-skill families), so a cross-skill edge is checked for
-// direction only, not rank.
+// hold family ids and must resolve; the requires graph must be acyclic. (The
+// old priority/skill-direction consistency check was dropped with the skill
+// axis — `priority` stays a soft authoring hint, no longer cross-validated.)
 
 function reviseTargets(f: Family): string[] {
   const pitfalls: { revise?: string[] }[] = f.pitfalls
@@ -572,34 +521,6 @@ export function validateFamilyLinks(families: Family[]): void {
     state.set(id, 'done')
   }
   for (const f of families) visit(f.id, [])
-
-  // Priority consistency with the graph (see block comment above).
-  for (const f of families) {
-    for (const r of f.requires) {
-      const req = byId.get(r)!
-      const sf = skillOf(f.id), sr = skillOf(req.id)
-      if (sf !== sr) {
-        if (skillRank[sf] < skillRank[sr]) {
-          throw new Error(
-            `Family "${f.id}" (${sf}) requires "${r}" (${sr}) — `
-            + `cross-skill dependencies may point only to an earlier skill `
-            + `(equivalence → classification → transformation).`)
-        }
-        continue  // later skill → earlier skill: always consistent, ranks not comparable
-      }
-      if (f.priority === undefined) continue
-      if (req.priority === undefined) {
-        throw new Error(
-          `Family "${f.id}" (priority ${f.priority}) requires unranked "${r}" — `
-          + `rank the prerequisite earlier or unrank the dependent.`)
-      }
-      if (req.priority >= f.priority) {
-        throw new Error(
-          `Family "${f.id}" (priority ${f.priority}) requires "${r}" (priority ${req.priority}) — `
-          + `a prerequisite must be ranked strictly earlier.`)
-      }
-    }
-  }
 }
 
 // ── LaTeX compile check ──────────────────────────────────────────────────────
@@ -631,7 +552,7 @@ export function validateLatexCompiles(
   for (const f of families) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
-    if (f.kind === 'equivalence' || f.kind === 'recognition') {
+    if (f.kind === 'equivalence') {
       f.equivalents.forEach((x, i) => check(f.id, `equivalents[${i}]`, x))
       f.pitfalls.forEach((p, i) => check(f.id, `pitfalls[${i}]`, p.expr))
     } else if (f.kind === 'classification') {
@@ -659,9 +580,7 @@ export function validateLatexCompiles(
     e.instances.forEach((x, i) => check(e.id, `instances[${i}]`, x))
     proseMath(e.text).forEach(m => check(e.id, 'text', m))
   }
-  for (const sk of ['equivalence', 'classification', 'transformation'] as const) {
-    for (const m of metas[sk]) proseMath(m.text).forEach(s => check(m.id, 'text', s))
-  }
+  for (const m of metas) proseMath(m.text).forEach(s => check(m.id, 'text', s))
 
   if (failures.length > 0) {
     throw new Error(`LaTeX compile failures:\n${failures.join('\n')}`)

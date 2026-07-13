@@ -1,7 +1,7 @@
 [
   {
-    "kind": "recognition",
-    "id": "recognition.same-value-different-structure",
+    "kind": "equivalence",
+    "id": "equivalence.same-value-different-structure",
     "group": "full-classification",
     "title": "Same value, different dominant operation",
     "requires": ["classification.difference", "classification.product"],

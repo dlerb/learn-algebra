@@ -3,20 +3,15 @@ import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { families, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
-import { loc, skillOf, type Family, type Skill } from '../data/family.schema'
+import { loc, type Family } from '../data/family.schema'
 import { lang } from '../lang'
 
-// 'groups' = thematic sections (default); 'order' = one flat list per skill,
-// sorted by drilling priority — for reviewing the sequence itself.
+// 'groups' = thematic sections (default); 'order' = one flat list sorted by
+// drilling priority — for reviewing the sequence itself.
 const viewMode = ref<'groups' | 'order'>('groups')
 
-const skills: { key: Skill; label: string }[] = [
-  { key: 'equivalence', label: 'Skill 1 · Equivalence Fluency' },
-  { key: 'classification', label: 'Skill 2 · Structural Recognition' },
-]
-
-function metaLabel(sk: Skill, id: string): string {
-  const m = metaPatterns[sk].find(mp => mp.id === id)
+function metaLabel(id: string): string {
+  const m = metaPatterns.find(mp => mp.id === id)
   return m ? `${m.code} · ${loc(m.title, lang.value)}` : id
 }
 
@@ -59,17 +54,16 @@ function familyTitle(id: string): string {
 }
 
 function toVM(f: Family): CardVM {
-  const sk = skillOf(f.id)
   const base = {
     id: f.id, title: loc(f.title, lang.value), kind: f.kind, group: f.group,
     priority: f.priority, conditions: f.conditions, note: loc(f.note, lang.value),
     json: JSON.stringify(rawById.get(f.id), null, 2),
-    metas: f.metaPatterns.map(m => metaLabel(sk, m)),
+    metas: f.metaPatterns.map(m => metaLabel(m)),
     requires: f.requires.map(familyTitle),
     laws: f.justifiedBy.map(layerLabel),
     governedBy: f.governedBy.map(layerLabel),
   }
-  if (f.kind === 'equivalence' || f.kind === 'recognition') {
+  if (f.kind === 'equivalence') {
     return {
       ...base,
       equivChain: f.equivalents.join(' = '),
@@ -104,28 +98,21 @@ const byPriority = (a: Family, b: Family) =>
   (a.priority ?? 999) - (b.priority ?? 999)
   || loc(a.title, lang.value).localeCompare(loc(b.title, lang.value))
 
+// Flat list of sections. 'groups' = one section per group (familyGroups order);
+// 'order' = a single priority-sorted section.
 const sections = computed(() =>
-  skills.map(skillDef => ({
-    ...skillDef,
-    groups: viewMode.value === 'order'
-      ? [{
-          slug: 'order', title: 'Drilling order',
-          blurb: 'All families of this skill, ranked first, unranked ("remaining") after.',
-          cards: families
-            .filter(f => skillOf(f.id) === skillDef.key)
-            .sort(byPriority)
-            .map(toVM),
-        }]
-      : groups[skillDef.key]
-          .map(g => ({
-            ...g,
-            cards: families
-              .filter(f => skillOf(f.id) === skillDef.key && f.group === g.slug)
-              .sort(byPriority)
-              .map(toVM),
-          }))
-          .filter(g => g.cards.length > 0),
-  })).filter(s => s.groups.length > 0),
+  viewMode.value === 'order'
+    ? [{
+        slug: 'order', title: 'Drilling order',
+        blurb: 'All families, ranked first, unranked ("remaining") after.',
+        cards: [...families].sort(byPriority).map(toVM),
+      }]
+    : groups
+        .map(g => ({
+          ...g,
+          cards: families.filter(f => f.group === g.slug).sort(byPriority).map(toVM),
+        }))
+        .filter(g => g.cards.length > 0),
 )
 
 function hasErrors(c: CardVM): boolean {
@@ -147,10 +134,7 @@ function hasErrors(c: CardVM): boolean {
       </div>
     </header>
 
-    <section v-for="ns in sections" :key="ns.key" class="skill">
-      <h2>{{ ns.label }}</h2>
-
-      <div v-for="g in ns.groups" :key="g.slug" class="group">
+    <section v-for="g in sections" :key="g.slug" class="group">
         <div class="group-head">
           <h3>{{ g.title }}</h3>
           <p v-if="g.blurb" class="blurb">{{ g.blurb }}</p>
@@ -231,7 +215,6 @@ function hasErrors(c: CardVM): boolean {
             </details>
           </article>
         </div>
-      </div>
     </section>
   </div>
 </template>

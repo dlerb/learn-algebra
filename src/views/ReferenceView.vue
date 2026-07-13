@@ -81,7 +81,7 @@ function errVM(e: ErrorDef): ErrVM {
   }
 }
 const errorSections = computed(() => [
-  { title: 'False laws — the generative rules of wrong algebra', ofWord: 'distorts', items: errorPatterns.filter(e => e.kind === 'false-law').map(errVM) },
+  { title: 'False laws — the generative rules of wrong algebra', ofWord: 'distorts', items: errorPatterns.filter(e => e.kind === 'anti-law').map(errVM) },
   { title: 'Misreadings — parsing the notation wrong', ofWord: 'violates', items: errorPatterns.filter(e => e.kind === 'misreading').map(errVM) },
 ])
 </script>

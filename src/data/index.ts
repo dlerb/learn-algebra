@@ -24,11 +24,11 @@ import equivalenceFractions from './families/equivalence-fractions.json'
 import equivalenceCommutativity from './families/equivalence-commutativity.json'
 import classificationBasicForms from './families/classification-basic-forms.json'
 import classificationMisleadingForms from './families/classification-misleading-forms.json'
-import classificationChunking from './families/classification-chunking.json'
+import chunkingChunking from './families/chunking-chunking.json'
 import classificationFamiliarShapes from './families/classification-familiar-shapes.json'
-import classificationFullClassification from './families/classification-full-classification.json'
+import equivalenceFullClassification from './families/equivalence-full-classification.json'
 
-// Per-group family files (named <skill>-<group>). Add new groups here as they
+// Per-group family files (named <kind>-<group>). Add new groups here as they
 // are authored.
 const familyFiles: unknown[][] = [
   equivalenceMultiplication as unknown[],
@@ -40,9 +40,9 @@ const familyFiles: unknown[][] = [
   equivalenceCommutativity as unknown[],
   classificationBasicForms as unknown[],
   classificationMisleadingForms as unknown[],
-  classificationChunking as unknown[],
+  chunkingChunking as unknown[],
   classificationFamiliarShapes as unknown[],
-  classificationFullClassification as unknown[],
+  equivalenceFullClassification as unknown[],
 ]
 
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)
