@@ -151,9 +151,9 @@ This is the hierarchy the library user should be able to see (the
    `def.fractional-exponent`) are *chosen*, not discovered: defined by the
    permanence principle so the power laws keep holding.
 
-Structure-skill families sit outside this tower: they cite conventions
+Classification-skill families sit outside this tower: they cite conventions
 (brackets, precedence, fraction bar, exponent scope — parsing), not laws,
-except `structure.same-value-different-structure` and the familiar-shapes
+except `recognition.same-value-different-structure` and the familiar-shapes
 group (binomial square, difference of squares).
 
 ---
@@ -166,8 +166,8 @@ group (binomial square, difference of squares).
 3. **Right-distribution of division.** `thm.split-numerator` splits over the
    numerator only ($\frac{c}{a+b}$ does NOT split); no family drilled that
    asymmetry — first genuine gap the matrix audit surfaced. → Family
-   `notation.no-splitting-the-denominator` added (fractions group,
-   contrasting with `notation.splitting-a-fraction`; pitfall cites
+   `equivalence.no-splitting-the-denominator` added (fractions group,
+   contrasting with `equivalence.splitting-a-fraction`; pitfall cites
    `anti.linearity`).
 4. **False laws stay flat** — no `derivedFrom` on error patterns; the
    machinery isn't worth it. (They do carry the `of` link to what they

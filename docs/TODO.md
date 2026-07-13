@@ -8,9 +8,9 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 - [x] Project setup (Vue 3, Vite, Pinia, Naive UI, UnoCSS, KaTeX)
 - [x] Family schema as Zod (`src/data/family.schema.ts`) — single source for validator + `Family` type
-  - [x] `kind` discriminator: `equivalence` (correct forms + `pitfalls`), `structure` (`examples` + `answer` + `pitfalls`), `chunking` (`examples[].chunks`) — renamed 2026-07-11 from `classification`/`decomposition` to skill-aligned names; frees "decomposition" for Skill 3 (commit 7400524). Skill axis stays on the id-prefix namespace, not `kind`.
-  - [x] Exercise type derived from `kind`, not stored; `skill`/`flag`/`code` dropped as redundant
-  - [x] Readable slug ids (`notation.<slug>` / `structure.<slug>`); namespace = skill
+  - [x] `kind` discriminator = the family's *mental step*: `equivalence` (equal-forms set), `recognition` (equal-forms set, but a Skill-2 "same value across different structure" step), `classification` (`examples` + `answer`), `chunking` (`examples[].chunks`); `transformation` reserved for Skill 3.
+  - [x] Exercise type derived from `kind`, not stored; `flag`/`code` dropped as redundant
+  - [x] Readable slug ids **kind-prefixed** (`<kind>.<slug>`), mirroring law `ax/def/thm`. `skill` (equivalence/classification/transformation) is DERIVED from kind via `skillOf()`, not stored, not in the id — the notation/structure namespace was retired 2026-07-13 (commit a05749f) because it conflated skill with naming and couldn't hold a third skill.
 - [x] All 54 families authored as JSON, one file per group (`src/data/families/*.json`)
 - [x] Groups + meta-patterns as namespaced data (`familyGroups.json`, `metapatterns.json`), referenced by families
 - [x] Load-time validation: schema, unique ids, group refs, meta-pattern refs (throws with offending id)
