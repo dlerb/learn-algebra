@@ -1,10 +1,18 @@
 [
-  { "slug": "addition", "title": "Addition laws" },
-  { "slug": "multiplication", "title": "Multiplication laws" },
-  { "slug": "distribution", "title": "Distribution" },
-  { "slug": "signs", "title": "Sign & minus laws" },
-  { "slug": "fractions", "title": "Fraction laws" },
-  { "slug": "powers", "title": "Power laws" },
-  { "slug": "roots", "title": "Root laws" },
-  { "slug": "binomials", "title": "Binomial formulas" }
+  { "slug": "addition", "title": "Addition laws",
+    "blurb": "The four axioms of addition — the one operation that stands alone, presupposing nothing else in the tower." },
+  { "slug": "multiplication", "title": "Multiplication laws",
+    "blurb": "Multiplication's own four axioms, mirroring addition's; the two worlds meet only through distributivity." },
+  { "slug": "distribution", "title": "Distribution",
+    "blurb": "The single bridge between the addition and multiplication worlds — distributivity, its backward reading (collecting like terms), and what it forces (0 times anything is 0)." },
+  { "slug": "signs", "title": "Sign & minus laws",
+    "blurb": "Subtraction is not a new operation but adding the inverse; every minus-sign rule follows from that one definition." },
+  { "slug": "fractions", "title": "Fraction laws",
+    "blurb": "Division is not a new operation but multiplying by the reciprocal; all fraction rules follow." },
+  { "slug": "powers", "title": "Power laws",
+    "blurb": "Powers repeat multiplication as multiples repeat addition; the three power laws fall out of counting factors." },
+  { "slug": "roots", "title": "Root laws",
+    "blurb": "Roots name the reverse question of powers; their rules are the power laws read backward." },
+  { "slug": "binomials", "title": "Binomial formulas",
+    "blurb": "The familiar product shapes you learn to recognize on sight — where spotting the form is the whole trick." }
 ]

@@ -38,15 +38,17 @@ function lawVM(l: LawDef): LawVM {
 // with no laws is dropped.
 const groupBy = ref<'kind' | 'topic'>('kind')
 
-const lawKindSections = computed(() => [
+interface LawSection { title: string; blurb?: string; items: LawVM[] }
+
+const lawKindSections = computed<LawSection[]>(() => [
   { title: 'Axioms — accepted, not proven', items: laws.filter(l => l.kind === 'axiom').map(lawVM) },
   { title: 'Definitions — every further operation is built from these', items: laws.filter(l => l.kind === 'definition').map(lawVM) },
   { title: 'Theorems — with their derivations', items: laws.filter(l => l.kind === 'theorem').map(lawVM) },
 ])
 
-const lawTopicSections = computed(() =>
+const lawTopicSections = computed<LawSection[]>(() =>
   lawGroups
-    .map(t => ({ title: t.title, items: laws.filter(l => l.group === (t.slug as LawGroup)).map(lawVM) }))
+    .map(t => ({ title: t.title, blurb: t.blurb, items: laws.filter(l => l.group === (t.slug as LawGroup)).map(lawVM) }))
     .filter(s => s.items.length > 0),
 )
 
@@ -94,6 +96,7 @@ const errorSections = computed(() => [
       </div>
       <div v-for="s in lawSections" :key="s.title" class="group">
         <h3>{{ s.title }}</h3>
+        <p v-if="s.blurb" class="blurb">{{ s.blurb }}</p>
         <div class="cards">
           <article v-for="l in s.items" :key="l.id" class="card">
             <div class="card-head">
