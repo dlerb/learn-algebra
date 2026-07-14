@@ -218,6 +218,17 @@ export function validateLawGroups(registry: GroupDef[]): void {
   validateGroupRegistry(registry, lawGroup.options, 'lawGroups.json')
 }
 
+// Kind registries — display metadata (title + blurb) for the `kind` enums, the
+// same shape as the group registries. Kinds are a closed schema enum, so the
+// slug set must equal the enum exactly; this keeps kind descriptions as data
+// (browsed by-kind, shown in info-dots) rather than hardcoded in the views.
+export function validateSkillKinds(registry: GroupDef[]): void {
+  validateGroupRegistry(registry, skillKind.options, 'skillKinds.json')
+}
+export function validateLawKinds(registry: GroupDef[]): void {
+  validateGroupRegistry(registry, lawKind.options, 'lawKinds.json')
+}
+
 export const lawDef = z.object({
   id: z.string().regex(/^(ax|def|thm)\.[a-z0-9-]+$/),
   code: z.string(),

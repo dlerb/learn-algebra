@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { skills, drills, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
+import { skills, drills, groups, skillKinds, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
 import { loc, type Skill, type Drill } from '../data/skill.schema'
 import { lang } from '../lang'
 
@@ -114,14 +114,6 @@ const byTitle = (a: Skill, b: Skill) =>
 // no drilling sequence — that lives in the drill layer.
 const groupBy = ref<'group' | 'kind'>('group')
 
-const kindOrder = ['equivalence', 'classification', 'chunking', 'transformation'] as const
-const kindMeta: Record<string, { title: string; blurb: string }> = {
-  equivalence: { title: 'Equivalence', blurb: 'Same thing written differently — the fluency atoms.' },
-  classification: { title: 'Classification', blurb: 'Recognising the dominant operation before acting.' },
-  chunking: { title: 'Chunking', blurb: 'Breaking a term into its top-level operands.' },
-  transformation: { title: 'Transformation', blurb: 'Directed manipulation — factor, expand, simplify.' },
-}
-
 interface Section { slug: string; title: string; blurb?: string; cards: CardVM[] }
 
 const groupSections = computed<Section[]>(() =>
@@ -130,8 +122,8 @@ const groupSections = computed<Section[]>(() =>
     .filter(s => s.cards.length > 0),
 )
 const kindSections = computed<Section[]>(() =>
-  kindOrder
-    .map(k => ({ slug: k, title: kindMeta[k].title, blurb: kindMeta[k].blurb, cards: skills.filter(f => f.kind === k).sort(byTitle).map(toVM) }))
+  skillKinds
+    .map(k => ({ slug: k.slug, title: k.title, blurb: k.blurb, cards: skills.filter(f => f.kind === k.slug).sort(byTitle).map(toVM) }))
     .filter(s => s.cards.length > 0),
 )
 const sections = computed(() => (groupBy.value === 'group' ? groupSections.value : kindSections.value))

@@ -3,14 +3,17 @@
 // here immediately with the offending id named.
 import {
   parseSkills, parseDrills, groupsFile, lawGroupsFile, conventionGroupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
-  validateUniqueIds, validateGroupRefs, validateLawGroups, validateConventionGroups, validateMetaPatternRefs, validateSkillLinks,
+  validateUniqueIds, validateGroupRefs, validateLawGroups, validateConventionGroups, validateSkillKinds, validateLawKinds, validateMetaPatternRefs, validateSkillLinks,
   validateDrills, validateLaws, validateConventions, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
   type Skill, type Drill, type GroupsFile, type LawGroupsFile, type ConventionGroupsFile, type MetaPatternsFile,
   type LawDef, type ConventionDef, type ErrorDef,
 } from './skill.schema'
 import groupsRaw from './skillGroups.json'
+import skillKindsRaw from './skillKinds.json'
 import lawGroupsRaw from './lawGroups.json'
+import lawKindsRaw from './lawKinds.json'
 import conventionGroupsRaw from './conventionGroups.json'
+import layersRaw from './layers.json'
 import metasRaw from './metapatterns.json'
 import lawsRaw from './laws.json'
 import conventionsRaw from './conventions.json'
@@ -73,8 +76,13 @@ const drillFiles: unknown[][] = [
 ]
 
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)
+export const skillKinds: GroupsFile = groupsFile.parse(skillKindsRaw)
+export const lawKinds: GroupsFile = groupsFile.parse(lawKindsRaw)
 export const lawGroups: LawGroupsFile = lawGroupsFile.parse(lawGroupsRaw)
 export const conventionGroups: ConventionGroupsFile = conventionGroupsFile.parse(conventionGroupsRaw)
+// Display metadata for the Fundamentals layer switch (laws/conventions/errors);
+// the ⓘ dot's one-liner. The set of layers is fixed by the view's `layer` type.
+export const layers: GroupsFile = groupsFile.parse(layersRaw)
 export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
 
 // Layers 1+2 (docs/content_model.md): the coordinate system skills
@@ -97,6 +105,8 @@ validateUniqueIds(skills)
 validateGroupRefs(skills, groups)
 validateLawGroups(lawGroups)
 validateConventionGroups(conventionGroups)
+validateSkillKinds(skillKinds)
+validateLawKinds(lawKinds)
 validateMetaPatternRefs(skills, metaPatterns)
 validateSkillLinks(skills)
 validateDrills(drills, skills)

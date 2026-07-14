@@ -1,0 +1,5 @@
+[
+  { "slug": "laws", "title": "Laws", "blurb": "Axioms, definitions and theorems — the logical tower school algebra rests on." },
+  { "slug": "conventions", "title": "Conventions", "blurb": "No truth value — the honest answer to \"why?\" is \"we agreed to write it that way.\"" },
+  { "slug": "errors", "title": "Errors", "blurb": "The shadow of the fundament: false laws and misreadings, each corrupting a law or convention." }
+]

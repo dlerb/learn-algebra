@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { laws, lawGroups, conventions, conventionGroups, errorPatterns, skills } from '../data'
+import { laws, lawGroups, lawKinds, conventions, conventionGroups, errorPatterns, layers, skills } from '../data'
 import { loc, type LawDef, type ConventionDef, type ErrorDef, type LawGroup, type ConventionGroup } from '../data/skill.schema'
 import { lang } from '../lang'
 
@@ -36,14 +36,9 @@ const unusedByLayer = {
 }
 const activeUnused = computed(() => unusedByLayer[layer.value])
 
-// One-line description of each layer, surfaced on tap via the ⓘ dot next to the
-// switch (was the standalone Conventions intro; laws/errors get one too).
-const layerBlurbs = {
-  laws: 'Axioms, definitions and theorems — the logical tower school algebra rests on.',
-  conventions: 'No truth value — the honest answer to "why?" is "we agreed to write it that way."',
-  errors: 'The shadow of the fundament: false laws and misreadings, each corrupting a law or convention.',
-}
-const activeBlurb = computed(() => layerBlurbs[layer.value])
+// One-line description of each layer (data: layers.json), surfaced on tap via
+// the ⓘ dot next to the switch.
+const activeBlurb = computed(() => layers.find(l => l.slug === layer.value)?.blurb)
 
 // Per-card disclosure state (the extra fields, and the raw JSON within them).
 const open = ref(new Set<string>())
@@ -69,11 +64,11 @@ function lawVM(l: LawDef): LawVM {
 // Laws sectioned by `kind` (place in the tower) or by `group` (classroom topic).
 const groupBy = ref<'kind' | 'topic'>('kind')
 interface LawSection { title: string; blurb?: string; items: LawVM[] }
-const lawKindSections = computed<LawSection[]>(() => [
-  { title: 'Axioms — accepted, not proven', items: laws.filter(l => l.kind === 'axiom').map(lawVM) },
-  { title: 'Definitions — every further operation is built from these', items: laws.filter(l => l.kind === 'definition').map(lawVM) },
-  { title: 'Theorems — with their derivations', items: laws.filter(l => l.kind === 'theorem').map(lawVM) },
-])
+const lawKindSections = computed<LawSection[]>(() =>
+  lawKinds
+    .map(k => ({ title: k.title, blurb: k.blurb, items: laws.filter(l => l.kind === k.slug).map(lawVM) }))
+    .filter(s => s.items.length > 0),
+)
 const lawTopicSections = computed<LawSection[]>(() =>
   lawGroups
     .map(t => ({ title: t.title, blurb: t.blurb, items: laws.filter(l => l.group === (t.slug as LawGroup)).map(lawVM) }))
