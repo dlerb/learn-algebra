@@ -1,7 +1,7 @@
-# Skill 2 — The Grammar (production rules)
+# Tier 2 — The Grammar (production rules)
 
 > ⚠️ **EXPLORATORY — not built, may never be.** A design sketch (2026-07-12)
-> for a possible Skill-2 backbone. It is under active question and *partly
+> for a possible Tier-2 backbone. It is under active question and *partly
 > superseded*: precedence turned out to be a *convention*, not "the grammar
 > itself," which undercuts the structural-vs-surface split below. Do not treat
 > this as the current model — it is a proposal on the table. If a `grammar.json`
@@ -10,23 +10,23 @@
 
 ## Why this exists
 
-Skill 1 feels systematic because its content sits on a materialized backbone —
-the law tower (`laws.json`) plus conventions — and every skill cites it. Skill 2
+Tier 1 feels systematic because its content sits on a materialized backbone —
+the law tower (`laws.json`) plus conventions — and every skill cites it. Tier 2
 has had no such backbone: the structure/chunking skills were a flat list of
 example expressions floating free of any system, which is why they felt ad hoc.
 
-The backbone Skill 2 was missing is a **grammar**: a small set of recursive
+The backbone Tier 2 was missing is a **grammar**: a small set of recursive
 **production rules** (one per operator construct) that say how an expression
 decomposes, disambiguated by the parsing **conventions**. This is the exact
-structural analog of Skill 1:
+structural analog of Tier 1:
 
 | | the "atoms" | the disambiguation | the skill |
 | --- | --- | --- | --- |
-| **Skill 1** | laws (axioms/defs/theorems) | conventions | curated *law × convention* cell |
-| **Skill 2** | grammar productions | **parsing** conventions | curated *production × obscuring-convention* cell |
+| **Tier 1** | laws (axioms/defs/theorems) | conventions | curated *law × convention* cell |
+| **Tier 2** | grammar productions | **parsing** conventions | curated *production × obscuring-convention* cell |
 
-Note the roles **swap**: in Skill 1 the laws are the rich content and conventions
-are glue; in Skill 2 the productions are a near-tautological skeleton and the
+Note the roles **swap**: in Tier 1 the laws are the rich content and conventions
+are glue; in Tier 2 the productions are a near-tautological skeleton and the
 **conventions (N1–N9) are the real content** — precedence, juxtaposition,
 brackets, exponent scope are where all the reading errors live.
 
@@ -65,11 +65,11 @@ chunk(node):
 
 One level of chunking = read a node's operands. "Make a and b more complicated"
 = those operands are themselves compound subtrees. Difficulty is recursion depth,
-not new rules — the same lever as the Skill-1↔3 pool parameter.
+not new rules — the same lever as the Tier-1↔3 pool parameter.
 
 ## The codes referenced here (`N·` and `M·`)
 
-These are **not new** — they are the existing layers Skill 1 already cites,
+These are **not new** — they are the existing layers Tier 1 already cites,
 referenced by their classroom display codes. `N·` = a **convention** in
 `conventions.json` (its `code`); `M·` = a **metapattern** in `metapatterns.json`
 (structure namespace). Only the ones used below are listed; the grammar invents
@@ -138,14 +138,14 @@ Two skill kinds fall out of the grammar:
 The concrete skill work this unlocks: **tag the untagged-17 skills with the
 `conv.*` their production's `governedBy` lists** — the grammar now *tells you*
 which conventions each skill should cite, instead of guessing. And it gives
-Skill 2 the same **coverage matrix** Skill 1 has: audit *production × convention*
+Tier 2 the same **coverage matrix** Tier 1 has: audit *production × convention*
 cells for gaps.
 
 ## Familiar-shapes are a separate layer
 
 The `familiar-shapes` group (difference of squares, perfect-square trinomial, …)
 is **not** part of this grammar. Those are recognition-with-intent — templates
-matched against an already-parsed tree, the S2→S3 `gateway` skills. They sit
+matched against an already-parsed tree, the Tier 2→Tier 3 `gateway` skills. They sit
 *on top of* the grammar, not inside it.
 
 ## `grammar.json` shape (the fields)
@@ -175,9 +175,9 @@ belong to its skill's production). Audit line: production × convention coverage
 
 - **Root has no `dominantOp` label.** The enum is sum/difference/product/quotient/
   power — no "root". Either add it, or treat roots as grouping-atoms (rare enough
-  at Skill-2 level). Decide during authoring.
+  at Tier-2 level). Decide during authoring.
 - **Unary-minus scope.** `−a² = −(a²)` sits awkwardly between `prod.sign` and
-  `prod.power` (N3 + N8). It is the same subtlety Skill 1 teaches as "negative
+  `prod.power` (N3 + N8). It is the same subtlety Tier 1 teaches as "negative
   base vs. negated square" — flag it, don't pretend the level is clean.
 - **Surface positions for interactive drills.** CE gives the semantic tree
   (chunks, recursion, op-class) but **not** surface positions, and it reorders

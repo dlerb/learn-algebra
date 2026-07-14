@@ -21,11 +21,11 @@ A daily drill tool for first-year Swiss high school students to build automatici
 
 KaTeX is the critical dependency: all expressions must render as proper mathematical notation, not plain text. Every expression in the taxonomy is stored in LaTeX and rendered via KaTeX.
 
-**Compute Engine** (`@cortex-js/compute-engine`) parses expressions to MathJSON trees. First use (2026-07-11) is **offline validation only**: `pnpm validate` (`scripts/validate.ts`, run via `vite-node`) derives the AST for every Skill-2 skill and cross-checks the hand-authored structure fields against it — root op-class vs `answer`/`op`, and chunk count vs the tree's maximal root operands. Kept out of the app runtime bundle. Still planned: template substitution via the tree (Skill 2/3, avoiding raw-LaTeX collision) and Skill-3 equivalence verification; MVP template substitution is still regex-based. Skill 1 deliberately stays on surface strings — an AST cannot represent `3x` vs `3·x` (same tree).
+**Compute Engine** (`@cortex-js/compute-engine`) parses expressions to MathJSON trees. First use (2026-07-11) is **offline validation only**: `pnpm validate` (`scripts/validate.ts`, run via `vite-node`) derives the AST for every Tier-2 skill and cross-checks the hand-authored structure fields against it — root op-class vs `answer`/`op`, and chunk count vs the tree's maximal root operands. Kept out of the app runtime bundle. Still planned: template substitution via the tree (Tier 2/3, avoiding raw-LaTeX collision) and Tier-3 equivalence verification; MVP template substitution is still regex-based. Tier 1 deliberately stays on surface strings — an AST cannot represent `3x` vs `3·x` (same tree).
 
-**Display principle — the authored LaTeX string is the single source of truth for anything the student sees. Compute Engine is asked only *semantic* questions ("are these equal?", "what are the root operands?") and is never used to render display output.** The reason is that CE *canonicalizes*: it reorders commutative operands (`3x + 2y` can come back as `2y + 3x`) and folds subtraction into `Add`+`Negate`, losing surface sign placement — and `canonical: false` does **not** reliably preserve authored order either. That normalization is exactly the *feature* for Skill-3 equivalence grading (normalize both sides, then compare) and a bounded chore for structural chunk checks (compare operands as a multiset, reconcile signs) — but it is a hazard the moment it drives display. Skill 1 already lives by this (surface strings, no CE); Skill 2/3 follow it too — display the authored `expr`, use CE only for the semantic layer behind it.
+**Display principle — the authored LaTeX string is the single source of truth for anything the student sees. Compute Engine is asked only *semantic* questions ("are these equal?", "what are the root operands?") and is never used to render display output.** The reason is that CE *canonicalizes*: it reorders commutative operands (`3x + 2y` can come back as `2y + 3x`) and folds subtraction into `Add`+`Negate`, losing surface sign placement — and `canonical: false` does **not** reliably preserve authored order either. That normalization is exactly the *feature* for Tier-3 equivalence grading (normalize both sides, then compare) and a bounded chore for structural chunk checks (compare operands as a multiset, reconcile signs) — but it is a hazard the moment it drives display. Tier 1 already lives by this (surface strings, no CE); Tier 2/3 follow it too — display the authored `expr`, use CE only for the semantic layer behind it.
 
-**Why validation is offline even though CE will likely enter the app later.** CE will probably ship in the runtime bundle eventually — most plausibly for Skill-3 grading, which checks arbitrary live student input that can't be precomputed. Validation stays a separate offline gate regardless: it must run in CI / pre-commit independent of the app booting, it shouldn't re-run on every student page load, and runtime CE (when it lands) should be lazy-loaded for the grading feature specifically — a different concern from validation. (An alternative that keeps runtime CE minimal: pre-generate the drill pool and precompute each target's normal form at build time, shipping JSON.)
+**Why validation is offline even though CE will likely enter the app later.** CE will probably ship in the runtime bundle eventually — most plausibly for Tier-3 grading, which checks arbitrary live student input that can't be precomputed. Validation stays a separate offline gate regardless: it must run in CI / pre-commit independent of the app booting, it shouldn't re-run on every student page load, and runtime CE (when it lands) should be lazy-loaded for the grading feature specifically — a different concern from validation. (An alternative that keeps runtime CE minimal: pre-generate the drill pool and precompute each target's normal form at build time, shipping JSON.)
 
 ---
 
@@ -57,7 +57,7 @@ Session always has a clear end. Students never open the app and face an infinite
 ## Exercise Types
 
 ### Type 1 — Same or Different?
-**Covers:** Skill 1 (equivalence fluency)
+**Covers:** Tier 1 (equivalence fluency)
 
 Two expressions displayed side by side (or stacked on mobile).
 Student taps SAME or DIFFERENT.
@@ -69,7 +69,7 @@ Student taps SAME or DIFFERENT.
 ```
 
 ### Type 2 — Odd One Out
-**Covers:** Skill 1 (equivalence fluency, deeper)
+**Covers:** Tier 1 (equivalence fluency, deeper)
 
 Four expressions displayed. Three are equivalent, one is not.
 Student taps the odd one out.
@@ -79,7 +79,7 @@ Student taps the odd one out.
 ```
 
 ### Type 3 — Name the Structure
-**Covers:** Skill 2 (structural recognition)
+**Covers:** Tier 2 (structural recognition)
 
 One expression displayed. Student taps the dominant operation.
 
@@ -182,15 +182,15 @@ Allows teacher to target class time at the skills where most students are stuck.
 ## Scope
 
 ### In scope (v1)
-- Skill 1 exercise types (Type 1 and Type 2)
-- Skill 2 exercise type (Type 3)
-- Taxonomy skills for Skill 1 (`equivalence`) and Skill 2 (`classification` / `chunking` / `recognition`)
+- Tier 1 exercise types (Type 1 and Type 2)
+- Tier 2 exercise type (Type 3)
+- Taxonomy skills for Tier 1 (`equivalence`) and Tier 2 (`classification` / `chunking` / `recognition`)
 - Spaced repetition and mastery tracking
 - Meta-pattern lookup library
 - Teacher dashboard (read-only)
 
 ### Out of scope (v1)
-- Skill 3 (manipulation) — requires free input and CAS-based verification
+- Tier 3 (manipulation) — requires free input and CAS-based verification
 - Authentication / multi-school deployment
 - Mobile app (PWA is sufficient for v1)
 - Localisation (Swiss German, French)

@@ -48,7 +48,7 @@ Applied: **laws** carry `kind` + `group` (topics addition … binomials).
 has no axiom/definition/theorem analog. **Errors** carry `kind`, no group (it's
 derivable from `corrupts`). **Skills** carry `kind` + `group`.
 
-**There is no skill axis in the data.** The "Skill 1/2/3" framing (equivalence /
+**There is no skill axis in the data.** The "Tier 1/2/3" framing (equivalence /
 classification / transformation) is only a coarse rollup the docs and app apply
 for presentation. It was tried as a stored, then a derived, field and removed:
 the kinds are finer and open-ended, so nothing should freeze a fixed 3-way skill.
@@ -321,7 +321,7 @@ renamed `kind`; the second binomial formula added. `groups.json` →
 
 **2026-07-13 (rev. 7, skill axis removed):** the skill id-namespace
 `notation`/`structure` was tried as a kind prefix with a derived `skill`, then
-dropped entirely — "Skill 1/2/3" is a docs/app lens, not data. Skill ids are
+dropped entirely — "Tier 1/2/3" is a docs/app lens, not data. Skill ids are
 `<kind>.<slug>` (`equivalence`/`classification`/`chunking`/`transformation`);
 `skillGroups.json` and `metapatterns.json` flattened to plain lists; error kind
 `false-law` → `anti-law` (so kind↔prefix is consistent); files `<kind>-<group>`.
@@ -338,10 +338,12 @@ called *family* is renamed **skill** throughout — files (`skills/*.json`,
 `skill.schema.ts`, `skillGroups.json`), the drill key (`family` → `skill`), and
 types/functions (`Skill`, `parseSkills`, `validateSkillLinks`). The word was
 freed once the strategy/material split (rev. 8) removed the two original
-objections to it — the fixed "Skill 1/2/3" partition and the skill↔drill
-conflation; you drill a skill, or a composition of skills. FOLLOW-UP: the coarse
-"Skill 1/2/3" presentation rollup still needs its own word (proposed: **tier**)
-to avoid "a Skill 1 is made of skills"; not yet swept. The old skill-level
+objections to it — the fixed "Tier 1/2/3" partition and the skill↔drill
+conflation; you drill a skill, or a composition of skills. The coarse
+equivalence/classification/transformation presentation rollup is renamed
+**tier** (Tier 1/2/3) so "skill" names only the entry and there is no "a Skill 1
+is made of skills"; the docs were swept, data strings and the `skill2_grammar.md`
+filename left for when those surfaces next change. The old skill-level
 **`priority`** (a linear drilling rank) was
 removed: a skill carries only the `requires` dependency graph (a partial order),
 never a sequence — sequencing is a drill/session-layer concern, deferred. The 47
