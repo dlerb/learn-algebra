@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { skills, drills, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
 import { loc, type Skill, type Drill } from '../data/skill.schema'
 import { lang } from '../lang'
 
+// The skills catalog. A card rests quiet — title · the forms the skill looks
+// like · the rationale note — and reveals its coordinates (laws / conventions /
+// meta-patterns / errors), prerequisites, drill pitfalls and raw JSON behind a
+// per-card `details` toggle, each labeled with its field name.
 function metaLabel(id: string): string {
   const m = metaPatterns.find(mp => mp.id === id)
   return m ? `${m.code} · ${loc(m.title, lang.value)}` : id
 }
-
-// Layer coordinates (laws/conventions) and error-pattern cites, shown as
-// "code · name" chips. Ids not found fall back to the raw id.
 const layerNames = new Map(
   [...laws, ...conventions, ...errorPatterns].map(x => [x.id, x] as const),
 )
@@ -20,6 +22,16 @@ function layerLabel(id: string): string {
   const x = layerNames.get(id)
   return x ? `${x.code} · ${loc(x.name, lang.value)}` : id
 }
+function skillTitle(id: string): string {
+  const f = skills.find(f => f.id === id)
+  return f ? loc(f.title, lang.value) : id
+}
+
+// Per-card disclosure state (the extra fields, and the raw JSON within them).
+const open = ref(new Set<string>())
+const jsonOpen = ref(new Set<string>())
+const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : open.value.add(id))
+const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
 
 // Flatten each skill into a dumb view-model so the template needs no narrowing.
 interface CardVM {
@@ -43,11 +55,6 @@ interface CardVM {
   classPitfalls?: { answer: string; why: string; revise: string[]; explainedBy: string[] }[]
   decomp?: { expr: string; chunks: string[]; op: string }[]
   decompPitfalls?: { why: string; revise: string[]; explainedBy: string[] }[]
-}
-
-function skillTitle(id: string): string {
-  const f = skills.find(f => f.id === id)
-  return f ? loc(f.title, lang.value) : id
 }
 
 // A skill (the strategy) joined with its drill (the material, if any).
@@ -102,16 +109,32 @@ function toVM(f: Skill): CardVM {
 const byTitle = (a: Skill, b: Skill) =>
   loc(a.title, lang.value).localeCompare(loc(b.title, lang.value))
 
-// One section per group (skillGroups order); cards sorted by title within a
-// group. Skills carry no drilling sequence — that lives in the drill layer.
-const sections = computed(() =>
+// Skills can be sectioned by `group` (classroom topic, skillGroups order) or by
+// `kind` (the strategy type). Cards sort by title within a section; skills carry
+// no drilling sequence — that lives in the drill layer.
+const groupBy = ref<'group' | 'kind'>('group')
+
+const kindOrder = ['equivalence', 'classification', 'chunking', 'transformation'] as const
+const kindMeta: Record<string, { title: string; blurb: string }> = {
+  equivalence: { title: 'Equivalence', blurb: 'Same thing written differently — the fluency atoms.' },
+  classification: { title: 'Classification', blurb: 'Recognising the dominant operation before acting.' },
+  chunking: { title: 'Chunking', blurb: 'Breaking a term into its top-level operands.' },
+  transformation: { title: 'Transformation', blurb: 'Directed manipulation — factor, expand, simplify.' },
+}
+
+interface Section { slug: string; title: string; blurb?: string; cards: CardVM[] }
+
+const groupSections = computed<Section[]>(() =>
   groups
-    .map(g => ({
-      ...g,
-      cards: skills.filter(f => f.group === g.slug).sort(byTitle).map(toVM),
-    }))
-    .filter(g => g.cards.length > 0),
+    .map(g => ({ slug: g.slug, title: g.title, blurb: g.blurb, cards: skills.filter(f => f.group === g.slug).sort(byTitle).map(toVM) }))
+    .filter(s => s.cards.length > 0),
 )
+const kindSections = computed<Section[]>(() =>
+  kindOrder
+    .map(k => ({ slug: k, title: kindMeta[k].title, blurb: kindMeta[k].blurb, cards: skills.filter(f => f.kind === k).sort(byTitle).map(toVM) }))
+    .filter(s => s.cards.length > 0),
+)
+const sections = computed(() => (groupBy.value === 'group' ? groupSections.value : kindSections.value))
 
 function hasErrors(c: CardVM): boolean {
   return !!(c.equivPitfalls?.length || c.classPitfalls?.length || c.decompPitfalls?.length)
@@ -120,67 +143,95 @@ function hasErrors(c: CardVM): boolean {
 
 <template>
   <div class="tax">
-    <header class="tax-head">
-      <h1>Taxonomy</h1>
-      <p>Every expression skill, as reference. Green = the true forms; red = the typical error.</p>
+    <div class="top-bar">
       <div class="mode">
-        <button :class="{ active: lang === 'de' }" @click="lang = 'de'">de</button>
-        <button :class="{ active: lang === 'en' }" @click="lang = 'en'">en</button>
+        <button :class="{ active: groupBy === 'group' }" @click="groupBy = 'group'">by group</button>
+        <button :class="{ active: groupBy === 'kind' }" @click="groupBy = 'kind'">by kind</button>
       </div>
-    </header>
+    </div>
 
     <section v-for="g in sections" :key="g.slug" class="group">
-        <div class="group-head">
-          <h3>{{ g.title }}</h3>
-          <p v-if="g.blurb" class="blurb">{{ g.blurb }}</p>
-        </div>
+      <div class="group-title">
+        <h3>{{ g.title }}</h3>
+        <NPopover v-if="g.blurb" trigger="click" placement="bottom-start">
+          <template #trigger><button class="info" aria-label="About this group">i</button></template>
+          <div class="pop">{{ g.blurb }}</div>
+        </NPopover>
+      </div>
 
-        <div class="cards">
-          <article v-for="c in g.cards" :key="c.id" class="card">
-            <div class="card-head">
-              <h4>{{ c.title }}</h4>
-              <div class="badges">
-                <span class="badge kind">{{ c.kind }}</span>
+      <div class="cards">
+        <article v-for="c in g.cards" :key="c.id" class="card">
+          <div class="card-top">
+            <span class="eyebrow">{{ c.kind }} · {{ c.group }}</span>
+            <button class="disclose" @click="toggle(c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
+          </div>
+          <div class="card-head">
+            <h4>{{ c.title }}</h4>
+          </div>
+
+          <!-- primary content: what this skill looks like -->
+          <div class="forms">
+            <MathExpr v-if="c.equivChain" :latex="c.equivChain" display />
+            <template v-else-if="c.classExamples">
+              <div class="examples">
+                <span v-for="(ex, i) in c.classExamples" :key="i" class="ex"><MathExpr :latex="ex" /></span>
               </div>
-            </div>
-            <code class="fam-id">{{ c.id }}</code>
-            <div v-if="c.conditions" class="cond">for <MathExpr :latex="c.conditions" /></div>
+              <div class="answer">dominant operation: <strong>{{ c.classAnswer }}</strong></div>
+            </template>
+            <template v-else-if="c.decomp">
+              <div v-for="(d, i) in c.decomp" :key="i" class="decomp">
+                <MathExpr :latex="d.expr" />
+                <span class="arrow">→</span>
+                <span v-for="(ch, j) in d.chunks" :key="j" class="chunk">[<MathExpr :latex="ch" />]</span>
+                <span class="opname">{{ d.op }}</span>
+              </div>
+            </template>
+            <MathExpr v-else-if="c.illustration" :latex="c.illustration" display />
+          </div>
 
-            <div class="correct">
-              <MathExpr v-if="c.equivChain" :latex="c.equivChain" display />
-              <template v-else-if="c.classExamples">
-                <div class="examples">
-                  <span v-for="(ex, i) in c.classExamples" :key="i" class="ex"><MathExpr :latex="ex" /></span>
-                </div>
-                <div class="answer">dominant operation: <strong>{{ c.classAnswer }}</strong></div>
-              </template>
-              <template v-else-if="c.decomp">
-                <div v-for="(d, i) in c.decomp" :key="i" class="decomp">
-                  <MathExpr :latex="d.expr" />
-                  <span class="arrow">→</span>
-                  <span v-for="(ch, j) in d.chunks" :key="j" class="chunk">[<MathExpr :latex="ch" />]</span>
-                  <span class="opname">{{ d.op }}</span>
-                </div>
-              </template>
-            </div>
+          <p class="body"><RichText :text="c.note" /></p>
 
-            <div v-if="hasErrors(c)" class="errors">
+          <div v-if="open.has(c.id)" class="details">
+            <dl class="fields">
+              <div class="field"><dt>kind</dt><dd>{{ c.kind }}</dd></div>
+              <div class="field"><dt>id</dt><dd><code>{{ c.id }}</code></dd></div>
+              <div class="field"><dt>group</dt><dd>{{ c.group }}</dd></div>
+              <div v-if="c.conditions" class="field"><dt>conditions</dt><dd><MathExpr :latex="c.conditions" /></dd></div>
+              <div v-if="c.requires.length" class="field">
+                <dt>requires</dt><dd><span v-for="(r, i) in c.requires" :key="i" class="chip">{{ r }}</span></dd>
+              </div>
+              <div v-if="c.laws.length" class="field">
+                <dt>justifiedBy</dt><dd><span v-for="(l, i) in c.laws" :key="i" class="chip">{{ l }}</span></dd>
+              </div>
+              <div v-if="c.governedBy.length" class="field">
+                <dt>governedBy</dt><dd><span v-for="(cv, i) in c.governedBy" :key="i" class="chip">{{ cv }}</span></dd>
+              </div>
+              <div v-if="c.metas.length" class="field">
+                <dt>metaPatterns</dt><dd><span v-for="(m, i) in c.metas" :key="i" class="chip">{{ m }}</span></dd>
+              </div>
+              <div v-if="c.errors.length" class="field">
+                <dt>errors</dt><dd><span v-for="(er, i) in c.errors" :key="i" class="chip">{{ er }}</span></dd>
+              </div>
+            </dl>
+
+            <div v-if="hasErrors(c)" class="pitfalls">
+              <div class="pitfalls-head">pitfalls</div>
               <template v-if="c.equivPitfalls">
-                <div v-for="(p, i) in c.equivPitfalls" :key="i" class="err">
+                <div v-for="(p, i) in c.equivPitfalls" :key="i" class="pit">
                   <MathExpr :latex="p.latex" />
                   <span v-if="p.explainedBy.length" class="cites">{{ p.explainedBy.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.classPitfalls">
-                <div v-for="(p, i) in c.classPitfalls" :key="i" class="err">
+                <div v-for="(p, i) in c.classPitfalls" :key="i" class="pit">
                   not <strong>{{ p.answer }}</strong> — <RichText :text="p.why" />
                   <span v-if="p.explainedBy.length" class="cites">{{ p.explainedBy.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
                 </div>
               </template>
               <template v-else-if="c.decompPitfalls">
-                <div v-for="(p, i) in c.decompPitfalls" :key="i" class="err">
+                <div v-for="(p, i) in c.decompPitfalls" :key="i" class="pit">
                   <RichText :text="p.why" />
                   <span v-if="p.explainedBy.length" class="cites">{{ p.explainedBy.join(' + ') }}</span>
                   <span v-if="p.revise.length" class="revise">→ revise: {{ p.revise.join(' · ') }}</span>
@@ -188,75 +239,67 @@ function hasErrors(c: CardVM): boolean {
               </template>
             </div>
 
-            <p class="note"><RichText :text="c.note" /></p>
-            <div v-if="c.requires.length" class="reqs">requires: {{ c.requires.join(' · ') }}</div>
-            <div v-if="c.metas.length" class="chip-row">
-              <span class="chip-label">meta</span>
-              <span v-for="(m, i) in c.metas" :key="i" class="meta-chip">{{ m }}</span>
-            </div>
-            <div v-if="c.laws.length" class="chip-row">
-              <span class="chip-label">laws</span>
-              <span v-for="(l, i) in c.laws" :key="i" class="meta-chip law-chip">{{ l }}</span>
-            </div>
-            <div v-if="c.governedBy.length" class="chip-row">
-              <span class="chip-label">conv</span>
-              <span v-for="(cv, i) in c.governedBy" :key="i" class="meta-chip conv-chip">{{ cv }}</span>
-            </div>
-            <div v-if="c.errors.length" class="chip-row">
-              <span class="chip-label">errors</span>
-              <span v-for="(er, i) in c.errors" :key="i" class="meta-chip err-chip">{{ er }}</span>
-            </div>
-            <details class="json">
-              <summary>json</summary>
-              <pre>{{ c.json }}</pre>
-            </details>
-          </article>
-        </div>
+            <button class="json-toggle" @click="toggleJson(c.id)">{{ jsonOpen.has(c.id) ? 'hide json' : 'json' }}</button>
+            <pre v-if="jsonOpen.has(c.id)" class="json">{{ c.json }}</pre>
+          </div>
+        </article>
+      </div>
     </section>
   </div>
 </template>
 
 <style scoped>
-.tax { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 4rem; color: #1f2937; }
-.tax-head h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 .25rem; }
-.tax-head p { color: #6b7280; margin: 0 0 .6rem; }
-.mode { display: flex; gap: .4rem; margin-bottom: 1rem; }
-.mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; }
-.mode button.active { background: #111827; border-color: #111827; color: #fff; }
-.cites { font-size: .72rem; color: #b91c1c; margin-left: .4rem; }
-.law-chip { background: #ecfdf5; color: #047857; }
-.conv-chip { background: #eff6ff; color: #1d4ed8; }
-.err-chip { background: #fef2f2; color: #b91c1c; }
-.skill > h2 { font-size: 1.15rem; font-weight: 700; margin: 2rem 0 .75rem; padding-bottom: .35rem; border-bottom: 2px solid #111827; }
-.group-head { margin: 1.25rem 0 .5rem; }
-.group-head h3 { font-size: 1rem; font-weight: 700; margin: 0; }
-.blurb { color: #6b7280; font-size: .85rem; margin: .15rem 0 0; }
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: .9rem; }
-.card { border: 1px solid #e5e7eb; border-radius: 10px; padding: .85rem .95rem; background: #fff; }
-.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
-.card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; }
-.badges { display: flex; gap: .3rem; flex-shrink: 0; }
-.badge { font-size: .68rem; padding: .1rem .4rem; border-radius: 999px; white-space: nowrap; }
-.badge.kind { background: #eef2ff; color: #4338ca; }
-.fam-id { font-size: .7rem; color: #9ca3af; }
-.cond { font-size: .78rem; color: #6b7280; font-style: italic; margin-top: .2rem; }
-.correct { margin: .6rem 0; padding: .5rem .6rem; background: #f0fdf4; border-left: 3px solid #22c55e; border-radius: 4px; overflow-x: auto; }
+.tax { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
+
+.top-bar { display: flex; justify-content: flex-end; margin-bottom: .25rem; }
+.mode { display: flex; gap: .4rem; }
+.mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-muted); cursor: pointer; }
+.mode button.active { background: var(--text); border-color: var(--text); color: #fff; }
+
+.group-title { display: flex; align-items: center; gap: .4rem; margin: 1.5rem 0 .6rem; }
+.group-title h3 { font-size: .95rem; font-weight: 700; color: var(--text); margin: 0; }
+.info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
+.info:hover { color: var(--accent); border-color: var(--accent); }
+.pop { max-width: 260px; font-size: .8rem; line-height: 1.45; color: var(--text); }
+
+.cards { display: grid; grid-template-columns: 1fr; gap: .7rem; }
+@media (min-width: 560px) { .cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
+
+/* Card: quiet at rest — title · forms · note */
+.card { position: relative; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem .9rem .8rem; background: var(--surface); }
+.card-top { position: absolute; top: .35rem; left: .9rem; right: .9rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.eyebrow { flex: 1; min-width: 0; font-size: .6rem; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-head { display: flex; align-items: baseline; gap: .5rem; }
+.card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); }
+.disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
+.disclose:hover { color: var(--accent); }
+
+.forms { margin: .5rem 0 0; overflow-x: auto; }
 .examples { display: flex; flex-wrap: wrap; gap: .35rem .9rem; }
-.ex { padding: .1rem .3rem; }
-.answer { margin-top: .4rem; font-size: .85rem; color: #374151; }
+.ex { padding: .1rem .2rem; }
+.answer { margin-top: .35rem; font-size: .82rem; color: var(--text-muted); }
 .decomp { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem; margin: .2rem 0; }
-.arrow { color: #9ca3af; }
+.arrow { color: var(--text-faint); }
 .chunk { display: inline-flex; align-items: center; }
-.opname { font-size: .72rem; color: #6b7280; margin-left: .25rem; }
-.errors { margin: .5rem 0; padding: .5rem .6rem; background: #fef2f2; border-left: 3px solid #ef4444; border-radius: 4px; overflow-x: auto; }
-.err { font-size: .85rem; color: #7f1d1d; margin: .15rem 0; }
-.revise { font-size: .75rem; color: #9f1239; font-style: italic; margin-left: .4rem; }
-.note { font-size: .82rem; color: #4b5563; margin: .5rem 0 .4rem; }
-.reqs { font-size: .75rem; color: #6b7280; margin: 0 0 .35rem; }
-.chip-row { display: flex; flex-wrap: wrap; gap: .3rem; align-items: baseline; margin-top: .25rem; }
-.chip-label { font-size: .68rem; color: #9ca3af; min-width: 2.2rem; }
-.meta-chip { font-size: .7rem; padding: .12rem .45rem; background: #f3f4f6; color: #4b5563; border-radius: 999px; }
-.json { margin-top: .5rem; }
-.json summary { font-size: .7rem; color: #9ca3af; cursor: pointer; user-select: none; }
-.json pre { font-size: .72rem; line-height: 1.45; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: .5rem .6rem; overflow-x: auto; margin: .3rem 0 0; }
+.opname { font-size: .72rem; color: var(--text-muted); margin-left: .25rem; }
+.body { font-size: .84rem; color: var(--text); margin: .5rem 0 0; line-height: 1.45; }
+
+/* Disclosed detail — labeled with the field name */
+.details { margin-top: .65rem; border-top: 1px solid var(--border); padding-top: .55rem; }
+.fields { margin: 0; display: grid; gap: .32rem; }
+.field { display: grid; grid-template-columns: 92px 1fr; gap: .5rem; align-items: baseline; }
+.field dt { font-size: .7rem; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.field dd { margin: 0; font-size: .8rem; color: var(--text); display: flex; flex-wrap: wrap; gap: .3rem; align-items: baseline; }
+.field dd code { font-size: .74rem; color: var(--text-muted); }
+.chip { font-size: .7rem; padding: .1rem .45rem; background: var(--chip-bg); color: var(--text-muted); border-radius: 999px; }
+
+.pitfalls { margin-top: .6rem; }
+.pitfalls-head { font-size: .7rem; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-bottom: .3rem; }
+.pit { border-left: 2px solid var(--bad); padding-left: .5rem; font-size: .82rem; color: var(--text); margin: .3rem 0; }
+.cites { font-size: .72rem; color: var(--bad); margin-left: .4rem; }
+.revise { font-size: .72rem; color: var(--text-muted); font-style: italic; margin-left: .4rem; }
+
+.json-toggle { margin-top: .55rem; font-size: .68rem; color: var(--text-muted); background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: .12rem .45rem; cursor: pointer; }
+.json-toggle:hover { color: var(--text); }
+.json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: #374151; }
 </style>

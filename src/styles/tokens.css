@@ -1,0 +1,26 @@
+/* Design tokens — one quiet, neutral-led palette. Color is reserved for signal
+ * (alerts, the true/false accents), never for structure. Defined as custom
+ * properties so a later `:root[data-theme="dark"]` block is the only thing dark
+ * mode needs — the views already read these vars instead of hardcoded hex. */
+:root {
+  --bg: #fafafa;          /* page */
+  --surface: #ffffff;     /* card */
+  --border: #ededed;      /* hairline */
+  --border-strong: #e0e1e3;
+
+  --text: #1f2328;        /* primary */
+  --text-muted: #8b8f96;  /* labels, secondary */
+  --text-faint: #b3b7bd;  /* ids, field names */
+
+  --accent: #4f46e5;      /* interactive / active, used sparingly */
+  --good: #3f8f6b;        /* "true form" accent — thin, never a fill */
+  --bad: #c0564b;         /* "wrong form" accent — thin, never a fill */
+
+  --warn-bg: #fffbeb;     /* the one loud signal: unused-coverage alert */
+  --warn-fg: #b45309;
+  --warn-border: #fcd34d;
+
+  --chip-bg: #f3f4f6;
+  --code-bg: #f6f7f8;
+  --radius: 10px;
+}
