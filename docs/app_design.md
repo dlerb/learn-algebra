@@ -21,34 +21,34 @@ A daily drill tool for first-year Swiss high school students to build automatici
 
 KaTeX is the critical dependency: all expressions must render as proper mathematical notation, not plain text. Every expression in the taxonomy is stored in LaTeX and rendered via KaTeX.
 
-**Compute Engine** (`@cortex-js/compute-engine`) parses expressions to MathJSON trees. First use (2026-07-11) is **offline validation only**: `pnpm validate` (`scripts/validate.ts`, run via `vite-node`) derives the AST for every Skill-2 family and cross-checks the hand-authored structure fields against it — root op-class vs `answer`/`op`, and chunk count vs the tree's maximal root operands. Kept out of the app runtime bundle. Still planned: template substitution via the tree (Skill 2/3, avoiding raw-LaTeX collision) and Skill-3 equivalence verification; MVP template substitution is still regex-based. Skill 1 deliberately stays on surface strings — an AST cannot represent `3x` vs `3·x` (same tree).
+**Compute Engine** (`@cortex-js/compute-engine`) parses expressions to MathJSON trees. First use (2026-07-11) is **offline validation only**: `pnpm validate` (`scripts/validate.ts`, run via `vite-node`) derives the AST for every Tier-2 skill and cross-checks the hand-authored structure fields against it — root op-class vs `answer`/`op`, and chunk count vs the tree's maximal root operands. Kept out of the app runtime bundle. Still planned: template substitution via the tree (Tier 2/3, avoiding raw-LaTeX collision) and Tier-3 equivalence verification; MVP template substitution is still regex-based. Tier 1 deliberately stays on surface strings — an AST cannot represent `3x` vs `3·x` (same tree).
 
-**Display principle — the authored LaTeX string is the single source of truth for anything the student sees. Compute Engine is asked only *semantic* questions ("are these equal?", "what are the root operands?") and is never used to render display output.** The reason is that CE *canonicalizes*: it reorders commutative operands (`3x + 2y` can come back as `2y + 3x`) and folds subtraction into `Add`+`Negate`, losing surface sign placement — and `canonical: false` does **not** reliably preserve authored order either. That normalization is exactly the *feature* for Skill-3 equivalence grading (normalize both sides, then compare) and a bounded chore for structural chunk checks (compare operands as a multiset, reconcile signs) — but it is a hazard the moment it drives display. Skill 1 already lives by this (surface strings, no CE); Skill 2/3 follow it too — display the authored `expr`, use CE only for the semantic layer behind it.
+**Display principle — the authored LaTeX string is the single source of truth for anything the student sees. Compute Engine is asked only *semantic* questions ("are these equal?", "what are the root operands?") and is never used to render display output.** The reason is that CE *canonicalizes*: it reorders commutative operands (`3x + 2y` can come back as `2y + 3x`) and folds subtraction into `Add`+`Negate`, losing surface sign placement — and `canonical: false` does **not** reliably preserve authored order either. That normalization is exactly the *feature* for Tier-3 equivalence grading (normalize both sides, then compare) and a bounded chore for structural chunk checks (compare operands as a multiset, reconcile signs) — but it is a hazard the moment it drives display. Tier 1 already lives by this (surface strings, no CE); Tier 2/3 follow it too — display the authored `expr`, use CE only for the semantic layer behind it.
 
-**Why validation is offline even though CE will likely enter the app later.** CE will probably ship in the runtime bundle eventually — most plausibly for Skill-3 grading, which checks arbitrary live student input that can't be precomputed. Validation stays a separate offline gate regardless: it must run in CI / pre-commit independent of the app booting, it shouldn't re-run on every student page load, and runtime CE (when it lands) should be lazy-loaded for the grading feature specifically — a different concern from validation. (An alternative that keeps runtime CE minimal: pre-generate the drill pool and precompute each target's normal form at build time, shipping JSON.)
+**Why validation is offline even though CE will likely enter the app later.** CE will probably ship in the runtime bundle eventually — most plausibly for Tier-3 grading, which checks arbitrary live student input that can't be precomputed. Validation stays a separate offline gate regardless: it must run in CI / pre-commit independent of the app booting, it shouldn't re-run on every student page load, and runtime CE (when it lands) should be lazy-loaded for the grading feature specifically — a different concern from validation. (An alternative that keeps runtime CE minimal: pre-generate the drill pool and precompute each target's normal form at build time, shipping JSON.)
 
 ---
 
 ## Core Concepts
 
-### Family
+### Skill
 One entry in the taxonomy (e.g. B4 — distributing a negative over a difference).
-Each family has:
+Each skill has:
 - A set of parameterized templates for generating items
 - A meta-pattern link (shown in feedback)
 - A mastery threshold (e.g. 8 correct in a row across sessions)
 
 ### Item
-A single exercise, generated from a family template. Never stored — generated fresh each session.
+A single exercise, generated from a skill template. Never stored — generated fresh each session.
 
 ### Mastery
-A family is mastered when the student has answered correctly above threshold with no recent errors. Mastery decays over time (spaced repetition) — a family can move from mastered back to review.
+A skill is mastered when the student has answered correctly above threshold with no recent errors. Mastery decays over time (spaced repetition) — a skill can move from mastered back to review.
 
 ### Session
 A fixed-length set of items (around 12–15). Mix of:
-- New families being introduced
-- Families in progress
-- Mastered families due for review
+- New skills being introduced
+- Skills in progress
+- Mastered skills due for review
 
 Session always has a clear end. Students never open the app and face an infinite queue.
 
@@ -57,7 +57,7 @@ Session always has a clear end. Students never open the app and face an infinite
 ## Exercise Types
 
 ### Type 1 — Same or Different?
-**Covers:** Skill 1 (equivalence fluency)
+**Covers:** Tier 1 (equivalence fluency)
 
 Two expressions displayed side by side (or stacked on mobile).
 Student taps SAME or DIFFERENT.
@@ -69,7 +69,7 @@ Student taps SAME or DIFFERENT.
 ```
 
 ### Type 2 — Odd One Out
-**Covers:** Skill 1 (equivalence fluency, deeper)
+**Covers:** Tier 1 (equivalence fluency, deeper)
 
 Four expressions displayed. Three are equivalent, one is not.
 Student taps the odd one out.
@@ -79,7 +79,7 @@ Student taps the odd one out.
 ```
 
 ### Type 3 — Name the Structure
-**Covers:** Skill 2 (structural recognition)
+**Covers:** Tier 2 (structural recognition)
 
 One expression displayed. Student taps the dominant operation.
 
@@ -100,7 +100,7 @@ Subtle positive signal (brief green highlight, soft sound optional).
 Next item loads immediately. Rhythm is not interrupted.
 
 ### Wrong answer (learning mode)
-Triggered by: first encounter with a family, OR same error made twice in a row.
+Triggered by: first encounter with a skill, OR same error made twice in a row.
 
 1. Show what the student answered and why it is wrong — specifically, not generically.
 2. Show the correct answer with a one-line explanation.
@@ -121,19 +121,19 @@ The minus distributes and flips the sign of every term inside.
 
 ### No gamification
 No points, stars, streaks, leaderboards, or celebratory animations.
-Progress is shown as mastered families — a real, meaningful number.
+Progress is shown as mastered skills — a real, meaningful number.
 
 ---
 
 ## Session Structure
 
-1. **Open app** → see progress overview (X families mastered, Y in progress)
+1. **Open app** → see progress overview (X skills mastered, Y in progress)
 2. **Start session** → 12–15 items, drawn from:
-   - 1–2 new families (introduced for first time)
-   - 4–6 families in active learning
-   - 3–4 mastered families due for spaced review
+   - 1–2 new skills (introduced for first time)
+   - 4–6 skills in active learning
+   - 3–4 mastered skills due for spaced review
 3. **During session** → items appear one at a time, full screen, no distractions
-4. **End of session** → brief summary: how many correct, which families improved, which need more work
+4. **End of session** → brief summary: how many correct, which skills improved, which need more work
 5. **Done** → clear stopping point, no pressure to continue
 
 ---
@@ -141,16 +141,16 @@ Progress is shown as mastered families — a real, meaningful number.
 ## Progression
 
 ### Introduction order
-Families are introduced in priority order (as defined in each taxonomy).
-A new family is not introduced until the previous one reaches a minimum threshold.
+Skills are introduced in priority order (as defined in each taxonomy).
+A new skill is not introduced until the previous one reaches a minimum threshold.
 
 ### Mastery definition
 - 8 correct answers with no errors in the last 8 attempts = mastered
-- Mastered families re-enter review queue after 3 days, then 1 week, then 2 weeks (spaced repetition)
+- Mastered skills re-enter review queue after 3 days, then 1 week, then 2 weeks (spaced repetition)
 
 ### Adaptive difficulty
-If a student errors on a family repeatedly:
-- That family appears more often
+If a student errors on a skill repeatedly:
+- That skill appears more often
 - Simpler template variants are used first
 - Harder variants (more complex parameters) introduced after mastery of simpler ones
 
@@ -171,26 +171,26 @@ If a student errors on a family repeatedly:
 
 Separate view (not student-facing).
 Shows per-student:
-- Families mastered / in progress / not yet started
-- Families with persistent errors (high miss rate)
+- Skills mastered / in progress / not yet started
+- Skills with persistent errors (high miss rate)
 - Last session date
 
-Allows teacher to target class time at the families where most students are stuck.
+Allows teacher to target class time at the skills where most students are stuck.
 
 ---
 
 ## Scope
 
 ### In scope (v1)
-- Skill 1 exercise types (Type 1 and Type 2)
-- Skill 2 exercise type (Type 3)
-- Taxonomy families for Skill 1 (`equivalence`) and Skill 2 (`classification` / `chunking` / `recognition`)
+- Tier 1 exercise types (Type 1 and Type 2)
+- Tier 2 exercise type (Type 3)
+- Taxonomy skills for Tier 1 (`equivalence`) and Tier 2 (`classification` / `chunking` / `recognition`)
 - Spaced repetition and mastery tracking
 - Meta-pattern lookup library
 - Teacher dashboard (read-only)
 
 ### Out of scope (v1)
-- Skill 3 (manipulation) — requires free input and CAS-based verification
+- Tier 3 (manipulation) — requires free input and CAS-based verification
 - Authentication / multi-school deployment
 - Mobile app (PWA is sufficient for v1)
 - Localisation (Swiss German, French)
@@ -202,4 +202,4 @@ Allows teacher to target class time at the families where most students are stuc
 - Should the app be usable without a teacher account (solo student)?
 - How are student accounts created — teacher-issued codes, or self-registration?
 - Local storage only (simple, private) vs. backend (required for teacher dashboard)?
-- Which families should be in the diagnostic entry test, and how many items?
+- Which skills should be in the diagnostic entry test, and how many items?

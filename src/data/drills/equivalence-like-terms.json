@@ -1,7 +1,7 @@
 [
   {
     "kind": "equivalence",
-    "family": "equivalence.number-plus-term",
+    "skill": "equivalence.number-plus-term",
     "equivalents": [
       "2 + 3x",
       "3x + 2"
@@ -17,7 +17,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.unlike-variable-terms",
+    "skill": "equivalence.unlike-variable-terms",
     "equivalents": [
       "3x + 2y",
       "2y + 3x"
@@ -33,7 +33,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.adding-powers",
+    "skill": "equivalence.adding-powers",
     "equivalents": [
       "x^2 + x",
       "x + x^2"

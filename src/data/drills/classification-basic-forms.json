@@ -1,7 +1,7 @@
 [
   {
     "kind": "classification",
-    "family": "classification.sum",
+    "skill": "classification.sum",
     "examples": [
       "a + b",
       "3x + 2y",
@@ -12,7 +12,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.difference",
+    "skill": "classification.difference",
     "examples": [
       "a - b",
       "3x - 2y",
@@ -23,7 +23,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.product",
+    "skill": "classification.product",
     "examples": [
       "ab",
       "3(x+1)",
@@ -34,7 +34,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.quotient",
+    "skill": "classification.quotient",
     "examples": [
       "\\frac{a}{b}",
       "\\frac{x+1}{x-1}",
@@ -45,7 +45,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.power",
+    "skill": "classification.power",
     "examples": [
       "a^2",
       "(x+1)^2",

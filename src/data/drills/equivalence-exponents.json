@@ -1,7 +1,7 @@
 [
   {
     "kind": "equivalence",
-    "family": "equivalence.exponent-as-repeated-product",
+    "skill": "equivalence.exponent-as-repeated-product",
     "equivalents": [
       "a^2",
       "a \\cdot a"
@@ -17,7 +17,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.coefficient-vs-exponent",
+    "skill": "equivalence.coefficient-vs-exponent",
     "equivalents": [
       "2a",
       "a + a"
@@ -33,7 +33,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.negated-square-vs-negative-base",
+    "skill": "equivalence.negated-square-vs-negative-base",
     "equivalents": [
       "-a^2",
       "-(a^2)"
@@ -55,7 +55,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.power-of-a-product",
+    "skill": "equivalence.power-of-a-product",
     "equivalents": [
       "(ab)^2",
       "a^2 b^2"
@@ -71,7 +71,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.zero-and-one-exponent",
+    "skill": "equivalence.zero-and-one-exponent",
     "equivalents": [
       "a^0",
       "1"
@@ -82,7 +82,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.negative-exponent",
+    "skill": "equivalence.negative-exponent",
     "equivalents": [
       "a^{-n}",
       "\\frac{1}{a^n}"
@@ -93,7 +93,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.fractional-exponent-root",
+    "skill": "equivalence.fractional-exponent-root",
     "equivalents": [
       "a^{m/n}",
       "\\sqrt[n]{a^m}",
@@ -105,7 +105,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.negative-fractional-exponent",
+    "skill": "equivalence.negative-fractional-exponent",
     "equivalents": [
       "a^{-m/n}",
       "\\frac{1}{\\sqrt[n]{a^m}}",
@@ -117,7 +117,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.power-of-a-sum",
+    "skill": "equivalence.power-of-a-sum",
     "equivalents": [
       "(a+b)^2",
       "(a+b)(a+b)"
@@ -133,7 +133,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.root-of-a-product",
+    "skill": "equivalence.root-of-a-product",
     "equivalents": [
       "\\sqrt{ab}",
       "\\sqrt{a} \\cdot \\sqrt{b}"
@@ -149,7 +149,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.root-of-a-sum",
+    "skill": "equivalence.root-of-a-sum",
     "equivalents": [
       "\\sqrt{a+b}",
       "\\sqrt{b+a}"

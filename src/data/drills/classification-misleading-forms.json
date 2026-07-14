@@ -1,7 +1,7 @@
 [
   {
     "kind": "classification",
-    "family": "classification.sum-of-products",
+    "skill": "classification.sum-of-products",
     "examples": [
       "3x + 2y",
       "ab + cd",
@@ -20,7 +20,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.product-with-inner-sum",
+    "skill": "classification.product-with-inner-sum",
     "examples": [
       "3(x+1)",
       "2x(x-1)",
@@ -39,7 +39,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.coefficient-times-power",
+    "skill": "classification.coefficient-times-power",
     "examples": [
       "2x^2",
       "3a^3"
@@ -57,7 +57,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.leading-minus",
+    "skill": "classification.leading-minus",
     "examples": [
       "-3x + 2y",
       "-(x+1) + x"
@@ -75,7 +75,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.power-with-inner-sum",
+    "skill": "classification.power-with-inner-sum",
     "examples": [
       "(x+1)^2",
       "(3x)^2"
@@ -100,7 +100,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.complex-quotient",
+    "skill": "classification.complex-quotient",
     "examples": [
       "\\frac{3x+2}{x-1}",
       "\\frac{x^2+1}{x+1}"

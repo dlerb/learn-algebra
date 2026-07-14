@@ -1,7 +1,7 @@
 [
   {
     "kind": "equivalence",
-    "family": "equivalence.bracket-types",
+    "skill": "equivalence.bracket-types",
     "equivalents": [
       "(a + b)",
       "[a + b]",
@@ -11,7 +11,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.redundant-brackets",
+    "skill": "equivalence.redundant-brackets",
     "equivalents": [
       "((a + b))",
       "(a + b)",
@@ -21,7 +21,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.precedence-brackets",
+    "skill": "equivalence.precedence-brackets",
     "equivalents": [
       "a + b \\cdot c",
       "a + bc"
@@ -43,7 +43,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.fraction-bar-grouping",
+    "skill": "equivalence.fraction-bar-grouping",
     "equivalents": [
       "\\frac{a+b}{c}",
       "(a+b) \\div c"
@@ -59,7 +59,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.minus-as-times-negative-one",
+    "skill": "equivalence.minus-as-times-negative-one",
     "equivalents": [
       "-(a + b)",
       "(-1)(a + b)",
@@ -77,7 +77,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.multiplying-into-a-bracket",
+    "skill": "equivalence.multiplying-into-a-bracket",
     "equivalents": [
       "2(x + 1)",
       "2x + 2"
