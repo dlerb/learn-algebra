@@ -4,7 +4,6 @@
     "id": "equivalence.negative-numbers",
     "group": "minus-sign",
     "title": "Negative numbers and the unary minus",
-    "priority": 2,
     "note": "A negative number and its parenthesised form are the same object: -3 and (-3) are identical, and both equal 0 - 3.",
     "illustration": "-3 = (-3) = 0 - 3",
     "metaPatterns": [
@@ -25,7 +24,6 @@
     "id": "equivalence.subtraction-as-adding-opposite",
     "group": "minus-sign",
     "title": "Subtracting vs. adding a negative",
-    "priority": 16,
     "note": "Subtracting is the same as adding the opposite: a - b = a + (-b). The minus and the number belong together.",
     "illustration": "a - b = a + (-b) = a + (-1) \\cdot b",
     "requires": [
@@ -50,7 +48,6 @@
     "id": "equivalence.minus-over-sum",
     "group": "minus-sign",
     "title": "Distributing a negative over a sum",
-    "priority": 8,
     "note": "The minus distributes to every term inside: -(a+b) = -a - b, not -a + b.",
     "illustration": "-(a + b) = -a - b",
     "requires": [
@@ -77,7 +74,6 @@
     "id": "equivalence.minus-over-difference",
     "group": "minus-sign",
     "title": "Distributing a negative over a difference",
-    "priority": 4,
     "note": "The minus flips the sign of every term inside the bracket. -(a-b) = -a+b, not -a-b.",
     "illustration": "-(a - b) = -a + b = b - a",
     "requires": [
@@ -103,7 +99,6 @@
     "id": "equivalence.double-negative",
     "group": "minus-sign",
     "title": "Double negative",
-    "priority": 17,
     "note": "Two minuses make a plus: subtracting a negative adds. a-(-b) = a+b, not a-b. (Likewise -(-a) = a.)",
     "illustration": "a - (-b) = a + b",
     "requires": [
@@ -179,7 +174,6 @@
     "id": "equivalence.subtracting-a-sum",
     "group": "minus-sign",
     "title": "Subtracting a bracketed sum",
-    "priority": 9,
     "note": "The minus hits every term inside, not just the first: a - (b+c) = a - b - c. Same rule as -(b+c), with a term in front.",
     "illustration": "a - (b + c) = a - b - c",
     "requires": [
@@ -205,7 +199,6 @@
     "id": "equivalence.subtracting-a-difference",
     "group": "minus-sign",
     "title": "Subtracting a bracketed difference",
-    "priority": 5,
     "note": "The minus flips every sign inside: a - (b-c) = a - b + c, not a - b - c.",
     "illustration": "a - (b - c) = a - b + c",
     "requires": [

@@ -4,7 +4,6 @@
     "id": "equivalence.explicit-vs-implicit-product",
     "group": "multiplication",
     "title": "Explicit vs. implicit multiplication",
-    "priority": 1,
     "note": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product — not a two-digit number, and not $3 + x$.",
     "illustration": "3 \\times x = 3 \\cdot x = 3x = x \\cdot 3 = (3)(x)",
     "metaPatterns": [
@@ -23,7 +22,6 @@
     "id": "equivalence.product-with-brackets",
     "group": "multiplication",
     "title": "Multiplication with brackets",
-    "priority": 14,
     "note": "A number against a bracket means multiply: 2(x+1) is 2 times (x+1), not 2 + (x+1).",
     "illustration": "2 \\times (x+1) = 2 \\cdot (x+1) = 2(x+1) = (x+1) \\cdot 2",
     "requires": [
@@ -46,7 +44,6 @@
     "id": "equivalence.coefficient-negative-one",
     "group": "multiplication",
     "title": "Coefficient of −1",
-    "priority": 3,
     "note": "An invisible coefficient of -1 means negate: (-1)a, -1a and -a are the same object. (Similarly a coefficient of 1 is invisible: 1x = x.)",
     "illustration": "(-1) \\cdot a = (-1)a = -1a = -a",
     "requires": [
@@ -96,7 +93,6 @@
     "id": "equivalence.repeated-addition",
     "group": "multiplication",
     "title": "Repeated addition vs. multiplication",
-    "priority": 10,
     "note": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Do not confuse with $x \\cdot x = x^2$.",
     "illustration": "x + x = 2x",
     "requires": [

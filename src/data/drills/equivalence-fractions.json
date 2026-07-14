@@ -1,7 +1,7 @@
 [
   {
     "kind": "equivalence",
-    "family": "equivalence.division-variants",
+    "skill": "equivalence.division-variants",
     "equivalents": [
       "a \\div b",
       "a : b",
@@ -18,7 +18,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.fraction-as-reciprocal-product",
+    "skill": "equivalence.fraction-as-reciprocal-product",
     "equivalents": [
       "\\frac{a}{b}",
       "a \\cdot \\frac{1}{b}"
@@ -27,7 +27,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.divide-by-one",
+    "skill": "equivalence.divide-by-one",
     "equivalents": [
       "\\frac{a}{1}",
       "a"
@@ -36,7 +36,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.splitting-a-fraction",
+    "skill": "equivalence.splitting-a-fraction",
     "equivalents": [
       "\\frac{a+b}{c}",
       "\\frac{a}{c} + \\frac{b}{c}"
@@ -45,7 +45,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.no-splitting-the-denominator",
+    "skill": "equivalence.no-splitting-the-denominator",
     "equivalents": [
       "\\frac{c}{a+b}",
       "c \\div (a+b)"
@@ -61,7 +61,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.no-cancelling-in-a-sum",
+    "skill": "equivalence.no-cancelling-in-a-sum",
     "equivalents": [
       "\\frac{3x+2}{3}",
       "x + \\frac{2}{3}"

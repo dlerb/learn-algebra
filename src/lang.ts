@@ -2,7 +2,7 @@
 // Prose switches between Schweizer Hochdeutsch and English; math notation does
 // not — it stays Swiss regardless of language.
 import { ref, watch } from 'vue'
-import type { Lang } from './data/family.schema'
+import type { Lang } from './data/skill.schema'
 
 const stored = localStorage.getItem('lang')
 export const lang = ref<Lang>(stored === 'de' ? 'de' : 'en')

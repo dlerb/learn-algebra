@@ -1,7 +1,7 @@
 [
   {
     "kind": "equivalence",
-    "family": "equivalence.negative-numbers",
+    "skill": "equivalence.negative-numbers",
     "equivalents": [
       "-3",
       "(-3)",
@@ -18,7 +18,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.subtraction-as-adding-opposite",
+    "skill": "equivalence.subtraction-as-adding-opposite",
     "equivalents": [
       "a - b",
       "a + (-b)",
@@ -35,7 +35,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.minus-over-sum",
+    "skill": "equivalence.minus-over-sum",
     "equivalents": [
       "-(a + b)",
       "-a - b"
@@ -52,7 +52,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.minus-over-difference",
+    "skill": "equivalence.minus-over-difference",
     "equivalents": [
       "-(a - b)",
       "-a + b",
@@ -69,7 +69,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.double-negative",
+    "skill": "equivalence.double-negative",
     "equivalents": [
       "a - (-b)",
       "a + b"
@@ -85,7 +85,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.negative-times-negative",
+    "skill": "equivalence.negative-times-negative",
     "equivalents": [
       "(-a)(-b)",
       "ab"
@@ -101,7 +101,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.minus-on-fraction",
+    "skill": "equivalence.minus-on-fraction",
     "equivalents": [
       "-\\frac{a}{b}",
       "\\frac{-a}{b}",
@@ -118,7 +118,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.subtracting-a-sum",
+    "skill": "equivalence.subtracting-a-sum",
     "equivalents": [
       "a - (b + c)",
       "a - b - c"
@@ -134,7 +134,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.subtracting-a-difference",
+    "skill": "equivalence.subtracting-a-difference",
     "equivalents": [
       "a - (b - c)",
       "a - b + c"

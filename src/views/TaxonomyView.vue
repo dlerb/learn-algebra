@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { families, drills, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
-import { loc, type Family, type Drill } from '../data/family.schema'
+import { skills, drills, groups, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
+import { loc, type Skill, type Drill } from '../data/skill.schema'
 import { lang } from '../lang'
-
-// 'groups' = thematic sections (default); 'order' = one flat list sorted by
-// drilling priority — for reviewing the sequence itself.
-const viewMode = ref<'groups' | 'order'>('groups')
 
 function metaLabel(id: string): string {
   const m = metaPatterns.find(mp => mp.id === id)
@@ -25,14 +21,13 @@ function layerLabel(id: string): string {
   return x ? `${x.code} · ${loc(x.name, lang.value)}` : id
 }
 
-// Flatten each family into a dumb view-model so the template needs no narrowing.
+// Flatten each skill into a dumb view-model so the template needs no narrowing.
 interface CardVM {
   id: string
   title: string
   kind: string
   group: string
   json: string
-  priority?: number
   conditions?: string
   note: string
   illustration?: string
@@ -50,33 +45,33 @@ interface CardVM {
   decompPitfalls?: { why: string; revise: string[]; explainedBy: string[] }[]
 }
 
-function familyTitle(id: string): string {
-  const f = families.find(f => f.id === id)
+function skillTitle(id: string): string {
+  const f = skills.find(f => f.id === id)
   return f ? loc(f.title, lang.value) : id
 }
 
-// A family (the strategy) joined with its drill (the material, if any).
-const drillByFamily = new Map<string, Drill>(drills.map(d => [d.family, d]))
+// A skill (the strategy) joined with its drill (the material, if any).
+const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
 
-function toVM(f: Family): CardVM {
+function toVM(f: Skill): CardVM {
   const base = {
     id: f.id, title: loc(f.title, lang.value), kind: f.kind, group: f.group,
-    priority: f.priority, conditions: f.conditions, note: loc(f.note, lang.value),
+    conditions: f.conditions, note: loc(f.note, lang.value),
     illustration: f.illustration, errors: f.errors.map(layerLabel),
     json: JSON.stringify(rawById.get(f.id), null, 2),
     metas: f.metaPatterns.map(m => metaLabel(m)),
-    requires: f.requires.map(familyTitle),
+    requires: f.requires.map(skillTitle),
     laws: f.justifiedBy.map(layerLabel),
     governedBy: f.governedBy.map(layerLabel),
   }
-  const d = drillByFamily.get(f.id)
+  const d = drillBySkill.get(f.id)
   if (d?.kind === 'equivalence') {
     return {
       ...base,
       equivChain: d.equivalents.join(' = '),
       equivPitfalls: d.pitfalls.map(p => ({
         latex: `${d.equivalents[0]} \\neq ${p.expr}`,
-        revise: (p.revise ?? []).map(familyTitle),
+        revise: (p.revise ?? []).map(skillTitle),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
@@ -86,7 +81,7 @@ function toVM(f: Family): CardVM {
       ...base, classExamples: d.examples, classAnswer: d.answer,
       classPitfalls: d.pitfalls.map(p => ({
         answer: p.answer, why: loc(p.why, lang.value),
-        revise: (p.revise ?? []).map(familyTitle),
+        revise: (p.revise ?? []).map(skillTitle),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
@@ -96,7 +91,7 @@ function toVM(f: Family): CardVM {
       ...base, decomp: d.examples,
       decompPitfalls: d.pitfalls.map(p => ({
         why: loc(p.why, lang.value),
-        revise: (p.revise ?? []).map(familyTitle),
+        revise: (p.revise ?? []).map(skillTitle),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
@@ -104,25 +99,18 @@ function toVM(f: Family): CardVM {
   return base
 }
 
-const byPriority = (a: Family, b: Family) =>
-  (a.priority ?? 999) - (b.priority ?? 999)
-  || loc(a.title, lang.value).localeCompare(loc(b.title, lang.value))
+const byTitle = (a: Skill, b: Skill) =>
+  loc(a.title, lang.value).localeCompare(loc(b.title, lang.value))
 
-// Flat list of sections. 'groups' = one section per group (familyGroups order);
-// 'order' = a single priority-sorted section.
+// One section per group (skillGroups order); cards sorted by title within a
+// group. Skills carry no drilling sequence — that lives in the drill layer.
 const sections = computed(() =>
-  viewMode.value === 'order'
-    ? [{
-        slug: 'order', title: 'Drilling order',
-        blurb: 'All families, ranked first, unranked ("remaining") after.',
-        cards: [...families].sort(byPriority).map(toVM),
-      }]
-    : groups
-        .map(g => ({
-          ...g,
-          cards: families.filter(f => f.group === g.slug).sort(byPriority).map(toVM),
-        }))
-        .filter(g => g.cards.length > 0),
+  groups
+    .map(g => ({
+      ...g,
+      cards: skills.filter(f => f.group === g.slug).sort(byTitle).map(toVM),
+    }))
+    .filter(g => g.cards.length > 0),
 )
 
 function hasErrors(c: CardVM): boolean {
@@ -134,11 +122,8 @@ function hasErrors(c: CardVM): boolean {
   <div class="tax">
     <header class="tax-head">
       <h1>Taxonomy</h1>
-      <p>Every expression family, as reference. Green = the true forms; red = the typical error.</p>
+      <p>Every expression skill, as reference. Green = the true forms; red = the typical error.</p>
       <div class="mode">
-        <button :class="{ active: viewMode === 'groups' }" @click="viewMode = 'groups'">by group</button>
-        <button :class="{ active: viewMode === 'order' }" @click="viewMode = 'order'">drilling order</button>
-        <span class="mode-gap" />
         <button :class="{ active: lang === 'de' }" @click="lang = 'de'">de</button>
         <button :class="{ active: lang === 'en' }" @click="lang = 'en'">en</button>
       </div>
@@ -155,8 +140,6 @@ function hasErrors(c: CardVM): boolean {
             <div class="card-head">
               <h4>{{ c.title }}</h4>
               <div class="badges">
-                <span v-if="c.priority" class="badge prio">#{{ c.priority }}</span>
-                <span v-if="viewMode === 'order'" class="badge group">{{ c.group }}</span>
                 <span class="badge kind">{{ c.kind }}</span>
               </div>
             </div>
@@ -240,7 +223,6 @@ function hasErrors(c: CardVM): boolean {
 .mode { display: flex; gap: .4rem; margin-bottom: 1rem; }
 .mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid #d1d5db; border-radius: 999px; background: #fff; color: #4b5563; cursor: pointer; }
 .mode button.active { background: #111827; border-color: #111827; color: #fff; }
-.mode-gap { width: .6rem; }
 .cites { font-size: .72rem; color: #b91c1c; margin-left: .4rem; }
 .law-chip { background: #ecfdf5; color: #047857; }
 .conv-chip { background: #eff6ff; color: #1d4ed8; }
@@ -255,9 +237,7 @@ function hasErrors(c: CardVM): boolean {
 .card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; }
 .badges { display: flex; gap: .3rem; flex-shrink: 0; }
 .badge { font-size: .68rem; padding: .1rem .4rem; border-radius: 999px; white-space: nowrap; }
-.badge.prio { background: #111827; color: #fff; }
 .badge.kind { background: #eef2ff; color: #4338ca; }
-.badge.group { background: #f3f4f6; color: #4b5563; }
 .fam-id { font-size: .7rem; color: #9ca3af; }
 .cond { font-size: .78rem; color: #6b7280; font-style: italic; margin-top: .2rem; }
 .correct { margin: .6rem 0; padding: .5rem .6rem; background: #f0fdf4; border-left: 3px solid #22c55e; border-radius: 4px; overflow-x: auto; }

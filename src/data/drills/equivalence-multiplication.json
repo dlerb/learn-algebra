@@ -1,7 +1,7 @@
 [
   {
     "kind": "equivalence",
-    "family": "equivalence.explicit-vs-implicit-product",
+    "skill": "equivalence.explicit-vs-implicit-product",
     "equivalents": [
       "3 \\times x",
       "3 \\cdot x",
@@ -20,7 +20,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.product-with-brackets",
+    "skill": "equivalence.product-with-brackets",
     "equivalents": [
       "2 \\times (x+1)",
       "2 \\cdot (x+1)",
@@ -38,7 +38,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.coefficient-negative-one",
+    "skill": "equivalence.coefficient-negative-one",
     "equivalents": [
       "(-1) \\cdot a",
       "(-1)a",
@@ -56,7 +56,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.coefficient-zero",
+    "skill": "equivalence.coefficient-zero",
     "equivalents": [
       "0 \\cdot x",
       "0x",
@@ -73,7 +73,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.repeated-addition",
+    "skill": "equivalence.repeated-addition",
     "equivalents": [
       "x + x",
       "2x"

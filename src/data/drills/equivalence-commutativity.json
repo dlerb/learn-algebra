@@ -1,7 +1,7 @@
 [
   {
     "kind": "equivalence",
-    "family": "equivalence.addition-commutative",
+    "skill": "equivalence.addition-commutative",
     "equivalents": [
       "a + b",
       "b + a"
@@ -10,7 +10,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.multiplication-commutative",
+    "skill": "equivalence.multiplication-commutative",
     "equivalents": [
       "ab",
       "ba"
@@ -19,7 +19,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.subtraction-not-commutative",
+    "skill": "equivalence.subtraction-not-commutative",
     "equivalents": [
       "a - b",
       "-(b - a)"
@@ -35,7 +35,7 @@
   },
   {
     "kind": "equivalence",
-    "family": "equivalence.division-not-commutative",
+    "skill": "equivalence.division-not-commutative",
     "equivalents": [
       "a \\div b",
       "\\frac{a}{b}"

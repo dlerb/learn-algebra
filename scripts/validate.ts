@@ -7,7 +7,7 @@
 // Skill-2 expression to an AST and cross-checks the hand-authored structure
 // fields against it.
 //
-// Why an AST check for Skill 2: a chunking family's `chunks` are meant to be the
+// Why an AST check for Skill 2: a chunking skill's `chunks` are meant to be the
 // immediate operands of the root operator, maximally (all terms of a sum, all
 // factors of a product). Compute Engine's n-ary Add/Multiply gives exactly that
 // decomposition, so it is the ground truth the authored chunks must agree with.
@@ -47,7 +47,7 @@ for (const d of drills) {
       const got = astClass(ce.parse(ex, { canonical: true }).operator)
       const want = wantClass[d.answer]
       if (got !== want)
-        issues.push(`${d.family}: example "${ex}" — answer=${d.answer} (${want}) but AST root is ${got}`)
+        issues.push(`${d.skill}: example "${ex}" — answer=${d.answer} (${want}) but AST root is ${got}`)
     }
   } else if (d.kind === 'chunking') {
     // each example carries its own op + chunk list
@@ -56,10 +56,10 @@ for (const d of drills) {
       const got = astClass(p.operator)
       const want = wantClass[ex.op]
       if (got !== want)
-        issues.push(`${d.family}: "${ex.expr}" — op=${ex.op} (${want}) but AST root is ${got}`)
+        issues.push(`${d.skill}: "${ex.expr}" — op=${ex.op} (${want}) but AST root is ${got}`)
       const nOps = p.ops?.length ?? 0
       if (nOps !== ex.chunks.length)
-        issues.push(`${d.family}: "${ex.expr}" — ${ex.chunks.length} chunks authored but AST root has ${nOps} operands `
+        issues.push(`${d.skill}: "${ex.expr}" — ${ex.chunks.length} chunks authored but AST root has ${nOps} operands `
           + `(${JSON.stringify(p.ops?.map(o => o.toString()))}). Chunks must be the maximal root operands.`)
     }
   }

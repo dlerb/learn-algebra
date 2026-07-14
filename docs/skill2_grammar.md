@@ -11,8 +11,8 @@
 ## Why this exists
 
 Skill 1 feels systematic because its content sits on a materialized backbone —
-the law tower (`laws.json`) plus conventions — and every family cites it. Skill 2
-has had no such backbone: the structure/chunking families were a flat list of
+the law tower (`laws.json`) plus conventions — and every skill cites it. Skill 2
+has had no such backbone: the structure/chunking skills were a flat list of
 example expressions floating free of any system, which is why they felt ad hoc.
 
 The backbone Skill 2 was missing is a **grammar**: a small set of recursive
@@ -20,7 +20,7 @@ The backbone Skill 2 was missing is a **grammar**: a small set of recursive
 decomposes, disambiguated by the parsing **conventions**. This is the exact
 structural analog of Skill 1:
 
-| | the "atoms" | the disambiguation | the family |
+| | the "atoms" | the disambiguation | the skill |
 | --- | --- | --- | --- |
 | **Skill 1** | laws (axioms/defs/theorems) | conventions | curated *law × convention* cell |
 | **Skill 2** | grammar productions | **parsing** conventions | curated *production × obscuring-convention* cell |
@@ -111,22 +111,22 @@ node (CE elides it — `(a+b)` is just `Add(a,b)`), it is the **convention `N4`
 (brackets group)** that the productions cite. So "bracket as a chunk" is a
 convention effect, not a rule of its own.
 
-## How families sit on the grammar (thin link)
+## How skills sit on the grammar (thin link)
 
-Decided **thin/derived**: a family declares its production *implicitly* via its
+Decided **thin/derived**: a skill declares its production *implicitly* via its
 existing `answer`/`op` `dominantOp` label (`sum` → `prod.additive`). No new
-per-family `produces` field. The label→production map is fixed and lives in the
+per-skill `produces` field. The label→production map is fixed and lives in the
 grammar (`labels`).
 
-Two family kinds fall out of the grammar:
+Two skill kinds fall out of the grammar:
 
 - **`basic-forms` = a production in isolation** (atomic operands): Sum,
-  Difference, Product, Quotient, Power. Five families, the five productions,
+  Difference, Product, Quotient, Power. Five skills, the five productions,
   taught clean.
 - **`misleading-forms` = a production where a glyph tempts the wrong production,
   resolved by a convention** — the *production × obscuring-convention* cell:
 
-| family | correct production | tempts | resolved by |
+| skill | correct production | tempts | resolved by |
 |---|---|---|---|
 | Sum of products (`ab + cd`) | additive | split at `·` | N5 / M3 |
 | Product containing a sum (`a(b+c)`) | multiplicative | split at `+` | N4 / M2 |
@@ -135,9 +135,9 @@ Two family kinds fall out of the grammar:
 | Power containing a sum (`(a+b)²`) | power → `[(a+b), 2]` | read as a sum | N8 / N4 |
 | Complex quotient (`(a+b)/(c−d)`) | fraction → `[num, den]` | split at inner `+`/`−` | N6 |
 
-The concrete family work this unlocks: **tag the untagged-17 families with the
+The concrete skill work this unlocks: **tag the untagged-17 skills with the
 `conv.*` their production's `governedBy` lists** — the grammar now *tells you*
-which conventions each family should cite, instead of guessing. And it gives
+which conventions each skill should cite, instead of guessing. And it gives
 Skill 2 the same **coverage matrix** Skill 1 has: audit *production × convention*
 cells for gaps.
 
@@ -145,7 +145,7 @@ cells for gaps.
 
 The `familiar-shapes` group (difference of squares, perfect-square trinomial, …)
 is **not** part of this grammar. Those are recognition-with-intent — templates
-matched against an already-parsed tree, the S2→S3 `gateway` families. They sit
+matched against an already-parsed tree, the S2→S3 `gateway` skills. They sit
 *on top of* the grammar, not inside it.
 
 ## `grammar.json` shape (the fields)
@@ -169,7 +169,7 @@ Validators (mirroring the law-layer validators): every `governedBy` resolves to 
 real convention; every `digest` to a real metapattern; the `labels` partition the
 `dominantOp` enum (each label owned by exactly one production); `astHead` is what
 the `pnpm validate` op-class check keys off (an example's AST root head must
-belong to its family's production). Audit line: production × convention coverage.
+belong to its skill's production). Audit line: production × convention coverage.
 
 ## Open questions
 

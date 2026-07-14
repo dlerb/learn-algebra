@@ -2,15 +2,16 @@ import { z } from 'zod'
 import katex from 'katex'
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Family schema — the single source of truth for BOTH the runtime validator and
-// the TypeScript `Family` type (via z.infer). Family data is authored as JSON in
-// src/data/families/*.json and validated against this schema on load.
+// Skill schema — the single source of truth for BOTH the runtime validator and
+// the TypeScript `Skill` type (via z.infer). Skill data is authored as JSON in
+// src/data/skills/*.json and validated against this schema on load.
 //
-// A family is a mathematical unit only. It declares WHAT IT IS (its `kind`);
+// A skill is a mathematical unit only. It declares WHAT IT IS (its `kind`);
 // how it is drilled (exercise type) is derived from the kind in code, never
-// stored here. Authored curation — including `priority`, the teacher's drilling
-// order — lives here; per-student runtime state (mastery, next-item selection,
-// spaced-repetition scheduling) does not.
+// stored here. A skill carries no linear ordering: dependency lives in the
+// `requires` graph, but drilling *sequence* is a drill/session-layer concern
+// (the old `priority` field was parked to drills/_parked-priority.json). Per-
+// student runtime state (mastery, next-item selection, scheduling) is not here.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const dominantOp = z.enum(['sum', 'difference', 'product', 'quotient', 'power'])
@@ -35,41 +36,40 @@ export function loc(ls: LocalizedString, lang: Lang): string {
   return ls[lang] ?? ls.en
 }
 
-// A family is a curated STRATEGY/SKILL — NOT drill material. It says what the
+// A skill is a curated STRATEGY/SKILL — NOT drill material. It says what the
 // skill is, why it matters (`note`), one canonical `illustration`, the
 // misconceptions it guards against (`errors` → error-pattern ids), and its links
 // into the law / convention / meta-pattern layers. All the drill-specific
 // material — instances, answers, distractors — lives in the drill layer
-// (drills/*.json), keyed by family id. Uniform shape across kinds: `kind` is a
+// (drills/*.json), keyed by skill id. Uniform shape across kinds: `kind` is a
 // plain category label (= id prefix), not a data-shape discriminant.
-export const familyKind = z.enum(['equivalence', 'classification', 'chunking', 'transformation'])
-export type FamilyKind = z.infer<typeof familyKind>
+export const skillKind = z.enum(['equivalence', 'classification', 'chunking', 'transformation'])
+export type SkillKind = z.infer<typeof skillKind>
 
-export const family = z.object({
+export const skill = z.object({
   id: z.string().regex(/^(equivalence|classification|chunking|transformation)\.[a-z0-9-]+$/,
     'id must be "<kind>.<slug>" (kind ∈ equivalence|classification|chunking|transformation)'),
-  kind: familyKind,                     // = id prefix (validated); a plain category label
-  group: z.string(),                    // topic slug; must exist in familyGroups.json
+  kind: skillKind,                     // = id prefix (validated); a plain category label
+  group: z.string(),                    // topic slug; must exist in skillGroups.json
   title: localizedString,
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
-  priority: z.number().int().positive().optional(),  // authored drilling rank; lower = earlier
   gateway: z.boolean().default(false),  // recognising this shape triggers a transformation (familiar shapes)
-  requires: z.array(z.string()).default([]),     // DIRECT prerequisite family ids
+  requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   metaPatterns: z.array(z.string()).default([]), // meta-pattern ids (metapatterns.json)
   justifiedBy: z.array(z.string()).default([]),  // law ids (laws.json)
   governedBy: z.array(z.string()).default([]),   // convention ids (conventions.json)
   errors: z.array(z.string()).default([]),       // error-pattern ids — the skill's misconception catalog
   conditions: z.string().optional(),    // domain caveat, pure LaTeX
 })
-export type Family = z.infer<typeof family>
+export type Skill = z.infer<typeof skill>
 
 // ── Drill layer ──────────────────────────────────────────────────────────────
-// Drill material, parked out of the families (drills/*.json). Each drill points
-// at its `family` by id. Discriminated on `kind` for now — that is the shape of
+// Drill material, parked out of the skills (drills/*.json). Each drill points
+// at its `skill` by id. Discriminated on `kind` for now — that is the shape of
 // the parked material; the real drill layer will likely key on a `format`
-// instead. A pitfall's `explainedBy` names which of the family's `errors` this
-// concrete distractor instantiates (validated ⊆ the family's set).
+// instead. A pitfall's `explainedBy` names which of the skill's `errors` this
+// concrete distractor instantiates (validated ⊆ the skill's set).
 const equivPitfall = z
   .union([z.string(), z.object({
     expr: z.string(),
@@ -81,12 +81,12 @@ const equivPitfall = z
 
 export const drill = z.discriminatedUnion('kind', [
   z.object({
-    kind: z.literal('equivalence'), family: z.string(),
+    kind: z.literal('equivalence'), skill: z.string(),
     equivalents: z.array(z.string()).min(2),
     pitfalls: z.array(equivPitfall).default([]),
   }),
   z.object({
-    kind: z.literal('classification'), family: z.string(),
+    kind: z.literal('classification'), skill: z.string(),
     examples: z.array(z.string()).min(1),
     answer: dominantOp,
     pitfalls: z.array(z.object({
@@ -96,7 +96,7 @@ export const drill = z.discriminatedUnion('kind', [
     })).default([]),
   }),
   z.object({
-    kind: z.literal('chunking'), family: z.string(),
+    kind: z.literal('chunking'), skill: z.string(),
     examples: z.array(z.object({
       expr: z.string(), chunks: z.array(z.string()).min(2), op: dominantOp,
     })).min(1),
@@ -110,8 +110,8 @@ export const drill = z.discriminatedUnion('kind', [
 export type Drill = z.infer<typeof drill>
 
 // ── Groups ───────────────────────────────────────────────────────────────────
-// Groups organize families into ordered sections in the lookup view. Defined once
-// in familyGroups.json as a flat list (array order = display order); a family
+// Groups organize skills into ordered sections in the lookup view. Defined once
+// in skillGroups.json as a flat list (array order = display order); a skill
 // references its group by slug.
 
 export const groupDef = z.object({
@@ -124,18 +124,18 @@ export type GroupDef = z.infer<typeof groupDef>
 export const groupsFile = z.array(groupDef)
 export type GroupsFile = z.infer<typeof groupsFile>
 
-// Cross-check: every family's group slug must exist in familyGroups.json.
-export function validateGroupRefs(families: Family[], groups: GroupsFile): void {
+// Cross-check: every skill's group slug must exist in skillGroups.json.
+export function validateGroupRefs(skills: Skill[], groups: GroupsFile): void {
   const slugs = new Set(groups.map(g => g.slug))
-  for (const f of families) {
+  for (const f of skills) {
     if (!slugs.has(f.group)) {
-      throw new Error(`Family "${f.id}" references unknown group "${f.group}".`)
+      throw new Error(`Skill "${f.id}" references unknown group "${f.group}".`)
     }
   }
 }
 
 // ── Meta-patterns ────────────────────────────────────────────────────────────
-// The generative decoding rules. A flat list in metapatterns.json; families
+// The generative decoding rules. A flat list in metapatterns.json; skills
 // reference them by id ("meta.…").
 
 export const metaPatternDef = z.object({
@@ -150,19 +150,19 @@ export type MetaPatternDef = z.infer<typeof metaPatternDef>
 export const metaPatternsFile = z.array(metaPatternDef)
 export type MetaPatternsFile = z.infer<typeof metaPatternsFile>
 
-// Cross-check: every metaPattern a family references must exist; ids and display
+// Cross-check: every metaPattern a skill references must exist; ids and display
 // codes are globally unique.
-export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsFile): void {
+export function validateMetaPatternRefs(skills: Skill[], metas: MetaPatternsFile): void {
   const dupId = metas.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)
   if (dupId) throw new Error(`Duplicate meta-pattern id "${dupId}".`)
   const dupCode = metas.map(m => m.code).find((c, i, a) => a.indexOf(c) !== i)
   if (dupCode) throw new Error(`Duplicate meta-pattern code "${dupCode}".`)
 
   const ids = new Set(metas.map(m => m.id))
-  for (const f of families) {
+  for (const f of skills) {
     for (const m of f.metaPatterns) {
       if (!ids.has(m)) {
-        throw new Error(`Family "${f.id}" references unknown meta-pattern "${m}".`)
+        throw new Error(`Skill "${f.id}" references unknown meta-pattern "${m}".`)
       }
     }
   }
@@ -172,7 +172,7 @@ export function validateMetaPatternRefs(families: Family[], metas: MetaPatternsF
 // The logical skeleton of school algebra (docs/content_model.md). Three
 // kinds: axiom (accepted, no links), definition (carries `basedOn` — what it
 // presupposes), theorem (carries `derivedFrom` — what proves it). `kind` is the
-// intrinsic type of the entry (mirroring the family `kind` discriminant); the id
+// intrinsic type of the entry (mirroring the skill `kind` discriminant); the id
 // prefix mirrors it so a derivation chain reads like a proof. A separate `group`
 // (topic: signs, fractions, powers …) cross-cuts `kind` for browsing. `code` is
 // the short display code matching the doc (A1, D3, T11).
@@ -183,7 +183,7 @@ export type LawKind = z.infer<typeof lawKind>
 // Topical group — a display/navigation bucket that cross-cuts `kind` (a group
 // holds definitions and theorems alike). Deliberately NOT in the id: grouping is
 // a soft, revisable call, ids are hard identity cited everywhere. The two power
-// sub-families (same-base / same-exponent / power-of-power) are intentionally
+// sub-skills (same-base / same-exponent / power-of-power) are intentionally
 // left to the derivedFrom lineage rather than a `subgroup` — one level is enough.
 export const lawGroup = z.enum([
   'addition', 'multiplication', 'distribution',
@@ -192,8 +192,8 @@ export const lawGroup = z.enum([
 export type LawGroup = z.infer<typeof lawGroup>
 
 // Display registry for the law groups — titles + display order — in its own file
-// (lawGroups.json), mirroring familyGroups.json for families. Kept separate from
-// familyGroups.json because that file is keyed by family namespace, a different axis.
+// (lawGroups.json), mirroring skillGroups.json for skills. Kept separate from
+// skillGroups.json because that file is keyed by skill namespace, a different axis.
 // The slug set must equal the lawGroup enum exactly, so a title can never drift
 // from a value laws use, nor a group go titleless. `groupDef` is reused (defined
 // above): { slug, title, blurb? }, array order = display order.
@@ -225,7 +225,7 @@ export const lawDef = z.object({
   group: lawGroup,                              // topical bucket, cross-cuts kind — display/navigation only
   name: localizedString,
   latex: z.string(),                            // the statement, KaTeX
-  conditions: z.string().optional(),            // domain condition, pure LaTeX, e.g. "b \\ne 0"; families citing the law inherit it
+  conditions: z.string().optional(),            // domain condition, pure LaTeX, e.g. "b \\ne 0"; skills citing the law inherit it
   basedOn: z.array(z.string()).default([]),     // definitions only
   derivedFrom: z.array(z.string()).default([]), // theorems only
   note: localizedString.optional(),
@@ -301,7 +301,7 @@ export const conventionDef = z.object({
 export type ConventionDef = z.output<typeof conventionDef>
 
 // Ids and display codes must both be unique (mirrors validateLaws/validateErrors).
-// Codes carry a family suffix when one convention is split into tiers — e.g.
+// Codes carry a skill suffix when one convention is split into tiers — e.g.
 // precedence → N5a (powers bind first) + N5b (point before line) — so the code
 // uniqueness check is what catches a fat-fingered duplicate suffix.
 export function validateConventions(conventions: ConventionDef[]): void {
@@ -367,27 +367,27 @@ export function validateErrors(
   }
 }
 
-// ── Cross-layer references from families and meta-patterns ──────────────────
+// ── Cross-layer references from skills and meta-patterns ──────────────────
 // `justifiedBy` → laws; `governedBy` → conventions; `errors` → error patterns;
 // meta-pattern `summarizes` → any of the three.
 
 export function validateLayerRefs(
-  families: Family[], metas: MetaPatternsFile,
+  skills: Skill[], metas: MetaPatternsFile,
   laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
 ): void {
   const lawIds = new Set(laws.map(l => l.id))
   const convIds = new Set(conventions.map(c => c.id))
   const errIds = new Set(errors.map(e => e.id))
 
-  for (const f of families) {
+  for (const f of skills) {
     for (const r of f.justifiedBy) {
-      if (!lawIds.has(r)) throw new Error(`Family "${f.id}" is justifiedBy unknown law "${r}".`)
+      if (!lawIds.has(r)) throw new Error(`Skill "${f.id}" is justifiedBy unknown law "${r}".`)
     }
     for (const r of f.governedBy) {
-      if (!convIds.has(r)) throw new Error(`Family "${f.id}" references unknown convention "${r}".`)
+      if (!convIds.has(r)) throw new Error(`Skill "${f.id}" references unknown convention "${r}".`)
     }
     for (const r of f.errors) {
-      if (!errIds.has(r)) throw new Error(`Family "${f.id}" lists unknown error pattern "${r}".`)
+      if (!errIds.has(r)) throw new Error(`Skill "${f.id}" lists unknown error pattern "${r}".`)
     }
   }
   for (const m of metas) {
@@ -400,26 +400,26 @@ export function validateLayerRefs(
 }
 
 // ── Matrix audit ─────────────────────────────────────────────────────────────
-// The completeness report, not a validator: which families have no coordinates
-// yet, and which laws / conventions / error patterns no family uses. An empty
+// The completeness report, not a validator: which skills have no coordinates
+// yet, and which laws / conventions / error patterns no skill uses. An empty
 // cell is a QUESTION (gap, or deliberately inert?), never automatically an
 // error — so this warns, it does not throw.
 
 export function auditCoverage(
-  families: Family[], metas: MetaPatternsFile,
+  skills: Skill[], metas: MetaPatternsFile,
   laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
 ): string[] {
   const lines: string[] = []
-  const untagged = families.filter(f => f.justifiedBy.length === 0 && f.governedBy.length === 0)
+  const untagged = skills.filter(f => f.justifiedBy.length === 0 && f.governedBy.length === 0)
   if (untagged.length > 0) {
-    lines.push(`${untagged.length}/${families.length} families have no layer coordinates yet (justifiedBy/conventions).`)
+    lines.push(`${untagged.length}/${skills.length} skills have no layer coordinates yet (justifiedBy/conventions).`)
   }
 
-  // Authored ⊆ derived: on a tagged family, every authored meta-pattern should
-  // be reachable from the family's coordinates via the pattern's summarizes.
+  // Authored ⊆ derived: on a tagged skill, every authored meta-pattern should
+  // be reachable from the skill's coordinates via the pattern's summarizes.
   // (Authored stays curation — this only catches a missing tag or a
-  // meta-pattern citation that doesn't fit the family.)
-  for (const f of families) {
+  // meta-pattern citation that doesn't fit the skill.)
+  for (const f of skills) {
     if (f.justifiedBy.length === 0 && f.governedBy.length === 0) continue
     const coords = new Set([...f.justifiedBy, ...f.governedBy, ...f.errors])
     const unsupported = f.metaPatterns.filter(mid => {
@@ -430,12 +430,12 @@ export function auditCoverage(
       lines.push(`"${f.id}" declares meta-patterns its coordinates don't support: ${unsupported.join(', ')}`)
     }
   }
-  const citedLaws = new Set(families.flatMap(f => f.justifiedBy))
-  const citedConvs = new Set(families.flatMap(f => f.governedBy))
-  const citedErrs = new Set(families.flatMap(f => f.errors))
+  const citedLaws = new Set(skills.flatMap(f => f.justifiedBy))
+  const citedConvs = new Set(skills.flatMap(f => f.governedBy))
+  const citedErrs = new Set(skills.flatMap(f => f.errors))
   const uncited = (kind: string, ids: string[], cited: Set<string>) => {
     const free = ids.filter(id => !cited.has(id))
-    if (free.length > 0) lines.push(`${kind} cited by no family: ${free.join(', ')}`)
+    if (free.length > 0) lines.push(`${kind} cited by no skill: ${free.join(', ')}`)
   }
   uncited('Laws', laws.filter(l => l.kind !== 'axiom').map(l => l.id), citedLaws)  // axioms may be reached only via theorems
   uncited('Conventions', conventions.map(c => c.id), citedConvs)
@@ -448,7 +448,7 @@ export function auditCoverage(
   const locVals = (ls?: LocalizedString): string[] => ls ? [ls.en, ls.de ?? ''] : []
   const countDirty = (fields: string[][]) => fields.filter(f => f.some(s => unicodeMath.test(s))).length
   const dirty = {
-    'family notes': countDirty(families.map(f => locVals(f.note))),
+    'skill notes': countDirty(skills.map(f => locVals(f.note))),
     'law notes': countDirty(laws.filter(l => l.note).map(l => locVals(l.note))),
     'convention texts': countDirty(conventions.map(c => locVals(c.text))),
     'error texts': countDirty(errors.map(e => locVals(e.text))),
@@ -459,19 +459,18 @@ export function auditCoverage(
   return lines
 }
 
-// ── Family links: requires (family-level) + revise (pitfall-level) ──────────
-// `requires` lists a family's direct prerequisites; `revise` on a pitfall names
-// the families that train the specific discrimination that error reveals. Both
-// hold family ids and must resolve; the requires graph must be acyclic. (The
-// old priority/skill-direction consistency check was dropped with the skill
-// axis — `priority` stays a soft authoring hint, no longer cross-validated.)
+// ── Skill links: requires (skill-level) + revise (pitfall-level) ──────────
+// `requires` lists a skill's direct prerequisites; `revise` on a pitfall names
+// the skills that train the specific discrimination that error reveals. Both
+// hold skill ids and must resolve; the requires graph must be acyclic — the
+// only ordering a skill carries (a dependency partial order, not a sequence).
 
-export function validateFamilyLinks(families: Family[]): void {
-  const byId = new Map(families.map(f => [f.id, f]))
+export function validateSkillLinks(skills: Skill[]): void {
+  const byId = new Map(skills.map(f => [f.id, f]))
 
-  for (const f of families) {
+  for (const f of skills) {
     for (const r of f.requires) {
-      if (!byId.has(r)) throw new Error(`Family "${f.id}" requires unknown family "${r}".`)
+      if (!byId.has(r)) throw new Error(`Skill "${f.id}" requires unknown skill "${r}".`)
     }
   }
 
@@ -486,7 +485,7 @@ export function validateFamilyLinks(families: Family[]): void {
     for (const r of byId.get(id)!.requires) visit(r, [...path, id])
     state.set(id, 'done')
   }
-  for (const f of families) visit(f.id, [])
+  for (const f of skills) visit(f.id, [])
 }
 
 // ── LaTeX compile check ──────────────────────────────────────────────────────
@@ -503,7 +502,7 @@ function proseMath(ls?: LocalizedString): string[] {
 }
 
 export function validateLatexCompiles(
-  families: Family[], drills: Drill[], metas: MetaPatternsFile,
+  skills: Skill[], drills: Drill[], metas: MetaPatternsFile,
   laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
 ): void {
   const failures: string[] = []
@@ -515,27 +514,27 @@ export function validateLatexCompiles(
     }
   }
 
-  for (const f of families) {
+  for (const f of skills) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
     if (f.illustration) check(f.id, 'illustration', f.illustration)
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
   }
   for (const d of drills) {
     if (d.kind === 'equivalence') {
-      d.equivalents.forEach((x, i) => check(d.family, `equivalents[${i}]`, x))
-      d.pitfalls.forEach((p, i) => check(d.family, `pitfalls[${i}]`, p.expr))
+      d.equivalents.forEach((x, i) => check(d.skill, `equivalents[${i}]`, x))
+      d.pitfalls.forEach((p, i) => check(d.skill, `pitfalls[${i}]`, p.expr))
     } else if (d.kind === 'classification') {
-      d.examples.forEach((x, i) => check(d.family, `examples[${i}]`, x))
+      d.examples.forEach((x, i) => check(d.skill, `examples[${i}]`, x))
       d.pitfalls.forEach((p, i) =>
-        proseMath(p.why).forEach(m => check(d.family, `pitfalls[${i}].why`, m)))
+        proseMath(p.why).forEach(m => check(d.skill, `pitfalls[${i}].why`, m)))
     } else {
       d.examples.forEach((ex, i) => {
-        check(d.family, `examples[${i}].expr`, ex.expr)
-        ex.chunks.forEach((c, j) => check(d.family, `examples[${i}].chunks[${j}]`, c))
+        check(d.skill, `examples[${i}].expr`, ex.expr)
+        ex.chunks.forEach((c, j) => check(d.skill, `examples[${i}].chunks[${j}]`, c))
       })
       d.pitfalls.forEach((p, i) => {
-        p.chunks.forEach((c, j) => check(d.family, `pitfalls[${i}].chunks[${j}]`, c))
-        proseMath(p.why).forEach(m => check(d.family, `pitfalls[${i}].why`, m))
+        p.chunks.forEach((c, j) => check(d.skill, `pitfalls[${i}].chunks[${j}]`, c))
+        proseMath(p.why).forEach(m => check(d.skill, `pitfalls[${i}].why`, m))
       })
     }
   }
@@ -556,25 +555,25 @@ export function validateLatexCompiles(
   }
 }
 
-// Every id must be unique, and the id prefix must match the family's `kind`.
-export function validateUniqueIds(families: Family[]): void {
+// Every id must be unique, and the id prefix must match the skill's `kind`.
+export function validateUniqueIds(skills: Skill[]): void {
   const seen = new Set<string>()
-  for (const f of families) {
-    if (seen.has(f.id)) throw new Error(`Duplicate family id "${f.id}".`)
+  for (const f of skills) {
+    if (seen.has(f.id)) throw new Error(`Duplicate skill id "${f.id}".`)
     seen.add(f.id)
     if (!f.id.startsWith(f.kind + '.')) {
-      throw new Error(`Family "${f.id}" has kind "${f.kind}" but a mismatching id prefix.`)
+      throw new Error(`Skill "${f.id}" has kind "${f.kind}" but a mismatching id prefix.`)
     }
   }
 }
 
-// Validate an array of raw JSON families, with the offending id in any error.
-export function parseFamilies(raw: unknown[]): Family[] {
+// Validate an array of raw JSON skills, with the offending id in any error.
+export function parseSkills(raw: unknown[]): Skill[] {
   return raw.map((entry, i) => {
-    const result = family.safeParse(entry)
+    const result = skill.safeParse(entry)
     if (!result.success) {
       const id = (entry as { id?: string })?.id ?? `index ${i}`
-      throw new Error(`Invalid family "${id}":\n${z.prettifyError(result.error)}`)
+      throw new Error(`Invalid skill "${id}":\n${z.prettifyError(result.error)}`)
     }
     return result.data
   })
@@ -585,35 +584,35 @@ export function parseDrills(raw: unknown[]): Drill[] {
   return raw.map((entry, i) => {
     const result = drill.safeParse(entry)
     if (!result.success) {
-      const fam = (entry as { family?: string })?.family ?? `index ${i}`
+      const fam = (entry as { skill?: string })?.skill ?? `index ${i}`
       throw new Error(`Invalid drill for "${fam}":\n${z.prettifyError(result.error)}`)
     }
     return result.data
   })
 }
 
-// Each drill points at a real family, shares its kind, and every distractor's
+// Each drill points at a real skill, shares its kind, and every distractor's
 // `explainedBy` / `revise` must resolve — and `explainedBy` must be one of the
-// family's declared `errors` (a distractor can't test a misconception the skill
-// never claims). One drill per family (for now).
-export function validateDrills(drills: Drill[], families: Family[]): void {
-  const byId = new Map(families.map(f => [f.id, f]))
+// skill's declared `errors` (a distractor can't test a misconception the skill
+// never claims). One drill per skill (for now).
+export function validateDrills(drills: Drill[], skills: Skill[]): void {
+  const byId = new Map(skills.map(f => [f.id, f]))
   const famIds = new Set(byId.keys())
   const seen = new Set<string>()
   for (const d of drills) {
-    const f = byId.get(d.family)
-    if (!f) throw new Error(`Drill references unknown family "${d.family}".`)
-    if (seen.has(d.family)) throw new Error(`More than one drill for family "${d.family}".`)
-    seen.add(d.family)
-    if (d.kind !== f.kind) throw new Error(`Drill for "${d.family}" is kind "${d.kind}" but the family is "${f.kind}".`)
+    const f = byId.get(d.skill)
+    if (!f) throw new Error(`Drill references unknown skill "${d.skill}".`)
+    if (seen.has(d.skill)) throw new Error(`More than one drill for skill "${d.skill}".`)
+    seen.add(d.skill)
+    if (d.kind !== f.kind) throw new Error(`Drill for "${d.skill}" is kind "${d.kind}" but the skill is "${f.kind}".`)
     const declared = new Set(f.errors)
     for (const p of d.pitfalls) {
       for (const r of p.revise ?? []) {
-        if (!famIds.has(r)) throw new Error(`Drill "${d.family}" revises unknown family "${r}".`)
+        if (!famIds.has(r)) throw new Error(`Drill "${d.skill}" revises unknown skill "${r}".`)
       }
       for (const r of p.explainedBy ?? []) {
         if (!declared.has(r)) {
-          throw new Error(`Drill "${d.family}" has a distractor explainedBy "${r}", not in the family's errors.`)
+          throw new Error(`Drill "${d.skill}" has a distractor explainedBy "${r}", not in the skill's errors.`)
         }
       }
     }

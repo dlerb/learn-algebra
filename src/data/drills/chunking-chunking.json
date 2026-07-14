@@ -1,7 +1,7 @@
 [
   {
     "kind": "chunking",
-    "family": "chunking.chunks-in-sum",
+    "skill": "chunking.chunks-in-sum",
     "examples": [
       {
         "expr": "3x + 2y - z",
@@ -39,7 +39,7 @@
   },
   {
     "kind": "chunking",
-    "family": "chunking.chunks-in-product",
+    "skill": "chunking.chunks-in-product",
     "examples": [
       {
         "expr": "3 \\cdot x \\cdot (x+1)",
@@ -65,7 +65,7 @@
   },
   {
     "kind": "chunking",
-    "family": "chunking.implicit-chunking",
+    "skill": "chunking.implicit-chunking",
     "examples": [
       {
         "expr": "3x + 2y",
@@ -101,7 +101,7 @@
   },
   {
     "kind": "chunking",
-    "family": "chunking.bracket-as-chunk",
+    "skill": "chunking.bracket-as-chunk",
     "examples": [
       {
         "expr": "3(x+1) - 2(x-1)",

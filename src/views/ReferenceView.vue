@@ -2,8 +2,8 @@
 import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { laws, lawGroups, conventions, conventionGroups, errorPatterns } from '../data'
-import { loc, type LawDef, type ConventionDef, type ErrorDef, type LawGroup, type ConventionGroup } from '../data/family.schema'
+import { laws, lawGroups, conventions, conventionGroups, errorPatterns, skills } from '../data'
+import { loc, type LawDef, type ConventionDef, type ErrorDef, type LawGroup, type ConventionGroup } from '../data/skill.schema'
 import { lang } from '../lang'
 
 // The reference rendering of layers 1+2 (docs/content_model.md holds
@@ -13,6 +13,22 @@ import { lang } from '../lang'
 const layerNames = new Map(
   [...laws, ...conventions, ...errorPatterns].map(x => [x.id, x] as const),
 )
+
+// Coverage reminder: which fundamentals no skill draws on yet. Skills are the
+// pedagogical bridge — a fundamental with no skill is inert (nothing drills it,
+// no tutorial path reaches it), so it flags either a skill still to author or a
+// gap that would break a path built on skills. Mirrors the [audit] console
+// report (auditCoverage in skill.schema) so the two never disagree: axioms are
+// excluded — a skill reaches them transitively through the theorems it cites,
+// so "no direct citation" is not a hole for an axiom.
+const citedLaws = new Set(skills.flatMap(s => s.justifiedBy))
+const citedConvs = new Set(skills.flatMap(s => s.governedBy))
+const citedErrs = new Set(skills.flatMap(s => s.errors))
+const lawUnused = (l: LawDef) => l.kind !== 'axiom' && !citedLaws.has(l.id)
+const unusedCount =
+  laws.filter(lawUnused).length
+  + conventions.filter(c => !citedConvs.has(c.id)).length
+  + errorPatterns.filter(e => !citedErrs.has(e.id)).length
 function label(id: string): string {
   const x = layerNames.get(id)
   return x ? `${x.code} · ${loc(x.name, lang.value)}` : id
@@ -20,7 +36,7 @@ function label(id: string): string {
 
 interface LawVM {
   id: string; code: string; name: string; latex: string; group: LawGroup
-  conditions?: string; links: string[]; linkWord: string; note?: string
+  conditions?: string; links: string[]; linkWord: string; note?: string; unused: boolean
 }
 function lawVM(l: LawDef): LawVM {
   return {
@@ -29,6 +45,7 @@ function lawVM(l: LawDef): LawVM {
     links: (l.kind === 'definition' ? l.basedOn : l.derivedFrom).map(label),
     linkWord: l.kind === 'definition' ? 'builds on' : 'derived from',
     note: l.note ? loc(l.note, lang.value) : undefined,
+    unused: lawUnused(l),
   }
 }
 
@@ -57,9 +74,9 @@ const lawSections = computed(() =>
 
 // Conventions have no `kind`, only a `group` — so they are sectioned by group
 // (reading / grouping / form), titles and blurbs from conventionGroups.json.
-interface ConvVM { id: string; code: string; group: ConventionGroup; name: string; text: string }
+interface ConvVM { id: string; code: string; group: ConventionGroup; name: string; text: string; unused: boolean }
 function convVM(c: ConventionDef): ConvVM {
-  return { id: c.id, code: c.code, group: c.group, name: loc(c.name, lang.value), text: loc(c.text, lang.value) }
+  return { id: c.id, code: c.code, group: c.group, name: loc(c.name, lang.value), text: loc(c.text, lang.value), unused: !citedConvs.has(c.id) }
 }
 const conventionSections = computed(() =>
   conventionGroups
@@ -72,12 +89,12 @@ const conventionSections = computed(() =>
 
 interface ErrVM {
   id: string; code: string; name: string; text: string
-  corrupts: string[]; instances: string[]
+  corrupts: string[]; instances: string[]; unused: boolean
 }
 function errVM(e: ErrorDef): ErrVM {
   return {
     id: e.id, code: e.code, name: loc(e.name, lang.value), text: loc(e.text, lang.value),
-    corrupts: e.corrupts.map(label), instances: e.instances,
+    corrupts: e.corrupts.map(label), instances: e.instances, unused: !citedErrs.has(e.id),
   }
 }
 const errorSections = computed(() => [
@@ -90,7 +107,11 @@ const errorSections = computed(() => [
   <div class="refv">
     <header class="ref-head">
       <h1>Laws & Conventions</h1>
-      <p>Layer 1 (laws) and layer 2 (writing conventions) — the coordinate system the families live in. Error patterns name what goes wrong.</p>
+      <p>Layer 1 (laws) and layer 2 (writing conventions) — the coordinate system the skills live in. Error patterns name what goes wrong.</p>
+      <p v-if="unusedCount" class="coverage-note">
+        <span class="badge unused">unused</span>
+        {{ unusedCount }} fundamentals are not drawn on by any skill yet — a skill still to author, or a gap a skill-based tutorial path would fall into.
+      </p>
       <div class="mode">
         <button :class="{ active: lang === 'de' }" @click="lang = 'de'">de</button>
         <button :class="{ active: lang === 'en' }" @click="lang = 'en'">en</button>
@@ -109,10 +130,11 @@ const errorSections = computed(() => [
         <h3>{{ s.title }}</h3>
         <p v-if="s.blurb" class="blurb">{{ s.blurb }}</p>
         <div class="cards">
-          <article v-for="l in s.items" :key="l.id" class="card">
+          <article v-for="l in s.items" :key="l.id" class="card" :class="{ unused: l.unused }">
             <div class="card-head">
               <h4>{{ l.name }}</h4>
               <span class="badges">
+                <span v-if="l.unused" class="badge unused">unused</span>
                 <span class="badge topic">{{ l.group }}</span>
                 <span class="badge code">{{ l.code }}</span>
               </span>
@@ -137,10 +159,11 @@ const errorSections = computed(() => [
         <h3>{{ s.title }}</h3>
         <p v-if="s.blurb" class="blurb">{{ s.blurb }}</p>
         <div class="cards">
-          <article v-for="c in s.items" :key="c.id" class="card">
+          <article v-for="c in s.items" :key="c.id" class="card" :class="{ unused: c.unused }">
             <div class="card-head">
               <h4>{{ c.name }}</h4>
               <span class="badges">
+                <span v-if="c.unused" class="badge unused">unused</span>
                 <span class="badge topic">{{ c.group }}</span>
                 <span class="badge code conv">{{ c.code }}</span>
               </span>
@@ -157,10 +180,13 @@ const errorSections = computed(() => [
       <div v-for="s in errorSections" :key="s.title" class="group">
         <h3>{{ s.title }}</h3>
         <div class="cards">
-          <article v-for="e in s.items" :key="e.id" class="card err-card">
+          <article v-for="e in s.items" :key="e.id" class="card err-card" :class="{ unused: e.unused }">
             <div class="card-head">
               <h4>{{ e.name }}</h4>
-              <span class="badge code err">{{ e.code }}</span>
+              <span class="badges">
+                <span v-if="e.unused" class="badge unused">unused</span>
+                <span class="badge code err">{{ e.code }}</span>
+              </span>
             </div>
             <code class="slug">{{ e.id }}</code>
             <p class="note"><RichText :text="e.text" /></p>
@@ -200,6 +226,9 @@ const errorSections = computed(() => [
 .badge.code { background: #ecfdf5; color: #047857; }
 .badge.code.conv { background: #eff6ff; color: #1d4ed8; }
 .badge.code.err { background: #fef2f2; color: #b91c1c; }
+.badge.unused { background: #fffbeb; color: #b45309; border: 1px solid #fcd34d; text-transform: uppercase; letter-spacing: .03em; font-size: .62rem; }
+.card.unused { border-style: dashed; border-color: #fcd34d; background: #fffdf7; }
+.coverage-note { display: flex; align-items: baseline; gap: .45rem; font-size: .82rem; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: .5rem .7rem; margin: 0 0 1rem; }
 .slug { font-size: .7rem; color: #9ca3af; }
 .statement { margin: .6rem 0 .3rem; padding: .5rem .6rem; background: #f0fdf4; border-left: 3px solid #22c55e; border-radius: 4px; overflow-x: auto; }
 .cond { font-size: .78rem; color: #6b7280; font-style: italic; margin: .2rem 0; }

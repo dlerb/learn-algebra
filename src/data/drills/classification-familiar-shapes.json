@@ -1,7 +1,7 @@
 [
   {
     "kind": "classification",
-    "family": "classification.difference-of-squares",
+    "skill": "classification.difference-of-squares",
     "examples": [
       "a^2 - b^2",
       "x^2 - 9",
@@ -13,7 +13,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.perfect-square-trinomial",
+    "skill": "classification.perfect-square-trinomial",
     "examples": [
       "a^2 + 2ab + b^2",
       "a^2 - 2ab + b^2",
@@ -25,7 +25,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.common-factor",
+    "skill": "classification.common-factor",
     "examples": [
       "3x + 6",
       "ax + ay",
@@ -37,7 +37,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.linear-form",
+    "skill": "classification.linear-form",
     "examples": [
       "3x + 2",
       "ax + b",
@@ -48,7 +48,7 @@
   },
   {
     "kind": "classification",
-    "family": "classification.quadratic-form",
+    "skill": "classification.quadratic-form",
     "examples": [
       "x^2 + 3x + 2",
       "ax^2 + bx + c",

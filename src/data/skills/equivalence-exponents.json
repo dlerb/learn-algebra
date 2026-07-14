@@ -4,7 +4,6 @@
     "id": "equivalence.exponent-as-repeated-product",
     "group": "exponents",
     "title": "Exponent as repeated multiplication",
-    "priority": 6,
     "note": "A power is repeated multiplication: $a^2 = a \\cdot a$, $a^3 = a \\cdot a \\cdot a$, $a^1 = a$.",
     "illustration": "a^2 = a \\cdot a",
     "requires": [
@@ -48,7 +47,6 @@
     "id": "equivalence.negated-square-vs-negative-base",
     "group": "exponents",
     "title": "Negative base vs. negated square",
-    "priority": 7,
     "note": "The exponent binds before the minus: $-a^2 = -(a^2)$, which is negative. That differs from $(-a)^2 = a^2$, which is positive. E.g. $-3^2 = -9$ but $(-3)^2 = 9$.",
     "illustration": "-a^2 = -(a^2)",
     "requires": [
@@ -71,7 +69,6 @@
     "id": "equivalence.power-of-a-product",
     "group": "exponents",
     "title": "Exponent on a product",
-    "priority": 21,
     "note": "A power on a bracket applies to every factor: $(ab)^2 = a^2 b^2$, and $(2x)^2 = 4x^2$. Without the bracket, $ab^2$ means $a \\cdot b^2$ — the exponent hits $b$ only.",
     "illustration": "(ab)^2 = a^2 b^2",
     "requires": [
@@ -177,7 +174,6 @@
     "id": "equivalence.power-of-a-sum",
     "group": "exponents",
     "title": "Exponent on a sum",
-    "priority": 22,
     "note": "A power does not distribute over $+$: $(a+b)^2$ means $(a+b)(a+b)$, which is not $a^2 + b^2$. Contrast $(ab)^2 = a^2b^2$ — over $\\times$ it works, over $+$ it never does.",
     "illustration": "(a+b)^2 = (a+b)(a+b)",
     "requires": [
@@ -203,7 +199,6 @@
     "id": "equivalence.root-of-a-product",
     "group": "exponents",
     "title": "Root of a product",
-    "priority": 28,
     "note": "A root splits over $\\times$: $\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$.",
     "illustration": "\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}",
     "conditions": "a \\ge 0, b \\ge 0",
@@ -228,7 +223,6 @@
     "id": "equivalence.root-of-a-sum",
     "group": "exponents",
     "title": "Root of a sum",
-    "priority": 29,
     "note": "A root does NOT split over $+$: $\\sqrt{a+b}$ is not $\\sqrt{a} + \\sqrt{b}$. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, but $3 + 4 = 7$.",
     "illustration": "\\sqrt{a+b} = \\sqrt{b+a}",
     "conditions": "a \\ge 0, b \\ge 0",

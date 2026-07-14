@@ -35,7 +35,6 @@
     "id": "equivalence.subtraction-not-commutative",
     "group": "commutativity",
     "title": "Subtraction is not commutative",
-    "priority": 23,
     "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
     "illustration": "a - b = -(b - a)",
     "requires": [
@@ -59,7 +58,6 @@
     "id": "equivalence.division-not-commutative",
     "group": "commutativity",
     "title": "Division is not commutative",
-    "priority": 24,
     "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",
     "illustration": "a \\div b = \\frac{a}{b}",
     "conditions": "b \\ne 0",

@@ -1,24 +1,24 @@
 # Content model — design rationale
 
 How the algebra content is structured. Everything lives under `src/data/` and is
-validated by `family.schema.ts` on load. The layers:
+validated by `skill.schema.ts` on load. The layers:
 
 - **laws** (`laws.json`) — the logical tower: axioms, definitions, theorems.
 - **conventions** (`conventions.json`) — the rules of the writing system.
 - **errors** (`errors.json`) — the error patterns that shadow the above.
 - **meta-patterns** (`metapatterns.json`) — student-facing digests of them.
-- **families** (`families/*.json`) — curated *strategies/skills* built on the
+- **skills** (`skills/*.json`) — curated *strategies/skills* built on the
   laws × conventions coordinate system: what is worth drilling, and why. Each
-  family's concrete material lives separately in…
+  skill's concrete material lives separately in…
 - **drills** (`drills/*.json`) — the format-specific drill material for each
-  family. See "Families vs drills" below.
+  skill. See "Skills vs drills" below.
 
-Laws + conventions are the *coordinate system* families live in — they justify
-and audit families, they do not generate them. Group **display** metadata
+Laws + conventions are the *coordinate system* skills live in — they justify
+and audit skills, they do not generate them. Group **display** metadata
 (title, order, blurb) lives in sibling registries (`lawGroups.json`,
-`conventionGroups.json`, `familyGroups.json`), each a flat list validated so a
+`conventionGroups.json`, `skillGroups.json`), each a flat list validated so a
 title can't drift from the values entries carry. Browse laws/conventions/errors
-in the app's **Laws & Conventions view**, families in the **Taxonomy view**.
+in the app's **Laws & Conventions view**, skills in the **Taxonomy view**.
 This doc records the *why*, not the content tables (they would drift).
 
 Ids are kind-prefixed slugs so a derivation chain reads like a proof:
@@ -26,7 +26,7 @@ Ids are kind-prefixed slugs so a derivation chain reads like a proof:
 `conv.juxtaposition`, `anti.linearity`, `equivalence.juxtaposition-product`.
 Each entry also carries a short display `code` (A1, D3, T11, N1, Ā1, M7) —
 display data for chips, never identity: everything cites slugs, not codes.
-(Families carry no code.)
+(Skills carry no code.)
 
 ### Two classifiers: `kind` and `group`
 
@@ -35,9 +35,9 @@ one word for each:
 
 - **`kind`** — the *intrinsic category* of the entry, and (where present) its id
   prefix. Laws: `axiom | definition | theorem` (also drives the link kind).
-  Errors: `anti-law | misreading | salience`. Families: `equivalence |
+  Errors: `anti-law | misreading | salience`. Skills: `equivalence |
   classification | chunking | transformation` — an **open-ended category label**
-  (a *strategy type*), which is why the family schema is one uniform shape rather
+  (a *strategy type*), which is why the skill schema is one uniform shape rather
   than a per-kind union.
 - **`group`** — a *topical* bucket for browsing; it **cross-cuts** `kind` (the
   `powers` group holds a definition and five theorems) and is kept out of the
@@ -46,34 +46,75 @@ one word for each:
 Applied: **laws** carry `kind` + `group` (topics addition … binomials).
 **Conventions** carry only a `group` (reading / grouping / form) — a writing rule
 has no axiom/definition/theorem analog. **Errors** carry `kind`, no group (it's
-derivable from `corrupts`). **Families** carry `kind` + `group`.
+derivable from `corrupts`). **Skills** carry `kind` + `group`.
 
 **There is no skill axis in the data.** The "Skill 1/2/3" framing (equivalence /
 classification / transformation) is only a coarse rollup the docs and app apply
 for presentation. It was tried as a stored, then a derived, field and removed:
 the kinds are finer and open-ended, so nothing should freeze a fixed 3-way skill.
 
-### Families vs drills — strategy vs material
+### Skills vs drills — strategy vs material
 
-A **family** is a curated *strategy*, not a problem set. It says what the skill
+A **skill** is a curated *strategy*, not a problem set. It says what the skill
 is, why it matters, and links into the other layers — nothing format-specific:
 `note` (the rationale), one canonical `illustration`, `errors` (the misconception
 catalog → error-pattern ids), `justifiedBy` / `governedBy` / `metaPatterns`
-links, `requires` (prerequisite families), plus `kind` + `group`.
+links, `requires` (prerequisite skills), plus `kind` + `group`.
 
 All the concrete material lives in the **drill** layer (`drills/<kind>-<group>
-.json`, one entry per family, keyed by `family` id): `equivalents` / `examples` /
+.json`, one entry per skill, keyed by `skill` id): `equivalents` / `examples` /
 `answer` / `chunks`, and `pitfalls` (each a wrong form + `explainedBy` naming
-which error it tests, + optional `revise`). *How* a family is drilled is the
+which error it tests, + optional `revise`). *How* a skill is drilled is the
 drill's business.
 
-Why split: the family answers "what goes wrong with this skill" (its
+Why split: the skill answers "what goes wrong with this skill" (its
 misconception *catalog*), while the concrete distractors that surface it — and
 *which* a given format uses — are drill-specific. A validator enforces the seam:
-every drill distractor's `explainedBy` must be **⊆ its family's `errors`** (a
+every drill distractor's `explainedBy` must be **⊆ its skill's `errors`** (a
 distractor can't test a misconception the skill never declared). The drill
 discriminant is `kind` for now — the shape of the parked material; the real drill
 layer will key on a **`format`** (same-or-different, odd-one-out, classify, …).
+
+### Skills are the pedagogical bridge
+
+Laws + conventions are the **fundamentals**: what is true and how it is written.
+That layer is closed and derivable (the law DAG, the notation rules) — and, on
+its own, *inert*: it cannot say what is worth learning or where a student
+stumbles. Its shadow (errors — every error `corrupts` a law or convention) and
+its student-facing digest (meta-patterns) are part of the same fundament.
+
+**Skills are the layer that makes the fundamentals learnable.** A skill is
+authored *curation*: it selects a coherent coordinate-region of the fundamentals
+and declares "this intersection is one thing worth getting fluent at." Nothing
+derives skills from the fundamentals — the "what matters" judgement is human,
+the same reason meta-pattern assignment stays authored, not derived. This is why
+a skill has exactly four cross-layer arrays and no more: they are **one arrow
+into each face of the fundament** — `justifiedBy` → laws (truth), `governedBy` →
+conventions (notation), `errors` → error patterns (the negative image),
+`metaPatterns` → the digest. A skill draws together *coordinates* (justification),
+not drill *material* — the material is authored separately in `drills/`.
+
+A skill carries no linear order — only the `requires` **dependency** graph (a
+partial order). This one graph feeds two different projections:
+
+- **What to drill** — a skill joined with its `drills/` material. Happy with a
+  *prioritised subset*: drill the high-value skills in any order.
+- **A tutorial path** — a *traversal* of `requires` (plus mastery state). This
+  needs a *spanning, gap-free* graph: any missing prerequisite is a hole a
+  learner falls into. The path ambition raises the bar from "the important
+  skills" to "a covering curriculum."
+
+**Coverage holes.** A fundamental that no skill draws on is inert — nothing
+drills it, no path reaches it. So it flags either a skill still to author or a
+gap that would break a skill-based path. The `auditCoverage` report lists these
+on load (`[audit] … cited by no skill`), and the **Laws & Conventions view**
+marks each such card *unused* (amber, dashed). A hole is tolerable for a *catalog*
+but disqualifying for a *path*. Most present holes are simply unimplemented
+skills — notably the entire **`transformation` kind is empty** (all current
+skills are recognition — equivalence/classification/chunking — none are the
+active manipulation half of "read *and practice*"), and the powers/roots law
+region is thinly skilled. Axioms are excluded from the "unused" mark: a skill
+reaches them transitively through the theorems it cites.
 
 ### Files, ids & codes at a glance
 
@@ -83,8 +124,8 @@ layer will key on a **`format`** (same-or-different, odd-one-out, classify, …)
 | `conventions.json` | convention | — | ✓ `conventionGroups.json` | `conv.` | N |
 | `errors.json` | error pattern | `anti-law` · `misreading` · `salience` | — (from `corrupts`) | `anti.`/`mis.`/`sal.` | Ā/R/S |
 | `metapatterns.json` | meta-pattern | — | — | `meta.` | M |
-| `families/<kind>-<group>.json` | family (strategy) | `equivalence` · `classification` · `chunking` · (`transformation`) | ✓ `familyGroups.json` | `<kind>.` | — |
-| `drills/<kind>-<group>.json` | drill (material) | mirrors its family | — | keyed by `family` id | — |
+| `skills/<kind>-<group>.json` | skill (strategy) | `equivalence` · `classification` · `chunking` · (`transformation`) | ✓ `skillGroups.json` | `<kind>.` | — |
+| `drills/<kind>-<group>.json` | drill (material) | mirrors its skill | — | keyed by `skill` id | — |
 
 **Group registries** — all three are flat lists of `{ slug, title, blurb? }`
 (array order = display order):
@@ -93,17 +134,17 @@ layer will key on a **`format`** (same-or-different, odd-one-out, classify, …)
 |---|---|---|
 | `lawGroups.json` | laws | slug set = the `lawGroup` enum exactly |
 | `conventionGroups.json` | conventions | slug set = the `conventionGroup` enum exactly |
-| `familyGroups.json` | families | a family's `group` must exist in the list (this list *is* the source of valid family groups) |
+| `skillGroups.json` | skills | a skill's `group` must exist in the list (this list *is* the source of valid skill groups) |
 
 **Group vocabularies** — the slugs each defines (titles/blurbs live in the files):
 
 - **`lawGroups.json`** → `addition` · `multiplication` · `distribution` · `signs` · `fractions` · `powers` · `roots` · `binomials`
 - **`conventionGroups.json`** → `reading` · `grouping` · `form`
-- **`familyGroups.json`** → `multiplication` · `like-terms` · `minus-sign` · `brackets` · `exponents` · `fractions` · `commutativity` · `basic-forms` · `misleading-forms` · `chunking` · `familiar-shapes` · `full-classification`
+- **`skillGroups.json`** → `multiplication` · `like-terms` · `minus-sign` · `brackets` · `exponents` · `fractions` · `commutativity` · `basic-forms` · `misleading-forms` · `chunking` · `familiar-shapes` · `full-classification`
 
 One rule ties the ids together: **id prefix = `kind`** wherever a kind exists —
 the validator enforces prefix↔kind for laws (`ax`/`def`/`thm`), errors
-(`anti`/`mis`/`sal`), and families (`<kind>.`); conventions and meta-patterns
+(`anti`/`mis`/`sal`), and skills (`<kind>.`); conventions and meta-patterns
 have no kind, so they take a fixed prefix.
 
 ---
@@ -128,9 +169,9 @@ have no kind, so they take a fixed prefix.
    `anti-law` (algebra that isn't true — corrupts the law it distorts),
    `misreading` (parsing the notation wrong — corrupts a convention), or
    `salience` (parsing by what is visually loudest — corrupts a meta-pattern). A
-   family lists the misconceptions its skill guards against in `errors`; a drill
+   skill lists the misconceptions its skill guards against in `errors`; a drill
    distractor names which one it instantiates via `explainedBy` (validated ⊆ the
-   family's `errors`). Per-error-pattern analytics thereby work from the first
+   skill's `errors`). Per-error-pattern analytics thereby work from the first
    day of drill data; no learner-model machinery is built yet, only the ids.
 3. **Dual citation** is allowed and expected where both readings are
    plausible: the distractor $-(a+b) = -a+b$ is `explainedBy`
@@ -161,11 +202,11 @@ have no kind, so they take a fixed prefix.
    drift from the layer it digests. They follow the same id scheme as
    everything else (slug `meta.…` + display code M1–M10) and are localized —
    their `text` is the takeaway line a student reads in drill feedback.
-   Assignment to families stays **authored** (curation), never derived from
+   Assignment to skills stays **authored** (curation), never derived from
    refs (coverage): tested empirically 2026-07-09, derivation recovers every
    authored assignment but over-generates true-but-beside-the-point extras.
    The audit checks the subset relation (an authored meta-pattern a tagged
-   family's coordinates can't support = missing tag or misfit citation).
+   skill's coordinates can't support = missing tag or misfit citation).
 9. **Prose format contract.** Prose fields (notes, whys, texts) are plain
    text with inline `$…$` KaTeX — deliberately NOT markdown: the one feature
    prose needs is math, and the `$` contract avoids a parser, HTML injection,
@@ -177,7 +218,7 @@ have no kind, so they take a fixed prefix.
    A load-time compile check runs every latex field and every `$…$` segment
    through KaTeX with `throwOnError: true` — a typo'd escape fails at startup
    with its id and field named, instead of rendering as red mush in a card.
-10. **Localization.** Prose fields (names, texts, notes, family titles,
+10. **Localization.** Prose fields (names, texts, notes, skill titles,
    pitfall explanations) are `LocalizedString`: a plain string (= English) or
    `{ en, de }`, with English fallback so nothing renders blank; `de` means
    Schweizer Hochdeutsch. LaTeX math is language-neutral and never
@@ -212,7 +253,7 @@ This is the hierarchy the library user should be able to see (the
    `def.fractional-exponent`) are *chosen*, not discovered: defined by the
    permanence principle so the power laws keep holding.
 
-The `classification` and `chunking` families sit outside this tower: they cite
+The `classification` and `chunking` skills sit outside this tower: they cite
 conventions (brackets, precedence, fraction bar, exponent scope — parsing), not
 laws — except `equivalence.same-value-different-structure` and the
 familiar-shapes group (binomial square, difference of squares).
@@ -225,17 +266,17 @@ familiar-shapes group (binomial square, difference of squares).
    (→ design decision 3).
 2. `def.integer-multiple` stays a definition (→ design decision 5).
 3. **Right-distribution of division.** `thm.split-numerator` splits over the
-   numerator only ($\frac{c}{a+b}$ does NOT split); no family drilled that
-   asymmetry — first genuine gap the matrix audit surfaced. → Family
+   numerator only ($\frac{c}{a+b}$ does NOT split); no skill drilled that
+   asymmetry — first genuine gap the matrix audit surfaced. → Skill
    `equivalence.no-splitting-the-denominator` added (fractions group,
    contrasting with `equivalence.splitting-a-fraction`; pitfall cites
    `anti.linearity`).
 4. **False laws stay flat** — no `derivedFrom` on error patterns; the
    machinery isn't worth it. (They do carry the `of` link to what they
    distort.)
-5. **Conditions live on laws**; families inherit the conditions of the laws
+5. **Conditions live on laws**; skills inherit the conditions of the laws
    they cite via `justifiedBy` instead of restating them, keeping the
-   family-level `conditions` field only for caveats that aren't law-derived.
+   skill-level `conditions` field only for caveats that aren't law-derived.
 
 ## Revision notes
 
@@ -261,33 +302,48 @@ same-exponent / power-of-a-power laws for roots.
 **2026-07-09 (rev. 4, meta-pattern migration):** meta-patterns moved to the
 standard id scheme (slug ids `meta.…`, globally unique across namespaces;
 "M1" kept as per-namespace display code) and localized (title/text now
-`{en, de}` — the text is the student-facing feedback takeaway). Family
+`{en, de}` — the text is the student-facing feedback takeaway). Skill
 `metaPatterns` arrays cite slugs. Derivation experiment recorded in design
 decision 8; authored-⊆-derived added to the audit.
 
 **2026-07-09 (rev. 5, prose format contract):** prose = text with inline
 `$…$` KaTeX (design decision 9), markdown considered and rejected;
 `conditions` migrated to pure LaTeX everywhere; all layer-file texts and the
-tagged families' notes migrated; audit counts remaining unicode-math prose
-(16 family notes + 2 whys at time of writing).
+tagged skills' notes migrated; audit counts remaining unicode-math prose
+(16 skill notes + 2 whys at time of writing).
 
 **2026-07-13 (rev. 6, `kind`/`group` model + flat registries):** every content
 list classified by `kind` (intrinsic type, = id prefix) + `group` (topic);
-`lawGroups.json`/`conventionGroups.json`/`familyGroups.json` display registries
+`lawGroups.json`/`conventionGroups.json`/`skillGroups.json` display registries
 added; laws gained a topical `group`; `laws.json`/`errors.json` `sort` field
 renamed `kind`; the second binomial formula added. `groups.json` →
-`familyGroups.json`.
+`skillGroups.json`.
 
-**2026-07-13 (rev. 7, skill axis removed):** the family id-namespace
+**2026-07-13 (rev. 7, skill axis removed):** the skill id-namespace
 `notation`/`structure` was tried as a kind prefix with a derived `skill`, then
-dropped entirely — "Skill 1/2/3" is a docs/app lens, not data. Family ids are
+dropped entirely — "Skill 1/2/3" is a docs/app lens, not data. Skill ids are
 `<kind>.<slug>` (`equivalence`/`classification`/`chunking`/`transformation`);
-`familyGroups.json` and `metapatterns.json` flattened to plain lists; error kind
+`skillGroups.json` and `metapatterns.json` flattened to plain lists; error kind
 `false-law` → `anti-law` (so kind↔prefix is consistent); files `<kind>-<group>`.
 
-**2026-07-14 (rev. 8, family = strategy, drill = material):** families split
-into an abstract strategy (`families/`, one uniform shape — `note`,
+**2026-07-14 (rev. 8, skill = strategy, drill = material):** skills split
+into an abstract strategy (`skills/`, one uniform shape — `note`,
 `illustration`, `errors`, links) and a separate drill layer (`drills/`,
-per-family material — equivalents/examples/answer/chunks/pitfalls). The
-discriminated union moved to the drill; `kind` is now a plain family category
-label. A drill's distractor `explainedBy` must be ⊆ its family's `errors`.
+per-skill material — equivalents/examples/answer/chunks/pitfalls). The
+discriminated union moved to the drill; `kind` is now a plain skill category
+label. A drill's distractor `explainedBy` must be ⊆ its skill's `errors`.
+
+**2026-07-14 (rev. 9, family → skill; `priority` parked):** the entry formerly
+called *family* is renamed **skill** throughout — files (`skills/*.json`,
+`skill.schema.ts`, `skillGroups.json`), the drill key (`family` → `skill`), and
+types/functions (`Skill`, `parseSkills`, `validateSkillLinks`). The word was
+freed once the strategy/material split (rev. 8) removed the two original
+objections to it — the fixed "Skill 1/2/3" partition and the skill↔drill
+conflation; you drill a skill, or a composition of skills. FOLLOW-UP: the coarse
+"Skill 1/2/3" presentation rollup still needs its own word (proposed: **tier**)
+to avoid "a Skill 1 is made of skills"; not yet swept. The old skill-level
+**`priority`** (a linear drilling rank) was
+removed: a skill carries only the `requires` dependency graph (a partial order),
+never a sequence — sequencing is a drill/session-layer concern, deferred. The 47
+authored priority values are parked in `drills/_parked-priority.json` (not
+loaded). The Taxonomy view's "drilling order" mode was dropped with it.
