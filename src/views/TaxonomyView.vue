@@ -123,10 +123,6 @@ function hasErrors(c: CardVM): boolean {
     <header class="tax-head">
       <h1>Taxonomy</h1>
       <p>Every expression skill, as reference. Green = the true forms; red = the typical error.</p>
-      <div class="mode">
-        <button :class="{ active: lang === 'de' }" @click="lang = 'de'">de</button>
-        <button :class="{ active: lang === 'en' }" @click="lang = 'en'">en</button>
-      </div>
     </header>
 
     <section v-for="g in sections" :key="g.slug" class="group">
