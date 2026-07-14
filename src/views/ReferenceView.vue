@@ -148,13 +148,14 @@ const errorSections = computed(() => [
         </div>
         <div class="cards">
           <article v-for="l in s.items" :key="l.id" class="card" :class="{ unused: l.unused }">
-            <div class="card-head">
-              <h4>{{ l.name }}</h4>
-              <div class="head-right">
+            <div class="card-top">
+              <span class="eyebrow">{{ l.kind }} · {{ l.group }}</span>
+              <span class="top-right">
                 <span v-if="l.unused" class="badge unused">unused</span>
                 <button class="disclose" @click="toggle(l.id)">{{ open.has(l.id) ? 'less' : 'details' }}</button>
-              </div>
+              </span>
             </div>
+            <div class="card-head"><h4>{{ l.name }}</h4></div>
             <div class="statement"><MathExpr :latex="l.latex" display /></div>
             <div v-if="open.has(l.id)" class="details">
               <dl class="fields">
@@ -189,13 +190,14 @@ const errorSections = computed(() => [
         </div>
         <div class="cards">
           <article v-for="c in s.items" :key="c.id" class="card" :class="{ unused: c.unused }">
-            <div class="card-head">
-              <h4>{{ c.name }}</h4>
-              <div class="head-right">
+            <div class="card-top">
+              <span class="eyebrow">· {{ c.group }}</span>
+              <span class="top-right">
                 <span v-if="c.unused" class="badge unused">unused</span>
                 <button class="disclose" @click="toggle(c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
-              </div>
+              </span>
             </div>
+            <div class="card-head"><h4>{{ c.name }}</h4></div>
             <p class="body"><RichText :text="c.text" /></p>
             <div v-if="open.has(c.id)" class="details">
               <dl class="fields">
@@ -217,13 +219,14 @@ const errorSections = computed(() => [
         <div class="group-title"><h3>{{ s.title }}</h3></div>
         <div class="cards">
           <article v-for="e in s.items" :key="e.id" class="card" :class="{ unused: e.unused }">
-            <div class="card-head">
-              <h4>{{ e.name }}</h4>
-              <div class="head-right">
+            <div class="card-top">
+              <span class="eyebrow">{{ e.kind }} ·</span>
+              <span class="top-right">
                 <span v-if="e.unused" class="badge unused">unused</span>
                 <button class="disclose" @click="toggle(e.id)">{{ open.has(e.id) ? 'less' : 'details' }}</button>
-              </div>
+              </span>
             </div>
+            <div class="card-head"><h4>{{ e.name }}</h4></div>
             <p class="body"><RichText :text="e.text" /></p>
             <div v-if="open.has(e.id)" class="details">
               <dl class="fields">
@@ -270,12 +273,14 @@ const errorSections = computed(() => [
 @media (min-width: 560px) { .cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
 
 /* Card: quiet at rest — name + primary content only */
-.card { border: 1px solid var(--border); border-radius: var(--radius); padding: .8rem .9rem; background: var(--surface); }
+.card { position: relative; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem .9rem .8rem; background: var(--surface); }
 .card.unused { border-style: dashed; border-color: var(--warn-border); }
-.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
+.card-top { position: absolute; top: .35rem; left: .9rem; right: .9rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.eyebrow { flex: 1; min-width: 0; font-size: .6rem; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-right { display: flex; align-items: center; gap: .35rem; flex-shrink: 0; }
+.card-head { display: flex; align-items: baseline; gap: .5rem; }
 .card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); }
-.head-right { display: flex; align-items: center; gap: .4rem; flex-shrink: 0; }
-.disclose { font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
+.disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
 .disclose:hover { color: var(--accent); }
 
 .statement { margin: .5rem 0 0; overflow-x: auto; }
