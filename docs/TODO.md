@@ -4,6 +4,31 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## fundament0 — current thread (2026-07-15)
+
+Isolated clean rebuild of the field-axioms bedrock, separate from the `laws.json`
+tower. Full rationale, structure, and design decisions in **`docs/fundament0.md`**.
+Built and live at `/fundament0`: operations + infix convention + field axioms +
+definitions + a collapsed per-axiom `intuition` field.
+
+**Next (discussed, not started):**
+- [ ] Refine/extend the intuition layer per the untangling backlog below.
+- [ ] Powers (natural + integer) as the ℕ-indexed layer *above* the field — the
+  laws are theorems from the definition + `ax.M1`/`ax.M2` (induction), no new axioms.
+- [ ] Order + completeness slab (upgrades field → ℝ; unblocks roots).
+- [ ] Roots + rational powers (need the order+completeness slab first).
+
+**Untangling backlog** — the conflations that make algebra hard (a concept living
+in several layers at once; detail in `docs/fundament0.md`):
+- [ ] Equality **number vs variable** (`a=a` trivial for a number, a universal claim
+  for a variable; symmetry near-empty for numbers, load-bearing for variables).
+- [ ] `3a = a+a+a` (definition) vs `3·a` (theorem, `3=1+1+1`) vs "three copies" (intuition).
+- [ ] `1.23·a` — repeated addition breaks → forces `r·a` (product); needs decimal numerals.
+- [ ] Minus / sign / subtraction — one glyph, three meanings.
+- [ ] Powers & roots — theorem vs definition-by-permanence vs new axioms (order+completeness).
+
+---
+
 ## Done — Taxonomy as data + reference library
 
 - [x] Project setup (Vue 3, Vite, Pinia, Naive UI, UnoCSS, KaTeX)

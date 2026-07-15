@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/', redirect: '/skills' },
   { path: '/skills', name: 'skills', component: () => import('./views/TaxonomyView.vue'), meta: { title: 'Skills' } },
   { path: '/fundamentals', name: 'fundamentals', component: () => import('./views/ReferenceView.vue'), meta: { title: 'Fundamentals' } },
+  { path: '/fundament0', name: 'fundament0', component: () => import('./views/Fundament0View.vue'), meta: { title: 'fundament0' } },
   { path: '/tutorial', name: 'tutorial', component: () => import('./views/TutorialView.vue'), meta: { title: 'Tutorial' } },
   { path: '/drills', name: 'drills', component: () => import('./views/DrillsView.vue'), meta: { title: 'Drills' } },
 ]

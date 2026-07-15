@@ -19,6 +19,7 @@ const router = useRouter()
 const menuOptions: MenuOption[] = [
   { label: 'Skills', key: 'skills' },
   { label: 'Fundamentals', key: 'fundamentals' },
+  { label: 'fundament0', key: 'fundament0' },
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },
 ]
