@@ -29,6 +29,47 @@ KaTeX is the critical dependency: all expressions must render as proper mathemat
 
 ---
 
+## App shell & views (as built — 2026-07-15)
+
+**Shell** (`App.vue`): a naive-ui header — brand · page nav (`NMenu`) · settings
+popover (`NPopover`). The language switch lives in the settings popover (moved
+out of the per-view headers). **Dark mode is scaffolded but NOT surfaced**:
+`NConfigProvider` is in place, but the content views must first move fully to the
+color tokens, so enabling the toggle now would darken only the chrome. Turning it
+on later ≈ one prop + a `:root[data-theme="dark"]` block in `tokens.css`.
+
+**Router** (`router.ts`): four pages — `/skills` (`TaxonomyView`), `/fundamentals`
+(`ReferenceView`), `/tutorial`, `/drills`. Activity routes are lazy-loaded so
+their future weight (CE grading) code-splits off the reference pages. **Tutorial
+and Drills are empty stubs.**
+
+**Two audiences.** `Skills` and `Fundamentals` are *browsable catalogs* and today
+are **teacher/dev inspection surfaces** — they show ids, raw JSON, `unused`
+coverage markers. `Tutorial` and `Drills` are the (unbuilt) **student** surfaces.
+Design rule for when they're built: **Tutorial *drives* Drills — one drill-runner,
+two drivers** (guided `requires`-traversal vs. free pick). Don't fork the runner.
+
+**Card system** (both catalogs, one system): a card rests quiet — an absolute
+coordinate *eyebrow* (`kind · group`, pinned under the top border), title, the
+primary content (a law's statement / a skill's forms), and the note. Everything
+else — ids, coordinates, links, pitfalls, raw JSON — sits behind a per-card
+`details` disclosure, each row **labeled with its field name**. Group/kind/layer
+descriptions are tap-triggered **info-dot popovers** (mobile-friendly, not hover).
+`Fundamentals` switches Laws · Conventions · Errors (+ a contextual "N unused"
+chip); each of Laws and Skills also switches `by group` / `by kind`.
+
+**Design tokens** (`src/styles/tokens.css`): one quiet neutral-led palette, color
+reserved for signal. This *is* the dark-mode groundwork. **All display prose lives
+in data registries**, never hardcoded in components: `skillGroups`/`lawGroups`/
+`conventionGroups`, `skillKinds`/`lawKinds` (slug-set validated == the kind enum),
+and `layers.json` (the Laws/Conventions/Errors one-liners).
+
+**Mobile:** cards are single-column by default, multi-column at ≥560px —
+mobile-*aware*, not a mobile-first pass (that's reserved for the greenfield drill
+screens).
+
+---
+
 ## Core Concepts
 
 ### Skill
