@@ -27,6 +27,8 @@ in several layers at once; detail in `docs/fundament0.md`):
 - [ ] Minus / sign / subtraction — one glyph, three meanings.
 - [ ] Powers & roots — theorem vs definition-by-permanence vs new axioms (order+completeness).
 - [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundament0) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable. Typography rule: number font = literals only; `^{-1}` marker stays plain.
+- [ ] Inverse-notation asymmetry — unary-minus *prefix* for `+`, no prefix for `·` (postfix `a^{-1}`). `a^{-1}` (primitive) vs `1/a` (derived, needs division); reserve "reciprocal" for `1/a`.
+- [ ] Sign vs unary minus — "sign/Vorzeichen" = literal's sign only; `-b` (variable) is the unary-minus operator.
 
 ---
 

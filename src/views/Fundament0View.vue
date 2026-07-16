@@ -15,8 +15,9 @@ import thmData from '../data/fundament0/theorems.json'
 // as cards under four group headings (equality / addition / multiplication /
 // bridge). No further classification. Reads its own JSON, not the wired `laws`.
 
+interface Preliminary { code: string; name: LocalizedString; note: LocalizedString }
 interface Operation { code: string; symbol: string; type: string; name: LocalizedString; note: LocalizedString }
-interface InfixItem { id: string; code: string; name: LocalizedString; latex: string; note?: LocalizedString }
+interface InfixItem { id: string; code: string; name: LocalizedString; latex?: string; avoid?: string; prefer?: string; note?: LocalizedString }
 interface Infix { title: LocalizedString; blurb: LocalizedString; items: InfixItem[] }
 interface Group { slug: string; title: LocalizedString; blurb: LocalizedString }
 interface Axiom {
@@ -33,6 +34,7 @@ interface Theorem {
 }
 
 const meta = data.meta as unknown as { characterizes: LocalizedString; note: LocalizedString }
+const preliminary = data.preliminary as unknown as Preliminary
 const operations = data.operations as unknown as Operation[]
 const infix = data.infix as unknown as Infix
 const groups = data.groups as unknown as Group[]
@@ -93,6 +95,18 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
       <p class="lead"><RichText :text="t(meta.note)" /></p>
     </header>
 
+    <!-- PRELIMINARIES: what a variable / constant is -->
+    <section class="group">
+      <div class="group-title"><h3>Preliminaries</h3></div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-top"><span class="eyebrow">{{ preliminary.code }}</span></div>
+          <div class="card-head"><h4>{{ t(preliminary.name) }}</h4></div>
+          <p class="note"><RichText :text="t(preliminary.note)" /></p>
+        </article>
+      </div>
+    </section>
+
     <!-- OPERATIONS: the data of the structure -->
     <section>
       <div class="group-title"><h3>Operations &amp; relation</h3></div>
@@ -125,7 +139,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
             <button class="disclose" @click="toggle(it.id)">{{ open.has(it.id) ? 'less' : 'details' }}</button>
           </div>
           <div class="card-head"><h4>{{ t(it.name) }}</h4></div>
-          <div class="statement"><MathExpr :latex="it.latex" display /></div>
+          <div v-if="it.latex" class="statement"><MathExpr :latex="it.latex" display /></div>
+          <div v-else-if="it.avoid" class="rewrite">
+            <div class="ex bad"><span class="mark">✗</span><MathExpr :latex="it.avoid" /></div>
+            <div class="ex good"><span class="mark">✓</span><MathExpr :latex="it.prefer!" /></div>
+          </div>
           <p v-if="it.note" class="note"><RichText :text="t(it.note)" /></p>
           <div v-if="open.has(it.id)" class="details">
             <dl class="fields">
@@ -292,6 +310,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
 .disclose:hover { color: var(--accent); }
 .statement { margin: .5rem 0 0; overflow-x: auto; }
+.rewrite { margin: .5rem 0 0; display: grid; gap: .3rem; }
+.ex { font-size: .95rem; line-height: 1.5; overflow-x: auto; white-space: nowrap; }
+.ex .mark { font-weight: 700; margin-right: .5rem; }
+.ex.bad .mark { color: var(--bad); }
+.ex.good .mark { color: var(--good); }
 .forall { font-size: .74rem; color: var(--text-muted); margin-top: .35rem; }
 .note { font-size: .8rem; color: var(--text-muted); margin: .55rem 0 0; line-height: 1.5; }
 

@@ -21,7 +21,7 @@
     { "id": "def.division", "code": "def.div", "group": "definitions",
       "name": { "en": "Division", "de": "Division" },
       "latex": "\\frac{a}{b} := a \\cdot b^{-1}", "cond": "b \\ne 0", "basedOn": ["ax.M4"],
-      "note": { "en": "Division is not a new operation, just multiplying by the multiplicative inverse.",
-                "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen." } }
+      "note": { "en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{\\num{1}}{a} = \\num{1} \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling.",
+                "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen. Ihr Spezialfall $\\frac{\\num{1}}{a} = \\num{1} \\cdot a^{-1} = a^{-1}$ ist der Kehrwert von $a$: dasselbe Element wie das Inverse, in der alltäglichen Schreibweise." } }
   ]
 }

@@ -16,16 +16,29 @@ the slab is "ℝ" hides where the real analysis content begins.
 
 The page tells one linear story:
 
+0. **Preliminaries** (`pre.1`) — what a *variable* is (a letter for an arbitrary
+   element of ℝ) vs a *constant* (a fixed number), and the typography that marks
+   them apart (see Design decisions).
 1. **Operations & relation** — the given data: `+`, `·` (both `ℝ×ℝ→ℝ`) and `=`
-   (a relation `ℝ×ℝ→{true,false}`). Codes `op.add`, `op.mul`, `op.eq`.
-2. **Infix convention** — the parsing rules (`ix.1` brackets, `ix.2` left-to-right,
-   `ix.3` precedence). Placed *before* the axioms on purpose: association and
-   distribution cannot even be *stated* without brackets and precedence. Parsing
-   is only a problem because we chose infix — `·(a, +(b,c))` needs no rules.
+   (a relation `ℝ×ℝ→{true,false}`). Codes `op.add`, `op.mul`, `op.eq`. Naming lives
+   here: summands (`+`), factors and coefficient (`·`).
+2. **Infix convention** — *reading* rules (`ix.1` brackets, `ix.2` left-to-right,
+   `ix.3` precedence) and *writing* conventions (`ix.4`–`ix.6`: bracket a negative
+   factor, no operator next to a unary minus, coefficient in front). Placed
+   *before* the axioms on purpose: association and distribution cannot even be
+   *stated* without brackets and precedence. Parsing is only a problem because we
+   chose infix — `·(a, +(b,c))` needs no rules.
 3. **The field axioms** — Equality (`ax.E1–E4`), Addition (`ax.A1–A4`),
    Multiplication (`ax.M1–M4`), Bridge (`ax.D1` distributivity, `ax.N1` `0≠1`).
-4. **Built on top: definitions** — subtraction (`def.sub`, rests on `ax.A4`) and
-   division (`def.div`, rests on `ax.M4`). Not new operations.
+   Each carries a collapsed, model-grounded `intuition`.
+4. **Definitions** — subtraction (`def.sub`, rests on `ax.A4`) and division
+   (`def.div`, rests on `ax.M4`; the reciprocal `1/a = a⁻¹` is its special case,
+   noted there). Not new operations.
+5. **Theorems** — derived results, not padding: `th.1` (`0·a = 0`, *forced* by the
+   axioms) and `th.2` (`-a = (-1)·a`, the additive inverse as "multiply by −1" —
+   a cross-world bridge via distributivity). Each shows a collapsed derivation and
+   cites what it rests on. (Notation identities like `1/a = a⁻¹` stay in the
+   relevant definition's note, not here.)
 
 ## Design decisions (settled)
 
@@ -47,10 +60,21 @@ The page tells one linear story:
   balance scale for congruence). It is **recognition on a model, not proof** —
   because `+`/`·` stay informally defined, the axioms can only be *exhibited* as
   evidently true, never derived. The page must never call this a proof.
-- **Codes** are prefixed by category: `op.`, `ix.`, `ax.`, `def.`. Bilingual
-  (English + Swiss German). Prose uses `$…$` for math and **no markdown** — the
-  `RichText` renderer only does math, so `**bold**`/`*italic*`/`—` render
-  literally (em dashes were purged for looking like `−`).
+- **Number typography.** `\num{n}` sets a numeral in a distinct font (`\mathtt`)
+  so *constant literals* read apart from italic *variables*; `\nnum{n}` is a
+  negative literal with a short, slightly-raised sign minus, so a number's own
+  sign reads apart from the full-size operator minus (the raised-minus / "high
+  minus" idea, kept subtle after a bigger raised version was rejected as alien).
+  Both are macros in `MathExpr.vue` — one place to restyle. Invariant: **number
+  font marks literals only** — variables (incl. variable exponents) stay italic,
+  the `^{-1}` marker stays plain (a conflation-detector; see backlog).
+- **Naming vocabulary**, attached where it belongs: summands (`op.add`), factors +
+  coefficient (`op.mul`), variable vs constant (`pre.1`), unary minus (`ax.A4`),
+  multiplicative inverse (`ax.M4`), reciprocal (`def.div`).
+- **Codes** are prefixed by category: `pre.`, `op.`, `ix.`, `ax.`, `def.`, `th.`.
+  Bilingual (English + Swiss German). Prose uses `$…$` for math and **no markdown**
+  — the `RichText` renderer only does math, so `**bold**`/`*italic*` and em dashes
+  `—` render literally (em dashes were purged for looking like `−`).
 
 ## Deferred layers (not built)
 
@@ -102,6 +126,19 @@ intuition / notation), and needs sorting before it is built.
   (incl. variable exponents) stay italic, and the inverse marker `^{-1}` stays
   plain. The number font thus acts as a conflation-detector: every numeral-looking
   mark forces the "literal / variable / notation?" decision school glosses over.
+- **Inverse notation is asymmetric.** Addition's inverse has a named unary
+  *prefix* operator (`-a`, the *unary minus*); multiplication's has *no* prefix
+  operator, forcing postfix `a^{-1}` (or the fraction `1/a`). This asymmetry is
+  likely why the multiplicative inverse feels more awkward. `a^{-1}` (primitive,
+  ax.M4) vs `1/a`: the fraction *looks* more elementary but is downstream —
+  `1/a = 1·a^{-1}` needs division (`def.div`), itself defined from the inverse. So
+  keep `a^{-1}` at the axiom; introduce `1/a` as the derived equivalent later.
+  Proposed word split: "multiplicative inverse" + `a^{-1}` (primitive) vs
+  "reciprocal" + `1/a` (derived) — so the name "reciprocal" travels with `1/a`.
+- **Sign vs unary minus.** "Sign / Vorzeichen" is properly the sign of a *number
+  literal* (`-2`, tied to being negative — really an order notion). For a
+  *variable* operand, `-b` is the *unary minus* (operator), not a sign. Don't call
+  `-b` a "sign" (a fixed ix.5 conflation). Reserve "sign" for literals.
 
 ## Verifying edits
 

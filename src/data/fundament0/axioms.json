@@ -7,11 +7,18 @@
     }
   },
 
+  "preliminary": {
+    "code": "pre.1",
+    "name": { "en": "Variables & constants", "de": "Variablen & Konstanten" },
+    "note": { "en": "Letters $a, b, c, \\dots$ are variables: each stands for an arbitrary element of $\\mathbb{R}$. Specific numbers $\\num{0}, \\num{1}, \\num{2}, \\dots$ are constants. Throughout, variables are set in italic and constants in the number font, so the two never blur.",
+              "de": "Buchstaben $a, b, c, \\dots$ sind Variablen: jede steht für ein beliebiges Element von $\\mathbb{R}$. Bestimmte Zahlen $\\num{0}, \\num{1}, \\num{2}, \\dots$ sind Konstanten. Durchgehend sind Variablen kursiv und Konstanten in der Zahlenschrift gesetzt, damit die beiden nie verschwimmen." }
+  },
+
   "operations": [
     { "code": "op.add", "symbol": "+", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}", "name": { "en": "Addition", "de": "Addition" },
-      "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a + b$.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a + b$." } },
+      "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a + b$; the result is a sum, its parts $a$ and $b$ the summands.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a + b$; das Ergebnis ist eine Summe, ihre Teile $a$ und $b$ die Summanden." } },
     { "code": "op.mul", "symbol": "\\cdot", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}", "name": { "en": "Multiplication", "de": "Multiplikation" },
-      "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a \\cdot b$, or just $ab$.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a \\cdot b$, oder nur $ab$." } },
+      "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a \\cdot b$, or just $ab$; the result is a product, its parts the factors. A numeric factor is a coefficient: in $\\num{3}a$, $\\num{3}$ is the coefficient of $a$.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a \\cdot b$, oder nur $ab$; das Ergebnis ist ein Produkt, seine Teile die Faktoren. Ein Zahlenfaktor ist ein Koeffizient: in $\\num{3}a$ ist $\\num{3}$ der Koeffizient von $a$." } },
     { "code": "op.eq", "symbol": "=", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\{\\,\\text{true},\\ \\text{false}\\,\\}", "name": { "en": "Equality", "de": "Gleichheit" },
       "note": { "en": "Defines equality of elements. Written $a = b$ when it holds (maps to true), $a \\ne b$ when it does not.", "de": "Definiert Gleichheit von Elementen. Geschrieben $a = b$, wenn sie gilt (auf wahr abgebildet), $a \\ne b$, wenn nicht." } }
   ],
@@ -19,8 +26,8 @@
   "infix": {
     "title": { "en": "Infix convention", "de": "Infix-Konvention" },
     "blurb": {
-      "en": "How the notation $a + b$ (for $+(a, b)$) is read once more than one operator appears. Needed to state the axioms below.",
-      "de": "Wie die Schreibweise $a + b$ (für $+(a, b)$) gelesen wird, sobald mehr als ein Operator vorkommt. Nötig, um die Axiome unten zu formulieren."
+      "en": "How infix expressions are read (ix.1–3, the parsing rules) and written without ambiguity (ix.4–6). Needed to state the axioms below.",
+      "de": "Wie Infix-Ausdrücke gelesen werden (ix.1–3, die Parsing-Regeln) und eindeutig geschrieben werden (ix.4–6). Nötig, um die Axiome unten zu formulieren."
     },
     "items": [
       { "id": "ix.brackets", "code": "ix.1", "name": { "en": "Brackets", "de": "Klammern" },
@@ -34,7 +41,19 @@
       { "id": "ix.precedence", "code": "ix.3", "name": { "en": "Precedence", "de": "Vorrang" },
         "latex": "a \\cdot b + a \\cdot c = (a \\cdot b) + (a \\cdot c)",
         "note": { "en": "$\\cdot$ binds tighter than $+$, so a product needs no brackets inside a sum.",
-                  "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe." } }
+                  "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe." } },
+      { "id": "ix.signed-factor", "code": "ix.4", "name": { "en": "Bracket a negative factor", "de": "Negativen Faktor klammern" },
+        "avoid": "\\nnum{1} \\cdot a", "prefer": "(\\nnum{1}) \\cdot a",
+        "note": { "en": "A negative number used as a factor takes brackets, so its sign stays with the number. It then equals $-a$ (th.2).",
+                  "de": "Eine negative Zahl als Faktor wird geklammert, damit ihr Vorzeichen bei der Zahl bleibt. Sie ist dann gleich $-a$ (th.2)." } },
+      { "id": "ix.operator-minus", "code": "ix.5", "name": { "en": "No operator next to a unary minus", "de": "Kein Operator neben unärem Minus" },
+        "avoid": "a \\cdot -b", "prefer": "a \\cdot (-b)",
+        "note": { "en": "A binary operator and a unary minus must not sit side by side; bracket the negated operand.",
+                  "de": "Ein binärer Operator und ein unäres Minus dürfen nicht nebeneinander stehen; der negierte Operand wird geklammert." } },
+      { "id": "ix.coefficient", "code": "ix.6", "name": { "en": "Coefficient in front", "de": "Koeffizient nach vorne" },
+        "avoid": "a \\cdot \\num{3}", "prefer": "\\num{3}a",
+        "note": { "en": "A coefficient goes before the variable. And $a\\num{3}$ reads as a name, not $\\num{3} \\cdot a$.",
+                  "de": "Ein Koeffizient steht vor der Variablen. Und $a\\num{3}$ liest sich wie ein Name, nicht als $\\num{3} \\cdot a$." } }
     ]
   },
 
@@ -96,8 +115,8 @@
     { "id": "add.inverse", "code": "ax.A4", "group": "addition",
       "name": { "en": "Inverse element of addition", "de": "Inverses Element der Addition" },
       "latex": "a + (-a) = \\num{0}", "forall": "a \\in \\mathbb{R}",
-      "note": { "en": "The element $-a$ is called the additive inverse of $a$.",
-                "de": "Das Element $-a$ heisst das additive Inverse von $a$." },
+      "note": { "en": "The element $-a$ is called the additive inverse of $a$; the prefix $-$ is the unary minus.",
+                "de": "Das Element $-a$ heisst das additive Inverse von $a$; das vorangestellte $-$ ist das unäre Minus." },
       "intuition": { "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $\\num{0}$, the 'opposite', and where subtraction comes from.",
                      "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $\\num{0}$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion." } },
 
@@ -120,8 +139,8 @@
     { "id": "mul.inverse", "code": "ax.M4", "group": "multiplication",
       "name": { "en": "Inverse element of multiplication", "de": "Inverses Element der Multiplikation" },
       "latex": "a \\cdot a^{-1} = \\num{1}", "forall": "a \\in \\mathbb{R},\\ a \\ne \\num{0}",
-      "note": { "en": "The element $a^{-1}$ is called the multiplicative inverse of $a$.",
-                "de": "Das Element $a^{-1}$ heisst das multiplikative Inverse von $a$." },
+      "note": { "en": "The element $a^{-1}$ is the multiplicative inverse of $a$. Unlike the additive case it has no prefix operator, so it is written postfix as $a^{-1}$.",
+                "de": "Das Element $a^{-1}$ ist das multiplikative Inverse von $a$. Anders als bei der Addition gibt es keinen vorangestellten Operator, daher die nachgestellte Schreibweise $a^{-1}$." },
       "intuition": { "en": "For any nonzero $a$ there is a reciprocal that scales it back to $\\num{1}$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $\\num{0}$ up to $\\num{1}$.",
                      "de": "Für jedes $a \\ne \\num{0}$ gibt es einen Kehrwert, der es auf $\\num{1}$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $\\num{0}$ auf $\\num{1}$." } },
 
