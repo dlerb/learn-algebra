@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "note": {
+      "en": "Derived, not assumed. Each theorem is proved from the axioms above and earns its place by clarifying or enabling something. Where an axiom is a starting assumption, a theorem is a consequence you could not have chosen otherwise.",
+      "de": "Abgeleitet, nicht angenommen. Jeder Satz wird aus den Axiomen oben bewiesen und verdient seinen Platz, indem er etwas klärt oder ermöglicht. Wo ein Axiom eine Ausgangsannahme ist, ist ein Satz eine Folge, die man nicht anders wählen konnte."
+    }
+  },
+
+  "items": [
+    { "id": "th.zero-times", "code": "th.1",
+      "name": { "en": "Zero times anything is zero", "de": "Null mal irgendetwas ist null" },
+      "latex": "\\num{0} \\cdot a = \\num{0}", "forall": "a \\in \\mathbb{R}",
+      "derivation": "\\num{0} \\cdot a = (\\num{0} + \\num{0}) \\cdot a = \\num{0} \\cdot a + \\num{0} \\cdot a",
+      "derivedFrom": ["ax.A3", "ax.D1", "ax.A4"] },
+
+    { "id": "th.neg-one-times", "code": "th.2",
+      "name": { "en": "The opposite is 'times minus one'", "de": "Das Gegenteil ist 'mal minus eins'" },
+      "latex": "-a = (\\nnum{1}) \\cdot a", "forall": "a \\in \\mathbb{R}",
+      "derivation": "a + (\\nnum{1}) \\cdot a = \\num{1} \\cdot a + (\\nnum{1}) \\cdot a = \\bigl(\\num{1} + (\\nnum{1})\\bigr) \\cdot a = \\num{0} \\cdot a = \\num{0}",
+      "derivedFrom": ["ax.M3", "ax.D1", "ax.A4", "th.zero-times"],
+      "note": { "en": "So $-a$ is the inverse of $a$, not a fixed 'sign'. Since $\\mathbb{R}$ has negatives, $-\\num{2} = \\nnum{2}$ and $-\\nnum{2} = \\num{2}$: the long $-$ is the operator, the short one is a number's own sign.",
+                "de": "$-a$ ist also das Inverse von $a$, kein festes 'Vorzeichen'. Da $\\mathbb{R}$ negative Zahlen enthält, gilt $-\\num{2} = \\nnum{2}$ und $-\\nnum{2} = \\num{2}$: das lange $-$ ist der Operator, das kurze das eigene Vorzeichen der Zahl." } }
+  ]
+}

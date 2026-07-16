@@ -7,6 +7,7 @@ import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
 import data from '../data/fundament0/axioms.json'
 import convData from '../data/fundament0/conventions.json'
+import thmData from '../data/fundament0/theorems.json'
 
 // Isolated inspection page for the fundament0 slab (src/data/fundament0/
 // axioms.json): the definition of a field over ℝ. Deliberately plain — a few
@@ -26,6 +27,10 @@ interface ConvItem {
   id: string; code: string; group: string
   name: LocalizedString; latex: string; cond?: string; basedOn?: string[]; note?: LocalizedString
 }
+interface Theorem {
+  id: string; code: string
+  name: LocalizedString; latex: string; forall?: string; derivation?: string; derivedFrom?: string[]; note?: LocalizedString
+}
 
 const meta = data.meta as unknown as { characterizes: LocalizedString; note: LocalizedString }
 const operations = data.operations as unknown as Operation[]
@@ -37,12 +42,15 @@ const convMeta = convData.meta as unknown as { note: LocalizedString }
 const convGroups = convData.groups as unknown as Group[]
 const convItems = convData.items as unknown as ConvItem[]
 
+const theoremsMeta = thmData.meta as unknown as { note: LocalizedString }
+const theorems = thmData.items as unknown as Theorem[]
+
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
-// Resolve a basedOn axiom code to "ax.A4 · Inverse element of addition".
-const axLabel = (code: string) => {
-  const a = axioms.find(x => x.code === code)
-  return a ? `${code} · ${t(a.name)}` : code
+// Resolve a cited code (axiom or theorem) to "ax.A4 · Inverse element of addition".
+const codeLabel = (code: string) => {
+  const x = axioms.find(a => a.code === code) ?? theorems.find(a => a.code === code)
+  return x ? `${code} · ${t(x.name)}` : code
 }
 
 const sections = computed(() =>
@@ -67,9 +75,11 @@ const convSections = computed(() =>
 const open = ref(new Set<string>())
 const jsonOpen = ref(new Set<string>())
 const intuitionOpen = ref(new Set<string>())
+const derivOpen = ref(new Set<string>())
 const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : open.value.add(id))
 const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
 const toggleIntuition = (id: string) => (intuitionOpen.value.has(id) ? intuitionOpen.value.delete(id) : intuitionOpen.value.add(id))
+const toggleDeriv = (id: string) => (derivOpen.value.has(id) ? derivOpen.value.delete(id) : derivOpen.value.add(id))
 const json = (x: unknown) => JSON.stringify(x, null, 2)
 </script>
 
@@ -163,7 +173,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
       </div>
     </section>
 
-    <!-- BUILT ON TOP: definitions & notation (not axioms) -->
+    <!-- BUILT ON TOP: definitions (not axioms) -->
     <div class="divider">
       <h3>Built on top: definitions</h3>
       <p><RichText :text="t(convMeta.note)" /></p>
@@ -189,7 +199,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
           <p v-if="it.note" class="note"><RichText :text="t(it.note)" /></p>
           <div v-if="it.basedOn" class="basedon">
             <span class="basedon-label">rests on</span>
-            <span v-for="c in it.basedOn" :key="c" class="chip">{{ axLabel(c) }}</span>
+            <span v-for="c in it.basedOn" :key="c" class="chip">{{ codeLabel(c) }}</span>
           </div>
           <div v-if="open.has(it.id)" class="details">
             <dl class="fields">
@@ -200,6 +210,43 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
             </dl>
             <button class="json-toggle" @click="toggleJson(it.id)">{{ jsonOpen.has(it.id) ? 'hide json' : 'json' }}</button>
             <pre v-if="jsonOpen.has(it.id)" class="json">{{ json(it) }}</pre>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- THEOREMS: derived from the axioms and definitions -->
+    <div class="divider">
+      <h3>Theorems</h3>
+      <p><RichText :text="t(theoremsMeta.note)" /></p>
+    </div>
+    <section class="group">
+      <div class="cards">
+        <article v-for="th in theorems" :key="th.id" class="card">
+          <div class="card-top">
+            <span class="eyebrow">{{ th.code }}</span>
+            <button class="disclose" @click="toggle(th.id)">{{ open.has(th.id) ? 'less' : 'details' }}</button>
+          </div>
+          <div class="card-head"><h4>{{ t(th.name) }}</h4></div>
+          <div class="statement"><MathExpr :latex="th.latex" display /></div>
+          <div v-if="th.forall" class="forall">for all <MathExpr :latex="th.forall" /></div>
+          <p v-if="th.note" class="note"><RichText :text="t(th.note)" /></p>
+          <button v-if="th.derivation" class="intuition-toggle" @click="toggleDeriv(th.id)">{{ derivOpen.has(th.id) ? '▾ derivation' : '▸ derivation' }}</button>
+          <div v-if="th.derivation && derivOpen.has(th.id)" class="derivation">
+            <MathExpr :latex="th.derivation" display />
+            <div v-if="th.derivedFrom" class="basedon">
+              <span class="basedon-label">from</span>
+              <span v-for="c in th.derivedFrom" :key="c" class="chip">{{ codeLabel(c) }}</span>
+            </div>
+          </div>
+          <div v-if="open.has(th.id)" class="details">
+            <dl class="fields">
+              <div class="field"><dt>id</dt><dd><code>{{ th.id }}</code></dd></div>
+              <div class="field"><dt>code</dt><dd>{{ th.code }}</dd></div>
+              <div v-if="th.derivedFrom" class="field"><dt>derivedFrom</dt><dd>{{ th.derivedFrom.join(', ') }}</dd></div>
+            </dl>
+            <button class="json-toggle" @click="toggleJson(th.id)">{{ jsonOpen.has(th.id) ? 'hide json' : 'json' }}</button>
+            <pre v-if="jsonOpen.has(th.id)" class="json">{{ json(th) }}</pre>
           </div>
         </article>
       </div>
@@ -247,6 +294,9 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .statement { margin: .5rem 0 0; overflow-x: auto; }
 .forall { font-size: .74rem; color: var(--text-muted); margin-top: .35rem; }
 .note { font-size: .8rem; color: var(--text-muted); margin: .55rem 0 0; line-height: 1.5; }
+
+/* Theorem derivation — the proof chain, collapsed by default */
+.derivation { margin-top: .45rem; padding: .4rem .55rem; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow-x: auto; }
 
 /* Per-axiom intuition — collapsed by default, informal (recognition, not proof) */
 .intuition-toggle { margin-top: .5rem; font-size: .72rem; color: var(--accent); background: none; border: none; cursor: pointer; padding: .1rem 0; }

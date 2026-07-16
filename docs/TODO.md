@@ -26,6 +26,7 @@ in several layers at once; detail in `docs/fundament0.md`):
 - [ ] `1.23·a` — repeated addition breaks → forces `r·a` (product); needs decimal numerals.
 - [ ] Minus / sign / subtraction — one glyph, three meanings.
 - [ ] Powers & roots — theorem vs definition-by-permanence vs new axioms (order+completeness).
+- [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundament0) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable. Typography rule: number font = literals only; `^{-1}` marker stays plain.
 
 ---
 

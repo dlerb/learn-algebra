@@ -92,6 +92,16 @@ intuition / notation), and needs sorting before it is built.
   the definition + `ax.M1`/`ax.M2` + induction), which are definitions-by-choice
   (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`, extension by permanence), and which need new axioms
   (roots and rational powers need order + completeness). See Deferred layers.
+- **The exponent `-1` / `-n`.** One glyph string, three readings: `b^{-1}` at
+  fundament0 is *atomic notation* for the inverse (ax.M4), where the `-1` is
+  decorative — not the number `-1`, and not a power (powers don't exist here). In
+  the later powers layer, `a^{-1}` is re-read as `a` to the integer *literal* `-1`,
+  while `a^{-n}` uses the additive-inverse *operator* on the *variable* `n`. They
+  are unified by the extension-by-permanence choice `a^{-n} := 1/a^n`. Typographic
+  upshot (a good invariant): the number font marks *literals only* — variables
+  (incl. variable exponents) stay italic, and the inverse marker `^{-1}` stays
+  plain. The number font thus acts as a conflation-detector: every numeral-looking
+  mark forces the "literal / variable / notation?" decision school glosses over.
 
 ## Verifying edits
 
