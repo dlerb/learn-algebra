@@ -24,11 +24,21 @@ in several layers at once; detail in `docs/fundament0.md`):
   for a variable; symmetry near-empty for numbers, load-bearing for variables).
 - [ ] `3a = a+a+a` (definition) vs `3·a` (theorem, `3=1+1+1`) vs "three copies" (intuition).
 - [ ] `1.23·a` — repeated addition breaks → forces `r·a` (product); needs decimal numerals.
-- [ ] Minus / sign / subtraction — one glyph, three meanings.
+- [x] ~~Minus / sign / subtraction — one glyph, three meanings.~~ **Resolved 2026-07-17:
+  there are only *two* minuses — unary (`ax.A4`, `-a` and `-2` alike) and binary
+  (`def.sub`). The third ("a number's own sign") does not exist in the notation.
+  Shipped in `ax.A4` + `th.2` + `ix.4`.**
+- [ ] **Atomic object, composite name** — ℝ's negatives are atomic elements, but the
+  notation gives them no *name*, only a description (`-2` = unary minus applied to `2`).
+  Hence `-2² = -4` (parse the name) vs `(-2)² = 4` (square the object). Brackets are the
+  notation's name-maker — that, not "keeping the sign with the number", is what `ix.4` is
+  for. Needs the power layer to state fully; likely the sharpest card in the design.
 - [ ] Powers & roots — theorem vs definition-by-permanence vs new axioms (order+completeness).
-- [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundament0) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable. Typography rule: number font = literals only; `^{-1}` marker stays plain.
+- [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundament0) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable.
 - [ ] Inverse-notation asymmetry — unary-minus *prefix* for `+`, no prefix for `·` (postfix `a^{-1}`). `a^{-1}` (primitive) vs `1/a` (derived, needs division); reserve "reciprocal" for `1/a`.
-- [ ] Sign vs unary minus — "sign/Vorzeichen" = literal's sign only; `-b` (variable) is the unary-minus operator.
+- [x] ~~Sign vs unary minus — "sign/Vorzeichen" = literal's sign only.~~ **Superseded
+  2026-07-17: too weak. `-2`'s minus is the unary *operator* too. New rule: "sign"
+  describes *elements* (semantic, needs order + zero), never *marks*.**
 
 ---
 

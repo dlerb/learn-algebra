@@ -2,23 +2,31 @@
   "meta": {
     "characterizes": { "en": "a field", "de": "ein Körper" },
     "note": {
-      "en": "We define a field over $\\mathbb{R}$: the set $\\mathbb{R}$ with two operations $+$ and $\\cdot$ and the equality relation $=$, required to satisfy the axioms below. (These are the field axioms. $\\mathbb{Q}$ satisfies them too; the order and completeness that single out $\\mathbb{R}$ are not discussed here.)",
-      "de": "Wir definieren einen Körper über $\\mathbb{R}$: die Menge $\\mathbb{R}$ mit zwei Operationen $+$ und $\\cdot$ und der Gleichheitsrelation $=$, die die Axiome unten erfüllen müssen. (Dies sind die Körperaxiome. $\\mathbb{Q}$ erfüllt sie ebenso; die Ordnung und Vollständigkeit, die $\\mathbb{R}$ auszeichnen, werden hier nicht diskutiert.)"
+      "en": "These axioms describe a field: a set of elements with two operations $+$ and $\\cdot$ and the relation $=$, obeying the laws below. They are a specification, not a construction, and they do not reach $\\mathbb{R}$ yet: every law below holds in $\\mathbb{Q}$ just as well, so nothing proved here can tell $\\mathbb{R}$ from $\\mathbb{Q}$. Adding an order would not separate them either. Only completeness pins it down; $\\mathbb{R}$ is the unique complete ordered field. We start at the field floor because nearly all symbolic algebra lives here, and we name each floor honestly rather than saying '$\\mathbb{R}$' before it is earned.",
+      "de": "Diese Axiome beschreiben einen Körper: eine Menge von Elementen mit zwei Operationen $+$ und $\\cdot$ und der Relation $=$, die den Gesetzen unten gehorchen. Sie sind eine Spezifikation, keine Konstruktion, und sie erreichen $\\mathbb{R}$ noch nicht: jedes Gesetz unten gilt in $\\mathbb{Q}$ ebenso, nichts hier Bewiesenes kann also $\\mathbb{R}$ von $\\mathbb{Q}$ unterscheiden. Auch eine Ordnung würde die beiden nicht trennen. Erst die Vollständigkeit legt es fest; $\\mathbb{R}$ ist der einzige vollständige geordnete Körper. Wir beginnen auf der Körperetage, weil fast die ganze symbolische Algebra hier lebt, und wir benennen jede Etage ehrlich, statt '$\\mathbb{R}$' zu sagen, bevor es verdient ist."
     }
   },
 
-  "preliminary": {
-    "code": "pre.1",
-    "name": { "en": "Variables & constants", "de": "Variablen & Konstanten" },
-    "note": { "en": "Letters $a, b, c, \\dots$ are variables: each stands for an arbitrary element of $\\mathbb{R}$. Specific numbers $\\num{0}, \\num{1}, \\num{2}, \\dots$ are constants. Throughout, variables are set in italic and constants in the number font, so the two never blur.",
-              "de": "Buchstaben $a, b, c, \\dots$ sind Variablen: jede steht für ein beliebiges Element von $\\mathbb{R}$. Bestimmte Zahlen $\\num{0}, \\num{1}, \\num{2}, \\dots$ sind Konstanten. Durchgehend sind Variablen kursiv und Konstanten in der Zahlenschrift gesetzt, damit die beiden nie verschwimmen." }
-  },
+  "preliminaries": [
+    {
+      "code": "pre.1",
+      "name": { "en": "The elements", "de": "Die Elemente" },
+      "note": { "en": "The elements have no properties beyond what the axioms give them; nothing is borrowed from the number line. Two of them exist because an axiom says so, and we name them $0$ (ax.A3) and $1$ (ax.M3). Every further name is built from those: $2$ is a name for $1 + 1$, $-2$ is the additive inverse of $2$ (ax.A4), and $2^{-1}$ is its multiplicative inverse (ax.M4). If a property is not in the axioms, it is not available here. That is the point of the exercise: it is what makes visible which property rests on which assumption.",
+                "de": "Die Elemente haben keine Eigenschaften ausser denen, die die Axiome ihnen geben; nichts wird von der Zahlengeraden geborgt. Zwei von ihnen existieren, weil ein Axiom es sagt, und wir nennen sie $0$ (ax.A3) und $1$ (ax.M3). Jeder weitere Name wird daraus gebaut: $2$ ist ein Name für $1 + 1$, $-2$ ist das additive Inverse von $2$ (ax.A4), und $2^{-1}$ ist sein multiplikatives Inverses (ax.M4). Steht eine Eigenschaft nicht in den Axiomen, ist sie hier nicht verfügbar. Genau darum geht es: so wird sichtbar, welche Eigenschaft auf welcher Annahme ruht." }
+    },
+    {
+      "code": "pre.2",
+      "name": { "en": "Variables & constants", "de": "Variablen & Konstanten" },
+      "note": { "en": "Letters $a, b, c, \\dots$ are variables: each stands for an arbitrary element. Named elements like $0, 1, 2, \\dots$ are constants. Variables are set in italic and constants upright, the usual convention, so the two never blur.",
+                "de": "Buchstaben $a, b, c, \\dots$ sind Variablen: jede steht für ein beliebiges Element. Benannte Elemente wie $0, 1, 2, \\dots$ sind Konstanten. Variablen werden kursiv gesetzt, Konstanten aufrecht, wie üblich, damit die beiden nie verschwimmen." }
+    }
+  ],
 
   "operations": [
     { "code": "op.add", "symbol": "+", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}", "name": { "en": "Addition", "de": "Addition" },
       "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a + b$; the result is a sum, its parts $a$ and $b$ the summands.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a + b$; das Ergebnis ist eine Summe, ihre Teile $a$ und $b$ die Summanden." } },
     { "code": "op.mul", "symbol": "\\cdot", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}", "name": { "en": "Multiplication", "de": "Multiplikation" },
-      "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a \\cdot b$, or just $ab$; the result is a product, its parts the factors. A numeric factor is a coefficient: in $\\num{3}a$ or $\\num{3}\\cdot a$, $\\num{3}$ is the coefficient of $a$.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a \\cdot b$, oder nur $ab$; das Ergebnis ist ein Produkt, seine Teile die Faktoren. Ein Zahlenfaktor ist ein Koeffizient: in $\\num{3}a$ oder $\\num{3}\\cdot a$ ist $\\num{3}$ der Koeffizient von $a$." } },
+      "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a \\cdot b$, or just $ab$; the result is a product, its parts the factors. A numeric factor is a coefficient: in $3a$ or $3\\cdot a$, $3$ is the coefficient of $a$.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a \\cdot b$, oder nur $ab$; das Ergebnis ist ein Produkt, seine Teile die Faktoren. Ein Zahlenfaktor ist ein Koeffizient: in $3a$ oder $3\\cdot a$ ist $3$ der Koeffizient von $a$." } },
     { "code": "op.eq", "symbol": "=", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\{\\,\\text{true},\\ \\text{false}\\,\\}", "name": { "en": "Equality", "de": "Gleichheit" },
       "note": { "en": "Defines equality of elements. Written $a = b$ when it holds (maps to true), $a \\ne b$ when it does not.", "de": "Definiert Gleichheit von Elementen. Geschrieben $a = b$, wenn sie gilt (auf wahr abgebildet), $a \\ne b$, wenn nicht." } }
   ],
@@ -43,17 +51,17 @@
         "note": { "en": "$\\cdot$ binds tighter than $+$, so a product needs no brackets inside a sum.",
                   "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe." } },
       { "id": "ix.signed-factor", "code": "ix.4", "name": { "en": "Bracket a negative factor", "de": "Negativen Faktor klammern" },
-        "avoid": "\\nnum{1} \\cdot a", "prefer": "(\\nnum{1}) \\cdot a",
-        "note": { "en": "A negative number used as a factor takes brackets, so its sign stays with the number. It then equals $-a$ (th.2).",
-                  "de": "Eine negative Zahl als Faktor wird geklammert, damit ihr Vorzeichen bei der Zahl bleibt. Sie ist dann gleich $-a$ (th.2)." } },
+        "avoid": "-1 \\cdot a", "prefer": "(-1) \\cdot a",
+        "note": { "en": "A negative number used as a factor takes brackets, so that $-1$ reads as a single factor. There is no name for that element (ax.A4), only the description $-1$, and brackets are what let a description stand as one thing. Here both readings agree in value, since $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.2); the brackets say which one is meant.",
+                  "de": "Eine negative Zahl als Faktor wird geklammert, damit $-1$ als ein einzelner Faktor gelesen wird. Für dieses Element gibt es keinen Namen (ax.A4), nur die Beschreibung $-1$, und Klammern lassen eine Beschreibung als ein Ding stehen. Hier stimmen beide Lesarten im Wert überein, denn $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.2); die Klammern sagen, welche gemeint ist." } },
       { "id": "ix.operator-minus", "code": "ix.5", "name": { "en": "No operator next to a unary minus", "de": "Kein Operator neben unärem Minus" },
         "avoid": "a \\cdot -b, \\quad a + -b", "prefer": "a \\cdot (-b), \\quad a + (-b)",
         "note": { "en": "A binary operator and a unary minus must not sit side by side; bracket the negated operand. The sum then reads as a subtraction: $a + (-b) = a - b$.",
                   "de": "Ein binärer Operator und ein unäres Minus dürfen nicht nebeneinander stehen; der negierte Operand wird geklammert. Die Summe liest sich dann als Subtraktion: $a + (-b) = a - b$." } },
       { "id": "ix.coefficient", "code": "ix.6", "name": { "en": "Coefficient in front", "de": "Koeffizient nach vorne" },
-        "avoid": "a \\cdot \\num{3}", "prefer": "\\num{3}a",
-        "note": { "en": "A coefficient goes before the variable. And $a\\num{3}$ reads as a name, not $\\num{3} \\cdot a$.",
-                  "de": "Ein Koeffizient steht vor der Variablen. Und $a\\num{3}$ liest sich wie ein Name, nicht als $\\num{3} \\cdot a$." } }
+        "avoid": "a \\cdot 3", "prefer": "3a",
+        "note": { "en": "A coefficient goes before the variable. And $a3$ reads as a name, not $3 \\cdot a$.",
+                  "de": "Ein Koeffizient steht vor der Variablen. Und $a3$ liest sich wie ein Name, nicht als $3 \\cdot a$." } }
     ]
   },
 
@@ -108,17 +116,17 @@
                      "de": "Beim Addieren dreier Mengen ist es egal, welches Paar man zuerst zusammenfasst." } },
     { "id": "add.neutral", "code": "ax.A3", "group": "addition",
       "name": { "en": "Neutral element of addition", "de": "Neutrales Element der Addition" },
-      "latex": "a + \\num{0} = a", "forall": "a \\in \\mathbb{R}",
-      "note": { "en": "$\\num{0}$ is called the neutral element of addition.", "de": "$\\num{0}$ heisst das neutrale Element der Addition." },
+      "latex": "a + 0 = a", "forall": "a \\in \\mathbb{R}",
+      "note": { "en": "$0$ is called the neutral element of addition.", "de": "$0$ heisst das neutrale Element der Addition." },
       "intuition": { "en": "Adding nothing leaves the amount unchanged.",
                      "de": "Nichts dazuzuzählen lässt die Menge unverändert." } },
     { "id": "add.inverse", "code": "ax.A4", "group": "addition",
       "name": { "en": "Inverse element of addition", "de": "Inverses Element der Addition" },
-      "latex": "a + (-a) = \\num{0}", "forall": "a \\in \\mathbb{R}",
-      "note": { "en": "The element $-a$ is called the additive inverse of $a$; the prefix $-$ is the unary minus.",
-                "de": "Das Element $-a$ heisst das additive Inverse von $a$; das vorangestellte $-$ ist das unäre Minus." },
-      "intuition": { "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $\\num{0}$, the 'opposite', and where subtraction comes from.",
-                     "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $\\num{0}$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion." } },
+      "latex": "a + (-a) = 0", "forall": "a \\in \\mathbb{R}",
+      "note": { "en": "The element $-a$ is called the additive inverse of $a$; the prefix $-$ is the unary minus. There is no other kind: in $-2$ it is the same operator applied to the constant $2$, not a 'sign' belonging to the number. So a negative element has no name of its own. Where $2$ names an element, $-2$ describes one, and brackets are what let a description be handled as a single element: $(-2)$.",
+                "de": "Das Element $-a$ heisst das additive Inverse von $a$; das vorangestellte $-$ ist das unäre Minus. Eine andere Art gibt es nicht: in $-2$ ist es derselbe Operator, angewandt auf die Konstante $2$, kein 'Vorzeichen', das zur Zahl gehört. Ein negatives Element hat also keinen eigenen Namen. Wo $2$ ein Element benennt, beschreibt $-2$ eines, und Klammern erlauben es, eine Beschreibung als einzelnes Element zu behandeln: $(-2)$." },
+      "intuition": { "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $0$, the 'opposite', and where subtraction comes from.",
+                     "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $0$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion." } },
 
     { "id": "mul.commutative", "code": "ax.M1", "group": "multiplication",
       "name": { "en": "Commutativity of multiplication", "de": "Kommutativgesetz der Multiplikation" },
@@ -132,17 +140,17 @@
                      "de": "Ein Quader $a \\times b \\times c$ hat ein Volumen, wie auch immer man die Faktoren gruppiert." } },
     { "id": "mul.neutral", "code": "ax.M3", "group": "multiplication",
       "name": { "en": "Neutral element of multiplication", "de": "Neutrales Element der Multiplikation" },
-      "latex": "\\num{1} \\cdot a = a", "forall": "a \\in \\mathbb{R}",
-      "note": { "en": "$\\num{1}$ is called the neutral element of multiplication.", "de": "$\\num{1}$ heisst das neutrale Element der Multiplikation." },
-      "intuition": { "en": "One copy of $a$ is just $a$; scaling by $\\num{1}$ changes nothing.",
-                     "de": "Eine Kopie von $a$ ist einfach $a$; Skalieren mit $\\num{1}$ ändert nichts." } },
+      "latex": "1 \\cdot a = a", "forall": "a \\in \\mathbb{R}",
+      "note": { "en": "$1$ is called the neutral element of multiplication.", "de": "$1$ heisst das neutrale Element der Multiplikation." },
+      "intuition": { "en": "One copy of $a$ is just $a$; scaling by $1$ changes nothing.",
+                     "de": "Eine Kopie von $a$ ist einfach $a$; Skalieren mit $1$ ändert nichts." } },
     { "id": "mul.inverse", "code": "ax.M4", "group": "multiplication",
       "name": { "en": "Inverse element of multiplication", "de": "Inverses Element der Multiplikation" },
-      "latex": "a \\cdot a^{-1} = \\num{1}", "forall": "a \\in \\mathbb{R},\\ a \\ne \\num{0}",
+      "latex": "a \\cdot a^{-1} = 1", "forall": "a \\in \\mathbb{R},\\ a \\ne 0",
       "note": { "en": "The element $a^{-1}$ is the multiplicative inverse of $a$. Unlike the additive case it has no prefix operator, so it is written postfix as $a^{-1}$.",
                 "de": "Das Element $a^{-1}$ ist das multiplikative Inverse von $a$. Anders als bei der Addition gibt es keinen vorangestellten Operator, daher die nachgestellte Schreibweise $a^{-1}$." },
-      "intuition": { "en": "For any nonzero $a$ there is a reciprocal that scales it back to $\\num{1}$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $\\num{0}$ up to $\\num{1}$.",
-                     "de": "Für jedes $a \\ne \\num{0}$ gibt es einen Kehrwert, der es auf $\\num{1}$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $\\num{0}$ auf $\\num{1}$." } },
+      "intuition": { "en": "For any nonzero $a$ there is a reciprocal that scales it back to $1$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $0$ up to $1$.",
+                     "de": "Für jedes $a \\ne 0$ gibt es einen Kehrwert, der es auf $1$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $0$ auf $1$." } },
 
     { "id": "field.distributive", "code": "ax.D1", "group": "bridge",
       "name": { "en": "Distributivity", "de": "Distributivgesetz" },
@@ -153,7 +161,7 @@
                      "de": "Das Flächenbild: ein Rechteck $a$ breit und $b + c$ hoch zerfällt in zwei mit Flächen $a \\cdot b$ und $a \\cdot c$. Eine Summe zu multiplizieren heisst, jeden Teil zu multiplizieren und zu addieren." } },
     { "id": "field.nondegenerate", "code": "ax.N1", "group": "bridge",
       "name": { "en": "Zero and one are different", "de": "Null und Eins sind verschieden" },
-      "latex": "\\num{0} \\ne \\num{1}",
+      "latex": "0 \\ne 1",
       "note": { "en": "Without it the whole structure could collapse to a single point.",
                 "de": "Ohne es könnte die ganze Struktur zu einem einzigen Punkt kollabieren." },
       "intuition": { "en": "There is genuinely 'nothing' and 'one thing', and they differ; otherwise every number would collapse into one.",

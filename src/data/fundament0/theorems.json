@@ -9,16 +9,16 @@
   "items": [
     { "id": "th.zero-times", "code": "th.1",
       "name": { "en": "Zero times anything is zero", "de": "Null mal irgendetwas ist null" },
-      "latex": "\\num{0} \\cdot a = \\num{0}", "forall": "a \\in \\mathbb{R}",
-      "derivation": "\\num{0} \\cdot a = (\\num{0} + \\num{0}) \\cdot a = \\num{0} \\cdot a + \\num{0} \\cdot a",
+      "latex": "0 \\cdot a = 0", "forall": "a \\in \\mathbb{R}",
+      "derivation": "0 \\cdot a = (0 + 0) \\cdot a = 0 \\cdot a + 0 \\cdot a",
       "derivedFrom": ["ax.A3", "ax.D1", "ax.A4"] },
 
     { "id": "th.neg-one-times", "code": "th.2",
       "name": { "en": "The opposite is 'times minus one'", "de": "Das Gegenteil ist 'mal minus eins'" },
-      "latex": "-a = (\\nnum{1}) \\cdot a", "forall": "a \\in \\mathbb{R}",
-      "derivation": "a + (\\nnum{1}) \\cdot a = \\num{1} \\cdot a + (\\nnum{1}) \\cdot a = \\bigl(\\num{1} + (\\nnum{1})\\bigr) \\cdot a = \\num{0} \\cdot a = \\num{0}",
+      "latex": "-a = (-1) \\cdot a", "forall": "a \\in \\mathbb{R}",
+      "derivation": "a + (-1) \\cdot a = 1 \\cdot a + (-1) \\cdot a = \\bigl(1 + (-1)\\bigr) \\cdot a = 0 \\cdot a = 0",
       "derivedFrom": ["ax.M3", "ax.D1", "ax.A4", "th.zero-times"],
-      "note": { "en": "So $-a$ is the inverse of $a$, not a fixed 'sign'. Since $\\mathbb{R}$ has negatives, $-\\num{2} = \\nnum{2}$ and $-\\nnum{2} = \\num{2}$: the long $-$ is the operator, the short one is a number's own sign.",
-                "de": "$-a$ ist also das Inverse von $a$, kein festes 'Vorzeichen'. Da $\\mathbb{R}$ negative Zahlen enthält, gilt $-\\num{2} = \\nnum{2}$ und $-\\nnum{2} = \\num{2}$: das lange $-$ ist der Operator, das kurze das eigene Vorzeichen der Zahl." } }
+      "note": { "en": "So $-a$ is the inverse of $a$, and the unary minus is nothing but multiplication by the constant $-1$. It therefore needs no rules of its own: wherever a unary minus stands, an ordinary product is at work, and it follows the rules products already follow. The brackets in $(-1)$ are what let it stand as a single factor.",
+                "de": "$-a$ ist also das Inverse von $a$, und das unäre Minus ist nichts anderes als die Multiplikation mit der Konstanten $-1$. Es braucht daher keine eigenen Regeln: wo ein unäres Minus steht, wirkt ein gewöhnliches Produkt, und es folgt den Regeln, denen Produkte ohnehin folgen. Die Klammern in $(-1)$ lassen es als einzelnen Faktor stehen." } }
   ]
 }

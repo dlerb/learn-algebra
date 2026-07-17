@@ -8,17 +8,38 @@ threads, not the content tables (they would drift — read the JSON).
 
 ## What it is
 
-`fundament0` characterises **a field over ℝ** — explicitly *a field*, not ℝ
-itself. Every axiom here already holds in ℚ; the **order** and **completeness**
-that single out ℝ are deliberately deferred (see Deferred layers). Naming it
-honestly matters: nearly all symbolic manipulation is field-level, and pretending
-the slab is "ℝ" hides where the real analysis content begins.
+`fundament0` is a **specification of a field** — not a construction of ℝ.
+
+*(The original phrasing, "a field over ℝ", was wrong twice: in algebra "over"
+means extension — a field over ℝ is something like ℂ — and fixing the carrier to
+the set ℝ contradicts the very next sentence, that ℚ satisfies the axioms too.
+Fixed 2026-07-17.)*
+
+The elements are treated as abstract: they have no properties beyond what the
+axioms give them. `0`/`1` exist by axiom; `2` is a *name* for `1+1`; `−2`
+*describes* the additive inverse of `2`. Every law here holds in ℚ just as well,
+so **nothing proved at this floor can tell ℝ from ℚ** — and order would not
+separate them either. Only completeness pins it down: **ℝ is the unique complete
+ordered field.** That gives the tower its narrative motor — at each floor, ask
+"what else still satisfies this?", and the answer names what you have not yet
+said.
+
+Naming each floor honestly matters: nearly all symbolic manipulation is
+field-level, and saying "ℝ" before it is earned hides where the real analysis
+content begins. The axioms earn their place **not by constructing ℝ** — nobody
+needs axioms to discover that 2+2=4 — **but by dependency bookkeeping**: making
+visible which property rests on which assumption (`−a` is the opposite → no
+order; `−a` is *negative* → order; `√2` exists → completeness). That bookkeeping
+*is* the untangling thesis.
 
 The page tells one linear story:
 
-0. **Preliminaries** (`pre.1`) — what a *variable* is (a letter for an arbitrary
-   element of ℝ) vs a *constant* (a fixed number), and the typography that marks
-   them apart (see Design decisions).
+0. **Preliminaries** (`pre.1`, `pre.2`) — `pre.1` *The elements*: no properties
+   beyond what the axioms give; `0`/`1` by axiom, `2` a name for `1+1`, `−2` the
+   additive inverse of `2`; if a property is not in the axioms it is not available
+   here, which is the whole point. `pre.2` *Variables & constants* — letters stand
+   for an arbitrary element, named elements are constants, told apart by the
+   ordinary italic/upright convention (no house typography; see Design decisions).
 1. **Operations & relation** — the given data: `+`, `·` (both `ℝ×ℝ→ℝ`) and `=`
    (a relation `ℝ×ℝ→{true,false}`). Codes `op.add`, `op.mul`, `op.eq`. Naming lives
    here: summands (`+`), factors and coefficient (`·`).
@@ -60,14 +81,29 @@ The page tells one linear story:
   balance scale for congruence). It is **recognition on a model, not proof** —
   because `+`/`·` stay informally defined, the axioms can only be *exhibited* as
   evidently true, never derived. The page must never call this a proof.
-- **Number typography.** `\num{n}` sets a numeral in a distinct font (`\mathtt`)
-  so *constant literals* read apart from italic *variables*; `\nnum{n}` is a
-  negative literal with a short, slightly-raised sign minus, so a number's own
-  sign reads apart from the full-size operator minus (the raised-minus / "high
-  minus" idea, kept subtle after a bigger raised version was rejected as alien).
-  Both are macros in `MathExpr.vue` — one place to restyle. Invariant: **number
-  font marks literals only** — variables (incl. variable exponents) stay italic,
-  the `^{-1}` marker stays plain (a conflation-detector; see backlog).
+- **Number typography: built, then deliberately removed (2026-07-17).** `\num{n}`
+  (numeral in `\mathtt`) and `\nnum{n}` (a short raised "sign minus", the
+  APL `¯` / "high minus" idea) existed for two sessions and are now **deleted**;
+  `MathExpr.vue` is plain KaTeX with no macros. Do not reintroduce them. Why:
+  - `\nnum` encoded a **fiction**. Standard notation has **no sign inside the
+    numeral**. There is exactly one minus — the unary *operator* — plus brackets.
+    The `−` in `−2` is the same operator applied to the constant `2` that `−a`
+    applies to `a`. Marking "a number's own sign" teaches a distinction the
+    notation does not implement — structurally the same broken promise as TI's
+    `(-)` key, whose glyph *looks* like a literal and *parses* like an operator
+    (which is exactly why `−2² = −4` while `Ans² = 4`).
+  - `\num` went for a different reason: **KaTeX already sets numerals upright and
+    variables italic**, and that italic/upright split *is* the international
+    convention (ISO 80000-2). `\mathtt` was decoration over a distinction already
+    present.
+  - The survey that settled it: the raised minus exists only in *elementary
+    education* (explicitly "training wheels", dropped by ~8th grade — our students
+    are past it), *APL* (where it is a genuine literal and works, because APL
+    committed), and *some early graphing calculators*. **Never in mathematics.**
+    Historical note: APL took it from Max Beberman, a maths educator — the idea
+    went education → APL, and mainstream maths declined it.
+  - **Principle: do not invent notation students meet nowhere else.** Use the
+    notation they will actually read, and *explain* it.
 - **Naming vocabulary**, attached where it belongs: summands (`op.add`), factors +
   coefficient (`op.mul`), variable vs constant (`pre.1`), unary minus (`ax.A4`),
   multiplicative inverse (`ax.M4`), reciprocal (`def.div`).
@@ -109,9 +145,42 @@ intuition / notation), and needs sorting before it is built.
   forces the `n·a` view to generalise to `r·a` for any real `r` — i.e. plain
   multiplication. Also needs decimal **numerals** first (what `1.23` names). A good
   probe for where "multiple" stops and "product" takes over.
-- **Minus / signed numbers.** `−a` as the additive *inverse* (an element), vs the
-  *sign* of a number, vs *binary subtraction* `a − b`. One glyph, three meanings —
-  the central conflation the whole app targets.
+- **Minus / signed numbers — RESOLVED (2026-07-17).** There are exactly **two**
+  minuses, not three: the **unary** operator (`ax.A4` — `−a` and `−2` alike) and
+  **binary** subtraction (`def.sub`). The supposed third, "a number's own sign",
+  **does not exist in the notation**. "Sign" is a property of an *element*
+  (semantic; needs order *and* the field's `0`), never a feature of a *mark*.
+  Calling the `−` in `−2` a sign fuses syntax with semantics and *causes* the
+  `−2² = −4` surprise. Shipped in `ax.A4`, `th.2`, `ix.4`.
+
+- **Atomic object, composite name (2026-07-17) — the sharpest card in the design,
+  waiting on the power layer.** ℝ's negative elements are full citizens: atomic,
+  no internal structure. But the notation gives atomic **names** only to
+  non-negatives (`2`); a negative gets only a **description** (`−2` = "apply the
+  unary minus to `2`"). Hence the trap: **squaring looks at the object (→ 4);
+  parsing looks at the name (→ −4)**. Both are right; they are different
+  questions; the notation is silent about which one you asked.
+  - **Brackets are the notation's name-maker.** `(−2)` is how a description is made
+    to stand as one element. That — not "keeping the sign with the number" — is
+    what `ix.4` is really for. Students learn brackets only as "do this first"
+    (`ix.1`), never as "**this is one thing**": two jobs, one glyph, school teaches
+    one.
+  - **The students are never wrong.** They assume *referential* atomicity implies
+    *syntactic* atomicity — true for every number they met before age 11. The
+    teaching debt is a **completion**, not a correction: "you were right that −2 is
+    a number; nobody told you our notation has no name for it." Framing it as a
+    reversal is what manufactures the sense of betrayal.
+  - Receipts for the card: TI's `2−4` ENTER → `Ans²` = **4** (the *object*) vs
+    `(-)2` `x²` = **−4** (the *expression*) — the device demonstrates both
+    faithfully and labels neither. Excel dissents (`−2² = 4`); TI does **not** —
+    TI matches standard maths, and its `(-)` key is documented as "multiplying by
+    −1", i.e. it ships `th.2` as its implementation.
+  - Fractions share the trap (`2/3² ≠ (2/3)²`); negatives are worse off, having
+    **no** atomic spelling at all, ever.
+  - Pedagogical spine (settled): read the minus via `th.2` as `(−1)·`. Then
+    `−2² = (−1)·2² = −4` follows from the precedence rule students *already own*
+    (`ix.3`, powers bind tighter than products) — it **derives** the rule instead
+    of decreeing it, and needs no "the power binds to the 2" PEMDAS edict.
 - **Powers & roots.** Which power laws are theorems (natural exponents: all, from
   the definition + `ax.M1`/`ax.M2` + induction), which are definitions-by-choice
   (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`, extension by permanence), and which need new axioms
@@ -121,11 +190,9 @@ intuition / notation), and needs sorting before it is built.
   decorative — not the number `-1`, and not a power (powers don't exist here). In
   the later powers layer, `a^{-1}` is re-read as `a` to the integer *literal* `-1`,
   while `a^{-n}` uses the additive-inverse *operator* on the *variable* `n`. They
-  are unified by the extension-by-permanence choice `a^{-n} := 1/a^n`. Typographic
-  upshot (a good invariant): the number font marks *literals only* — variables
-  (incl. variable exponents) stay italic, and the inverse marker `^{-1}` stays
-  plain. The number font thus acts as a conflation-detector: every numeral-looking
-  mark forces the "literal / variable / notation?" decision school glosses over.
+  are unified by the extension-by-permanence choice `a^{-n} := 1/a^n`. (The
+  typographic "conflation-detector" invariant that used to live here died with the
+  number font — see Design decisions.)
 - **Inverse notation is asymmetric.** Addition's inverse has a named unary
   *prefix* operator (`-a`, the *unary minus*); multiplication's has *no* prefix
   operator, forcing postfix `a^{-1}` (or the fraction `1/a`). This asymmetry is
@@ -135,10 +202,18 @@ intuition / notation), and needs sorting before it is built.
   keep `a^{-1}` at the axiom; introduce `1/a` as the derived equivalent later.
   Proposed word split: "multiplicative inverse" + `a^{-1}` (primitive) vs
   "reciprocal" + `1/a` (derived) — so the name "reciprocal" travels with `1/a`.
-- **Sign vs unary minus.** "Sign / Vorzeichen" is properly the sign of a *number
-  literal* (`-2`, tied to being negative — really an order notion). For a
-  *variable* operand, `-b` is the *unary minus* (operator), not a sign. Don't call
-  `-b` a "sign" (a fixed ix.5 conflation). Reserve "sign" for literals.
+- **Sign vs unary minus — SUPERSEDED (2026-07-17).** The old rule ("reserve 'sign'
+  for literals; only `-b` with a *variable* operand is the unary minus") was too
+  weak, and wrong in the same direction as `\nnum`: the `−` in `−2` is the unary
+  *operator* too, exactly as in `−b`. **New rule: "sign" describes *elements*,
+  never *marks*.** "The sign of `−2` is negative" ✓ — an order fact about the
+  element. "The `−` in `−2` is a sign" ✗ — there is no such thing.
+  - Note the German-school angle: the *Vorzeichen / Rechenzeichen* tradition names
+    a distinction its own notation does not implement, which is precisely why
+    Beberman and Iverson had to invent `⁻`/`¯` to build the thing the tradition
+    talks about. Where the tradition is right is **binary vs unary** (`def.sub` vs
+    `ax.A4`) — that distinction is real, and TI enforces it in hardware with two
+    separate keys.
 
 ## Verifying edits
 

@@ -34,7 +34,7 @@ interface Theorem {
 }
 
 const meta = data.meta as unknown as { characterizes: LocalizedString; note: LocalizedString }
-const preliminary = data.preliminary as unknown as Preliminary
+const preliminaries = data.preliminaries as unknown as Preliminary[]
 const operations = data.operations as unknown as Operation[]
 const infix = data.infix as unknown as Infix
 const groups = data.groups as unknown as Group[]
@@ -99,10 +99,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
     <section class="group">
       <div class="group-title"><h3>Preliminaries</h3></div>
       <div class="cards">
-        <article class="card">
-          <div class="card-top"><span class="eyebrow">{{ preliminary.code }}</span></div>
-          <div class="card-head"><h4>{{ t(preliminary.name) }}</h4></div>
-          <p class="note"><RichText :text="t(preliminary.note)" /></p>
+        <article v-for="p in preliminaries" :key="p.code" class="card">
+          <div class="card-top"><span class="eyebrow">{{ p.code }}</span></div>
+          <div class="card-head"><h4>{{ t(p.name) }}</h4></div>
+          <p class="note"><RichText :text="t(p.note)" /></p>
         </article>
       </div>
     </section>
