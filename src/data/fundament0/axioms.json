@@ -1,9 +1,9 @@
 {
   "meta": {
-    "characterizes": { "en": "a field", "de": "ein Körper" },
+    "characterizes": { "en": "ℝ", "de": "ℝ" },
     "note": {
-      "en": "These axioms describe a field: a set of elements with two operations $+$ and $\\cdot$ and the relation $=$, obeying the laws below. They are a specification, not a construction, and they do not reach $\\mathbb{R}$ yet: every law below holds in $\\mathbb{Q}$ just as well, so nothing proved here can tell $\\mathbb{R}$ from $\\mathbb{Q}$. Adding an order would not separate them either. Only completeness pins it down; $\\mathbb{R}$ is the unique complete ordered field. We start at the field floor because nearly all symbolic algebra lives here, and we name each floor honestly rather than saying '$\\mathbb{R}$' before it is earned.",
-      "de": "Diese Axiome beschreiben einen Körper: eine Menge von Elementen mit zwei Operationen $+$ und $\\cdot$ und der Relation $=$, die den Gesetzen unten gehorchen. Sie sind eine Spezifikation, keine Konstruktion, und sie erreichen $\\mathbb{R}$ noch nicht: jedes Gesetz unten gilt in $\\mathbb{Q}$ ebenso, nichts hier Bewiesenes kann also $\\mathbb{R}$ von $\\mathbb{Q}$ unterscheiden. Auch eine Ordnung würde die beiden nicht trennen. Erst die Vollständigkeit legt es fest; $\\mathbb{R}$ ist der einzige vollständige geordnete Körper. Wir beginnen auf der Körperetage, weil fast die ganze symbolische Algebra hier lebt, und wir benennen jede Etage ehrlich, statt '$\\mathbb{R}$' zu sagen, bevor es verdient ist."
+      "en": "Consider a set $R$ carrying the structure of a complete ordered field. This page works through what that phrase means, one assumption at a time, and the claim is that the definitions, conventions and theorems it forces are exactly the high-school algebra of the real numbers, so that by the end $R$ is $\\mathbb{R}$. Elements of $R$ are written with small letters $a, b, c, \\dots$ (variables: each stands for an arbitrary element); specific elements keep their familiar names $0, 1, 2, 1.25, \\pi, \\dots$. Those names are for reading only. Every property claimed below is traced back to an axiom, never taken for granted from the number line, and that tracing is the whole point: it makes visible which property rests on which assumption. Three words carry the structure. A field has the two operations $+$ and $\\cdot$, their neutral elements $0$ and $1$, inverses, and the laws below. Ordered adds a relation $<$ that places every element as positive, negative, or zero, so that 'positive' and 'negative' mean something. Complete means the number line has no gaps: among other things, every positive element then has a root (to be defined), so $\\sqrt{2}$ is an element of $R$, not a hole in it.",
+      "de": "Wir betrachten eine Menge $R$, die die Struktur eines vollständigen geordneten Körpers trägt. Diese Seite arbeitet Schritt für Schritt heraus, was dieser Ausdruck bedeutet, und die Behauptung ist, dass die Definitionen, Konventionen und Sätze, die er erzwingt, genau die Schulalgebra der reellen Zahlen sind, sodass am Ende $R$ gleich $\\mathbb{R}$ ist. Elemente von $R$ schreiben wir mit kleinen Buchstaben $a, b, c, \\dots$ (Variablen: jede steht für ein beliebiges Element); bestimmte Elemente behalten ihre vertrauten Namen $0, 1, 2, 1.25, \\pi, \\dots$. Diese Namen dienen nur dem Lesen. Jede unten behauptete Eigenschaft wird auf ein Axiom zurückgeführt, nie als von der Zahlengeraden bekannt vorausgesetzt, und genau das ist der Sinn: es wird sichtbar, welche Eigenschaft auf welcher Annahme ruht. Drei Wörter tragen die Struktur. Ein Körper hat die zwei Operationen $+$ und $\\cdot$, ihre neutralen Elemente $0$ und $1$, Inverse und die Gesetze unten. Geordnet fügt eine Relation $<$ hinzu, die jedes Element als positiv, negativ oder null einordnet, sodass 'positiv' und 'negativ' etwas bedeuten. Vollständig heisst, die Zahlengerade hat keine Lücken: unter anderem hat dann jedes positive Element eine Wurzel (noch zu definieren), sodass $\\sqrt{2}$ ein Element von $R$ ist und kein Loch darin."
     }
   },
 
@@ -11,7 +11,7 @@
     {
       "code": "pre.1",
       "name": { "en": "The elements", "de": "Die Elemente" },
-      "note": { "en": "The elements have no properties beyond what the axioms give them; nothing is borrowed from the number line. Two of them exist because an axiom says so, and we name them $0$ (ax.A3) and $1$ (ax.M3). Every further name is built from those: $2$ is a name for $1 + 1$, $-2$ is the additive inverse of $2$ (ax.A4), and $2^{-1}$ is its multiplicative inverse (ax.M4). If a property is not in the axioms, it is not available here. That is the point of the exercise: it is what makes visible which property rests on which assumption.",
+      "note": { "en": "The elements of have no properties beyond what the axioms give them; nothing is borrowed from the number line. Two of them exist because an axiom says so, and we name them $0$ (ax.A3) and $1$ (ax.M3). Every further name is built from those: $2$ is a name for $1 + 1$, $-2$ is the additive inverse of $2$ (ax.A4), and $2^{-1}$ is its multiplicative inverse (ax.M4). If a property is not in the axioms, it is not available here. That is the point of the exercise: it is what makes visible which property rests on which assumption.",
                 "de": "Die Elemente haben keine Eigenschaften ausser denen, die die Axiome ihnen geben; nichts wird von der Zahlengeraden geborgt. Zwei von ihnen existieren, weil ein Axiom es sagt, und wir nennen sie $0$ (ax.A3) und $1$ (ax.M3). Jeder weitere Name wird daraus gebaut: $2$ ist ein Name für $1 + 1$, $-2$ ist das additive Inverse von $2$ (ax.A4), und $2^{-1}$ ist sein multiplikatives Inverses (ax.M4). Steht eine Eigenschaft nicht in den Axiomen, ist sie hier nicht verfügbar. Genau darum geht es: so wird sichtbar, welche Eigenschaft auf welcher Annahme ruht." }
     },
     {
@@ -28,7 +28,9 @@
     { "code": "op.mul", "symbol": "\\cdot", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}", "name": { "en": "Multiplication", "de": "Multiplikation" },
       "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a \\cdot b$, or just $ab$; the result is a product, its parts the factors. A numeric factor is a coefficient: in $3a$ or $3\\cdot a$, $3$ is the coefficient of $a$.", "de": "Eine binäre Operation auf $\\mathbb{R}$. Geschrieben $a \\cdot b$, oder nur $ab$; das Ergebnis ist ein Produkt, seine Teile die Faktoren. Ein Zahlenfaktor ist ein Koeffizient: in $3a$ oder $3\\cdot a$ ist $3$ der Koeffizient von $a$." } },
     { "code": "op.eq", "symbol": "=", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\{\\,\\text{true},\\ \\text{false}\\,\\}", "name": { "en": "Equality", "de": "Gleichheit" },
-      "note": { "en": "Defines equality of elements. Written $a = b$ when it holds (maps to true), $a \\ne b$ when it does not.", "de": "Definiert Gleichheit von Elementen. Geschrieben $a = b$, wenn sie gilt (auf wahr abgebildet), $a \\ne b$, wenn nicht." } }
+      "note": { "en": "Defines equality of elements. Written $a = b$ when it holds (maps to true), $a \\ne b$ when it does not.", "de": "Definiert Gleichheit von Elementen. Geschrieben $a = b$, wenn sie gilt (auf wahr abgebildet), $a \\ne b$, wenn nicht." } },
+    { "code": "op.lt", "symbol": "<", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\{\\,\\text{true},\\ \\text{false}\\,\\}", "name": { "en": "Order", "de": "Ordnung" },
+      "note": { "en": "A second relation, alongside $=$. Written $a < b$ ('$a$ is less than $b$'), with $a \\le b$ short for '$a < b$ or $a = b$'. Unlike $=$ it is not automatic: every set has one equality, but an order is extra structure, and not every field can carry one. It is what lets an element be called positive (when $0 < a$) or negative (when $a < 0$): a property of the element, read off the order, not a mark in how it is written. Its laws are the order axioms below.", "de": "Eine zweite Relation, neben $=$. Geschrieben $a < b$ ('$a$ ist kleiner als $b$'), mit $a \\le b$ als Kurzform für '$a < b$ oder $a = b$'. Anders als $=$ ist sie nicht automatisch: jede Menge hat eine Gleichheit, aber eine Ordnung ist zusätzliche Struktur, und nicht jeder Körper kann eine tragen. Sie ist es, die ein Element positiv (wenn $0 < a$) oder negativ (wenn $a < 0$) nennen lässt: eine Eigenschaft des Elements, an der Ordnung abgelesen, kein Merkmal seiner Schreibweise. Ihre Gesetze sind die Ordnungsaxiome unten." } }
   ],
 
   "infix": {
@@ -50,7 +52,7 @@
         "latex": "a \\cdot b + a \\cdot c = (a \\cdot b) + (a \\cdot c)",
         "note": { "en": "$\\cdot$ binds tighter than $+$, so a product needs no brackets inside a sum.",
                   "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe." } },
-      { "id": "ix.signed-factor", "code": "ix.4", "name": { "en": "Bracket a negative factor", "de": "Negativen Faktor klammern" },
+      { "id": "ix.negative-factor", "code": "ix.4", "name": { "en": "Bracket a negative factor", "de": "Negativen Faktor klammern" },
         "avoid": "-1 \\cdot a", "prefer": "(-1) \\cdot a",
         "note": { "en": "A negative number used as a factor takes brackets, so that $-1$ reads as a single factor. There is no name for that element (ax.A4), only the description $-1$, and brackets are what let a description stand as one thing. Here both readings agree in value, since $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.2); the brackets say which one is meant.",
                   "de": "Eine negative Zahl als Faktor wird geklammert, damit $-1$ als ein einzelner Faktor gelesen wird. Für dieses Element gibt es keinen Namen (ax.A4), nur die Beschreibung $-1$, und Klammern lassen eine Beschreibung als ein Ding stehen. Hier stimmen beide Lesarten im Wert überein, denn $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.2); die Klammern sagen, welche gemeint ist." } },
@@ -77,7 +79,13 @@
                  "de": "Die vier Axiome von $\\cdot$, ein Spiegel der Addition; das Inverse gilt nur abseits der Null." } },
     { "slug": "bridge", "title": { "en": "Bridge axioms", "de": "Brückenaxiome" },
       "blurb": { "en": "Distributivity, the only axiom linking $+$ and $\\cdot$, and that $0 \\ne 1$.",
-                 "de": "Distributivität, das einzige Axiom, das $+$ und $\\cdot$ verbindet, und dass $0 \\ne 1$." } }
+                 "de": "Distributivität, das einzige Axiom, das $+$ und $\\cdot$ verbindet, und dass $0 \\ne 1$." } },
+    { "slug": "order", "title": { "en": "Order axioms", "de": "Ordnungsaxiome" },
+      "blurb": { "en": "The four laws of $<$. The first two, trichotomy and transitivity, make it a total order on the set; the last two tie it to $+$ and $\\cdot$. The condition $0 < c$ in the fourth is exactly where 'flip the inequality when you multiply by a negative' comes from.",
+                 "de": "Die vier Gesetze von $<$. Die ersten beiden, Trichotomie und Transitivität, machen es zu einer totalen Ordnung auf der Menge; die letzten beiden binden es an $+$ und $\\cdot$. Die Bedingung $0 < c$ im vierten ist genau der Ursprung von 'das Ungleichheitszeichen umdrehen, wenn man mit einer negativen Zahl multipliziert'." } },
+    { "slug": "completeness", "title": { "en": "Completeness", "de": "Vollständigkeit" },
+      "blurb": { "en": "The single axiom that lifts an ordered field to $\\mathbb{R}$: the number line has no gaps. Unlike every axiom above, it speaks of whole sets, not of single elements.",
+                 "de": "Das einzige Axiom, das einen geordneten Körper zu $\\mathbb{R}$ hebt: die Zahlengerade hat keine Lücken. Anders als jedes Axiom oben spricht es von ganzen Mengen, nicht von einzelnen Elementen." } }
   ],
 
   "axioms": [
@@ -123,8 +131,8 @@
     { "id": "add.inverse", "code": "ax.A4", "group": "addition",
       "name": { "en": "Inverse element of addition", "de": "Inverses Element der Addition" },
       "latex": "a + (-a) = 0", "forall": "a \\in \\mathbb{R}",
-      "note": { "en": "The element $-a$ is called the additive inverse of $a$; the prefix $-$ is the unary minus. There is no other kind: in $-2$ it is the same operator applied to the constant $2$, not a 'sign' belonging to the number. So a negative element has no name of its own. Where $2$ names an element, $-2$ describes one, and brackets are what let a description be handled as a single element: $(-2)$.",
-                "de": "Das Element $-a$ heisst das additive Inverse von $a$; das vorangestellte $-$ ist das unäre Minus. Eine andere Art gibt es nicht: in $-2$ ist es derselbe Operator, angewandt auf die Konstante $2$, kein 'Vorzeichen', das zur Zahl gehört. Ein negatives Element hat also keinen eigenen Namen. Wo $2$ ein Element benennt, beschreibt $-2$ eines, und Klammern erlauben es, eine Beschreibung als einzelnes Element zu behandeln: $(-2)$." },
+      "note": { "en": "The element $-a$ is called the additive inverse of $a$; the prefix $-$ is the unary minus. There is no other kind: in $-2$ it is the same operator applied to the constant $2$, not something the number carries. So a negative element has no name of its own. Where $2$ names an element, $-2$ describes one, and brackets are what let a description be handled as a single element: $(-2)$.",
+                "de": "Das Element $-a$ heisst das additive Inverse von $a$; das vorangestellte $-$ ist das unäre Minus. Eine andere Art gibt es nicht: in $-2$ ist es derselbe Operator, angewandt auf die Konstante $2$, nichts, was die Zahl in sich trägt. Ein negatives Element hat also keinen eigenen Namen. Wo $2$ ein Element benennt, beschreibt $-2$ eines, und Klammern erlauben es, eine Beschreibung als einzelnes Element zu behandeln: $(-2)$." },
       "intuition": { "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $0$, the 'opposite', and where subtraction comes from.",
                      "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $0$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion." } },
 
@@ -165,6 +173,41 @@
       "note": { "en": "Without it the whole structure could collapse to a single point.",
                 "de": "Ohne es könnte die ganze Struktur zu einem einzigen Punkt kollabieren." },
       "intuition": { "en": "There is genuinely 'nothing' and 'one thing', and they differ; otherwise every number would collapse into one.",
-                     "de": "Es gibt wirklich 'nichts' und 'ein Ding', und sie sind verschieden; sonst fielen alle Zahlen zu einer zusammen." } }
+                     "de": "Es gibt wirklich 'nichts' und 'ein Ding', und sie sind verschieden; sonst fielen alle Zahlen zu einer zusammen." } },
+
+    { "id": "order.trichotomy", "code": "ax.O1", "group": "order",
+      "name": { "en": "Trichotomy", "de": "Trichotomie" },
+      "latex": "a < b \\quad\\text{or}\\quad a = b \\quad\\text{or}\\quad b < a", "forall": "a, b \\in \\mathbb{R}",
+      "note": { "en": "Exactly one of the three holds. So any two elements are comparable, and 'less', 'equal', 'greater' exclude one another. With $b = 0$, this is what makes 'positive', 'zero', 'negative' a clean split: every element is exactly one of the three.",
+                "de": "Genau eines der drei gilt. Je zwei Elemente sind also vergleichbar, und 'kleiner', 'gleich', 'grösser' schliessen einander aus. Mit $b = 0$ ist es das, was 'positiv', 'null', 'negativ' zu einer sauberen Aufteilung macht: jedes Element ist genau eines der drei." },
+      "intuition": { "en": "Place the elements on a line: of any two, either they coincide or one lies strictly left of the other, never both. This is what makes $<$ a total order.",
+                     "de": "Man lege die Elemente auf eine Gerade: von je zweien fallen sie entweder zusammen, oder eines liegt strikt links vom anderen, nie beides. Das macht $<$ zu einer totalen Ordnung." } },
+    { "id": "order.transitive", "code": "ax.O2", "group": "order",
+      "name": { "en": "Transitivity", "de": "Transitivität" },
+      "latex": "a < b \\;\\text{ and }\\; b < c \\;\\Rightarrow\\; a < c", "forall": "a, b, c \\in \\mathbb{R}",
+      "intuition": { "en": "If $a$ lies left of $b$ and $b$ left of $c$, then $a$ lies left of $c$. Order carries along the line.",
+                     "de": "Liegt $a$ links von $b$ und $b$ links von $c$, so liegt $a$ links von $c$. Die Ordnung überträgt sich entlang der Geraden." } },
+    { "id": "order.add-compatible", "code": "ax.O3", "group": "order",
+      "name": { "en": "Compatibility with addition", "de": "Verträglichkeit mit der Addition" },
+      "latex": "a < b \\;\\Rightarrow\\; a + c < b + c", "forall": "a, b, c \\in \\mathbb{R}",
+      "note": { "en": "Adding the same element to both sides preserves order, with no condition on $c$. This is what lets a term move across an inequality.",
+                "de": "Dasselbe Element auf beiden Seiten zu addieren erhält die Ordnung, ohne Bedingung an $c$. Das erlaubt, einen Term über eine Ungleichung zu verschieben." },
+      "intuition": { "en": "Sliding two points by the same step keeps their left-to-right relation.",
+                     "de": "Zwei Punkte um denselben Schritt zu verschieben erhält ihre Links-rechts-Beziehung." } },
+    { "id": "order.mul-compatible", "code": "ax.O4", "group": "order",
+      "name": { "en": "Compatibility with multiplication", "de": "Verträglichkeit mit der Multiplikation" },
+      "latex": "a < b \\;\\text{ and }\\; 0 < c \\;\\Rightarrow\\; a \\cdot c < b \\cdot c", "forall": "a, b, c \\in \\mathbb{R}",
+      "note": { "en": "Multiplying both sides by the same factor preserves order only when the factor is positive ($0 < c$). That one condition is the whole reason an inequality flips when you multiply by a negative factor ($c < 0$): positive scaling keeps order, negative scaling reverses it.",
+                "de": "Beide Seiten mit demselben Faktor zu multiplizieren erhält die Ordnung nur, wenn der Faktor positiv ist ($0 < c$). Diese eine Bedingung ist der ganze Grund, warum sich eine Ungleichung umdreht, wenn man mit einem negativen Faktor ($c < 0$) multipliziert: positives Skalieren erhält die Ordnung, negatives kehrt sie um." },
+      "intuition": { "en": "Scaling two points by a positive factor keeps their order (a stretch). A negative factor mirrors across $0$ and reverses it, which is why $<$ turns into $>$. The rule lives in this one condition, not in a separate decree.",
+                     "de": "Zwei Punkte mit einem positiven Faktor zu skalieren erhält ihre Ordnung (eine Streckung). Ein negativer Faktor spiegelt an $0$ und kehrt sie um, weshalb $<$ zu $>$ wird. Die Regel steckt in dieser einen Bedingung, nicht in einem eigenen Erlass." } },
+
+    { "id": "field.complete", "code": "ax.C1", "group": "completeness",
+      "name": { "en": "Completeness axiom", "de": "Vollständigkeitsaxiom" },
+      "latex": "S \\subseteq \\mathbb{R},\\ S \\ne \\emptyset,\\ S \\text{ bounded above} \\;\\Rightarrow\\; \\sup S \\in \\mathbb{R}",
+      "note": { "en": "An upper bound of a set $S$ is an element $b$ with $x \\le b$ for every $x \\in S$; $S$ is bounded above if it has one. The least upper bound $\\sup S$ is the smallest upper bound. The axiom: every non-empty set that is capped above has a smallest cap, and it lies in $\\mathbb{R}$.",
+                "de": "Eine obere Schranke einer Menge $S$ ist ein Element $b$ mit $x \\le b$ für jedes $x \\in S$; $S$ ist nach oben beschränkt, wenn sie eine besitzt. Die kleinste obere Schranke $\\sup S$ ist die kleinste solche Schranke. Das Axiom: jede nicht-leere, nach oben beschränkte Menge hat eine kleinste Schranke, und sie liegt in $\\mathbb{R}$." },
+      "intuition": { "en": "The number line has no gaps. This is the one assumption that leaves algebra behind: it speaks not of single elements and operations but of whole sets and their bounds. It is exactly what tells $\\mathbb{R}$ from $\\mathbb{Q}$: the rationals whose square is below $2$ are bounded above, yet among the rationals there is no least bound, so $\\mathbb{Q}$ has a hole where $\\sqrt{2}$ should be. Completeness fills every such hole, and from it the roots of positive elements exist (to be defined).",
+                     "de": "Die Zahlengerade hat keine Lücken. Dies ist die eine Annahme, die die Algebra hinter sich lässt: sie spricht nicht von einzelnen Elementen und Operationen, sondern von ganzen Mengen und ihren Schranken. Genau sie unterscheidet $\\mathbb{R}$ von $\\mathbb{Q}$: die rationalen Zahlen mit Quadrat unter $2$ sind nach oben beschränkt, doch unter den rationalen Zahlen gibt es keine kleinste Schranke, also hat $\\mathbb{Q}$ ein Loch dort, wo $\\sqrt{2}$ sein sollte. Die Vollständigkeit füllt jedes solche Loch, und aus ihr existieren die Wurzeln positiver Elemente (noch zu definieren)." } }
   ]
 }

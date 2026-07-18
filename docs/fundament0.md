@@ -1,4 +1,4 @@
-# fundament0 — the clean field-axioms layer
+# fundament0 — the clean ℝ layer (complete ordered field)
 
 A deliberately isolated rebuild of the very bottom of algebra, mathematically
 stricter than the existing `laws.json` tower, which it does not touch. It lives
@@ -8,58 +8,69 @@ threads, not the content tables (they would drift — read the JSON).
 
 ## What it is
 
-`fundament0` is a **specification of a field** — not a construction of ℝ.
+`fundament0` specifies **ℝ as the complete ordered field**, from stated
+assumptions only. It is a **specification**, not a construction: we posit a set
+`R` with `+`, `·`, `<` and the axioms, and the claim is that anything satisfying
+them *is* ℝ (the axioms pin it down uniquely). The page's arc is the discovery
+that these assumptions — and nothing borrowed from the number line — reconstruct
+exactly the high-school algebra of ℝ. Tag: `≙ ℝ`.
 
-*(The original phrasing, "a field over ℝ", was wrong twice: in algebra "over"
-means extension — a field over ℝ is something like ℂ — and fixing the carrier to
-the set ℝ contradicts the very next sentence, that ℚ satisfies the axioms too.
-Fixed 2026-07-17.)*
+*(History, worth keeping. It began as "a field over ℝ" — wrong twice: in algebra
+"over" means extension (a field over ℝ is something like ℂ), and fixing the
+carrier to ℝ contradicts the axioms being a specification. It was then reframed
+as "a specification of a field", **parking** order and completeness, on the audit
+verdict "school algebra is an ordered field; completeness is the analysis seam,
+park it". On 2026-07-18 that parking was **reversed**: the user chose the full ℝ,
+told as `R` discovered to be `ℝ`. Order and completeness are now built in.)*
 
-The elements are treated as abstract: they have no properties beyond what the
-axioms give them. `0`/`1` exist by axiom; `2` is a *name* for `1+1`; `−2`
-*describes* the additive inverse of `2`. Every law here holds in ℚ just as well,
-so **nothing proved at this floor can tell ℝ from ℚ** — and order would not
-separate them either. Only completeness pins it down: **ℝ is the unique complete
-ordered field.** That gives the tower its narrative motor — at each floor, ask
-"what else still satisfies this?", and the answer names what you have not yet
-said.
+Three words, each a floor, each answering "what else still satisfies this?":
+- **field** — `+`, `·`, neutrals `0`/`1`, inverses, the laws. Also ℚ, ℂ, …
+- **ordered** — the relation `<` and its four axioms; where *positive* / *negative*
+  are born. Also ℚ (not ℂ).
+- **complete** — the supremum axiom (`ax.C1`); the number line has no gaps. **ℝ
+  alone.** The analysis seam.
 
-Naming each floor honestly matters: nearly all symbolic manipulation is
-field-level, and saying "ℝ" before it is earned hides where the real analysis
-content begins. The axioms earn their place **not by constructing ℝ** — nobody
-needs axioms to discover that 2+2=4 — **but by dependency bookkeeping**: making
-visible which property rests on which assumption (`−a` is the opposite → no
-order; `−a` is *negative* → order; `√2` exists → completeness). That bookkeeping
-*is* the untangling thesis.
+The elements are abstract: no properties beyond what the axioms give. `0`/`1` exist
+by axiom; `2` is a *name* for `1+1`; `−2` *describes* the additive inverse of `2`.
+The familiar names (`0,1,2,1.25,π`) are for reading only; every property is traced
+to an axiom, never taken for granted from the number line. That tracing is the
+point: it makes visible **which property rests on which assumption** (`−a` is the
+opposite → no order; `−a` is *negative* → order; `√2` exists → completeness). The
+axioms earn their place **not by constructing ℝ** — nobody needs axioms to find
+2+2=4 — **but by that dependency bookkeeping**, which *is* the untangling thesis.
 
 The page tells one linear story:
 
-0. **Preliminaries** (`pre.1`, `pre.2`) — `pre.1` *The elements*: no properties
-   beyond what the axioms give; `0`/`1` by axiom, `2` a name for `1+1`, `−2` the
-   additive inverse of `2`; if a property is not in the axioms it is not available
-   here, which is the whole point. `pre.2` *Variables & constants* — letters stand
-   for an arbitrary element, named elements are constants, told apart by the
-   ordinary italic/upright convention (no house typography; see Design decisions).
-1. **Operations & relation** — the given data: `+`, `·` (both `ℝ×ℝ→ℝ`) and `=`
-   (a relation `ℝ×ℝ→{true,false}`). Codes `op.add`, `op.mul`, `op.eq`. Naming lives
-   here: summands (`+`), factors and coefficient (`·`).
-2. **Infix convention** — *reading* rules (`ix.1` brackets, `ix.2` left-to-right,
-   `ix.3` precedence) and *writing* conventions (`ix.4`–`ix.6`: bracket a negative
-   factor, no operator next to a unary minus, coefficient in front). Placed
-   *before* the axioms on purpose: association and distribution cannot even be
-   *stated* without brackets and precedence. Parsing is only a problem because we
-   chose infix — `·(a, +(b,c))` needs no rules.
-3. **The field axioms** — Equality (`ax.E1–E4`), Addition (`ax.A1–A4`),
-   Multiplication (`ax.M1–M4`), Bridge (`ax.D1` distributivity, `ax.N1` `0≠1`).
-   Each carries a collapsed, model-grounded `intuition`.
-4. **Definitions** — subtraction (`def.sub`, rests on `ax.A4`) and division
-   (`def.div`, rests on `ax.M4`; the reciprocal `1/a = a⁻¹` is its special case,
-   noted there). Not new operations.
-5. **Theorems** — derived results, not padding: `th.1` (`0·a = 0`, *forced* by the
-   axioms) and `th.2` (`-a = (-1)·a`, the additive inverse as "multiply by −1" —
-   a cross-world bridge via distributivity). Each shows a collapsed derivation and
-   cites what it rests on. (Notation identities like `1/a = a⁻¹` stay in the
-   relevant definition's note, not here.)
+0. **Preliminaries** (`pre.1` *The elements*, `pre.2` *Variables & constants*) — no
+   properties beyond what the axioms give; `0`/`1` by axiom, `2` a name for `1+1`,
+   `−2` the additive inverse of `2`. Told apart by ordinary italic/upright (no house
+   typography; see Design decisions).
+1. **Operations & relations** — the given data: `+`, `·` (both `ℝ×ℝ→ℝ`), `=` and
+   `<` (relations `ℝ×ℝ→{true,false}`). Codes `op.add/mul/eq/lt`. Naming lives here:
+   summands, factors, coefficient. **`op.lt` also defines *positive* (`0<a`) and
+   *negative* (`a<0`)** — the terms live with the relation that makes them possible,
+   not in a `def.` card. There is no `def.sign`.
+2. **Infix convention** (`ix.1–6`) — reading rules (brackets, left-to-right,
+   precedence) + writing conventions (bracket a negative factor, no operator next to
+   a unary minus, coefficient in front). Before the axioms on purpose: association
+   and distribution cannot be *stated* without brackets and precedence.
+3. **The axioms** — Equality (`ax.E1–E4`), Addition (`A1–A4`), Multiplication
+   (`M1–M4`), Bridge (`D1` distributivity, `N1` `0≠1`), **Order (`O1` trichotomy,
+   `O2` transitivity, `O3` `+`-compat, `O4` `·`-compat)**, **Completeness (`C1`, the
+   supremum axiom)**. Field/order axioms carry a collapsed `intuition`. `O4`'s `0<c`
+   condition is exactly where "flip the inequality when multiplying by a negative"
+   comes from. `C1` is different in kind — it speaks of *sets*, not elements (the
+   analysis seam), and its intuition motivates via the ℚ hole at `√2`.
+4. **Definitions** — subtraction (`def.sub`, rests on `A4`) and division (`def.div`,
+   rests on `M4`; reciprocal noted there). Not new operations. (`positive`/`negative`
+   are *not* here — see step 1.)
+5. **Theorems** — field: `th.1` (`0·a=0`), `th.2` (`−a=(−1)·a`), `th.4`
+   (`(−1)(−1)=1`, "minus times minus is plus", proved with **no order** — the audit's
+   showcase). Order: `th.3` (the opposite flips positive/negative, `0<a ⟺ −a<0` —
+   the untangler: the unary minus does not *make* things negative, it swaps),
+   `th.5` (a non-zero square is positive — why `a·a+1=0` has no solution), `th.6`
+   (`0<1`, a corollary of `th.5`). Each shows a collapsed derivation and cites what
+   it rests on (by **code**; the earlier `th.zero-times`-by-id citation bug is fixed).
 
 ## Design decisions (settled)
 
@@ -104,25 +115,44 @@ The page tells one linear story:
     went education → APL, and mainstream maths declined it.
   - **Principle: do not invent notation students meet nowhere else.** Use the
     notation they will actually read, and *explain* it.
+- **The carrier is `R`, discovered to be `ℝ`; tag `≙ ℝ`.** The meta introduces the
+  set as `R` and reveals `R = ℝ` at the end. The axiom LaTeX still quantifies over
+  `\mathbb{R}` (kept for readability). *Open tidy:* strict R-purism would use `R` in
+  every `forall`; deferred as cheap and cosmetic.
+- **"Sign" / "Vorzeichen" is retired entirely (2026-07-18).** Student-facing data
+  never uses the word — not even reclaimed for the order meaning. `positive` /
+  `negative` / `zero` carry everything, each defined via `<` on `op.lt`, made a
+  clean three-way split by trichotomy (`ax.O1`). Retiring the word sidesteps the
+  whole *Vorzeichen / Rechenzeichen* baggage. (This doc still discusses "sign" as a
+  design term — deliberate; ids like `th.opposite-flips`, `ix.negative-factor` were
+  renamed to keep the word out even internally.)
 - **Naming vocabulary**, attached where it belongs: summands (`op.add`), factors +
   coefficient (`op.mul`), variable vs constant (`pre.1`), unary minus (`ax.A4`),
-  multiplicative inverse (`ax.M4`), reciprocal (`def.div`).
+  multiplicative inverse (`ax.M4`), reciprocal (`def.div`), positive/negative
+  (`op.lt`).
 - **Codes** are prefixed by category: `pre.`, `op.`, `ix.`, `ax.`, `def.`, `th.`.
   Bilingual (English + Swiss German). Prose uses `$…$` for math and **no markdown**
   — the `RichText` renderer only does math, so `**bold**`/`*italic*` and em dashes
   `—` render literally (em dashes were purged for looking like `−`).
 
+## Built (2026-07-18) — order + completeness
+
+Order + completeness were once deferred; they are now **in** (see What it is). The
+order relation `op.lt`, the four order axioms `ax.O1–O4`, the completeness axiom
+`ax.C1`, the `positive`/`negative` definition on `op.lt`, and the order theorems
+`th.3/th.5/th.6` plus the field theorem `th.4` all shipped. The tag moved to `≙ ℝ`.
+
 ## Deferred layers (not built)
 
-- **Order + completeness** — the two axioms that upgrade "a field" to ℝ. Needed
-  for `a ≥ 0`, inequalities, and the *existence* of roots (`√2` is not in ℚ).
 - **The ℕ-indexed layer** above the field — multiples (`3a`), powers (`aⁿ`), and
   numerals (`2 := 1+1`, decimal). These all smuggle in ℕ (counting/repetition),
   so they sit *above* fundament0, not inside it. Natural-power laws are theorems
-  from the definition plus `ax.M1`/`ax.M2` (by induction, no new axioms); roots
-  and rational powers need the order+completeness slab first. The existing
-  `laws.json` (`def.power` → `thm.power-same-base`, `def.extended-exponents`
-  "extension by permanence", `def.root`) is the worked reference.
+  from the definition plus `ax.M1`/`ax.M2` (by induction, no new axioms); roots and
+  rational powers need completeness, **which now exists** (`ax.C1`). Draft parked at
+  `src/data/naturals/powers.json` (still carries the rejected `pre.nat` import card;
+  see the powers-tower design in memory). The existing `laws.json` (`def.power` →
+  `thm.power-same-base`, `def.extended-exponents`, `def.root`) is the worked
+  reference.
 
 ## The untangling backlog
 
@@ -151,7 +181,10 @@ intuition / notation), and needs sorting before it is built.
   **does not exist in the notation**. "Sign" is a property of an *element*
   (semantic; needs order *and* the field's `0`), never a feature of a *mark*.
   Calling the `−` in `−2` a sign fuses syntax with semantics and *causes* the
-  `−2² = −4` surprise. Shipped in `ax.A4`, `th.2`, `ix.4`.
+  `−2² = −4` surprise. Shipped in `ax.A4`, `th.2`, `ix.4`. **Update 2026-07-18:**
+  `positive`/`negative` now built via order (`op.lt` + `ax.O1`), with `th.3`
+  proving `−a` is negative *only* when `a` is positive; and the word "sign" was
+  retired from the data entirely (see Design decisions).
 
 - **Atomic object, composite name (2026-07-17) — the sharpest card in the design,
   waiting on the power layer.** ℝ's negative elements are full citizens: atomic,
@@ -202,22 +235,24 @@ intuition / notation), and needs sorting before it is built.
   keep `a^{-1}` at the axiom; introduce `1/a` as the derived equivalent later.
   Proposed word split: "multiplicative inverse" + `a^{-1}` (primitive) vs
   "reciprocal" + `1/a` (derived) — so the name "reciprocal" travels with `1/a`.
-- **Sign vs unary minus — SUPERSEDED (2026-07-17).** The old rule ("reserve 'sign'
-  for literals; only `-b` with a *variable* operand is the unary minus") was too
-  weak, and wrong in the same direction as `\nnum`: the `−` in `−2` is the unary
-  *operator* too, exactly as in `−b`. **New rule: "sign" describes *elements*,
-  never *marks*.** "The sign of `−2` is negative" ✓ — an order fact about the
-  element. "The `−` in `−2` is a sign" ✗ — there is no such thing.
-  - Note the German-school angle: the *Vorzeichen / Rechenzeichen* tradition names
-    a distinction its own notation does not implement, which is precisely why
-    Beberman and Iverson had to invent `⁻`/`¯` to build the thing the tradition
-    talks about. Where the tradition is right is **binary vs unary** (`def.sub` vs
-    `ax.A4`) — that distinction is real, and TI enforces it in hardware with two
-    separate keys.
+- **Sign vs unary minus — SUPERSEDED, then RETIRED (2026-07-18).** The old rule
+  ("reserve 'sign' for literals; only `-b` with a *variable* operand is the unary
+  minus") was too weak, wrong in the same direction as `\nnum`: the `−` in `−2` is
+  the unary *operator* too, exactly as in `−b`. The interim fix ("'sign' describes
+  *elements*, never *marks*") was then dropped in favour of dropping the word
+  outright — the data now uses only `positive`/`negative`/`zero`, defined via `<`.
+  - Still worth remembering: the German-school *Vorzeichen / Rechenzeichen*
+    tradition names a distinction its own notation does not implement (which is why
+    Beberman and Iverson had to invent `⁻`/`¯`). Where the tradition is right is
+    **binary vs unary** (`def.sub` vs `ax.A4`) — real, and TI enforces it in
+    hardware with two separate keys.
 
 ## Verifying edits
 
 Data is plain JSON consumed directly by the view (no Zod schema yet, unlike the
 skills tower). After editing: run a KaTeX render sweep over every `$…$` fragment
-and every `latex` field, `vue-tsc --noEmit`, and a `vite` serve check. Watch for
-stray markdown/em dashes (they render literally).
+and every `latex`/`derivation`/`cond`/`forall`/`avoid`/`prefer` field **with no
+macros defined** (proves nothing depends on `\num`/`\nnum` again), `vue-tsc
+--noEmit`, and a `vite build`. Also check: no em dashes / stray markdown (they
+render literally; `—` also reads as `−`), no `ß` in German, no "sign"/"Vorzeichen"
+leak, and every `derivedFrom` code resolves against an `ax.`/`th.` **code**.
