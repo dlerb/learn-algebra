@@ -5,83 +5,62 @@ import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
-import data from '../data/fundament0/axioms.json'
-import convData from '../data/fundament0/conventions.json'
-import thmData from '../data/fundament0/theorems.json'
+import data from '../data/fundament0/cards.json'
 
-// Isolated inspection page for the fundament0 slab (src/data/fundament0/
-// axioms.json): the definition of a field over ℝ. Deliberately plain — a few
-// cards introducing the operations + , · and the congruence =, then the axioms
-// as cards under four group headings (equality / addition / multiplication /
-// bridge). No further classification. Reads its own JSON, not the wired `laws`.
+// Isolated inspection page for the fundament0 layer. One source file
+// (cards.json), one containment tree: layer → sections → groups → cards.
+// `kind` is the section (preliminary/signature/convention/axiom/definition/
+// theorem); `concerns` is a per-card multi-tag (add/mul/eq/order/completeness).
+// Two filter rows (kind, concerns) dim non-matching cards. Page order is
+// array order, top to bottom. See docs/fundament0.md.
 
-interface Preliminary { code: string; name: LocalizedString; note: LocalizedString }
-interface Operation { code: string; symbol: string; type: string; name: LocalizedString; note: LocalizedString }
-interface InfixItem { id: string; code: string; name: LocalizedString; latex?: string; avoid?: string; prefer?: string; note?: LocalizedString }
-interface Infix { title: LocalizedString; blurb: LocalizedString; items: InfixItem[] }
-interface Group { slug: string; title: LocalizedString; blurb: LocalizedString }
-interface Axiom {
-  id: string; code: string; group: string
-  name: LocalizedString; latex: string; forall?: string; note?: LocalizedString; intuition?: LocalizedString
+interface Card {
+  code: string; concerns?: string[]
+  symbol?: string; type?: string
+  name: LocalizedString
+  latex?: string; avoid?: string; prefer?: string
+  forall?: string; cond?: string; basedOn?: string[]
+  derivation?: string; derivedFrom?: string[]
+  note?: LocalizedString; intuition?: LocalizedString
 }
-interface ConvItem {
-  id: string; code: string; group: string
-  name: LocalizedString; latex: string; cond?: string; basedOn?: string[]; note?: LocalizedString
-}
-interface Theorem {
-  id: string; code: string
-  name: LocalizedString; latex: string; forall?: string; derivation?: string; derivedFrom?: string[]; note?: LocalizedString
-}
+interface Group { slug: string; title?: LocalizedString; blurb?: LocalizedString; cards: Card[] }
+interface Section { kind: string; title: LocalizedString; blurb?: LocalizedString; note?: LocalizedString; groups: Group[] }
 
-const meta = data.meta as unknown as { characterizes: LocalizedString; note: LocalizedString }
-const preliminaries = data.preliminaries as unknown as Preliminary[]
-const operations = data.operations as unknown as Operation[]
-const infix = data.infix as unknown as Infix
-const groups = data.groups as unknown as Group[]
-const axioms = data.axioms as unknown as Axiom[]
-
-const convMeta = convData.meta as unknown as { note: LocalizedString }
-const convGroups = convData.groups as unknown as Group[]
-const convItems = convData.items as unknown as ConvItem[]
-
-const theoremsMeta = thmData.meta as unknown as { note: LocalizedString }
-const theorems = thmData.items as unknown as Theorem[]
+const meta = data.layer.meta as unknown as { characterizes: LocalizedString; note: LocalizedString }
+const sections = data.sections as unknown as Section[]
 
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
-// Resolve a cited code (axiom or theorem) to "ax.A4 · Inverse element of addition".
+// Flat view of every card with its section kind, for citation labels + filters.
+const allCards = computed(() =>
+  sections.flatMap(s => s.groups.flatMap(g => g.cards.map(c => ({ card: c, kind: s.kind })))),
+)
 const codeLabel = (code: string) => {
-  const x = axioms.find(a => a.code === code) ?? theorems.find(a => a.code === code)
-  return x ? `${code} · ${t(x.name)}` : code
+  const x = allCards.value.find(e => e.card.code === code)
+  return x ? `${code} · ${t(x.card.name)}` : code
 }
 
-const sections = computed(() =>
-  groups.map(g => ({
-    slug: g.slug,
-    title: t(g.title),
-    blurb: t(g.blurb),
-    items: axioms.filter(a => a.group === g.slug),
-  })).filter(s => s.items.length > 0),
-)
+// A single-group section shows its cards directly (no sub-heading); its group
+// blurb, if any, is lifted onto the section. Multi-group sections show headings.
+const sectionBlurb = (s: Section) => s.blurb ?? (s.groups.length === 1 ? s.groups[0].blurb : undefined)
+const showGroupHeads = (s: Section) => s.groups.length > 1
 
-const convSections = computed(() =>
-  convGroups.map(g => ({
-    slug: g.slug,
-    title: t(g.title),
-    blurb: t(g.blurb),
-    items: convItems.filter(i => i.group === g.slug),
-  })).filter(s => s.items.length > 0),
-)
+// Filters. Both sets start full (nothing dimmed). Toggling narrows.
+const kinds = sections.map(s => s.kind)
+const concernTokens = ['add', 'mul', 'eq', 'order', 'completeness']
+const kindActive = ref(new Set(kinds))
+const concernActive = ref(new Set(concernTokens))
+const toggleKind = (k: string) => (kindActive.value.has(k) ? kindActive.value.delete(k) : kindActive.value.add(k))
+const toggleConcern = (c: string) => (concernActive.value.has(c) ? concernActive.value.delete(c) : concernActive.value.add(c))
+const matched = (c: Card, kind: string) =>
+  kindActive.value.has(kind) && (c.concerns ? c.concerns.some(x => concernActive.value.has(x)) : true)
 
-// Per-card disclosure (id/code/group + raw JSON), matching Fundamentals.
+// Per-card disclosure, keyed by code (unique).
 const open = ref(new Set<string>())
 const jsonOpen = ref(new Set<string>())
 const intuitionOpen = ref(new Set<string>())
 const derivOpen = ref(new Set<string>())
-const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : open.value.add(id))
-const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
-const toggleIntuition = (id: string) => (intuitionOpen.value.has(id) ? intuitionOpen.value.delete(id) : intuitionOpen.value.add(id))
-const toggleDeriv = (id: string) => (derivOpen.value.has(id) ? derivOpen.value.delete(id) : derivOpen.value.add(id))
+const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add(id))
 const json = (x: unknown) => JSON.stringify(x, null, 2)
 </script>
 
@@ -93,181 +72,109 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
         <span class="tag field">≙ {{ t(meta.characterizes) }}</span>
       </div>
       <p class="lead"><RichText :text="t(meta.note)" /></p>
+
+      <div class="filters">
+        <div class="filter-row">
+          <span class="filter-label">kind</span>
+          <button v-for="k in kinds" :key="k" class="fchip" :class="{ off: !kindActive.has(k) }" @click="toggleKind(k)">{{ k }}</button>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">concerns</span>
+          <button v-for="c in concernTokens" :key="c" class="fchip concern" :class="{ off: !concernActive.has(c) }" @click="toggleConcern(c)">{{ c }}</button>
+        </div>
+      </div>
     </header>
 
-    <!-- PRELIMINARIES: what a variable / constant is -->
-    <section class="group">
-      <div class="group-title"><h3>Preliminaries</h3></div>
-      <div class="cards">
-        <article v-for="p in preliminaries" :key="p.code" class="card">
-          <div class="card-top"><span class="eyebrow">{{ p.code }}</span></div>
-          <div class="card-head"><h4>{{ t(p.name) }}</h4></div>
-          <p class="note"><RichText :text="t(p.note)" /></p>
-        </article>
-      </div>
-    </section>
-
-    <!-- OPERATIONS: the data of the structure -->
-    <section>
-      <div class="group-title"><h3>Operations &amp; relation</h3></div>
-      <div class="ops">
-        <article v-for="op in operations" :key="op.symbol" class="op">
-          <div class="op-eyebrow">{{ op.code }}</div>
-          <div class="op-top">
-            <span class="op-sym"><MathExpr :latex="op.symbol" /></span>
-            <span class="op-type"><MathExpr :latex="op.type" /></span>
-          </div>
-          <div class="op-name">{{ t(op.name) }}</div>
-          <p class="op-note"><RichText :text="t(op.note)" /></p>
-        </article>
-      </div>
-    </section>
-
-    <!-- INFIX: parsing rules, needed before the axioms -->
-    <section class="group">
+    <section v-for="s in sections" :key="s.kind" class="group">
       <div class="group-title">
-        <h3>{{ t(infix.title) }}</h3>
-        <NPopover trigger="click" placement="bottom-start">
-          <template #trigger><button class="info" aria-label="About the infix convention">i</button></template>
-          <div class="pop"><RichText :text="t(infix.blurb)" /></div>
+        <h3>{{ t(s.title) }}</h3>
+        <NPopover v-if="sectionBlurb(s)" trigger="click" placement="bottom-start">
+          <template #trigger><button class="info" aria-label="About this section">i</button></template>
+          <div class="pop"><RichText :text="t(sectionBlurb(s)!)" /></div>
         </NPopover>
       </div>
-      <div class="cards">
-        <article v-for="it in infix.items" :key="it.id" class="card">
-          <div class="card-top">
-            <span class="eyebrow">{{ it.code }}</span>
-            <button class="disclose" @click="toggle(it.id)">{{ open.has(it.id) ? 'less' : 'details' }}</button>
-          </div>
-          <div class="card-head"><h4>{{ t(it.name) }}</h4></div>
-          <div v-if="it.latex" class="statement"><MathExpr :latex="it.latex" display /></div>
-          <div v-else-if="it.avoid" class="rewrite">
-            <div class="ex bad"><span class="mark">✗</span><MathExpr :latex="it.avoid" /></div>
-            <div class="ex good"><span class="mark">✓</span><MathExpr :latex="it.prefer!" /></div>
-          </div>
-          <p v-if="it.note" class="note"><RichText :text="t(it.note)" /></p>
-          <div v-if="open.has(it.id)" class="details">
-            <dl class="fields">
-              <div class="field"><dt>id</dt><dd><code>{{ it.id }}</code></dd></div>
-              <div class="field"><dt>code</dt><dd>{{ it.code }}</dd></div>
-            </dl>
-            <button class="json-toggle" @click="toggleJson(it.id)">{{ jsonOpen.has(it.id) ? 'hide json' : 'json' }}</button>
-            <pre v-if="jsonOpen.has(it.id)" class="json">{{ json(it) }}</pre>
-          </div>
-        </article>
-      </div>
-    </section>
+      <p v-if="s.note" class="section-note"><RichText :text="t(s.note)" /></p>
 
-    <!-- AXIOMS: grouped -->
-    <section v-for="s in sections" :key="s.slug" class="group">
-      <div class="group-title">
-        <h3>{{ s.title }}</h3>
-        <NPopover trigger="click" placement="bottom-start">
-          <template #trigger><button class="info" aria-label="About this group">i</button></template>
-          <div class="pop">{{ s.blurb }}</div>
-        </NPopover>
-      </div>
-      <div class="cards">
-        <article v-for="a in s.items" :key="a.id" class="card">
-          <div class="card-top">
-            <span class="eyebrow">{{ a.code }}</span>
-            <button class="disclose" @click="toggle(a.id)">{{ open.has(a.id) ? 'less' : 'details' }}</button>
-          </div>
-          <div class="card-head"><h4>{{ t(a.name) }}</h4></div>
-          <div class="statement"><MathExpr :latex="a.latex" display /></div>
-          <div v-if="a.forall" class="forall">for all <MathExpr :latex="a.forall" /></div>
-          <p v-if="a.note" class="note"><RichText :text="t(a.note)" /></p>
-          <button v-if="a.intuition" class="intuition-toggle" @click="toggleIntuition(a.id)">{{ intuitionOpen.has(a.id) ? '▾ intuition' : '▸ intuition' }}</button>
-          <div v-if="a.intuition && intuitionOpen.has(a.id)" class="intuition"><RichText :text="t(a.intuition)" /></div>
-          <div v-if="open.has(a.id)" class="details">
-            <dl class="fields">
-              <div class="field"><dt>id</dt><dd><code>{{ a.id }}</code></dd></div>
-              <div class="field"><dt>code</dt><dd>{{ a.code }}</dd></div>
-              <div class="field"><dt>group</dt><dd>{{ a.group }}</dd></div>
-            </dl>
-            <button class="json-toggle" @click="toggleJson(a.id)">{{ jsonOpen.has(a.id) ? 'hide json' : 'json' }}</button>
-            <pre v-if="jsonOpen.has(a.id)" class="json">{{ json(a) }}</pre>
-          </div>
-        </article>
-      </div>
-    </section>
+      <template v-for="g in s.groups" :key="g.slug">
+        <div v-if="showGroupHeads(s)" class="subhead">
+          <h4>{{ g.title ? t(g.title) : g.slug }}</h4>
+          <NPopover v-if="g.blurb" trigger="click" placement="bottom-start">
+            <template #trigger><button class="info" aria-label="About this group">i</button></template>
+            <div class="pop"><RichText :text="t(g.blurb)" /></div>
+          </NPopover>
+        </div>
 
-    <!-- BUILT ON TOP: definitions (not axioms) -->
-    <div class="divider">
-      <h3>Built on top: definitions</h3>
-      <p><RichText :text="t(convMeta.note)" /></p>
-    </div>
+        <div :class="s.kind === 'signature' ? 'ops' : 'cards'">
+          <!-- SIGNATURE: operation / relation cards -->
+          <template v-if="s.kind === 'signature'">
+            <article v-for="c in g.cards" :key="c.code" class="op" :class="{ dimmed: !matched(c, s.kind) }">
+              <div class="op-eyebrow">{{ c.code }}</div>
+              <div class="op-top">
+                <span class="op-sym"><MathExpr :latex="c.symbol!" /></span>
+                <span class="op-type"><MathExpr :latex="c.type!" /></span>
+              </div>
+              <div class="op-name">{{ t(c.name) }}</div>
+              <p class="op-note"><RichText :text="t(c.note!)" /></p>
+            </article>
+          </template>
 
-    <section v-for="s in convSections" :key="s.slug" class="group">
-      <div class="group-title">
-        <h3>{{ s.title }}</h3>
-        <NPopover trigger="click" placement="bottom-start">
-          <template #trigger><button class="info" aria-label="About this group">i</button></template>
-          <div class="pop">{{ s.blurb }}</div>
-        </NPopover>
-      </div>
-      <div class="cards">
-        <article v-for="it in s.items" :key="it.id" class="card">
-          <div class="card-top">
-            <span class="eyebrow">{{ it.code }}</span>
-            <button class="disclose" @click="toggle(it.id)">{{ open.has(it.id) ? 'less' : 'details' }}</button>
-          </div>
-          <div class="card-head"><h4>{{ t(it.name) }}</h4></div>
-          <div class="statement"><MathExpr :latex="it.latex" display /></div>
-          <div v-if="it.cond" class="forall">for <MathExpr :latex="it.cond" /></div>
-          <p v-if="it.note" class="note"><RichText :text="t(it.note)" /></p>
-          <div v-if="it.basedOn" class="basedon">
-            <span class="basedon-label">rests on</span>
-            <span v-for="c in it.basedOn" :key="c" class="chip">{{ codeLabel(c) }}</span>
-          </div>
-          <div v-if="open.has(it.id)" class="details">
-            <dl class="fields">
-              <div class="field"><dt>id</dt><dd><code>{{ it.id }}</code></dd></div>
-              <div class="field"><dt>code</dt><dd>{{ it.code }}</dd></div>
-              <div class="field"><dt>group</dt><dd>{{ it.group }}</dd></div>
-              <div v-if="it.basedOn" class="field"><dt>basedOn</dt><dd>{{ it.basedOn.join(', ') }}</dd></div>
-            </dl>
-            <button class="json-toggle" @click="toggleJson(it.id)">{{ jsonOpen.has(it.id) ? 'hide json' : 'json' }}</button>
-            <pre v-if="jsonOpen.has(it.id)" class="json">{{ json(it) }}</pre>
-          </div>
-        </article>
-      </div>
-    </section>
+          <!-- PRELIMINARY: plain note cards -->
+          <template v-else-if="s.kind === 'preliminary'">
+            <article v-for="c in g.cards" :key="c.code" class="card" :class="{ dimmed: !matched(c, s.kind) }">
+              <div class="card-top"><span class="eyebrow">{{ c.code }}</span></div>
+              <div class="card-head"><h4>{{ t(c.name) }}</h4></div>
+              <p class="note"><RichText :text="t(c.note!)" /></p>
+            </article>
+          </template>
 
-    <!-- THEOREMS: derived from the axioms and definitions -->
-    <div class="divider">
-      <h3>Theorems</h3>
-      <p><RichText :text="t(theoremsMeta.note)" /></p>
-    </div>
-    <section class="group">
-      <div class="cards">
-        <article v-for="th in theorems" :key="th.id" class="card">
-          <div class="card-top">
-            <span class="eyebrow">{{ th.code }}</span>
-            <button class="disclose" @click="toggle(th.id)">{{ open.has(th.id) ? 'less' : 'details' }}</button>
-          </div>
-          <div class="card-head"><h4>{{ t(th.name) }}</h4></div>
-          <div class="statement"><MathExpr :latex="th.latex" display /></div>
-          <div v-if="th.forall" class="forall">for all <MathExpr :latex="th.forall" /></div>
-          <p v-if="th.note" class="note"><RichText :text="t(th.note)" /></p>
-          <button v-if="th.derivation" class="intuition-toggle" @click="toggleDeriv(th.id)">{{ derivOpen.has(th.id) ? '▾ derivation' : '▸ derivation' }}</button>
-          <div v-if="th.derivation && derivOpen.has(th.id)" class="derivation">
-            <MathExpr :latex="th.derivation" display />
-            <div v-if="th.derivedFrom" class="basedon">
-              <span class="basedon-label">from</span>
-              <span v-for="c in th.derivedFrom" :key="c" class="chip">{{ codeLabel(c) }}</span>
-            </div>
-          </div>
-          <div v-if="open.has(th.id)" class="details">
-            <dl class="fields">
-              <div class="field"><dt>id</dt><dd><code>{{ th.id }}</code></dd></div>
-              <div class="field"><dt>code</dt><dd>{{ th.code }}</dd></div>
-              <div v-if="th.derivedFrom" class="field"><dt>derivedFrom</dt><dd>{{ th.derivedFrom.join(', ') }}</dd></div>
-            </dl>
-            <button class="json-toggle" @click="toggleJson(th.id)">{{ jsonOpen.has(th.id) ? 'hide json' : 'json' }}</button>
-            <pre v-if="jsonOpen.has(th.id)" class="json">{{ json(th) }}</pre>
-          </div>
-        </article>
-      </div>
+          <!-- STATEMENT cards: convention / axiom / definition / theorem -->
+          <template v-else>
+            <article v-for="c in g.cards" :key="c.code" class="card" :class="{ dimmed: !matched(c, s.kind) }">
+              <div class="card-top">
+                <span class="eyebrow">{{ c.code }}</span>
+                <button class="disclose" @click="toggle(open, c.code)">{{ open.has(c.code) ? 'less' : 'details' }}</button>
+              </div>
+              <div class="card-head"><h4>{{ t(c.name) }}</h4></div>
+
+              <div v-if="c.latex" class="statement"><MathExpr :latex="c.latex" display /></div>
+              <div v-else-if="c.avoid" class="rewrite">
+                <div class="ex bad"><span class="mark">✗</span><MathExpr :latex="c.avoid" /></div>
+                <div class="ex good"><span class="mark">✓</span><MathExpr :latex="c.prefer!" /></div>
+              </div>
+
+              <div v-if="c.forall" class="forall">for all <MathExpr :latex="c.forall" /></div>
+              <div v-if="c.cond" class="forall">for <MathExpr :latex="c.cond" /></div>
+              <p v-if="c.note" class="note"><RichText :text="t(c.note)" /></p>
+
+              <div v-if="c.basedOn" class="basedon">
+                <span class="basedon-label">rests on</span>
+                <span v-for="r in c.basedOn" :key="r" class="chip">{{ codeLabel(r) }}</span>
+              </div>
+
+              <button v-if="c.intuition" class="intuition-toggle" @click="toggle(intuitionOpen, c.code)">{{ intuitionOpen.has(c.code) ? '▾ intuition' : '▸ intuition' }}</button>
+              <div v-if="c.intuition && intuitionOpen.has(c.code)" class="intuition"><RichText :text="t(c.intuition)" /></div>
+
+              <button v-if="c.derivation" class="intuition-toggle" @click="toggle(derivOpen, c.code)">{{ derivOpen.has(c.code) ? '▾ derivation' : '▸ derivation' }}</button>
+              <div v-if="c.derivation && derivOpen.has(c.code)" class="derivation">
+                <MathExpr :latex="c.derivation" display />
+                <div v-if="c.derivedFrom" class="basedon">
+                  <span class="basedon-label">from</span>
+                  <span v-for="r in c.derivedFrom" :key="r" class="chip">{{ codeLabel(r) }}</span>
+                </div>
+              </div>
+
+              <div v-if="open.has(c.code)" class="details">
+                <dl class="fields">
+                  <div class="field"><dt>code</dt><dd>{{ c.code }}</dd></div>
+                  <div v-if="c.concerns" class="field"><dt>concerns</dt><dd>{{ c.concerns.join(', ') }}</dd></div>
+                </dl>
+                <button class="json-toggle" @click="toggle(jsonOpen, c.code)">{{ jsonOpen.has(c.code) ? 'hide json' : 'json' }}</button>
+                <pre v-if="jsonOpen.has(c.code)" class="json">{{ json(c) }}</pre>
+              </div>
+            </article>
+          </template>
+        </div>
+      </template>
     </section>
   </div>
 </template>
@@ -282,13 +189,25 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .tag.field { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
 .lead { font-size: .88rem; line-height: 1.55; color: var(--text-muted); margin: .5rem 0 0; max-width: 72ch; }
 
+/* Filters */
+.filters { margin-top: 1rem; display: grid; gap: .4rem; }
+.filter-row { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.filter-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; width: 4.5rem; }
+.fchip { font-size: .72rem; padding: .16rem .55rem; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.fchip.concern { border-color: var(--border-strong); background: var(--text-muted); }
+.fchip.off { background: transparent; color: var(--text-muted); border-color: var(--border-strong); }
+.fchip:hover { filter: brightness(1.08); }
+
 .group-title { display: flex; align-items: center; gap: .4rem; margin: 1.6rem 0 .7rem; }
 .group-title h3 { font-size: .95rem; font-weight: 700; color: var(--text); margin: 0; }
+.section-note { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: -.3rem 0 .8rem; max-width: 74ch; }
+.subhead { display: flex; align-items: center; gap: .4rem; margin: 1rem 0 .55rem; }
+.subhead h4 { font-size: .8rem; font-weight: 600; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: .03em; }
 .info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
 .info:hover { color: var(--accent); border-color: var(--accent); }
 .pop { max-width: 280px; font-size: .8rem; line-height: 1.45; color: var(--text); }
 
-/* Operations */
+/* Signature cards */
 .ops { display: grid; grid-template-columns: 1fr; gap: .7rem; align-items: start; }
 @media (min-width: 560px) { .ops { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); } }
 .op { border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem .85rem; background: var(--surface); }
@@ -299,8 +218,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .op-name { font-size: .85rem; font-weight: 600; margin-top: .25rem; }
 .op-note { font-size: .78rem; line-height: 1.45; color: var(--text-muted); margin: .35rem 0 0; }
 
-
-/* Axiom cards */
+/* Statement cards */
 .cards { display: grid; grid-template-columns: 1fr; gap: .7rem; }
 @media (min-width: 560px) { .cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
 .card { position: relative; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem .9rem .8rem; background: var(--surface); }
@@ -318,20 +236,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .forall { font-size: .74rem; color: var(--text-muted); margin-top: .35rem; }
 .note { font-size: .8rem; color: var(--text-muted); margin: .55rem 0 0; line-height: 1.5; }
 
-/* Theorem derivation — the proof chain, collapsed by default */
 .derivation { margin-top: .45rem; padding: .4rem .55rem; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow-x: auto; }
-
-/* Per-axiom intuition — collapsed by default, informal (recognition, not proof) */
-.intuition-toggle { margin-top: .5rem; font-size: .72rem; color: var(--accent); background: none; border: none; cursor: pointer; padding: .1rem 0; }
+.intuition-toggle { margin-top: .5rem; font-size: .72rem; color: var(--accent); background: none; border: none; cursor: pointer; padding: .1rem 0; display: block; }
 .intuition-toggle:hover { text-decoration: underline; }
 .intuition { margin-top: .45rem; padding: .5rem .6rem; background: var(--chip-bg); border-radius: 6px; font-size: .78rem; line-height: 1.5; color: var(--text); }
 
-/* Divider before the built-on-top layer */
-.divider { margin: 2.4rem 0 .3rem; padding-top: 1.1rem; border-top: 2px solid var(--border-strong); }
-.divider h3 { font-size: 1.05rem; font-weight: 700; margin: 0 0 .3rem; color: var(--text); }
-.divider p { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: 0; max-width: 74ch; }
-
-/* basedOn chips on definition cards */
 .basedon { display: flex; align-items: baseline; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
 .basedon-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .chip { font-size: .7rem; padding: .1rem .45rem; background: var(--chip-bg); color: var(--text-muted); border-radius: 999px; }
@@ -341,8 +250,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .field { display: grid; grid-template-columns: 92px 1fr; gap: .5rem; align-items: baseline; }
 .field dt { font-size: .7rem; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .field dd { margin: 0; font-size: .8rem; color: var(--text); }
-.field dd code { font-size: .74rem; color: var(--text-muted); }
 .json-toggle { margin-top: .55rem; font-size: .68rem; color: var(--text-muted); background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: .12rem .45rem; cursor: pointer; }
 .json-toggle:hover { color: var(--text); }
 .json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: #374151; }
+
+/* Filter dimming */
+.dimmed { opacity: .2; transition: opacity .15s; }
 </style>
