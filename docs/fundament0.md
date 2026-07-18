@@ -72,6 +72,47 @@ The page tells one linear story:
    (`0<1`, a corollary of `th.5`). Each shows a collapsed derivation and cites what
    it rests on (by **code**; the earlier `th.zero-times`-by-id citation bug is fixed).
 
+## Data structure (one file, 2026-07-18)
+
+The three files (`axioms.json` / `conventions.json` / `theorems.json`) were
+collapsed into a single **`src/data/fundament0/cards.json`**, a uniform
+containment tree — the flat structure discussion (see git log) landed here:
+
+```
+layer → sections[] → groups[] → cards[]
+```
+
+- **`layer`** — `{ id, meta }`; `meta.characterizes` (the `≙ ℝ` tag) + `meta.note`
+  (the intro). One layer per file; the powers layer will be its own file, and an
+  outer `layers[]` array (a manifest, not built yet) composes them.
+- **`sections[]`** — ordered; each has a `kind` and its `groups`. **Page order is
+  array order** at every level — no derived-from-folder kind, no layout config.
+  The seven→six kinds are the epistemic ladder: `preliminary · signature ·
+  convention · axiom · definition · theorem` (framing → given → agreed → assumed →
+  defined → derived). **`operation`+`relation` merged under `signature`** (both are
+  the *given vocabulary*; function-vs-predicate is a group split inside it).
+- **`groups[]`** — a *partition* of a kind's cards into titled sub-sections
+  (`slug`, `title?`, `blurb?`). Membership is **structural** — the card nests
+  inside its group, so the old `group` foreign-key field is gone. New sub-groups the
+  flat files couldn't show: signature→operations/relations, convention→
+  reading/writing, theorem→field/order.
+- **`cards[]`** — `code` is the sole key (`id` dropped; citations always used
+  codes). Each carries `concerns` + its kind-specific fields.
+
+Two orthogonal axes, deliberately represented differently:
+- **`kind` / `group`** = the *tree* (a partition → structural nesting). What a card
+  *is*, and which section it's filed under.
+- **`concerns[]`** = a *tagging* (multi-valued → a field). Tokens `add · mul · eq ·
+  order · completeness`; what a card is *about*. **Bridges are emergent**
+  (`|concerns|>1`) — every theorem, plus E4/D1/N1/O1/O3/O4/C1 — so the `bridge`
+  axiom group is no longer the only bridge, just a display home.
+
+The view (`Fundament0View.vue`) walks the tree with three card layouts (signature
+op-cards, plain preliminaries, one unified statement-card for convention/axiom/
+definition/theorem) and two **filter rows** — `kind` and `concerns` — that **dim**
+(not hide) non-matching cards. Deselect all concerns but `mul` for the cross-cutting
+"multiplication across all kinds" view the section layout can't produce.
+
 ## Design decisions (settled)
 
 - **Strict `\cdot`** in the axioms; juxtaposition `ab` is only mentioned on the
@@ -249,10 +290,18 @@ intuition / notation), and needs sorting before it is built.
 
 ## Verifying edits
 
-Data is plain JSON consumed directly by the view (no Zod schema yet, unlike the
-skills tower). After editing: run a KaTeX render sweep over every `$…$` fragment
-and every `latex`/`derivation`/`cond`/`forall`/`avoid`/`prefer` field **with no
-macros defined** (proves nothing depends on `\num`/`\nnum` again), `vue-tsc
---noEmit`, and a `vite build`. Also check: no em dashes / stray markdown (they
-render literally; `—` also reads as `−`), no `ß` in German, no "sign"/"Vorzeichen"
-leak, and every `derivedFrom` code resolves against an `ax.`/`th.` **code**.
+Data is one plain-JSON file, `cards.json`, consumed directly by the view (no Zod
+schema yet, unlike the skills tower). After editing, sweep the tree
+(`sections[].groups[].cards[]`) for:
+
+- **KaTeX** over every `$…$` fragment and every `latex`/`derivation`/`cond`/
+  `forall`/`avoid`/`prefer` field, **with no macros defined** (proves nothing
+  depends on `\num`/`\nnum` again).
+- **`vue-tsc --noEmit`** and **`vite build`** (a `vite` boot to `200` is the serve
+  check; no browser tooling installed for pixels).
+- No em dashes / stray markdown (they render literally; `—` also reads as `−`), no
+  `ß` in German, no "sign"/"Vorzeichen" leak.
+- Every `derivedFrom`/`basedOn` code resolves against a card `code`, and every card
+  code is unique.
+- Every non-`preliminary` card has `concerns`; every `concerns` token is one of
+  `add·mul·eq·order·completeness`.
