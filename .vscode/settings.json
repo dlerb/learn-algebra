@@ -1,0 +1,12 @@
+{
+  // The content JSON (src/data/**) carries long bilingual prose strings on single
+  // lines, which are unreadable in a split editor without wrapping.
+  "editor.wordWrap": "on",
+  // Wrapped continuation lines align under the start of the line, so nested JSON
+  // stays readable.
+  "editor.wrappingIndent": "indent",
+
+  // Prose lives in JSON string values here, so spell-check-style rulers and the
+  // 80-col guide are noise rather than help.
+  "editor.rulers": []
+}
