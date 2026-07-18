@@ -4,19 +4,27 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## fundament0 — current thread (2026-07-15)
+## fundament0 — current thread (2026-07-18)
 
 Isolated clean rebuild of the field-axioms bedrock, separate from the `laws.json`
 tower. Full rationale, structure, and design decisions in **`docs/fundament0.md`**.
-Built and live at `/fundament0`: operations + infix convention + field axioms +
-definitions + a collapsed per-axiom `intuition` field.
+Built and live at `/fundament0`: now the **full complete ordered field ℝ** (tag
+`≙ ℝ`) — operations + relations (`+ · = <`) + infix convention + field/order/
+completeness axioms + definitions + theorems, with a collapsed per-axiom
+`intuition` field.
 
 **Next (discussed, not started):**
 - [ ] Refine/extend the intuition layer per the untangling backlog below.
-- [ ] Powers (natural + integer) as the ℕ-indexed layer *above* the field — the
-  laws are theorems from the definition + `ax.M1`/`ax.M2` (induction), no new axioms.
-- [ ] Order + completeness slab (upgrades field → ℝ; unblocks roots).
-- [ ] Roots + rational powers (need the order+completeness slab first).
+- [ ] Powers (natural + integer) as the ℕ-indexed layer *above* the field — laws
+  are theorems from the definition + `ax.M1`/`ax.M2` (induction), no new axioms.
+  Draft parked at `src/data/naturals/powers.json` (rework needed; drop the rejected
+  `pre.nat` import card). Design (construction→choice→existence) in `docs/fundament0.md`.
+- [x] ~~Order + completeness slab (upgrades field → ℝ; unblocks roots).~~ **Built
+  2026-07-18:** `op.lt` + `ax.O1–O4` (O4's `0<c` condition = the flip rule) + `ax.C1`
+  supremum axiom; positive/negative defined on `op.lt`; theorems th.3 (opposite
+  flips positive/negative), th.4 (`(−1)(−1)=1`, no order used), th.5 (non-zero
+  square positive), th.6 (`0<1`). Tag moved to `≙ ℝ`; the word "sign" retired.
+- [ ] Roots + rational powers (need completeness — now available via `ax.C1`).
 
 **Untangling backlog** — the conflations that make algebra hard (a concept living
 in several layers at once; detail in `docs/fundament0.md`):
@@ -27,7 +35,8 @@ in several layers at once; detail in `docs/fundament0.md`):
 - [x] ~~Minus / sign / subtraction — one glyph, three meanings.~~ **Resolved 2026-07-17:
   there are only *two* minuses — unary (`ax.A4`, `-a` and `-2` alike) and binary
   (`def.sub`). The third ("a number's own sign") does not exist in the notation.
-  Shipped in `ax.A4` + `th.2` + `ix.4`.**
+  Shipped in `ax.A4` + `th.2` + `ix.4`. Extended 2026-07-18: positive/negative built
+  via order (`op.lt` + `ax.O1`, `th.3`), and the word "sign" retired from the data.**
 - [ ] **Atomic object, composite name** — ℝ's negatives are atomic elements, but the
   notation gives them no *name*, only a description (`-2` = unary minus applied to `2`).
   Hence `-2² = -4` (parse the name) vs `(-2)² = 4` (square the object). Brackets are the
@@ -37,8 +46,9 @@ in several layers at once; detail in `docs/fundament0.md`):
 - [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundament0) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable.
 - [ ] Inverse-notation asymmetry — unary-minus *prefix* for `+`, no prefix for `·` (postfix `a^{-1}`). `a^{-1}` (primitive) vs `1/a` (derived, needs division); reserve "reciprocal" for `1/a`.
 - [x] ~~Sign vs unary minus — "sign/Vorzeichen" = literal's sign only.~~ **Superseded
-  2026-07-17: too weak. `-2`'s minus is the unary *operator* too. New rule: "sign"
-  describes *elements* (semantic, needs order + zero), never *marks*.**
+  2026-07-17 (too weak: `-2`'s minus is the unary *operator* too), then RETIRED
+  2026-07-18: the word "sign" is dropped from the data entirely — only
+  positive/negative/zero, each defined via `<`. See `docs/fundament0.md`.**
 
 ---
 
