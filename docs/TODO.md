@@ -17,6 +17,14 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
 - [x] ~~Refine/extend the intuition layer.~~ **2026-07-22: every `intuition` that
   offers a *model* now names its own stopping point** (where the picture fails), in
   both layers. Rationale + the list in `docs/fundament0.md` (Design decisions).
+- [ ] **School-facing simplification of the fundament (user's instinct, 2026-07-22).**
+  The layers are deliberately deep and none of it is student-facing as written. The
+  hypothesis to test later: **most of this can be collapsed for school use while
+  keeping the important concepts *separate*** — the separation is the load-bearing
+  part (definition vs theorem vs picture; opposite vs negative; object vs name), the
+  depth is not. Related to but distinct from the second-field item below: that one
+  adds prose per card, this one asks which cards a school version needs at all.
+  Not started, no design yet.
 - [ ] **A second, classroom-facing prose field per axiom/theorem** (name TBD, a
   sibling of `intuition`, not a replacement). `intuition` is written for the reader of
   the page — a teacher, or the author checking dependencies; what is missing is the
