@@ -64,7 +64,9 @@ The page tells one linear story:
 4. **Definitions** — subtraction (`def.sub`, rests on `A4`) and division (`def.div`,
    rests on `M4`; reciprocal noted there). Not new operations. (`positive`/`negative`
    are *not* here — see step 1.)
-5. **Theorems** — field: `th.1` (`0·a=0`), `th.2` (`−a=(−1)·a`), `th.4`
+5. **Theorems** — field: `th.1` (`0·a=0`), `th.2` (`−a=(−1)·a`), **`th.7`
+   (zero product, `ab=0 ⟹ a=0 or b=0` — the converse of `th.1` and the licence for
+   solving by factoring; added 2026-07-22 with the ℤ layer)**, `th.4`
    (`(−1)(−1)=1`, "minus times minus is plus", proved with **no order** — the audit's
    showcase). Order: `th.3` (the opposite flips positive/negative, `0<a ⟺ −a<0` —
    the untangler: the unary minus does not *make* things negative, it swaps),
@@ -224,6 +226,10 @@ order relation `op.lt`, the four order axioms `ax.O1–O4`, the completeness axi
   roots, needs `ax.C1`), and decimal numerals. The old `laws.json` (`def.power` →
   `thm.power-same-base`, `def.extended-exponents`, `def.root`) remains the worked
   reference for those.
+- **The ℤ-exponent layer — BUILT 2026-07-22**, see `docs/integers.md`. `a⁰` and `a⁻ⁿ`
+  as *choices forced by permanence*; `th.inverse-is-power` retroactively justifies this
+  page's atomic `a^{-1}` notation. Only the ℚ floor (roots, existence, needs `ax.C1`)
+  is left.
 
 ## The untangling backlog
 

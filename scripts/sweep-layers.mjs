@@ -10,7 +10,7 @@
 import katex from 'katex'
 import fs from 'fs'
 
-const files = ['src/data/fundament0/cards.json', 'src/data/naturals/cards.json']
+const files = ['src/data/fundament0/cards.json', 'src/data/naturals/cards.json', 'src/data/integers/cards.json']
 const LATEX_FIELDS = ['latex','derivation','cond','forall','avoid','prefer','symbol','type']
 let errs = [], codes = new Map(), refs = [], n = 0
 const CONCERNS = new Set(['add','mul','eq','order','completeness'])
@@ -25,7 +25,7 @@ const scanProse = (s, where) => {
   if ((s.match(/\$/g) || []).length % 2) errs.push(`unpaired $ in ${where}`)
   if (/—/.test(s)) errs.push(`em dash in ${where}`)  // en dash ok in ranges (ix.1-3)
   if (/ß/.test(s)) errs.push(`sharp s in ${where}`)
-  if (/\b(sign|Vorzeichen)\b/i.test(s)) errs.push(`retired word "sign" in ${where}`)
+  if (/\b(signs?|Vorzeichen)\b/i.test(s)) errs.push(`retired word "sign" in ${where}`)
 }
 
 for (const f of files) {
