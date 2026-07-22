@@ -80,9 +80,47 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   the first layer with non-unique exponent *names*) · `th.pow-laws-rat` ·
   `th.base-fence`. Added `def.abs` to fundament0 for `√(x²) = |x|`.
   **The powers tower is complete: ℕ builds, ℤ finds, ℚ must be given.**
-- [ ] **After the fundament**: `aˣ` for irrational `x` is deliberately NOT reachable —
-  it needs continuity, a new *idea* and not a new axiom. Recorded as the tower's
-  stopping point in the rationals layer note. Only build if the app ever needs it.
+- [ ] **ℝ layer — real exponents (sketched 2026-07-22, not started; build LAST).**
+  Small, ~5 cards, and worth it mainly to stop the fundament ending on a dangling
+  "and then, analysis". **Behind the school-facing simplification**, which has far more
+  classroom value per hour.
+
+  **Permanence fails a third way here.** At `0⁰` it falls silent; at negative bases it
+  contradicts itself; for irrational exponents it is **massively underdetermined**. The
+  laws say `f(x+y) = f(x)·f(y)`, `f(1) = a` — Cauchy's functional equation — which has
+  infinitely many solutions besides `aˣ` (Hamel basis). The sharp fact: those solutions
+  **agree with `a^q` at every rational `q`** (forced by the equation) and differ at the
+  irrationals. So all of ℚ can be pinned down and `a^√2` still is not.
+
+  **Completeness = existence, order = selection.** Both routes to the value work and
+  both rest on `ax.C1`: `aˣ := sup{a^q : q ∈ ℚ, q < x}` (a>1), or `lim a^{q_k}` for
+  `q_k → x`. But neither *selects*: the step "`q_k → x` therefore `a^{q_k} → aˣ`" is not
+  a deduction, it is the assumption that the extension respects limits, i.e. continuity
+  chosen by the method. What pins it down is an extra condition on the **function**, and
+  **monotonicity suffices** — no continuity, no limits, and monotone is `ax.O4`
+  vocabulary the tower already owns. Contrast with `th.root-exists`, which needed no
+  extra criterion because it pinned an **element**, where order gave uniqueness free.
+  The object being determined changed from an element to a function; that is the layer.
+
+  **Use sup, not sequences.** `ax.C1` is stated as a supremum axiom, so the sup version
+  uses it directly. The sequence route needs convergence and Cauchy sequences defined
+  first, well-definedness across sequences, and quietly the Archimedean property. Same
+  destination, more machinery — and sup keeps the layer inside the fundament's existing
+  vocabulary, which is the only reason it is cheap enough to consider.
+
+  Cards: `pre.underdetermination` · `def.pow-real` (sup; a>1 / a=1 / a<1) ·
+  `th.agrees-on-rationals` (the agreement-on-overlap beat, the first that genuinely
+  could have failed) · `th.pow-laws-real` · **`th.unique-monotone`** (the payoff: `aˣ`
+  is the unique monotone law-abiding extension — the only card in the tower where a
+  definition is pinned by a *property* rather than a construction or a demand).
+  Optional sixth, and the one school-facing idea: **the role swap** — fix `a`, let `x`
+  run, and `x ↦ aˣ` becomes a *function*, the doorway to growth and logarithms.
+  Caveat that belongs on a card, not in a footnote: the wild solutions need the axiom
+  of choice; without it, it is consistent that all solutions are continuous.
+- [ ] **Correction owed to `docs/rationals.md` + `src/data/rationals/cards.json`**: the
+  layer note's closing line says `aˣ` "needs continuity, a new idea rather than a new
+  axiom". Truer: it needs a **tie-breaker**, and the cheapest one is **monotonicity**,
+  which the tower already owns. Fix whether or not the ℝ layer is built.
 
 **Untangling backlog** — the conflations that make algebra hard (a concept living
 in several layers at once; detail in `docs/fundament0.md`):
