@@ -48,9 +48,20 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   Replaced by the domain fact (`a^n` only for `n ∈ ℕ`) and "`n ↦ aⁿ` is a restriction
   of no field operation, `n·a` is". Card `th.numeral-arithmetic` added (`2+3=5`,
   `2·3=6` are theorems). Sources checked in `docs/naturals.md`.
-- [ ] **ℤ layer — choice by permanence** (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`). The arrow
-  reverses: the laws become the constraint and *force* the definition;
-  `pl.same-base` is the card the layer must preserve.
+- [x] ~~**ℤ layer — choice by permanence.**~~ **Built 2026-07-22** as the `integers`
+  layer (`src/data/integers/cards.json`, `/integers`, tag `≙ aⁿ, n ∈ ℤ`) — see
+  **`docs/integers.md`**. The arrow reverses: `pre.permanence` (Peacock 1834 / Hankel
+  1867, a *method*, neither axiom nor theorem) → `def.int` · `def.pow-zero`
+  (`a⁰ := 1`, forced; `0⁰` left undefined *and explained*) · `def.pow-neg`
+  (`a⁻ⁿ := (aⁿ)⁻¹`, existence via `(a⁻¹)ⁿ` and `pl.of-product`) → `th.inverse-is-power`
+  (fundament0's atomic `a⁻¹` notation is retroactively justified — closes the
+  exponent-`-1` backlog item) · `th.pow-laws-int` (all three laws survive on ℤ).
+  Payoff: **three species of "convention" side by side** — arbitrary (`0 ∈ ℕ`, `0⁰`),
+  determined (`a⁰ = 1`), proved (the laws on ℤ).
+- [x] ~~fundament0 `th.7` **zero product**~~ (`ab = 0 ⇒ a = 0 or b = 0`) — added
+  2026-07-22 alongside the ℤ layer. Converse of `th.1`, one line from `ax.M4`, and the
+  basis of solving by factoring. Its stopping point: a property of *fields*, not of
+  multiplication (`2·3 = 0` mod `6`).
 - [ ] **Layer manifest follow-ups.** `src/data/layers.ts` + `LayerView` shipped
   2026-07-22 (routes + nav generated, citations resolve tower-wide,
   `pnpm sweep-layers` runs the KaTeX/refs/prose checks). Open: the layers are still
@@ -60,7 +71,10 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   supremum axiom; positive/negative defined on `op.lt`; theorems th.3 (opposite
   flips positive/negative), th.4 (`(−1)(−1)=1`, no order used), th.5 (non-zero
   square positive), th.6 (`0<1`). Tag moved to `≙ ℝ`; the word "sign" retired.
-- [ ] Roots + rational powers (need completeness — now available via `ax.C1`).
+- [ ] **ℚ layer — existence** (roots + rational powers; needs `ax.C1` and `a > 0`).
+  The last floor of the powers tower, and a different *kind* of step: permanence does
+  not merely fall silent here, it produces a contradiction for `(-2)^(1/2)`, which is
+  what the `a > 0` fence is for.
 
 **Untangling backlog** — the conflations that make algebra hard (a concept living
 in several layers at once; detail in `docs/fundament0.md`):

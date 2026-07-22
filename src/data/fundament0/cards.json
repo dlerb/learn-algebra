@@ -855,6 +855,23 @@
                 "en": "The chain shows $(-1) + (-1) \\cdot (-1) = 0$, so $(-1) \\cdot (-1)$ is the additive inverse of $-1$. But so is $1$ (ax.A4), and an inverse is unique, hence $(-1) \\cdot (-1) = 1$. This used no order at all: 'minus times minus is plus' is a fact of the field, not of the number line, though it is almost always taught with a number-line story.",
                 "de": "Die Kette zeigt $(-1) + (-1) \\cdot (-1) = 0$, also ist $(-1) \\cdot (-1)$ das additive Inverse von $-1$. Das ist aber auch $1$ (ax.A4), und ein Inverses ist eindeutig, folglich $(-1) \\cdot (-1) = 1$. Das brauchte keine Ordnung: 'Minus mal Minus ist plus' ist eine Tatsache des Körpers, nicht der Zahlengeraden, obwohl es fast immer mit einer Zahlengeraden-Geschichte gelehrt wird."
               }
+            },
+            {
+              "code": "th.7",
+              "concerns": ["mul"],
+              "name": { "en": "Zero product", "de": "Nullprodukt" },
+              "latex": "a \\cdot b = 0 \\;\\Rightarrow\\; a = 0 \\;\\text{ or }\\; b = 0",
+              "forall": "a, b \\in \\mathbb{R}",
+              "derivation": "a \\ne 0 \\;\\Rightarrow\\; b = 1 \\cdot b = (a^{-1} \\cdot a) \\cdot b = a^{-1} \\cdot (a \\cdot b) = a^{-1} \\cdot 0 = 0",
+              "derivedFrom": ["ax.M4", "ax.M3", "ax.M2", "ax.M1", "th.1"],
+              "note": {
+                "en": "Read the chain as a case split: if $a$ is not $0$ it has a reciprocal (ax.M4), and applying it to $a \\cdot b = 0$ leaves $b = 0$. So at least one factor was $0$ to begin with. This is the converse of th.1, and it is what licenses solving an equation by factoring: from $(x-2)(x+3) = 0$ one may conclude $x = 2$ or $x = -3$. That step is this theorem and not a rule of thumb.",
+                "de": "Die Kette ist eine Fallunterscheidung: ist $a$ nicht $0$, so hat es einen Kehrwert (ax.M4), und wendet man ihn auf $a \\cdot b = 0$ an, bleibt $b = 0$. Mindestens ein Faktor war also von Anfang an $0$. Das ist die Umkehrung von th.1, und es ist das, was das Lösen einer Gleichung durch Faktorisieren erlaubt: aus $(x-2)(x+3) = 0$ darf man auf $x = 2$ oder $x = -3$ schliessen. Dieser Schritt ist dieser Satz und keine Faustregel."
+              },
+              "intuition": {
+                "en": "If neither factor were $0$, both could be scaled back to $1$, and the product could not have vanished; something must already have been $0$ before the multiplication. Where the picture stops: this is a property of fields, not of multiplication as such. Where there are no reciprocals it fails, and $2 \\cdot 3 = 0$ among the clock remainders modulo $6$. The factoring step borrows from ax.M4, not from the shape of the equation.",
+                "de": "Wäre keiner der Faktoren $0$, so liessen sich beide auf $1$ zurückskalieren, und das Produkt hätte nicht verschwinden können; etwas muss schon vor der Multiplikation $0$ gewesen sein. Wo das Bild aufhört: das ist eine Eigenschaft von Körpern und nicht der Multiplikation an sich. Wo es keine Kehrwerte gibt, versagt es, und unter den Uhrenresten modulo $6$ ist $2 \\cdot 3 = 0$. Der Faktorisierungsschritt borgt bei ax.M4 und nicht bei der Gestalt der Gleichung."
+              }
             }
           ]
         },
