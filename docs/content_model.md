@@ -7,6 +7,13 @@ validated by `skill.schema.ts` on load. The layers:
 - **conventions** (`conventions.json`) — the rules of the writing system.
 - **errors** (`errors.json`) — the error patterns that shadow the above.
 - **meta-patterns** (`metapatterns.json`) — student-facing digests of them.
+
+  *(Note on the word: "layer" here means a **file/role** inside the skills tower.
+  The separate **fundament tower** — `fundament0 · naturals · integers · rationals`,
+  under `src/data/<layer>/cards.json` and composed by `src/data/layers.ts` — also
+  calls its floors layers, in the sense of mathematical dependency. The two towers
+  are deliberately separate representations and must not be merged; see
+  `docs/fundament0.md`.)*
 - **skills** (`skills/*.json`) — curated *strategies/skills* built on the
   laws × conventions coordinate system: what is worth drilling, and why. Each
   skill's concrete material lives separately in…

@@ -38,14 +38,20 @@ out of the per-view headers). **Dark mode is scaffolded but NOT surfaced**:
 color tokens, so enabling the toggle now would darken only the chrome. Turning it
 on later ≈ one prop + a `:root[data-theme="dark"]` block in `tokens.css`.
 
-**Router** (`router.ts`): four pages — `/skills` (`TaxonomyView`), `/fundamentals`
-(`ReferenceView`), `/tutorial`, `/drills`. Activity routes are lazy-loaded so
-their future weight (CE grading) code-splits off the reference pages. **Tutorial
-and Drills are empty stubs.**
+**Router** (`router.ts`, updated 2026-07-22): `/skills` (`TaxonomyView`),
+`/fundamentals` (`ReferenceView`), `/tutorial`, `/drills`, **plus one route per
+layer of the fundament tower** — `/fundament0`, `/naturals`, `/integers`,
+`/rationals`. Those four are **generated from the manifest** (`src/data/layers.ts`)
+and all render the same component (`LayerView`, selected by a `layerId` prop), so
+adding a layer needs no route and no nav entry; the `NMenu` options are generated
+from the same list. Activity routes are lazy-loaded so their future weight (CE
+grading) code-splits off the reference pages. **Tutorial and Drills are empty stubs.**
 
-**Two audiences.** `Skills` and `Fundamentals` are *browsable catalogs* and today
-are **teacher/dev inspection surfaces** — they show ids, raw JSON, `unused`
-coverage markers. `Tutorial` and `Drills` are the (unbuilt) **student** surfaces.
+**Two audiences.** `Skills`, `Fundamentals` and the four **layer** pages are
+*browsable catalogs* and today are **teacher/dev inspection surfaces** — they show
+ids, raw JSON, `unused` coverage markers. The layer pages are the deepest of these
+and are explicitly *not* student-facing (see the school-facing simplification thread
+in `docs/TODO.md`). `Tutorial` and `Drills` are the (unbuilt) **student** surfaces.
 Design rule for when they're built: **Tutorial *drives* Drills — one drill-runner,
 two drivers** (guided `requires`-traversal vs. free pick). Don't fork the runner.
 
