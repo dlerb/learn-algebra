@@ -71,10 +71,18 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   supremum axiom; positive/negative defined on `op.lt`; theorems th.3 (opposite
   flips positive/negative), th.4 (`(−1)(−1)=1`, no order used), th.5 (non-zero
   square positive), th.6 (`0<1`). Tag moved to `≙ ℝ`; the word "sign" retired.
-- [ ] **ℚ layer — existence** (roots + rational powers; needs `ax.C1` and `a > 0`).
-  The last floor of the powers tower, and a different *kind* of step: permanence does
-  not merely fall silent here, it produces a contradiction for `(-2)^(1/2)`, which is
-  what the `a > 0` fence is for.
+- [x] ~~**ℚ layer — existence** (roots + rational powers).~~ **Built 2026-07-22** as the
+  `rationals` layer (`src/data/rationals/cards.json`, `/rationals`, tag `≙ aⁿ, n ∈ ℚ`) —
+  see **`docs/rationals.md`**. `pre.existence` → `ix.root` → `def.rat` · `def.root`
+  (by *description*, licensed by the theorem below it) · `def.pow-rat` →
+  `th.root-exists` (**the first and only use of `ax.C1`** — uniqueness is order,
+  existence is completeness) · `th.principal-root` · `th.exponent-well-defined` (ℚ is
+  the first layer with non-unique exponent *names*) · `th.pow-laws-rat` ·
+  `th.base-fence`. Added `def.abs` to fundament0 for `√(x²) = |x|`.
+  **The powers tower is complete: ℕ builds, ℤ finds, ℚ must be given.**
+- [ ] **After the fundament**: `aˣ` for irrational `x` is deliberately NOT reachable —
+  it needs continuity, a new *idea* and not a new axiom. Recorded as the tower's
+  stopping point in the rationals layer note. Only build if the app ever needs it.
 
 **Untangling backlog** — the conflations that make algebra hard (a concept living
 in several layers at once; detail in `docs/fundament0.md`):
