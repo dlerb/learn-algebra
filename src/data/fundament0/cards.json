@@ -767,6 +767,22 @@
                 "en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling.",
                 "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen. Ihr Spezialfall $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ ist der Kehrwert von $a$: dasselbe Element wie das Inverse, in der alltäglichen Schreibweise."
               }
+            },
+            {
+              "code": "def.abs",
+              "concerns": ["add", "order"],
+              "name": { "en": "Absolute value", "de": "Betrag" },
+              "latex": "|a| := \\begin{cases} a & 0 < a \\\\ 0 & a = 0 \\\\ -a & a < 0 \\end{cases}",
+              "forall": "a \\in \\mathbb{R}",
+              "note": {
+                "en": "Three cases, one for each possibility trichotomy allows (ax.O1), so exactly one applies to any element. Like subtraction and division this is a definition and not a new operation: it is built from the unary minus (ax.A4) and the order relation, and it needs both. Note what the definition does not say. It does not say 'leave off the minus'. That is a rule about marks on paper, and it works only when the element is written as a numeral with a minus in front of it. $|a|$ for a variable $a$ cannot be simplified at all without knowing where $a$ lies, and $|-a|$ is $a$ exactly when $a$ is not negative, which is the opposite of what the mark suggests.",
+                "de": "Drei Fälle, einer für jede Möglichkeit, die die Trichotomie zulässt (ax.O1); auf jedes Element passt also genau einer. Wie Subtraktion und Division ist dies eine Definition und keine neue Operation: sie ist aus dem unären Minus (ax.A4) und der Ordnungsrelation gebaut und braucht beides. Man beachte, was die Definition nicht sagt. Sie sagt nicht 'lass das Minus weg'. Das ist eine Regel über Zeichen auf Papier und funktioniert nur, wenn das Element als Zahl mit einem Minus davor geschrieben ist. $|a|$ mit einer Variablen $a$ lässt sich ohne Wissen darüber, wo $a$ liegt, gar nicht vereinfachen, und $|-a|$ ist genau dann $a$, wenn $a$ nicht negativ ist, also gerade umgekehrt, als das Zeichen nahelegt."
+              },
+              "intuition": {
+                "en": "The distance from $a$ to $0$, with the direction thrown away. Where the picture stops: distance is a picture of the *value*, while the notation tempts you to read $|\\cdot|$ as an instruction to the *marks* inside it. Those come apart exactly where it matters, at $|x|$ with $x$ a variable, which is why $\\sqrt{x^{2}} = |x|$ and not $x$.",
+                "de": "Der Abstand von $a$ zu $0$, ohne die Richtung. Wo das Bild aufhört: der Abstand ist ein Bild des *Werts*, während die Schreibweise dazu verführt, $|\\cdot|$ als Anweisung an die *Zeichen* darin zu lesen. Genau dort, wo es zählt, fallen die beiden auseinander, nämlich bei $|x|$ mit einer Variablen $x$, und darum ist $\\sqrt{x^{2}} = |x|$ und nicht $x$."
+              },
+              "basedOn": ["op.lt", "ax.A4", "ax.O1"]
             }
           ]
         }

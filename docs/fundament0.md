@@ -61,8 +61,10 @@ The page tells one linear story:
    condition is exactly where "flip the inequality when multiplying by a negative"
    comes from. `C1` is different in kind — it speaks of *sets*, not elements (the
    analysis seam), and its intuition motivates via the ℚ hole at `√2`.
-4. **Definitions** — subtraction (`def.sub`, rests on `A4`) and division (`def.div`,
-   rests on `M4`; reciprocal noted there). Not new operations. (`positive`/`negative`
+4. **Definitions** — subtraction (`def.sub`, rests on `A4`), division (`def.div`,
+   rests on `M4`; reciprocal noted there) and **absolute value (`def.abs`, three cases
+   by trichotomy; added 2026-07-22 for the ℚ layer's `√(x²) = |x|` — and it does *not*
+   say "leave off the minus")**. Not new operations. (`positive`/`negative`
    are *not* here — see step 1.)
 5. **Theorems** — field: `th.1` (`0·a=0`), `th.2` (`−a=(−1)·a`), **`th.7`
    (zero product, `ab=0 ⟹ a=0 or b=0` — the converse of `th.1` and the licence for
@@ -228,8 +230,12 @@ order relation `op.lt`, the four order axioms `ax.O1–O4`, the completeness axi
   reference for those.
 - **The ℤ-exponent layer — BUILT 2026-07-22**, see `docs/integers.md`. `a⁰` and `a⁻ⁿ`
   as *choices forced by permanence*; `th.inverse-is-power` retroactively justifies this
-  page's atomic `a^{-1}` notation. Only the ℚ floor (roots, existence, needs `ax.C1`)
-  is left.
+  page's atomic `a^{-1}` notation.
+- **The ℚ-exponent layer — BUILT 2026-07-22**, see `docs/rationals.md`. Roots by
+  *existence*: `th.root-exists` is **the first and only card in the whole tower that
+  uses `ax.C1`**, and the only one that would be false in ℚ. The powers tower is
+  complete (ℕ builds → ℤ finds → ℚ must be given), and it ends by naming what it cannot
+  reach: `aˣ` for irrational `x` needs continuity, a new idea rather than a new axiom.
 
 ## The untangling backlog
 
