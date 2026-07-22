@@ -298,8 +298,8 @@
               "latex": "a = a",
               "forall": "a \\in \\mathbb{R}",
               "intuition": {
-                "en": "Anything is the same value as itself, the obvious anchor that lets $=$ mean 'same value'.",
-                "de": "Alles ist derselbe Wert wie es selbst, der offensichtliche Anker, damit $=$ 'derselbe Wert' bedeutet."
+                "en": "Anything is the same value as itself, the obvious anchor that lets $=$ mean 'same value'. The picture is of a fixed number, and there the statement is nearly empty. Said of a variable it claims something about every value at once, and nothing in the notation marks which reading is meant.",
+                "de": "Alles ist derselbe Wert wie es selbst, der offensichtliche Anker, damit $=$ 'derselbe Wert' bedeutet. Das Bild ist das einer festen Zahl, und da ist die Aussage fast leer. Von einer Variablen gesagt, behauptet sie etwas über alle Werte auf einmal, und nichts in der Schreibweise zeigt an, welche Lesart gemeint ist."
               }
             },
             {
@@ -314,8 +314,8 @@
               "latex": "a = b \\;\\Rightarrow\\; b = a",
               "forall": "a, b \\in \\mathbb{R}",
               "intuition": {
-                "en": "An equation is a two-way statement of sameness, not a one-way 'compute this'. If $a$ is $b$, then $b$ is $a$.",
-                "de": "Eine Gleichung ist eine beidseitige Aussage über Gleichheit, kein einseitiges 'rechne dies aus'. Ist $a$ gleich $b$, so ist $b$ gleich $a$."
+                "en": "An equation is a two-way statement of sameness, not a one-way 'compute this'. If $a$ is $b$, then $b$ is $a$. For a fixed number this is almost content-free; it earns its keep with variables, where reading the equation in the other direction is a real move.",
+                "de": "Eine Gleichung ist eine beidseitige Aussage über Gleichheit, kein einseitiges 'rechne dies aus'. Ist $a$ gleich $b$, so ist $b$ gleich $a$. Für eine feste Zahl ist das beinahe inhaltsleer; seinen Wert bekommt es bei Variablen, wo das Lesen der Gleichung in die andere Richtung ein echter Schritt ist."
               }
             },
             {
@@ -330,8 +330,8 @@
               "latex": "a = b \\;\\text{ and }\\; b = c \\;\\Rightarrow\\; a = c",
               "forall": "a, b, c \\in \\mathbb{R}",
               "intuition": {
-                "en": "If each line of a calculation equals the next, the first equals the last. This is what lets you chain steps.",
-                "de": "Wenn jede Zeile einer Rechnung der nächsten gleicht, gleicht die erste der letzten. So lassen sich Schritte verketten."
+                "en": "If each line of a calculation equals the next, the first equals the last. This is what lets you chain steps. Where the picture stops: a chain of equalities has no direction. The calculation you wrote has one, the equality does not, and the axiom will not tell you which way you were working.",
+                "de": "Wenn jede Zeile einer Rechnung der nächsten gleicht, gleicht die erste der letzten. So lassen sich Schritte verketten. Wo das Bild aufhört: eine Kette von Gleichheiten hat keine Richtung. Die Rechnung, die Sie geschrieben haben, hat eine, die Gleichheit nicht, und das Axiom sagt nicht, in welche Richtung gearbeitet wurde."
               }
             },
             {
@@ -352,8 +352,8 @@
                 "de": "Was $=$ mehr macht als eine Äquivalenzrelation: sie respektiert die Operationen, man darf also auf beiden Seiten dasselbe tun."
               },
               "intuition": {
-                "en": "Since $=$ means 'same value', swapping a thing for an equal thing cannot change a result. A balance scale: do the same to both sides and it stays balanced.",
-                "de": "Da $=$ 'derselbe Wert' heisst, ändert das Ersetzen durch Gleiches kein Ergebnis. Eine Waage: tut man auf beiden Seiten dasselbe, bleibt sie im Gleichgewicht."
+                "en": "Since $=$ means 'same value', swapping a thing for an equal thing cannot change a result. A balance scale: do the same to both sides and it stays balanced. Where the picture stops: the scale stays balanced under any equal operation, multiplying both sides by $0$ included. So it cannot tell you which steps can be undone. E4 licenses the step; it says nothing about getting back.",
+                "de": "Da $=$ 'derselbe Wert' heisst, ändert das Ersetzen durch Gleiches kein Ergebnis. Eine Waage: tut man auf beiden Seiten dasselbe, bleibt sie im Gleichgewicht. Wo das Bild aufhört: die Waage bleibt bei jeder gleichen Operation im Gleichgewicht, auch beim Multiplizieren beider Seiten mit $0$. Sie kann also nicht sagen, welche Schritte sich rückgängig machen lassen. E4 erlaubt den Schritt; über den Rückweg sagt es nichts."
               }
             }
           ]
@@ -381,8 +381,8 @@
               "latex": "a + b = b + a",
               "forall": "a, b \\in \\mathbb{R}",
               "intuition": {
-                "en": "Combining two amounts does not depend on order: 3 apples then 2 more, or 2 then 3, is 5 either way.",
-                "de": "Zwei Mengen zusammenzulegen hängt nicht von der Reihenfolge ab: 3 Äpfel und dann 2, oder 2 und dann 3, ergibt beides 5."
+                "en": "Combining two amounts does not depend on order: 3 apples then 2 more, or 2 then 3, is 5 either way. Where the picture stops: apples are things you can count. The axiom speaks of every element, including those no counting reaches.",
+                "de": "Zwei Mengen zusammenzulegen hängt nicht von der Reihenfolge ab: 3 Äpfel und dann 2, oder 2 und dann 3, ergibt beides 5. Wo das Bild aufhört: Äpfel kann man zählen. Das Axiom spricht von jedem Element, auch von solchen, die kein Zählen erreicht."
               }
             },
             {
@@ -397,8 +397,8 @@
               "latex": "(a + b) + c = a + (b + c)",
               "forall": "a, b, c \\in \\mathbb{R}",
               "intuition": {
-                "en": "Adding three amounts, it makes no difference which pair you combine first.",
-                "de": "Beim Addieren dreier Mengen ist es egal, welches Paar man zuerst zusammenfasst."
+                "en": "Adding three amounts, it makes no difference which pair you combine first. Where the picture stops: as in A1, the amounts are imagined as countable. The axiom holds for all elements, and the picture only makes it plausible.",
+                "de": "Beim Addieren dreier Mengen ist es egal, welches Paar man zuerst zusammenfasst. Wo das Bild aufhört: wie bei A1 werden die Mengen als zählbar vorgestellt. Das Axiom gilt für alle Elemente, und das Bild macht es nur plausibel."
               }
             },
             {
@@ -417,8 +417,8 @@
                 "de": "$0$ heisst das neutrale Element der Addition."
               },
               "intuition": {
-                "en": "Adding nothing leaves the amount unchanged.",
-                "de": "Nichts dazuzuzählen lässt die Menge unverändert."
+                "en": "Adding nothing leaves the amount unchanged. Where the picture stops: 'nothing' is the weak part. $0$ is an element like any other, brought into existence by this axiom, and not the absence of one.",
+                "de": "Nichts dazuzuzählen lässt die Menge unverändert. Wo das Bild aufhört: 'nichts' ist der schwache Teil. $0$ ist ein Element wie jedes andere, von diesem Axiom ins Dasein gerufen, und keine Abwesenheit."
               }
             },
             {
@@ -437,8 +437,8 @@
                 "de": "Das Element $-a$ heisst das additive Inverse von $a$; das vorangestellte $-$ ist das unäre Minus. Eine andere Art gibt es nicht: in $-2$ ist es derselbe Operator, angewandt auf die Konstante $2$, nichts, was die Zahl in sich trägt. Ein negatives Element hat also keinen eigenen Namen. Wo $2$ ein Element benennt, beschreibt $-2$ eines, und Klammern erlauben es, eine Beschreibung als einzelnes Element zu behandeln: $(-2)$."
               },
               "intuition": {
-                "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $0$, the 'opposite', and where subtraction comes from.",
-                "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $0$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion."
+                "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $0$, the 'opposite', and where subtraction comes from. Where the picture stops: a mirror needs a line to mirror in, and that line is order, which this axiom does not have. $-a$ is the opposite of $a$, not the negative one; th.3 is where that difference is finally made, and it needs the order axioms to make it.",
+                "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $0$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion. Wo das Bild aufhört: ein Spiegel braucht eine Gerade, an der gespiegelt wird, und diese Gerade ist die Ordnung, die dieses Axiom nicht hat. $-a$ ist das Gegenteil von $a$, nicht das negative; th.3 ist der Ort, wo dieser Unterschied gemacht wird, und dafür braucht es die Ordnungsaxiome."
               }
             }
           ]
@@ -466,8 +466,8 @@
               "latex": "a \\cdot b = b \\cdot a",
               "forall": "a, b \\in \\mathbb{R}",
               "intuition": {
-                "en": "A rectangle $a$ by $b$ has the same area as $b$ by $a$, just turn it; rows become columns.",
-                "de": "Ein Rechteck $a$ mal $b$ hat denselben Flächeninhalt wie $b$ mal $a$, einfach gedreht; Zeilen werden Spalten."
+                "en": "A rectangle $a$ by $b$ has the same area as $b$ by $a$, just turn it; rows become columns. Where the picture stops: an area is a length times a length, and neither can be negative. The picture says nothing about $(-2) \\cdot 3$, which is why th.4 is proved from the axioms and not from a rectangle.",
+                "de": "Ein Rechteck $a$ mal $b$ hat denselben Flächeninhalt wie $b$ mal $a$, einfach gedreht; Zeilen werden Spalten. Wo das Bild aufhört: eine Fläche ist Länge mal Länge, und keine davon kann negativ sein. Über $(-2) \\cdot 3$ sagt das Bild nichts, und darum wird th.4 aus den Axiomen bewiesen und nicht an einem Rechteck."
               }
             },
             {
@@ -482,8 +482,8 @@
               "latex": "(a \\cdot b) \\cdot c = a \\cdot (b \\cdot c)",
               "forall": "a, b, c \\in \\mathbb{R}",
               "intuition": {
-                "en": "A box $a \\times b \\times c$ has one volume, however you group the factors.",
-                "de": "Ein Quader $a \\times b \\times c$ hat ein Volumen, wie auch immer man die Faktoren gruppiert."
+                "en": "A box $a \\times b \\times c$ has one volume, however you group the factors. Where the picture stops: at three factors. There is no fourth direction to lay a box in, while the axiom chains as far as you like.",
+                "de": "Ein Quader $a \\times b \\times c$ hat ein Volumen, wie auch immer man die Faktoren gruppiert. Wo das Bild aufhört: bei drei Faktoren. Es gibt keine vierte Richtung, in die sich ein Quader legen liesse, während sich das Axiom beliebig weit verketten lässt."
               }
             },
             {
@@ -502,8 +502,8 @@
                 "de": "$1$ heisst das neutrale Element der Multiplikation."
               },
               "intuition": {
-                "en": "One copy of $a$ is just $a$; scaling by $1$ changes nothing.",
-                "de": "Eine Kopie von $a$ ist einfach $a$; Skalieren mit $1$ ändert nichts."
+                "en": "One copy of $a$ is just $a$; scaling by $1$ changes nothing. Where the picture stops: 'one copy' counts copies, so it reaches only the counting elements. 'Scaling by $1$' has no such limit, and it is the reading to keep.",
+                "de": "Eine Kopie von $a$ ist einfach $a$; Skalieren mit $1$ ändert nichts. Wo das Bild aufhört: 'eine Kopie' zählt Kopien und erreicht damit nur die Zählelemente. 'Mit $1$ skalieren' kennt diese Grenze nicht und ist die Lesart, die man behalten sollte."
               }
             },
             {
@@ -522,8 +522,8 @@
                 "de": "Das Element $a^{-1}$ ist das multiplikative Inverse von $a$. Anders als bei der Addition gibt es keinen vorangestellten Operator, daher die nachgestellte Schreibweise $a^{-1}$."
               },
               "intuition": {
-                "en": "For any nonzero $a$ there is a reciprocal that scales it back to $1$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $0$ up to $1$.",
-                "de": "Für jedes $a \\ne 0$ gibt es einen Kehrwert, der es auf $1$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $0$ auf $1$."
+                "en": "For any nonzero $a$ there is a reciprocal that scales it back to $1$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $0$ up to $1$. Where the picture stops: 'how much of $a$ makes one' is a partition, and partitions reach the fractions and no further. For $a = \\sqrt{2}$ the reciprocal is not a number of pieces; the axiom asserts it exists anyway.",
+                "de": "Für jedes $a \\ne 0$ gibt es einen Kehrwert, der es auf $1$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $0$ auf $1$. Wo das Bild aufhört: 'wie viel von $a$ gibt eins' ist eine Aufteilung, und Aufteilungen reichen bis zu den Brüchen und nicht weiter. Für $a = \\sqrt{2}$ ist der Kehrwert keine Anzahl Stücke; das Axiom behauptet trotzdem, dass er existiert."
               }
             }
           ]
@@ -556,8 +556,8 @@
                 "de": "Das einzige Axiom, das $+$ und $\\cdot$ verbindet. Jedes Ausmultiplizieren und Faktorisieren ist dieses Gesetz, vorwärts oder rückwärts."
               },
               "intuition": {
-                "en": "The area picture: a rectangle $a$ wide and $b + c$ tall splits into two, of areas $a \\cdot b$ and $a \\cdot c$. Multiplying a sum means multiplying each part and adding.",
-                "de": "Das Flächenbild: ein Rechteck $a$ breit und $b + c$ hoch zerfällt in zwei mit Flächen $a \\cdot b$ und $a \\cdot c$. Eine Summe zu multiplizieren heisst, jeden Teil zu multiplizieren und zu addieren."
+                "en": "The area picture: a rectangle $a$ wide and $b + c$ tall splits into two, of areas $a \\cdot b$ and $a \\cdot c$. Multiplying a sum means multiplying each part and adding. Where the picture stops: the rectangle needs $a$, $b$ and $c$ to be lengths. Distributivity holds for negative elements too, where there is no rectangle to split.",
+                "de": "Das Flächenbild: ein Rechteck $a$ breit und $b + c$ hoch zerfällt in zwei mit Flächen $a \\cdot b$ und $a \\cdot c$. Eine Summe zu multiplizieren heisst, jeden Teil zu multiplizieren und zu addieren. Wo das Bild aufhört: das Rechteck braucht $a$, $b$ und $c$ als Längen. Die Distributivität gilt auch für negative Elemente, wo es kein Rechteck zu zerschneiden gibt."
               }
             },
             {
@@ -576,8 +576,8 @@
                 "de": "Ohne es könnte die ganze Struktur zu einem einzigen Punkt kollabieren."
               },
               "intuition": {
-                "en": "There is genuinely 'nothing' and 'one thing', and they differ; otherwise every number would collapse into one.",
-                "de": "Es gibt wirklich 'nichts' und 'ein Ding', und sie sind verschieden; sonst fielen alle Zahlen zu einer zusammen."
+                "en": "There is genuinely 'nothing' and 'one thing', and they differ; otherwise every number would collapse into one. Where the picture stops: the picture counts things, while the axiom rules out a structure. Without it a single element could satisfy every other axiom, and everything below would be true and empty.",
+                "de": "Es gibt wirklich 'nichts' und 'ein Ding', und sie sind verschieden; sonst fielen alle Zahlen zu einer zusammen. Wo das Bild aufhört: das Bild zählt Dinge, das Axiom schliesst eine Struktur aus. Ohne es könnte ein einziges Element alle übrigen Axiome erfüllen, und alles Weitere wäre wahr und leer."
               }
             }
           ]
@@ -610,8 +610,8 @@
                 "de": "Genau eines der drei gilt. Je zwei Elemente sind also vergleichbar, und 'kleiner', 'gleich', 'grösser' schliessen einander aus. Mit $b = 0$ ist es das, was 'positiv', 'null', 'negativ' zu einer sauberen Aufteilung macht: jedes Element ist genau eines der drei."
               },
               "intuition": {
-                "en": "Place the elements on a line: of any two, either they coincide or one lies strictly left of the other, never both. This is what makes $<$ a total order.",
-                "de": "Man lege die Elemente auf eine Gerade: von je zweien fallen sie entweder zusammen, oder eines liegt strikt links vom anderen, nie beides. Das macht $<$ zu einer totalen Ordnung."
+                "en": "Place the elements on a line: of any two, either they coincide or one lies strictly left of the other, never both. This is what makes $<$ a total order. Where the picture stops: there is no line yet. The line is what these axioms describe, so drawing it assumes the answer. And not every field admits one: $\\mathbb{C}$ has no order compatible with its operations.",
+                "de": "Man lege die Elemente auf eine Gerade: von je zweien fallen sie entweder zusammen, oder eines liegt strikt links vom anderen, nie beides. Das macht $<$ zu einer totalen Ordnung. Wo das Bild aufhört: eine Gerade gibt es noch nicht. Die Gerade ist das, was diese Axiome beschreiben; sie zu zeichnen heisst, die Antwort vorauszusetzen. Und nicht jeder Körper lässt eine zu: $\\mathbb{C}$ hat keine mit seinen Operationen verträgliche Ordnung."
               }
             },
             {
@@ -626,8 +626,8 @@
               "latex": "a < b \\;\\text{ and }\\; b < c \\;\\Rightarrow\\; a < c",
               "forall": "a, b, c \\in \\mathbb{R}",
               "intuition": {
-                "en": "If $a$ lies left of $b$ and $b$ left of $c$, then $a$ lies left of $c$. Order carries along the line.",
-                "de": "Liegt $a$ links von $b$ und $b$ links von $c$, so liegt $a$ links von $c$. Die Ordnung überträgt sich entlang der Geraden."
+                "en": "If $a$ lies left of $b$ and $b$ left of $c$, then $a$ lies left of $c$. Order carries along the line. Where the picture stops: as in O1, the line is what is being described here, not something we may use.",
+                "de": "Liegt $a$ links von $b$ und $b$ links von $c$, so liegt $a$ links von $c$. Die Ordnung überträgt sich entlang der Geraden. Wo das Bild aufhört: wie bei O1 wird die Gerade hier beschrieben und ist nichts, was wir schon benutzen dürfen."
               }
             },
             {
@@ -647,8 +647,8 @@
                 "de": "Dasselbe Element auf beiden Seiten zu addieren erhält die Ordnung, ohne Bedingung an $c$. Das erlaubt, einen Term über eine Ungleichung zu verschieben."
               },
               "intuition": {
-                "en": "Sliding two points by the same step keeps their left-to-right relation.",
-                "de": "Zwei Punkte um denselben Schritt zu verschieben erhält ihre Links-rechts-Beziehung."
+                "en": "Sliding two points by the same step keeps their left-to-right relation. Where the picture stops: sliding pictures a step to the right. The axiom asks nothing of $c$, and says exactly the same when the step goes left.",
+                "de": "Zwei Punkte um denselben Schritt zu verschieben erhält ihre Links-rechts-Beziehung. Wo das Bild aufhört: das Schieben zeigt einen Schritt nach rechts. Das Axiom verlangt nichts von $c$ und sagt genau dasselbe, wenn der Schritt nach links geht."
               }
             },
             {
@@ -668,8 +668,8 @@
                 "de": "Beide Seiten mit demselben Faktor zu multiplizieren erhält die Ordnung nur, wenn der Faktor positiv ist ($0 < c$). Diese eine Bedingung ist der ganze Grund, warum sich eine Ungleichung umdreht, wenn man mit einem negativen Faktor ($c < 0$) multipliziert: positives Skalieren erhält die Ordnung, negatives kehrt sie um."
               },
               "intuition": {
-                "en": "Scaling two points by a positive factor keeps their order (a stretch). A negative factor mirrors across $0$ and reverses it, which is why $<$ turns into $>$. The rule lives in this one condition, not in a separate decree.",
-                "de": "Zwei Punkte mit einem positiven Faktor zu skalieren erhält ihre Ordnung (eine Streckung). Ein negativer Faktor spiegelt an $0$ und kehrt sie um, weshalb $<$ zu $>$ wird. Die Regel steckt in dieser einen Bedingung, nicht in einem eigenen Erlass."
+                "en": "Scaling two points by a positive factor keeps their order (a stretch). A negative factor mirrors across $0$ and reverses it, which is why $<$ turns into $>$. The rule lives in this one condition, not in a separate decree. Where the picture stops: a stretch can be seen only for a factor that can be seen. For $c = \\sqrt{2}$ nothing is being pictured, and the axiom does not mind.",
+                "de": "Zwei Punkte mit einem positiven Faktor zu skalieren erhält ihre Ordnung (eine Streckung). Ein negativer Faktor spiegelt an $0$ und kehrt sie um, weshalb $<$ zu $>$ wird. Die Regel steckt in dieser einen Bedingung, nicht in einem eigenen Erlass. Wo das Bild aufhört: eine Streckung sieht man nur bei einem Faktor, den man sehen kann. Für $c = \\sqrt{2}$ wird nichts abgebildet, und das Axiom stört das nicht."
               }
             }
           ]
@@ -701,8 +701,8 @@
                 "de": "Eine obere Schranke einer Menge $S$ ist ein Element $b$ mit $x \\le b$ für jedes $x \\in S$; $S$ ist nach oben beschränkt, wenn sie eine besitzt. Die kleinste obere Schranke $\\sup S$ ist die kleinste solche Schranke. Das Axiom: jede nicht-leere, nach oben beschränkte Menge hat eine kleinste Schranke, und sie liegt in $\\mathbb{R}$."
               },
               "intuition": {
-                "en": "The number line has no gaps. This is the one assumption that leaves algebra behind: it speaks not of single elements and operations but of whole sets and their bounds. It is exactly what tells $\\mathbb{R}$ from $\\mathbb{Q}$: the rationals whose square is below $2$ are bounded above, yet among the rationals there is no least bound, so $\\mathbb{Q}$ has a hole where $\\sqrt{2}$ should be. Completeness fills every such hole, and from it the roots of positive elements exist (to be defined).",
-                "de": "Die Zahlengerade hat keine Lücken. Dies ist die eine Annahme, die die Algebra hinter sich lässt: sie spricht nicht von einzelnen Elementen und Operationen, sondern von ganzen Mengen und ihren Schranken. Genau sie unterscheidet $\\mathbb{R}$ von $\\mathbb{Q}$: die rationalen Zahlen mit Quadrat unter $2$ sind nach oben beschränkt, doch unter den rationalen Zahlen gibt es keine kleinste Schranke, also hat $\\mathbb{Q}$ ein Loch dort, wo $\\sqrt{2}$ sein sollte. Die Vollständigkeit füllt jedes solche Loch, und aus ihr existieren die Wurzeln positiver Elemente (noch zu definieren)."
+                "en": "The number line has no gaps. This is the one assumption that leaves algebra behind: it speaks not of single elements and operations but of whole sets and their bounds. It is exactly what tells $\\mathbb{R}$ from $\\mathbb{Q}$: the rationals whose square is below $2$ are bounded above, yet among the rationals there is no least bound, so $\\mathbb{Q}$ has a hole where $\\sqrt{2}$ should be. Completeness fills every such hole, and from it the roots of positive elements exist (to be defined). Where the picture stops, and this one is worth the trouble: the gapless line is not evidence for this axiom, it is a picture of it. Anyone who draws the line has already assumed what is being asserted. Nor can the hole at $\\sqrt{2}$ be seen, since the missing point is exactly what cannot be drawn. That circularity is why completeness has to be assumed rather than shown.",
+                "de": "Die Zahlengerade hat keine Lücken. Dies ist die eine Annahme, die die Algebra hinter sich lässt: sie spricht nicht von einzelnen Elementen und Operationen, sondern von ganzen Mengen und ihren Schranken. Genau sie unterscheidet $\\mathbb{R}$ von $\\mathbb{Q}$: die rationalen Zahlen mit Quadrat unter $2$ sind nach oben beschränkt, doch unter den rationalen Zahlen gibt es keine kleinste Schranke, also hat $\\mathbb{Q}$ ein Loch dort, wo $\\sqrt{2}$ sein sollte. Die Vollständigkeit füllt jedes solche Loch, und aus ihr existieren die Wurzeln positiver Elemente (noch zu definieren). Wo das Bild aufhört, und hier lohnt sich die Mühe: die lückenlose Gerade ist kein Beleg für dieses Axiom, sie ist ein Bild davon. Wer die Gerade zeichnet, hat das Behauptete schon vorausgesetzt. Auch die Lücke bei $\\sqrt{2}$ lässt sich nicht sehen, denn der fehlende Punkt ist genau das, was sich nicht zeichnen lässt. Diese Zirkularität ist der Grund, warum die Vollständigkeit angenommen und nicht gezeigt werden muss."
               }
             }
           ]

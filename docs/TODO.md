@@ -14,7 +14,17 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
 `intuition` field.
 
 **Thread state:**
-- [ ] Refine/extend the intuition layer per the untangling backlog below.
+- [x] ~~Refine/extend the intuition layer.~~ **2026-07-22: every `intuition` that
+  offers a *model* now names its own stopping point** (where the picture fails), in
+  both layers. Rationale + the list in `docs/fundament0.md` (Design decisions).
+- [ ] **A second, classroom-facing prose field per axiom/theorem** (name TBD, a
+  sibling of `intuition`, not a replacement). `intuition` is written for the reader of
+  the page — a teacher, or the author checking dependencies; what is missing is the
+  same statement said the way it would be said to a 15-year-old. Two audiences, two
+  failure modes, so two fields. **Deferred on purpose**: the field name and the
+  writing standard both need deciding, and part of this may belong in the skills
+  tower instead, which is the pedagogical bridge. Touches: both `cards.json` trees,
+  `LayerView.vue` (a second collapsed toggle), `scripts/sweep-layers.mjs`.
 - [x] ~~Powers (natural) as the ℕ-indexed layer *above* the field.~~ **Built
   2026-07-22 as the `naturals` layer** (`src/data/naturals/cards.json`, `/naturals`,
   tag `≙ ℕ ⊂ ℝ`) — see **`docs/naturals.md`**. The parked `pre.nat` import card was
@@ -151,6 +161,10 @@ and distractor items below are done. Only incremental threads remain.
 - [x] Distractors for empty-pitfall notation skills → cited where a tempting wrong form fits; remaining empties (basic identities: `divide-by-one`, `bracket-types`, `redundant-brackets`, commutativity pair, `fraction-as-reciprocal-product`, `splitting-a-fraction`) are distractor-free by decision.
 - [ ] German translations of skill notes/whys (incremental & cross-skill — better as one bilingual pass over notation + structure; layer files and meta-patterns already bilingual).
 - [ ] Cite the 4 uncited exponent-extension distractors (`zero-and-one-exponent`, `negative-exponent`, `fractional-exponent-root`, `negative-fractional-exponent`) — blocked on an error pattern that fits, not on authoring.
+- [ ] **Candidate metapattern: "multiplication makes bigger"** (2026-07-22). Not among
+  M1–M10, which are all notation/structure. This one is a different kind: a property
+  smuggled from the ℕ-model into ℝ (sibling: expecting `a^r` to behave like `aⁿ`).
+  Errors-layer work; rationale in `docs/naturals.md`.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).
 - [~] Prerequisites as a graph: `requires` + validators in schema; graph fully authored and priority-consistent (notation strict 1–29 after the 2026-07-09 insertion; structure basic forms 1–5, linear-form 14 with quadratic-form requiring it). The graph is a v1 hypothesis until drill data confirms it.
   - Open: `notation.minus-as-times-negative-one` stays unranked; it is the justification skill for minus-over-sum/subtracting-a-sum (carried by meta.three-minuses / meta.implicit-op-before-bracket), drilled later or not at all — confirm.

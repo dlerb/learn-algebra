@@ -103,6 +103,15 @@ layer → sections[] → groups[] → cards[]
 - **`cards[]`** — `code` is the sole key (`id` dropped; citations always used
   codes). Each carries `concerns` + its kind-specific fields.
 
+**Planned, not built — a second prose field per card.** `intuition` is written for
+the *reader of this page* (a teacher, or the author checking dependencies). What is
+missing is the **classroom-facing** explanation: the same axiom or theorem said the
+way it would be said to a 15-year-old. It wants its own named field alongside
+`intuition`, not a rewrite of it, because the two have different audiences and
+different failure modes. Deferred deliberately — the field name and the writing
+standard both need deciding, and the skills tower may turn out to be the better home
+for some of it. See `docs/TODO.md`.
+
 Two orthogonal axes, deliberately represented differently:
 - **`kind` / `group`** = the *tree* (a partition → structural nesting). What a card
   *is*, and which section it's filed under.
@@ -132,6 +141,21 @@ definition/theorem) and two **filter rows** — `kind` and `concerns` — that *
 - **`−` and `/` are definitions, not operations** — built on the inverse axioms.
   A load-bearing pedagogical point, not a technicality.
 - **Per-axiom `intuition` field**, collapsed by default (`▸ intuition` toggle).
+- **Every intuition names its own stopping point (2026-07-22).** A picture is
+  `recognition on a model, not proof`, and the teaching debt comes not from picking
+  the wrong picture but from never saying where it stops, then acting surprised when
+  a student takes theirs past that point. So each `intuition` that offers a *model*
+  ends by saying where the model fails: the balance scale cannot tell you which steps
+  are reversible (`E4`); the mirror needs a line, and the line is order, which `A4`
+  does not have; the rectangle has no negative sides (`M1`, `D1`); the box runs out at
+  three factors (`M2`); partition reaches the fractions and no further (`M4`); a
+  stretch cannot be seen for an unseeable factor (`O4`); and the sharpest one, the
+  gapless number line is **not evidence for `C1`, it is a picture of it** — anyone who
+  draws it has assumed what is asserted, and the hole at `√2` is by construction the
+  point that cannot be drawn. Intuitions that are not models are exempt (`def.nat`'s
+  `0`-convention note, `th.negative-base`'s teaching stance).
+  *Background: the discussion that produced this (repeated addition vs scaling,
+  whether ℝ has any adequate picture at all) is summarised in `docs/naturals.md`.*
   Informal, model-grounded, weighted toward the non-obvious (area model for
   distributivity; number-line "opposite" → subtraction; reciprocal → division;
   balance scale for congruence). It is **recognition on a model, not proof** —

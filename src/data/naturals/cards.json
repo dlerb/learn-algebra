@@ -127,8 +127,8 @@
                 "de": "Das ist Zählen, nicht Rechnen im linken Platz. Das $n$ sagt, wie oft $a$ hinzuschreiben ist; es wird nie zu etwas addiert und nie mit etwas multipliziert. Die Definition läuft den Schritten entlang, die von $1$ zu $n$ geführt haben; das ist die Rekursion, die def.nat aufgesetzt hat: eines klären, dann den Schritt von $n$ auf $n+1$ weitergeben. Die Punkte sind eine Kurzschrift für diese Rekursion und keine eigene Idee, denn die Rekursion ist es, die 'und so weiter' präzise macht. Man beachte, was hier gebraucht wird: $+$, und sonst nichts. Kein Inverses, keine Ordnung, kein $\\cdot$. Kopien eines Elements gibt es in jeder Struktur, die addieren kann."
               },
               "intuition": {
-                "en": "Three copies of a length laid end to end. This is the picture nearly everyone actually carries for $3a$, and for $n \\in \\mathbb{N}$ it is faithful. Keep it, and notice that it is a picture of this card only and not a picture of multiplication.",
-                "de": "Drei Kopien einer Länge hintereinandergelegt. Das ist das Bild, das fast alle für $3a$ tatsächlich mit sich tragen, und für $n \\in \\mathbb{N}$ ist es treu. Behalten Sie es, und merken Sie sich, dass es ein Bild nur dieser Karte ist und kein Bild der Multiplikation."
+                "en": "Three copies of a length laid end to end. This is the picture nearly everyone actually carries for $3a$, and for $n \\in \\mathbb{N}$ it is faithful. Keep it, and notice that it is a picture of this card only and not a picture of multiplication. It stops the moment the left factor is not a counting element: $1.23$ copies is not a thing.",
+                "de": "Drei Kopien einer Länge hintereinandergelegt. Das ist das Bild, das fast alle für $3a$ tatsächlich mit sich tragen, und für $n \\in \\mathbb{N}$ ist es treu. Behalten Sie es, und merken Sie sich, dass es ein Bild nur dieser Karte ist und kein Bild der Multiplikation. Es hört in dem Moment auf, in dem der linke Faktor kein Zählelement ist: $1.23$ Kopien gibt es nicht."
               },
               "basedOn": ["def.nat", "op.add"]
             }

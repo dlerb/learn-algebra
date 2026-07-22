@@ -135,3 +135,49 @@ with fundament0's `th.1…th.6` now that citations resolve tower-wide.
   *is*; the model breaks at fractions; scaling is the general notion), and a live
   argument among teachers, so worth knowing before a colleague raises it.
   [Overview](https://en.wikipedia.org/wiki/Multiplication_and_repeated_addition).
+
+## Repeated addition vs scaling — the discussion behind the stopping points (2026-07-22)
+
+Devlin's *It Ain't No Repeated Addition* was weighed and largely **set aside**, with
+one part kept. The user's position, which held up:
+
+- **In this frame the slogan is empty.** `op.mul` is a *primitive*: no definition at
+  all, only axioms. So neither repeated addition nor scaling is what multiplication
+  *is*. Devlin's implicit second half ("…it *is* scaling") overreaches exactly as far
+  as the half he attacks.
+- The slogan is **domain-relative**, and that is its whole content. On ℕ via Peano,
+  multiplication literally **is** defined as repeated addition. On a *specified* field
+  it is primitive. On a *constructed* ℝ it is neither. So "abstract on ℚ" is true if
+  you specify ℚ and false if you construct it — the specification/construction seam,
+  one floor down.
+- **Scaling has no independent content on ℚ.** Scaling by $m/n$ is executed as *take
+  the $n$-th part, repeat it $m$ times*, and the $n$-th part is characterised by
+  `ax.M4`. It is repetition closed under its own inverse, not a rival picture. (User's
+  argument, and it generalises further than the $1.5$ case they raised.) It becomes
+  irreducible only at irrational factors — i.e. **the intuition boundary coincides with
+  the `ax.C1` boundary**.
+- **Scaling is not innate-free either way.** The approximate number system is
+  ratio-based (Weber), 6-month-olds abstract ratios (McCrink & Wynn), and size
+  constancy is a scaling computation run continuously. But all of it is *approximate*;
+  exactness lives on the repetition side. **Neither faculty has both**, which is why
+  the number system had to be built rather than perceived.
+- **The picture of $\sqrt2 \cdot a$ is a construction, not a stretch**: the diagonal of
+  the square on $a$. Exact, drawable, no approximation. Geometry has the completeness
+  that arithmetic must be *given* by `ax.C1` — the Greek separation of ratio from
+  number, and Eudoxus' equal-ratios definition is Dedekind's cut 2200 years early.
+
+**Conclusion, and the reason the stopping-point pass happened:** ℝ has no adequate
+intuitive model. Sticks fail at $\sqrt2$, rubber bands fail at exactness, area fails at
+negatives, and nothing at all pictures $(-2)(-3) = 6$ (`th.4` is pure axioms). That is
+*why* ℝ is axiomatised. The teaching debt is not caused by choosing the wrong picture;
+it is caused by never saying that every picture has a stopping point. Hence: each
+`intuition` now names its own.
+
+**Not adopted:** "teach scaling instead" as the fix for *multiplication makes bigger*.
+Fischbein's finding is about the primitive model students **have**; it is no evidence
+that scaling can be **installed**, and classroom experience says it cannot. The fix is
+to make the *extension* visible, which is `th.multiple-is-product` plus the ℚ
+divergence. Still open for the errors layer: **"multiplication makes bigger" is not
+among M1–M10**, which are all notation/structure. It is a different kind of error, a
+property smuggled from the ℕ-model into ℝ, sibling to expecting $a^r$ to behave like
+$a^n$. Candidate new metapattern.
