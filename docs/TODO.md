@@ -4,7 +4,7 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## fundament0 — current thread (2026-07-18)
+## fundament0 + naturals — current thread (2026-07-22)
 
 Isolated clean rebuild of the field-axioms bedrock, separate from the `laws.json`
 tower. Full rationale, structure, and design decisions in **`docs/fundament0.md`**.
@@ -13,12 +13,25 @@ Built and live at `/fundament0`: now the **full complete ordered field ℝ** (ta
 completeness axioms + definitions + theorems, with a collapsed per-axiom
 `intuition` field.
 
-**Next (discussed, not started):**
+**Thread state:**
 - [ ] Refine/extend the intuition layer per the untangling backlog below.
-- [ ] Powers (natural + integer) as the ℕ-indexed layer *above* the field — laws
-  are theorems from the definition + `ax.M1`/`ax.M2` (induction), no new axioms.
-  Draft parked at `src/data/naturals/powers.json` (rework needed; drop the rejected
-  `pre.nat` import card). Design (construction→choice→existence) in `docs/fundament0.md`.
+- [x] ~~Powers (natural) as the ℕ-indexed layer *above* the field.~~ **Built
+  2026-07-22 as the `naturals` layer** (`src/data/naturals/cards.json`, `/naturals`,
+  tag `≙ ℕ ⊂ ℝ`) — see **`docs/naturals.md`**. The parked `pre.nat` import card was
+  **rejected as false**: `def.nat` carves ℕ out of ℝ as the smallest inductive
+  subset, so the layer assumes *nothing* and induction (`th.ind`) is a theorem.
+  Cards: `pre.count` · `ix.pow`, `ix.juxtaposition` · `def.nat`, `def.numeral`,
+  `def.multiple`, `def.pow` · `th.ind`, `th.numerals-distinct`,
+  `th.multiple-is-product`, `pl.same-base`, `pl.of-power`, `pl.of-product`,
+  `pl.no-sum-law`, `th.negative-base`. `0 ∉ ℕ` here (stated on the card as a
+  *convention, not a fact*); decimal numerals deferred.
+- [ ] **ℤ layer — choice by permanence** (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`). The arrow
+  reverses: the laws become the constraint and *force* the definition;
+  `pl.same-base` is the card the layer must preserve.
+- [ ] **Layer manifest follow-ups.** `src/data/layers.ts` + `LayerView` shipped
+  2026-07-22 (routes + nav generated, citations resolve tower-wide,
+  `pnpm sweep-layers` runs the KaTeX/refs/prose checks). Open: the layers are still
+  separate *pages*; composing several into one scrolling page is unbuilt.
 - [x] ~~Order + completeness slab (upgrades field → ℝ; unblocks roots).~~ **Built
   2026-07-18:** `op.lt` + `ax.O1–O4` (O4's `0<c` condition = the flip rule) + `ax.C1`
   supremum axiom; positive/negative defined on `op.lt`; theorems th.3 (opposite
@@ -30,19 +43,22 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
 in several layers at once; detail in `docs/fundament0.md`):
 - [ ] Equality **number vs variable** (`a=a` trivial for a number, a universal claim
   for a variable; symmetry near-empty for numbers, load-bearing for variables).
-- [ ] `3a = a+a+a` (definition) vs `3·a` (theorem, `3=1+1+1`) vs "three copies" (intuition).
+- [x] ~~`3a = a+a+a` (definition) vs `3·a` (theorem) vs "three copies" (intuition).~~
+  **Resolved 2026-07-22** — three separate cards in the naturals layer
+  (`def.multiple` / `th.multiple-is-product` / its collapsed `intuition`).
 - [ ] `1.23·a` — repeated addition breaks → forces `r·a` (product); needs decimal numerals.
 - [x] ~~Minus / sign / subtraction — one glyph, three meanings.~~ **Resolved 2026-07-17:
   there are only *two* minuses — unary (`ax.A4`, `-a` and `-2` alike) and binary
   (`def.sub`). The third ("a number's own sign") does not exist in the notation.
   Shipped in `ax.A4` + `th.2` + `ix.4`. Extended 2026-07-18: positive/negative built
   via order (`op.lt` + `ax.O1`, `th.3`), and the word "sign" retired from the data.**
-- [ ] **Atomic object, composite name** — ℝ's negatives are atomic elements, but the
-  notation gives them no *name*, only a description (`-2` = unary minus applied to `2`).
-  Hence `-2² = -4` (parse the name) vs `(-2)² = 4` (square the object). Brackets are the
-  notation's name-maker — that, not "keeping the sign with the number", is what `ix.4` is
-  for. Needs the power layer to state fully; likely the sharpest card in the design.
-- [ ] Powers & roots — theorem vs definition-by-permanence vs new axioms (order+completeness).
+- [x] ~~**Atomic object, composite name** — `-2² = -4` (parse the name) vs
+  `(-2)² = 4` (square the object).~~ **Shipped 2026-07-22** as `th.negative-base`
+  in the naturals layer: derived via `th.2` + `ix.3` rather than decreed, brackets
+  as the notation's name-maker (`ix.4`), and the "completion, not a correction"
+  teaching stance in the card's `intuition`.
+- [~] Powers & roots — the *theorem* half is built (natural exponents, by induction,
+  plus `pl.no-sum-law`); definition-by-permanence (ℤ) and existence (ℚ, roots) remain.
 - [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundament0) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable.
 - [ ] Inverse-notation asymmetry — unary-minus *prefix* for `+`, no prefix for `·` (postfix `a^{-1}`). `a^{-1}` (primitive) vs `1/a` (derived, needs division); reserve "reciprocal" for `1/a`.
 - [x] ~~Sign vs unary minus — "sign/Vorzeichen" = literal's sign only.~~ **Superseded

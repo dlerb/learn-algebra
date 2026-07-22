@@ -6,6 +6,7 @@ import {
   NButton, NRadioGroup, NRadioButton, type MenuOption,
 } from 'naive-ui'
 import { lang } from './lang'
+import { layers } from './data/layers'
 
 // Global app chrome: brand · page nav · settings. Page-specific controls stay
 // in the pages; only truly global state (language now, dark mode later) lives
@@ -19,7 +20,7 @@ const router = useRouter()
 const menuOptions: MenuOption[] = [
   { label: 'Skills', key: 'skills' },
   { label: 'Fundamentals', key: 'fundamentals' },
-  { label: 'fundament0', key: 'fundament0' },
+  ...layers.map(l => ({ label: l.title, key: l.slug })),
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },
 ]

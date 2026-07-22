@@ -3,7 +3,7 @@
 A deliberately isolated rebuild of the very bottom of algebra, mathematically
 stricter than the existing `laws.json` tower, which it does not touch. It lives
 in `src/data/fundament0/` and renders at `/fundament0`
-(`src/views/Fundament0View.vue`). This doc records the *why* and the open
+(`src/views/LayerView.vue`, shared by every layer via `src/data/layers.ts`). This doc records the *why* and the open
 threads, not the content tables (they would drift — read the JSON).
 
 ## What it is
@@ -83,8 +83,12 @@ layer → sections[] → groups[] → cards[]
 ```
 
 - **`layer`** — `{ id, meta }`; `meta.characterizes` (the `≙ ℝ` tag) + `meta.note`
-  (the intro). One layer per file; the powers layer will be its own file, and an
-  outer `layers[]` array (a manifest, not built yet) composes them.
+  (the intro). One layer per file. **The manifest is `src/data/layers.ts`** (built
+  2026-07-22 with the naturals layer): it fixes the reading order of the tower,
+  generates the routes and nav entries (one `LayerView`, a `layerId` prop), and
+  resolves citations **across** layers — `th.negative-base` in naturals rests on
+  `th.2` and `ix.3` here. Codes are unique tower-wide, and it throws at load time
+  on a duplicate code, an unresolvable citation, or a bad/missing `concerns`.
 - **`sections[]`** — ordered; each has a `kind` and its `groups`. **Page order is
   array order** at every level — no derived-from-folder kind, no layout config.
   The seven→six kinds are the epistemic ladder: `preliminary · signature ·
@@ -107,7 +111,7 @@ Two orthogonal axes, deliberately represented differently:
   (`|concerns|>1`) — every theorem, plus E4/D1/N1/O1/O3/O4/C1 — so the `bridge`
   axiom group is no longer the only bridge, just a display home.
 
-The view (`Fundament0View.vue`) walks the tree with three card layouts (signature
+The view (`LayerView.vue`) walks the tree with three card layouts (signature
 op-cards, plain preliminaries, one unified statement-card for convention/axiom/
 definition/theorem) and two **filter rows** — `kind` and `concerns` — that **dim**
 (not hide) non-matching cards. Deselect all concerns but `mul` for the cross-cutting
@@ -185,15 +189,17 @@ order relation `op.lt`, the four order axioms `ax.O1–O4`, the completeness axi
 
 ## Deferred layers (not built)
 
-- **The ℕ-indexed layer** above the field — multiples (`3a`), powers (`aⁿ`), and
-  numerals (`2 := 1+1`, decimal). These all smuggle in ℕ (counting/repetition),
-  so they sit *above* fundament0, not inside it. Natural-power laws are theorems
-  from the definition plus `ax.M1`/`ax.M2` (by induction, no new axioms); roots and
-  rational powers need completeness, **which now exists** (`ax.C1`). Draft parked at
-  `src/data/naturals/powers.json` (still carries the rejected `pre.nat` import card;
-  see the powers-tower design in memory). The existing `laws.json` (`def.power` →
-  `thm.power-same-base`, `def.extended-exponents`, `def.root`) is the worked
-  reference.
+- **The ℕ-indexed layer — BUILT 2026-07-22**, see `docs/naturals.md`. Numerals
+  (`2 := 1+1`), multiples (`3a`) and natural powers (`aⁿ`) live in
+  `src/data/naturals/cards.json` at `/naturals`. It does **not** smuggle in ℕ: the
+  parked `pre.nat` import card was rejected as false, and `def.nat` carves ℕ out of
+  ℝ as the smallest inductive subset, so the layer assumes nothing and induction
+  (`th.ind`) is a theorem. Power laws are theorems by induction, as designed. The
+  "atomic object, composite name" card shipped there as `th.negative-base`.
+  Still deferred above it: ℤ (choice by permanence — `a⁰`, `a⁻ⁿ`), ℚ (existence —
+  roots, needs `ax.C1`), and decimal numerals. The old `laws.json` (`def.power` →
+  `thm.power-same-base`, `def.extended-exponents`, `def.root`) remains the worked
+  reference for those.
 
 ## The untangling backlog
 
@@ -209,9 +215,12 @@ intuition / notation), and needs sorting before it is built.
   equation both ways" for variables. The equality intuitions we wrote lean on the
   number reading — the variable reading is where the real difficulty lives. Untangle
   which reading each equality axiom/intuition intends.
-- **`3a = a + a + a`.** Straddles three layers: a *definition* (multiple = repeated
-  addition), a *theorem* (`3a = 3·a` via distributivity, where `3 = 1+1+1`), and an
-  *intuition* ("three copies"). One glyph pattern, three homes.
+- **`3a = a + a + a` — RESOLVED 2026-07-22**, shipped in the naturals layer. The
+  three homes are now three separate cards: a *definition* (`def.multiple`, copies),
+  a *theorem* (`th.multiple-is-product`, copies coincide with `n·a`, hinging on
+  `ax.D1`), and an *intuition* (the collapsed field, "three lengths end to end").
+  The point of the split: school says all three in one voice, so nothing tells a
+  student that one was chosen, one proved and one is only a picture.
 - **`1.23·a`.** Repeated addition breaks (you cannot add `a` "1.23 times"), which
   forces the `n·a` view to generalise to `r·a` for any real `r` — i.e. plain
   multiplication. Also needs decimal **numerals** first (what `1.23` names). A good
@@ -227,8 +236,9 @@ intuition / notation), and needs sorting before it is built.
   proving `−a` is negative *only* when `a` is positive; and the word "sign" was
   retired from the data entirely (see Design decisions).
 
-- **Atomic object, composite name (2026-07-17) — the sharpest card in the design,
-  waiting on the power layer.** ℝ's negative elements are full citizens: atomic,
+- **Atomic object, composite name (2026-07-17) — SHIPPED 2026-07-22** as
+  `th.negative-base` in the naturals layer (statement + derivation in the note, the
+  teaching stance in `intuition`); this entry stays as the full rationale. ℝ's negative elements are full citizens: atomic,
   no internal structure. But the notation gives atomic **names** only to
   non-negatives (`2`); a negative gets only a **description** (`−2` = "apply the
   unary minus to `2`"). Hence the trap: **squaring looks at the object (→ 4);
@@ -255,10 +265,12 @@ intuition / notation), and needs sorting before it is built.
     `−2² = (−1)·2² = −4` follows from the precedence rule students *already own*
     (`ix.3`, powers bind tighter than products) — it **derives** the rule instead
     of decreeing it, and needs no "the power binds to the 2" PEMDAS edict.
-- **Powers & roots.** Which power laws are theorems (natural exponents: all, from
-  the definition + `ax.M1`/`ax.M2` + induction), which are definitions-by-choice
-  (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`, extension by permanence), and which need new axioms
-  (roots and rational powers need order + completeness). See Deferred layers.
+- **Powers & roots — half done (2026-07-22).** The *theorem* half is built: all
+  natural-exponent laws are proved by induction in the naturals layer, plus
+  `pl.no-sum-law` (there is no law for sums, by counterexample). Still open: the
+  definitions-by-choice (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`, extension by permanence — the ℤ
+  layer, where the arrow reverses and the laws *force* the definition) and the
+  existence half (roots and rational powers, needing `ax.C1`). See `docs/naturals.md`.
 - **The exponent `-1` / `-n`.** One glyph string, three readings: `b^{-1}` at
   fundament0 is *atomic notation* for the inverse (ax.M4), where the `-1` is
   decorative — not the number `-1`, and not a power (powers don't exist here). In
@@ -290,9 +302,11 @@ intuition / notation), and needs sorting before it is built.
 
 ## Verifying edits
 
-Data is one plain-JSON file, `cards.json`, consumed directly by the view (no Zod
-schema yet, unlike the skills tower). After editing, sweep the tree
-(`sections[].groups[].cards[]`) for:
+Data is one plain-JSON file per layer, `cards.json`, consumed directly by the view
+(no Zod schema, unlike the skills tower). **`pnpm sweep-layers`** now runs the whole
+checklist below over every layer in the manifest, except the two build steps; the
+structural half also runs at load time in `src/data/layers.ts`. The list, for when
+a check needs changing:
 
 - **KaTeX** over every `$…$` fragment and every `latex`/`derivation`/`cond`/
   `forall`/`avoid`/`prefer` field, **with no macros defined** (proves nothing

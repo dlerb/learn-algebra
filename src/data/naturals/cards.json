@@ -1,0 +1,300 @@
+{
+  "layer": {
+    "id": "naturals",
+    "meta": {
+      "characterizes": { "en": "ℕ ⊂ ℝ", "de": "ℕ ⊂ ℝ" },
+      "note": {
+        "en": "Counting looks like it has to come from outside the field, and it does not: the numbers we count with were in $\\mathbb{R}$ all along. This layer adds no assumption. It carves out $\\mathbb{N}$ as the smallest subset containing $1$ and closed under adding one, reads induction straight off that definition, and then builds the two repetition constructions on it: multiples, where $n$ counts copies added, and powers, where $n$ counts factors multiplied. The power laws follow by induction, so they are theorems and not new rules. Only natural exponents live here. The value $a^{0}$, negative exponents and fractional exponents are a choice and an existence claim respectively, and they belong to the layers above.",
+        "de": "Zählen sieht so aus, als müsste es von ausserhalb des Körpers kommen, und das muss es nicht: die Zahlen, mit denen wir zählen, waren die ganze Zeit schon in $\\mathbb{R}$. Diese Schicht nimmt nichts Neues an. Sie schneidet $\\mathbb{N}$ als die kleinste Teilmenge heraus, die $1$ enthält und unter dem Weiterzählen abgeschlossen ist, liest die Induktion direkt an dieser Definition ab und baut darauf die beiden Wiederholungskonstruktionen: Vielfache, wo $n$ addierte Kopien zählt, und Potenzen, wo $n$ multiplizierte Faktoren zählt. Die Potenzgesetze folgen durch Induktion, sind also Sätze und keine neuen Regeln. Hier wohnen nur natürliche Exponenten. Der Wert $a^{0}$, negative und gebrochene Exponenten sind eine Wahl beziehungsweise eine Existenzaussage und gehören in die Schichten darüber."
+      }
+    }
+  },
+
+  "sections": [
+    {
+      "kind": "preliminary",
+      "title": { "en": "Preliminaries", "de": "Vorbemerkungen" },
+      "groups": [
+        {
+          "slug": "prelim",
+          "cards": [
+            {
+              "code": "pre.count",
+              "name": { "en": "Where the counting comes from", "de": "Woher das Zählen kommt" },
+              "note": {
+                "en": "To say '$n$ factors of $a$' we have to count, and it looks as though counting must be brought in from outside. It does not. The axioms give us $1$ (ax.M3) and they give us $+$, so they already give us $1$, $1+1$, $1+1+1$, and everything reachable by taking one more step. The counting elements are not an import; they are a part of $\\mathbb{R}$ we had not yet looked at. This layer names that part and works out what it lets us build, and it is the first layer since the axioms that assumes nothing at all: only definitions and their consequences. One thing does change, and it is worth being awake to it. Below, a natural number appears in two different roles. In $3 = 1+1+1$ it is an element, something you can add and multiply. In $a^{3}$ it is a counter: it says how many factors to write down, and it is never added to or multiplied by anything. Same object, two jobs.",
+                "de": "Um '$n$ Faktoren $a$' zu sagen, müssen wir zählen, und es sieht so aus, als müsste das Zählen von aussen dazugeholt werden. Muss es nicht. Die Axiome geben uns $1$ (ax.M3) und sie geben uns $+$, also geben sie uns bereits $1$, $1+1$, $1+1+1$ und alles, was mit einem weiteren Schritt erreichbar ist. Die Zählelemente sind kein Import; sie sind ein Teil von $\\mathbb{R}$, den wir noch nicht angeschaut haben. Diese Schicht benennt diesen Teil und arbeitet heraus, was er zu bauen erlaubt, und sie ist die erste Schicht seit den Axiomen, die gar nichts annimmt: nur Definitionen und ihre Folgen. Eines ändert sich aber, und darauf lohnt es sich zu achten. Weiter unten tritt eine natürliche Zahl in zwei verschiedenen Rollen auf. In $3 = 1+1+1$ ist sie ein Element, etwas, das man addieren und multiplizieren kann. In $a^{3}$ ist sie ein Zähler: sie sagt, wie viele Faktoren zu schreiben sind, und wird selbst nie addiert oder multipliziert. Dasselbe Objekt, zwei Aufgaben."
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "kind": "convention",
+      "title": { "en": "Notation", "de": "Schreibweise" },
+      "groups": [
+        {
+          "slug": "reading",
+          "title": { "en": "Reading", "de": "Lesen" },
+          "cards": [
+            {
+              "code": "ix.pow",
+              "concerns": ["mul"],
+              "name": { "en": "Reading a power", "de": "Eine Potenz lesen" },
+              "latex": "a^n",
+              "note": {
+                "en": "Read '$a$ to the $n$-th': $n$ factors of $a$ multiplied together. Two slots doing two different jobs. The base $a$ is an element, anything $\\mathbb{R}$ contains. The exponent $n$ counts factors: it is the counter role from pre.count, written small and raised because it is not part of the arithmetic going on below it. Nothing is being multiplied by $n$. Powers are not a field operation. The field has $+$ and $\\cdot$ and nothing else; exponentiation is machinery built on top, in this layer, out of $\\cdot$ and counting. That is the honest reason powers do not behave like coefficients: a coefficient sits in a field slot and may be any element, an exponent sits in a counting slot and may not. In $3a$ the $3$ eventually stops counting and becomes an ordinary factor, and the counting picture can be dropped with no loss. In $a^{3}$ the $3$ never gets to do that.",
+                "de": "Gelesen '$a$ hoch $n$': $n$ Faktoren $a$ miteinander multipliziert. Zwei Plätze mit zwei verschiedenen Aufgaben. Die Basis $a$ ist ein Element, alles, was $\\mathbb{R}$ enthält. Der Exponent $n$ zählt Faktoren: das ist die Zählerrolle aus pre.count, klein und hochgestellt geschrieben, weil er nicht zur Rechnung darunter gehört. Es wird nichts mit $n$ multipliziert. Potenzen sind keine Körperoperation. Der Körper hat $+$ und $\\cdot$ und sonst nichts; das Potenzieren ist Maschinerie obendrauf, in dieser Schicht, aus $\\cdot$ und dem Zählen gebaut. Das ist der ehrliche Grund, warum sich Potenzen anders verhalten als Koeffizienten: ein Koeffizient steht auf einem Körperplatz und darf jedes Element sein, ein Exponent steht auf einem Zählplatz und darf das nicht. In $3a$ hört die $3$ irgendwann auf zu zählen und wird ein gewöhnlicher Faktor, und das Zählbild lässt sich verlustfrei fallen lassen. In $a^{3}$ kommt die $3$ nie dazu."
+              },
+              "basedOn": ["op.mul", "def.nat"]
+            }
+          ]
+        },
+        {
+          "slug": "writing",
+          "title": { "en": "Writing", "de": "Schreiben" },
+          "cards": [
+            {
+              "code": "ix.juxtaposition",
+              "concerns": ["mul"],
+              "name": { "en": "Why 3a is safe", "de": "Warum 3a unbedenklich ist" },
+              "latex": "\\underbrace{a + a + a}_{3 \\text{ copies}} \\;=\\; 3 \\cdot a \\;=:\\; 3a",
+              "note": {
+                "en": "ix.6 already asks for the coefficient in front and the dot dropped. This card is what it rests on. There are two things $3a$ could mean, three copies of $a$ added and the product $3 \\cdot a$, and th.multiple-is-product says they are the same element, so dropping the dot cannot lose information. A notation may be ambiguous exactly when its readings agree; ix.6 is a preference, this is the licence. Two limits. Juxtaposition is for a numeral followed by a letter or a bracket, $3a$ and $2(x+1)$; it is not available between numerals, because $34$ is already the name of another element, and no proof rescues a collision of names. And the licence says which multiplication is meant, not how tightly it binds: precedence is still ix.3's business.",
+                "de": "ix.6 verlangt bereits den Koeffizienten nach vorne und den Punkt weg. Diese Karte ist das, worauf das ruht. $3a$ kann zweierlei heissen, drei addierte Kopien von $a$ oder das Produkt $3 \\cdot a$, und th.multiple-is-product sagt, dass beides dasselbe Element ist; das Weglassen des Punktes kann also keine Information kosten. Eine Schreibweise darf genau dann mehrdeutig sein, wenn ihre Lesarten übereinstimmen; ix.6 ist die Vorliebe, dies ist die Erlaubnis. Zwei Grenzen. Das Nebeneinanderschreiben gilt für eine Zahl vor einem Buchstaben oder einer Klammer, $3a$ und $2(x+1)$; zwischen zwei Zahlen gilt es nicht, denn $34$ ist bereits der Name eines anderen Elements, und kein Beweis rettet einen Zusammenstoss von Namen. Und die Erlaubnis sagt, welche Multiplikation gemeint ist, nicht wie stark sie bindet: die Bindung bleibt Sache von ix.3."
+              },
+              "basedOn": ["th.multiple-is-product", "ix.6", "op.mul"]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "kind": "definition",
+      "title": { "en": "Definitions", "de": "Definitionen" },
+      "note": {
+        "en": "Nothing below is assumed. Each card either names a part of $\\mathbb{R}$ that the axioms already forced to be there, or introduces an abbreviation for something already writable.",
+        "de": "Nichts hier unten wird angenommen. Jede Karte benennt entweder einen Teil von $\\mathbb{R}$, den die Axiome ohnehin erzwungen haben, oder führt eine Abkürzung für etwas ein, das sich bereits schreiben lässt."
+      },
+      "groups": [
+        {
+          "slug": "numbers",
+          "title": { "en": "The counting elements", "de": "Die Zählelemente" },
+          "cards": [
+            {
+              "code": "def.nat",
+              "concerns": ["add"],
+              "name": { "en": "The natural numbers", "de": "Die natürlichen Zahlen" },
+              "latex": "\\begin{aligned} S \\subseteq \\mathbb{R} \\ \\text{inductive} \\;&:\\Leftrightarrow\\; 1 \\in S \\;\\text{ and }\\; (x \\in S \\Rightarrow x + 1 \\in S) \\\\[2pt] \\mathbb{N} \\;&:= \\bigcap \\{\\, S \\subseteq \\mathbb{R} \\;:\\; S \\ \\text{inductive} \\,\\} \\end{aligned}",
+              "note": {
+                "en": "$\\mathbb{R}$ is itself inductive, so we are not intersecting an empty family. The intersection is again inductive, so $\\mathbb{N}$ is the smallest inductive subset: it contains $1$, it is closed under taking one more, and it contains nothing else. That last clause is the whole content. $\\mathbb{N}$ holds exactly the elements you are forced to include and no strays, which is what th.ind then reads back off it. It is defined out of $+$ and $1$ alone; neither order nor completeness is used. This is a move we have made once before. Like ax.C1 it speaks about subsets rather than elements, since 'the smallest inductive set' cannot be said one element at a time. Unlike ax.C1 it asserts nothing: C1 was an assumption, this is a definition, and a definition may always be made.",
+                "de": "$\\mathbb{R}$ ist selbst induktiv, wir schneiden also keine leere Familie. Der Durchschnitt ist wieder induktiv, also ist $\\mathbb{N}$ die kleinste induktive Teilmenge: sie enthält $1$, sie ist unter dem Weiterzählen abgeschlossen, und sie enthält sonst nichts. Dieser letzte Punkt ist der ganze Inhalt. $\\mathbb{N}$ enthält genau die Elemente, die man aufnehmen muss, und keine Ausreisser, und genau das liest th.ind wieder daran ab. Definiert ist sie allein aus $+$ und $1$; weder Ordnung noch Vollständigkeit kommen vor. Diesen Zug haben wir schon einmal gemacht. Wie ax.C1 spricht er über Teilmengen statt über Elemente, denn 'die kleinste induktive Menge' lässt sich nicht Element für Element sagen. Anders als ax.C1 behauptet er nichts: C1 war eine Annahme, dies ist eine Definition, und eine Definition darf man immer treffen."
+              },
+              "intuition": {
+                "en": "We start at $1$, not at $0$, because $1$ is what ax.M3 hands us while $0$ would have to be fetched from ax.A3 for no work it does here. Many textbooks, including Swiss ones, write $\\mathbb{N} = \\{0, 1, 2, \\dots\\}$ instead. Both are correct, because whether $0$ counts as a natural number is a convention and not a fact. It is worth noticing how little the two look different on the page: a decision and a discovery arrive in the same voice, and nothing in the notation tells you which one you just read.",
+                "de": "Wir beginnen bei $1$ und nicht bei $0$, weil ax.M3 uns die $1$ gibt, während die $0$ aus ax.A3 geholt werden müsste, ohne hier etwas zu leisten. Viele Lehrmittel, auch Schweizer, schreiben stattdessen $\\mathbb{N} = \\{0, 1, 2, \\dots\\}$. Beides ist richtig, denn ob die $0$ als natürliche Zahl zählt, ist eine Konvention und keine Tatsache. Es lohnt sich zu bemerken, wie wenig verschieden die beiden auf dem Papier aussehen: eine Entscheidung und eine Entdeckung treten im selben Ton auf, und die Schreibweise sagt nicht, was man gerade gelesen hat."
+              },
+              "basedOn": ["op.add", "ax.M3"]
+            },
+            {
+              "code": "def.numeral",
+              "concerns": ["add"],
+              "name": { "en": "Names for the counting elements", "de": "Namen für die Zählelemente" },
+              "latex": "2 := 1 + 1, \\quad 3 := 2 + 1, \\quad 4 := 3 + 1, \\quad \\dots",
+              "note": {
+                "en": "pre.1 already said that $2$ is a name for $1+1$. Now we can say which names there are and where they stop: one name per element of $\\mathbb{N}$, handed out by the same 'one more' step that built $\\mathbb{N}$ in the first place. So the numerals name exactly the counting elements, one each, and the list never runs out. These names are abbreviations and not new mathematics. Every claim below could be written with $1$s and $+$ alone; it would only be unreadable. Nothing about $\\mathbb{R}$ changes when we introduce them, which is exactly why it is safe to introduce them. What is not being defined here is decimal notation. Writing $47$ as four tens and seven is a separate machine, with place value, a fixed stock of digits and a rule for reading a string as a sum, and it is the machine that also has to explain $1.23$. Naming one element at a time and running a positional system are different acts, and the second belongs upstairs with the fractions.",
+                "de": "pre.1 hat schon gesagt, dass $2$ ein Name für $1+1$ ist. Jetzt können wir sagen, welche Namen es gibt und wo sie aufhören: ein Name pro Element von $\\mathbb{N}$, vergeben durch denselben Schritt 'eins weiter', der $\\mathbb{N}$ überhaupt gebaut hat. Die Zahlzeichen benennen also genau die Zählelemente, jedes einmal, und die Liste geht nie aus. Diese Namen sind Abkürzungen und keine neue Mathematik. Jede Aussage weiter unten liesse sich allein mit Einsen und $+$ schreiben; sie wäre bloss unlesbar. An $\\mathbb{R}$ ändert sich durch die Namen nichts, und genau darum ist es unbedenklich, sie einzuführen. Nicht definiert wird hier die Dezimalschreibweise. $47$ als vier Zehner und sieben zu schreiben ist eine eigene Maschine, mit Stellenwert, einem festen Vorrat an Ziffern und einer Regel, eine Zeichenkette als Summe zu lesen, und es ist die Maschine, die auch $1.23$ erklären muss. Ein Element nach dem anderen zu benennen und ein Stellenwertsystem zu betreiben sind verschiedene Handlungen, und die zweite gehört nach oben zu den Brüchen."
+              },
+              "basedOn": ["def.nat", "op.add"]
+            }
+          ]
+        },
+        {
+          "slug": "multiples",
+          "title": { "en": "Multiples", "de": "Vielfache" },
+          "cards": [
+            {
+              "code": "def.multiple",
+              "concerns": ["add"],
+              "name": { "en": "Copies of an element", "de": "Kopien eines Elements" },
+              "latex": "\\begin{aligned} \\underbrace{a + \\dots + a}_{1} &:= a \\\\[2pt] \\underbrace{a + \\dots + a}_{n+1} &:= \\Big( \\underbrace{a + \\dots + a}_{n} \\Big) + a \\end{aligned}",
+              "cond": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+              "note": {
+                "en": "This is counting, not arithmetic in the left slot. The $n$ says how many times to write $a$ down; it is never added to anything and never multiplied by anything. It is the counter role from pre.count, and the recursion is the one def.nat set up: settle one, then pass the step from $n$ to $n+1$. The dots are shorthand for that recursion and not a separate idea, since the recursion is what makes 'and so on' precise. Note what this uses: $+$, and nothing else. No inverse, no order, no $\\cdot$. Copies of an element exist in any structure that can add.",
+                "de": "Das ist Zählen, nicht Rechnen im linken Platz. Das $n$ sagt, wie oft $a$ hinzuschreiben ist; es wird nie zu etwas addiert und nie mit etwas multipliziert. Das ist die Zählerrolle aus pre.count, und die Rekursion ist jene, die def.nat aufgesetzt hat: eines klären, dann den Schritt von $n$ auf $n+1$ weitergeben. Die Punkte sind eine Kurzschrift für diese Rekursion und keine eigene Idee, denn die Rekursion ist es, die 'und so weiter' präzise macht. Man beachte, was hier gebraucht wird: $+$, und sonst nichts. Kein Inverses, keine Ordnung, kein $\\cdot$. Kopien eines Elements gibt es in jeder Struktur, die addieren kann."
+              },
+              "intuition": {
+                "en": "Three copies of a length laid end to end. This is the picture nearly everyone actually carries for $3a$, and for $n \\in \\mathbb{N}$ it is faithful. Keep it, and notice that it is a picture of this card only and not a picture of multiplication.",
+                "de": "Drei Kopien einer Länge hintereinandergelegt. Das ist das Bild, das fast alle für $3a$ tatsächlich mit sich tragen, und für $n \\in \\mathbb{N}$ ist es treu. Behalten Sie es, und merken Sie sich, dass es ein Bild nur dieser Karte ist und kein Bild der Multiplikation."
+              },
+              "basedOn": ["def.nat", "op.add"]
+            }
+          ]
+        },
+        {
+          "slug": "powers",
+          "title": { "en": "Powers", "de": "Potenzen" },
+          "cards": [
+            {
+              "code": "def.pow",
+              "concerns": ["mul"],
+              "name": { "en": "Power with a natural exponent", "de": "Potenz mit natürlichem Exponenten" },
+              "latex": "a^{1} := a \\qquad a^{\\,n+1} := a^{n} \\cdot a",
+              "cond": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+              "note": {
+                "en": "Repeated multiplication, by recursion on the exponent: one factor is $a$ itself, and each further step multiplies on one more $a$. So $a^{2} = a \\cdot a$ and $a^{3} = a \\cdot a \\cdot a$. This is a genuine construction: it says what $a^{n}$ is, built from $\\cdot$ alone. It is def.multiple with the operation swapped, since copies are to $+$ what factors are to $\\cdot$: same recursion, same counter, different operation underneath. The parallel is exact here and does not survive the trip upstairs. It uses no inverse, so it holds for every base including $0$, where $0^{n} = 0$ for every $n$ with nothing special happening. The value $a^{0}$ is deliberately not here. The recursion starts at one factor because counting starts at one: 'zero copies of $a$' is not something counting hands you, it is something you would have to decide. Leaving the gap open is the point, so that $a^{0} = 1$ later arrives visibly as a choice with a reason instead of being smuggled in as a base case nobody looked at. The same holds for negative exponents. Only natural exponents live in this layer.",
+                "de": "Wiederholte Multiplikation, rekursiv über den Exponenten: ein Faktor ist $a$ selbst, und jeder weitere Schritt multipliziert ein weiteres $a$ dazu. Also $a^{2} = a \\cdot a$ und $a^{3} = a \\cdot a \\cdot a$. Das ist eine echte Konstruktion: sie sagt, was $a^{n}$ ist, allein aus $\\cdot$ gebaut. Sie ist def.multiple mit vertauschter Operation, denn Kopien verhalten sich zu $+$ wie Faktoren zu $\\cdot$: dieselbe Rekursion, derselbe Zähler, eine andere Operation darunter. Die Parallele ist hier exakt und übersteht den Weg nach oben nicht. Sie braucht kein Inverses, gilt also für jede Basis, auch $0$, wo $0^{n} = 0$ für jedes $n$ ist, ohne dass etwas Besonderes passiert. Der Wert $a^{0}$ steht bewusst nicht hier. Die Rekursion beginnt bei einem Faktor, weil das Zählen bei eins beginnt: 'null Kopien von $a$' liefert das Zählen nicht, das müsste man entscheiden. Die Lücke offen zu lassen ist der Punkt, damit $a^{0} = 1$ später sichtbar als begründete Wahl auftritt und nicht als Anfangsfall hereingeschmuggelt wird, den niemand angeschaut hat. Für negative Exponenten gilt dasselbe. In dieser Schicht wohnen nur natürliche Exponenten."
+              },
+              "basedOn": ["op.mul", "def.nat"]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "kind": "theorem",
+      "title": { "en": "Theorems", "de": "Sätze" },
+      "note": {
+        "en": "Every proof in this section has the same two beats, check $1$ and pass the step from $n$ to $n+1$, because that is the shape def.nat has.",
+        "de": "Jeder Beweis in diesem Abschnitt hat dieselben zwei Takte, $1$ prüfen und den Schritt von $n$ auf $n+1$ weitergeben, weil def.nat genau diese Gestalt hat."
+      },
+      "groups": [
+        {
+          "slug": "numbers",
+          "title": { "en": "The counting elements", "de": "Die Zählelemente" },
+          "cards": [
+            {
+              "code": "th.ind",
+              "concerns": ["add"],
+              "name": { "en": "Induction", "de": "Induktion" },
+              "latex": "1 \\in S \\;\\text{ and }\\; (n \\in S \\Rightarrow n + 1 \\in S) \\;\\Longrightarrow\\; S = \\mathbb{N}",
+              "forall": "S \\subseteq \\mathbb{N}",
+              "derivation": "S \\text{ inductive} \\;\\Rightarrow\\; \\mathbb{N} \\subseteq S \\;\\text{ and }\\; S \\subseteq \\mathbb{N} \\;\\Rightarrow\\; S = \\mathbb{N}",
+              "derivedFrom": ["def.nat"],
+              "note": {
+                "en": "Such an $S$ is inductive, and $\\mathbb{N}$ is contained in every inductive subset by def.nat, so $\\mathbb{N} \\subseteq S$; together with $S \\subseteq \\mathbb{N}$ this gives equality. In school, induction turns up as an exotic proof technique with a ritual to memorise. Here it is a one-line consequence of how $\\mathbb{N}$ was carved: we defined $\\mathbb{N}$ to be the set with no strays in it, so 'no strays' is what we get back. It is not a new power. It is the definition, read in the other direction. Every law in this layer is proved with it.",
+                "de": "Ein solches $S$ ist induktiv, und $\\mathbb{N}$ ist nach def.nat in jeder induktiven Teilmenge enthalten, also $\\mathbb{N} \\subseteq S$; zusammen mit $S \\subseteq \\mathbb{N}$ ergibt das Gleichheit. In der Schule tritt die Induktion als exotische Beweistechnik mit einem Ritual zum Auswendiglernen auf. Hier ist sie eine einzeilige Folge daraus, wie $\\mathbb{N}$ herausgeschnitten wurde: wir haben $\\mathbb{N}$ als die Menge ohne Ausreisser definiert, also bekommen wir 'keine Ausreisser' zurück. Das ist keine neue Kraft. Das ist die Definition, andersherum gelesen. Jedes Gesetz dieser Schicht wird damit bewiesen."
+              }
+            },
+            {
+              "code": "th.numerals-distinct",
+              "concerns": ["add", "order"],
+              "name": { "en": "The names are distinct", "de": "Die Namen sind verschieden" },
+              "latex": "1 < 2 < 3 < \\dots",
+              "derivation": "0 < 1 \\;\\Rightarrow\\; n < n + 1 \\;\\Rightarrow\\; 1 < 2 < 3 < \\dots",
+              "derivedFrom": ["th.6", "ax.O3", "ax.O2", "def.numeral"],
+              "note": {
+                "en": "From $0 < 1$ (th.6), adding $n$ to both sides (ax.O3) gives $n < n+1$ for every $n$, and transitivity (ax.O2) chains these. So distinct numerals name distinct elements. That is not something the field axioms give you. A field may perfectly well satisfy $1 + 1 = 0$, and then the numerals fall on top of each other and $\\mathbb{N}$ is finite. What rules this out is order: once $0 < 1$, every step of adding one moves strictly to the right, so the naming never doubles back and $\\mathbb{N}$ is genuinely infinite. This is the sort of fact that is invisible because it is too obvious to question, namely that counting does not loop. It earns a card precisely because it shows where the obviousness is anchored: not in $+$, not in $1$, but in $<$.",
+                "de": "Aus $0 < 1$ (th.6) liefert das Addieren von $n$ auf beiden Seiten (ax.O3) die Aussage $n < n+1$ für jedes $n$, und die Transitivität (ax.O2) reiht diese aneinander. Verschiedene Zahlzeichen benennen also verschiedene Elemente. Das geben einem die Körperaxiome nicht. Ein Körper darf durchaus $1 + 1 = 0$ erfüllen, dann fallen die Zahlzeichen aufeinander und $\\mathbb{N}$ ist endlich. Ausgeschlossen wird das durch die Ordnung: sobald $0 < 1$ gilt, führt jeder Schritt mit plus eins echt nach rechts, die Benennung kehrt also nie zurück und $\\mathbb{N}$ ist wirklich unendlich. Das ist eine Tatsache, die unsichtbar ist, weil sie zu selbstverständlich ist, um befragt zu werden, nämlich dass das Zählen nicht in einen Kreis läuft. Sie verdient eine Karte gerade deshalb, weil sie zeigt, woran die Selbstverständlichkeit hängt: nicht an $+$, nicht an $1$, sondern an $<$."
+              }
+            }
+          ]
+        },
+        {
+          "slug": "multiples",
+          "title": { "en": "Multiples", "de": "Vielfache" },
+          "cards": [
+            {
+              "code": "th.multiple-is-product",
+              "concerns": ["add", "mul"],
+              "name": { "en": "Counting agrees with multiplying", "de": "Zählen stimmt mit Multiplizieren überein" },
+              "latex": "\\underbrace{a + a + \\dots + a}_{n \\text{ copies}} = n \\cdot a",
+              "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+              "derivation": "\\underbrace{a + \\dots + a}_{n+1} = \\Big( \\underbrace{a + \\dots + a}_{n} \\Big) + a = n \\cdot a + a = n \\cdot a + 1 \\cdot a = (n + 1) \\cdot a",
+              "derivedFrom": ["def.multiple", "th.ind", "ax.M3", "ax.D1"],
+              "note": {
+                "en": "Induction on $n$. One copy: $a = 1 \\cdot a$ by ax.M3. The step is shown, and it closes with distributivity. The two $n$'s in the statement are the same object: on the left it counts, on the right it is a factor being multiplied. It can be both because def.nat carved $\\mathbb{N}$ out of $\\mathbb{R}$ instead of importing it. Had we brought $\\mathbb{N}$ in from outside, this theorem would have needed a map from the counters into $\\mathbb{R}$ and would have said 'these two correspond' rather than 'these two agree'. One written form, two readings, one object, which is the whole reason writing $3a$ is safe. Distributivity is the hinge: ax.D1 says $\\cdot$ respects the structure of $+$, and 'add $a$ to itself $n$ times equals multiply $a$ by $n$' is that respect cashed out.",
+                "de": "Induktion über $n$. Eine Kopie: $a = 1 \\cdot a$ nach ax.M3. Der Schritt ist gezeigt und schliesst mit der Distributivität. Die beiden $n$ in der Aussage sind dasselbe Objekt: links zählt es, rechts ist es ein Faktor, der multipliziert wird. Es kann beides sein, weil def.nat $\\mathbb{N}$ aus $\\mathbb{R}$ herausgeschnitten und nicht importiert hat. Hätten wir $\\mathbb{N}$ von aussen geholt, bräuchte dieser Satz eine Abbildung der Zähler nach $\\mathbb{R}$ und würde sagen 'die beiden entsprechen einander' statt 'die beiden stimmen überein'. Eine Schreibweise, zwei Lesarten, ein Objekt, und genau darum ist $3a$ unbedenklich. Die Distributivität ist das Scharnier: ax.D1 sagt, dass $\\cdot$ die Struktur von $+$ respektiert, und '$a$ $n$-mal zu sich selbst addieren ist gleich $a$ mit $n$ multiplizieren' ist genau dieser Respekt, ausgezahlt."
+              },
+              "intuition": {
+                "en": "$3a = a + a + a$ is three things at once: a definition (def.multiple, what copies means), a theorem (this card, that copies coincide with the product) and a picture (three lengths end to end). School says all three in the same breath and in the same voice, so a student has no way to hear that one of them was chosen, one was proved and one is only a picture. And the picture does fail: there is no such thing as $1.23$ copies of $a$, while $r \\cdot a$ is defined for every $r$ by op.mul. So the product is the general fact and copies are the special case available when the left factor happens to be a counting element. Repeated addition is not what multiplication is; it is what multiplication looks like on $\\mathbb{N}$.",
+                "de": "$3a = a + a + a$ ist dreierlei zugleich: eine Definition (def.multiple, was Kopien heisst), ein Satz (diese Karte, dass Kopien mit dem Produkt zusammenfallen) und ein Bild (drei Längen hintereinander). Die Schule sagt alle drei im selben Atemzug und im selben Ton, und so kann eine Schülerin nicht heraushören, dass eines gewählt, eines bewiesen und eines nur ein Bild ist. Und das Bild versagt: $1.23$ Kopien von $a$ gibt es nicht, während $r \\cdot a$ nach op.mul für jedes $r$ definiert ist. Das Produkt ist also die allgemeine Tatsache, und die Kopien sind der Sonderfall, der zur Verfügung steht, wenn der linke Faktor gerade ein Zählelement ist. Wiederholte Addition ist nicht, was Multiplikation ist; es ist, wie Multiplikation auf $\\mathbb{N}$ aussieht."
+              }
+            }
+          ]
+        },
+        {
+          "slug": "powers",
+          "title": { "en": "Power laws", "de": "Potenzgesetze" },
+          "blurb": {
+            "en": "Theorems, not axioms: each is proved from def.pow by induction, using only the multiplication axioms. No new assumption. These are the laws the layers above are built to preserve.",
+            "de": "Sätze, keine Axiome: jedes wird aus def.pow durch Induktion bewiesen, allein mit den Multiplikationsaxiomen. Keine neue Annahme. Das sind die Gesetze, welche die Schichten darüber erhalten sollen."
+          },
+          "cards": [
+            {
+              "code": "pl.same-base",
+              "concerns": ["mul"],
+              "name": { "en": "Product of powers", "de": "Produkt von Potenzen" },
+              "latex": "a^{m+n} = a^{m} \\cdot a^{n}",
+              "forall": "a \\in \\mathbb{R},\\ m, n \\in \\mathbb{N}",
+              "derivation": "a^{m+(n+1)} = a^{(m+n)+1} = a^{m+n} \\cdot a = (a^{m} \\cdot a^{n}) \\cdot a = a^{m} \\cdot (a^{n} \\cdot a) = a^{m} \\cdot a^{\\,n+1}",
+              "derivedFrom": ["def.pow", "th.ind", "ax.M2"],
+              "note": {
+                "en": "Induction on $n$. Base $n=1$: $a^{m+1} = a^{m} \\cdot a$ is def.pow. The step is shown and rests on associativity of $\\cdot$ (ax.M2) and on arithmetic among the counters. Read what the law says: addition in the counter slot becomes multiplication in the element slot. That is the whole behaviour of powers in one line, and everything the layers above do is an attempt to keep this sentence true once the exponent stops being a count. The values $a^{0} = 1$ and $a^{-n} = 1/a^{n}$ are not conventions somebody picked; they are the only values that keep this law standing. So this is the load-bearing card of the layer, not because it is used most, but because it is the constraint the next layers are built to satisfy.",
+                "de": "Induktion über $n$. Basis $n=1$: $a^{m+1} = a^{m} \\cdot a$ ist def.pow. Der Schritt ist gezeigt und ruht auf der Assoziativität von $\\cdot$ (ax.M2) und auf dem Rechnen unter den Zählern. Man lese, was das Gesetz sagt: Addition im Zählplatz wird zu Multiplikation im Elementplatz. Das ist das ganze Verhalten der Potenzen in einer Zeile, und alles, was die Schichten darüber tun, ist ein Versuch, diesen Satz wahr zu halten, sobald der Exponent aufhört, eine Anzahl zu sein. Die Werte $a^{0} = 1$ und $a^{-n} = 1/a^{n}$ sind keine Konventionen, die jemand ausgesucht hat; sie sind die einzigen Werte, die dieses Gesetz stehen lassen. Das ist also die tragende Karte der Schicht, nicht weil sie am häufigsten gebraucht wird, sondern weil sie die Bedingung ist, die die nächsten Schichten erfüllen sollen."
+              }
+            },
+            {
+              "code": "pl.of-power",
+              "concerns": ["mul"],
+              "name": { "en": "Power of a power", "de": "Potenz einer Potenz" },
+              "latex": "(a^{m})^{n} = a^{m \\cdot n}",
+              "forall": "a \\in \\mathbb{R},\\ m, n \\in \\mathbb{N}",
+              "derivation": "(a^{m})^{\\,n+1} = (a^{m})^{n} \\cdot a^{m} = a^{m \\cdot n} \\cdot a^{m} = a^{m \\cdot n + m} = a^{m \\cdot (n+1)}",
+              "derivedFrom": ["def.pow", "pl.same-base", "th.ind", "ax.D1"],
+              "note": {
+                "en": "Induction on $n$, using pl.same-base for the middle step and distributivity among the counters for $mn + m = m(n+1)$. Base $n=1$: $(a^{m})^{1} = a^{m} = a^{m \\cdot 1}$. Note where the work happens. Every manipulation in this proof is on the exponents, up in the counting slot, while the base never moves. That is what makes this law feel unlike the others.",
+                "de": "Induktion über $n$, mit pl.same-base für den mittleren Schritt und der Distributivität unter den Zählern für $mn + m = m(n+1)$. Basis $n=1$: $(a^{m})^{1} = a^{m} = a^{m \\cdot 1}$. Man beachte, wo die Arbeit geschieht. Jede Umformung in diesem Beweis betrifft die Exponenten, oben im Zählplatz, während die Basis sich nie bewegt. Das macht dieses Gesetz anders im Gefühl als die übrigen."
+              }
+            },
+            {
+              "code": "pl.of-product",
+              "concerns": ["mul"],
+              "name": { "en": "Power of a product", "de": "Potenz eines Produkts" },
+              "latex": "(a \\cdot b)^{n} = a^{n} \\cdot b^{n}",
+              "forall": "a, b \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+              "derivation": "(a b)^{\\,n+1} = (a b)^{n} \\cdot a b = a^{n} b^{n} \\cdot a \\cdot b = a^{n} \\cdot a \\cdot b^{n} \\cdot b = a^{\\,n+1} \\cdot b^{\\,n+1}",
+              "derivedFrom": ["def.pow", "th.ind", "ax.M1", "ax.M2"],
+              "note": {
+                "en": "Induction on $n$; base $n=1$ is $(ab)^{1} = ab$. The rearrangement in the middle is the only interesting move: commutativity (ax.M1) and associativity (ax.M2) sort the $a$-factors away from the $b$-factors. The law is true because multiplication does not care about order, and for no deeper reason than that. Which is exactly why the next card is false.",
+                "de": "Induktion über $n$; die Basis $n=1$ ist $(ab)^{1} = ab$. Die Umsortierung in der Mitte ist der einzige interessante Zug: Kommutativität (ax.M1) und Assoziativität (ax.M2) trennen die $a$-Faktoren von den $b$-Faktoren. Das Gesetz gilt, weil die Multiplikation die Reihenfolge nicht beachtet, und aus keinem tieferen Grund. Und genau darum ist die nächste Karte falsch."
+              }
+            },
+            {
+              "code": "pl.no-sum-law",
+              "concerns": ["add", "mul"],
+              "name": { "en": "There is no law for sums", "de": "Für Summen gibt es kein Gesetz" },
+              "latex": "(a + b)^{n} \\neq a^{n} + b^{n}",
+              "derivation": "(1 + 1)^{2} = 2^{2} = 4 \\qquad 1^{2} + 1^{2} = 2",
+              "derivedFrom": ["def.pow", "ax.D1"],
+              "note": {
+                "en": "One counterexample settles it, and the counterexample is as small as it gets. The reason is structural. Every law above is proved by pulling one factor off the end and using a property of $\\cdot$. def.pow is built out of $\\cdot$ and nothing else, so a sum sitting inside the base offers the recursion no handle. Addition can only enter a power through ax.D1, and D1 applied repeatedly does not produce $a^{n} + b^{n}$; it produces the cross terms, which is what $(a+b)^{2} = a^{2} + 2ab + b^{2}$ records. Expecting the law to hold is not stupidity: it is the pattern of pl.of-product applied one operation over, and three of the four laws on this page really do pass through their operation. The sentence that separates them: powers distribute over products because they are made of products, and do not distribute over sums because they are not made of sums.",
+                "de": "Ein Gegenbeispiel entscheidet die Sache, und das Gegenbeispiel ist so klein wie möglich. Der Grund ist struktureller Art. Jedes Gesetz oben wird bewiesen, indem man hinten einen Faktor abzieht und eine Eigenschaft von $\\cdot$ benutzt. def.pow ist allein aus $\\cdot$ gebaut, und eine Summe in der Basis bietet der Rekursion keinen Griff. Die Addition kann nur über ax.D1 in eine Potenz gelangen, und D1 wiederholt angewendet liefert nicht $a^{n} + b^{n}$; es liefert die gemischten Glieder, und das hält $(a+b)^{2} = a^{2} + 2ab + b^{2}$ fest. Zu erwarten, dass das Gesetz gilt, ist keine Dummheit: es ist das Muster von pl.of-product, eine Operation weiter angewendet, und drei der vier Gesetze auf dieser Seite gehen tatsächlich durch ihre Operation hindurch. Der Satz, der sie trennt: Potenzen gehen durch Produkte hindurch, weil sie aus Produkten gebaut sind, und nicht durch Summen, weil sie nicht aus Summen gebaut sind."
+              }
+            },
+            {
+              "code": "th.negative-base",
+              "concerns": ["add", "mul"],
+              "name": { "en": "Squaring a negative", "de": "Ein negatives Element quadrieren" },
+              "latex": "-2^{2} = -4 \\qquad (-2)^{2} = 4",
+              "derivation": "-2^{2} = (-1) \\cdot 2^{2} = (-1) \\cdot 4 = -4 \\qquad (-2)^{2} = (-2) \\cdot (-2) = 4",
+              "derivedFrom": ["def.pow", "th.2", "th.4", "ix.3", "ix.4"],
+              "note": {
+                "en": "Both are correct, and they are answers to two different questions. $-2$ is an ordinary element, atomic, with no internal structure, exactly as much a single number as $2$ is. But the notation gives atomic names only to the non-negative elements. There is no single character for the element $-2$; what we write is a description, namely 'apply the unary minus (ax.A4) to $2$'. So when a power is attached there are two things it might attach to, the object the description picks out or the last piece of the description, and the written form does not say which. Squaring the object gives $4$; parsing the name gives $-4$. Brackets are the notation's name-maker: $(-2)$ is how a description is made to stand as one thing, and that, rather than keeping a minus attached to a numeral, is what ix.4 is for. Note that no new rule was needed. Reading the minus as $(-1) \\cdot$ through th.2 turns the question into a precedence question that ix.3 already answers, so the result is derived and not decreed. Fractions have the same trap in a milder form, $2/3^{2} \\neq (2/3)^{2}$; negatives have it worse, because a fraction at least has $\\tfrac{2}{3}$ as a way of looking atomic and a negative has no atomic spelling at all, ever.",
+                "de": "Beides ist richtig, und beides beantwortet eine andere Frage. $-2$ ist ein gewöhnliches Element, atomar, ohne innere Struktur, genauso sehr eine einzelne Zahl wie $2$. Aber die Schreibweise vergibt atomare Namen nur an die nicht negativen Elemente. Für das Element $-2$ gibt es kein einzelnes Zeichen; was wir schreiben, ist eine Beschreibung, nämlich 'wende das unäre Minus (ax.A4) auf $2$ an'. Wenn nun eine Potenz angehängt wird, gibt es zwei Dinge, an die sie sich hängen könnte, das Objekt, das die Beschreibung meint, oder das letzte Stück der Beschreibung, und die Schreibweise sagt nicht, welches. Das Objekt quadriert ergibt $4$; den Namen gelesen ergibt $-4$. Klammern sind der Namensmacher der Schreibweise: $(-2)$ ist die Art, eine Beschreibung als ein Ding auftreten zu lassen, und dafür ist ix.4 da, nicht dafür, ein Minus an einer Ziffer festzuhalten. Man beachte, dass keine neue Regel nötig war. Das Minus über th.2 als $(-1) \\cdot$ zu lesen macht aus der Frage eine Frage der Bindung, die ix.3 bereits beantwortet; das Ergebnis ist also hergeleitet und nicht verordnet. Brüche haben dieselbe Falle in milderer Form, $2/3^{2} \\neq (2/3)^{2}$; Negative trifft es härter, denn ein Bruch hat mit $\\tfrac{2}{3}$ wenigstens eine Art, atomar auszusehen, und ein negatives Element hat nie eine atomare Schreibung."
+              },
+              "intuition": {
+                "en": "The students are not wrong. They assume that being one number means being one symbol, and that was true of every number they had met before this year. The gap is a completion and not a correction: you were right that $-2$ is a number, and nobody mentioned that our notation has no name for it. Told as a reversal, this manufactures the feeling of having been lied to. Told as a completion, it is just news.",
+                "de": "Die Schülerinnen und Schüler haben nicht unrecht. Sie nehmen an, dass eine Zahl zu sein heisst, ein Zeichen zu sein, und das galt für jede Zahl, der sie vor diesem Jahr begegnet sind. Die Lücke ist eine Ergänzung und keine Korrektur: Sie hatten recht, dass $-2$ eine Zahl ist, und niemand hat erwähnt, dass unsere Schreibweise keinen Namen dafür hat. Als Umkehrung erzählt, erzeugt das das Gefühl, angelogen worden zu sein. Als Ergänzung erzählt, ist es einfach eine Neuigkeit."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
