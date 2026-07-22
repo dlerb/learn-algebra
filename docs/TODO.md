@@ -277,7 +277,9 @@ and distractor items below are done. Only incremental threads remain.
 
 ## Technical / housekeeping
 
-- [ ] `package.json` name is still `tmp`; README is the stock Vite template
+- [x] ~~`package.json` name is still `tmp`; README is the stock Vite template~~ — both
+  fixed 2026-07-22: package is `learn-algebra` with a description, and the README now
+  documents the two towers, the pages, the scripts, the prose contract and the doc index.
 - [ ] Mobile layout polish (large tap targets, phone-readable)
 - [ ] PWA setup (installable, offline)
 - [ ] JSON Schema for IDE authoring: generate via `z.toJSONSchema(skill, { io: 'input' })`, register in `.vscode/settings.json` (`json.schemas`) for `src/data/skills/*.json` — autocomplete + inline validation while editing

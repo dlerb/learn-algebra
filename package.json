@@ -1,7 +1,8 @@
 {
-  "name": "tmp",
+  "name": "learn-algebra",
   "private": true,
   "version": "0.0.0",
+  "description": "Algebra fluency app for Swiss Gymnasium first-years, with the fundament and skills content towers as data.",
   "type": "module",
   "scripts": {
     "dev": "vite",
