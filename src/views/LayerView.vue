@@ -1,42 +1,32 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
-import data from '../data/fundament0/cards.json'
+import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Section } from '../data/layers'
 
-// Isolated inspection page for the fundament0 layer. One source file
+// Inspection page for ONE layer of the tower, selected by the `layerId` route
+// prop (src/data/layers.ts is the manifest). One source file per layer
 // (cards.json), one containment tree: layer → sections → groups → cards.
 // `kind` is the section (preliminary/signature/convention/axiom/definition/
 // theorem); `concerns` is a per-card multi-tag (add/mul/eq/order/completeness).
 // Two filter rows (kind, concerns) dim non-matching cards. Page order is
 // array order, top to bottom. See docs/fundament0.md.
 
-interface Card {
-  code: string; concerns?: string[]
-  symbol?: string; type?: string
-  name: LocalizedString
-  latex?: string; avoid?: string; prefer?: string
-  forall?: string; cond?: string; basedOn?: string[]
-  derivation?: string; derivedFrom?: string[]
-  note?: LocalizedString; intuition?: LocalizedString
-}
-interface Group { slug: string; title?: LocalizedString; blurb?: LocalizedString; cards: Card[] }
-interface Section { kind: string; title: LocalizedString; blurb?: LocalizedString; note?: LocalizedString; groups: Group[] }
+const props = defineProps<{ layerId: string }>()
 
-const meta = data.layer.meta as unknown as { characterizes: LocalizedString; note: LocalizedString }
-const sections = data.sections as unknown as Section[]
+const layer = computed(() => layerById(props.layerId)!)
+const meta = computed(() => layer.value.data.layer.meta)
+const sections = computed<Section[]>(() => layer.value.data.sections)
 
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
-// Flat view of every card with its section kind, for citation labels + filters.
-const allCards = computed(() =>
-  sections.flatMap(s => s.groups.flatMap(g => g.cards.map(c => ({ card: c, kind: s.kind })))),
-)
+// Citations resolve tower-wide, not just inside this layer: naturals cards rest
+// on fundament0 codes (th.negative-base → th.2, ix.3).
 const codeLabel = (code: string) => {
-  const x = allCards.value.find(e => e.card.code === code)
+  const x = cardIndex.get(code)
   return x ? `${code} · ${t(x.card.name)}` : code
 }
 
@@ -45,11 +35,14 @@ const codeLabel = (code: string) => {
 const sectionBlurb = (s: Section) => s.blurb ?? (s.groups.length === 1 ? s.groups[0].blurb : undefined)
 const showGroupHeads = (s: Section) => s.groups.length > 1
 
-// Filters. Both sets start full (nothing dimmed). Toggling narrows.
-const kinds = sections.map(s => s.kind)
-const concernTokens = ['add', 'mul', 'eq', 'order', 'completeness']
-const kindActive = ref(new Set(kinds))
-const concernActive = ref(new Set(concernTokens))
+// Filters. Both sets start full (nothing dimmed). Toggling narrows. The kind
+// row is per-layer (naturals has no signature or axiom section), so it resets
+// when the route swaps the layer under a reused component instance.
+const kinds = computed(() => sections.value.map(s => s.kind))
+const concernTokens = CONCERN_TOKENS
+const kindActive = ref(new Set<string>(kinds.value))
+watch(kinds, k => (kindActive.value = new Set(k)))
+const concernActive = ref(new Set<string>(concernTokens))
 const toggleKind = (k: string) => (kindActive.value.has(k) ? kindActive.value.delete(k) : kindActive.value.add(k))
 const toggleConcern = (c: string) => (concernActive.value.has(c) ? concernActive.value.delete(c) : concernActive.value.add(c))
 const matched = (c: Card, kind: string) =>
@@ -65,10 +58,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 </script>
 
 <template>
-  <div class="f0">
+  <div class="layer">
     <header class="intro">
       <div class="title-row">
-        <h2>fundament0</h2>
+        <h2>{{ layer.title }}</h2>
         <span class="tag field">≙ {{ t(meta.characterizes) }}</span>
       </div>
       <p class="lead"><RichText :text="t(meta.note)" /></p>
@@ -180,7 +173,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 </template>
 
 <style scoped>
-.f0 { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
+.layer { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
 .intro { margin-bottom: 1.4rem; }
 .title-row { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
