@@ -24,7 +24,12 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   `def.multiple`, `def.pow` · `th.ind`, `th.numerals-distinct`,
   `th.multiple-is-product`, `pl.same-base`, `pl.of-power`, `pl.of-product`,
   `pl.no-sum-law`, `th.negative-base`. `0 ∉ ℕ` here (stated on the card as a
-  *convention, not a fact*); decimal numerals deferred.
+  *convention, not a fact*); decimal numerals deferred. **Revised 2026-07-22 after
+  user pushback**: the "counter vs element" framing is RETIRED (ℕ ⊆ ℝ, so nothing is
+  identified; the distinction is the ℤ-module/characteristic story, which ℝ dissolves).
+  Replaced by the domain fact (`a^n` only for `n ∈ ℕ`) and "`n ↦ aⁿ` is a restriction
+  of no field operation, `n·a` is". Card `th.numeral-arithmetic` added (`2+3=5`,
+  `2·3=6` are theorems). Sources checked in `docs/naturals.md`.
 - [ ] **ℤ layer — choice by permanence** (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`). The arrow
   reverses: the laws become the constraint and *force* the definition;
   `pl.same-base` is the card the layer must preserve.
@@ -204,6 +209,10 @@ and distractor items below are done. Only incremental threads remain.
 - [ ] Arcavi (1994) "Symbol Sense" — closest description of Tier 1+2 combined
 - [ ] Hoch & Dreyfus (2004–2006) "Structure Sense" — maps to Tier 2
 - [ ] Variation theory / bianshi — Contrast, Generalization, Separation, Fusion as design dimensions
+- [ ] Devlin (2008) "It Ain't No Repeated Addition" (MAA) — multiplication is not
+  repeated addition; the model breaks at fractions, scaling is the general notion.
+  Directly under `th.multiple-is-product` and the deferred `1.23·a` card; also a live
+  teacher argument, so worth knowing before a colleague raises it.
 
 ---
 
