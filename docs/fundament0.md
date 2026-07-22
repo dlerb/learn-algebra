@@ -215,7 +215,7 @@ order relation `op.lt`, the four order axioms `ax.O1–O4`, the completeness axi
 `ax.C1`, the `positive`/`negative` definition on `op.lt`, and the order theorems
 `th.3/th.5/th.6` plus the field theorem `th.4` all shipped. The tag moved to `≙ ℝ`.
 
-## Deferred layers (not built)
+## The layers above (all built 2026-07-22)
 
 - **The ℕ-indexed layer — BUILT 2026-07-22**, see `docs/naturals.md`. Numerals
   (`2 := 1+1`), multiples (`3a`) and natural powers (`aⁿ`) live in
@@ -224,10 +224,9 @@ order relation `op.lt`, the four order axioms `ax.O1–O4`, the completeness axi
   ℝ as the smallest inductive subset, so the layer assumes nothing and induction
   (`th.ind`) is a theorem. Power laws are theorems by induction, as designed. The
   "atomic object, composite name" card shipped there as `th.negative-base`.
-  Still deferred above it: ℤ (choice by permanence — `a⁰`, `a⁻ⁿ`), ℚ (existence —
-  roots, needs `ax.C1`), and decimal numerals. The old `laws.json` (`def.power` →
-  `thm.power-same-base`, `def.extended-exponents`, `def.root`) remains the worked
-  reference for those.
+  Still deferred: **decimal numerals** (and with them the full `1.23·a` card). The old
+  `laws.json` (`def.power` → `thm.power-same-base`, `def.extended-exponents`,
+  `def.root`) remains the worked reference for the school-level versions.
 - **The ℤ-exponent layer — BUILT 2026-07-22**, see `docs/integers.md`. `a⁰` and `a⁻ⁿ`
   as *choices forced by permanence*; `th.inverse-is-power` retroactively justifies this
   page's atomic `a^{-1}` notation.
