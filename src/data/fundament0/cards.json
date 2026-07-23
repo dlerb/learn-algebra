@@ -14,6 +14,7 @@
   },
   "sections": [
     {
+      "slug": "prelim",
       "kind": "preliminary",
       "title": {
         "en": "Preliminaries",
@@ -50,6 +51,7 @@
       ]
     },
     {
+      "slug": "signature",
       "kind": "signature",
       "title": {
         "en": "Operations & relations",
@@ -141,6 +143,7 @@
       ]
     },
     {
+      "slug": "infix",
       "kind": "convention",
       "title": {
         "en": "Infix convention",
@@ -295,6 +298,7 @@
       ]
     },
     {
+      "slug": "axioms",
       "kind": "axiom",
       "title": {
         "en": "Axioms",
@@ -735,6 +739,7 @@
       ]
     },
     {
+      "slug": "definitions",
       "kind": "definition",
       "title": {
         "en": "Definitions",
@@ -796,6 +801,7 @@
       ]
     },
     {
+      "slug": "theorems",
       "kind": "theorem",
       "title": {
         "en": "Theorems",
@@ -962,6 +968,7 @@
       ]
     },
     {
+      "slug": "existence",
       "kind": "remark",
       "title": {
         "en": "Existence & uniqueness",

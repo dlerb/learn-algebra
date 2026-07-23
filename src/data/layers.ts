@@ -38,10 +38,12 @@ export interface Group {
   cards: Card[]
 }
 export interface Section {
-  /** Unique within the layer. Needed once a layer repeats a `kind`: the powers
-   *  layer runs ℕ → ℤ → ℚ as three acts, so `definition` and `theorem` each
-   *  appear three times and `kind` can no longer key the list. */
-  slug?: string
+  /** Unique within the layer, and the key the rendered list is built on.
+   *  Required since 2026-07-23: `kind` cannot key the list once a layer repeats
+   *  one (powers runs ℕ → ℤ → ℚ as three acts, so `definition` and `theorem`
+   *  each appear three times), and a per-layer key that is sometimes the kind
+   *  and sometimes not is worse than one that is always the slug. */
+  slug: string
   kind: string
   title: LocalizedString
   blurb?: LocalizedString
@@ -83,15 +85,15 @@ export const CONCERN_TOKENS = ['add', 'mul', 'eq', 'order', 'completeness'] as c
 // Load-time validation, same contract as the skills tower: throw on the first
 // offending code rather than rendering a broken page.
 function validate() {
-  // Section keys must be unique per layer, or the rendered list collapses. `kind`
-  // suffices while a layer uses each kind once; `slug` is required the moment it
-  // does not (powers: three `definition` sections, one per act).
+  // Every section carries a slug, unique per layer: it is what keys the rendered
+  // list. The JSON is cast rather than parsed, so TypeScript cannot enforce it —
+  // this can.
   for (const l of layers) {
     const keys = new Set<string>()
     for (const s of l.data.sections) {
-      const key = s.slug ?? s.kind
-      if (keys.has(key)) throw new Error(`layers: duplicate section key "${key}" in layer ${l.id} — give the section a slug`)
-      keys.add(key)
+      if (!s.slug) throw new Error(`layers: section "${s.kind}" in layer ${l.id} has no slug`)
+      if (keys.has(s.slug)) throw new Error(`layers: duplicate section slug "${s.slug}" in layer ${l.id}`)
+      keys.add(s.slug)
     }
   }
   const seen = new Set<string>()
