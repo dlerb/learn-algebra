@@ -327,30 +327,6 @@
     },
 
     {
-      "slug": "rat-notation",
-      "kind": "convention",
-      "title": {"en": "ℚ · Radical notation", "de": "ℚ · Wurzelschreibweise"},
-      "groups": [
-        {
-          "slug": "reading",
-          "cards": [
-            {
-              "code": "ix.root",
-              "concerns": ["mul"],
-              "name": { "en": "Radical and exponent", "de": "Wurzel und Exponent" },
-              "latex": "\\sqrt[n]{a} \\;=\\; a^{1/n} \\qquad \\sqrt{a} \\;=\\; \\sqrt[2]{a}",
-              "note": {
-                "en": "Two notations for one element. The radical is much older and it hides the laws: nothing in the symbol $\\sqrt{\\phantom{a}}$ suggests that $\\sqrt{a} \\cdot \\sqrt{a} = a$ is an instance of the same rule as $a^{2} \\cdot a^{3} = a^{5}$. Written $a^{1/2}$ it visibly is. That is the whole case for the exponent form: the power laws are the useful spelling and the radical is the traditional one. One difference between them is not cosmetic. The radical can be extended where the exponent notation cannot: many school books write $\\sqrt[3]{-8} = -2$, which is consistent as a root, since $(-2)^{3} = -8$ and odd powers do not collide. Writing $(-8)^{1/3}$ instead invites pl.of-power and lands in the contradiction of th.base-fence. So the two notations have genuinely different domains, and the radical's extra reach is bought by giving up the laws.",
-                "de": "Zwei Schreibweisen für ein Element. Die Wurzel ist viel älter und verbirgt die Gesetze: nichts am Zeichen $\\sqrt{\\phantom{a}}$ legt nahe, dass $\\sqrt{a} \\cdot \\sqrt{a} = a$ ein Fall derselben Regel ist wie $a^{2} \\cdot a^{3} = a^{5}$. Als $a^{1/2}$ geschrieben, ist es sichtbar so. Das ist der ganze Grund für die Exponentenform: die Potenzgesetze sind die nützliche Schreibweise, die Wurzel die überlieferte. Ein Unterschied zwischen beiden ist nicht kosmetisch. Die Wurzel lässt sich dort erweitern, wo die Exponentenschreibweise es nicht kann: viele Lehrmittel schreiben $\\sqrt[3]{-8} = -2$, was als Wurzel stimmig ist, denn $(-2)^{3} = -8$, und ungerade Potenzen stossen nicht zusammen. Schreibt man stattdessen $(-8)^{1/3}$, so ruft man pl.of-power auf den Plan und landet im Widerspruch von th.base-fence. Die beiden Schreibweisen haben also wirklich verschiedene Bereiche, und die grössere Reichweite der Wurzel ist mit dem Verzicht auf die Gesetze bezahlt."
-              },
-              "basedOn": ["def.root"]
-            }
-          ]
-        }
-      ]
-    },
-
-    {
       "slug": "rat-definition",
       "kind": "definition",
       "title": {"en": "ℚ · Roots and rational exponents", "de": "ℚ · Wurzeln und rationale Exponenten"},
@@ -383,6 +359,30 @@
               "cond": "a > 0",
               "basedOn": ["def.root", "def.pow", "def.pow-neg", "def.rat", "def.div"],
               "note": {"en": "Built from the two layers below: the inner step is this layer's root, the outer is def.pow, or def.pow-neg when $m$ is negative. Nothing new is demanded here. Once $a^{1/n}$ exists, everything rational is reachable by composing what the tower already has, which is why the root card carries the whole of the layer's difficulty and this one is bookkeeping. Except for one thing, and it is genuinely new: the definition is stated in terms of $m$ and $n$, and those are a name for the exponent rather than the exponent itself. See th.exponent-well-defined.", "de": "Aus den beiden Schichten darunter gebaut: der innere Schritt ist die Wurzel dieser Schicht, der äussere ist def.pow, oder def.pow-neg, wenn $m$ negativ ist. Neues wird hier nicht verlangt. Sobald $a^{1/n}$ existiert, ist alles Rationale durch Zusammensetzen dessen erreichbar, was der Turm schon hat; darum trägt die Wurzelkarte die ganze Schwierigkeit der Schicht und diese hier ist Buchhaltung. Bis auf eines, und das ist wirklich neu: die Definition ist über $m$ und $n$ formuliert, und die sind ein Name für den Exponenten und nicht der Exponent selbst. Siehe th.exponent-well-defined."}
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "slug": "rat-notation",
+      "kind": "convention",
+      "title": {"en": "ℚ · Radical notation", "de": "ℚ · Wurzelschreibweise"},
+      "groups": [
+        {
+          "slug": "reading",
+          "cards": [
+            {
+              "code": "ix.root",
+              "concerns": ["mul"],
+              "name": { "en": "Radical and exponent", "de": "Wurzel und Exponent" },
+              "latex": "\\sqrt[n]{a} \\;=\\; a^{1/n} \\qquad \\sqrt{a} \\;=\\; \\sqrt[2]{a}",
+              "note": {
+                "en": "Two notations for one element. The radical is much older and it hides the laws: nothing in the symbol $\\sqrt{\\phantom{a}}$ suggests that $\\sqrt{a} \\cdot \\sqrt{a} = a$ is an instance of the same rule as $a^{2} \\cdot a^{3} = a^{5}$. Written $a^{1/2}$ it visibly is. That is the whole case for the exponent form: the power laws are the useful spelling and the radical is the traditional one. One difference between them is not cosmetic. The radical can be extended where the exponent notation cannot: many school books write $\\sqrt[3]{-8} = -2$, which is consistent as a root, since $(-2)^{3} = -8$ and odd powers do not collide. Writing $(-8)^{1/3}$ instead invites pl.of-power and lands in the contradiction of th.base-fence. So the two notations have genuinely different domains, and the radical's extra reach is bought by giving up the laws.",
+                "de": "Zwei Schreibweisen für ein Element. Die Wurzel ist viel älter und verbirgt die Gesetze: nichts am Zeichen $\\sqrt{\\phantom{a}}$ legt nahe, dass $\\sqrt{a} \\cdot \\sqrt{a} = a$ ein Fall derselben Regel ist wie $a^{2} \\cdot a^{3} = a^{5}$. Als $a^{1/2}$ geschrieben, ist es sichtbar so. Das ist der ganze Grund für die Exponentenform: die Potenzgesetze sind die nützliche Schreibweise, die Wurzel die überlieferte. Ein Unterschied zwischen beiden ist nicht kosmetisch. Die Wurzel lässt sich dort erweitern, wo die Exponentenschreibweise es nicht kann: viele Lehrmittel schreiben $\\sqrt[3]{-8} = -2$, was als Wurzel stimmig ist, denn $(-2)^{3} = -8$, und ungerade Potenzen stossen nicht zusammen. Schreibt man stattdessen $(-8)^{1/3}$, so ruft man pl.of-power auf den Plan und landet im Widerspruch von th.base-fence. Die beiden Schreibweisen haben also wirklich verschiedene Bereiche, und die grössere Reichweite der Wurzel ist mit dem Verzicht auf die Gesetze bezahlt."
+              },
+              "basedOn": ["def.root"]
             }
           ]
         }

@@ -28,9 +28,14 @@ const scanProse = (s, where) => {
   if (/\b(signs?|Vorzeichen)\b/i.test(s)) errs.push(`retired word "sign" in ${where}`)
 }
 
+const layerOrder = []          // [layerId, [code, …]] in page order
+const cardByCode = new Map()
+
 for (const f of files) {
   const d = JSON.parse(fs.readFileSync(f, 'utf8'))
   const layer = d.layer.id
+  const order = []
+  layerOrder.push([layer, order])
   for (const k of ['characterizes','note']) for (const l of ['en','de']) scanProse(d.layer.meta[k][l], `${layer}/meta.${k}.${l}`)
   for (const s of d.sections) {
     for (const k of ['title','blurb','note']) if (s[k]) for (const l of ['en','de']) scanProse(s[k][l], `${layer}/${s.kind}.${k}.${l}`)
@@ -39,6 +44,8 @@ for (const f of files) {
       for (const c of g.cards) {
         if (codes.has(c.code)) errs.push(`duplicate code ${c.code}`)
         codes.set(c.code, `${layer}/${s.kind}`)
+        cardByCode.set(c.code, c)
+        order.push(c.code)
         for (const k of LATEX_FIELDS) if (c[k]) tryTex(c[k], `${c.code}.${k}`)
         for (const k of ['name','note','intuition']) if (c[k]) for (const l of ['en','de']) {
           if (!c[k][l]) errs.push(`${c.code}.${k} missing ${l}`); else scanProse(c[k][l], `${c.code}.${k}.${l}`)
@@ -53,6 +60,21 @@ for (const f of files) {
   }
 }
 for (const [from, r] of refs) if (!codes.has(r)) errs.push(`${from} cites unknown ${r}`)
+
+// No card may cite something that appears LATER in its own layer. Page order is
+// array order, so a forward citation means the page uses something before it has
+// been given — the one thing this tower exists to avoid. Citing a lower layer is
+// fine, that is the point. Prose may still point forward (the ℕ act's note defers
+// a⁰ to the layers above); only basedOn/derivedFrom are checked.
+for (const [layer, ordered] of layerOrder) {
+  const at = new Map(ordered.map((c, i) => [c, i]))
+  for (const c of ordered) {
+    const card = cardByCode.get(c)
+    for (const r of [...(card.basedOn || []), ...(card.derivedFrom || [])])
+      if (at.has(r) && at.get(r) > at.get(c))
+        errs.push(`${c} cites ${r}, which comes later in ${layer} — reorder the sections`)
+  }
+}
 
 // ---- the bridge -----------------------------------------------------------
 // Since 2026-07-23 the tower is the primary reference and laws.json /

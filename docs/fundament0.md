@@ -50,10 +50,11 @@ The page tells one linear story:
    summands, factors, coefficient. **`op.lt` also defines *positive* (`0<a`) and
    *negative* (`a<0`)** — the terms live with the relation that makes them possible,
    not in a `def.` card. There is no `def.sign`.
-2. **Infix convention** (the six `ix.*` cards) — reading rules (brackets, left-to-right,
-   precedence) + writing conventions (bracket a negative factor, no operator next to
-   a unary minus, coefficient in front). Before the axioms on purpose: association
-   and distribution cannot be *stated* without brackets and precedence.
+2. **Reading an expression** (`ix.brackets`, `ix.left-to-right`, `ix.precedence`,
+   `ix.fraction-bar`, `ix.division-signs`) — the parsing rules, before the axioms on
+   purpose: association and distribution cannot be *stated* without brackets and
+   precedence. Nothing in this section rests on anything below it.
+   **The writing conventions are a separate section, further down** — see step 4.
 3. **The axioms** — Equality (the four `ax.eq-*`), Addition (`ax.add-*`), Multiplication
    (`ax.mul-*`), Bridge (`ax.distributivity`, `ax.zero-not-one` `0≠1`), **Order
    (`ax.order-trichotomy`, `ax.order-transitive`, `ax.order-add`, `ax.order-mul`)**,
@@ -61,12 +62,22 @@ The page tells one linear story:
    condition is exactly where "flip the inequality when multiplying by a negative"
    comes from. `ax.completeness` is different in kind — it speaks of *sets*, not elements (the
    analysis seam), and its intuition motivates via the ℚ hole at `√2`.
-4. **Definitions** — subtraction (`def.sub`, rests on `ax.additive-inverse`), division (`def.div`,
+4. **Writing without ambiguity** (`ix.negative-factor`, `ix.no-adjacent-operator`,
+   `ix.coefficient-front`, `ix.invisible-one`) — split out of the old single convention
+   section on 2026-07-23 and moved **between the axioms and the definitions**, because
+   every one of them presupposes an axiom: the first two need the unary minus of
+   `ax.additive-inverse`, `ix.coefficient-front` needs `ax.mul-commutative`,
+   `ix.invisible-one` needs `ax.one-neutral`. They come *before* the definitions rather
+   than after because `def.sub` is written `a + (−b)`, brackets and all, and
+   `ix.no-adjacent-operator` is what puts them there. **A parsing rule makes the axioms
+   writable; a writing rule is a recommendation about expressions whose meaning is
+   already fixed.**
+5. **Definitions** — subtraction (`def.sub`, rests on `ax.additive-inverse`), division (`def.div`,
    rests on `ax.multiplicative-inverse`; reciprocal noted there) and **absolute value (`def.abs`, three cases
    by trichotomy; added 2026-07-22 for the ℚ layer's `√(x²) = |x|` — and it does *not*
    say "leave off the minus")**. Not new operations. (`positive`/`negative`
    are *not* here — see step 1.)
-5. **Theorems** — field: `th.zero-times` (`0·a=0`), `th.negative-one-times` (`−a=(−1)·a`), **`th.zero-product`
+6. **Theorems** — field: `th.zero-times` (`0·a=0`), `th.negative-one-times` (`−a=(−1)·a`), **`th.zero-product`
    (zero product, `ab=0 ⟹ a=0 or b=0` — the converse of `th.zero-times` and the licence for
    solving by factoring; added 2026-07-22 with the ℤ layer)**, `th.minus-times-minus`
    (`(−1)(−1)=1`, "minus times minus is plus", proved with **no order** — the audit's
@@ -75,7 +86,7 @@ The page tells one linear story:
    `th.square-positive` (a non-zero square is positive — why `a·a+1=0` has no solution), `th.zero-less-than-one`
    (`0<1`, a corollary of `th.square-positive`). Each shows a collapsed derivation and cites what
    it rests on (by **code**; the earlier `th.zero-times`-by-id citation bug is fixed).
-6. **Existence & uniqueness** (`rk.existence` *Is there such a thing?*, `rk.uniqueness` *Is there more
+7. **Existence & uniqueness** (`rk.existence` *Is there such a thing?*, `rk.uniqueness` *Is there more
    than one?*; kind `remark`, added 2026-07-23) — the page's closing honesty. Every
    card above starts from *suppose* `R` is a complete ordered field; nothing had said
    there is one, and demands nothing satisfies prove everything (`0=1` included).
@@ -176,6 +187,33 @@ layer → sections[] → groups[] → cards[]
   reading/writing, theorem→field/order.
 - **`cards[]`** — `code` is the sole key (`id` dropped; citations always used
   codes). Each carries `concerns` + its kind-specific fields.
+
+### Page order is a dependency order (enforced 2026-07-23)
+
+**No card may cite something that appears later in its own layer.** Page order is array
+order, so a forward citation means the page uses something before it has been given,
+which is the one thing this tower exists to avoid. `sweep-layers` now fails on it.
+
+Four sections moved to make it true, all of them the same mistake — a convention
+section sitting before the thing it rests on:
+
+| layer | was | now |
+|---|---|---|
+| fundament0 | one `convention` section before the axioms | `reading` before them, `writing` between axioms and definitions |
+| numbers | `notation` before the definitions | `notation` last — `ix.juxtaposition` rests on `th.multiple-is-product` |
+| powers (ℚ act) | `rat-notation` before `rat-definition` | after it — `ix.root` rests on `def.root` |
+
+Citing a **lower layer** is unaffected; that is the point of the tower. Only
+`basedOn`/`derivedFrom` are checked, so prose may still point forward — the ℕ act's
+note deferring `a⁰` to the layers above is deliberate.
+
+The trigger was a good question with a wrong premise: whether the definitions should
+move up because the fraction conventions use them. They must not — `def.sub` needs
+`ax.additive-inverse` and `def.div` needs `ax.multiplicative-inverse`, so definitions
+cannot precede the axioms. And the fraction cards were never the problem:
+`ix.fraction-bar` cites only `ix.brackets`, and it is `def.div` that cites
+`ix.fraction-bar`, exactly as `ax.add-associative` cites `ix.brackets`. The real
+offenders were the four writing conventions.
 
 ### The card format (all three layers, 2026-07-23)
 
