@@ -48,6 +48,14 @@ const showGroupHeads = (s: Section) => s.groups.length > 1
 // here). Everything else renders from field presence.
 const isOpGroup = (g: Group) => g.cards.some(c => !!c.symbol)
 
+// `forall` is the DOMAIN of the card's free variables, `cond` a RESTRICTION on
+// them — kept apart because the generator needs both separately (the domain says
+// where to sample, the condition what to filter). Their labels are the only
+// prose the view owns, so they localize like everything else.
+const L = computed(() => lang.value === 'de'
+  ? { forall: 'für alle', cond: 'sofern' }
+  : { forall: 'for all',  cond: 'provided' })
+
 // Filters. Both sets start full (nothing dimmed). Toggling narrows. The kind
 // row is per-layer (powers has no signature or axiom section), so it resets
 // when the route swaps the layer under a reused component instance. Deduped:
@@ -141,8 +149,8 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
                 <div class="ex good"><span class="mark">✓</span><MathExpr :latex="c.prefer!" /></div>
               </div>
 
-              <div v-if="c.forall" class="forall">for all <MathExpr :latex="c.forall" /></div>
-              <div v-if="c.cond" class="forall">for <MathExpr :latex="c.cond" /></div>
+              <div v-if="c.forall" class="forall">{{ L.forall }} <MathExpr :latex="c.forall" /></div>
+              <div v-if="c.cond" class="forall">{{ L.cond }} <MathExpr :latex="c.cond" /></div>
               <p v-if="c.note" class="note"><RichText :text="t(c.note)" /></p>
 
               <div v-if="c.basedOn" class="basedon">
