@@ -1,7 +1,8 @@
-# integers — the ℤ-exponent layer
+# powers · the ℤ act (was the `integers` layer)
 
-The fourth layer of the tower, on top of **naturals** (`docs/naturals.md`).
-Data: `src/data/integers/cards.json`; page: `/integers`. Tag: **`≙ aⁿ, n ∈ ℤ`**.
+The second of the three acts of the **powers** layer (`docs/powers.md`), merged in
+2026-07-23. Sections `int-preliminary` / `int-definition` / `int-laws` of
+`src/data/powers/cards.json`; page `/powers`. Design record for the act.
 
 ## What it is
 

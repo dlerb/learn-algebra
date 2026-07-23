@@ -34,8 +34,8 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   tower instead, which is the pedagogical bridge. Touches: both `cards.json` trees,
   `LayerView.vue` (a second collapsed toggle), `scripts/sweep-layers.mjs`.
 - [x] ~~Powers (natural) as the ℕ-indexed layer *above* the field.~~ **Built
-  2026-07-22 as the `naturals` layer** (`src/data/naturals/cards.json`, `/naturals`,
-  tag `≙ ℕ ⊂ ℝ`) — see **`docs/naturals.md`**. The parked `pre.nat` import card was
+  2026-07-22 as the `naturals` layer** (`src/data/powers/cards.json`, `/powers`,
+  tag `≙ ℕ ⊂ ℝ`) — see **`docs/powers-nat-act.md`**. The parked `pre.nat` import card was
   **rejected as false**: `def.nat` carves ℕ out of ℝ as the smallest inductive
   subset, so the layer assumes *nothing* and induction (`th.ind`) is a theorem.
   Cards: `pre.count` · `ix.pow`, `ix.juxtaposition` · `def.nat`, `def.numeral`,
@@ -47,10 +47,10 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   identified; the distinction is the ℤ-module/characteristic story, which ℝ dissolves).
   Replaced by the domain fact (`a^n` only for `n ∈ ℕ`) and "`n ↦ aⁿ` is a restriction
   of no field operation, `n·a` is". Card `th.numeral-arithmetic` added (`2+3=5`,
-  `2·3=6` are theorems). Sources checked in `docs/naturals.md`.
+  `2·3=6` are theorems). Sources checked in `docs/powers-nat-act.md`.
 - [x] ~~**ℤ layer — choice by permanence.**~~ **Built 2026-07-22** as the `integers`
-  layer (`src/data/integers/cards.json`, `/integers`, tag `≙ aⁿ, n ∈ ℤ`) — see
-  **`docs/integers.md`**. The arrow reverses: `pre.permanence` (Peacock 1834 / Hankel
+  layer (`src/data/powers/cards.json`, `/powers`, tag `≙ aⁿ, n ∈ ℤ`) — see
+  **`docs/powers-int-act.md`**. The arrow reverses: `pre.permanence` (Peacock 1834 / Hankel
   1867, a *method*, neither axiom nor theorem) → `def.int` · `def.pow-zero`
   (`a⁰ := 1`, forced; `0⁰` left undefined *and explained*) · `def.pow-neg`
   (`a⁻ⁿ := (aⁿ)⁻¹`, existence via `(a⁻¹)ⁿ` and `pl.of-product`) → `th.inverse-is-power`
@@ -72,8 +72,8 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   flips positive/negative), th.minus-times-minus (`(−1)(−1)=1`, no order used), th.square-positive (non-zero
   square positive), th.zero-less-than-one (`0<1`). Tag moved to `≙ ℝ`; the word "sign" retired.
 - [x] ~~**ℚ layer — existence** (roots + rational powers).~~ **Built 2026-07-22** as the
-  `rationals` layer (`src/data/rationals/cards.json`, `/rationals`, tag `≙ aⁿ, n ∈ ℚ`) —
-  see **`docs/rationals.md`**. `pre.existence` → `ix.root` → `def.rat` · `def.root`
+  `rationals` layer (`src/data/powers/cards.json`, `/powers`, tag `≙ aⁿ, n ∈ ℚ`) —
+  see **`docs/powers-rat-act.md`**. `pre.existence` → `ix.root` → `def.rat` · `def.root`
   (by *description*, licensed by the theorem below it) · `def.pow-rat` →
   `th.root-exists` (**the first and only use of `ax.completeness`** — uniqueness is order,
   existence is completeness) · `th.principal-root` · `th.exponent-well-defined` (ℚ is
@@ -117,7 +117,9 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   run, and `x ↦ aˣ` becomes a *function*, the doorway to growth and logarithms.
   Caveat that belongs on a card, not in a footnote: the wild solutions need the axiom
   of choice; without it, it is consistent that all solutions are continuous.
-- [ ] **Correction owed to `docs/rationals.md` + `src/data/rationals/cards.json`**: the
+- [x] ~~**Correction owed to `docs/powers-rat-act.md` + `src/data/powers/cards.json`**~~ —
+  **done 2026-07-23**: the continuity sentence was deleted from the layer data on the
+  user's instruction. The sketch below is kept as the record of *why* it was wrong. The
   layer note's closing line says `aˣ` "needs continuity, a new idea rather than a new
   axiom". Truer: it needs a **tie-breaker**, and the cheapest one is **monotonicity**,
   which the tower already owns. Fix whether or not the ℝ layer is built.
@@ -232,7 +234,7 @@ and distractor items below are done. Only incremental threads remain.
 - [ ] **Candidate metapattern: "multiplication makes bigger"** (2026-07-22). Not among
   M1–M10, which are all notation/structure. This one is a different kind: a property
   smuggled from the ℕ-model into ℝ (sibling: expecting `a^r` to behave like `aⁿ`).
-  Errors-layer work; rationale in `docs/naturals.md`.
+  Errors-layer work; rationale in `docs/powers-nat-act.md`.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).
 - [~] Prerequisites as a graph: `requires` + validators in schema; graph fully authored and priority-consistent (notation strict 1–29 after the 2026-07-09 insertion; structure basic forms 1–5, linear-form 14 with quadratic-form requiring it). The graph is a v1 hypothesis until drill data confirms it.
   - Open: `notation.minus-as-times-negative-one` stays unranked; it is the justification skill for minus-over-sum/subtracting-a-sum (carried by meta.three-minuses / meta.implicit-op-before-bracket), drilled later or not at all — confirm.

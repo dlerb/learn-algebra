@@ -1,8 +1,9 @@
-# rationals — the ℚ-exponent layer
+# powers · the ℚ act (was the `rationals` layer)
 
-The fifth and last layer of the tower, on top of **integers** (`docs/integers.md`).
-`def.rat` moved to the **numbers** layer on 2026-07-23 (`docs/numbers.md`); what
-remains here is powers only.
+The third and last act of the **powers** layer (`docs/powers.md`), merged in
+2026-07-23. Sections `rat-preliminary` / `rat-notation` / `rat-definition` /
+`rat-laws` of `src/data/powers/cards.json`; page `/powers`. `def.rat` moved to the
+**numbers** layer the same day (`docs/numbers.md`). Design record for the act.
 Data: `src/data/rationals/cards.json`; page: `/rationals`. Tag: **`≙ aⁿ, n ∈ ℚ`**.
 
 ## What it is

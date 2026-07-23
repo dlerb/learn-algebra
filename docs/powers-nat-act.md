@@ -1,7 +1,9 @@
-# naturals — the ℕ-exponent layer
+# powers · the ℕ act (was the `naturals` layer)
 
-The third layer of the tower, on top of **numbers** (`docs/numbers.md`).
-Data: `src/data/naturals/cards.json`; page: `/naturals`. Tag: **`≙ aⁿ, n ∈ ℕ`**.
+The first of the three acts of the **powers** layer (`docs/powers.md`), merged in
+2026-07-23. Sections `nat-notation` / `nat-definition` / `nat-laws` of
+`src/data/powers/cards.json`; page `/powers`. This file is the design record for
+the act; the layer-level structure lives in `docs/powers.md`.
 
 ## What it is
 

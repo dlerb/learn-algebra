@@ -216,6 +216,50 @@
               }
             }
           ]
+        },
+
+        {
+          "slug": "extensions",
+          "title": {
+            "en": "Integers and rationals",
+            "de": "Ganze und rationale Zahlen"
+          },
+          "cards": [
+            {
+              "code": "th.no-rational-square-two",
+              "concerns": [
+                "mul",
+                "order"
+              ],
+              "name": {
+                "en": "No rational number squares to two",
+                "de": "Keine rationale Zahl ergibt quadriert zwei"
+              },
+              "latex": "q \\cdot q \\neq 2",
+              "forall": "q \\in \\mathbb{Q}",
+              "basedOn": [
+                "def.rat",
+                "th.ind",
+                "ax.order-mul",
+                "ax.order-trichotomy"
+              ],
+              "derivation": "\\begin{aligned} q \\cdot q = 2, \\ 0 < q \\;&\\Rightarrow\\; q = m \\cdot n^{-1}, \\quad m, n \\in \\mathbb{N}, \\ n \\ \\text{smallest} \\\\[2pt] &\\Rightarrow\\; m \\cdot m = 2 \\cdot (n \\cdot n) \\\\[2pt] 1 < q < 2 \\;&\\Rightarrow\\; n < m < n + n \\\\[2pt] m' := n + n - m, \\quad n' := m - n \\;&\\Rightarrow\\; 0 < n' < n \\\\[2pt] m' \\cdot m' \\;&=\\; 2 \\cdot (n' \\cdot n') \\end{aligned}",
+              "derivedFrom": [
+                "def.rat",
+                "th.ind",
+                "ax.distributivity",
+                "ax.order-mul"
+              ],
+              "note": {
+                "en": "The hole in $\\mathbb{Q}$, finally exhibited. ax.completeness was assumed in order to fill it and its intuition points at this very element, but until now nothing in the tower had shown that the hole is really there. The argument is a descent and needs no divisibility, no primes and no 'lowest terms': write a positive rational as $m \\cdot n^{-1}$ with the *smallest* possible $n$, and then build a smaller one. What it borrows is that every non-empty part of $\\mathbb{N}$ has a least element, which is th.ind read once more, so the proof stays inside what this layer owns. Two consequences upstairs. The demand for an element whose square is $2$ is exactly as reasonable in $\\mathbb{Q}$ as anywhere, and $\\mathbb{Q}$ cannot meet it, so a definition by description cannot be assumed to produce its object. And the word 'complete' now has a witness: the difference between $\\mathbb{Q}$ and $\\mathbb{R}$ is not a matter of degree.",
+                "de": "Das Loch in $\\mathbb{Q}$, endlich vorgezeigt. ax.completeness wurde angenommen, um es zu füllen, und seine Anschauung zeigt genau auf dieses Element; bis jetzt hat aber nichts im Turm gezeigt, dass das Loch wirklich da ist. Das Argument ist ein Abstieg und braucht keine Teilbarkeit, keine Primzahlen und keine 'gekürzte Darstellung': man schreibe eine positive rationale Zahl als $m \\cdot n^{-1}$ mit dem *kleinstmöglichen* $n$ und baue daraus ein kleineres. Geliehen wird nur, dass jeder nicht-leere Teil von $\\mathbb{N}$ ein kleinstes Element hat, und das ist th.ind ein weiteres Mal gelesen; der Beweis bleibt also in dem, was diese Schicht besitzt. Zwei Folgen für die Schichten darüber. Die Forderung nach einem Element, dessen Quadrat $2$ ist, ist in $\\mathbb{Q}$ genauso vernünftig wie überall, und $\\mathbb{Q}$ kann sie nicht erfüllen; eine Definition durch Beschreibung erzeugt ihren Gegenstand also nicht von selbst. Und das Wort 'vollständig' hat nun einen Zeugen: der Unterschied zwischen $\\mathbb{Q}$ und $\\mathbb{R}$ ist kein Unterschied des Grades."
+              },
+              "intuition": {
+                "en": "The length is drawable, which is what makes the result startling: the diagonal of the square on $1$ is right there, constructible with ruler and compass, and no ratio of counting elements names it. Where the picture stops: the diagram shows that the *quantity* exists geometrically, and says nothing at all about whether the arithmetic has a name for it. The Greeks had the diagram and drew the opposite conclusion, calling such pairs incommensurable rather than admitting a new kind of number.",
+                "de": "Die Länge lässt sich zeichnen, und genau das macht das Ergebnis erstaunlich: die Diagonale des Quadrats über $1$ ist da, mit Zirkel und Lineal konstruierbar, und kein Verhältnis von Zählelementen benennt sie. Wo das Bild aufhört: die Zeichnung zeigt, dass die *Grösse* geometrisch existiert, und sagt gar nichts darüber, ob die Arithmetik einen Namen dafür hat. Die Griechen hatten die Zeichnung und zogen den umgekehrten Schluss: sie nannten solche Paare inkommensurabel, statt eine neue Art von Zahl zuzulassen."
+              }
+            }
+          ]
         }
       ]
     }

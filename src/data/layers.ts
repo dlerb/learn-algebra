@@ -1,17 +1,15 @@
 import type { LocalizedString } from './skill.schema'
 import fundament0 from './fundament0/cards.json'
 import numbers from './numbers/cards.json'
-import naturals from './naturals/cards.json'
-import integers from './integers/cards.json'
-import rationals from './rationals/cards.json'
+import powers from './powers/cards.json'
 
 // The layer manifest. Each layer is one cards.json — a containment tree
 // `layer → sections[] → groups[] → cards[]`, page order = array order at every
 // level (docs/fundament0.md, "Data structure"). This module is what composes
 // them: it fixes the reading order of the tower, generates the routes and the
-// nav entries, and — the reason it had to exist before the naturals layer could
+// nav entries, and — the reason it had to exist before the numbers layer could
 // be written — resolves citations ACROSS layers, since `th.negative-base` in
-// naturals rests on `th.negative-one-times` and `ix.precedence` in fundament0.
+// powers rests on `th.negative-one-times` and `ix.precedence` in fundament0.
 //
 // Adding a layer = write its cards.json, add one entry below.
 
@@ -39,6 +37,10 @@ export interface Group {
   cards: Card[]
 }
 export interface Section {
+  /** Unique within the layer. Needed once a layer repeats a `kind`: the powers
+   *  layer runs ℕ → ℤ → ℚ as three acts, so `definition` and `theorem` each
+   *  appear three times and `kind` can no longer key the list. */
+  slug?: string
   kind: string
   title: LocalizedString
   blurb?: LocalizedString
@@ -62,9 +64,7 @@ export interface Layer {
 export const layers: Layer[] = [
   { id: 'fundament0', slug: 'fundament0', title: 'fundament0', data: fundament0 as unknown as LayerData },
   { id: 'numbers', slug: 'numbers', title: 'numbers', data: numbers as unknown as LayerData },
-  { id: 'naturals', slug: 'naturals', title: 'naturals', data: naturals as unknown as LayerData },
-  { id: 'integers', slug: 'integers', title: 'integers', data: integers as unknown as LayerData },
-  { id: 'rationals', slug: 'rationals', title: 'rationals', data: rationals as unknown as LayerData },
+  { id: 'powers', slug: 'powers', title: 'powers', data: powers as unknown as LayerData },
 ]
 
 export const layerById = (id: string) => layers.find(l => l.id === id)
@@ -81,6 +81,17 @@ export const CONCERN_TOKENS = ['add', 'mul', 'eq', 'order', 'completeness'] as c
 // Load-time validation, same contract as the skills tower: throw on the first
 // offending code rather than rendering a broken page.
 function validate() {
+  // Section keys must be unique per layer, or the rendered list collapses. `kind`
+  // suffices while a layer uses each kind once; `slug` is required the moment it
+  // does not (powers: three `definition` sections, one per act).
+  for (const l of layers) {
+    const keys = new Set<string>()
+    for (const s of l.data.sections) {
+      const key = s.slug ?? s.kind
+      if (keys.has(key)) throw new Error(`layers: duplicate section key "${key}" in layer ${l.id} — give the section a slug`)
+      keys.add(key)
+    }
+  }
   const seen = new Set<string>()
   for (const l of layers) {
     for (const { card } of cardsOf(l)) {
