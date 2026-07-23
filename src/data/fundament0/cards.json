@@ -24,18 +24,18 @@
           "slug": "prelim",
           "cards": [
             {
-              "code": "pre.1",
+              "code": "pre.elements",
               "name": {
                 "en": "The elements",
                 "de": "Die Elemente"
               },
               "note": {
-                "en": "The elements of have no properties beyond what the axioms give them; nothing is borrowed from the number line. Two of them exist because an axiom says so, and we name them $0$ (ax.A3) and $1$ (ax.M3). Every further name is built from those: $2$ is a name for $1 + 1$, $-2$ is the additive inverse of $2$ (ax.A4), and $2^{-1}$ is its multiplicative inverse (ax.M4). If a property is not in the axioms, it is not available here. That is the point of the exercise: it is what makes visible which property rests on which assumption.",
-                "de": "Die Elemente haben keine Eigenschaften ausser denen, die die Axiome ihnen geben; nichts wird von der Zahlengeraden geborgt. Zwei von ihnen existieren, weil ein Axiom es sagt, und wir nennen sie $0$ (ax.A3) und $1$ (ax.M3). Jeder weitere Name wird daraus gebaut: $2$ ist ein Name für $1 + 1$, $-2$ ist das additive Inverse von $2$ (ax.A4), und $2^{-1}$ ist sein multiplikatives Inverses (ax.M4). Steht eine Eigenschaft nicht in den Axiomen, ist sie hier nicht verfügbar. Genau darum geht es: so wird sichtbar, welche Eigenschaft auf welcher Annahme ruht."
+                "en": "The elements of have no properties beyond what the axioms give them; nothing is borrowed from the number line. Two of them exist because an axiom says so, and we name them $0$ (ax.zero-neutral) and $1$ (ax.one-neutral). Every further name is built from those: $2$ is a name for $1 + 1$, $-2$ is the additive inverse of $2$ (ax.additive-inverse), and $2^{-1}$ is its multiplicative inverse (ax.multiplicative-inverse). If a property is not in the axioms, it is not available here. That is the point of the exercise: it is what makes visible which property rests on which assumption.",
+                "de": "Die Elemente haben keine Eigenschaften ausser denen, die die Axiome ihnen geben; nichts wird von der Zahlengeraden geborgt. Zwei von ihnen existieren, weil ein Axiom es sagt, und wir nennen sie $0$ (ax.zero-neutral) und $1$ (ax.one-neutral). Jeder weitere Name wird daraus gebaut: $2$ ist ein Name für $1 + 1$, $-2$ ist das additive Inverse von $2$ (ax.additive-inverse), und $2^{-1}$ ist sein multiplikatives Inverses (ax.multiplicative-inverse). Steht eine Eigenschaft nicht in den Axiomen, ist sie hier nicht verfügbar. Genau darum geht es: so wird sichtbar, welche Eigenschaft auf welcher Annahme ruht."
               }
             },
             {
-              "code": "pre.2",
+              "code": "pre.variables",
               "name": {
                 "en": "Variables & constants",
                 "de": "Variablen & Konstanten"
@@ -147,8 +147,8 @@
         "de": "Infix-Konvention"
       },
       "blurb": {
-        "en": "How infix expressions are read (ix.1–3, the parsing rules) and written without ambiguity (ix.4–6). Needed to state the axioms below.",
-        "de": "Wie Infix-Ausdrücke gelesen werden (ix.1–3, die Parsing-Regeln) und eindeutig geschrieben werden (ix.4–6). Nötig, um die Axiome unten zu formulieren."
+        "en": "How infix expressions are read (ix.brackets, ix.left-to-right, ix.precedence: the parsing rules) and written without ambiguity (ix.negative-factor, ix.no-adjacent-operator, ix.coefficient-front). Needed to state the axioms below.",
+        "de": "Wie Infix-Ausdrücke gelesen werden (ix.brackets, ix.left-to-right, ix.precedence, die Parsing-Regeln) und eindeutig geschrieben werden (ix.negative-factor, ix.no-adjacent-operator, ix.coefficient-front). Nötig, um die Axiome unten zu formulieren."
       },
       "groups": [
         {
@@ -159,7 +159,7 @@
           },
           "cards": [
             {
-              "code": "ix.1",
+              "code": "ix.brackets",
               "concerns": [
                 "add",
                 "mul"
@@ -175,7 +175,7 @@
               }
             },
             {
-              "code": "ix.2",
+              "code": "ix.left-to-right",
               "concerns": [
                 "add",
                 "mul"
@@ -191,7 +191,7 @@
               }
             },
             {
-              "code": "ix.3",
+              "code": "ix.precedence",
               "concerns": [
                 "add",
                 "mul"
@@ -216,7 +216,7 @@
           },
           "cards": [
             {
-              "code": "ix.4",
+              "code": "ix.negative-factor",
               "concerns": [
                 "mul"
               ],
@@ -227,12 +227,12 @@
               "avoid": "-1 \\cdot a",
               "prefer": "(-1) \\cdot a",
               "note": {
-                "en": "A negative number used as a factor takes brackets, so that $-1$ reads as a single factor. There is no name for that element (ax.A4), only the description $-1$, and brackets are what let a description stand as one thing. Here both readings agree in value, since $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.2); the brackets say which one is meant.",
-                "de": "Eine negative Zahl als Faktor wird geklammert, damit $-1$ als ein einzelner Faktor gelesen wird. Für dieses Element gibt es keinen Namen (ax.A4), nur die Beschreibung $-1$, und Klammern lassen eine Beschreibung als ein Ding stehen. Hier stimmen beide Lesarten im Wert überein, denn $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.2); die Klammern sagen, welche gemeint ist."
+                "en": "A negative number used as a factor takes brackets, so that $-1$ reads as a single factor. There is no name for that element (ax.additive-inverse), only the description $-1$, and brackets are what let a description stand as one thing. Here both readings agree in value, since $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.negative-one-times); the brackets say which one is meant.",
+                "de": "Eine negative Zahl als Faktor wird geklammert, damit $-1$ als ein einzelner Faktor gelesen wird. Für dieses Element gibt es keinen Namen (ax.additive-inverse), nur die Beschreibung $-1$, und Klammern lassen eine Beschreibung als ein Ding stehen. Hier stimmen beide Lesarten im Wert überein, denn $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.negative-one-times); die Klammern sagen, welche gemeint ist."
               }
             },
             {
-              "code": "ix.5",
+              "code": "ix.no-adjacent-operator",
               "concerns": [
                 "add",
                 "mul"
@@ -249,7 +249,7 @@
               }
             },
             {
-              "code": "ix.6",
+              "code": "ix.coefficient-front",
               "concerns": [
                 "mul"
               ],
@@ -287,7 +287,7 @@
           },
           "cards": [
             {
-              "code": "ax.E1",
+              "code": "ax.eq-reflexive",
               "concerns": [
                 "eq"
               ],
@@ -303,7 +303,7 @@
               }
             },
             {
-              "code": "ax.E2",
+              "code": "ax.eq-symmetric",
               "concerns": [
                 "eq"
               ],
@@ -319,7 +319,7 @@
               }
             },
             {
-              "code": "ax.E3",
+              "code": "ax.eq-transitive",
               "concerns": [
                 "eq"
               ],
@@ -335,7 +335,7 @@
               }
             },
             {
-              "code": "ax.E4",
+              "code": "ax.eq-congruence",
               "concerns": [
                 "eq",
                 "add",
@@ -352,8 +352,8 @@
                 "de": "Was $=$ mehr macht als eine Äquivalenzrelation: sie respektiert die Operationen, man darf also auf beiden Seiten dasselbe tun."
               },
               "intuition": {
-                "en": "Since $=$ means 'same value', swapping a thing for an equal thing cannot change a result. A balance scale: do the same to both sides and it stays balanced. Where the picture stops: the scale stays balanced under any equal operation, multiplying both sides by $0$ included. So it cannot tell you which steps can be undone. E4 licenses the step; it says nothing about getting back.",
-                "de": "Da $=$ 'derselbe Wert' heisst, ändert das Ersetzen durch Gleiches kein Ergebnis. Eine Waage: tut man auf beiden Seiten dasselbe, bleibt sie im Gleichgewicht. Wo das Bild aufhört: die Waage bleibt bei jeder gleichen Operation im Gleichgewicht, auch beim Multiplizieren beider Seiten mit $0$. Sie kann also nicht sagen, welche Schritte sich rückgängig machen lassen. E4 erlaubt den Schritt; über den Rückweg sagt es nichts."
+                "en": "Since $=$ means 'same value', swapping a thing for an equal thing cannot change a result. A balance scale: do the same to both sides and it stays balanced. Where the picture stops: the scale stays balanced under any equal operation, multiplying both sides by $0$ included. So it cannot tell you which steps can be undone. ax.eq-congruence licenses the step; it says nothing about getting back.",
+                "de": "Da $=$ 'derselbe Wert' heisst, ändert das Ersetzen durch Gleiches kein Ergebnis. Eine Waage: tut man auf beiden Seiten dasselbe, bleibt sie im Gleichgewicht. Wo das Bild aufhört: die Waage bleibt bei jeder gleichen Operation im Gleichgewicht, auch beim Multiplizieren beider Seiten mit $0$. Sie kann also nicht sagen, welche Schritte sich rückgängig machen lassen. ax.eq-congruence erlaubt den Schritt; über den Rückweg sagt es nichts."
               }
             }
           ]
@@ -370,7 +370,7 @@
           },
           "cards": [
             {
-              "code": "ax.A1",
+              "code": "ax.add-commutative",
               "concerns": [
                 "add"
               ],
@@ -386,7 +386,7 @@
               }
             },
             {
-              "code": "ax.A2",
+              "code": "ax.add-associative",
               "concerns": [
                 "add"
               ],
@@ -397,12 +397,12 @@
               "latex": "(a + b) + c = a + (b + c)",
               "forall": "a, b, c \\in \\mathbb{R}",
               "intuition": {
-                "en": "Adding three amounts, it makes no difference which pair you combine first. Where the picture stops: as in A1, the amounts are imagined as countable. The axiom holds for all elements, and the picture only makes it plausible.",
-                "de": "Beim Addieren dreier Mengen ist es egal, welches Paar man zuerst zusammenfasst. Wo das Bild aufhört: wie bei A1 werden die Mengen als zählbar vorgestellt. Das Axiom gilt für alle Elemente, und das Bild macht es nur plausibel."
+                "en": "Adding three amounts, it makes no difference which pair you combine first. Where the picture stops: as in ax.add-commutative, the amounts are imagined as countable. The axiom holds for all elements, and the picture only makes it plausible.",
+                "de": "Beim Addieren dreier Mengen ist es egal, welches Paar man zuerst zusammenfasst. Wo das Bild aufhört: wie bei ax.add-commutative werden die Mengen als zählbar vorgestellt. Das Axiom gilt für alle Elemente, und das Bild macht es nur plausibel."
               }
             },
             {
-              "code": "ax.A3",
+              "code": "ax.zero-neutral",
               "concerns": [
                 "add"
               ],
@@ -422,7 +422,7 @@
               }
             },
             {
-              "code": "ax.A4",
+              "code": "ax.additive-inverse",
               "concerns": [
                 "add"
               ],
@@ -437,8 +437,8 @@
                 "de": "Das Element $-a$ heisst das additive Inverse von $a$; das vorangestellte $-$ ist das unäre Minus. Eine andere Art gibt es nicht: in $-2$ ist es derselbe Operator, angewandt auf die Konstante $2$, nichts, was die Zahl in sich trägt. Ein negatives Element hat also keinen eigenen Namen. Wo $2$ ein Element benennt, beschreibt $-2$ eines, und Klammern erlauben es, eine Beschreibung als einzelnes Element zu behandeln: $(-2)$."
               },
               "intuition": {
-                "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $0$, the 'opposite', and where subtraction comes from. Where the picture stops: a mirror needs a line to mirror in, and that line is order, which this axiom does not have. $-a$ is the opposite of $a$, not the negative one; th.3 is where that difference is finally made, and it needs the order axioms to make it.",
-                "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $0$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion. Wo das Bild aufhört: ein Spiegel braucht eine Gerade, an der gespiegelt wird, und diese Gerade ist die Ordnung, die dieses Axiom nicht hat. $-a$ ist das Gegenteil von $a$, nicht das negative; th.3 ist der Ort, wo dieser Unterschied gemacht wird, und dafür braucht es die Ordnungsaxiome."
+                "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $0$, the 'opposite', and where subtraction comes from. Where the picture stops: a mirror needs a line to mirror in, and that line is order, which this axiom does not have. $-a$ is the opposite of $a$, not the negative one; th.opposite-flips is where that difference is finally made, and it needs the order axioms to make it.",
+                "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $0$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion. Wo das Bild aufhört: ein Spiegel braucht eine Gerade, an der gespiegelt wird, und diese Gerade ist die Ordnung, die dieses Axiom nicht hat. $-a$ ist das Gegenteil von $a$, nicht das negative; th.opposite-flips ist der Ort, wo dieser Unterschied gemacht wird, und dafür braucht es die Ordnungsaxiome."
               }
             }
           ]
@@ -455,7 +455,7 @@
           },
           "cards": [
             {
-              "code": "ax.M1",
+              "code": "ax.mul-commutative",
               "concerns": [
                 "mul"
               ],
@@ -466,12 +466,12 @@
               "latex": "a \\cdot b = b \\cdot a",
               "forall": "a, b \\in \\mathbb{R}",
               "intuition": {
-                "en": "A rectangle $a$ by $b$ has the same area as $b$ by $a$, just turn it; rows become columns. Where the picture stops: an area is a length times a length, and neither can be negative. The picture says nothing about $(-2) \\cdot 3$, which is why th.4 is proved from the axioms and not from a rectangle.",
-                "de": "Ein Rechteck $a$ mal $b$ hat denselben Flächeninhalt wie $b$ mal $a$, einfach gedreht; Zeilen werden Spalten. Wo das Bild aufhört: eine Fläche ist Länge mal Länge, und keine davon kann negativ sein. Über $(-2) \\cdot 3$ sagt das Bild nichts, und darum wird th.4 aus den Axiomen bewiesen und nicht an einem Rechteck."
+                "en": "A rectangle $a$ by $b$ has the same area as $b$ by $a$, just turn it; rows become columns. Where the picture stops: an area is a length times a length, and neither can be negative. The picture says nothing about $(-2) \\cdot 3$, which is why th.minus-times-minus is proved from the axioms and not from a rectangle.",
+                "de": "Ein Rechteck $a$ mal $b$ hat denselben Flächeninhalt wie $b$ mal $a$, einfach gedreht; Zeilen werden Spalten. Wo das Bild aufhört: eine Fläche ist Länge mal Länge, und keine davon kann negativ sein. Über $(-2) \\cdot 3$ sagt das Bild nichts, und darum wird th.minus-times-minus aus den Axiomen bewiesen und nicht an einem Rechteck."
               }
             },
             {
-              "code": "ax.M2",
+              "code": "ax.mul-associative",
               "concerns": [
                 "mul"
               ],
@@ -487,7 +487,7 @@
               }
             },
             {
-              "code": "ax.M3",
+              "code": "ax.one-neutral",
               "concerns": [
                 "mul"
               ],
@@ -507,7 +507,7 @@
               }
             },
             {
-              "code": "ax.M4",
+              "code": "ax.multiplicative-inverse",
               "concerns": [
                 "mul"
               ],
@@ -540,7 +540,7 @@
           },
           "cards": [
             {
-              "code": "ax.D1",
+              "code": "ax.distributivity",
               "concerns": [
                 "add",
                 "mul"
@@ -561,7 +561,7 @@
               }
             },
             {
-              "code": "ax.N1",
+              "code": "ax.zero-not-one",
               "concerns": [
                 "add",
                 "mul"
@@ -594,7 +594,7 @@
           },
           "cards": [
             {
-              "code": "ax.O1",
+              "code": "ax.order-trichotomy",
               "concerns": [
                 "order",
                 "eq"
@@ -615,7 +615,7 @@
               }
             },
             {
-              "code": "ax.O2",
+              "code": "ax.order-transitive",
               "concerns": [
                 "order"
               ],
@@ -626,12 +626,12 @@
               "latex": "a < b \\;\\text{ and }\\; b < c \\;\\Rightarrow\\; a < c",
               "forall": "a, b, c \\in \\mathbb{R}",
               "intuition": {
-                "en": "If $a$ lies left of $b$ and $b$ left of $c$, then $a$ lies left of $c$. Order carries along the line. Where the picture stops: as in O1, the line is what is being described here, not something we may use.",
-                "de": "Liegt $a$ links von $b$ und $b$ links von $c$, so liegt $a$ links von $c$. Die Ordnung überträgt sich entlang der Geraden. Wo das Bild aufhört: wie bei O1 wird die Gerade hier beschrieben und ist nichts, was wir schon benutzen dürfen."
+                "en": "If $a$ lies left of $b$ and $b$ left of $c$, then $a$ lies left of $c$. Order carries along the line. Where the picture stops: as in ax.order-trichotomy, the line is what is being described here, not something we may use.",
+                "de": "Liegt $a$ links von $b$ und $b$ links von $c$, so liegt $a$ links von $c$. Die Ordnung überträgt sich entlang der Geraden. Wo das Bild aufhört: wie bei ax.order-trichotomy wird die Gerade hier beschrieben und ist nichts, was wir schon benutzen dürfen."
               }
             },
             {
-              "code": "ax.O3",
+              "code": "ax.order-add",
               "concerns": [
                 "order",
                 "add"
@@ -652,7 +652,7 @@
               }
             },
             {
-              "code": "ax.O4",
+              "code": "ax.order-mul",
               "concerns": [
                 "order",
                 "mul"
@@ -686,7 +686,7 @@
           },
           "cards": [
             {
-              "code": "ax.C1",
+              "code": "ax.completeness",
               "concerns": [
                 "order",
                 "completeness"
@@ -742,7 +742,7 @@
               },
               "latex": "a - b := a + (-b)",
               "basedOn": [
-                "ax.A4"
+                "ax.additive-inverse"
               ],
               "note": {
                 "en": "Subtraction is not a new operation, just adding the additive inverse.",
@@ -761,7 +761,7 @@
               "latex": "\\frac{a}{b} := a \\cdot b^{-1}",
               "cond": "b \\ne 0",
               "basedOn": [
-                "ax.M4"
+                "ax.multiplicative-inverse"
               ],
               "note": {
                 "en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling.",
@@ -775,14 +775,14 @@
               "latex": "|a| := \\begin{cases} a & 0 < a \\\\ 0 & a = 0 \\\\ -a & a < 0 \\end{cases}",
               "forall": "a \\in \\mathbb{R}",
               "note": {
-                "en": "Three cases, one for each possibility trichotomy allows (ax.O1), so exactly one applies to any element. Like subtraction and division this is a definition and not a new operation: it is built from the unary minus (ax.A4) and the order relation, and it needs both. Note what the definition does not say. It does not say 'leave off the minus'. That is a rule about marks on paper, and it works only when the element is written as a numeral with a minus in front of it. $|a|$ for a variable $a$ cannot be simplified at all without knowing where $a$ lies, and $|-a|$ is $a$ exactly when $a$ is not negative, which is the opposite of what the mark suggests.",
-                "de": "Drei Fälle, einer für jede Möglichkeit, die die Trichotomie zulässt (ax.O1); auf jedes Element passt also genau einer. Wie Subtraktion und Division ist dies eine Definition und keine neue Operation: sie ist aus dem unären Minus (ax.A4) und der Ordnungsrelation gebaut und braucht beides. Man beachte, was die Definition nicht sagt. Sie sagt nicht 'lass das Minus weg'. Das ist eine Regel über Zeichen auf Papier und funktioniert nur, wenn das Element als Zahl mit einem Minus davor geschrieben ist. $|a|$ mit einer Variablen $a$ lässt sich ohne Wissen darüber, wo $a$ liegt, gar nicht vereinfachen, und $|-a|$ ist genau dann $a$, wenn $a$ nicht negativ ist, also gerade umgekehrt, als das Zeichen nahelegt."
+                "en": "Three cases, one for each possibility trichotomy allows (ax.order-trichotomy), so exactly one applies to any element. Like subtraction and division this is a definition and not a new operation: it is built from the unary minus (ax.additive-inverse) and the order relation, and it needs both. Note what the definition does not say. It does not say 'leave off the minus'. That is a rule about marks on paper, and it works only when the element is written as a numeral with a minus in front of it. $|a|$ for a variable $a$ cannot be simplified at all without knowing where $a$ lies, and $|-a|$ is $a$ exactly when $a$ is not negative, which is the opposite of what the mark suggests.",
+                "de": "Drei Fälle, einer für jede Möglichkeit, die die Trichotomie zulässt (ax.order-trichotomy); auf jedes Element passt also genau einer. Wie Subtraktion und Division ist dies eine Definition und keine neue Operation: sie ist aus dem unären Minus (ax.additive-inverse) und der Ordnungsrelation gebaut und braucht beides. Man beachte, was die Definition nicht sagt. Sie sagt nicht 'lass das Minus weg'. Das ist eine Regel über Zeichen auf Papier und funktioniert nur, wenn das Element als Zahl mit einem Minus davor geschrieben ist. $|a|$ mit einer Variablen $a$ lässt sich ohne Wissen darüber, wo $a$ liegt, gar nicht vereinfachen, und $|-a|$ ist genau dann $a$, wenn $a$ nicht negativ ist, also gerade umgekehrt, als das Zeichen nahelegt."
               },
               "intuition": {
                 "en": "The distance from $a$ to $0$, with the direction thrown away. Where the picture stops: distance is a picture of the *value*, while the notation tempts you to read $|\\cdot|$ as an instruction to the *marks* inside it. Those come apart exactly where it matters, at $|x|$ with $x$ a variable, which is why $\\sqrt{x^{2}} = |x|$ and not $x$.",
                 "de": "Der Abstand von $a$ zu $0$, ohne die Richtung. Wo das Bild aufhört: der Abstand ist ein Bild des *Werts*, während die Schreibweise dazu verführt, $|\\cdot|$ als Anweisung an die *Zeichen* darin zu lesen. Genau dort, wo es zählt, fallen die beiden auseinander, nämlich bei $|x|$ mit einer Variablen $x$, und darum ist $\\sqrt{x^{2}} = |x|$ und nicht $x$."
               },
-              "basedOn": ["op.lt", "ax.A4", "ax.O1"]
+              "basedOn": ["op.lt", "ax.additive-inverse", "ax.order-trichotomy"]
             }
           ]
         }
@@ -807,7 +807,7 @@
           },
           "cards": [
             {
-              "code": "th.1",
+              "code": "th.zero-times",
               "concerns": [
                 "add",
                 "mul"
@@ -820,13 +820,13 @@
               "forall": "a \\in \\mathbb{R}",
               "derivation": "0 \\cdot a = (0 + 0) \\cdot a = 0 \\cdot a + 0 \\cdot a",
               "derivedFrom": [
-                "ax.A3",
-                "ax.D1",
-                "ax.A4"
+                "ax.zero-neutral",
+                "ax.distributivity",
+                "ax.additive-inverse"
               ]
             },
             {
-              "code": "th.2",
+              "code": "th.negative-one-times",
               "concerns": [
                 "add",
                 "mul"
@@ -839,10 +839,10 @@
               "forall": "a \\in \\mathbb{R}",
               "derivation": "a + (-1) \\cdot a = 1 \\cdot a + (-1) \\cdot a = \\bigl(1 + (-1)\\bigr) \\cdot a = 0 \\cdot a = 0",
               "derivedFrom": [
-                "ax.M3",
-                "ax.D1",
-                "ax.A4",
-                "th.1"
+                "ax.one-neutral",
+                "ax.distributivity",
+                "ax.additive-inverse",
+                "th.zero-times"
               ],
               "note": {
                 "en": "So $-a$ is the inverse of $a$, and the unary minus is nothing but multiplication by the constant $-1$. It therefore needs no rules of its own: wherever a unary minus stands, an ordinary product is at work, and it follows the rules products already follow. The brackets in $(-1)$ are what let it stand as a single factor.",
@@ -850,7 +850,7 @@
               }
             },
             {
-              "code": "th.4",
+              "code": "th.minus-times-minus",
               "concerns": [
                 "add",
                 "mul"
@@ -862,31 +862,31 @@
               "latex": "(-1) \\cdot (-1) = 1",
               "derivation": "(-1) + (-1) \\cdot (-1) = (-1) \\cdot 1 + (-1) \\cdot (-1) = (-1) \\cdot \\bigl(1 + (-1)\\bigr) = (-1) \\cdot 0 = 0",
               "derivedFrom": [
-                "ax.M3",
-                "ax.D1",
-                "ax.A4",
-                "th.1"
+                "ax.one-neutral",
+                "ax.distributivity",
+                "ax.additive-inverse",
+                "th.zero-times"
               ],
               "note": {
-                "en": "The chain shows $(-1) + (-1) \\cdot (-1) = 0$, so $(-1) \\cdot (-1)$ is the additive inverse of $-1$. But so is $1$ (ax.A4), and an inverse is unique, hence $(-1) \\cdot (-1) = 1$. This used no order at all: 'minus times minus is plus' is a fact of the field, not of the number line, though it is almost always taught with a number-line story.",
-                "de": "Die Kette zeigt $(-1) + (-1) \\cdot (-1) = 0$, also ist $(-1) \\cdot (-1)$ das additive Inverse von $-1$. Das ist aber auch $1$ (ax.A4), und ein Inverses ist eindeutig, folglich $(-1) \\cdot (-1) = 1$. Das brauchte keine Ordnung: 'Minus mal Minus ist plus' ist eine Tatsache des Körpers, nicht der Zahlengeraden, obwohl es fast immer mit einer Zahlengeraden-Geschichte gelehrt wird."
+                "en": "The chain shows $(-1) + (-1) \\cdot (-1) = 0$, so $(-1) \\cdot (-1)$ is the additive inverse of $-1$. But so is $1$ (ax.additive-inverse), and an inverse is unique, hence $(-1) \\cdot (-1) = 1$. This used no order at all: 'minus times minus is plus' is a fact of the field, not of the number line, though it is almost always taught with a number-line story.",
+                "de": "Die Kette zeigt $(-1) + (-1) \\cdot (-1) = 0$, also ist $(-1) \\cdot (-1)$ das additive Inverse von $-1$. Das ist aber auch $1$ (ax.additive-inverse), und ein Inverses ist eindeutig, folglich $(-1) \\cdot (-1) = 1$. Das brauchte keine Ordnung: 'Minus mal Minus ist plus' ist eine Tatsache des Körpers, nicht der Zahlengeraden, obwohl es fast immer mit einer Zahlengeraden-Geschichte gelehrt wird."
               }
             },
             {
-              "code": "th.7",
+              "code": "th.zero-product",
               "concerns": ["mul"],
               "name": { "en": "Zero product", "de": "Nullprodukt" },
               "latex": "a \\cdot b = 0 \\;\\Rightarrow\\; a = 0 \\;\\text{ or }\\; b = 0",
               "forall": "a, b \\in \\mathbb{R}",
               "derivation": "a \\ne 0 \\;\\Rightarrow\\; b = 1 \\cdot b = (a^{-1} \\cdot a) \\cdot b = a^{-1} \\cdot (a \\cdot b) = a^{-1} \\cdot 0 = 0",
-              "derivedFrom": ["ax.M4", "ax.M3", "ax.M2", "ax.M1", "th.1"],
+              "derivedFrom": ["ax.multiplicative-inverse", "ax.one-neutral", "ax.mul-associative", "ax.mul-commutative", "th.zero-times"],
               "note": {
-                "en": "Read the chain as a case split: if $a$ is not $0$ it has a reciprocal (ax.M4), and applying it to $a \\cdot b = 0$ leaves $b = 0$. So at least one factor was $0$ to begin with. This is the converse of th.1, and it is what licenses solving an equation by factoring: from $(x-2)(x+3) = 0$ one may conclude $x = 2$ or $x = -3$. That step is this theorem and not a rule of thumb.",
-                "de": "Die Kette ist eine Fallunterscheidung: ist $a$ nicht $0$, so hat es einen Kehrwert (ax.M4), und wendet man ihn auf $a \\cdot b = 0$ an, bleibt $b = 0$. Mindestens ein Faktor war also von Anfang an $0$. Das ist die Umkehrung von th.1, und es ist das, was das Lösen einer Gleichung durch Faktorisieren erlaubt: aus $(x-2)(x+3) = 0$ darf man auf $x = 2$ oder $x = -3$ schliessen. Dieser Schritt ist dieser Satz und keine Faustregel."
+                "en": "Read the chain as a case split: if $a$ is not $0$ it has a reciprocal (ax.multiplicative-inverse), and applying it to $a \\cdot b = 0$ leaves $b = 0$. So at least one factor was $0$ to begin with. This is the converse of th.zero-times, and it is what licenses solving an equation by factoring: from $(x-2)(x+3) = 0$ one may conclude $x = 2$ or $x = -3$. That step is this theorem and not a rule of thumb.",
+                "de": "Die Kette ist eine Fallunterscheidung: ist $a$ nicht $0$, so hat es einen Kehrwert (ax.multiplicative-inverse), und wendet man ihn auf $a \\cdot b = 0$ an, bleibt $b = 0$. Mindestens ein Faktor war also von Anfang an $0$. Das ist die Umkehrung von th.zero-times, und es ist das, was das Lösen einer Gleichung durch Faktorisieren erlaubt: aus $(x-2)(x+3) = 0$ darf man auf $x = 2$ oder $x = -3$ schliessen. Dieser Schritt ist dieser Satz und keine Faustregel."
               },
               "intuition": {
-                "en": "If neither factor were $0$, both could be scaled back to $1$, and the product could not have vanished; something must already have been $0$ before the multiplication. Where the picture stops: this is a property of fields, not of multiplication as such. Where there are no reciprocals it fails, and $2 \\cdot 3 = 0$ among the clock remainders modulo $6$. The factoring step borrows from ax.M4, not from the shape of the equation.",
-                "de": "Wäre keiner der Faktoren $0$, so liessen sich beide auf $1$ zurückskalieren, und das Produkt hätte nicht verschwinden können; etwas muss schon vor der Multiplikation $0$ gewesen sein. Wo das Bild aufhört: das ist eine Eigenschaft von Körpern und nicht der Multiplikation an sich. Wo es keine Kehrwerte gibt, versagt es, und unter den Uhrenresten modulo $6$ ist $2 \\cdot 3 = 0$. Der Faktorisierungsschritt borgt bei ax.M4 und nicht bei der Gestalt der Gleichung."
+                "en": "If neither factor were $0$, both could be scaled back to $1$, and the product could not have vanished; something must already have been $0$ before the multiplication. Where the picture stops: this is a property of fields, not of multiplication as such. Where there are no reciprocals it fails, and $2 \\cdot 3 = 0$ among the clock remainders modulo $6$. The factoring step borrows from ax.multiplicative-inverse, not from the shape of the equation.",
+                "de": "Wäre keiner der Faktoren $0$, so liessen sich beide auf $1$ zurückskalieren, und das Produkt hätte nicht verschwinden können; etwas muss schon vor der Multiplikation $0$ gewesen sein. Wo das Bild aufhört: das ist eine Eigenschaft von Körpern und nicht der Multiplikation an sich. Wo es keine Kehrwerte gibt, versagt es, und unter den Uhrenresten modulo $6$ ist $2 \\cdot 3 = 0$. Der Faktorisierungsschritt borgt bei ax.multiplicative-inverse und nicht bei der Gestalt der Gleichung."
               }
             }
           ]
@@ -899,7 +899,7 @@
           },
           "cards": [
             {
-              "code": "th.3",
+              "code": "th.opposite-flips",
               "concerns": [
                 "order",
                 "add"
@@ -912,17 +912,17 @@
               "forall": "a \\in \\mathbb{R}",
               "derivation": "0 < a \\;\\Rightarrow\\; 0 + (-a) < a + (-a) \\;\\Rightarrow\\; -a < 0",
               "derivedFrom": [
-                "ax.O3",
-                "ax.A3",
-                "ax.A4"
+                "ax.order-add",
+                "ax.zero-neutral",
+                "ax.additive-inverse"
               ],
               "note": {
-                "en": "So $-a$ is negative exactly when $a$ is positive, and positive when $a$ is negative: the unary minus does not make an element negative, it swaps positive and negative. Forward: add $-a$ to both sides of $0 < a$ (ax.O3). Reverse: add $a$ to $-a < 0$. Obvious for a concrete number like $a = 2$, but for a variable it is the exact point students miss.",
-                "de": "$-a$ ist also genau dann negativ, wenn $a$ positiv ist, und positiv, wenn $a$ negativ ist: das unäre Minus macht ein Element nicht negativ, es vertauscht positiv und negativ. Hin: addiere $-a$ auf beiden Seiten von $0 < a$ (ax.O3). Zurück: addiere $a$ zu $-a < 0$. Für eine konkrete Zahl wie $a = 2$ offensichtlich, doch für eine Variable genau der Punkt, den man übersieht."
+                "en": "So $-a$ is negative exactly when $a$ is positive, and positive when $a$ is negative: the unary minus does not make an element negative, it swaps positive and negative. Forward: add $-a$ to both sides of $0 < a$ (ax.order-add). Reverse: add $a$ to $-a < 0$. Obvious for a concrete number like $a = 2$, but for a variable it is the exact point students miss.",
+                "de": "$-a$ ist also genau dann negativ, wenn $a$ positiv ist, und positiv, wenn $a$ negativ ist: das unäre Minus macht ein Element nicht negativ, es vertauscht positiv und negativ. Hin: addiere $-a$ auf beiden Seiten von $0 < a$ (ax.order-add). Zurück: addiere $a$ zu $-a < 0$. Für eine konkrete Zahl wie $a = 2$ offensichtlich, doch für eine Variable genau der Punkt, den man übersieht."
               }
             },
             {
-              "code": "th.5",
+              "code": "th.square-positive",
               "concerns": [
                 "order",
                 "mul"
@@ -935,19 +935,19 @@
               "forall": "a \\in \\mathbb{R}",
               "derivation": "0 < a \\;\\Rightarrow\\; 0 \\cdot a < a \\cdot a \\;\\Rightarrow\\; 0 < a \\cdot a",
               "derivedFrom": [
-                "ax.O4",
-                "ax.O1",
-                "th.1",
-                "th.3",
-                "th.4"
+                "ax.order-mul",
+                "ax.order-trichotomy",
+                "th.zero-times",
+                "th.opposite-flips",
+                "th.minus-times-minus"
               ],
               "note": {
-                "en": "If $a \\ne 0$, then by trichotomy $0 < a$ or $a < 0$. When $0 < a$: multiply by $a$ (ax.O4), then $0 \\cdot a = 0$ (th.1) gives the chain shown. When $a < 0$: then $0 < -a$ (th.3), the same step gives $0 < (-a) \\cdot (-a)$, and $(-a) \\cdot (-a) = a \\cdot a$ by minus-times-minus (th.4). Either way $0 < a \\cdot a$. So a square is never negative, which is why $a \\cdot a + 1 = 0$ has no solution.",
-                "de": "Ist $a \\ne 0$, so gilt nach der Trichotomie $0 < a$ oder $a < 0$. Für $0 < a$: mit $a$ multiplizieren (ax.O4), dann gibt $0 \\cdot a = 0$ (th.1) die gezeigte Kette. Für $a < 0$: dann ist $0 < -a$ (th.3), derselbe Schritt gibt $0 < (-a) \\cdot (-a)$, und $(-a) \\cdot (-a) = a \\cdot a$ nach Minus-mal-Minus (th.4). So oder so $0 < a \\cdot a$. Ein Quadrat ist also nie negativ, weshalb $a \\cdot a + 1 = 0$ keine Lösung hat."
+                "en": "If $a \\ne 0$, then by trichotomy $0 < a$ or $a < 0$. When $0 < a$: multiply by $a$ (ax.order-mul), then $0 \\cdot a = 0$ (th.zero-times) gives the chain shown. When $a < 0$: then $0 < -a$ (th.opposite-flips), the same step gives $0 < (-a) \\cdot (-a)$, and $(-a) \\cdot (-a) = a \\cdot a$ by minus-times-minus (th.minus-times-minus). Either way $0 < a \\cdot a$. So a square is never negative, which is why $a \\cdot a + 1 = 0$ has no solution.",
+                "de": "Ist $a \\ne 0$, so gilt nach der Trichotomie $0 < a$ oder $a < 0$. Für $0 < a$: mit $a$ multiplizieren (ax.order-mul), dann gibt $0 \\cdot a = 0$ (th.zero-times) die gezeigte Kette. Für $a < 0$: dann ist $0 < -a$ (th.opposite-flips), derselbe Schritt gibt $0 < (-a) \\cdot (-a)$, und $(-a) \\cdot (-a) = a \\cdot a$ nach Minus-mal-Minus (th.minus-times-minus). So oder so $0 < a \\cdot a$. Ein Quadrat ist also nie negativ, weshalb $a \\cdot a + 1 = 0$ keine Lösung hat."
               }
             },
             {
-              "code": "th.6",
+              "code": "th.zero-less-than-one",
               "concerns": [
                 "order",
                 "mul"
@@ -959,13 +959,72 @@
               "latex": "0 < 1",
               "derivation": "0 < 1 \\cdot 1 = 1",
               "derivedFrom": [
-                "th.5",
-                "ax.N1",
-                "ax.M3"
+                "th.square-positive",
+                "ax.zero-not-one",
+                "ax.one-neutral"
               ],
               "note": {
-                "en": "A corollary: $1 \\ne 0$ (ax.N1), so $1$ is a non-zero square, $1 = 1 \\cdot 1$ (ax.M3), and a non-zero square is positive (th.5). The order cannot put $1$ below $0$: the two named elements lie in the expected order.",
-                "de": "Eine Folgerung: $1 \\ne 0$ (ax.N1), also ist $1$ ein Quadrat ungleich null, $1 = 1 \\cdot 1$ (ax.M3), und ein solches ist positiv (th.5). Die Ordnung kann $1$ nicht unter $0$ setzen: die beiden benannten Elemente liegen in der erwarteten Reihenfolge."
+                "en": "A corollary: $1 \\ne 0$ (ax.zero-not-one), so $1$ is a non-zero square, $1 = 1 \\cdot 1$ (ax.one-neutral), and a non-zero square is positive (th.square-positive). The order cannot put $1$ below $0$: the two named elements lie in the expected order.",
+                "de": "Eine Folgerung: $1 \\ne 0$ (ax.zero-not-one), also ist $1$ ein Quadrat ungleich null, $1 = 1 \\cdot 1$ (ax.one-neutral), und ein solches ist positiv (th.square-positive). Die Ordnung kann $1$ nicht unter $0$ setzen: die beiden benannten Elemente liegen in der erwarteten Reihenfolge."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "remark",
+      "title": {
+        "en": "Existence & uniqueness",
+        "de": "Existenz & Eindeutigkeit"
+      },
+      "note": {
+        "en": "Here neither assumed nor proved. Both cards report a result from outside this page: the construction belongs to the foundations of analysis, the isomorphism to a short but genuine proof. They close the page because without them 'let $R$ be a complete ordered field' would be an unchecked phrase rather than a supposition about something.",
+        "de": "Hier weder angenommen noch bewiesen. Beide Karten berichten ein Ergebnis von ausserhalb dieser Seite: die Konstruktion gehört zu den Grundlagen der Analysis, der Isomorphiesatz zu einem kurzen, aber echten Beweis. Sie schliessen die Seite ab, weil ohne sie 'sei $R$ ein vollständiger geordneter Körper' eine ungedeckte Redewendung wäre statt einer Annahme über etwas."
+      },
+      "groups": [
+        {
+          "slug": "existence",
+          "cards": [
+            {
+              "code": "rk.existence",
+              "concerns": [
+                "add",
+                "mul",
+                "eq",
+                "order",
+                "completeness"
+              ],
+              "name": {
+                "en": "Is there such a thing?",
+                "de": "Gibt es so etwas überhaupt?"
+              },
+              "latex": "\\mathbb{N} \\;\\rightsquigarrow\\; \\mathbb{Z} \\;\\rightsquigarrow\\; \\mathbb{Q} \\;\\rightsquigarrow\\; R",
+              "note": {
+                "en": "Every card above begins from a supposition: *let* $R$ be a complete ordered field. Nothing has yet said that there is one, and the gap is not harmless: a list of demands that nothing satisfies proves everything, including $0 = 1$. The answer is yes. Starting from the counting numbers alone one builds $\\mathbb{Z}$ (as differences), then $\\mathbb{Q}$ (as quotients), then $R$ by filling the gaps between the rationals, and then checks the nineteen axioms above on the result, one at a time. That construction is genuine mathematics and it is deliberately not on this page: it belongs to the foundations of analysis, and no algebra below depends on how it is carried out. Notice the direction. The layer after this one defines $\\mathbb{N}$, $\\mathbb{Z}$ and $\\mathbb{Q}$ *inside* $R$, by carving subsets out of something already given; the construction sketched here runs the opposite way, building $R$ out of them. Both are legitimate, and they answer different questions: one asks what the number line contains, the other asks whether there is a number line at all.",
+                "de": "Jede Karte oben beginnt mit einer Annahme: *sei* $R$ ein vollständiger geordneter Körper. Dass es einen solchen gibt, wurde bisher nirgends gesagt, und diese Lücke ist nicht harmlos: eine Liste von Forderungen, die nichts erfüllt, beweist alles, auch $0 = 1$. Die Antwort ist ja. Allein von den Zählzahlen ausgehend baut man $\\mathbb{Z}$ (als Differenzen), dann $\\mathbb{Q}$ (als Quotienten), dann $R$, indem man die Lücken zwischen den rationalen Zahlen füllt, und prüft anschliessend die neunzehn Axiome oben eines nach dem anderen am Ergebnis nach. Diese Konstruktion ist echte Mathematik und steht bewusst nicht auf dieser Seite: sie gehört zu den Grundlagen der Analysis, und nichts von der Algebra unten hängt davon ab, wie sie ausgeführt wird. Man beachte die Richtung. Die Schicht nach dieser definiert $\\mathbb{N}$, $\\mathbb{Z}$ und $\\mathbb{Q}$ *innerhalb* von $R$, als Teilmengen von etwas bereits Gegebenem; die hier skizzierte Konstruktion läuft umgekehrt und baut $R$ aus ihnen auf. Beides ist legitim, und beides beantwortet eine andere Frage: die eine, was die Zahlengerade enthält, die andere, ob es überhaupt eine Zahlengerade gibt."
+              }
+            },
+            {
+              "code": "rk.uniqueness",
+              "concerns": [
+                "add",
+                "mul",
+                "eq",
+                "order",
+                "completeness"
+              ],
+              "name": {
+                "en": "Is there more than one?",
+                "de": "Gibt es mehr als einen?"
+              },
+              "latex": "R,\\ R' \\ \\text{complete ordered fields} \\;\\Longrightarrow\\; R \\cong R'",
+              "basedOn": [
+                "ax.completeness"
+              ],
+              "note": {
+                "en": "Existence alone would not be enough. If many essentially different structures met the demands, 'the real numbers' would be a phrase without a referent, and every theorem above would silently be about whichever one you happened to pick. That does not happen: any two complete ordered fields are isomorphic. There is a one-to-one correspondence between them carrying $+$ to $+$, $\\cdot$ to $\\cdot$ and $<$ to $<$, so nothing sayable in the language of this page can tell them apart. They may be built out of quite different raw material and still be, as far as algebra is concerned, the same structure with its elements renamed. Completeness does the work here: drop ax.completeness and uniqueness fails at once, since $\\mathbb{Q}$ is an ordered field too and is certainly not isomorphic to $R$. So the axioms do not describe a family of structures, they pin down exactly one, which is what licenses the definite article in 'the real numbers', and why this page may claim that $R$ *is* $\\mathbb{R}$.",
+                "de": "Existenz allein würde nicht genügen. Erfüllten viele wesentlich verschiedene Strukturen die Forderungen, so wäre 'die reellen Zahlen' ein Ausdruck ohne Bezug, und jeder Satz oben handelte stillschweigend von derjenigen, die man gerade gewählt hat. Das passiert nicht: je zwei vollständige geordnete Körper sind isomorph. Es gibt eine eineindeutige Zuordnung zwischen ihnen, die $+$ auf $+$, $\\cdot$ auf $\\cdot$ und $<$ auf $<$ abbildet; nichts, was sich in der Sprache dieser Seite sagen lässt, kann sie also unterscheiden. Sie mögen aus ganz verschiedenem Rohmaterial gebaut sein und sind, soweit es die Algebra betrifft, dennoch dieselbe Struktur mit umbenannten Elementen. Die Arbeit leistet hier die Vollständigkeit: lässt man ax.completeness weg, scheitert die Eindeutigkeit sofort, denn auch $\\mathbb{Q}$ ist ein geordneter Körper und ganz sicher nicht isomorph zu $R$. Die Axiome beschreiben also keine Familie von Strukturen, sie legen genau eine fest, und das rechtfertigt den bestimmten Artikel in 'die reellen Zahlen' und erlaubt dieser Seite die Behauptung, $R$ *sei* $\\mathbb{R}$."
               }
             }
           ]

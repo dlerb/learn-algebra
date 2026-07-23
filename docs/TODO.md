@@ -58,8 +58,8 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   exponent-`-1` backlog item) · `th.pow-laws-int` (all three laws survive on ℤ).
   Payoff: **three species of "convention" side by side** — arbitrary (`0 ∈ ℕ`, `0⁰`),
   determined (`a⁰ = 1`), proved (the laws on ℤ).
-- [x] ~~fundament0 `th.7` **zero product**~~ (`ab = 0 ⇒ a = 0 or b = 0`) — added
-  2026-07-22 alongside the ℤ layer. Converse of `th.1`, one line from `ax.M4`, and the
+- [x] ~~fundament0 `th.zero-product` **zero product**~~ (`ab = 0 ⇒ a = 0 or b = 0`) — added
+  2026-07-22 alongside the ℤ layer. Converse of `th.zero-times`, one line from `ax.multiplicative-inverse`, and the
   basis of solving by factoring. Its stopping point: a property of *fields*, not of
   multiplication (`2·3 = 0` mod `6`).
 - [ ] **Layer manifest follow-ups.** `src/data/layers.ts` + `LayerView` shipped
@@ -67,15 +67,15 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   `pnpm sweep-layers` runs the KaTeX/refs/prose checks). Open: the layers are still
   separate *pages*; composing several into one scrolling page is unbuilt.
 - [x] ~~Order + completeness slab (upgrades field → ℝ; unblocks roots).~~ **Built
-  2026-07-18:** `op.lt` + `ax.O1–O4` (O4's `0<c` condition = the flip rule) + `ax.C1`
-  supremum axiom; positive/negative defined on `op.lt`; theorems th.3 (opposite
-  flips positive/negative), th.4 (`(−1)(−1)=1`, no order used), th.5 (non-zero
-  square positive), th.6 (`0<1`). Tag moved to `≙ ℝ`; the word "sign" retired.
+  2026-07-18:** `op.lt` + `the four `ax.order-*`` (`ax.order-mul`'s `0<c` condition = the flip rule) + `ax.completeness`
+  supremum axiom; positive/negative defined on `op.lt`; theorems th.opposite-flips (opposite
+  flips positive/negative), th.minus-times-minus (`(−1)(−1)=1`, no order used), th.square-positive (non-zero
+  square positive), th.zero-less-than-one (`0<1`). Tag moved to `≙ ℝ`; the word "sign" retired.
 - [x] ~~**ℚ layer — existence** (roots + rational powers).~~ **Built 2026-07-22** as the
   `rationals` layer (`src/data/rationals/cards.json`, `/rationals`, tag `≙ aⁿ, n ∈ ℚ`) —
   see **`docs/rationals.md`**. `pre.existence` → `ix.root` → `def.rat` · `def.root`
   (by *description*, licensed by the theorem below it) · `def.pow-rat` →
-  `th.root-exists` (**the first and only use of `ax.C1`** — uniqueness is order,
+  `th.root-exists` (**the first and only use of `ax.completeness`** — uniqueness is order,
   existence is completeness) · `th.principal-root` · `th.exponent-well-defined` (ℚ is
   the first layer with non-unique exponent *names*) · `th.pow-laws-rat` ·
   `th.base-fence`. Added `def.abs` to fundament0 for `√(x²) = |x|`.
@@ -93,16 +93,16 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   irrationals. So all of ℚ can be pinned down and `a^√2` still is not.
 
   **Completeness = existence, order = selection.** Both routes to the value work and
-  both rest on `ax.C1`: `aˣ := sup{a^q : q ∈ ℚ, q < x}` (a>1), or `lim a^{q_k}` for
+  both rest on `ax.completeness`: `aˣ := sup{a^q : q ∈ ℚ, q < x}` (a>1), or `lim a^{q_k}` for
   `q_k → x`. But neither *selects*: the step "`q_k → x` therefore `a^{q_k} → aˣ`" is not
   a deduction, it is the assumption that the extension respects limits, i.e. continuity
   chosen by the method. What pins it down is an extra condition on the **function**, and
-  **monotonicity suffices** — no continuity, no limits, and monotone is `ax.O4`
+  **monotonicity suffices** — no continuity, no limits, and monotone is `ax.order-mul`
   vocabulary the tower already owns. Contrast with `th.root-exists`, which needed no
   extra criterion because it pinned an **element**, where order gave uniqueness free.
   The object being determined changed from an element to a function; that is the layer.
 
-  **Use sup, not sequences.** `ax.C1` is stated as a supremum axiom, so the sup version
+  **Use sup, not sequences.** `ax.completeness` is stated as a supremum axiom, so the sup version
   uses it directly. The sequence route needs convergence and Cauchy sequences defined
   first, well-definedness across sequences, and quietly the Archimedean property. Same
   destination, more machinery — and sup keeps the layer inside the fundament's existing
@@ -131,14 +131,14 @@ in several layers at once; detail in `docs/fundament0.md`):
   (`def.multiple` / `th.multiple-is-product` / its collapsed `intuition`).
 - [ ] `1.23·a` — repeated addition breaks → forces `r·a` (product); needs decimal numerals.
 - [x] ~~Minus / sign / subtraction — one glyph, three meanings.~~ **Resolved 2026-07-17:
-  there are only *two* minuses — unary (`ax.A4`, `-a` and `-2` alike) and binary
+  there are only *two* minuses — unary (`ax.additive-inverse`, `-a` and `-2` alike) and binary
   (`def.sub`). The third ("a number's own sign") does not exist in the notation.
-  Shipped in `ax.A4` + `th.2` + `ix.4`. Extended 2026-07-18: positive/negative built
-  via order (`op.lt` + `ax.O1`, `th.3`), and the word "sign" retired from the data.**
+  Shipped in `ax.additive-inverse` + `th.negative-one-times` + `ix.negative-factor`. Extended 2026-07-18: positive/negative built
+  via order (`op.lt` + `ax.order-trichotomy`, `th.opposite-flips`), and the word "sign" retired from the data.**
 - [x] ~~**Atomic object, composite name** — `-2² = -4` (parse the name) vs
   `(-2)² = 4` (square the object).~~ **Shipped 2026-07-22** as `th.negative-base`
-  in the naturals layer: derived via `th.2` + `ix.3` rather than decreed, brackets
-  as the notation's name-maker (`ix.4`), and the "completion, not a correction"
+  in the naturals layer: derived via `th.negative-one-times` + `ix.precedence` rather than decreed, brackets
+  as the notation's name-maker (`ix.negative-factor`), and the "completion, not a correction"
   teaching stance in the card's `intuition`.
 - [~] Powers & roots — the *theorem* half is built (natural exponents, by induction,
   plus `pl.no-sum-law`); definition-by-permanence (ℤ) and existence (ℚ, roots) remain.

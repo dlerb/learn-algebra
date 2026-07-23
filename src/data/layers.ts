@@ -1,5 +1,6 @@
 import type { LocalizedString } from './skill.schema'
 import fundament0 from './fundament0/cards.json'
+import numbers from './numbers/cards.json'
 import naturals from './naturals/cards.json'
 import integers from './integers/cards.json'
 import rationals from './rationals/cards.json'
@@ -10,7 +11,7 @@ import rationals from './rationals/cards.json'
 // them: it fixes the reading order of the tower, generates the routes and the
 // nav entries, and — the reason it had to exist before the naturals layer could
 // be written — resolves citations ACROSS layers, since `th.negative-base` in
-// naturals rests on `th.2` and `ix.3` in fundament0.
+// naturals rests on `th.negative-one-times` and `ix.precedence` in fundament0.
 //
 // Adding a layer = write its cards.json, add one entry below.
 
@@ -60,6 +61,7 @@ export interface Layer {
 
 export const layers: Layer[] = [
   { id: 'fundament0', slug: 'fundament0', title: 'fundament0', data: fundament0 as unknown as LayerData },
+  { id: 'numbers', slug: 'numbers', title: 'numbers', data: numbers as unknown as LayerData },
   { id: 'naturals', slug: 'naturals', title: 'naturals', data: naturals as unknown as LayerData },
   { id: 'integers', slug: 'integers', title: 'integers', data: integers as unknown as LayerData },
   { id: 'rationals', slug: 'rationals', title: 'rationals', data: rationals as unknown as LayerData },

@@ -9,7 +9,7 @@ validated by `skill.schema.ts` on load. The layers:
 - **meta-patterns** (`metapatterns.json`) — student-facing digests of them.
 
   *(Note on the word: "layer" here means a **file/role** inside the skills tower.
-  The separate **fundament tower** — `fundament0 · naturals · integers · rationals`,
+  The separate **fundament tower** — `fundament0 · numbers · naturals · integers · rationals`,
   under `src/data/<layer>/cards.json` and composed by `src/data/layers.ts` — also
   calls its floors layers, in the sense of mathematical dependency. The two towers
   are deliberately separate representations and must not be merged; see
