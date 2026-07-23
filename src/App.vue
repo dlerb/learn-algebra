@@ -17,16 +17,32 @@ import { layers } from './data/layers'
 const route = useRoute()
 const router = useRouter()
 
+// Two catalog groups + two activities. The tower layers nest under one dropdown
+// and the curated pedagogy (skills, errors) under another, so the bar stays four
+// wide however many layers the tower grows. Group keys are suffixed `-menu` so
+// they never collide with a route name; only leaf keys are route names, and a
+// parent with children just expands (never navigates), so `go` only ever sees a
+// leaf. `route.name` matching a leaf key auto-highlights that leaf and its parent.
 const menuOptions: MenuOption[] = [
-  { label: 'Skills', key: 'skills' },
-  ...layers.map(l => ({ label: l.title, key: l.slug })),
-  { label: 'Errors', key: 'errors' },
+  {
+    label: 'Fundament', key: 'tower-menu',
+    children: layers.map(l => ({ label: l.title, key: l.slug })),
+  },
+  {
+    label: 'Curated', key: 'curated-menu',
+    children: [
+      { label: 'Skills', key: 'skills' },
+      { label: 'Errors', key: 'errors' },
+    ],
+  },
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },
 ]
 const activeKey = computed<string | null>(() => (route.name as string) ?? null)
 function go(key: string | number) {
-  router.push({ name: String(key) })
+  const name = String(key)
+  if (name.endsWith('-menu')) return  // a group header, not a route
+  router.push({ name })
 }
 </script>
 
