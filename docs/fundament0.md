@@ -156,7 +156,10 @@ layer → sections[] → groups[] → cards[]
   resolves citations **across** layers — `th.negative-base` in naturals rests on
   `th.negative-one-times` and `ix.precedence` here. Codes are unique tower-wide, and it throws at load time
   on a duplicate code, an unresolvable citation, or a bad/missing `concerns`.
-- **`sections[]`** — ordered; each has a `kind` and its `groups`. **Page order is
+- **`sections[]`** — ordered; each has a **`slug`** (unique per layer, and the key the
+  rendered list is built on — required since 2026-07-23, because `kind` cannot key it
+  once a layer repeats one: `powers` runs ℕ/ℤ/ℚ as three acts and so has three
+  `definition` sections), a `kind`, and its `groups`. **Page order is
   array order** at every level — no derived-from-folder kind, no layout config.
   The seven→six kinds are the epistemic ladder: `preliminary · signature ·
   convention · axiom · definition · theorem` (framing → given → agreed → assumed →
@@ -270,8 +273,9 @@ no view change. The single layout variant is the signature tile, keyed on `symbo
 
 `validate()` in `src/data/layers.ts` throws at load time on: a duplicate `code`
 tower-wide; a `basedOn`/`derivedFrom` entry that resolves to nothing; a missing or
-unknown `concerns` on a non-`preliminary` card; a duplicate section key
-(`slug ?? kind`) within a layer. `scripts/sweep-layers.mjs` adds the KaTeX and prose
+unknown `concerns` on a non-`preliminary` card; a missing or duplicated section `slug`
+within a layer. (The JSON is cast rather than parsed, so TypeScript cannot enforce the
+required fields — `validate()` is what does.) `scripts/sweep-layers.mjs` adds the KaTeX and prose
 checks. Neither tool checks *field clusters* — those are editorial.
 
 #### Four cards, verbatim

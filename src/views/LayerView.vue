@@ -101,7 +101,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
       </div>
     </header>
 
-    <section v-for="s in sections" :key="s.slug ?? s.kind" class="group">
+    <section v-for="s in sections" :key="s.slug" class="group">
       <div class="group-title">
         <h3>{{ t(s.title) }}</h3>
         <NPopover v-if="sectionBlurb(s)" trigger="click" placement="bottom-start">

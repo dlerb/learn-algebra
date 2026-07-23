@@ -9,6 +9,7 @@
 
   "sections": [
     {
+      "slug": "prelim",
       "kind": "preliminary",
       "title": {"en": "Preliminaries", "de": "Vorbemerkungen"},
       "groups": [
@@ -29,6 +30,7 @@
     },
 
     {
+      "slug": "notation",
       "kind": "convention",
       "title": {"en": "Notation", "de": "Schreibweise"},
       "groups": [
@@ -53,6 +55,7 @@
     },
 
     {
+      "slug": "definitions",
       "kind": "definition",
       "title": {"en": "Definitions", "de": "Definitionen"},
       "note": {"en": "Nothing below is assumed. Each card either names a part of $\\mathbb{R}$ that the axioms already forced to be there, or introduces an abbreviation for something already writable.", "de": "Nichts hier unten wird angenommen. Jede Karte benennt entweder einen Teil von $\\mathbb{R}$, den die Axiome ohnehin erzwungen haben, oder führt eine Abkürzung für etwas ein, das sich bereits schreiben lässt."},
@@ -140,6 +143,7 @@
     },
 
     {
+      "slug": "theorems",
       "kind": "theorem",
       "title": {"en": "Theorems", "de": "Sätze"},
       "note": {"en": "Nothing here is a new assumption either. th.ind is the one that matters: induction is not an axiom in this tower, it is read off def.nat, because 'the smallest inductive subset' already says that a subset containing $1$ and closed under the step can only be all of $\\mathbb{N}$.", "de": "Auch hier wird nichts neu angenommen. th.ind ist die entscheidende Karte: die Induktion ist in diesem Turm kein Axiom, sie wird an def.nat abgelesen, denn 'die kleinste induktive Teilmenge' sagt bereits, dass eine Teilmenge, die $1$ enthält und unter dem Schritt abgeschlossen ist, nur ganz $\\mathbb{N}$ sein kann."},
