@@ -5,15 +5,21 @@ import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
-import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Section } from '../data/layers'
+import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Group, type Section } from '../data/layers'
 
 // Inspection page for ONE layer of the tower, selected by the `layerId` route
 // prop (src/data/layers.ts is the manifest). One source file per layer
 // (cards.json), one containment tree: layer → sections → groups → cards.
 // `kind` is the section (preliminary/signature/convention/axiom/definition/
-// theorem); `concerns` is a per-card multi-tag (add/mul/eq/order/completeness).
-// Two filter rows (kind, concerns) dim non-matching cards. Page order is
-// array order, top to bottom. See docs/fundament0.md.
+// theorem/remark); `concerns` is a per-card multi-tag (add/mul/eq/order/
+// completeness). Two filter rows (kind, concerns) dim non-matching cards. Page
+// order is array order, top to bottom. See docs/fundament0.md.
+//
+// ONE card template, driven by field presence (2026-07-23). `kind` is a claim
+// about knowledge, not about layout, so it no longer selects a template: a card
+// shows a statement iff it has `latex`, a derivation iff it has `derivation`, and
+// so on. Adding a kind therefore needs no change here. The single remaining
+// layout variant is the signature tile, keyed on `symbol` — see isOpGroup.
 
 const props = defineProps<{ layerId: string }>()
 
@@ -34,6 +40,13 @@ const codeLabel = (code: string) => {
 // blurb, if any, is lifted onto the section. Multi-group sections show headings.
 const sectionBlurb = (s: Section) => s.blurb ?? (s.groups.length === 1 ? s.groups[0].blurb : undefined)
 const showGroupHeads = (s: Section) => s.groups.length > 1
+
+// Signature cards (a glyph over a type) need wider, shorter tiles than statement
+// cards. That is the ONE layout difference left, and it is chosen by whether the
+// card carries a `symbol` — never by `kind`, which means epistemic role and must
+// stay free to grow without the view knowing (`remark` was added without a change
+// here). Everything else renders from field presence.
+const isOpGroup = (g: Group) => g.cards.some(c => !!c.symbol)
 
 // Filters. Both sets start full (nothing dimmed). Toggling narrows. The kind
 // row is per-layer (powers has no signature or axiom section), so it resets
@@ -99,32 +112,23 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
           </NPopover>
         </div>
 
-        <div :class="s.kind === 'signature' ? 'ops' : 'cards'">
-          <!-- SIGNATURE: operation / relation cards -->
-          <template v-if="s.kind === 'signature'">
-            <article v-for="c in g.cards" :key="c.code" class="op" :class="{ dimmed: !matched(c, s.kind) }">
+        <div :class="isOpGroup(g) ? 'ops' : 'cards'">
+          <template v-for="c in g.cards" :key="c.code">
+            <!-- Signature cards: a glyph over a type. Selected by `c.symbol`, not by
+                 kind — a card carrying a symbol IS this shape, whatever it is called. -->
+            <article v-if="c.symbol" class="op" :class="{ dimmed: !matched(c, s.kind) }">
               <div class="op-eyebrow">{{ c.code }}</div>
               <div class="op-top">
-                <span class="op-sym"><MathExpr :latex="c.symbol!" /></span>
+                <span class="op-sym"><MathExpr :latex="c.symbol" /></span>
                 <span class="op-type"><MathExpr :latex="c.type!" /></span>
               </div>
               <div class="op-name">{{ t(c.name) }}</div>
-              <p class="op-note"><RichText :text="t(c.note!)" /></p>
+              <p v-if="c.note" class="op-note"><RichText :text="t(c.note)" /></p>
             </article>
-          </template>
 
-          <!-- PRELIMINARY: plain note cards -->
-          <template v-else-if="s.kind === 'preliminary'">
-            <article v-for="c in g.cards" :key="c.code" class="card" :class="{ dimmed: !matched(c, s.kind) }">
-              <div class="card-top"><span class="eyebrow">{{ c.code }}</span></div>
-              <div class="card-head"><h4>{{ t(c.name) }}</h4></div>
-              <p class="note"><RichText :text="t(c.note!)" /></p>
-            </article>
-          </template>
-
-          <!-- STATEMENT cards: convention / axiom / definition / theorem -->
-          <template v-else>
-            <article v-for="c in g.cards" :key="c.code" class="card" :class="{ dimmed: !matched(c, s.kind) }">
+            <!-- Every other card. Each part appears iff its field is present, so a
+                 framing card is simply one that has a note and nothing else. -->
+            <article v-else class="card" :class="{ dimmed: !matched(c, s.kind) }">
               <div class="card-top">
                 <span class="eyebrow">{{ c.code }}</span>
                 <button class="disclose" @click="toggle(open, c.code)">{{ open.has(c.code) ? 'less' : 'details' }}</button>
