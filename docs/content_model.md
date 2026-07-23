@@ -7,11 +7,13 @@ validated by `skill.schema.ts` on load. The layers:
   `src/data/layers.ts`) — **the primary reference since 2026-07-23**: the axioms,
   conventions, definitions and theorems, each traced to what it rests on.
   `fundament0 · numbers · powers · algebra`. See `docs/fundament0.md`.
-- **laws** (`laws.json`) + **conventions** (`conventions.json`) — **empty since
-  2026-07-23.** These were the original law tower; everything they held is now a card in
-  the fundament tower, and every reference from the skills side points at a card code
-  (163/163). Kept as empty stubs only because the reference view and the sweep still
-  import them. Do not add to them.
+- **~~laws + conventions~~** — **deleted 2026-07-23.** These were the original law
+  tower; everything they held is a card in the fundament tower now, and every reference
+  from the skills side (`justifiedBy`, `governedBy`, error `corrupts`, meta-pattern
+  `summarizes`) resolves to a **card code**, checked at load by `validateLayerRefs` /
+  `validateErrors` and at build by `sweep-layers`. The files, their display registries
+  (`lawGroups`/`lawKinds`/`conventionGroups`), the Zod schemas and the reference view's
+  law/convention segments all went with them; `ReferenceView` is now an errors page.
 - **errors** (`errors.json`) — the error patterns that shadow the above.
 - **meta-patterns** (`metapatterns.json`) — student-facing digests of them.
 

@@ -57,8 +57,8 @@ export const skill = z.object({
   gateway: z.boolean().default(false),  // recognising this shape triggers a transformation (familiar shapes)
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   metaPatterns: z.array(z.string()).default([]), // meta-pattern ids (metapatterns.json)
-  justifiedBy: z.array(z.string()).default([]),  // law ids (laws.json)
-  governedBy: z.array(z.string()).default([]),   // convention ids (conventions.json)
+  justifiedBy: z.array(z.string()).default([]),  // card codes (src/data/layers.ts): the law/def/theorem it rests on
+  governedBy: z.array(z.string()).default([]),   // card codes: the convention it obeys
   errors: z.array(z.string()).default([]),       // error-pattern ids — the skill's misconception catalog
   conditions: z.string().optional(),    // domain caveat, pure LaTeX
 })
@@ -124,6 +124,22 @@ export type GroupDef = z.infer<typeof groupDef>
 export const groupsFile = z.array(groupDef)
 export type GroupsFile = z.infer<typeof groupsFile>
 
+// A display registry (skillKinds.json, …) must name exactly the enum it titles:
+// no duplicate slug, no unknown slug, no missing title.
+function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[], file: string): void {
+  const slugs = registry.map(g => g.slug)
+  const dup = slugs.find((s, i) => slugs.indexOf(s) !== i)
+  if (dup) throw new Error(`Duplicate group slug "${dup}" in ${file}.`)
+  const inEnum = new Set<string>(allowed)
+  const inReg = new Set(slugs)
+  for (const s of inReg) if (!inEnum.has(s)) throw new Error(`${file} lists unknown group "${s}".`)
+  for (const s of inEnum) if (!inReg.has(s)) throw new Error(`${file} is missing a title for group "${s}".`)
+}
+
+export function validateSkillKinds(registry: GroupDef[]): void {
+  validateGroupRegistry(registry, skillKind.options, 'skillKinds.json')
+}
+
 // Cross-check: every skill's group slug must exist in skillGroups.json.
 export function validateGroupRefs(skills: Skill[], groups: GroupsFile): void {
   const slugs = new Set(groups.map(g => g.slug))
@@ -168,175 +184,6 @@ export function validateMetaPatternRefs(skills: Skill[], metas: MetaPatternsFile
   }
 }
 
-// ── Laws (layer 1) ───────────────────────────────────────────────────────────
-// The logical skeleton of school algebra (docs/content_model.md). Three
-// kinds: axiom (accepted, no links), definition (carries `basedOn` — what it
-// presupposes), theorem (carries `derivedFrom` — what proves it). `kind` is the
-// intrinsic type of the entry (mirroring the skill `kind` discriminant); the id
-// prefix mirrors it so a derivation chain reads like a proof. A separate `group`
-// (topic: signs, fractions, powers …) cross-cuts `kind` for browsing. `code` is
-// the short display code matching the doc (A1, D3, T11).
-
-export const lawKind = z.enum(['axiom', 'definition', 'theorem'])
-export type LawKind = z.infer<typeof lawKind>
-
-// Topical group — a display/navigation bucket that cross-cuts `kind` (a group
-// holds definitions and theorems alike). Deliberately NOT in the id: grouping is
-// a soft, revisable call, ids are hard identity cited everywhere. The two power
-// sub-skills (same-base / same-exponent / power-of-power) are intentionally
-// left to the derivedFrom lineage rather than a `subgroup` — one level is enough.
-export const lawGroup = z.enum([
-  'addition', 'multiplication', 'distribution',
-  'signs', 'fractions', 'powers', 'roots', 'binomials',
-])
-export type LawGroup = z.infer<typeof lawGroup>
-
-// Display registry for the law groups — titles + display order — in its own file
-// (lawGroups.json), mirroring skillGroups.json for skills. Kept separate from
-// skillGroups.json because that file is keyed by skill namespace, a different axis.
-// The slug set must equal the lawGroup enum exactly, so a title can never drift
-// from a value laws use, nor a group go titleless. `groupDef` is reused (defined
-// above): { slug, title, blurb? }, array order = display order.
-export const lawGroupsFile = z.array(groupDef)
-export type LawGroupsFile = z.infer<typeof lawGroupsFile>
-
-// Shared registry check (used by law and convention group registries): the
-// registry's slug set must equal the group enum's value set exactly — no
-// duplicate, no unknown group, no missing title — so display titles/order can
-// never drift from the values entries actually carry.
-function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[], file: string): void {
-  const slugs = registry.map(g => g.slug)
-  const dup = slugs.find((s, i) => slugs.indexOf(s) !== i)
-  if (dup) throw new Error(`Duplicate group slug "${dup}" in ${file}.`)
-  const inEnum = new Set<string>(allowed)
-  const inReg = new Set(slugs)
-  for (const s of inReg) if (!inEnum.has(s)) throw new Error(`${file} lists unknown group "${s}".`)
-  for (const s of inEnum) if (!inReg.has(s)) throw new Error(`${file} is missing a title for group "${s}".`)
-}
-
-export function validateLawGroups(registry: GroupDef[]): void {
-  validateGroupRegistry(registry, lawGroup.options, 'lawGroups.json')
-}
-
-// Kind registries — display metadata (title + blurb) for the `kind` enums, the
-// same shape as the group registries. Kinds are a closed schema enum, so the
-// slug set must equal the enum exactly; this keeps kind descriptions as data
-// (browsed by-kind, shown in info-dots) rather than hardcoded in the views.
-export function validateSkillKinds(registry: GroupDef[]): void {
-  validateGroupRegistry(registry, skillKind.options, 'skillKinds.json')
-}
-export function validateLawKinds(registry: GroupDef[]): void {
-  validateGroupRegistry(registry, lawKind.options, 'lawKinds.json')
-}
-
-export const lawDef = z.object({
-  id: z.string().regex(/^(ax|def|thm)\.[a-z0-9-]+$/),
-  code: z.string(),
-  kind: lawKind,                                // intrinsic logical type — drives the link kind + id prefix
-  group: lawGroup,                              // topical bucket, cross-cuts kind — display/navigation only
-  name: localizedString,
-  latex: z.string(),                            // the statement, KaTeX
-  conditions: z.string().optional(),            // domain condition, pure LaTeX, e.g. "b \\ne 0"; skills citing the law inherit it
-  basedOn: z.array(z.string()).default([]),     // definitions only
-  derivedFrom: z.array(z.string()).default([]), // theorems only
-  note: localizedString.optional(),
-})
-export type LawDef = z.output<typeof lawDef>
-
-const lawPrefixOfKind: Record<LawKind, string> = { axiom: 'ax', definition: 'def', theorem: 'thm' }
-
-export function validateLaws(laws: LawDef[]): void {
-  const byId = new Map(laws.map(l => [l.id, l]))
-  if (byId.size !== laws.length) throw new Error('Duplicate law id.')
-
-  for (const l of laws) {
-    if (!l.id.startsWith(lawPrefixOfKind[l.kind] + '.')) {
-      throw new Error(`Law "${l.id}" has kind "${l.kind}" but a mismatching id prefix.`)
-    }
-    if (l.kind !== 'definition' && l.basedOn.length > 0) {
-      throw new Error(`Law "${l.id}" (${l.kind}) may not carry basedOn — definitions only.`)
-    }
-    if (l.kind !== 'theorem' && l.derivedFrom.length > 0) {
-      throw new Error(`Law "${l.id}" (${l.kind}) may not carry derivedFrom — theorems only.`)
-    }
-    if (l.kind === 'theorem' && l.derivedFrom.length === 0) {
-      throw new Error(`Theorem "${l.id}" must name what it is derived from.`)
-    }
-    for (const r of [...l.basedOn, ...l.derivedFrom]) {
-      if (!byId.has(r)) throw new Error(`Law "${l.id}" links to unknown law "${r}".`)
-    }
-  }
-
-  // Acyclicity over basedOn ∪ derivedFrom (DFS, reporting the cycle path).
-  const state = new Map<string, 'visiting' | 'done'>()
-  function visit(id: string, path: string[]): void {
-    if (state.get(id) === 'done') return
-    if (state.get(id) === 'visiting') {
-      throw new Error(`Cycle in law graph: ${[...path, id].join(' → ')}`)
-    }
-    state.set(id, 'visiting')
-    const l = byId.get(id)!
-    for (const r of [...l.basedOn, ...l.derivedFrom]) visit(r, [...path, id])
-    state.set(id, 'done')
-  }
-  for (const l of laws) visit(l.id, [])
-}
-
-// ── Conventions (layer 2) ────────────────────────────────────────────────────
-// The agreed rules of the writing system — no truth value, hence no `kind`
-// (there is no axiom/definition/theorem analog for a notation rule). They carry
-// only a topical `group`: reading (what a mark means), grouping (how marks bind
-// into structure / precedence), or form (legal & canonical writing). `code` =
-// N1..N12.
-
-export const conventionGroup = z.enum(['reading', 'grouping', 'form'])
-export type ConventionGroup = z.infer<typeof conventionGroup>
-
-// Display registry for the convention groups — titles + display order + blurbs —
-// its own file (conventionGroups.json), parallel to lawGroups.json. Slug set must
-// equal the conventionGroup enum exactly (see validateGroupRegistry).
-export const conventionGroupsFile = z.array(groupDef)
-export type ConventionGroupsFile = z.infer<typeof conventionGroupsFile>
-
-export function validateConventionGroups(registry: GroupDef[]): void {
-  validateGroupRegistry(registry, conventionGroup.options, 'conventionGroups.json')
-}
-
-export const conventionDef = z.object({
-  id: z.string().regex(/^conv\.[a-z0-9-]+$/),
-  code: z.string(),
-  group: conventionGroup,
-  name: localizedString,
-  text: localizedString,
-})
-export type ConventionDef = z.output<typeof conventionDef>
-
-// Ids and display codes must both be unique (mirrors validateLaws/validateErrors).
-// Codes carry a skill suffix when one convention is split into tiers — e.g.
-// precedence → N5a (powers bind first) + N5b (point before line) — so the code
-// uniqueness check is what catches a fat-fingered duplicate suffix.
-export function validateConventions(conventions: ConventionDef[]): void {
-  const seenId = new Set<string>()
-  const seenCode = new Set<string>()
-  for (const c of conventions) {
-    if (seenId.has(c.id)) throw new Error(`Duplicate convention id "${c.id}".`)
-    seenId.add(c.id)
-    if (seenCode.has(c.code)) throw new Error(`Duplicate convention code "${c.code}".`)
-    seenCode.add(c.code)
-  }
-}
-
-// ── Error patterns ───────────────────────────────────────────────────────────
-// First-class citizens of the error space: ONE addressable list that pitfalls
-// cite, so drill data can be analyzed per error pattern from day one. Three
-// kinds (each `corrupts` a different layer; the kind's leading word IS its id
-// prefix — anti-law→anti, misreading→mis, salience→sal):
-//   anti-law   (anti.) — corrupts a true LAW it distorts/over-generalizes
-//   misreading (mis.)  — corrupts a CONVENTION it violates
-//   salience   (sal.)  — corrupts a METAPATTERN: parsing by what is visually
-//                        loudest instead of by structure (the negative of a
-//                        perceptual heuristic, e.g. sal.loudest-op-wins is the
-//                        failure of meta.dominant-op-last).
 // `code` = Ā1..Ā5 / R1..R15 / S1..
 
 export const errorKind = z.enum(['anti-law', 'misreading', 'salience'])
@@ -356,12 +203,16 @@ export type ErrorDef = z.output<typeof errorDef>
 const errorPrefixOfKind: Record<ErrorKind, string> =
   { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
 
+// `cardCodes` is the set of fundament-tower card codes (src/data/layers.ts). Since
+// 2026-07-23 the legacy laws.json / conventions.json are gone and every error's
+// `corrupts` target is a card there — an anti-law corrupts a law card, a misreading
+// a convention card — except salience, which still points at a meta-pattern.
 export function validateErrors(
-  errors: ErrorDef[], laws: LawDef[], conventions: ConventionDef[], metas: MetaPatternsFile,
+  errors: ErrorDef[], cardCodes: Set<string>, metas: MetaPatternsFile,
 ): void {
   const poolOfKind: Record<ErrorKind, { ids: Set<string>; name: string }> = {
-    'anti-law': { ids: new Set(laws.map(l => l.id)), name: 'law' },
-    misreading: { ids: new Set(conventions.map(c => c.id)), name: 'convention' },
+    'anti-law': { ids: cardCodes, name: 'law card' },
+    misreading: { ids: cardCodes, name: 'convention card' },
     salience: { ids: new Set(metas.map(m => m.id)), name: 'meta-pattern' },
   }
   const seen = new Set<string>()
@@ -379,23 +230,22 @@ export function validateErrors(
 }
 
 // ── Cross-layer references from skills and meta-patterns ──────────────────
-// `justifiedBy` → laws; `governedBy` → conventions; `errors` → error patterns;
-// meta-pattern `summarizes` → any of the three.
-
+// The bridge into the fundament tower: `justifiedBy` and `governedBy` are now
+// card codes (was law / convention ids), `errors` → error patterns, and a
+// meta-pattern `summarizes` a card code or an error id. `cardCodes` comes from
+// src/data/layers.ts. This is the runtime twin of scripts/sweep-layers.mjs.
 export function validateLayerRefs(
   skills: Skill[], metas: MetaPatternsFile,
-  laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
+  cardCodes: Set<string>, errors: ErrorDef[],
 ): void {
-  const lawIds = new Set(laws.map(l => l.id))
-  const convIds = new Set(conventions.map(c => c.id))
   const errIds = new Set(errors.map(e => e.id))
 
   for (const f of skills) {
     for (const r of f.justifiedBy) {
-      if (!lawIds.has(r)) throw new Error(`Skill "${f.id}" is justifiedBy unknown law "${r}".`)
+      if (!cardCodes.has(r)) throw new Error(`Skill "${f.id}" is justifiedBy unknown card "${r}".`)
     }
     for (const r of f.governedBy) {
-      if (!convIds.has(r)) throw new Error(`Skill "${f.id}" references unknown convention "${r}".`)
+      if (!cardCodes.has(r)) throw new Error(`Skill "${f.id}" governedBy unknown card "${r}".`)
     }
     for (const r of f.errors) {
       if (!errIds.has(r)) throw new Error(`Skill "${f.id}" lists unknown error pattern "${r}".`)
@@ -403,7 +253,7 @@ export function validateLayerRefs(
   }
   for (const m of metas) {
     for (const r of m.summarizes) {
-      if (!lawIds.has(r) && !convIds.has(r) && !errIds.has(r)) {
+      if (!cardCodes.has(r) && !errIds.has(r)) {
         throw new Error(`Meta-pattern ${m.id} summarizes unknown id "${r}".`)
       }
     }
@@ -417,8 +267,7 @@ export function validateLayerRefs(
 // error — so this warns, it does not throw.
 
 export function auditCoverage(
-  skills: Skill[], metas: MetaPatternsFile,
-  laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
+  skills: Skill[], metas: MetaPatternsFile, errors: ErrorDef[],
 ): string[] {
   const lines: string[] = []
   const untagged = skills.filter(f => f.justifiedBy.length === 0 && f.governedBy.length === 0)
@@ -441,15 +290,11 @@ export function auditCoverage(
       lines.push(`"${f.id}" declares meta-patterns its coordinates don't support: ${unsupported.join(', ')}`)
     }
   }
-  const citedLaws = new Set(skills.flatMap(f => f.justifiedBy))
-  const citedConvs = new Set(skills.flatMap(f => f.governedBy))
   const citedErrs = new Set(skills.flatMap(f => f.errors))
   const uncited = (kind: string, ids: string[], cited: Set<string>) => {
     const free = ids.filter(id => !cited.has(id))
     if (free.length > 0) lines.push(`${kind} cited by no skill: ${free.join(', ')}`)
   }
-  uncited('Laws', laws.filter(l => l.kind !== 'axiom').map(l => l.id), citedLaws)  // axioms may be reached only via theorems
-  uncited('Conventions', conventions.map(c => c.id), citedConvs)
   uncited('Error patterns', errors.map(e => e.id), citedErrs)
 
   // Prose format contract: text with inline $…$ KaTeX. Improvised unicode
@@ -460,8 +305,6 @@ export function auditCoverage(
   const countDirty = (fields: string[][]) => fields.filter(f => f.some(s => unicodeMath.test(s))).length
   const dirty = {
     'skill notes': countDirty(skills.map(f => locVals(f.note))),
-    'law notes': countDirty(laws.filter(l => l.note).map(l => locVals(l.note))),
-    'convention texts': countDirty(conventions.map(c => locVals(c.text))),
     'error texts': countDirty(errors.map(e => locVals(e.text))),
     'meta-pattern texts': countDirty(metas.map(m => locVals(m.text))),
   }
@@ -513,8 +356,7 @@ function proseMath(ls?: LocalizedString): string[] {
 }
 
 export function validateLatexCompiles(
-  skills: Skill[], drills: Drill[], metas: MetaPatternsFile,
-  laws: LawDef[], conventions: ConventionDef[], errors: ErrorDef[],
+  skills: Skill[], drills: Drill[], metas: MetaPatternsFile, errors: ErrorDef[],
 ): void {
   const failures: string[] = []
   function check(owner: string, field: string, latex: string): void {
@@ -549,12 +391,6 @@ export function validateLatexCompiles(
       })
     }
   }
-  for (const l of laws) {
-    check(l.id, 'latex', l.latex)
-    if (l.conditions) check(l.id, 'conditions', l.conditions)
-    proseMath(l.note).forEach(m => check(l.id, 'note', m))
-  }
-  for (const c of conventions) proseMath(c.text).forEach(m => check(c.id, 'text', m))
   for (const e of errors) {
     e.instances.forEach((x, i) => check(e.id, `instances[${i}]`, x))
     proseMath(e.text).forEach(m => check(e.id, 'text', m))
