@@ -443,6 +443,31 @@
               "note": {"en": "Same shape as th.pow-laws-int and the same moral: one law was demanded, all three come back. But notice what the price was this time. The $\\mathbb{Z}$ extension cost nothing, because the elements were already there. This one cost an axiom, and it bought a smaller domain: the laws now hold only for positive bases, where on $\\mathbb{Z}$ they held for every non-zero base. The tower has been trading domain for reach the whole way up, and this is the first layer where the trade is visible on the card.", "de": "Dieselbe Gestalt wie th.pow-laws-int und dieselbe Moral: verlangt wurde ein Gesetz, zurück kommen alle drei. Man beachte aber den Preis diesmal. Die Erweiterung auf $\\mathbb{Z}$ kostete nichts, denn die Elemente waren schon da. Diese kostete ein Axiom und kaufte einen kleineren Bereich: die Gesetze gelten jetzt nur für positive Basen, während sie auf $\\mathbb{Z}$ für jede von null verschiedene Basis galten. Der Turm tauscht den ganzen Weg hinauf Bereich gegen Reichweite, und hier ist der Tausch zum ersten Mal auf der Karte sichtbar."}
             },
             {
+              "code": "th.root-power-order",
+              "concerns": [
+                "mul",
+                "completeness"
+              ],
+              "name": {
+                "en": "Root and power commute",
+                "de": "Wurzel und Potenz sind vertauschbar"
+              },
+              "latex": "\\left( \\sqrt[n]{a} \\right)^{m} \\;=\\; \\sqrt[n]{a^{m}}",
+              "forall": "a \\in \\mathbb{R},\\ m \\in \\mathbb{Z},\\ n \\in \\mathbb{N}",
+              "cond": "a > 0",
+              "derivation": "\\left( a^{1/n} \\right)^{m} = a^{\\frac{1}{n} \\cdot m} = a^{m \\cdot \\frac{1}{n}} = \\left( a^{m} \\right)^{1/n}",
+              "derivedFrom": [
+                "def.pow-rat",
+                "th.pow-laws-rat",
+                "ax.mul-commutative",
+                "ix.root"
+              ],
+              "note": {
+                "en": "In radical notation this looks like a fact relating two different operations, and it is worth seeing that it is not. Both sides are powers, pl.of-power multiplies the exponents, and multiplication of exponents commutes by ax.mul-commutative, so the order simply cannot matter. The whole content of the card is that last sentence, and it is invisible while the radical is worn. Practically the two sides differ in effort rather than in value: $\\left(\\sqrt[3]{8}\\right)^{2} = 2^{2} = 4$ is a line of mental arithmetic, while $\\sqrt[3]{8^{2}} = \\sqrt[3]{64}$ asks for a larger number first. Take the root before the power whenever the root comes out whole.",
+                "de": "In der Wurzelschreibweise sieht das aus wie eine Tatsache über zwei verschiedene Operationen, und es lohnt sich zu sehen, dass es keine ist. Beide Seiten sind Potenzen, pl.of-power multipliziert die Exponenten, und die Multiplikation der Exponenten ist nach ax.mul-commutative vertauschbar, also kann die Reihenfolge gar nicht zählen. Der ganze Inhalt der Karte ist dieser letzte Satz, und er ist unsichtbar, solange die Wurzel getragen wird. Praktisch unterscheiden sich die beiden Seiten im Aufwand und nicht im Wert: $\\left(\\sqrt[3]{8}\\right)^{2} = 2^{2} = 4$ ist eine Zeile Kopfrechnen, während $\\sqrt[3]{8^{2}} = \\sqrt[3]{64}$ zuerst eine grössere Zahl verlangt. Man ziehe die Wurzel vor der Potenz, wann immer die Wurzel aufgeht."
+              }
+            },
+            {
               "code": "th.root-laws",
               "concerns": [
                 "mul",

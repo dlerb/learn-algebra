@@ -13,7 +13,7 @@
       "meta.juxtaposition"
     ],
     "justifiedBy": [
-      "thm.collect-like-terms"
+      "th.collect-like-terms"
     ],
     "governedBy": [
       "ix.juxtaposition"
@@ -36,7 +36,7 @@
       "meta.juxtaposition"
     ],
     "justifiedBy": [
-      "thm.collect-like-terms"
+      "th.collect-like-terms"
     ],
     "governedBy": [
       "ix.juxtaposition"
@@ -57,7 +57,7 @@
       "equivalence.number-plus-term"
     ],
     "justifiedBy": [
-      "thm.collect-like-terms"
+      "th.collect-like-terms"
     ],
     "errors": [
       "anti.conjoining"

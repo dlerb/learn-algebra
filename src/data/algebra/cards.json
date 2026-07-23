@@ -32,6 +32,89 @@
       ]
     },
 
+        {
+      "slug": "distributing",
+      "kind": "theorem",
+      "title": {"en": "Distributing and collecting", "de": "Verteilen und Zusammenfassen"},
+      "note": {"en": "One axiom, read in both directions. Forwards, with $-1$ as the factor, it takes a minus over a bracket; backwards it collects what shares a factor. Nothing else is involved, and the two commonest slips in school algebra are a forwards move stopped halfway and a backwards move made where there is no common factor.", "de": "Ein Axiom, in beide Richtungen gelesen. Vorwärts, mit $-1$ als Faktor, trägt es ein Minus über eine Klammer; rückwärts fasst es zusammen, was einen Faktor teilt. Mehr ist nicht im Spiel, und die beiden häufigsten Pannen der Schulalgebra sind ein auf halbem Weg abgebrochener Vorwärtszug und ein Rückwärtszug dort, wo es keinen gemeinsamen Faktor gibt."},
+      "groups": [
+        {
+          "slug": "distributing",
+          "cards": [
+            {
+              "code": "th.minus-over-sum",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "A minus in front of a bracket is a factor",
+                "de": "Ein Minus vor der Klammer ist ein Faktor"
+              },
+              "latex": "-(a + b) \\;=\\; -a - b",
+              "forall": "a, b \\in \\mathbb{R}",
+              "derivation": "-(a+b) = (-1)(a+b) = (-1)a + (-1)b = (-a) + (-b) = -a - b",
+              "derivedFrom": [
+                "th.negative-one-times",
+                "ax.distributivity",
+                "def.sub"
+              ],
+              "note": {
+                "en": "There is no rule here that is not already ax.distributivity. th.negative-one-times says the minus in front of the bracket *is* the factor $-1$, so distributing it is the same move as $3(a+b) = 3a + 3b$, with $3$ replaced by $-1$. That is worth insisting on, because the error it prevents is one of the most common in school algebra and it is a *partial* application: the minus reaches the first summand and stops, giving $-a + b$. Nobody stops halfway through $3(a+b)$, and the reason is that there the factor is visible. The last step is def.sub read backwards: $(-a) + (-b)$ is written $-a - b$.",
+                "de": "Hier steht keine Regel, die nicht schon ax.distributivity wäre. th.negative-one-times sagt, das Minus vor der Klammer *sei* der Faktor $-1$; es zu verteilen ist also derselbe Zug wie $3(a+b) = 3a + 3b$, nur mit $-1$ statt $3$. Darauf lohnt es sich zu bestehen, denn der Fehler, den es verhindert, gehört zu den häufigsten der Schulalgebra und ist eine *halbe* Anwendung: das Minus erreicht den ersten Summanden und hört auf, was $-a + b$ ergibt. Bei $3(a+b)$ hört niemand auf halbem Weg auf, und der Grund ist, dass der Faktor dort sichtbar ist. Der letzte Schritt ist def.sub rückwärts gelesen: $(-a) + (-b)$ schreibt man $-a - b$."
+              }
+            },
+            {
+              "code": "th.subtract-a-sum",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "Subtracting a sum, and subtracting a difference",
+                "de": "Eine Summe abziehen, und eine Differenz abziehen"
+              },
+              "latex": "a - (b + c) = a - b - c \\qquad a - (b - c) = a - b + c",
+              "forall": "a, b, c \\in \\mathbb{R}",
+              "derivation": "\\begin{aligned} a - (b+c) &= a + \\bigl(-(b+c)\\bigr) = a + (-b - c) = a - b - c \\\\[2pt] a - (b-c) &= a + \\bigl(-(b + (-c))\\bigr) = a + (-b) + \\bigl(-(-c)\\bigr) = a - b + c \\end{aligned}",
+              "derivedFrom": [
+                "def.sub",
+                "th.minus-over-sum",
+                "th.minus-times-minus"
+              ],
+              "note": {
+                "en": "The shape th.minus-over-sum is actually met in, and the two lines are put side by side on purpose. They look almost identical and end differently, which is exactly the situation in which a remembered rule fails and a mechanism does not. Both are the same two steps: def.sub turns the subtraction into adding the opposite, then the $-1$ is distributed over everything inside. The second line ends in $+c$ because the inner term was already $-c$, and th.minus-times-minus turns $-(-c)$ into $c$. The classic error, $a - (b+c) = a - b + c$, is the first line answered with the second line's ending: the minus reached $b$ and then something else happened to $c$.",
+                "de": "Die Gestalt, in der th.minus-over-sum tatsächlich auftritt, und die beiden Zeilen stehen mit Absicht nebeneinander. Sie sehen fast gleich aus und enden verschieden, und genau in dieser Lage versagt eine gemerkte Regel und ein Mechanismus nicht. Beide sind dieselben zwei Schritte: def.sub macht aus dem Abziehen ein Addieren des Gegenteils, dann wird die $-1$ über alles darin verteilt. Die zweite Zeile endet auf $+c$, weil der innere Term schon $-c$ war und th.minus-times-minus aus $-(-c)$ ein $c$ macht. Der klassische Fehler $a - (b+c) = a - b + c$ ist die erste Zeile mit dem Ende der zweiten: das Minus erreichte $b$, und mit $c$ geschah dann etwas anderes."
+              }
+            },
+            {
+              "code": "th.collect-like-terms",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "Collecting is distributivity backwards",
+                "de": "Zusammenfassen ist das Distributivgesetz rückwärts"
+              },
+              "latex": "m \\cdot a + n \\cdot a \\;=\\; (m + n) \\cdot a",
+              "forall": "a, m, n \\in \\mathbb{R}",
+              "derivation": "(m+n) \\cdot a = a \\cdot (m+n) = a \\cdot m + a \\cdot n = m \\cdot a + n \\cdot a",
+              "derivedFrom": [
+                "ax.distributivity",
+                "ax.mul-commutative",
+                "ix.invisible-one"
+              ],
+              "note": {
+                "en": "Read the axiom right to left and this is it; there is no separate law of like terms. That also answers a question students are rarely given an answer to, which is what makes two terms *alike*: they are alike when they share a factor, because a shared factor is the only thing distributivity can pull out. So $3a + 2b$ does not collect, not because the letters differ but because there is nothing common to extract. Note ix.invisible-one doing its work here: $a + 2a$ is $1 \\cdot a + 2 \\cdot a = 3a$, and answering $2a$ is the standard slip, made by not seeing a factor that was never written.",
+                "de": "Das Axiom von rechts nach links gelesen, und mehr ist es nicht; ein eigenes Gesetz über gleichartige Terme gibt es nicht. Damit ist auch eine Frage beantwortet, auf die Schülerinnen selten eine Antwort bekommen, nämlich was zwei Terme *gleichartig* macht: sie sind es, wenn sie einen Faktor teilen, denn ein gemeinsamer Faktor ist das Einzige, was das Distributivgesetz herausziehen kann. $3a + 2b$ lässt sich also nicht zusammenfassen, nicht weil die Buchstaben verschieden sind, sondern weil es nichts Gemeinsames herauszuziehen gibt. Man beachte ix.invisible-one bei der Arbeit: $a + 2a$ ist $1 \\cdot a + 2 \\cdot a = 3a$, und die übliche Panne ist die Antwort $2a$, aus dem Nichtsehen eines nie geschriebenen Faktors."
+              }
+            }
+          ]
+        }
+      ]
+    },
+
     {
       "slug": "binomials",
       "kind": "theorem",
@@ -60,7 +143,8 @@
                 "ax.mul-commutative",
                 "ax.add-associative",
                 "ix.invisible-one",
-                "def.numeral"
+                "def.numeral",
+                "th.collect-like-terms"
               ],
               "note": {
                 "en": "The card pl.no-sum-law leaves owed. That one says what does not happen; this one says what does, and without it a student is told only that the obvious move fails. Nothing new is assumed. The expansion is ax.distributivity twice, once to split the left factor and once inside each half, and everything after that is collecting. The middle term is the whole content: $ab$ and $ba$ are the same element by ax.mul-commutative, so the two mixed products fall together into one term, and the coefficient $2$ is counting them. That is the term students lose, and it is lost by expanding only the two 'matching' pairs. The last step is the invisible one of ix.invisible-one made visible: $ab + ab = 1 \\cdot ab + 1 \\cdot ab = (1+1) \\cdot ab$. Read the line right to left and it is the first factoring pattern, the same fact in the harder direction.",

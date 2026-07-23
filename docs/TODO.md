@@ -182,11 +182,10 @@ built earlier that day in `powers` **moved up**: `th.difference-of-squares` is n
 statement about exponents, so the binomials could not stay filed under `aⁿ`. The
 adjacency with `pl.no-sum-law` survives as a forward pointer in its note.
 
-**Cluster 3 — minus over sums. STILL OPEN, and it is all that is left.** One line each
-from `th.negative-one-times` + `ax.distributivity`; derivable today, but a skill needs
-a card to point at. `thm.minus-over-sum` · `thm.subtract-a-sum` ·
-`thm.collect-like-terms` · `thm.root-power-order`. (`thm.root-of-product` was absorbed
-into `th.root-laws`.)
+**Cluster 3 — minus over sums and collecting. ✅ DONE 2026-07-23.** `th.minus-over-sum`,
+`th.subtract-a-sum`, `th.collect-like-terms` are algebra's new `distributing` section;
+`th.root-power-order` went to `powers` (ℚ act), since both its sides are powers. **This
+empties `laws.json` — the bridge is 163/163 into the tower, zero legacy.**
 
 ⭐ **DONE 2026-07-23.** The tower had `pl.no-sum-law` — *there is no law for sums* —
 and nothing saying what does happen, so students were told only that the obvious move
