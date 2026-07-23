@@ -34,6 +34,22 @@ The adjacency is kept as a **forward pointer** in `pl.no-sum-law`'s note — hou
 already, since the ℕ act's note defers `a⁰` and fractional exponents to "the two
 layers above".
 
+## Distributing and collecting — the axiom in both directions
+
+`th.minus-over-sum`, `th.subtract-a-sum`, `th.collect-like-terms`. One axiom read two
+ways. **Forwards, with `−1` as the factor** (`th.negative-one-times`), it carries a
+minus over a bracket — `−(a+b) = −a−b` — and the note insists this is the *same move*
+as `3(a+b) = 3a+3b`, because the classic error is a forwards move stopped halfway
+(`−a+b`), which nobody makes when the factor is visible. `th.subtract-a-sum` is the
+shape that error is actually met in: `a−(b+c)` and `a−(b−c)` side by side, looking
+alike and ending differently, the situation where a remembered rule fails and a
+mechanism doesn't. **Backwards** it collects: `th.collect-like-terms` is
+`ax.distributivity` right-to-left, and it answers a question students are rarely
+given — what makes two terms *alike*: a shared factor, because that is the only thing
+distributivity can pull out. `3a+2b` doesn't collect for lack of anything common to
+extract, not because the letters differ. This section sits **before** the binomials,
+which use its collecting step.
+
 ## The binomials — three cards, one mechanism
 
 Each expands a product of two sums with `ax.distributivity` and then collects. All
@@ -115,8 +131,22 @@ about the same thing appearing above and below. Unfolded by `def.div` it **is**
 hands out an inverse for every element except `0`, so the condition is the reach of the
 axiom rather than caution.
 
-## Not built
+## The legacy files are empty (2026-07-23)
 
-`thm.minus-over-sum`, `thm.subtract-a-sum`, `thm.collect-like-terms`,
-`thm.root-power-order` — all that is left of `laws.json`. **`conventions.json` is
-empty**: every convention it held is now a card.
+`laws.json` and `conventions.json` are now `[]`. Every axiom, definition, theorem and
+convention they once held is a card in the tower, and every `governedBy` /
+`justifiedBy` / `corrupts` reference from the skills side resolves to a card code —
+**163 of 163, zero legacy.** `th.root-power-order` was the last, and it went to
+`powers` (the ℚ act) rather than here: in radical notation it *looks* like a fact
+relating two operations, but both sides are powers and `ax.mul-commutative` on the
+exponents is the whole content, so it belongs with the other power laws.
+
+`ReferenceView` hides the Laws and Conventions segments while their files are empty and
+opens on Errors, so nothing needs deleting to keep the page working. The files are kept
+as empty stubs rather than removed, because the reference view and the sweep both still
+import them; a later pass can delete them and the imports together.
+
+What the tower does **not** yet have is no longer a *file* — it is a to-do: the
+`numbers` layer's decimal / special-numbers items (`docs/TODO.md`), and whatever school
+algebra lies beyond identities and fractions (equations, functions), which was never in
+`laws.json` to begin with.
