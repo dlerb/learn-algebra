@@ -30,31 +30,6 @@
     },
 
     {
-      "slug": "notation",
-      "kind": "convention",
-      "title": {"en": "Notation", "de": "Schreibweise"},
-      "groups": [
-        {
-          "slug": "writing",
-          "title": {"en": "Writing", "de": "Schreiben"},
-          "cards": [
-            {
-              "code": "ix.juxtaposition",
-              "concerns": ["mul"],
-              "name": { "en": "Why 3a is safe", "de": "Warum 3a unbedenklich ist" },
-              "latex": "\\underbrace{a + a + a}_{3 \\text{ copies}} \\;=\\; 3 \\cdot a \\;=:\\; 3a",
-              "note": {
-                "en": "ix.coefficient-front already asks for the coefficient in front and the dot dropped. This card is what it rests on. There are two things $3a$ could mean, three copies of $a$ added and the product $3 \\cdot a$, and th.multiple-is-product says they are the same element, so dropping the dot cannot lose information. A notation may be ambiguous exactly when its readings agree; ix.coefficient-front is a preference, this is the licence. Two limits. Juxtaposition is for a numeral followed by a letter or a bracket, $3a$ and $2(x+1)$; it is not available between numerals, because $34$ is already the name of another element, and no proof rescues a collision of names. And the licence says which multiplication is meant, not how tightly it binds: precedence is still ix.precedence's business.",
-                "de": "ix.coefficient-front verlangt bereits den Koeffizienten nach vorne und den Punkt weg. Diese Karte ist das, worauf das ruht. $3a$ kann zweierlei heissen, drei addierte Kopien von $a$ oder das Produkt $3 \\cdot a$, und th.multiple-is-product sagt, dass beides dasselbe Element ist; das Weglassen des Punktes kann also keine Information kosten. Eine Schreibweise darf genau dann mehrdeutig sein, wenn ihre Lesarten übereinstimmen; ix.coefficient-front ist die Vorliebe, dies ist die Erlaubnis. Zwei Grenzen. Das Nebeneinanderschreiben gilt für eine Zahl vor einem Buchstaben oder einer Klammer, $3a$ und $2(x+1)$; zwischen zwei Zahlen gilt es nicht, denn $34$ ist bereits der Name eines anderen Elements, und kein Beweis rettet einen Zusammenstoss von Namen. Und die Erlaubnis sagt, welche Multiplikation gemeint ist, nicht wie stark sie bindet: die Bindung bleibt Sache von ix.precedence."
-              },
-              "basedOn": ["th.multiple-is-product", "ix.coefficient-front", "op.mul"]
-            }
-          ]
-        }
-      ]
-    },
-
-    {
       "slug": "definitions",
       "kind": "definition",
       "title": {"en": "Definitions", "de": "Definitionen"},
@@ -251,6 +226,31 @@
                 "en": "The length is drawable, which is what makes the result startling: the diagonal of the square on $1$ is right there, constructible with ruler and compass, and no ratio of counting elements names it. Where the picture stops: the diagram shows that the *quantity* exists geometrically, and says nothing at all about whether the arithmetic has a name for it. The Greeks had the diagram and drew the opposite conclusion, calling such pairs incommensurable rather than admitting a new kind of number.",
                 "de": "Die Länge lässt sich zeichnen, und genau das macht das Ergebnis erstaunlich: die Diagonale des Quadrats über $1$ ist da, mit Zirkel und Lineal konstruierbar, und kein Verhältnis von Zählelementen benennt sie. Wo das Bild aufhört: die Zeichnung zeigt, dass die *Grösse* geometrisch existiert, und sagt gar nichts darüber, ob die Arithmetik einen Namen dafür hat. Die Griechen hatten die Zeichnung und zogen den umgekehrten Schluss: sie nannten solche Paare inkommensurabel, statt eine neue Art von Zahl zuzulassen."
               }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "slug": "notation",
+      "kind": "convention",
+      "title": {"en": "Notation", "de": "Schreibweise"},
+      "groups": [
+        {
+          "slug": "writing",
+          "title": {"en": "Writing", "de": "Schreiben"},
+          "cards": [
+            {
+              "code": "ix.juxtaposition",
+              "concerns": ["mul"],
+              "name": { "en": "Why 3a is safe", "de": "Warum 3a unbedenklich ist" },
+              "latex": "\\underbrace{a + a + a}_{3 \\text{ copies}} \\;=\\; 3 \\cdot a \\;=:\\; 3a",
+              "note": {
+                "en": "ix.coefficient-front already asks for the coefficient in front and the dot dropped. This card is what it rests on. There are two things $3a$ could mean, three copies of $a$ added and the product $3 \\cdot a$, and th.multiple-is-product says they are the same element, so dropping the dot cannot lose information. A notation may be ambiguous exactly when its readings agree; ix.coefficient-front is a preference, this is the licence. Two limits. Juxtaposition is for a numeral followed by a letter or a bracket, $3a$ and $2(x+1)$; it is not available between numerals, because $34$ is already the name of another element, and no proof rescues a collision of names. And the licence says which multiplication is meant, not how tightly it binds: precedence is still ix.precedence's business.",
+                "de": "ix.coefficient-front verlangt bereits den Koeffizienten nach vorne und den Punkt weg. Diese Karte ist das, worauf das ruht. $3a$ kann zweierlei heissen, drei addierte Kopien von $a$ oder das Produkt $3 \\cdot a$, und th.multiple-is-product sagt, dass beides dasselbe Element ist; das Weglassen des Punktes kann also keine Information kosten. Eine Schreibweise darf genau dann mehrdeutig sein, wenn ihre Lesarten übereinstimmen; ix.coefficient-front ist die Vorliebe, dies ist die Erlaubnis. Zwei Grenzen. Das Nebeneinanderschreiben gilt für eine Zahl vor einem Buchstaben oder einer Klammer, $3a$ und $2(x+1)$; zwischen zwei Zahlen gilt es nicht, denn $34$ ist bereits der Name eines anderen Elements, und kein Beweis rettet einen Zusammenstoss von Namen. Und die Erlaubnis sagt, welche Multiplikation gemeint ist, nicht wie stark sie bindet: die Bindung bleibt Sache von ix.precedence."
+              },
+              "basedOn": ["th.multiple-is-product", "ix.coefficient-front", "op.mul"]
             }
           ]
         }
