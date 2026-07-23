@@ -6,7 +6,7 @@ validated by `skill.schema.ts` on load. The layers:
 - **the fundament tower** (`src/data/<layer>/cards.json`, composed by
   `src/data/layers.ts`) — **the primary reference since 2026-07-23**: the axioms,
   conventions, definitions and theorems, each traced to what it rests on.
-  `fundament0 · numbers · powers · algebra`. See `docs/fundament0.md`.
+  `fundamentals · numbers · powers · algebra`. See `docs/fundamentals.md`.
 - **~~laws + conventions~~** — **deleted 2026-07-23.** These were the original law
   tower; everything they held is a card in the fundament tower now, and every reference
   from the skills side (`justifiedBy`, `governedBy`, error `corrupts`, meta-pattern

@@ -4,11 +4,11 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## fundament0 + naturals — current thread (2026-07-22)
+## fundamentals + naturals — current thread (2026-07-22)
 
 Isolated clean rebuild of the field-axioms bedrock, separate from the `laws.json`
-tower. Full rationale, structure, and design decisions in **`docs/fundament0.md`**.
-Built and live at `/fundament0`: now the **full complete ordered field ℝ** (tag
+tower. Full rationale, structure, and design decisions in **`docs/fundamentals.md`**.
+Built and live at `/fundamentals`: now the **full complete ordered field ℝ** (tag
 `≙ ℝ`) — operations + relations (`+ · = <`) + infix convention + field/order/
 completeness axioms + definitions + theorems, with a collapsed per-axiom
 `intuition` field.
@@ -16,7 +16,7 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
 **Thread state:**
 - [x] ~~Refine/extend the intuition layer.~~ **2026-07-22: every `intuition` that
   offers a *model* now names its own stopping point** (where the picture fails), in
-  both layers. Rationale + the list in `docs/fundament0.md` (Design decisions).
+  both layers. Rationale + the list in `docs/fundamentals.md` (Design decisions).
 - [ ] **School-facing simplification of the fundament (user's instinct, 2026-07-22).**
   The layers are deliberately deep and none of it is student-facing as written. The
   hypothesis to test later: **most of this can be collapsed for school use while
@@ -54,11 +54,11 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   1867, a *method*, neither axiom nor theorem) → `def.int` · `def.pow-zero`
   (`a⁰ := 1`, forced; `0⁰` left undefined *and explained*) · `def.pow-neg`
   (`a⁻ⁿ := (aⁿ)⁻¹`, existence via `(a⁻¹)ⁿ` and `pl.of-product`) → `th.inverse-is-power`
-  (fundament0's atomic `a⁻¹` notation is retroactively justified — closes the
+  (fundamentals's atomic `a⁻¹` notation is retroactively justified — closes the
   exponent-`-1` backlog item) · `th.pow-laws-int` (all three laws survive on ℤ).
   Payoff: **three species of "convention" side by side** — arbitrary (`0 ∈ ℕ`, `0⁰`),
   determined (`a⁰ = 1`), proved (the laws on ℤ).
-- [x] ~~fundament0 `th.zero-product` **zero product**~~ (`ab = 0 ⇒ a = 0 or b = 0`) — added
+- [x] ~~fundamentals `th.zero-product` **zero product**~~ (`ab = 0 ⇒ a = 0 or b = 0`) — added
   2026-07-22 alongside the ℤ layer. Converse of `th.zero-times`, one line from `ax.multiplicative-inverse`, and the
   basis of solving by factoring. Its stopping point: a property of *fields*, not of
   multiplication (`2·3 = 0` mod `6`).
@@ -78,7 +78,7 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   `th.root-exists` (**the first and only use of `ax.completeness`** — uniqueness is order,
   existence is completeness) · `th.principal-root` · `th.exponent-well-defined` (ℚ is
   the first layer with non-unique exponent *names*) · `th.pow-laws-rat` ·
-  `th.base-fence`. Added `def.abs` to fundament0 for `√(x²) = |x|`.
+  `th.base-fence`. Added `def.abs` to fundamentals for `√(x²) = |x|`.
   **The powers tower is complete: ℕ builds, ℤ finds, ℚ must be given.**
 - [ ] **ℝ layer — real exponents (sketched 2026-07-22, not started; build LAST).**
   Small, ~5 cards, and worth it mainly to stop the fundament ending on a dangling
@@ -125,7 +125,7 @@ completeness axioms + definitions + theorems, with a collapsed per-axiom
   which the tower already owns. Fix whether or not the ℝ layer is built.
 
 **Untangling backlog** — the conflations that make algebra hard (a concept living
-in several layers at once; detail in `docs/fundament0.md`):
+in several layers at once; detail in `docs/fundamentals.md`):
 - [ ] Equality **number vs variable** (`a=a` trivial for a number, a universal claim
   for a variable; symmetry near-empty for numbers, load-bearing for variables).
 - [x] ~~`3a = a+a+a` (definition) vs `3·a` (theorem) vs "three copies" (intuition).~~
@@ -144,12 +144,12 @@ in several layers at once; detail in `docs/fundament0.md`):
   teaching stance in the card's `intuition`.
 - [~] Powers & roots — the *theorem* half is built (natural exponents, by induction,
   plus `pl.no-sum-law`); definition-by-permanence (ℤ) and existence (ℚ, roots) remain.
-- [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundament0) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable.
+- [ ] The exponent `-1`/`-n` — `b^{-1}` inverse-*notation* (fundamentals) vs `a^{-1}` the literal-`-1` power vs `a^{-n}` operator-on-variable.
 - [ ] Inverse-notation asymmetry — unary-minus *prefix* for `+`, no prefix for `·` (postfix `a^{-1}`). `a^{-1}` (primitive) vs `1/a` (derived, needs division); reserve "reciprocal" for `1/a`.
 - [x] ~~Sign vs unary minus — "sign/Vorzeichen" = literal's sign only.~~ **Superseded
   2026-07-17 (too weak: `-2`'s minus is the unary *operator* too), then RETIRED
   2026-07-18: the word "sign" is dropped from the data entirely — only
-  positive/negative/zero, each defined via `<`. See `docs/fundament0.md`.**
+  positive/negative/zero, each defined via `<`. See `docs/fundamentals.md`.**
 
 ---
 
@@ -166,7 +166,7 @@ cards** and only **4 of each other**. Every derivation is one or two steps from
 cards that exist. `laws.json` is down to **14** after `th.binomial-square` moved in.
 
 **Cluster 1 — the fraction bar. ✅ DONE 2026-07-23**, split across three layers by the
-same filing logic that placed the binomials: the **notation** went to `fundament0`
+same filing logic that placed the binomials: the **notation** went to `fundamentals`
 (`ix.fraction-bar`, `ix.division-symbols` in the `infix`/reading group, and `def.div`
 now cites the bar it is written with); the **quotient power laws** went to `powers`
 (`th.pow-quotient-same-base`, `th.pow-of-quotient` in the ℤ act, `th.root-laws` in the

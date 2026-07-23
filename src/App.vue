@@ -19,8 +19,8 @@ const router = useRouter()
 
 const menuOptions: MenuOption[] = [
   { label: 'Skills', key: 'skills' },
-  { label: 'Fundamentals', key: 'fundamentals' },
   ...layers.map(l => ({ label: l.title, key: l.slug })),
+  { label: 'Errors', key: 'errors' },
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },
 ]

@@ -66,7 +66,7 @@ with rising difficulty, and this layer is where the rise becomes visible.
   non-zero base. This one cost an axiom and bought a *smaller* domain (positive bases
   only). The tower has been trading domain for reach all the way up; here it is visible.
 
-## Added to fundament0 for this layer
+## Added to fundamentals for this layer
 
 **`def.abs`** (definition section, after `def.sub`/`def.div`) — three cases, one per
 branch of trichotomy (`ax.order-trichotomy`), built from `ax.additive-inverse` and `op.lt`. Its note makes the point
