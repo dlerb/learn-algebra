@@ -130,6 +130,36 @@
               }
             },
             {
+              "code": "th.binomial-square",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "What a squared sum really is",
+                "de": "Was eine quadrierte Summe wirklich ist"
+              },
+              "latex": "(a + b)^{2} \\;=\\; a^{2} + 2ab + b^{2}",
+              "forall": "a, b \\in \\mathbb{R}",
+              "derivation": "\\begin{aligned} (a+b)^{2} &= (a+b) \\cdot (a+b) \\\\[2pt] &= a \\cdot (a+b) + b \\cdot (a+b) \\\\[2pt] &= (a \\cdot a + a \\cdot b) + (b \\cdot a + b \\cdot b) \\\\[2pt] &= a^{2} + (ab + ab) + b^{2} \\\\[2pt] &= a^{2} + (1+1) \\cdot ab + b^{2} \\;=\\; a^{2} + 2ab + b^{2} \\end{aligned}",
+              "derivedFrom": [
+                "def.pow",
+                "ax.distributivity",
+                "ax.mul-commutative",
+                "ax.add-associative",
+                "ix.invisible-one",
+                "def.numeral"
+              ],
+              "note": {
+                "en": "The card pl.no-sum-law leaves owed. That one says what does not happen; this one says what does, and without it a student is told only that the obvious move fails. Nothing new is assumed. The expansion is ax.distributivity twice, once to split the left factor and once inside each half, and everything after that is collecting. The middle term is the whole content: $ab$ and $ba$ are the same element by ax.mul-commutative, so the two mixed products fall together into one term, and the coefficient $2$ is counting them. That is the term students lose, and it is lost by expanding only the two 'matching' pairs. The last step is the invisible one of ix.invisible-one made visible: $ab + ab = 1 \\cdot ab + 1 \\cdot ab = (1+1) \\cdot ab$. Read the line right to left and it is the first factoring pattern, the same fact in the harder direction.",
+                "de": "Die Karte, die pl.no-sum-law schuldig bleibt. Jene sagt, was nicht passiert; diese sagt, was passiert, und ohne sie erfährt eine Schülerin nur, dass der naheliegende Zug scheitert. Es wird nichts Neues angenommen. Das Ausmultiplizieren ist zweimal ax.distributivity, einmal um den linken Faktor aufzuteilen und einmal in jeder Hälfte, alles Weitere ist Zusammenfassen. Der mittlere Term ist der ganze Inhalt: $ab$ und $ba$ sind nach ax.mul-commutative dasselbe Element, die beiden gemischten Produkte fallen also zu einem Term zusammen, und der Koeffizient $2$ zählt sie. Genau dieser Term geht verloren, und er geht verloren, wenn man nur die beiden 'passenden' Paare ausmultipliziert. Der letzte Schritt macht die unsichtbare Eins aus ix.invisible-one sichtbar: $ab + ab = 1 \\cdot ab + 1 \\cdot ab = (1+1) \\cdot ab$. Von rechts nach links gelesen ist die Zeile das erste Faktorisierungsmuster, dieselbe Tatsache in der schwierigeren Richtung."
+              },
+              "intuition": {
+                "en": "The square picture: a square of side $a + b$ cuts into four pieces, a square $a^{2}$, a square $b^{2}$, and two rectangles $ab$, one on each side of the diagonal. The two rectangles are what the $2$ counts, and seeing that there are two of them is what makes the middle term hard to forget. Where the picture stops: it needs $a$ and $b$ to be lengths, so it says nothing at all once either is negative, and $(a + (-b))^{2}$ is exactly the case that has to work. The derivation above holds whether $b$ is positive or negative, because it never asks; the picture cannot help asking.",
+                "de": "Das Quadratbild: ein Quadrat der Seite $a + b$ zerfällt in vier Stücke, ein Quadrat $a^{2}$, ein Quadrat $b^{2}$ und zwei Rechtecke $ab$, eines auf jeder Seite der Diagonalen. Die beiden Rechtecke sind das, was die $2$ zählt, und zu sehen, dass es zwei sind, macht den mittleren Term schwer vergesslich. Wo das Bild aufhört: es braucht $a$ und $b$ als Längen und sagt gar nichts mehr, sobald eines negativ ist, und genau $(a + (-b))^{2}$ muss funktionieren. Die Herleitung oben gilt, ob $b$ positiv oder negativ ist, denn sie fragt gar nicht danach; das Bild kann nicht anders als zu fragen."
+              }
+            },
+            {
               "code": "th.negative-base",
               "concerns": ["add", "mul"],
               "name": { "en": "Squaring a negative", "de": "Ein negatives Element quadrieren" },

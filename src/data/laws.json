@@ -177,23 +177,6 @@
     ]
   },
   {
-    "id": "thm.binomial-square",
-    "code": "T18",
-    "kind": "theorem",
-    "group": "binomials",
-    "name": {
-      "en": "Square of a sum",
-      "de": "Erste binomische Formel"
-    },
-    "latex": "(a + b)^2 = a^2 + 2ab + b^2",
-    "derivedFrom": [
-      "def.pow",
-      "ax.distributivity",
-      "ax.add-commutative",
-      "thm.collect-like-terms"
-    ]
-  },
-  {
     "id": "thm.square-of-difference",
     "code": "T19",
     "kind": "theorem",
