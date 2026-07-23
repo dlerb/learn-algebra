@@ -1,7 +1,7 @@
-# algebra — where the tower stops describing and starts transforming
+# terms — Term manipulations, where the tower stops describing and starts transforming
 
 The fourth and last layer of the tower, on top of **powers** (`docs/powers.md`).
-Data: `src/data/algebra/cards.json`; page: `/algebra`.
+Data: `src/data/terms/cards.json`; page: `/terms`. Nav label: **Term manipulations**.
 Tag: **`≙ expand · collect · cancel`**. Started 2026-07-23, **deliberately unfinished.**
 
 ## What it is, and why it is a layer rather than a section
@@ -91,7 +91,7 @@ moved the binomials up here sends its pieces to three different floors:
 - **The quotient power laws are powers'.** `th.pow-quotient-same-base` (ℤ act) and
   `th.pow-of-quotient` (ℤ act) are statements about exponents wearing a bar, not facts
   about fractions; `th.root-laws` (ℚ act) is the same two laws in radical form.
-- **The transformations are algebra's** — the `fractions` section here.
+- **The transformations are the `terms` layer's** — the `fractions` section here.
 
 ### `ix.fraction-bar` is the load-bearing one
 

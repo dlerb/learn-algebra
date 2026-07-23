@@ -9,7 +9,7 @@ import { loc, type ErrorDef } from '../data/skill.schema'
 import { lang } from '../lang'
 
 // The fundament's SHADOW. Since 2026-07-23 the fundament itself is the tower
-// (fundamentals · numbers · powers · algebra, each on its own /layer page), and
+// (fundamentals · numbers · powers · terms, each on its own /layer page), and
 // laws.json / conventions.json are gone. What is left here is errors.json: each
 // pattern `corrupts` a card in the tower, and this page renders them grouped by
 // kind. A card code resolves to its name via cardIndex; an error id (salience
