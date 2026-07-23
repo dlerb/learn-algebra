@@ -52,7 +52,9 @@ The page tells one linear story:
    not in a `def.` card. There is no `def.sign`.
 2. **Reading an expression** (`ix.brackets`, `ix.left-to-right`, `ix.precedence`) —
    the parsing rules, before the axioms on purpose: association and distribution cannot
-   be *stated* without brackets and precedence. Nothing here rests on anything below,
+   be *stated* without brackets and precedence. `ix.precedence` states only the
+   lower rung `· ≻ +`; the top rung `power ≻ ·` waits for `ix.power-precedence` in the
+   powers layer, since fundament0 has no power operator to rank. Nothing here rests on anything below,
    **which is exactly why the fraction bar is not in this section** — it denotes an
    operation the signature does not have. See step 5.
 3. **The axioms** — Equality (the four `ax.eq-*`), Addition (`ax.add-*`), Multiplication
