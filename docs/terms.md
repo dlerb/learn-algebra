@@ -20,6 +20,43 @@ That is also why this is the layer the **skills tower** talks to. A drill is nea
 always one of these moves carried out on particular material, which is why the error
 patterns point here rather than at the axioms.
 
+## Where `terms` ends and skills begin (the boundary, settled 2026-07-23)
+
+`terms` and skills are easy to confuse because **both are curated** — neither is
+forced by the mathematics the way `fundamentals` / `numbers` / `powers` are (every
+axiom, every number set, every exponent range *must* be there; the binomial formulas
+are *chosen*). So "it's curated" does **not** tell you which side of the line
+something is on. The axis that does:
+
+- **A `terms` card is a *provable statement*** — it has a derivation, it traces to
+  the axioms, it is true or false. `(a+b)² = a² + 2ab + b²`.
+- **A skill is a *practice*** — recognition, sequencing, errors, drilling. You get
+  *better* at it. "expanding a squared sum, and not dropping the middle term."
+
+They are different objects that point at each other, and the relation is **one card,
+many skills**: `th.split-numerator` is drilled by three (`splitting-a-fraction` does
+it, `no-splitting-the-denominator` blocks the wrong one, `no-cancelling-in-a-sum` is
+the neighbouring trap); `th.collect-like-terms` by four. A theorem can also have *no*
+skill (stated, not yet drilled), and a skill's `justifiedBy` can cite several cards.
+So the fan-out is the signature of a clean boundary, not a smell.
+
+The tower is the *determined → curated* gradient made explicit: `fundamentals` /
+`numbers` / `powers` are **determined knowledge**, `terms` is **curated knowledge**
+(provable, but selected for importance), and skills are **curated practice**. `terms`
+sits on the seam — which is exactly why the question keeps coming up.
+
+An audit of all 45 `equivalence` skills (2026-07-23) confirmed the split is already
+right: only **three** trained a compound theorem the tower lacked — the biggest being
+`(−a)(−b) = ab`, which became `th.minus-in-product` (in `fundamentals`, not here,
+because its factors are *atomic* — no compound part to reach inside; contrast
+`−(a+b)`, which has a sum in it and *is* a `terms` card). Everything else was
+correctly a skill (direct axiom/definition application, or notation) or already carded.
+
+**The test, for the next card-or-skill call:** does it *reach inside a compound
+expression* with a derivation (→ a `terms` card), or is it *recognition / practice /
+the wrong version* (→ a skill)? And atomic sign/number arithmetic with a proof is
+`fundamentals`, not `terms`, however often it is drilled.
+
 ## Why `th.binomial-square` moved up here (2026-07-23)
 
 It was built the same day into `powers`, next to `pl.no-sum-law`, on the argument that
