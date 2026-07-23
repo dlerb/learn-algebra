@@ -10,7 +10,7 @@
       "equivalence.explicit-vs-implicit-product"
     ],
     "justifiedBy": [
-      "def.power"
+      "def.pow"
     ],
     "errors": [
       "anti.repetition-confusion"
@@ -31,12 +31,12 @@
       "meta.juxtaposition"
     ],
     "justifiedBy": [
-      "def.integer-multiple",
-      "def.power"
+      "def.multiple",
+      "def.pow"
     ],
     "governedBy": [
-      "conv.juxtaposition",
-      "conv.invisible-one"
+      "ix.juxtaposition",
+      "ix.invisible-one"
     ],
     "errors": [
       "anti.repetition-confusion"
@@ -57,8 +57,10 @@
       "meta.exponent-binds-tighter"
     ],
     "governedBy": [
-      "conv.exponent-scope",
-      "conv.minus-roles"
+      "ix.pow",
+      "th.negative-base",
+      "th.negative-one-times",
+      "def.sub"
     ],
     "errors": [
       "mis.exponent-scope"
@@ -79,10 +81,11 @@
       "meta.exponent-binds-tighter"
     ],
     "justifiedBy": [
-      "thm.power-same-exponent"
+      "pl.of-product"
     ],
     "governedBy": [
-      "conv.exponent-scope"
+      "ix.pow",
+      "th.negative-base"
     ],
     "errors": [
       "mis.exponent-scope"
@@ -100,7 +103,8 @@
       "equivalence.exponent-as-repeated-product"
     ],
     "justifiedBy": [
-      "def.extended-exponents"
+      "def.pow-zero",
+      "def.pow-neg"
     ]
   },
   {
@@ -119,10 +123,12 @@
       "meta.exponent-binds-tighter"
     ],
     "justifiedBy": [
-      "def.extended-exponents"
+      "def.pow-zero",
+      "def.pow-neg"
     ],
     "governedBy": [
-      "conv.exponent-scope"
+      "ix.pow",
+      "th.negative-base"
     ]
   },
   {
@@ -140,10 +146,11 @@
       "meta.exponent-binds-tighter"
     ],
     "justifiedBy": [
-      "def.fractional-exponent"
+      "def.pow-rat"
     ],
     "governedBy": [
-      "conv.exponent-scope"
+      "ix.pow",
+      "th.negative-base"
     ]
   },
   {
@@ -162,11 +169,13 @@
       "meta.exponent-binds-tighter"
     ],
     "justifiedBy": [
-      "def.extended-exponents",
-      "def.fractional-exponent"
+      "def.pow-zero",
+      "def.pow-neg",
+      "def.pow-rat"
     ],
     "governedBy": [
-      "conv.exponent-scope"
+      "ix.pow",
+      "th.negative-base"
     ]
   },
   {
@@ -184,11 +193,12 @@
       "meta.only-multiplication-distributes"
     ],
     "justifiedBy": [
-      "def.power",
+      "def.pow",
       "thm.binomial-square"
     ],
     "governedBy": [
-      "conv.exponent-scope"
+      "ix.pow",
+      "th.negative-base"
     ],
     "errors": [
       "anti.linearity"
@@ -212,7 +222,7 @@
       "thm.root-of-product"
     ],
     "governedBy": [
-      "conv.root-groups"
+      "ix.root"
     ],
     "errors": [
       "anti.linearity"
@@ -233,7 +243,7 @@
       "meta.only-multiplication-distributes"
     ],
     "governedBy": [
-      "conv.root-groups"
+      "ix.root"
     ],
     "errors": [
       "anti.linearity"

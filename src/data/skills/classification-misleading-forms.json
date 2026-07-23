@@ -32,8 +32,8 @@
       "meta.bracket-chunk"
     ],
     "governedBy": [
-      "conv.brackets-group",
-      "conv.precedence"
+      "ix.brackets",
+      "ix.precedence"
     ],
     "errors": [
       "sal.loudest-op-wins"
@@ -54,7 +54,8 @@
       "meta.dominant-op-last"
     ],
     "governedBy": [
-      "conv.exponent-scope"
+      "ix.pow",
+      "th.negative-base"
     ],
     "errors": [
       "mis.exponent-scope"

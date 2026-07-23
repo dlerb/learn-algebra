@@ -41,8 +41,8 @@
                 "de": "Variablen & Konstanten"
               },
               "note": {
-                "en": "Letters $a, b, c, \\dots$ are variables: each stands for an arbitrary element. Named elements like $0, 1, 2, \\dots$ are constants. Variables are set in italic and constants upright, the usual convention, so the two never blur.",
-                "de": "Buchstaben $a, b, c, \\dots$ sind Variablen: jede steht für ein beliebiges Element. Benannte Elemente wie $0, 1, 2, \\dots$ sind Konstanten. Variablen werden kursiv gesetzt, Konstanten aufrecht, wie üblich, damit die beiden nie verschwimmen."
+                "en": "Letters $a, b, c, \\dots$ are variables: each stands for an arbitrary element. Named elements like $0, 1, 2, \\dots$ are constants. Variables are set in italic and constants upright, the usual convention, so the two never blur. Within one expression a letter keeps its value: every occurrence of $a$ denotes the same element, which is what makes collecting $a + a$ into $2a$ legitimate. Different letters may still denote the same element, nothing says $a \\ne b$.",
+                "de": "Buchstaben $a, b, c, \\dots$ sind Variablen: jede steht für ein beliebiges Element. Benannte Elemente wie $0, 1, 2, \\dots$ sind Konstanten. Variablen werden kursiv gesetzt, Konstanten aufrecht, wie üblich, damit die beiden nie verschwimmen. Innerhalb eines Ausdrucks behält ein Buchstabe seinen Wert: jedes Vorkommen von $a$ bezeichnet dasselbe Element, und genau das macht das Zusammenfassen von $a + a$ zu $2a$ zulässig. Verschiedene Buchstaben dürfen trotzdem dasselbe Element bezeichnen, nichts sagt $a \\ne b$."
               }
             }
           ]
@@ -269,6 +269,26 @@
                 "de": "Ein Koeffizient steht vor der Variablen. Und $a3$ liest sich wie ein Name, nicht als $3 \\cdot a$."
               },
               "basedOn": ["op.mul", "ax.mul-commutative"]
+            },
+            {
+              "code": "ix.invisible-one",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The invisible one",
+                "de": "Die unsichtbare Eins"
+              },
+              "latex": "a \\;=\\; 1 \\cdot a",
+              "forall": "a \\in \\mathbb{R}",
+              "basedOn": [
+                "ax.one-neutral",
+                "ix.coefficient-front"
+              ],
+              "note": {
+                "en": "A coefficient of $1$ is never written. The two spellings name the same element by ax.one-neutral, and the short one is standard. Worth a card because the $1$ does not go away, it is only unwritten, and it has to be seen again the moment a term is collected or a factor pulled out: $a + 2a$ is $1 \\cdot a + 2 \\cdot a$, which is why the answer is $3a$ and not $2a$. The exponent $1$ is omitted in exactly the same way, see ix.pow.",
+                "de": "Ein Koeffizient $1$ wird nie geschrieben. Beide Schreibweisen benennen nach ax.one-neutral dasselbe Element, und die kurze ist die übliche. Eine eigene Karte wert, weil die $1$ nicht verschwindet, sondern nur ungeschrieben bleibt: sie muss wiedergesehen werden, sobald ein Term zusammengefasst oder ein Faktor herausgezogen wird. $a + 2a$ ist $1 \\cdot a + 2 \\cdot a$, und darum ist das Ergebnis $3a$ und nicht $2a$. Der Exponent $1$ wird genauso weggelassen, siehe ix.pow."
+              }
             }
           ]
         }

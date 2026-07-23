@@ -4,26 +4,32 @@ import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import { laws, lawGroups, lawKinds, conventions, conventionGroups, errorPatterns, layers, skills } from '../data'
+import { cardIndex } from '../data/layers'
 import { loc, type LawDef, type ConventionDef, type ErrorDef, type LawGroup, type ConventionGroup } from '../data/skill.schema'
 import { lang } from '../lang'
 
-// Reference rendering of the fundament (laws + conventions) and its shadow
-// (errors). Cards rest quiet — name + primary content — and reveal the rest
-// (ids, codes, links, notes, raw JSON) behind a per-card `details` toggle.
+// Reference rendering of what is LEFT of the legacy law/convention files, plus
+// the error patterns. Since 2026-07-23 the fundament tower (fundament0 · numbers
+// · powers) is the primary reference: everything these files duplicated has been
+// retired and every citation repointed at a card code. What survives here is
+// exactly what the tower does not yet state — fractions and binomials — so most
+// links below resolve into `cardIndex`, not into this file.
 const layerNames = new Map(
   [...laws, ...conventions, ...errorPatterns].map(x => [x.id, x] as const),
 )
 function label(id: string): string {
   const x = layerNames.get(id)
-  return x ? `${x.code} · ${loc(x.name, lang.value)}` : id
+  if (x) return `${x.code} · ${loc(x.name, lang.value)}`
+  const card = cardIndex.get(id)
+  return card ? `${id} · ${loc(card.card.name, lang.value)}` : id
 }
 
-// Coverage: which fundamentals no skill draws on yet (mirrors auditCoverage;
-// axioms excluded — reached transitively via cited theorems).
+// Coverage: which of the survivors no skill draws on yet. The `kind !== 'axiom'`
+// guard is gone with the axioms themselves — every entry left is a theorem.
 const citedLaws = new Set(skills.flatMap(s => s.justifiedBy))
 const citedConvs = new Set(skills.flatMap(s => s.governedBy))
 const citedErrs = new Set(skills.flatMap(s => s.errors))
-const lawUnused = (l: LawDef) => l.kind !== 'axiom' && !citedLaws.has(l.id)
+const lawUnused = (l: LawDef) => !citedLaws.has(l.id)
 
 // One layer visible at a time. Errors aren't fundamentals — they are the
 // fundament's shadow (each `corrupts` a law or convention) — but live here as a

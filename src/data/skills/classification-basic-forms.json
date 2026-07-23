@@ -17,7 +17,7 @@
       "ax.add-commutative"
     ],
     "governedBy": [
-      "conv.precedence"
+      "ix.precedence"
     ]
   },
   {
@@ -53,9 +53,9 @@
       "ax.mul-commutative"
     ],
     "governedBy": [
-      "conv.juxtaposition",
-      "conv.brackets-group",
-      "conv.precedence"
+      "ix.juxtaposition",
+      "ix.brackets",
+      "ix.precedence"
     ]
   },
   {
@@ -86,10 +86,11 @@
       "meta.dominant-op-last"
     ],
     "justifiedBy": [
-      "def.power"
+      "def.pow"
     ],
     "governedBy": [
-      "conv.exponent-scope"
+      "ix.pow",
+      "th.negative-base"
     ]
   }
 ]

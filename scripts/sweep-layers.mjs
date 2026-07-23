@@ -53,5 +53,37 @@ for (const f of files) {
   }
 }
 for (const [from, r] of refs) if (!codes.has(r)) errs.push(`${from} cites unknown ${r}`)
+
+// ---- the bridge -----------------------------------------------------------
+// Since 2026-07-23 the tower is the primary reference and laws.json /
+// conventions.json are a legacy stub holding only what the tower does not yet
+// state. Every reference out of the skills side must therefore land on a card
+// code OR on one of the survivors — nothing else. This is what stops the two
+// from drifting apart again.
+const readJSON = f => JSON.parse(fs.readFileSync(f, 'utf8'))
+const legacy = new Set([
+  ...readJSON('src/data/laws.json').map(x => x.id),
+  ...readJSON('src/data/conventions.json').map(x => x.id),
+])
+const resolves = id => codes.has(id) || legacy.has(id)
+let bridged = 0, intoTower = 0
+const cite = (from, id, field) => {
+  bridged++
+  if (codes.has(id)) intoTower++
+  else if (!legacy.has(id)) errs.push(`${from}.${field} cites unknown ${id}`)
+}
+for (const f of fs.readdirSync('src/data/skills')) {
+  for (const sk of readJSON(`src/data/skills/${f}`)) {
+    for (const field of ['governedBy', 'justifiedBy'])
+      for (const id of sk[field] || []) cite(sk.id, id, field)
+  }
+}
+for (const e of readJSON('src/data/errors.json'))
+  for (const id of e.corrupts || []) if (!id.startsWith('meta.')) cite(e.id, id, 'corrupts')
+for (const x of [...readJSON('src/data/laws.json'), ...readJSON('src/data/conventions.json')])
+  for (const field of ['basedOn', 'derivedFrom'])
+    for (const id of x[field] || []) cite(x.id, id, field)
+
 console.log(`cards: ${codes.size}   latex fragments checked: ${n}   refs: ${refs.length}`)
+console.log(`bridge: ${bridged} references from the skills side, ${intoTower} into the tower, ${bridged - intoTower} still legacy`)
 console.log(errs.length ? 'PROBLEMS:\n' + errs.join('\n') : 'clean')

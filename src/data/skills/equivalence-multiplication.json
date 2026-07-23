@@ -10,8 +10,8 @@
       "meta.juxtaposition"
     ],
     "governedBy": [
-      "conv.juxtaposition",
-      "conv.canonical-order"
+      "ix.juxtaposition",
+      "ix.coefficient-front"
     ],
     "errors": [
       "mis.juxtaposition-as-plus"
@@ -32,8 +32,8 @@
       "meta.implicit-op-before-bracket"
     ],
     "governedBy": [
-      "conv.juxtaposition",
-      "conv.brackets-group"
+      "ix.juxtaposition",
+      "ix.brackets"
     ],
     "errors": [
       "mis.juxtaposition-as-plus"
@@ -55,11 +55,11 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "thm.negative-one-times"
+      "th.negative-one-times"
     ],
     "governedBy": [
-      "conv.invisible-one",
-      "conv.juxtaposition"
+      "ix.invisible-one",
+      "ix.juxtaposition"
     ],
     "errors": [
       "mis.juxtaposition-as-plus"
@@ -79,10 +79,10 @@
       "meta.juxtaposition"
     ],
     "justifiedBy": [
-      "thm.zero-product"
+      "th.zero-times"
     ],
     "governedBy": [
-      "conv.juxtaposition"
+      "ix.juxtaposition"
     ],
     "errors": [
       "mis.juxtaposition-as-plus"
@@ -102,10 +102,10 @@
       "meta.juxtaposition"
     ],
     "justifiedBy": [
-      "def.integer-multiple"
+      "def.multiple"
     ],
     "governedBy": [
-      "conv.juxtaposition"
+      "ix.juxtaposition"
     ],
     "errors": [
       "anti.repetition-confusion"

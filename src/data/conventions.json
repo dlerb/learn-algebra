@@ -1,50 +1,28 @@
 [
-  { "id": "conv.juxtaposition", "code": "N1", "group": "reading",
-    "name": { "en": "Juxtaposition means multiplication", "de": "Nebeneinanderschreiben bedeutet Multiplikation" },
-    "text": { "en": "Anything written next to anything else with no sign between means multiply: $3x$, $2(x+1)$, $xy$. The explicit signs $\\cdot$ and $\\times$ mean the same; $\\times$ is discouraged — it collides with the letter $x$.",
-              "de": "Was ohne Zeichen nebeneinander steht, wird multipliziert: $3x$, $2(x+1)$, $xy$. Die expliziten Zeichen $\\cdot$ und $\\times$ bedeuten dasselbe; $\\times$ ist unerwünscht — es kollidiert mit dem Buchstaben $x$." } },
-  { "id": "conv.invisible-one", "code": "N2", "group": "reading",
-    "name": { "en": "The invisible one", "de": "Die unsichtbare Eins" },
-    "text": { "en": "Coefficient 1 and exponent 1 are omitted: $a = 1a = a^1$.",
-              "de": "Koeffizient 1 und Exponent 1 werden weggelassen: $a = 1a = a^1$." } },
-  { "id": "conv.minus-roles", "code": "N3", "group": "reading",
-    "name": { "en": "One minus symbol, three roles", "de": "Ein Minuszeichen, drei Rollen" },
-    "text": { "en": "(1) The sign of a number literal: the minus in $-3$. (2) Binary subtraction: $a - b$. (3) Unary operator on an expression: $-a$, $-(\\ldots)$ — which by thm.negative-one-times (a theorem, not a convention!) can always be read as $\\cdot(-1)$. The spellings $(-1)a$, $-1a$, $-1 \\cdot a$ are legal but non-canonical; $-1a$ especially invites misreading. This one-symbol-three-roles overload is at the heart of many errors.",
-              "de": "(1) Vorzeichen einer Zahl: das Minus in $-3$. (2) Subtraktion: $a - b$. (3) Unärer Operator auf einem Term: $-a$, $-(\\ldots)$ — nach thm.negative-one-times (ein Satz, keine Konvention!) stets lesbar als $\\cdot(-1)$. Die Schreibweisen $(-1)a$, $-1a$, $-1 \\cdot a$ sind erlaubt, aber nicht kanonisch; besonders $-1a$ lädt zum Verlesen ein. Diese Überladung eines Zeichens mit drei Rollen steckt hinter vielen Fehlern." } },
-  { "id": "conv.brackets-group", "code": "N4", "group": "grouping",
-    "name": { "en": "Brackets group", "de": "Klammern fassen zusammen" },
-    "text": { "en": "Bracket types $(\\,)$ $[\\,]$ $\\{\\,\\}$ are interchangeable; redundant brackets are legal; a bracket is one object, evaluated as a unit — so it overrides precedence.",
-              "de": "Klammertypen $(\\,)$ $[\\,]$ $\\{\\,\\}$ sind austauschbar; überflüssige Klammern sind erlaubt; eine Klammer ist EIN Objekt, das als Einheit ausgewertet wird — sie hat also Vorrang vor den Vorrangregeln." } },
-  { "id": "conv.precedence", "code": "N5", "group": "grouping",
-    "name": { "en": "Precedence", "de": "Vorrangregeln" },
-    "text": { "en": "Products and quotients bind tighter than sums and differences: $a + b \\cdot c$ means $a + (b \\cdot c)$. (Powers bind tighter still — that is exponent scope, N8.)",
-              "de": "Punktrechnung bindet stärker als Strichrechnung: $a + b \\cdot c$ bedeutet $a + (b \\cdot c)$. (Potenzen binden noch stärker — das ist der Geltungsbereich des Exponenten, N8.)" } },
-  { "id": "conv.fraction-bar", "code": "N6", "group": "grouping",
-    "name": { "en": "The fraction bar is a bracket", "de": "Der Bruchstrich ist eine Klammer" },
-    "text": { "en": "It denotes division AND groups numerator and denominator, each as one object.",
-              "de": "Er bedeutet Division UND fasst Zähler und Nenner je zu einem Objekt zusammen." } },
-  { "id": "conv.division-signs", "code": "N7", "group": "reading",
-    "name": { "en": "Division signs are synonyms", "de": "Divisionszeichen sind Synonyme" },
-    "text": { "en": "$a \\div b$, $a : b$, $a/b$ and the fraction bar mean the same; the fraction bar is the encouraged form.",
-              "de": "$a \\div b$, $a : b$, $a/b$ und der Bruchstrich bedeuten dasselbe; der Bruchstrich ist die bevorzugte Form." } },
-  { "id": "conv.exponent-scope", "code": "N8", "group": "grouping",
-    "name": { "en": "Exponent scope", "de": "Geltungsbereich des Exponenten" },
-    "text": { "en": "A superscript applies to the immediately preceding atom or bracket only.",
-              "de": "Ein Exponent wirkt nur auf das unmittelbar davorstehende Zeichen oder die davorstehende Klammer." } },
-  { "id": "conv.root-groups", "code": "N9", "group": "grouping",
-    "name": { "en": "The root sign groups", "de": "Das Wurzelzeichen fasst zusammen" },
-    "text": { "en": "The vinculum of the root sign brackets its argument; the index sits in the hook: $\\sqrt[n]{a^m}$.",
-              "de": "Der Strich des Wurzelzeichens klammert den Radikanden; der Wurzelexponent sitzt im Haken: $\\sqrt[n]{a^m}$." } },
-  { "id": "conv.same-letter", "code": "N10", "group": "reading",
-    "name": { "en": "Same letter, same value", "de": "Gleicher Buchstabe, gleicher Wert" },
-    "text": { "en": "Within one expression every occurrence of a letter denotes the same number.",
-              "de": "Innerhalb eines Terms bezeichnet jedes Vorkommen eines Buchstabens dieselbe Zahl." } },
-  { "id": "conv.canonical-order", "code": "N11", "group": "form",
-    "name": { "en": "Canonical ordering", "de": "Kanonische Reihenfolge" },
-    "text": { "en": "Coefficient before letters, letters alphabetical: $3xy$, not $y3x$ — the latter is legal but non-canonical.",
-              "de": "Koeffizient vor Buchstaben, Buchstaben alphabetisch: $3xy$, nicht $y3x$ — Letzteres ist erlaubt, aber nicht kanonisch." } },
-  { "id": "conv.adjacent-signs", "code": "N12", "group": "form",
-    "name": { "en": "Adjacent operation signs must be bracketed", "de": "Aufeinanderfolgende Rechenzeichen brauchen Klammern" },
-    "text": { "en": "Two operation signs may not stand next to each other: $a - (-b)$, never $a--b$ or $a+-b$. (The algebra of the double sign is thm.double-negative; this is only the writing rule.)",
-              "de": "Zwei Rechenzeichen dürfen nicht direkt nebeneinander stehen: $a - (-b)$, nie $a--b$ oder $a+-b$. (Die Algebra dazu ist thm.double-negative; dies ist nur die Schreibregel.)" } }
+  {
+    "id": "conv.fraction-bar",
+    "code": "N6",
+    "group": "grouping",
+    "name": {
+      "en": "The fraction bar is a bracket",
+      "de": "Der Bruchstrich ist eine Klammer"
+    },
+    "text": {
+      "en": "It denotes division AND groups numerator and denominator, each as one object.",
+      "de": "Er bedeutet Division UND fasst Zähler und Nenner je zu einem Objekt zusammen."
+    }
+  },
+  {
+    "id": "conv.division-signs",
+    "code": "N7",
+    "group": "reading",
+    "name": {
+      "en": "Division signs are synonyms",
+      "de": "Divisionszeichen sind Synonyme"
+    },
+    "text": {
+      "en": "$a \\div b$, $a : b$, $a/b$ and the fraction bar mean the same; the fraction bar is the encouraged form.",
+      "de": "$a \\div b$, $a : b$, $a/b$ und der Bruchstrich bedeuten dasselbe; der Bruchstrich ist die bevorzugte Form."
+    }
+  }
 ]
