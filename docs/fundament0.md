@@ -92,6 +92,53 @@ The page tells one linear story:
    Neither card is proved here; both are reported from outside, which is what the
    `remark` kind means — it sits *off* the epistemic ladder rather than on top of it.
 
+## The citation graph (filled in 2026-07-23)
+
+The tower's thesis is dependency bookkeeping, so the `basedOn` / `derivedFrom` edges
+*are* the product. They were sparse: 39 of 76 cards declared any dependency, and 20
+cards were cited by nothing. Most glaring, **all four equality axioms were orphans**,
+though `ax.eq-congruence` is what makes rewriting legal and rewriting is what the
+whole skills tower drills. The graph was thick where the mathematics was interesting
+and thin where the teaching happens. Now: **66 of 76 cards carry edges, 204 edges
+total.** What was added, and on what principle:
+
+- **Signature ← axioms.** Every axiom now cites the operation or relation it
+  constrains (`op.add` / `op.mul` / `op.eq` / `op.lt`). This connects the signature
+  section, which was previously an island — `op.eq` was cited by nothing at all.
+- **Conventions ← axioms.** `ax.add-associative`, `ax.mul-associative` and
+  `ax.distributivity` cite `ix.brackets` (and distributivity also `ix.precedence`).
+  This doc already *claimed* that dependency — "association and distribution cannot
+  be **stated** without brackets and precedence" — and the data now records it.
+  Same move one layer up: `def.pow` cites `ix.pow`, `def.sub` cites
+  `ix.no-adjacent-operator`, `def.multiple` cites `ix.left-to-right`.
+- **The equality axioms, on a stated rule.** `ax.eq-transitive` and
+  `ax.eq-congruence` are at work in *every* chain, so citing them everywhere would
+  make the chips uniform noise. The **theorem section note** now says this once, and
+  the cards cite them only where they carry visible weight:
+  - `ax.eq-congruence` where the step is the conspicuous one, **applying the same
+    operation to both sides** — `th.zero-times`, `th.negative-one-times`,
+    `th.minus-times-minus`, `th.zero-product`, `def.pow-zero`, `def.pow-neg`.
+  - `ax.eq-transitive` where **the chain itself is the content** —
+    `th.numeral-arithmetic`, and `th.base-fence`, whose five legal steps are what
+    produce `−2 = 2`.
+  - **The whole trio on `th.exponent-well-defined`**, which is the one card whose
+    claim *is* that `=` is respected: well-definedness says a definition reading a
+    *name* gives the same answer for two names of one object.
+- **Precise dependencies the derivations really used.** `th.opposite-flips` cites
+  `ax.add-commutative`, because it needs `0 + (−a) = −a` while the axiom is stated
+  `a + 0 = a`. `th.minus-times-minus` cites `ax.mul-commutative` for the same reason
+  (`(−1)·1` against `1·a = a`). `th.no-rational-square-two` cites `def.sub` — it
+  subtracts. `def.pow-rat` cites `def.div` — the exponent `m/n` *is* a fraction.
+
+### The 15 remaining orphans are not a defect list — they are the exports
+
+Nothing above them cites them because they are the **top** of the tower: `pre.*`
+(framing), `rk.*` (reported from outside), and the terminal results — `th.zero-product`
+(the licence for solving by factoring), `pl.no-sum-law`, `th.negative-base`,
+`th.base-fence`, `th.no-rational-square-two`, `ix.juxtaposition`, `ix.root`. These
+are what the layer produces for someone else to use, and **the someone else is the
+skills tower**. That list is the surface to attach `errors.json`'s `corrupts` to.
+
 ## Data structure (one file, 2026-07-18)
 
 The three files (`axioms.json` / `conventions.json` / `theorems.json`) were

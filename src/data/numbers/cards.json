@@ -108,7 +108,7 @@
                 "en": "Three copies of a length laid end to end. This is the picture nearly everyone actually carries for $3a$, and for $n \\in \\mathbb{N}$ it is faithful. Keep it, and notice that it is a picture of this card only and not a picture of multiplication. It stops the moment the left factor is not a counting element: $1.23$ copies is not a thing.",
                 "de": "Drei Kopien einer Länge hintereinandergelegt. Das ist das Bild, das fast alle für $3a$ tatsächlich mit sich tragen, und für $n \\in \\mathbb{N}$ ist es treu. Behalten Sie es, und merken Sie sich, dass es ein Bild nur dieser Karte ist und kein Bild der Multiplikation. Es hört in dem Moment auf, in dem der linke Faktor kein Zählelement ist: $1.23$ Kopien gibt es nicht."
               },
-              "basedOn": ["def.nat", "op.add"]
+              "basedOn": ["def.nat", "op.add", "ix.left-to-right"]
             }
           ]
         },
@@ -185,7 +185,7 @@
               "name": { "en": "The times table is derived", "de": "Das Einmaleins ist hergeleitet" },
               "latex": "2 + 3 = 5 \\qquad 2 \\cdot 3 = 6",
               "derivation": "\\begin{aligned} 2 + 3 &= 2 + (2 + 1) = (2 + 2) + 1 = (3 + 1) + 1 = 4 + 1 = 5 \\\\[2pt] 2 \\cdot 3 &= 3 \\cdot 2 = 3 \\cdot (1 + 1) = 3 \\cdot 1 + 3 \\cdot 1 = 3 + 3 = 6 \\end{aligned}",
-              "derivedFrom": ["def.numeral", "ax.add-associative", "ax.mul-commutative", "ax.one-neutral", "ax.distributivity"],
+              "derivedFrom": ["def.numeral", "ax.add-associative", "ax.mul-commutative", "ax.one-neutral", "ax.distributivity", "ax.eq-transitive"],
               "note": {
                 "en": "Unfold the names by def.numeral, then reassociate (ax.add-associative) or distribute (ax.distributivity), and the value falls out. Nothing is stipulated here except the names themselves. It is worth doing once, on an entry small enough to write out in full, because the picture it replaces is the one most people carry: that arithmetic facts are a separate body of knowledge sitting beside the axioms, to be remembered rather than derived, and that algebra starts later when the letters arrive. Both halves of that are false. The times table is a list of theorems, and the axioms that prove its entries are the same ones used on letters afterwards.",
                 "de": "Die Namen nach def.numeral aufklappen, dann umklammern (ax.add-associative) oder ausmultiplizieren (ax.distributivity), und der Wert fällt heraus. Festgelegt ist hier nichts ausser den Namen selbst. Es lohnt sich, das einmal zu tun, an einem Eintrag, der klein genug zum Ausschreiben ist, denn das Bild, das dabei ersetzt wird, tragen die meisten mit sich: dass Rechenfakten ein eigener Wissensbestand neben den Axiomen seien, zu merken statt herzuleiten, und dass die Algebra erst später beginne, wenn die Buchstaben kommen. Beides ist falsch. Das Einmaleins ist eine Liste von Sätzen, und die Axiome, die seine Einträge beweisen, sind dieselben, die danach auf Buchstaben angewendet werden."
@@ -244,12 +244,7 @@
                 "ax.order-trichotomy"
               ],
               "derivation": "\\begin{aligned} q \\cdot q = 2, \\ 0 < q \\;&\\Rightarrow\\; q = m \\cdot n^{-1}, \\quad m, n \\in \\mathbb{N}, \\ n \\ \\text{smallest} \\\\[2pt] &\\Rightarrow\\; m \\cdot m = 2 \\cdot (n \\cdot n) \\\\[2pt] 1 < q < 2 \\;&\\Rightarrow\\; n < m < n + n \\\\[2pt] m' := n + n - m, \\quad n' := m - n \\;&\\Rightarrow\\; 0 < n' < n \\\\[2pt] m' \\cdot m' \\;&=\\; 2 \\cdot (n' \\cdot n') \\end{aligned}",
-              "derivedFrom": [
-                "def.rat",
-                "th.ind",
-                "ax.distributivity",
-                "ax.order-mul"
-              ],
+              "derivedFrom": ["def.rat", "th.ind", "ax.distributivity", "ax.order-mul", "def.sub", "th.numerals-distinct"],
               "note": {
                 "en": "The hole in $\\mathbb{Q}$, finally exhibited. ax.completeness was assumed in order to fill it and its intuition points at this very element, but until now nothing in the tower had shown that the hole is really there. The argument is a descent and needs no divisibility, no primes and no 'lowest terms': write a positive rational as $m \\cdot n^{-1}$ with the *smallest* possible $n$, and then build a smaller one. What it borrows is that every non-empty part of $\\mathbb{N}$ has a least element, which is th.ind read once more, so the proof stays inside what this layer owns. Two consequences upstairs. The demand for an element whose square is $2$ is exactly as reasonable in $\\mathbb{Q}$ as anywhere, and $\\mathbb{Q}$ cannot meet it, so a definition by description cannot be assumed to produce its object. And the word 'complete' now has a witness: the difference between $\\mathbb{Q}$ and $\\mathbb{R}$ is not a matter of degree.",
                 "de": "Das Loch in $\\mathbb{Q}$, endlich vorgezeigt. ax.completeness wurde angenommen, um es zu füllen, und seine Anschauung zeigt genau auf dieses Element; bis jetzt hat aber nichts im Turm gezeigt, dass das Loch wirklich da ist. Das Argument ist ein Abstieg und braucht keine Teilbarkeit, keine Primzahlen und keine 'gekürzte Darstellung': man schreibe eine positive rationale Zahl als $m \\cdot n^{-1}$ mit dem *kleinstmöglichen* $n$ und baue daraus ein kleineres. Geliehen wird nur, dass jeder nicht-leere Teil von $\\mathbb{N}$ ein kleinstes Element hat, und das ist th.ind ein weiteres Mal gelesen; der Beweis bleibt also in dem, was diese Schicht besitzt. Zwei Folgen für die Schichten darüber. Die Forderung nach einem Element, dessen Quadrat $2$ ist, ist in $\\mathbb{Q}$ genauso vernünftig wie überall, und $\\mathbb{Q}$ kann sie nicht erfüllen; eine Definition durch Beschreibung erzeugt ihren Gegenstand also nicht von selbst. Und das Wort 'vollständig' hat nun einen Zeugen: der Unterschied zwischen $\\mathbb{Q}$ und $\\mathbb{R}$ ist kein Unterschied des Grades."
