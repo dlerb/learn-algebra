@@ -3,103 +3,33 @@ import { computed, ref } from 'vue'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { laws, lawGroups, lawKinds, conventions, conventionGroups, errorPatterns, layers, skills } from '../data'
+import { errorPatterns, skills, layers } from '../data'
 import { cardIndex } from '../data/layers'
-import { loc, type LawDef, type ConventionDef, type ErrorDef, type LawGroup, type ConventionGroup } from '../data/skill.schema'
+import { loc, type ErrorDef } from '../data/skill.schema'
 import { lang } from '../lang'
 
-// Reference rendering of what is LEFT of the legacy law/convention files, plus
-// the error patterns. Since 2026-07-23 the fundament tower (fundament0 · numbers
-// · powers) is the primary reference: everything these files duplicated has been
-// retired and every citation repointed at a card code. What survives here is
-// exactly what the tower does not yet state — fractions and binomials — so most
-// links below resolve into `cardIndex`, not into this file.
-const layerNames = new Map(
-  [...laws, ...conventions, ...errorPatterns].map(x => [x.id, x] as const),
-)
+// The fundament's SHADOW. Since 2026-07-23 the fundament itself is the tower
+// (fundament0 · numbers · powers · algebra, each on its own /layer page), and
+// laws.json / conventions.json are gone. What is left here is errors.json: each
+// pattern `corrupts` a card in the tower, and this page renders them grouped by
+// kind. A card code resolves to its name via cardIndex; an error id (salience
+// corrupts a meta-pattern, but those are shown as raw ids) falls through.
+const errName = new Map(errorPatterns.map(e => [e.id, e] as const))
 function label(id: string): string {
-  const x = layerNames.get(id)
-  if (x) return `${x.code} · ${loc(x.name, lang.value)}`
   const card = cardIndex.get(id)
-  return card ? `${id} · ${loc(card.card.name, lang.value)}` : id
+  if (card) return `${id} · ${loc(card.card.name, lang.value)}`
+  const e = errName.get(id)
+  return e ? `${e.code} · ${loc(e.name, lang.value)}` : id
 }
 
-// Coverage: which of the survivors no skill draws on yet. The `kind !== 'axiom'`
-// guard is gone with the axioms themselves — every entry left is a theorem.
-const citedLaws = new Set(skills.flatMap(s => s.justifiedBy))
-const citedConvs = new Set(skills.flatMap(s => s.governedBy))
 const citedErrs = new Set(skills.flatMap(s => s.errors))
-const lawUnused = (l: LawDef) => !citedLaws.has(l.id)
+const errorsBlurb = computed(() => layers.find(l => l.slug === 'errors')?.blurb)
+const unused = computed(() => errorPatterns.filter(e => !citedErrs.has(e.id)).length)
 
-// One layer visible at a time. Errors aren't fundamentals — they are the
-// fundament's shadow (each `corrupts` a law or convention) — but live here as a
-// third segment. The unused chip is contextual to the active layer.
-// The laws/conventions segments disappear as their files empty out: conventions
-// reached zero on 2026-07-23 and laws is down to four, so `errors` is the default
-// whenever nothing is left to show.
-const layer = ref<'laws' | 'conventions' | 'errors'>(laws.length ? 'laws' : 'errors')
-const unusedByLayer = {
-  laws: laws.filter(lawUnused).length,
-  conventions: conventions.filter(c => !citedConvs.has(c.id)).length,
-  errors: errorPatterns.filter(e => !citedErrs.has(e.id)).length,
-}
-const activeUnused = computed(() => unusedByLayer[layer.value])
-
-// One-line description of each layer (data: layers.json), surfaced on tap via
-// the ⓘ dot next to the switch.
-const activeBlurb = computed(() => layers.find(l => l.slug === layer.value)?.blurb)
-
-// Per-card disclosure state (the extra fields, and the raw JSON within them).
 const open = ref(new Set<string>())
 const jsonOpen = ref(new Set<string>())
 const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : open.value.add(id))
 const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
-
-interface LawVM {
-  id: string; code: string; kind: string; name: string; latex: string; group: LawGroup
-  conditions?: string; links: string[]; linkField: string; note?: string; unused: boolean; json: string
-}
-function lawVM(l: LawDef): LawVM {
-  return {
-    id: l.id, code: l.code, kind: l.kind, name: loc(l.name, lang.value), latex: l.latex, group: l.group,
-    conditions: l.conditions,
-    links: (l.kind === 'definition' ? l.basedOn : l.derivedFrom).map(label),
-    linkField: l.kind === 'definition' ? 'basedOn' : 'derivedFrom',
-    note: l.note ? loc(l.note, lang.value) : undefined,
-    unused: lawUnused(l), json: JSON.stringify(l, null, 2),
-  }
-}
-
-// Laws sectioned by `kind` (place in the tower) or by `group` (classroom topic).
-const groupBy = ref<'kind' | 'topic'>('kind')
-interface LawSection { title: string; blurb?: string; items: LawVM[] }
-const lawKindSections = computed<LawSection[]>(() =>
-  lawKinds
-    .map(k => ({ title: k.title, blurb: k.blurb, items: laws.filter(l => l.kind === k.slug).map(lawVM) }))
-    .filter(s => s.items.length > 0),
-)
-const lawTopicSections = computed<LawSection[]>(() =>
-  lawGroups
-    .map(t => ({ title: t.title, blurb: t.blurb, items: laws.filter(l => l.group === (t.slug as LawGroup)).map(lawVM) }))
-    .filter(s => s.items.length > 0),
-)
-const lawSections = computed(() => (groupBy.value === 'kind' ? lawKindSections.value : lawTopicSections.value))
-
-interface ConvVM { id: string; code: string; group: ConventionGroup; name: string; text: string; unused: boolean; json: string }
-function convVM(c: ConventionDef): ConvVM {
-  return {
-    id: c.id, code: c.code, group: c.group, name: loc(c.name, lang.value),
-    text: loc(c.text, lang.value), unused: !citedConvs.has(c.id), json: JSON.stringify(c, null, 2),
-  }
-}
-const conventionSections = computed(() =>
-  conventionGroups
-    .map(g => ({
-      title: g.title, blurb: g.blurb,
-      items: conventions.filter(c => c.group === (g.slug as ConventionGroup)).map(convVM),
-    }))
-    .filter(s => s.items.length > 0),
-)
 
 interface ErrVM {
   id: string; code: string; kind: string; name: string; text: string
@@ -114,145 +44,58 @@ function errVM(e: ErrorDef): ErrVM {
 const errorSections = computed(() => [
   { title: 'False laws — the generative rules of wrong algebra', items: errorPatterns.filter(e => e.kind === 'anti-law').map(errVM) },
   { title: 'Misreadings — parsing the notation wrong', items: errorPatterns.filter(e => e.kind === 'misreading').map(errVM) },
-])
+  { title: 'Salience — the loud thing seen first', items: errorPatterns.filter(e => e.kind === 'salience').map(errVM) },
+].filter(s => s.items.length > 0))
 </script>
 
 <template>
   <div class="refv">
     <div class="layer-bar">
       <div class="bar-left">
-        <div class="mode layers">
-          <button v-if="laws.length" :class="{ active: layer === 'laws' }" @click="layer = 'laws'">Laws</button>
-          <button v-if="conventions.length" :class="{ active: layer === 'conventions' }" @click="layer = 'conventions'">Conventions</button>
-          <button :class="{ active: layer === 'errors' }" @click="layer = 'errors'">Errors</button>
-        </div>
+        <h2 class="refv-title">Errors</h2>
         <NPopover trigger="click" placement="bottom-start">
-          <template #trigger><button class="info" aria-label="About this layer">i</button></template>
-          <div class="pop">{{ activeBlurb }}</div>
+          <template #trigger><button class="info" aria-label="About errors">i</button></template>
+          <div class="pop">{{ errorsBlurb }}</div>
         </NPopover>
       </div>
       <div class="bar-right">
-        <span v-if="activeUnused" class="unused-chip" title="not drawn on by any skill yet">{{ activeUnused }} unused</span>
-        <div v-if="layer === 'laws'" class="mode">
-          <button :class="{ active: groupBy === 'kind' }" @click="groupBy = 'kind'">by kind</button>
-          <button :class="{ active: groupBy === 'topic' }" @click="groupBy = 'topic'">by group</button>
-        </div>
+        <span v-if="unused" class="unused-chip" title="not drawn on by any skill yet">{{ unused }} unused</span>
       </div>
     </div>
 
-    <!-- LAWS -->
-    <template v-if="layer === 'laws'">
-      <div v-for="s in lawSections" :key="s.title" class="group">
-        <div class="group-title">
-          <h3>{{ s.title }}</h3>
-          <NPopover v-if="s.blurb" trigger="click" placement="bottom-start">
-            <template #trigger><button class="info" aria-label="About this group">i</button></template>
-            <div class="pop">{{ s.blurb }}</div>
-          </NPopover>
-        </div>
-        <div class="cards">
-          <article v-for="l in s.items" :key="l.id" class="card" :class="{ unused: l.unused }">
-            <div class="card-top">
-              <span class="eyebrow">{{ l.kind }} · {{ l.group }}</span>
-              <span class="top-right">
-                <span v-if="l.unused" class="badge unused">unused</span>
-                <button class="disclose" @click="toggle(l.id)">{{ open.has(l.id) ? 'less' : 'details' }}</button>
-              </span>
-            </div>
-            <div class="card-head"><h4>{{ l.name }}</h4></div>
-            <div class="statement"><MathExpr :latex="l.latex" display /></div>
-            <div v-if="open.has(l.id)" class="details">
-              <dl class="fields">
-                <div class="field"><dt>kind</dt><dd>{{ l.kind }}</dd></div>
-                <div class="field"><dt>id</dt><dd><code>{{ l.id }}</code></dd></div>
-                <div class="field"><dt>code</dt><dd>{{ l.code }}</dd></div>
-                <div class="field"><dt>group</dt><dd>{{ l.group }}</dd></div>
-                <div v-if="l.conditions" class="field"><dt>conditions</dt><dd><MathExpr :latex="l.conditions" /></dd></div>
-                <div v-if="l.links.length" class="field">
-                  <dt>{{ l.linkField }}</dt>
-                  <dd><span v-for="(x, i) in l.links" :key="i" class="chip">{{ x }}</span></dd>
-                </div>
-                <div v-if="l.note" class="field"><dt>note</dt><dd><RichText :text="l.note" /></dd></div>
-              </dl>
-              <button class="json-toggle" @click="toggleJson(l.id)">{{ jsonOpen.has(l.id) ? 'hide json' : 'json' }}</button>
-              <pre v-if="jsonOpen.has(l.id)" class="json">{{ l.json }}</pre>
-            </div>
-          </article>
-        </div>
+    <div v-for="s in errorSections" :key="s.title" class="group">
+      <div class="group-title"><h3>{{ s.title }}</h3></div>
+      <div class="cards">
+        <article v-for="e in s.items" :key="e.id" class="card" :class="{ unused: e.unused }">
+          <div class="card-top">
+            <span class="eyebrow">{{ e.kind }} ·</span>
+            <span class="top-right">
+              <span v-if="e.unused" class="badge unused">unused</span>
+              <button class="disclose" @click="toggle(e.id)">{{ open.has(e.id) ? 'less' : 'details' }}</button>
+            </span>
+          </div>
+          <div class="card-head"><h4>{{ e.name }}</h4></div>
+          <p class="body"><RichText :text="e.text" /></p>
+          <div v-if="open.has(e.id)" class="details">
+            <dl class="fields">
+              <div class="field"><dt>kind</dt><dd>{{ e.kind }}</dd></div>
+              <div class="field"><dt>id</dt><dd><code>{{ e.id }}</code></dd></div>
+              <div class="field"><dt>code</dt><dd>{{ e.code }}</dd></div>
+              <div v-if="e.corrupts.length" class="field">
+                <dt>corrupts</dt>
+                <dd><span v-for="(x, i) in e.corrupts" :key="i" class="chip">{{ x }}</span></dd>
+              </div>
+              <div v-if="e.instances.length" class="field">
+                <dt>instances</dt>
+                <dd class="instances"><span v-for="(x, i) in e.instances" :key="i" class="wrong"><MathExpr :latex="x" /></span></dd>
+              </div>
+            </dl>
+            <button class="json-toggle" @click="toggleJson(e.id)">{{ jsonOpen.has(e.id) ? 'hide json' : 'json' }}</button>
+            <pre v-if="jsonOpen.has(e.id)" class="json">{{ e.json }}</pre>
+          </div>
+        </article>
       </div>
-    </template>
-
-    <!-- CONVENTIONS -->
-    <template v-else-if="layer === 'conventions'">
-      <div v-for="s in conventionSections" :key="s.title" class="group">
-        <div class="group-title">
-          <h3>{{ s.title }}</h3>
-          <NPopover v-if="s.blurb" trigger="click" placement="bottom-start">
-            <template #trigger><button class="info" aria-label="About this group">i</button></template>
-            <div class="pop">{{ s.blurb }}</div>
-          </NPopover>
-        </div>
-        <div class="cards">
-          <article v-for="c in s.items" :key="c.id" class="card" :class="{ unused: c.unused }">
-            <div class="card-top">
-              <span class="eyebrow">· {{ c.group }}</span>
-              <span class="top-right">
-                <span v-if="c.unused" class="badge unused">unused</span>
-                <button class="disclose" @click="toggle(c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
-              </span>
-            </div>
-            <div class="card-head"><h4>{{ c.name }}</h4></div>
-            <p class="body"><RichText :text="c.text" /></p>
-            <div v-if="open.has(c.id)" class="details">
-              <dl class="fields">
-                <div class="field"><dt>id</dt><dd><code>{{ c.id }}</code></dd></div>
-                <div class="field"><dt>code</dt><dd>{{ c.code }}</dd></div>
-                <div class="field"><dt>group</dt><dd>{{ c.group }}</dd></div>
-              </dl>
-              <button class="json-toggle" @click="toggleJson(c.id)">{{ jsonOpen.has(c.id) ? 'hide json' : 'json' }}</button>
-              <pre v-if="jsonOpen.has(c.id)" class="json">{{ c.json }}</pre>
-            </div>
-          </article>
-        </div>
-      </div>
-    </template>
-
-    <!-- ERRORS -->
-    <template v-else>
-      <div v-for="s in errorSections" :key="s.title" class="group">
-        <div class="group-title"><h3>{{ s.title }}</h3></div>
-        <div class="cards">
-          <article v-for="e in s.items" :key="e.id" class="card" :class="{ unused: e.unused }">
-            <div class="card-top">
-              <span class="eyebrow">{{ e.kind }} ·</span>
-              <span class="top-right">
-                <span v-if="e.unused" class="badge unused">unused</span>
-                <button class="disclose" @click="toggle(e.id)">{{ open.has(e.id) ? 'less' : 'details' }}</button>
-              </span>
-            </div>
-            <div class="card-head"><h4>{{ e.name }}</h4></div>
-            <p class="body"><RichText :text="e.text" /></p>
-            <div v-if="open.has(e.id)" class="details">
-              <dl class="fields">
-                <div class="field"><dt>kind</dt><dd>{{ e.kind }}</dd></div>
-                <div class="field"><dt>id</dt><dd><code>{{ e.id }}</code></dd></div>
-                <div class="field"><dt>code</dt><dd>{{ e.code }}</dd></div>
-                <div v-if="e.corrupts.length" class="field">
-                  <dt>corrupts</dt>
-                  <dd><span v-for="(x, i) in e.corrupts" :key="i" class="chip">{{ x }}</span></dd>
-                </div>
-                <div v-if="e.instances.length" class="field">
-                  <dt>instances</dt>
-                  <dd class="instances"><span v-for="(x, i) in e.instances" :key="i" class="wrong"><MathExpr :latex="x" /></span></dd>
-                </div>
-              </dl>
-              <button class="json-toggle" @click="toggleJson(e.id)">{{ jsonOpen.has(e.id) ? 'hide json' : 'json' }}</button>
-              <pre v-if="jsonOpen.has(e.id)" class="json">{{ e.json }}</pre>
-            </div>
-          </article>
-        </div>
-      </div>
-    </template>
+    </div>
   </div>
 </template>
 

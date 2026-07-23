@@ -1,5 +1,0 @@
-[
-  { "slug": "axiom", "title": "Axioms", "blurb": "Accepted, not proven — the school-honest starting assumptions." },
-  { "slug": "definition", "title": "Definitions", "blurb": "Every further operation is built from these." },
-  { "slug": "theorem", "title": "Theorems", "blurb": "Derivable results, shown with their derivations." }
-]

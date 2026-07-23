@@ -3,24 +3,26 @@ import { computed, ref } from 'vue'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
-import { skills, drills, groups, skillKinds, metaPatterns, laws, conventions, errorPatterns, rawById } from '../data'
+import { skills, drills, groups, skillKinds, metaPatterns, errorPatterns, rawById } from '../data'
 import { loc, type Skill, type Drill } from '../data/skill.schema'
+import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 
 // The skills catalog. A card rests quiet — title · the forms the skill looks
-// like · the rationale note — and reveals its coordinates (laws / conventions /
-// meta-patterns / errors), prerequisites, drill pitfalls and raw JSON behind a
-// per-card `details` toggle, each labeled with its field name.
+// like · the rationale note — and reveals its coordinates (justifiedBy/governedBy
+// resolve into the fundament tower now, plus meta-patterns / errors),
+// prerequisites, drill pitfalls and raw JSON behind a per-card `details` toggle.
 function metaLabel(id: string): string {
   const m = metaPatterns.find(mp => mp.id === id)
   return m ? `${m.code} · ${loc(m.title, lang.value)}` : id
 }
-const layerNames = new Map(
-  [...laws, ...conventions, ...errorPatterns].map(x => [x.id, x] as const),
-)
+// `justifiedBy`, `governedBy` and error `explainedBy` are card codes or error ids.
+const errName = new Map(errorPatterns.map(e => [e.id, e] as const))
 function layerLabel(id: string): string {
-  const x = layerNames.get(id)
-  return x ? `${x.code} · ${loc(x.name, lang.value)}` : id
+  const card = cardIndex.get(id)
+  if (card) return `${id} · ${loc(card.card.name, lang.value)}`
+  const e = errName.get(id)
+  return e ? `${e.code} · ${loc(e.name, lang.value)}` : id
 }
 function skillTitle(id: string): string {
   const f = skills.find(f => f.id === id)

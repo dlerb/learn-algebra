@@ -77,35 +77,34 @@ for (const [layer, ordered] of layerOrder) {
 }
 
 // ---- the bridge -----------------------------------------------------------
-// Since 2026-07-23 the tower is the primary reference and laws.json /
-// conventions.json are a legacy stub holding only what the tower does not yet
-// state. Every reference out of the skills side must therefore land on a card
-// code OR on one of the survivors — nothing else. This is what stops the two
-// from drifting apart again.
+// ---- the bridge -----------------------------------------------------------
+// The legacy laws.json / conventions.json were deleted on 2026-07-23; every
+// reference from the skills side (skills' governedBy/justifiedBy, errors'
+// corrupts, meta-patterns' summarizes) must now land on a card code, or on a
+// meta-pattern / error id for the two kinds that legitimately do. Anything else
+// is a dangling reference. This is the build-time twin of validateLayerRefs.
 const readJSON = f => JSON.parse(fs.readFileSync(f, 'utf8'))
-const legacy = new Set([
-  ...readJSON('src/data/laws.json').map(x => x.id),
-  ...readJSON('src/data/conventions.json').map(x => x.id),
-])
-const resolves = id => codes.has(id) || legacy.has(id)
-let bridged = 0, intoTower = 0
-const cite = (from, id, field) => {
+const metaIds = new Set(readJSON('src/data/metapatterns.json').map(m => m.id))
+const errFile = readJSON('src/data/errors.json')
+const errIds = new Set(errFile.map(e => e.id))
+let bridged = 0
+const cite = (from, id, field, pool) => {
   bridged++
-  if (codes.has(id)) intoTower++
-  else if (!legacy.has(id)) errs.push(`${from}.${field} cites unknown ${id}`)
+  if (!pool.has(id)) errs.push(`${from}.${field} cites unknown ${id}`)
 }
 for (const f of fs.readdirSync('src/data/skills')) {
   for (const sk of readJSON(`src/data/skills/${f}`)) {
     for (const field of ['governedBy', 'justifiedBy'])
-      for (const id of sk[field] || []) cite(sk.id, id, field)
+      for (const id of sk[field] || []) cite(sk.id, id, field, codes)
   }
 }
-for (const e of readJSON('src/data/errors.json'))
-  for (const id of e.corrupts || []) if (!id.startsWith('meta.')) cite(e.id, id, 'corrupts')
-for (const x of [...readJSON('src/data/laws.json'), ...readJSON('src/data/conventions.json')])
-  for (const field of ['basedOn', 'derivedFrom'])
-    for (const id of x[field] || []) cite(x.id, id, field)
+for (const e of errFile)
+  for (const id of e.corrupts || [])
+    cite(e.id, id, 'corrupts', id.startsWith('meta.') ? metaIds : codes)
+for (const m of readJSON('src/data/metapatterns.json'))
+  for (const id of m.summarizes || [])
+    cite(m.id, id, 'summarizes', id.startsWith('sal.') || id.startsWith('mis.') || id.startsWith('anti.') ? errIds : codes)
 
 console.log(`cards: ${codes.size}   latex fragments checked: ${n}   refs: ${refs.length}`)
-console.log(`bridge: ${bridged} references from the skills side, ${intoTower} into the tower, ${bridged - intoTower} still legacy`)
+console.log(`bridge: ${bridged} references from the skills side, all resolved into the tower`)
 console.log(errs.length ? 'PROBLEMS:\n' + errs.join('\n') : 'clean')

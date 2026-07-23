@@ -2,21 +2,16 @@
 // duplicate id, a dangling group, or a dangling meta-pattern reference throws
 // here immediately with the offending id named.
 import {
-  parseSkills, parseDrills, groupsFile, lawGroupsFile, conventionGroupsFile, metaPatternsFile, lawDef, conventionDef, errorDef,
-  validateUniqueIds, validateGroupRefs, validateLawGroups, validateConventionGroups, validateSkillKinds, validateLawKinds, validateMetaPatternRefs, validateSkillLinks,
-  validateDrills, validateLaws, validateConventions, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Skill, type Drill, type GroupsFile, type LawGroupsFile, type ConventionGroupsFile, type MetaPatternsFile,
-  type LawDef, type ConventionDef, type ErrorDef,
+  parseSkills, parseDrills, groupsFile, metaPatternsFile, errorDef,
+  validateUniqueIds, validateGroupRefs, validateSkillKinds, validateMetaPatternRefs, validateSkillLinks,
+  validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
+  type Skill, type Drill, type GroupsFile, type MetaPatternsFile, type ErrorDef,
 } from './skill.schema'
+import { cardIndex } from './layers'
 import groupsRaw from './skillGroups.json'
 import skillKindsRaw from './skillKinds.json'
-import lawGroupsRaw from './lawGroups.json'
-import lawKindsRaw from './lawKinds.json'
-import conventionGroupsRaw from './conventionGroups.json'
 import layersRaw from './layers.json'
 import metasRaw from './metapatterns.json'
-import lawsRaw from './laws.json'
-import conventionsRaw from './conventions.json'
 import errorsRaw from './errors.json'
 import equivalenceMultiplication from './skills/equivalence-multiplication.json'
 import equivalenceLikeTerms from './skills/equivalence-like-terms.json'
@@ -77,19 +72,19 @@ const drillFiles: unknown[][] = [
 
 export const groups: GroupsFile = groupsFile.parse(groupsRaw)
 export const skillKinds: GroupsFile = groupsFile.parse(skillKindsRaw)
-export const lawKinds: GroupsFile = groupsFile.parse(lawKindsRaw)
-export const lawGroups: LawGroupsFile = lawGroupsFile.parse(lawGroupsRaw)
-export const conventionGroups: ConventionGroupsFile = conventionGroupsFile.parse(conventionGroupsRaw)
-// Display metadata for the Fundamentals layer switch (laws/conventions/errors);
-// the ⓘ dot's one-liner. The set of layers is fixed by the view's `layer` type.
+// Display metadata for the reference view's segment switch (now errors only; the
+// laws/conventions segments retired with those files on 2026-07-23).
 export const layers: GroupsFile = groupsFile.parse(layersRaw)
 export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
 
-// Layers 1+2 (docs/content_model.md): the coordinate system skills
-// live in — laws justify, conventions locate, error patterns name the wrong.
-export const laws: LawDef[] = (lawsRaw as unknown[]).map(l => lawDef.parse(l))
-export const conventions: ConventionDef[] = (conventionsRaw as unknown[]).map(c => conventionDef.parse(c))
+// The fundament's shadow: false laws and misreadings, each `corrupts` a card in
+// the tower (src/data/layers.ts). The laws/conventions files they used to point
+// at were folded into the tower and deleted; see docs/content_model.md.
 export const errorPatterns: ErrorDef[] = (errorsRaw as unknown[]).map(e => errorDef.parse(e))
+
+// Every fundament-tower card code, the resolution target for the skill/error/
+// meta-pattern references validated below.
+const cardCodes = new Set(cardIndex.keys())
 
 const rawEntries = skillFiles.flat()
 export const skills: Skill[] = parseSkills(rawEntries)
@@ -103,20 +98,15 @@ export const rawById = new Map<string, unknown>(
 
 validateUniqueIds(skills)
 validateGroupRefs(skills, groups)
-validateLawGroups(lawGroups)
-validateConventionGroups(conventionGroups)
 validateSkillKinds(skillKinds)
-validateLawKinds(lawKinds)
 validateMetaPatternRefs(skills, metaPatterns)
 validateSkillLinks(skills)
 validateDrills(drills, skills)
-validateLaws(laws)
-validateConventions(conventions)
-validateErrors(errorPatterns, laws, conventions, metaPatterns)
-validateLayerRefs(skills, metaPatterns, laws, conventions, errorPatterns)
-validateLatexCompiles(skills, drills, metaPatterns, laws, conventions, errorPatterns)
+validateErrors(errorPatterns, cardCodes, metaPatterns)
+validateLayerRefs(skills, metaPatterns, cardCodes, errorPatterns)
+validateLatexCompiles(skills, drills, metaPatterns, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.
-for (const line of auditCoverage(skills, metaPatterns, laws, conventions, errorPatterns)) {
+for (const line of auditCoverage(skills, metaPatterns, errorPatterns)) {
   console.info(`[audit] ${line}`)
 }
