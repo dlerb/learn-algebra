@@ -190,8 +190,8 @@ interface does not declare. `LocalizedString` is `{ en, de }` — both always pr
 | `type` | LaTeX | 4 | signature, e.g. `\mathbb{R} \times \mathbb{R} \to \mathbb{R}` |
 | `latex` | LaTeX | 64 | the statement, rendered display-style |
 | `avoid` / `prefer` | LaTeX | 3 / 3 | the ✗/✓ pair, used *instead of* `latex` by rewrite conventions |
-| `forall` | LaTeX | 32 | quantifier line, rendered as "for all …" |
-| `cond` | LaTeX | 8 | side condition, rendered as "for …" |
+| `forall` | LaTeX | 44 | **domain** of the card's free variables, rendered "for all …" / "für alle …" |
+| `cond` | LaTeX | 13 | **restriction** on those variables, rendered "provided …" / "sofern …" |
 | `basedOn` | code[] | 42 | standing dependencies → the "rests on" chips |
 | `derivation` | LaTeX | 23 | the proof chain, collapsed behind a toggle |
 | `derivedFrom` | code[] | 26 | what the chain uses → chips under the derivation |
@@ -201,6 +201,39 @@ interface does not declare. `LocalizedString` is `{ en, de }` — both always pr
 **Prose fields carry no markdown beyond `*emph*` and no em dashes** — they render
 literally, and `—` also reads as `−`. `scripts/sweep-layers.mjs` fails the build on
 either, and KaTeX-checks every LaTeX field with **no macros defined**.
+
+#### `forall` is the domain, `cond` is the restriction (split 2026-07-23)
+
+The two used to hold the same thing: definitions drifted to `cond`, theorems to
+`forall`, and several cards mashed both into one field, so identical content showed
+up under two names with two labels. The rule now, enforced editorially:
+
+- **`forall` = where the free variables live** — `a \in \mathbb{R}`, `n \in \mathbb{N}`,
+  `S \subseteq \mathbb{R}`. 22 of the 44 are one of three stock strings, which is the
+  sign that this is a type declaration rather than part of the claim.
+- **`cond` = what is additionally required of them** — `a \ne 0`, `a > 0`,
+  `S \ne \emptyset`. A `cond` never appears without a `forall`.
+
+`def.div` reads `for all a, b ∈ ℝ · provided b ≠ 0`, which is how you would say it
+aloud. The separation is not cosmetic: for generating exercises the **domain says
+where to sample and the condition says what to filter**, and that is unrecoverable
+once the two are merged into one string — or inlined into `latex`.
+
+**Why the quantifier is not a field.** These prefixes are always universal, because
+they scope the *free* variables and a stated law quantifies its free variables
+universally by construction. Every existential in the tower is **inside** the
+statement, where its variable is bound and so cannot appear in the prefix:
+`def.root`'s "the unique $b > 0$ with $b^{n} = a$", `th.root-exists`'s "there is
+exactly one $b$", `ax.completeness`'s $\sup S$. A `quantifier` token would read
+`all` on all 44 cards. The one genuine exception argues the same way:
+`pl.no-sum-law` states $(a+b)^n \neq a^n + b^n$, which is *not* universally true (it
+fails at $n = 1$), and it therefore carries **no prefix at all** — absence already
+encodes it, and its note explains that it is a counterexample card.
+
+**Why not `\forall` inside `latex`.** It would put a logic symbol students meet
+nowhere on 44 cards, against the standing rule; it would push an identical prefix in
+front of 19 axioms whose statement line should be the statement; and it would hide
+from any query the one thing a generator needs most.
 
 #### Field clusters are a convention, not a schema
 

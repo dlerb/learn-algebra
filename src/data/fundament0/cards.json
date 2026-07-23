@@ -525,24 +525,14 @@
             },
             {
               "code": "ax.multiplicative-inverse",
-              "concerns": [
-                "mul"
-              ],
-              "name": {
-                "en": "Inverse element of multiplication",
-                "de": "Inverses Element der Multiplikation"
-              },
+              "concerns": ["mul"],
+              "name": {"en": "Inverse element of multiplication", "de": "Inverses Element der Multiplikation"},
               "latex": "a \\cdot a^{-1} = 1",
-              "forall": "a \\in \\mathbb{R},\\ a \\ne 0",
-              "note": {
-                "en": "The element $a^{-1}$ is the multiplicative inverse of $a$. Unlike the additive case it has no prefix operator, so it is written postfix as $a^{-1}$.",
-                "de": "Das Element $a^{-1}$ ist das multiplikative Inverse von $a$. Anders als bei der Addition gibt es keinen vorangestellten Operator, daher die nachgestellte Schreibweise $a^{-1}$."
-              },
-              "intuition": {
-                "en": "For any nonzero $a$ there is a reciprocal that scales it back to $1$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $0$ up to $1$. Where the picture stops: 'how much of $a$ makes one' is a partition, and partitions reach the fractions and no further. For $a = \\sqrt{2}$ the reciprocal is not a number of pieces; the axiom asserts it exists anyway.",
-                "de": "Für jedes $a \\ne 0$ gibt es einen Kehrwert, der es auf $1$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $0$ auf $1$. Wo das Bild aufhört: 'wie viel von $a$ gibt eins' ist eine Aufteilung, und Aufteilungen reichen bis zu den Brüchen und nicht weiter. Für $a = \\sqrt{2}$ ist der Kehrwert keine Anzahl Stücke; das Axiom behauptet trotzdem, dass er existiert."
-              },
-              "basedOn": ["op.mul"]
+              "forall": "a \\in \\mathbb{R}",
+              "cond": "a \\ne 0",
+              "basedOn": ["op.mul"],
+              "note": {"en": "The element $a^{-1}$ is the multiplicative inverse of $a$. Unlike the additive case it has no prefix operator, so it is written postfix as $a^{-1}$.", "de": "Das Element $a^{-1}$ ist das multiplikative Inverse von $a$. Anders als bei der Addition gibt es keinen vorangestellten Operator, daher die nachgestellte Schreibweise $a^{-1}$."},
+              "intuition": {"en": "For any nonzero $a$ there is a reciprocal that scales it back to $1$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $0$ up to $1$. Where the picture stops: 'how much of $a$ makes one' is a partition, and partitions reach the fractions and no further. For $a = \\sqrt{2}$ the reciprocal is not a number of pieces; the axiom asserts it exists anyway.", "de": "Für jedes $a \\ne 0$ gibt es einen Kehrwert, der es auf $1$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $0$ auf $1$. Wo das Bild aufhört: 'wie viel von $a$ gibt eins' ist eine Aufteilung, und Aufteilungen reichen bis zu den Brüchen und nicht weiter. Für $a = \\sqrt{2}$ ist der Kehrwert keine Anzahl Stücke; das Axiom behauptet trotzdem, dass er existiert."}
             }
           ]
         },
@@ -711,24 +701,14 @@
           "cards": [
             {
               "code": "ax.completeness",
-              "concerns": [
-                "order",
-                "completeness"
-              ],
-              "name": {
-                "en": "Completeness axiom",
-                "de": "Vollständigkeitsaxiom"
-              },
-              "latex": "S \\subseteq \\mathbb{R},\\ S \\ne \\emptyset,\\ S \\text{ bounded above} \\;\\Rightarrow\\; \\sup S \\in \\mathbb{R}",
-              "note": {
-                "en": "An upper bound of a set $S$ is an element $b$ with $x \\le b$ for every $x \\in S$; $S$ is bounded above if it has one. The least upper bound $\\sup S$ is the smallest upper bound. The axiom: every non-empty set that is capped above has a smallest cap, and it lies in $\\mathbb{R}$.",
-                "de": "Eine obere Schranke einer Menge $S$ ist ein Element $b$ mit $x \\le b$ für jedes $x \\in S$; $S$ ist nach oben beschränkt, wenn sie eine besitzt. Die kleinste obere Schranke $\\sup S$ ist die kleinste solche Schranke. Das Axiom: jede nicht-leere, nach oben beschränkte Menge hat eine kleinste Schranke, und sie liegt in $\\mathbb{R}$."
-              },
-              "intuition": {
-                "en": "The number line has no gaps. This is the one assumption that leaves algebra behind: it speaks not of single elements and operations but of whole sets and their bounds. It is exactly what tells $\\mathbb{R}$ from $\\mathbb{Q}$: the rationals whose square is below $2$ are bounded above, yet among the rationals there is no least bound, so $\\mathbb{Q}$ has a hole where $\\sqrt{2}$ should be. Completeness fills every such hole, and from it the roots of positive elements exist (to be defined). Where the picture stops, and this one is worth the trouble: the gapless line is not evidence for this axiom, it is a picture of it. Anyone who draws the line has already assumed what is being asserted. Nor can the hole at $\\sqrt{2}$ be seen, since the missing point is exactly what cannot be drawn. That circularity is why completeness has to be assumed rather than shown.",
-                "de": "Die Zahlengerade hat keine Lücken. Dies ist die eine Annahme, die die Algebra hinter sich lässt: sie spricht nicht von einzelnen Elementen und Operationen, sondern von ganzen Mengen und ihren Schranken. Genau sie unterscheidet $\\mathbb{R}$ von $\\mathbb{Q}$: die rationalen Zahlen mit Quadrat unter $2$ sind nach oben beschränkt, doch unter den rationalen Zahlen gibt es keine kleinste Schranke, also hat $\\mathbb{Q}$ ein Loch dort, wo $\\sqrt{2}$ sein sollte. Die Vollständigkeit füllt jedes solche Loch, und aus ihr existieren die Wurzeln positiver Elemente (noch zu definieren). Wo das Bild aufhört, und hier lohnt sich die Mühe: die lückenlose Gerade ist kein Beleg für dieses Axiom, sie ist ein Bild davon. Wer die Gerade zeichnet, hat das Behauptete schon vorausgesetzt. Auch die Lücke bei $\\sqrt{2}$ lässt sich nicht sehen, denn der fehlende Punkt ist genau das, was sich nicht zeichnen lässt. Diese Zirkularität ist der Grund, warum die Vollständigkeit angenommen und nicht gezeigt werden muss."
-              },
-              "basedOn": ["op.lt"]
+              "concerns": ["order", "completeness"],
+              "name": {"en": "Completeness axiom", "de": "Vollständigkeitsaxiom"},
+              "latex": "\\sup S \\in \\mathbb{R}",
+              "forall": "S \\subseteq \\mathbb{R}",
+              "cond": "S \\ne \\emptyset,\\ S \\text{ bounded above}",
+              "basedOn": ["op.lt"],
+              "note": {"en": "An upper bound of a set $S$ is an element $b$ with $x \\le b$ for every $x \\in S$; $S$ is bounded above if it has one. The least upper bound $\\sup S$ is the smallest upper bound. The axiom: every non-empty set that is capped above has a smallest cap, and it lies in $\\mathbb{R}$.", "de": "Eine obere Schranke einer Menge $S$ ist ein Element $b$ mit $x \\le b$ für jedes $x \\in S$; $S$ ist nach oben beschränkt, wenn sie eine besitzt. Die kleinste obere Schranke $\\sup S$ ist die kleinste solche Schranke. Das Axiom: jede nicht-leere, nach oben beschränkte Menge hat eine kleinste Schranke, und sie liegt in $\\mathbb{R}$."},
+              "intuition": {"en": "The number line has no gaps. This is the one assumption that leaves algebra behind: it speaks not of single elements and operations but of whole sets and their bounds. It is exactly what tells $\\mathbb{R}$ from $\\mathbb{Q}$: the rationals whose square is below $2$ are bounded above, yet among the rationals there is no least bound, so $\\mathbb{Q}$ has a hole where $\\sqrt{2}$ should be. Completeness fills every such hole, and from it the roots of positive elements exist (to be defined). Where the picture stops, and this one is worth the trouble: the gapless line is not evidence for this axiom, it is a picture of it. Anyone who draws the line has already assumed what is being asserted. Nor can the hole at $\\sqrt{2}$ be seen, since the missing point is exactly what cannot be drawn. That circularity is why completeness has to be assumed rather than shown.", "de": "Die Zahlengerade hat keine Lücken. Dies ist die eine Annahme, die die Algebra hinter sich lässt: sie spricht nicht von einzelnen Elementen und Operationen, sondern von ganzen Mengen und ihren Schranken. Genau sie unterscheidet $\\mathbb{R}$ von $\\mathbb{Q}$: die rationalen Zahlen mit Quadrat unter $2$ sind nach oben beschränkt, doch unter den rationalen Zahlen gibt es keine kleinste Schranke, also hat $\\mathbb{Q}$ ein Loch dort, wo $\\sqrt{2}$ sein sollte. Die Vollständigkeit füllt jedes solche Loch, und aus ihr existieren die Wurzeln positiver Elemente (noch zu definieren). Wo das Bild aufhört, und hier lohnt sich die Mühe: die lückenlose Gerade ist kein Beleg für dieses Axiom, sie ist ein Bild davon. Wer die Gerade zeichnet, hat das Behauptete schon vorausgesetzt. Auch die Lücke bei $\\sqrt{2}$ lässt sich nicht sehen, denn der fehlende Punkt ist genau das, was sich nicht zeichnen lässt. Diese Zirkularität ist der Grund, warum die Vollständigkeit angenommen und nicht gezeigt werden muss."}
             }
           ]
         }
@@ -758,36 +738,22 @@
           "cards": [
             {
               "code": "def.sub",
-              "concerns": [
-                "add"
-              ],
-              "name": {
-                "en": "Subtraction",
-                "de": "Subtraktion"
-              },
+              "concerns": ["add"],
+              "name": {"en": "Subtraction", "de": "Subtraktion"},
               "latex": "a - b := a + (-b)",
+              "forall": "a, b \\in \\mathbb{R}",
               "basedOn": ["ax.additive-inverse", "ix.no-adjacent-operator"],
-              "note": {
-                "en": "Subtraction is not a new operation, just adding the additive inverse.",
-                "de": "Die Subtraktion ist keine neue Operation, sondern die Addition des additiven Inversen."
-              }
+              "note": {"en": "Subtraction is not a new operation, just adding the additive inverse.", "de": "Die Subtraktion ist keine neue Operation, sondern die Addition des additiven Inversen."}
             },
             {
               "code": "def.div",
-              "concerns": [
-                "mul"
-              ],
-              "name": {
-                "en": "Division",
-                "de": "Division"
-              },
+              "concerns": ["mul"],
+              "name": {"en": "Division", "de": "Division"},
               "latex": "\\frac{a}{b} := a \\cdot b^{-1}",
+              "forall": "a, b \\in \\mathbb{R}",
               "cond": "b \\ne 0",
               "basedOn": ["ax.multiplicative-inverse", "op.mul"],
-              "note": {
-                "en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling.",
-                "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen. Ihr Spezialfall $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ ist der Kehrwert von $a$: dasselbe Element wie das Inverse, in der alltäglichen Schreibweise."
-              }
+              "note": {"en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling.", "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen. Ihr Spezialfall $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ ist der Kehrwert von $a$: dasselbe Element wie das Inverse, in der alltäglichen Schreibweise."}
             },
             {
               "code": "def.abs",
