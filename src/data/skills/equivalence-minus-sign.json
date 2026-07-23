@@ -10,10 +10,11 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "def.subtraction"
+      "def.sub"
     ],
     "governedBy": [
-      "conv.minus-roles"
+      "th.negative-one-times",
+      "def.sub"
     ],
     "errors": [
       "anti.commute-everything"
@@ -33,11 +34,12 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "def.subtraction",
-      "thm.negative-one-times"
+      "def.sub",
+      "th.negative-one-times"
     ],
     "governedBy": [
-      "conv.minus-roles"
+      "th.negative-one-times",
+      "def.sub"
     ],
     "errors": [
       "mis.minus-roles-confused"
@@ -61,8 +63,9 @@
       "thm.minus-over-sum"
     ],
     "governedBy": [
-      "conv.minus-roles",
-      "conv.brackets-group"
+      "th.negative-one-times",
+      "def.sub",
+      "ix.brackets"
     ],
     "errors": [
       "anti.partial-distribution",
@@ -87,8 +90,9 @@
       "thm.minus-over-sum"
     ],
     "governedBy": [
-      "conv.minus-roles",
-      "conv.brackets-group"
+      "th.negative-one-times",
+      "def.sub",
+      "ix.brackets"
     ],
     "errors": [
       "anti.partial-distribution"
@@ -108,10 +112,11 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "thm.double-negative"
+      "th.minus-times-minus"
     ],
     "governedBy": [
-      "conv.minus-roles"
+      "th.negative-one-times",
+      "def.sub"
     ],
     "errors": [
       "mis.minus-roles-confused"
@@ -133,11 +138,13 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "thm.sign-rules"
+      "th.minus-times-minus",
+      "th.opposite-flips"
     ],
     "governedBy": [
-      "conv.juxtaposition",
-      "conv.minus-roles"
+      "ix.juxtaposition",
+      "th.negative-one-times",
+      "def.sub"
     ],
     "errors": [
       "mis.minus-roles-confused"
@@ -162,7 +169,8 @@
       "thm.fraction-sign-moves"
     ],
     "governedBy": [
-      "conv.minus-roles",
+      "th.negative-one-times",
+      "def.sub",
       "conv.fraction-bar"
     ],
     "errors": [
@@ -187,8 +195,9 @@
       "thm.subtract-a-sum"
     ],
     "governedBy": [
-      "conv.minus-roles",
-      "conv.brackets-group"
+      "th.negative-one-times",
+      "def.sub",
+      "ix.brackets"
     ],
     "errors": [
       "anti.partial-distribution"
@@ -212,8 +221,9 @@
       "thm.subtract-a-sum"
     ],
     "governedBy": [
-      "conv.minus-roles",
-      "conv.brackets-group"
+      "th.negative-one-times",
+      "def.sub",
+      "ix.brackets"
     ],
     "errors": [
       "anti.partial-distribution"

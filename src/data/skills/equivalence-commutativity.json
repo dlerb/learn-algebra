@@ -27,7 +27,7 @@
       "ax.mul-commutative"
     ],
     "governedBy": [
-      "conv.juxtaposition"
+      "ix.juxtaposition"
     ]
   },
   {
@@ -44,10 +44,11 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "def.subtraction"
+      "def.sub"
     ],
     "governedBy": [
-      "conv.minus-roles"
+      "th.negative-one-times",
+      "def.sub"
     ],
     "errors": [
       "anti.commute-everything"
@@ -65,7 +66,7 @@
       "equivalence.division-variants"
     ],
     "justifiedBy": [
-      "def.division"
+      "def.div"
     ],
     "governedBy": [
       "conv.division-signs"

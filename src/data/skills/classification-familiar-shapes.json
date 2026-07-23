@@ -18,8 +18,9 @@
       "thm.difference-of-squares"
     ],
     "governedBy": [
-      "conv.precedence",
-      "conv.exponent-scope"
+      "ix.precedence",
+      "ix.pow",
+      "th.negative-base"
     ]
   },
   {

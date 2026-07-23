@@ -153,6 +153,56 @@ in several layers at once; detail in `docs/fundament0.md`):
 
 ---
 
+## The `algebra` layer — the tower's fourth floor (spec'd 2026-07-23, NOT started)
+
+House-cleaning on 2026-07-23 made the fundament tower the primary reference and cut
+`laws.json` 38 → 15 and `conventions.json` 12 → 2. **What survives is the spec for
+this layer**: it is precisely what the tower does not state, and the gap has a shape.
+The tower is complete for the *linear infix core* — one operation, one term at a
+time — and empty wherever school algebra is two-dimensional or two-termed.
+
+Confirmation that it is ready to write: the 17 survivors already cite **45 tower
+cards** and only **4 of each other**. Every derivation is one or two steps from
+cards that exist.
+
+**Cluster 1 — the fraction bar.** `def.div` defines `a/b := a·b⁻¹` and stops; every
+`ix.*` convention is about *linear* infix, so nothing in the tower says the bar is
+two-dimensional and groups both its parts implicitly, which is exactly why students
+mis-handle it.
+`conv.fraction-bar` · `conv.division-signs` (÷ / : synonyms, and `:` is the Swiss
+one) · `thm.split-numerator` · `thm.cancel-common-factor` · `thm.fraction-sign-moves`
+· `thm.divide-by-one` · `thm.power-same-base-quotient` · `thm.power-of-quotient` ·
+`thm.root-of-quotient`
+
+**Cluster 2 — the binomial.** Nothing in the tower multiplies two sums.
+`thm.binomial-square` · `thm.square-of-difference` · `thm.difference-of-squares`
+
+**Cluster 3 — minus over sums.** One line each from `th.negative-one-times` +
+`ax.distributivity`; derivable today, but a skill needs a card to point at.
+`thm.minus-over-sum` · `thm.subtract-a-sum` · `thm.collect-like-terms` ·
+`thm.root-of-product` · `thm.root-power-order`
+
+⭐ **Do this one first, whatever else waits:** the tower has `pl.no-sum-law` — *there
+is no law for sums*, `(a+b)ⁿ ≠ aⁿ + bⁿ` — and does **not** have `thm.binomial-square`.
+Students are told what does not work and never what does. That asymmetry is a
+pedagogical bug independent of the layer question.
+
+## Decimal numbers and other special numbers — for the `numbers` layer (2026-07-23)
+
+The `numbers` layer's stated criterion is *distinguished subsets of ℝ and the
+vocabulary for naming their elements*, and both halves have obvious holes:
+
+- **Decimal representation.** `def.numeral` names one element at a time
+  (`2 := 1+1`); positional/decimal notation is a different machine and has to
+  explain `1.23`. It is what the full `1.23·a` card needs — already planted in
+  `th.multiple-is-product`'s intuition (copies run out, the product does not).
+  Note `conv.division-signs` above: the Swiss `:` and the decimal point/comma
+  question belong in the same pass.
+- **Divisibility and the primes** — the first structure *inside* ℕ.
+- **Other special numbers** — π and e (named constants with no algebraic
+  definition, which is itself the point), and the irrationals as a *set* now that
+  `th.no-rational-square-two` has exhibited one.
+
 ## Done — Taxonomy as data + reference library
 
 - [x] Project setup (Vue 3, Vite, Pinia, Naive UI, UnoCSS, KaTeX)

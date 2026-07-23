@@ -16,7 +16,7 @@
       "thm.collect-like-terms"
     ],
     "governedBy": [
-      "conv.juxtaposition"
+      "ix.juxtaposition"
     ],
     "errors": [
       "anti.conjoining"
@@ -39,7 +39,7 @@
       "thm.collect-like-terms"
     ],
     "governedBy": [
-      "conv.juxtaposition"
+      "ix.juxtaposition"
     ],
     "errors": [
       "anti.conjoining"

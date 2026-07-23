@@ -48,7 +48,7 @@
       "ax.add-commutative"
     ],
     "governedBy": [
-      "conv.precedence"
+      "ix.precedence"
     ],
     "errors": [
       "mis.precedence-ignored"

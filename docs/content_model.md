@@ -3,17 +3,25 @@
 How the algebra content is structured. Everything lives under `src/data/` and is
 validated by `skill.schema.ts` on load. The layers:
 
-- **laws** (`laws.json`) — the logical tower: axioms, definitions, theorems.
-- **conventions** (`conventions.json`) — the rules of the writing system.
+- **the fundament tower** (`src/data/<layer>/cards.json`, composed by
+  `src/data/layers.ts`) — **the primary reference since 2026-07-23**: the axioms,
+  conventions, definitions and theorems, each traced to what it rests on.
+  `fundament0 · numbers · powers`. See `docs/fundament0.md`.
+- **laws** (`laws.json`) + **conventions** (`conventions.json`) — **a legacy stub.**
+  These were the original law tower. On 2026-07-23 everything the fundament also
+  states was retired from them (38 laws → 15, 12 conventions → 2) and every citation
+  repointed at a card code. What is left is exactly what the tower does **not** yet
+  state: the **fraction bar** and the **binomial**. Do not add to these files; they
+  are the spec for a future `algebra` layer (`docs/TODO.md`).
 - **errors** (`errors.json`) — the error patterns that shadow the above.
 - **meta-patterns** (`metapatterns.json`) — student-facing digests of them.
 
-  *(Note on the word: "layer" here means a **file/role** inside the skills tower.
-  The separate **fundament tower** — `fundament0 · numbers · naturals · integers · rationals`,
-  under `src/data/<layer>/cards.json` and composed by `src/data/layers.ts` — also
-  calls its floors layers, in the sense of mathematical dependency. The two towers
-  are deliberately separate representations and must not be merged; see
-  `docs/fundament0.md`.)*
+  *(Note on the word: "layer" means both a **file/role** here and a **floor** of the
+  fundament tower, in the sense of mathematical dependency. The two remain separate
+  representations — the tower is not generated from the skills side or vice versa —
+  but they are no longer disconnected: skills reach into the tower by card code, and
+  `pnpm sweep-layers` fails if any reference resolves to neither a card nor a
+  surviving legacy id.)*
 - **skills** (`skills/*.json`) — curated *strategies/skills* built on the
   laws × conventions coordinate system: what is worth drilling, and why. Each
   skill's concrete material lives separately in…
