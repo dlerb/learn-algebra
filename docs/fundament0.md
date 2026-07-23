@@ -50,11 +50,11 @@ The page tells one linear story:
    summands, factors, coefficient. **`op.lt` also defines *positive* (`0<a`) and
    *negative* (`a<0`)** — the terms live with the relation that makes them possible,
    not in a `def.` card. There is no `def.sign`.
-2. **Reading an expression** (`ix.brackets`, `ix.left-to-right`, `ix.precedence`,
-   `ix.fraction-bar`, `ix.division-signs`) — the parsing rules, before the axioms on
-   purpose: association and distribution cannot be *stated* without brackets and
-   precedence. Nothing in this section rests on anything below it.
-   **The writing conventions are a separate section, further down** — see step 4.
+2. **Reading an expression** (`ix.brackets`, `ix.left-to-right`, `ix.precedence`) —
+   the parsing rules, before the axioms on purpose: association and distribution cannot
+   be *stated* without brackets and precedence. Nothing here rests on anything below,
+   **which is exactly why the fraction bar is not in this section** — it denotes an
+   operation the signature does not have. See step 5.
 3. **The axioms** — Equality (the four `ax.eq-*`), Addition (`ax.add-*`), Multiplication
    (`ax.mul-*`), Bridge (`ax.distributivity`, `ax.zero-not-one` `0≠1`), **Order
    (`ax.order-trichotomy`, `ax.order-transitive`, `ax.order-add`, `ax.order-mul`)**,
@@ -62,21 +62,20 @@ The page tells one linear story:
    condition is exactly where "flip the inequality when multiplying by a negative"
    comes from. `ax.completeness` is different in kind — it speaks of *sets*, not elements (the
    analysis seam), and its intuition motivates via the ℚ hole at `√2`.
-4. **Writing without ambiguity** (`ix.negative-factor`, `ix.no-adjacent-operator`,
-   `ix.coefficient-front`, `ix.invisible-one`) — split out of the old single convention
-   section on 2026-07-23 and moved **between the axioms and the definitions**, because
-   every one of them presupposes an axiom: the first two need the unary minus of
+4. **Definitions** — subtraction (`def.sub`, rests on `ax.additive-inverse` and
+   `ix.brackets`), division (`def.div`) and absolute value (`def.abs`). **`def.div`
+   introduces the bar**, together with the meaning, exactly as `def.sub` introduces the
+   binary minus; that the bar also *groups* is a separate fact and waits for step 5.
+5. **Writing without ambiguity** (`ix.negative-factor`, `ix.no-adjacent-operator`,
+   `ix.coefficient-front`, `ix.invisible-one`, `ix.fraction-bar`,
+   `ix.division-symbols`) — split out of the old single convention section on
+   2026-07-23 and placed **after the definitions**, because every card in it
+   presupposes something already given: the first two need the unary minus of
    `ax.additive-inverse`, `ix.coefficient-front` needs `ax.mul-commutative`,
-   `ix.invisible-one` needs `ax.one-neutral`. They come *before* the definitions rather
-   than after because `def.sub` is written `a + (−b)`, brackets and all, and
-   `ix.no-adjacent-operator` is what puts them there. **A parsing rule makes the axioms
-   writable; a writing rule is a recommendation about expressions whose meaning is
-   already fixed.**
-5. **Definitions** — subtraction (`def.sub`, rests on `ax.additive-inverse`), division (`def.div`,
-   rests on `ax.multiplicative-inverse`; reciprocal noted there) and **absolute value (`def.abs`, three cases
-   by trichotomy; added 2026-07-22 for the ℚ layer's `√(x²) = |x|` — and it does *not*
-   say "leave off the minus")**. Not new operations. (`positive`/`negative`
-   are *not* here — see step 1.)
+   `ix.invisible-one` needs `ax.one-neutral`, and the last two need `def.div` — a bar
+   cannot be a convention for an operation the page has not got yet.
+   **A parsing rule makes the axioms writable; a writing rule is a recommendation about
+   expressions whose meaning is already fixed.**
 6. **Theorems** — field: `th.zero-times` (`0·a=0`), `th.negative-one-times` (`−a=(−1)·a`), **`th.zero-product`
    (zero product, `ab=0 ⟹ a=0 or b=0` — the converse of `th.zero-times` and the licence for
    solving by factoring; added 2026-07-22 with the ℤ layer)**, `th.minus-times-minus`
@@ -199,7 +198,7 @@ section sitting before the thing it rests on:
 
 | layer | was | now |
 |---|---|---|
-| fundament0 | one `convention` section before the axioms | `reading` before them, `writing` between axioms and definitions |
+| fundament0 | one `convention` section before the axioms | `reading` before them, `writing` **after the definitions** |
 | numbers | `notation` before the definitions | `notation` last — `ix.juxtaposition` rests on `th.multiple-is-product` |
 | powers (ℚ act) | `rat-notation` before `rat-definition` | after it — `ix.root` rests on `def.root` |
 
@@ -207,13 +206,30 @@ Citing a **lower layer** is unaffected; that is the point of the tower. Only
 `basedOn`/`derivedFrom` are checked, so prose may still point forward — the ℕ act's
 note deferring `a⁰` to the layers above is deliberate.
 
-The trigger was a good question with a wrong premise: whether the definitions should
-move up because the fraction conventions use them. They must not — `def.sub` needs
-`ax.additive-inverse` and `def.div` needs `ax.multiplicative-inverse`, so definitions
-cannot precede the axioms. And the fraction cards were never the problem:
-`ix.fraction-bar` cites only `ix.brackets`, and it is `def.div` that cites
-`ix.fraction-bar`, exactly as `ax.add-associative` cites `ix.brackets`. The real
-offenders were the four writing conventions.
+**The fraction bar took two passes, and the second one corrected the first.** The
+initial fix moved only the four writing conventions, on the argument that
+`ix.fraction-bar` cites just `ix.brackets` while `def.div` cites *it*, so the direction
+was already right — the same shape as `ax.add-associative` citing `ix.brackets`.
+
+That analogy is wrong, and the difference matters. **Brackets need nothing defined**:
+they are pure grouping, and they operate on operations the signature already has. **The
+bar denotes an operation the signature does not have** — `+`, `·`, `=`, `<` and no
+division — so writing `\frac{a}{b}` before `def.div` uses something the page has not
+been given. Exactly the `ix.root`/`def.root` case, which had already been fixed in
+`powers` in the same pass.
+
+The resolution is that `def.div` **introduces** the bar rather than citing a convention
+for it, precisely as `def.sub` introduces the binary minus and no card licenses that
+symbol either. `ix.fraction-bar` then keeps only the claim that is genuinely a
+convention — *the bar is a bracket you do not write* — and moves after the definitions.
+
+Two consequences worth keeping: `def.sub` now cites `ix.brackets` rather than
+`ix.no-adjacent-operator` (writing `a + (−b)` needs the bracket; avoiding `a + −b` is a
+preference, not a requirement), which is what frees `writing` to sit after
+`definitions`; and **`ix.division-symbols` now defines `:`, `÷` and `/`** instead of
+asserting four spellings are equal while none of them has a meaning. It was renamed
+from `ix.division-signs` because the sweep rejects "sign" — a card titled *signs*
+invites exactly the ± confusion that word was retired for.
 
 ### The card format (all three layers, 2026-07-23)
 

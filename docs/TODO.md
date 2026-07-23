@@ -167,7 +167,7 @@ cards that exist. `laws.json` is down to **14** after `th.binomial-square` moved
 
 **Cluster 1 — the fraction bar. ✅ DONE 2026-07-23**, split across three layers by the
 same filing logic that placed the binomials: the **notation** went to `fundament0`
-(`ix.fraction-bar`, `ix.division-signs` in the `infix`/reading group, and `def.div`
+(`ix.fraction-bar`, `ix.division-symbols` in the `infix`/reading group, and `def.div`
 now cites the bar it is written with); the **quotient power laws** went to `powers`
 (`th.pow-quotient-same-base`, `th.pow-of-quotient` in the ℤ act, `th.root-laws` in the
 ℚ act); the **transformations** went to `algebra`'s new `fractions` section

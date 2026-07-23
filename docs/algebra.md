@@ -70,7 +70,7 @@ moved the binomials up here sends its pieces to three different floors:
 - **The notation is fundament0's.** `def.div` already writes `\frac{a}{b}`, so by the
   tower's own rule — *a statement cites the convention it cannot be written without* —
   the bar had to be a convention below it, not above. `ix.fraction-bar` and
-  `ix.division-signs` joined the `infix` section's *reading* group, and `def.div` now
+  `ix.division-symbols` joined the `infix` section's *reading* group, and `def.div` now
   cites `ix.fraction-bar`.
 - **The quotient power laws are powers'.** `th.pow-quotient-same-base` (ℤ act) and
   `th.pow-of-quotient` (ℤ act) are statements about exponents wearing a bar, not facts
