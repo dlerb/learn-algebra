@@ -1,11 +1,11 @@
 # numbers — the named subsets of ℝ
 
-The second layer of the tower, sitting directly on **fundament0** (`docs/fundament0.md`).
+The second layer of the tower, sitting directly on **fundamentals** (`docs/fundamentals.md`).
 Data: `src/data/numbers/cards.json`; page: `/numbers`. Tag: **`≙ ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ`**.
 
 ## What it is
 
-fundament0 leaves ℝ **undifferentiated**: the axioms say nothing about counting,
+fundamentals leaves ℝ **undifferentiated**: the axioms say nothing about counting,
 primes or decimals. This layer names the parts — ℕ, ℤ, ℚ — and works out what
 counting lets us build (numerals, the times table, multiples). It **assumes nothing**:
 every set is carved out of what the axioms already forced to exist.
@@ -31,7 +31,7 @@ extraction moved **groups, not cards**: eleven cards, prose untouched.
 *definition methods*, not sets. Cross-layer citations (`def.pow` → `def.nat`,
 `def.pow-rat` → `def.rat`) resolve through `src/data/layers.ts` as before.
 
-`rk.existence` in fundament0 records the **direction**, which is what makes this layer
+`rk.existence` in fundamentals records the **direction**, which is what makes this layer
 coherent: the standard construction of ℝ builds it *out of* ℕ, ℤ, ℚ; here they are
 carved *out of* an ℝ already given. Different questions — what the number line
 contains vs. whether there is one. That is also why there is no "existence" layer.
@@ -71,7 +71,7 @@ Consequences that make this the right call, not merely the correct one:
 - **`th.numerals-distinct` needs order.** That $2 \neq 3$ is not a field fact (a field
   may satisfy $1+1=0$); `th.zero-less-than-one` + `ax.order-add` + `ax.order-transitive` is what stops counting from looping.
   The sharpest dependency-bookkeeping card in the layer.
-- **`ix.juxtaposition` justifies `ix.coefficient-front` rather than re-licensing it.** fundament0
+- **`ix.juxtaposition` justifies `ix.coefficient-front` rather than re-licensing it.** fundamentals
   already *prefers* $3a$; this card supplies the proof that the abbreviation loses
   nothing, plus the two limits (not between numerals — $34$ is another name; and it
   says *which* multiplication, not how tightly it binds).

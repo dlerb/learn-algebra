@@ -13,7 +13,7 @@ import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Group, type Secti
 // `kind` is the section (preliminary/signature/convention/axiom/definition/
 // theorem/remark); `concerns` is a per-card multi-tag (add/mul/eq/order/
 // completeness). Two filter rows (kind, concerns) dim non-matching cards. Page
-// order is array order, top to bottom. See docs/fundament0.md.
+// order is array order, top to bottom. See docs/fundamentals.md.
 //
 // ONE card template, driven by field presence (2026-07-23). `kind` is a claim
 // about knowledge, not about layout, so it no longer selects a template: a card
@@ -30,7 +30,7 @@ const sections = computed<Section[]>(() => layer.value.data.sections)
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 // Citations resolve tower-wide, not just inside this layer: naturals cards rest
-// on fundament0 codes (th.negative-base → th.negative-one-times, ix.precedence).
+// on fundamentals codes (th.negative-base → th.negative-one-times, ix.precedence).
 const codeLabel = (code: string) => {
   const x = cardIndex.get(code)
   return x ? `${code} · ${t(x.card.name)}` : code

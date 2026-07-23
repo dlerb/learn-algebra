@@ -7,7 +7,7 @@ Tag: **`≙ expand · collect · cancel`**. Started 2026-07-23, **deliberately u
 ## What it is, and why it is a layer rather than a section
 
 Every layer below says what things **are** — what the operations satisfy
-(`fundament0`), which subsets of ℝ have names (`numbers`), how one operation extends
+(`fundamentals`), which subsets of ℝ have names (`numbers`), how one operation extends
 across a widening exponent (`powers`). Here every card says what may be **done** to an
 expression that has parts: expand a product of sums, collect what repeats, cancel what
 undoes itself.
@@ -83,7 +83,7 @@ Teaching points carried on the cards:
 The fraction cluster does not sit in one place, because the same filing logic that
 moved the binomials up here sends its pieces to three different floors:
 
-- **The notation is fundament0's.** `def.div` already writes `\frac{a}{b}`, so by the
+- **The notation is fundamentals's.** `def.div` already writes `\frac{a}{b}`, so by the
   tower's own rule — *a statement cites the convention it cannot be written without* —
   the bar had to be a convention below it, not above. `ix.fraction-bar` and
   `ix.division-symbols` joined the `infix` section's *reading* group, and `def.div` now

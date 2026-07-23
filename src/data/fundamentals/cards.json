@@ -1,6 +1,6 @@
 {
   "layer": {
-    "id": "fundament0",
+    "id": "fundamentals",
     "meta": {
       "characterizes": {
         "en": "ℝ",
@@ -201,8 +201,8 @@
               },
               "latex": "a \\cdot b + a \\cdot c = (a \\cdot b) + (a \\cdot c)",
               "note": {
-                "en": "$\\cdot$ binds tighter than $+$, so a product needs no brackets inside a sum: $a \\cdot b + a \\cdot c$ reads as $(a \\cdot b) + (a \\cdot c)$, never $a \\cdot (b + a) \\cdot c$. This is the lower rung of a ranking. The tighter something binds, the more it counts as one piece before the looser operations look at it, and there is a rung above $\\cdot$ as well: the power, once it exists (ix.power-precedence, in the powers layer), binds tighter still. The full order is $\\text{power} \\succ \\cdot \\succ +$, but the top rung has to wait, because fundament0 has no power operator to rank yet.",
-                "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe: $a \\cdot b + a \\cdot c$ liest sich als $(a \\cdot b) + (a \\cdot c)$, nie als $a \\cdot (b + a) \\cdot c$. Das ist die untere Stufe einer Rangordnung. Je stärker etwas bindet, desto mehr gilt es als ein Stück, bevor die schwächeren Operationen es ansehen, und über $\\cdot$ gibt es noch eine Stufe: die Potenz bindet, sobald es sie gibt (ix.power-precedence, in der Schicht powers), noch stärker. Die volle Ordnung ist $\\text{Potenz} \\succ \\cdot \\succ +$, doch die oberste Stufe muss warten, weil fundament0 noch keinen Potenzoperator zum Einordnen hat."
+                "en": "$\\cdot$ binds tighter than $+$, so a product needs no brackets inside a sum: $a \\cdot b + a \\cdot c$ reads as $(a \\cdot b) + (a \\cdot c)$, never $a \\cdot (b + a) \\cdot c$. This is the lower rung of a ranking. The tighter something binds, the more it counts as one piece before the looser operations look at it, and there is a rung above $\\cdot$ as well: the power, once it exists (ix.power-precedence, in the powers layer), binds tighter still. The full order is $\\text{power} \\succ \\cdot \\succ +$, but the top rung has to wait, because fundamentals has no power operator to rank yet.",
+                "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe: $a \\cdot b + a \\cdot c$ liest sich als $(a \\cdot b) + (a \\cdot c)$, nie als $a \\cdot (b + a) \\cdot c$. Das ist die untere Stufe einer Rangordnung. Je stärker etwas bindet, desto mehr gilt es als ein Stück, bevor die schwächeren Operationen es ansehen, und über $\\cdot$ gibt es noch eine Stufe: die Potenz bindet, sobald es sie gibt (ix.power-precedence, in der Schicht powers), noch stärker. Die volle Ordnung ist $\\text{Potenz} \\succ \\cdot \\succ +$, doch die oberste Stufe muss warten, weil fundamentals noch keinen Potenzoperator zum Einordnen hat."
               },
               "basedOn": [
                 "op.add",

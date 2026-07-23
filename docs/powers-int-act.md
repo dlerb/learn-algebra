@@ -56,7 +56,7 @@ what remains here is powers only.
   one element: $(a^n)^{-1}$ (what the demand produces), $(a^{-1})^n$ (what shows it
   exists), $1/a^n$ (what school writes, and the most downstream — it needs `def.div`).
   Word split kept: **multiplicative inverse** = $a^{-1}$, **reciprocal** = $1/a$.
-- **`th.inverse-is-power` closes a backlog item.** At fundament0 `a^{-1}` was *atomic
+- **`th.inverse-is-power` closes a backlog item.** At fundamentals `a^{-1}` was *atomic
   notation* with a decorative `-1`; here it becomes literally the power with exponent
   $-1$, and the two readings coincide. Same move as `ix.juxtaposition`: notation used
   on trust, paid for later. Also settles the other half — the minus in $a^{-n}$ is the
@@ -67,7 +67,7 @@ what remains here is powers only.
   the others. Note the status change: on ℕ these were theorems about a recursion, here
   they are theorems about definitions built to satisfy them.
 
-## Added to fundament0 for this layer
+## Added to fundamentals for this layer
 
 **`th.zero-product` zero product** ($ab = 0 \Rightarrow a = 0$ or $b = 0$) — a one-line
 consequence of `ax.multiplicative-inverse` + `th.zero-times`, the converse of `th.zero-times`, and the entire basis of

@@ -67,7 +67,7 @@ recursion, said in words. Prefer it to any formal phrasing.
 pl.of-power, pl.of-product, pl.no-sum-law, th.negative-base).
 
 **Codes are slug-style, never numbered** (`pl.same-base`, not `th.zero-product`) so nothing can
-collide with fundament0's theorem codes now that citations resolve tower-wide.
+collide with fundamentals's theorem codes now that citations resolve tower-wide.
 
 ## Deferred (not built)
 

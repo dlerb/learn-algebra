@@ -1,14 +1,14 @@
-# fundament0 — the clean ℝ layer (complete ordered field)
+# fundamentals — the clean ℝ layer (complete ordered field)
 
 A deliberately isolated rebuild of the very bottom of algebra, mathematically
 stricter than the existing `laws.json` tower, which it does not touch. It lives
-in `src/data/fundament0/` and renders at `/fundament0`
+in `src/data/fundamentals/` and renders at `/fundamentals`
 (`src/views/LayerView.vue`, shared by every layer via `src/data/layers.ts`). This doc records the *why* and the open
 threads, not the content tables (they would drift — read the JSON).
 
 ## What it is
 
-`fundament0` specifies **ℝ as the complete ordered field**, from stated
+`fundamentals` specifies **ℝ as the complete ordered field**, from stated
 assumptions only. It is a **specification**, not a construction: we posit a set
 `R` with `+`, `·`, `<` and the axioms, and the claim is that anything satisfying
 them *is* ℝ (the axioms pin it down uniquely). The page's arc is the discovery
@@ -54,7 +54,7 @@ The page tells one linear story:
    the parsing rules, before the axioms on purpose: association and distribution cannot
    be *stated* without brackets and precedence. `ix.precedence` states only the
    lower rung `· ≻ +`; the top rung `power ≻ ·` waits for `ix.power-precedence` in the
-   powers layer, since fundament0 has no power operator to rank. Nothing here rests on anything below,
+   powers layer, since fundamentals has no power operator to rank. Nothing here rests on anything below,
    **which is exactly why the fraction bar is not in this section** — it denotes an
    operation the signature does not have. See step 5.
 3. **The axioms** — Equality (the four `ax.eq-*`), Addition (`ax.add-*`), Multiplication
@@ -154,7 +154,7 @@ skills tower**. That list is the surface to attach `errors.json`'s `corrupts` to
 ## Data structure (one file, 2026-07-18)
 
 The three files (`axioms.json` / `conventions.json` / `theorems.json`) were
-collapsed into a single **`src/data/fundament0/cards.json`**, a uniform
+collapsed into a single **`src/data/fundamentals/cards.json`**, a uniform
 containment tree — the flat structure discussion (see git log) landed here:
 
 ```
@@ -179,7 +179,7 @@ layer → sections[] → groups[] → cards[]
   the *given vocabulary*; function-vs-predicate is a group split inside it).
   **`remark` (2026-07-23) is the one kind off that ladder**: results reported from
   outside the page, neither assumed nor derived here (`rk.existence`/`rk.uniqueness`). It renders as
-  an ordinary statement card; the kind chip is per-layer, so it appears in fundament0
+  an ordinary statement card; the kind chip is per-layer, so it appears in fundamentals
   only.
 - **`groups[]`** — a *partition* of a kind's cards into titled sub-sections
   (`slug`, `title?`, `blurb?`). Membership is **structural** — the card nests
@@ -200,7 +200,7 @@ section sitting before the thing it rests on:
 
 | layer | was | now |
 |---|---|---|
-| fundament0 | one `convention` section before the axioms | `reading` before them, `writing` **after the definitions** |
+| fundamentals | one `convention` section before the axioms | `reading` before them, `writing` **after the definitions** |
 | numbers | `notation` before the definitions | `notation` last — `ix.juxtaposition` rests on `th.multiple-is-product` |
 | powers (ℚ act) | `rat-notation` before `rat-definition` | after it — `ix.root` rests on `def.root` |
 
@@ -235,7 +235,7 @@ invites exactly the ± confusion that word was retired for.
 
 ### The card format (all three layers, 2026-07-23)
 
-**One schema, 15 fields, two of them required.** Every card in `fundament0`,
+**One schema, 15 fields, two of them required.** Every card in `fundamentals`,
 `numbers` and `powers` validates against the same `Card` interface in
 `src/data/layers.ts`; there is no per-kind schema and no field in the data that the
 interface does not declare. `LocalizedString` is `{ en, de }` — both always present.
@@ -585,7 +585,7 @@ intuition / notation), and needs sorting before it is built.
   layer, where the arrow reverses and the laws *force* the definition) and the
   existence half (roots and rational powers, needing `ax.completeness`). See `docs/powers-nat-act.md`.
 - **The exponent `-1` / `-n`.** One glyph string, three readings: `b^{-1}` at
-  fundament0 is *atomic notation* for the inverse (ax.multiplicative-inverse), where the `-1` is
+  fundamentals is *atomic notation* for the inverse (ax.multiplicative-inverse), where the `-1` is
   decorative — not the number `-1`, and not a power (powers don't exist here). In
   the later powers layer, `a^{-1}` is re-read as `a` to the integer *literal* `-1`,
   while `a^{-n}` uses the additive-inverse *operator* on the *variable* `n`. They

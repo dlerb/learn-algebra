@@ -1,4 +1,4 @@
-// The layer-tree sweep from docs/fundament0.md "Verifying edits", made runnable:
+// The layer-tree sweep from docs/fundamentals.md "Verifying edits", made runnable:
 // `pnpm sweep-layers`. Compiles every latex field and every inline $…$ fragment
 // with NO macros defined (proving nothing depends on the deleted \num/\nnum),
 // then checks codes are unique tower-wide, citations resolve across layers,
@@ -10,7 +10,7 @@
 import katex from 'katex'
 import fs from 'fs'
 
-const files = ['src/data/fundament0/cards.json', 'src/data/numbers/cards.json', 'src/data/powers/cards.json', 'src/data/algebra/cards.json']
+const files = ['src/data/fundamentals/cards.json', 'src/data/numbers/cards.json', 'src/data/powers/cards.json', 'src/data/algebra/cards.json']
 const LATEX_FIELDS = ['latex','derivation','cond','forall','avoid','prefer','symbol','type']
 let errs = [], codes = new Map(), refs = [], n = 0
 const CONCERNS = new Set(['add','mul','eq','order','completeness'])
