@@ -71,7 +71,7 @@
     "name": { "en": "The fraction bar not recognized as division", "de": "Der Bruchstrich wird nicht als Division erkannt" },
     "text": { "en": "The bar is seen as a picture of a fraction, not as the operation $a \\div b$.",
               "de": "Der Strich wird als Bild eines Bruchs gesehen, nicht als die Operation $a \\div b$." } },
-  { "id": "mis.exponent-scope", "code": "R11", "kind": "misreading", "corrupts": ["ix.pow", "th.negative-base"],
+  { "id": "mis.exponent-scope", "code": "R11", "kind": "misreading", "corrupts": ["ix.power-precedence", "th.negative-base"],
     "name": { "en": "Exponent scope misread", "de": "Geltungsbereich des Exponenten verlesen" },
     "text": { "en": "The exponent applied to more than the immediately preceding atom.",
               "de": "Der Exponent wird auf mehr als das unmittelbar davorstehende Zeichen angewendet." },
