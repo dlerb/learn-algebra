@@ -38,14 +38,16 @@ out of the per-view headers). **Dark mode is scaffolded but NOT surfaced**:
 color tokens, so enabling the toggle now would darken only the chrome. Turning it
 on later ≈ one prop + a `:root[data-theme="dark"]` block in `tokens.css`.
 
-**Router** (`router.ts`, updated 2026-07-22): `/skills` (`TaxonomyView`),
-`/fundamentals` (`ReferenceView`), `/tutorial`, `/drills`, **plus one route per
-layer of the fundament tower** — `/fundamentals`, `/numbers`, `/powers`. Those three
-are **generated from the manifest** (`src/data/layers.ts`)
-and all render the same component (`LayerView`, selected by a `layerId` prop), so
-adding a layer needs no route and no nav entry; the `NMenu` options are generated
-from the same list. Activity routes are lazy-loaded so their future weight (CE
-grading) code-splits off the reference pages. **Tutorial and Drills are empty stubs.**
+**Router** (`router.ts`): `/skills` (`TaxonomyView`), `/errors` (`ReferenceView` —
+now an errors-only page), `/tutorial`, `/drills`, **plus one route per layer of the
+tower** — `/fundamentals`, `/numbers`, `/powers`, `/terms`. Those four are
+**generated from the manifest** (`src/data/layers.ts`) and all render the same
+component (`LayerView`, selected by a `layerId` prop), so adding a layer needs no
+route. The **nav groups them** (`App.vue`): a "Fundament" dropdown over the four
+layers, a "Curated" dropdown over Skills + Errors, then Tutorial and Drills. Group
+headers use `-menu` keys so they never collide with a route. Activity routes are
+lazy-loaded so their future weight (CE grading) code-splits off the reference pages.
+**Tutorial and Drills are empty stubs.**
 
 **Two audiences.** `Skills`, `Fundamentals` and the four **layer** pages are
 *browsable catalogs* and today are **teacher/dev inspection surfaces** — they show

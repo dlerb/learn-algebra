@@ -10,7 +10,7 @@
 import katex from 'katex'
 import fs from 'fs'
 
-const files = ['src/data/fundamentals/cards.json', 'src/data/numbers/cards.json', 'src/data/powers/cards.json', 'src/data/algebra/cards.json']
+const files = ['src/data/fundamentals/cards.json', 'src/data/numbers/cards.json', 'src/data/powers/cards.json', 'src/data/terms/cards.json']
 const LATEX_FIELDS = ['latex','derivation','cond','forall','avoid','prefer','symbol','type']
 let errs = [], codes = new Map(), refs = [], n = 0
 const CONCERNS = new Set(['add','mul','eq','order','completeness'])

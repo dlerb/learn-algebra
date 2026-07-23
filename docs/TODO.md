@@ -153,7 +153,7 @@ in several layers at once; detail in `docs/fundamentals.md`):
 
 ---
 
-## The `algebra` layer — STARTED 2026-07-23 (binomials built, fractions not)
+## The `terms` layer (Term manipulations) — STARTED 2026-07-23; renamed from `algebra` 2026-07-23
 
 House-cleaning on 2026-07-23 made the fundament tower the primary reference and cut
 `laws.json` 38 → 15 and `conventions.json` 12 → 2. **What survives is the spec for
@@ -170,13 +170,13 @@ same filing logic that placed the binomials: the **notation** went to `fundament
 (`ix.fraction-bar`, `ix.division-symbols` in the `infix`/reading group, and `def.div`
 now cites the bar it is written with); the **quotient power laws** went to `powers`
 (`th.pow-quotient-same-base`, `th.pow-of-quotient` in the ℤ act, `th.root-laws` in the
-ℚ act); the **transformations** went to `algebra`'s new `fractions` section
+ℚ act); the **transformations** went to the `terms` layer's new `fractions` section
 (`th.split-numerator`, `th.cancel-common-factor`, `th.fraction-minus-moves`,
-`th.divide-by-one`). See `docs/algebra.md`. **`conventions.json` is now empty and
+`th.divide-by-one`). See `docs/terms.md`. **`conventions.json` is now empty and
 `laws.json` is down to 4.**
 
 **Cluster 2 — the binomial. ✅ DONE 2026-07-23**, and it is what created the layer.
-All three now live in `src/data/algebra/cards.json` (`docs/algebra.md`):
+All three now live in `src/data/terms/cards.json` (`docs/terms.md`):
 `th.binomial-square` · `th.square-of-difference` · `th.difference-of-squares`. The card
 built earlier that day in `powers` **moved up**: `th.difference-of-squares` is not a
 statement about exponents, so the binomials could not stay filed under `aⁿ`. The

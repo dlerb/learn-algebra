@@ -2,7 +2,7 @@ import type { LocalizedString } from './skill.schema'
 import fundamentals from './fundamentals/cards.json'
 import numbers from './numbers/cards.json'
 import powers from './powers/cards.json'
-import algebra from './algebra/cards.json'
+import terms from './terms/cards.json'
 
 // The layer manifest. Each layer is one cards.json — a containment tree
 // `layer → sections[] → groups[] → cards[]`, page order = array order at every
@@ -68,7 +68,7 @@ export const layers: Layer[] = [
   { id: 'fundamentals', slug: 'fundamentals', title: 'fundamentals', data: fundamentals as unknown as LayerData },
   { id: 'numbers', slug: 'numbers', title: 'numbers', data: numbers as unknown as LayerData },
   { id: 'powers', slug: 'powers', title: 'powers', data: powers as unknown as LayerData },
-  { id: 'algebra', slug: 'algebra', title: 'algebra', data: algebra as unknown as LayerData },
+  { id: 'terms', slug: 'terms', title: 'Term manipulations', data: terms as unknown as LayerData },
 ]
 
 export const layerById = (id: string) => layers.find(l => l.id === id)
