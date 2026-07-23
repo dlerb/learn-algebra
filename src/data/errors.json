@@ -67,7 +67,7 @@
     "text": { "en": "Linear $a + b/c$ transcribed as if the whole left side were the numerator.",
               "de": "Linear geschriebenes $a + b/c$ wird übertragen, als wäre die ganze linke Seite der Zähler." },
     "instances": ["a + b/c = \\frac{a+b}{c}"] },
-  { "id": "mis.bar-not-division", "code": "R10", "kind": "misreading", "corrupts": ["ix.fraction-bar", "ix.division-signs"],
+  { "id": "mis.bar-not-division", "code": "R10", "kind": "misreading", "corrupts": ["ix.fraction-bar", "ix.division-symbols"],
     "name": { "en": "The fraction bar not recognized as division", "de": "Der Bruchstrich wird nicht als Division erkannt" },
     "text": { "en": "The bar is seen as a picture of a fraction, not as the operation $a \\div b$.",
               "de": "Der Strich wird als Bild eines Bruchs gesehen, nicht als die Operation $a \\div b$." } },

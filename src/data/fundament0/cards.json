@@ -146,7 +146,7 @@
       "slug": "reading",
       "kind": "convention",
       "title": {"en": "Reading an expression", "de": "Einen Ausdruck lesen"},
-      "blurb": {"en": "The parsing rules, and they sit before the axioms because the axioms cannot be *stated* without them: association and distribution both need brackets and precedence to be written down at all. Nothing here rests on anything below it.", "de": "Die Regeln des Lesens, und sie stehen vor den Axiomen, weil sich die Axiome ohne sie gar nicht *formulieren* lassen: Assoziativität und Distributivität brauchen beide Klammern und Vorrang, um überhaupt hingeschrieben zu werden. Nichts hier ruht auf etwas weiter unten."},
+      "blurb": {"en": "The parsing rules, and they sit before the axioms because the axioms cannot be *stated* without them: association and distribution both need brackets and precedence to be written down at all. Nothing here rests on anything below it, which is exactly why the fraction bar is not in this section: it denotes an operation the signature does not have, so it has to wait for def.div.", "de": "Die Regeln des Lesens, und sie stehen vor den Axiomen, weil sich die Axiome ohne sie gar nicht *formulieren* lassen: Assoziativität und Distributivität brauchen beide Klammern und Vorrang, um überhaupt hingeschrieben zu werden. Nichts hier ruht auf etwas weiter unten, und genau darum steht der Bruchstrich nicht in diesem Abschnitt: er bezeichnet eine Operation, die die Signatur nicht hat, und muss auf def.div warten."},
       "groups": [
         {
           "slug": "reading",
@@ -205,46 +205,6 @@
                 "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe."
               },
               "basedOn": ["op.add", "op.mul", "ix.brackets"]
-            },
-            {
-              "code": "ix.fraction-bar",
-              "concerns": [
-                "mul"
-              ],
-              "name": {
-                "en": "The bar is a bracket you do not write",
-                "de": "Der Bruchstrich ist eine Klammer, die man nicht schreibt"
-              },
-              "latex": "\\frac{a + b}{c + d} \\;=\\; (a + b) : (c + d)",
-              "basedOn": [
-                "ix.brackets"
-              ],
-              "note": {
-                "en": "Two jobs in one stroke, and the second is invisible. The bar *divides*, which def.div makes precise, and it also *groups*: everything above it is one object and everything below it is another, with no bracket written anywhere. Set the same expression on a line and the brackets have to reappear, which is the whole content of the card. Both directions go wrong in practice. Dropping the bar's brackets turns $\\frac{a+b}{c}$ into $a + \\frac{b}{c}$; inventing brackets that were never there turns $a + b : c$ into $\\frac{a+b}{c}$. ix.brackets says a bracket makes one object out of several; the bar does exactly that while writing nothing, which is why it is the one piece of notation that cannot be read left to right.",
-                "de": "Zwei Aufgaben in einem Strich, und die zweite ist unsichtbar. Der Strich *teilt*, was def.div präzise macht, und er *gruppiert*: alles darüber ist ein Objekt, alles darunter ein anderes, ohne dass irgendwo eine Klammer stünde. Schreibt man denselben Ausdruck auf eine Zeile, müssen die Klammern wieder auftauchen, und das ist der ganze Inhalt dieser Karte. In der Praxis geht es in beide Richtungen schief. Lässt man die Klammern des Strichs weg, wird aus $\\frac{a+b}{c}$ ein $a + \\frac{b}{c}$; erfindet man Klammern, die nie da waren, wird aus $a + b : c$ ein $\\frac{a+b}{c}$. ix.brackets sagt, eine Klammer mache aus mehrerem ein Objekt; genau das tut der Strich, ohne etwas zu schreiben, und darum ist er das eine Stück Notation, das sich nicht von links nach rechts lesen lässt."
-              },
-              "intuition": {
-                "en": "The everyday reading is parts of a whole: $\\frac{3}{4}$ of a cake, three pieces out of four. Where the picture stops, and it stops early: it makes the bar look like a *picture* rather than an operation, so $\\frac{7}{4}$ has no cake to be four quarters of, and $\\frac{a}{b}$ with letters has nothing to cut at all. Read it instead as $a : b$, an instruction with two inputs, and both cases come out right.",
-                "de": "Die alltägliche Lesart ist Teile eines Ganzen: $\\frac{3}{4}$ eines Kuchens, drei Stücke von vieren. Wo das Bild aufhört, und es hört früh auf: es lässt den Strich wie ein *Bild* aussehen statt wie eine Operation, also gibt es bei $\\frac{7}{4}$ keinen Kuchen, von dem das vier Viertel wären, und bei $\\frac{a}{b}$ mit Buchstaben nichts zu zerschneiden. Liest man ihn stattdessen als $a : b$, als Anweisung mit zwei Eingaben, stimmen beide Fälle."
-              }
-            },
-            {
-              "code": "ix.division-signs",
-              "concerns": [
-                "mul"
-              ],
-              "name": {
-                "en": "Four spellings, one operation",
-                "de": "Vier Schreibweisen, eine Operation"
-              },
-              "latex": "a : b \\;=\\; a \\div b \\;=\\; a / b \\;=\\; \\frac{a}{b}",
-              "basedOn": [
-                "ix.fraction-bar"
-              ],
-              "note": {
-                "en": "Nothing mathematical distinguishes them. Swiss schoolbooks use $:$, calculators and code use $/$, $\\div$ belongs mostly to English-language material, and all four denote the operation def.div defines. One of them does differ in *notation*, and it is the difference that matters: only the bar groups its two sides by itself (ix.fraction-bar). So $a + b : c$ and $a + \\frac{b}{c}$ say the same thing, while $\\frac{a+b}{c}$ needs written brackets the moment it goes on a line.",
-                "de": "Mathematisch unterscheidet sie nichts. Schweizer Schulbücher verwenden $:$, Taschenrechner und Code $/$, $\\div$ steht meist in englischsprachigem Material, und alle vier bezeichnen die Operation, die def.div definiert. Eine unterscheidet sich in der *Notation*, und das ist der Unterschied, auf den es ankommt: nur der Strich gruppiert seine beiden Seiten von selbst (ix.fraction-bar). $a + b : c$ und $a + \\frac{b}{c}$ sagen also dasselbe, während $\\frac{a+b}{c}$ geschriebene Klammern braucht, sobald es auf eine Zeile kommt."
-              }
             }
           ]
         }
@@ -691,11 +651,97 @@
         }
       ]
     },
+
+    {
+      "slug": "definitions",
+      "kind": "definition",
+      "title": {
+        "en": "Definitions",
+        "de": "Definitionen"
+      },
+      "note": {
+        "en": "Built on top of the field, not axioms. Definitions reduce a new symbol to the primitives and the inverses; they carry content (a definition could not have been made otherwise).",
+        "de": "Auf dem Körper aufgebaut, keine Axiome. Definitionen führen ein neues Symbol auf die Primitive und die Inversen zurück; sie tragen Inhalt (eine Definition könnte nicht anders lauten)."
+      },
+      "groups": [
+        {
+          "slug": "definitions",
+          "title": {
+            "en": "Definitions",
+            "de": "Definitionen"
+          },
+          "blurb": {
+            "en": "New symbols reduced to the primitives and the inverses; each rests on an axiom. Not new operations.",
+            "de": "Neue Symbole, zurückgeführt auf die Primitive und die Inversen; jede ruht auf einem Axiom. Keine neuen Operationen."
+          },
+          "cards": [
+            {
+              "code": "def.sub",
+              "concerns": [
+                "add"
+              ],
+              "name": {
+                "en": "Subtraction",
+                "de": "Subtraktion"
+              },
+              "latex": "a - b := a + (-b)",
+              "forall": "a, b \\in \\mathbb{R}",
+              "basedOn": [
+                "ax.additive-inverse",
+                "ix.brackets"
+              ],
+              "note": {
+                "en": "Subtraction is not a new operation, just adding the additive inverse.",
+                "de": "Die Subtraktion ist keine neue Operation, sondern die Addition des additiven Inversen."
+              }
+            },
+            {
+              "code": "def.div",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Division",
+                "de": "Division"
+              },
+              "latex": "\\frac{a}{b} := a \\cdot b^{-1}",
+              "forall": "a, b \\in \\mathbb{R}",
+              "cond": "b \\ne 0",
+              "basedOn": [
+                "ax.multiplicative-inverse",
+                "op.mul"
+              ],
+              "note": {
+                "en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling. The bar itself is introduced here, together with the meaning, exactly as the binary minus is introduced by def.sub. That it also *groups* is a second and separate fact, and it belongs to ix.fraction-bar below.",
+                "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen. Ihr Spezialfall $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ ist der Kehrwert von $a$: dasselbe Element wie das Inverse, in der alltäglichen Schreibweise. Der Bruchstrich selbst wird hier eingeführt, zusammen mit der Bedeutung, genau wie das binäre Minus von def.sub eingeführt wird. Dass er zusätzlich *gruppiert*, ist eine zweite und eigene Tatsache und gehört zu ix.fraction-bar weiter unten."
+              }
+            },
+            {
+              "code": "def.abs",
+              "concerns": ["add", "order"],
+              "name": { "en": "Absolute value", "de": "Betrag" },
+              "latex": "|a| := \\begin{cases} a & 0 < a \\\\ 0 & a = 0 \\\\ -a & a < 0 \\end{cases}",
+              "forall": "a \\in \\mathbb{R}",
+              "note": {
+                "en": "Three cases, one for each possibility trichotomy allows (ax.order-trichotomy), so exactly one applies to any element. Like subtraction and division this is a definition and not a new operation: it is built from the unary minus (ax.additive-inverse) and the order relation, and it needs both. Note what the definition does not say. It does not say 'leave off the minus'. That is a rule about marks on paper, and it works only when the element is written as a numeral with a minus in front of it. $|a|$ for a variable $a$ cannot be simplified at all without knowing where $a$ lies, and $|-a|$ is $a$ exactly when $a$ is not negative, which is the opposite of what the mark suggests.",
+                "de": "Drei Fälle, einer für jede Möglichkeit, die die Trichotomie zulässt (ax.order-trichotomy); auf jedes Element passt also genau einer. Wie Subtraktion und Division ist dies eine Definition und keine neue Operation: sie ist aus dem unären Minus (ax.additive-inverse) und der Ordnungsrelation gebaut und braucht beides. Man beachte, was die Definition nicht sagt. Sie sagt nicht 'lass das Minus weg'. Das ist eine Regel über Zeichen auf Papier und funktioniert nur, wenn das Element als Zahl mit einem Minus davor geschrieben ist. $|a|$ mit einer Variablen $a$ lässt sich ohne Wissen darüber, wo $a$ liegt, gar nicht vereinfachen, und $|-a|$ ist genau dann $a$, wenn $a$ nicht negativ ist, also gerade umgekehrt, als das Zeichen nahelegt."
+              },
+              "intuition": {
+                "en": "The distance from $a$ to $0$, with the direction thrown away. Where the picture stops: distance is a picture of the *value*, while the notation tempts you to read $|\\cdot|$ as an instruction to the *marks* inside it. Those come apart exactly where it matters, at $|x|$ with $x$ a variable, which is why $\\sqrt{x^{2}} = |x|$ and not $x$.",
+                "de": "Der Abstand von $a$ zu $0$, ohne die Richtung. Wo das Bild aufhört: der Abstand ist ein Bild des *Werts*, während die Schreibweise dazu verführt, $|\\cdot|$ als Anweisung an die *Zeichen* darin zu lesen. Genau dort, wo es zählt, fallen die beiden auseinander, nämlich bei $|x|$ mit einer Variablen $x$, und darum ist $\\sqrt{x^{2}} = |x|$ und nicht $x$."
+              },
+              "basedOn": ["op.lt", "ax.additive-inverse", "ax.order-trichotomy"]
+            }
+          ]
+        }
+      ]
+    },
+
     {
       "slug": "writing",
       "kind": "convention",
       "title": {"en": "Writing without ambiguity", "de": "Eindeutig schreiben"},
-      "note": {"en": "These sit between the axioms and the definitions, unlike the parsing rules above, and the placement is the content: each one presupposes something already assumed. ix.negative-factor and ix.no-adjacent-operator need the unary minus of ax.additive-inverse, ix.coefficient-front needs ax.mul-commutative to know that its two spellings name one element, and ix.invisible-one needs ax.one-neutral. A parsing rule is what makes the axioms writable; a writing rule is a recommendation about expressions whose meaning is already fixed. They come before the definitions rather than after because def.sub is written $a + (-b)$, brackets and all, and ix.no-adjacent-operator is what puts them there.", "de": "Diese stehen zwischen den Axiomen und den Definitionen, anders als die Leseregeln oben, und die Stellung ist der Inhalt: jede setzt etwas bereits Angenommenes voraus. ix.negative-factor und ix.no-adjacent-operator brauchen das unäre Minus aus ax.additive-inverse, ix.coefficient-front braucht ax.mul-commutative, um zu wissen, dass seine beiden Schreibweisen ein Element benennen, und ix.invisible-one braucht ax.one-neutral. Eine Leseregel macht die Axiome überhaupt schreibbar; eine Schreibregel ist eine Empfehlung zu Ausdrücken, deren Bedeutung schon feststeht. Sie stehen vor den Definitionen und nicht danach, weil def.sub als $a + (-b)$ geschrieben wird, mit Klammern, und ix.no-adjacent-operator sie dorthin setzt."},
+      "note": {"en": "These sit *after* the axioms and definitions, unlike the parsing rules above, and the placement is the content: every one of them presupposes something already given. ix.negative-factor and ix.no-adjacent-operator need the unary minus of ax.additive-inverse; ix.coefficient-front needs ax.mul-commutative to know its two spellings name one element; ix.invisible-one needs ax.one-neutral; and ix.fraction-bar and ix.division-symbols need def.div, because a bar cannot be a convention for an operation the page has not got yet. A parsing rule is what makes the axioms writable; a writing rule is a recommendation about expressions whose meaning is already fixed.", "de": "Diese stehen *nach* den Axiomen und Definitionen, anders als die Leseregeln oben, und die Stellung ist der Inhalt: jede setzt etwas bereits Gegebenes voraus. ix.negative-factor und ix.no-adjacent-operator brauchen das unäre Minus aus ax.additive-inverse; ix.coefficient-front braucht ax.mul-commutative, um zu wissen, dass seine beiden Schreibweisen ein Element benennen; ix.invisible-one braucht ax.one-neutral; und ix.fraction-bar und ix.division-symbols brauchen def.div, denn ein Strich kann keine Konvention für eine Operation sein, die die Seite noch gar nicht hat. Eine Leseregel macht die Axiome überhaupt schreibbar; eine Schreibregel ist eine Empfehlung zu Ausdrücken, deren Bedeutung schon feststeht."},
       "groups": [
         {
           "slug": "writing",
@@ -775,69 +821,48 @@
                 "en": "A coefficient of $1$ is never written. The two spellings name the same element by ax.one-neutral, and the short one is standard. Worth a card because the $1$ does not go away, it is only unwritten, and it has to be seen again the moment a term is collected or a factor pulled out: $a + 2a$ is $1 \\cdot a + 2 \\cdot a$, which is why the answer is $3a$ and not $2a$. The exponent $1$ is omitted in exactly the same way, see ix.pow.",
                 "de": "Ein Koeffizient $1$ wird nie geschrieben. Beide Schreibweisen benennen nach ax.one-neutral dasselbe Element, und die kurze ist die übliche. Eine eigene Karte wert, weil die $1$ nicht verschwindet, sondern nur ungeschrieben bleibt: sie muss wiedergesehen werden, sobald ein Term zusammengefasst oder ein Faktor herausgezogen wird. $a + 2a$ ist $1 \\cdot a + 2 \\cdot a$, und darum ist das Ergebnis $3a$ und nicht $2a$. Der Exponent $1$ wird genauso weggelassen, siehe ix.pow."
               }
-            }
-          ]
-        }
-      ]
-    },
-
-    {
-      "slug": "definitions",
-      "kind": "definition",
-      "title": {
-        "en": "Definitions",
-        "de": "Definitionen"
-      },
-      "note": {
-        "en": "Built on top of the field, not axioms. Definitions reduce a new symbol to the primitives and the inverses; they carry content (a definition could not have been made otherwise).",
-        "de": "Auf dem Körper aufgebaut, keine Axiome. Definitionen führen ein neues Symbol auf die Primitive und die Inversen zurück; sie tragen Inhalt (eine Definition könnte nicht anders lauten)."
-      },
-      "groups": [
-        {
-          "slug": "definitions",
-          "title": {
-            "en": "Definitions",
-            "de": "Definitionen"
-          },
-          "blurb": {
-            "en": "New symbols reduced to the primitives and the inverses; each rests on an axiom. Not new operations.",
-            "de": "Neue Symbole, zurückgeführt auf die Primitive und die Inversen; jede ruht auf einem Axiom. Keine neuen Operationen."
-          },
-          "cards": [
-            {
-              "code": "def.sub",
-              "concerns": ["add"],
-              "name": {"en": "Subtraction", "de": "Subtraktion"},
-              "latex": "a - b := a + (-b)",
-              "forall": "a, b \\in \\mathbb{R}",
-              "basedOn": ["ax.additive-inverse", "ix.no-adjacent-operator"],
-              "note": {"en": "Subtraction is not a new operation, just adding the additive inverse.", "de": "Die Subtraktion ist keine neue Operation, sondern die Addition des additiven Inversen."}
             },
             {
-              "code": "def.div",
-              "concerns": ["mul"],
-              "name": {"en": "Division", "de": "Division"},
-              "latex": "\\frac{a}{b} := a \\cdot b^{-1}",
-              "forall": "a, b \\in \\mathbb{R}",
-              "cond": "b \\ne 0",
-              "basedOn": ["ax.multiplicative-inverse", "op.mul", "ix.fraction-bar"],
-              "note": {"en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling.", "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen. Ihr Spezialfall $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ ist der Kehrwert von $a$: dasselbe Element wie das Inverse, in der alltäglichen Schreibweise."}
-            },
-            {
-              "code": "def.abs",
-              "concerns": ["add", "order"],
-              "name": { "en": "Absolute value", "de": "Betrag" },
-              "latex": "|a| := \\begin{cases} a & 0 < a \\\\ 0 & a = 0 \\\\ -a & a < 0 \\end{cases}",
-              "forall": "a \\in \\mathbb{R}",
+              "code": "ix.fraction-bar",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The bar is a bracket you do not write",
+                "de": "Der Bruchstrich ist eine Klammer, die man nicht schreibt"
+              },
+              "latex": "\\frac{a + b}{c + d} \\;=\\; (a + b) \\cdot (c + d)^{-1}",
+              "basedOn": [
+                "def.div",
+                "ix.brackets"
+              ],
               "note": {
-                "en": "Three cases, one for each possibility trichotomy allows (ax.order-trichotomy), so exactly one applies to any element. Like subtraction and division this is a definition and not a new operation: it is built from the unary minus (ax.additive-inverse) and the order relation, and it needs both. Note what the definition does not say. It does not say 'leave off the minus'. That is a rule about marks on paper, and it works only when the element is written as a numeral with a minus in front of it. $|a|$ for a variable $a$ cannot be simplified at all without knowing where $a$ lies, and $|-a|$ is $a$ exactly when $a$ is not negative, which is the opposite of what the mark suggests.",
-                "de": "Drei Fälle, einer für jede Möglichkeit, die die Trichotomie zulässt (ax.order-trichotomy); auf jedes Element passt also genau einer. Wie Subtraktion und Division ist dies eine Definition und keine neue Operation: sie ist aus dem unären Minus (ax.additive-inverse) und der Ordnungsrelation gebaut und braucht beides. Man beachte, was die Definition nicht sagt. Sie sagt nicht 'lass das Minus weg'. Das ist eine Regel über Zeichen auf Papier und funktioniert nur, wenn das Element als Zahl mit einem Minus davor geschrieben ist. $|a|$ mit einer Variablen $a$ lässt sich ohne Wissen darüber, wo $a$ liegt, gar nicht vereinfachen, und $|-a|$ ist genau dann $a$, wenn $a$ nicht negativ ist, also gerade umgekehrt, als das Zeichen nahelegt."
+                "en": "def.div has already given the bar its meaning: $\\frac{a}{b}$ is $a \\cdot b^{-1}$. What this card adds is the second job, and it is the invisible one. The bar also *groups*: everything above it is one object and everything below it is another, with no bracket written anywhere. Set the same expression on a line and the brackets have to reappear, which is why the right-hand side above carries two pairs that the left-hand side does not. Both directions go wrong in practice. Dropping the bar's brackets turns $\\frac{a+b}{c}$ into $a + \\frac{b}{c}$; inventing brackets that were never there turns $a + b \\cdot c^{-1}$ into $\\frac{a+b}{c}$. ix.brackets says a bracket makes one object out of several; the bar does exactly that while writing nothing, which is why it is the one piece of notation that cannot be read left to right.",
+                "de": "def.div hat dem Strich seine Bedeutung bereits gegeben: $\\frac{a}{b}$ ist $a \\cdot b^{-1}$. Was diese Karte hinzufügt, ist die zweite Aufgabe, und zwar die unsichtbare. Der Strich *gruppiert* auch: alles darüber ist ein Objekt, alles darunter ein anderes, ohne dass irgendwo eine Klammer stünde. Schreibt man denselben Ausdruck auf eine Zeile, müssen die Klammern wieder auftauchen, und darum trägt die rechte Seite oben zwei Paare, die die linke nicht hat. In der Praxis geht es in beide Richtungen schief. Lässt man die Klammern des Strichs weg, wird aus $\\frac{a+b}{c}$ ein $a + \\frac{b}{c}$; erfindet man Klammern, die nie da waren, wird aus $a + b \\cdot c^{-1}$ ein $\\frac{a+b}{c}$. ix.brackets sagt, eine Klammer mache aus mehrerem ein Objekt; genau das tut der Strich, ohne etwas zu schreiben, und darum ist er das eine Stück Notation, das sich nicht von links nach rechts lesen lässt."
               },
               "intuition": {
-                "en": "The distance from $a$ to $0$, with the direction thrown away. Where the picture stops: distance is a picture of the *value*, while the notation tempts you to read $|\\cdot|$ as an instruction to the *marks* inside it. Those come apart exactly where it matters, at $|x|$ with $x$ a variable, which is why $\\sqrt{x^{2}} = |x|$ and not $x$.",
-                "de": "Der Abstand von $a$ zu $0$, ohne die Richtung. Wo das Bild aufhört: der Abstand ist ein Bild des *Werts*, während die Schreibweise dazu verführt, $|\\cdot|$ als Anweisung an die *Zeichen* darin zu lesen. Genau dort, wo es zählt, fallen die beiden auseinander, nämlich bei $|x|$ mit einer Variablen $x$, und darum ist $\\sqrt{x^{2}} = |x|$ und nicht $x$."
+                "en": "The everyday reading is parts of a whole: $\\frac{3}{4}$ of a cake, three pieces out of four. Where the picture stops, and it stops early: it makes the bar look like a *picture* rather than an operation, so $\\frac{7}{4}$ has no cake to be four quarters of, and $\\frac{a}{b}$ with letters has nothing to cut at all. Read it instead as $a : b$, an instruction with two inputs, and both cases come out right.",
+                "de": "Die alltägliche Lesart ist Teile eines Ganzen: $\\frac{3}{4}$ eines Kuchens, drei Stücke von vieren. Wo das Bild aufhört, und es hört früh auf: es lässt den Strich wie ein *Bild* aussehen statt wie eine Operation, also gibt es bei $\\frac{7}{4}$ keinen Kuchen, von dem das vier Viertel wären, und bei $\\frac{a}{b}$ mit Buchstaben nichts zu zerschneiden. Liest man ihn stattdessen als $a : b$, als Anweisung mit zwei Eingaben, stimmen beide Fälle."
+              }
+            },
+            {
+              "code": "ix.division-symbols",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Four spellings, one operation",
+                "de": "Vier Schreibweisen, eine Operation"
               },
-              "basedOn": ["op.lt", "ax.additive-inverse", "ax.order-trichotomy"]
+              "latex": "a : b \\;=\\; a \\div b \\;=\\; a / b \\;=\\; \\frac{a}{b}",
+              "basedOn": [
+                "def.div",
+                "ix.fraction-bar"
+              ],
+              "note": {
+                "en": "def.div introduced one spelling, the bar. The other three are introduced here rather than assumed: $a : b$, $a \\div b$ and $a / b$ each *mean* $\\frac{a}{b}$, which means $a \\cdot b^{-1}$. Nothing mathematical distinguishes them and the choice is regional and typographic, which is worth saying because a student meets all of them. Swiss schoolbooks use $:$, calculators and code use $/$, and $\\div$ belongs mostly to English-language material. One does differ in *notation*, and it is the difference that matters: only the bar groups its two sides by itself (ix.fraction-bar). So $a + b : c$ and $a + \\frac{b}{c}$ say the same thing, while $\\frac{a+b}{c}$ has to be written $(a+b) : c$ the moment it goes on a line.",
+                "de": "def.div hat eine Schreibweise eingeführt, den Strich. Die anderen drei werden hier eingeführt und nicht vorausgesetzt: $a : b$, $a \\div b$ und $a / b$ *bedeuten* je $\\frac{a}{b}$, und das bedeutet $a \\cdot b^{-1}$. Mathematisch unterscheidet sie nichts, die Wahl ist regional und typografisch, und das ist erwähnenswert, weil eine Schülerin allen begegnet. Schweizer Schulbücher verwenden $:$, Taschenrechner und Code $/$, und $\\div$ steht meist in englischsprachigem Material. Eine unterscheidet sich in der *Notation*, und das ist der Unterschied, auf den es ankommt: nur der Strich gruppiert seine beiden Seiten von selbst (ix.fraction-bar). $a + b : c$ und $a + \\frac{b}{c}$ sagen also dasselbe, während $\\frac{a+b}{c}$ als $(a+b) : c$ geschrieben werden muss, sobald es auf eine Zeile kommt."
+              }
             }
           ]
         }
