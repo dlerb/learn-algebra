@@ -34,7 +34,10 @@ const lawUnused = (l: LawDef) => !citedLaws.has(l.id)
 // One layer visible at a time. Errors aren't fundamentals — they are the
 // fundament's shadow (each `corrupts` a law or convention) — but live here as a
 // third segment. The unused chip is contextual to the active layer.
-const layer = ref<'laws' | 'conventions' | 'errors'>('laws')
+// The laws/conventions segments disappear as their files empty out: conventions
+// reached zero on 2026-07-23 and laws is down to four, so `errors` is the default
+// whenever nothing is left to show.
+const layer = ref<'laws' | 'conventions' | 'errors'>(laws.length ? 'laws' : 'errors')
 const unusedByLayer = {
   laws: laws.filter(lawUnused).length,
   conventions: conventions.filter(c => !citedConvs.has(c.id)).length,
@@ -119,8 +122,8 @@ const errorSections = computed(() => [
     <div class="layer-bar">
       <div class="bar-left">
         <div class="mode layers">
-          <button :class="{ active: layer === 'laws' }" @click="layer = 'laws'">Laws</button>
-          <button :class="{ active: layer === 'conventions' }" @click="layer = 'conventions'">Conventions</button>
+          <button v-if="laws.length" :class="{ active: layer === 'laws' }" @click="layer = 'laws'">Laws</button>
+          <button v-if="conventions.length" :class="{ active: layer === 'conventions' }" @click="layer = 'conventions'">Conventions</button>
           <button :class="{ active: layer === 'errors' }" @click="layer = 'errors'">Errors</button>
         </div>
         <NPopover trigger="click" placement="bottom-start">

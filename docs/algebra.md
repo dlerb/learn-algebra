@@ -62,13 +62,61 @@ Teaching points carried on the cards:
   picture needs `b < a` and both to be lengths; the identity does not care, and
   `a = 2, b = 5` is as true as any other case.
 
+## The fractions — built 2026-07-23, and split across three layers
+
+The fraction cluster does not sit in one place, because the same filing logic that
+moved the binomials up here sends its pieces to three different floors:
+
+- **The notation is fundament0's.** `def.div` already writes `\frac{a}{b}`, so by the
+  tower's own rule — *a statement cites the convention it cannot be written without* —
+  the bar had to be a convention below it, not above. `ix.fraction-bar` and
+  `ix.division-signs` joined the `infix` section's *reading* group, and `def.div` now
+  cites `ix.fraction-bar`.
+- **The quotient power laws are powers'.** `th.pow-quotient-same-base` (ℤ act) and
+  `th.pow-of-quotient` (ℤ act) are statements about exponents wearing a bar, not facts
+  about fractions; `th.root-laws` (ℚ act) is the same two laws in radical form.
+- **The transformations are algebra's** — the `fractions` section here.
+
+### `ix.fraction-bar` is the load-bearing one
+
+*The bar is a bracket you do not write.* It does two jobs and the second is invisible:
+it divides, and it groups, so everything above is one object and everything below is
+another with no bracket written anywhere. Four of the error patterns corrupt exactly
+this and now point at the card: `mis.fraction-bar-grouping-lost` (`(a+b)/c → a + b/c`,
+the brackets dropped), `mis.linear-slash-overgrouped` (the reverse, brackets invented),
+`mis.bar-not-division` (the bar read as a picture rather than an operation), and
+`anti.linearity`'s `\frac{3x+2}{3} = x + 2`.
+
+Its intuition is *parts of a whole* and its stopping point is early and worth knowing:
+that reading makes the bar a **picture** rather than an operation, so `7/4` has no cake
+to be four quarters of and `a/b` has nothing to cut. Read `a : b` instead.
+
+### The three transformation cards say one thing
+
+**Where a move is allowed to reach.** `th.split-numerator` and
+`th.cancel-common-factor` reach **factors, never summands**, and the derivations show
+why rather than asserting it:
+
+- Splitting works upstairs because `(a+b)·c⁻¹` has the sum in a **factor** position, so
+  `ax.distributivity` applies. It fails downstairs because `c·(a+b)⁻¹` has the sum
+  **inverted**, and no axiom distributes over an inverse. That is the whole reason
+  `3/(x+2) ≠ 3/x + 3/2`.
+- Cancelling removes a factor paired with its own inverse, `c·c⁻¹ = 1`. In
+  `(a+c)/(b+c)` there is nothing to pair — `c` is a summand and no `c⁻¹` is anywhere
+  near it, so the chain cannot even begin.
+- `th.fraction-minus-moves` reaches everywhere, and for the opposite reason: by
+  `th.negative-one-times` the minus **is** a factor, and a product does not care where
+  a factor stands. Three positions, not eight combinations — moving it twice puts it
+  back.
+
+`th.divide-by-one` carries the case worth saying out loud: `a/a = 1` is not a rule
+about the same thing appearing above and below. Unfolded by `def.div` it **is**
+`ax.multiplicative-inverse`, which is also exactly why `0/0` is not `1` — the axiom
+hands out an inverse for every element except `0`, so the condition is the reach of the
+axiom rather than caution.
+
 ## Not built
 
-**The fraction bar** — the other half of the spec in `docs/TODO.md`. `def.div` defines
-`a/b := a·b⁻¹` and stops; every `ix.*` convention is about *linear* infix, so nothing
-in the tower yet says the bar is two-dimensional and groups both its parts without
-writing a bracket. That is where most of the remaining school algebra lives:
-`conv.fraction-bar`, `conv.division-signs`, `thm.split-numerator`,
-`thm.cancel-common-factor`, `thm.fraction-sign-moves`, `thm.divide-by-one`, the two
-quotient power laws, `thm.root-of-quotient`. Also outstanding: `thm.collect-like-terms`
-and the minus-over-sums group.
+`thm.minus-over-sum`, `thm.subtract-a-sum`, `thm.collect-like-terms`,
+`thm.root-power-order` — all that is left of `laws.json`. **`conventions.json` is
+empty**: every convention it held is now a card.

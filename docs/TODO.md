@@ -165,14 +165,15 @@ Confirmation that it is ready to write: the survivors already cite **45 tower
 cards** and only **4 of each other**. Every derivation is one or two steps from
 cards that exist. `laws.json` is down to **14** after `th.binomial-square` moved in.
 
-**Cluster 1 — the fraction bar.** `def.div` defines `a/b := a·b⁻¹` and stops; every
-`ix.*` convention is about *linear* infix, so nothing in the tower says the bar is
-two-dimensional and groups both its parts implicitly, which is exactly why students
-mis-handle it.
-`conv.fraction-bar` · `conv.division-signs` (÷ / : synonyms, and `:` is the Swiss
-one) · `thm.split-numerator` · `thm.cancel-common-factor` · `thm.fraction-sign-moves`
-· `thm.divide-by-one` · `thm.power-same-base-quotient` · `thm.power-of-quotient` ·
-`thm.root-of-quotient`
+**Cluster 1 — the fraction bar. ✅ DONE 2026-07-23**, split across three layers by the
+same filing logic that placed the binomials: the **notation** went to `fundament0`
+(`ix.fraction-bar`, `ix.division-signs` in the `infix`/reading group, and `def.div`
+now cites the bar it is written with); the **quotient power laws** went to `powers`
+(`th.pow-quotient-same-base`, `th.pow-of-quotient` in the ℤ act, `th.root-laws` in the
+ℚ act); the **transformations** went to `algebra`'s new `fractions` section
+(`th.split-numerator`, `th.cancel-common-factor`, `th.fraction-minus-moves`,
+`th.divide-by-one`). See `docs/algebra.md`. **`conventions.json` is now empty and
+`laws.json` is down to 4.**
 
 **Cluster 2 — the binomial. ✅ DONE 2026-07-23**, and it is what created the layer.
 All three now live in `src/data/algebra/cards.json` (`docs/algebra.md`):
@@ -181,10 +182,11 @@ built earlier that day in `powers` **moved up**: `th.difference-of-squares` is n
 statement about exponents, so the binomials could not stay filed under `aⁿ`. The
 adjacency with `pl.no-sum-law` survives as a forward pointer in its note.
 
-**Cluster 3 — minus over sums.** One line each from `th.negative-one-times` +
-`ax.distributivity`; derivable today, but a skill needs a card to point at.
-`thm.minus-over-sum` · `thm.subtract-a-sum` · `thm.collect-like-terms` ·
-`thm.root-of-product` · `thm.root-power-order`
+**Cluster 3 — minus over sums. STILL OPEN, and it is all that is left.** One line each
+from `th.negative-one-times` + `ax.distributivity`; derivable today, but a skill needs
+a card to point at. `thm.minus-over-sum` · `thm.subtract-a-sum` ·
+`thm.collect-like-terms` · `thm.root-power-order`. (`thm.root-of-product` was absorbed
+into `th.root-laws`.)
 
 ⭐ **DONE 2026-07-23.** The tower had `pl.no-sum-law` — *there is no law for sums* —
 and nothing saying what does happen, so students were told only that the obvious move

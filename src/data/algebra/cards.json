@@ -130,6 +130,121 @@
           ]
         }
       ]
+    },
+
+    {
+      "slug": "fractions",
+      "kind": "theorem",
+      "title": {"en": "Fractions", "de": "Brüche"},
+      "note": {"en": "Four cards, and three of them are really about where a move is allowed to reach. The bar has already made its two sides into single objects (ix.fraction-bar); what these say is that splitting and cancelling reach factors, never summands, and that the minus reaches anywhere because it is only a factor itself.", "de": "Vier Karten, und drei davon handeln eigentlich davon, wohin ein Zug greifen darf. Der Strich hat seine beiden Seiten längst zu einzelnen Objekten gemacht (ix.fraction-bar); diese Karten sagen, dass Aufteilen und Kürzen Faktoren erreichen und nie Summanden, und dass das Minus überallhin darf, weil es selbst nur ein Faktor ist."},
+      "groups": [
+        {
+          "slug": "fractions",
+          "cards": [
+            {
+              "code": "th.split-numerator",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "A sum splits over the bar, but only upstairs",
+                "de": "Eine Summe lässt sich aufteilen, aber nur oben"
+              },
+              "latex": "\\frac{a + b}{c} \\;=\\; \\frac{a}{c} + \\frac{b}{c}",
+              "forall": "a, b, c \\in \\mathbb{R}",
+              "cond": "c \\ne 0",
+              "derivation": "\\frac{a+b}{c} = (a+b) \\cdot c^{-1} = a \\cdot c^{-1} + b \\cdot c^{-1} = \\frac{a}{c} + \\frac{b}{c}",
+              "derivedFrom": [
+                "def.div",
+                "ax.distributivity",
+                "ax.mul-commutative",
+                "ix.fraction-bar"
+              ],
+              "note": {
+                "en": "One line of ax.distributivity, and the whole card is about why the other side does *not* work. Above the bar the sum is a **factor**: $(a+b) \\cdot c^{-1}$ has $a+b$ multiplied, so distributivity applies and splits it. Below the bar the sum is **inverted**: $c \\cdot (a+b)^{-1}$ has $a+b$ inside an inverse, and no axiom distributes over that. So $\\frac{3}{x+2} \\ne \\frac{3}{x} + \\frac{3}{2}$, and the asymmetry is not a quirk to memorise but the difference between a factor position and an inverted one. Read right to left this is how unlike denominators are recognised, which is the direction that actually gets used.",
+                "de": "Eine Zeile ax.distributivity, und die ganze Karte handelt davon, warum die andere Seite *nicht* geht. Über dem Strich ist die Summe ein **Faktor**: in $(a+b) \\cdot c^{-1}$ wird $a+b$ multipliziert, also greift das Distributivgesetz und teilt sie auf. Unter dem Strich wird die Summe **invertiert**: in $c \\cdot (a+b)^{-1}$ steht $a+b$ in einem Inversen, und kein Axiom verteilt sich darüber. Also ist $\\frac{3}{x+2} \\ne \\frac{3}{x} + \\frac{3}{2}$, und die Asymmetrie ist keine Marotte zum Auswendiglernen, sondern der Unterschied zwischen einer Faktorstelle und einer invertierten. Von rechts nach links gelesen ist das der Weg, ungleiche Nenner zu erkennen, und diese Richtung wird tatsächlich gebraucht."
+              }
+            },
+            {
+              "code": "th.cancel-common-factor",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Cancelling needs a factor, not a summand",
+                "de": "Kürzen braucht einen Faktor, keinen Summanden"
+              },
+              "latex": "\\frac{a \\cdot c}{b \\cdot c} \\;=\\; \\frac{a}{b}",
+              "forall": "a, b, c \\in \\mathbb{R}",
+              "cond": "b \\ne 0,\\ c \\ne 0",
+              "derivation": "\\begin{aligned} (b \\cdot c) \\cdot (b^{-1} c^{-1}) &= (b b^{-1})(c c^{-1}) = 1 \\;\\Longrightarrow\\; (bc)^{-1} = b^{-1} c^{-1} \\\\[2pt] \\frac{ac}{bc} &= (ac)(b^{-1}c^{-1}) = (a b^{-1})(c c^{-1}) = \\frac{a}{b} \\cdot 1 = \\frac{a}{b} \\end{aligned}",
+              "derivedFrom": [
+                "def.div",
+                "ax.mul-associative",
+                "ax.mul-commutative",
+                "ax.multiplicative-inverse",
+                "ax.one-neutral"
+              ],
+              "note": {
+                "en": "The most-abused move in school algebra, and the derivation says exactly why. What disappears is a factor paired with its own inverse, $c \\cdot c^{-1} = 1$. In $\\frac{a+c}{b+c}$ there is nothing to pair: $c$ is a summand, no $c^{-1}$ is anywhere near it, and no step of the chain above can begin. The two conditions are not decoration either. $b \\ne 0$ is what lets the fraction exist at all, and $c \\ne 0$ is what makes the cancelled factor invertible, which is the same well-definedness obligation th.exponent-well-defined names: whenever a move reads the *written form* rather than the element, something has to be checked.",
+                "de": "Der meistmissbrauchte Zug der Schulalgebra, und die Herleitung sagt genau, warum. Weg fällt ein Faktor zusammen mit seinem eigenen Inversen, $c \\cdot c^{-1} = 1$. In $\\frac{a+c}{b+c}$ gibt es nichts zu paaren: $c$ ist ein Summand, kein $c^{-1}$ ist in der Nähe, und kein Schritt der Kette oben kann überhaupt beginnen. Auch die beiden Bedingungen sind keine Zierde. $b \\ne 0$ lässt den Bruch erst existieren, und $c \\ne 0$ macht den gekürzten Faktor invertierbar, und das ist dieselbe Wohldefiniertheitspflicht, die th.exponent-well-defined benennt: wo ein Zug die *geschriebene Form* liest statt das Element, muss etwas geprüft werden."
+              }
+            },
+            {
+              "code": "th.fraction-minus-moves",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "The minus of a fraction moves",
+                "de": "Das Minus eines Bruchs wandert"
+              },
+              "latex": "-\\frac{a}{b} \\;=\\; \\frac{-a}{b} \\;=\\; \\frac{a}{-b}",
+              "forall": "a, b \\in \\mathbb{R}",
+              "cond": "b \\ne 0",
+              "derivation": "\\begin{aligned} -\\frac{a}{b} &= (-1) \\cdot (a b^{-1}) = \\bigl((-1) a\\bigr) b^{-1} = \\frac{-a}{b} \\\\[2pt] (-b) \\cdot \\bigl(-(b^{-1})\\bigr) &= (-1)(-1) \\cdot b b^{-1} = 1 \\;\\Longrightarrow\\; (-b)^{-1} = -(b^{-1}) \\;\\Longrightarrow\\; \\frac{a}{-b} = -\\frac{a}{b} \\end{aligned}",
+              "derivedFrom": [
+                "def.div",
+                "th.negative-one-times",
+                "th.minus-times-minus",
+                "ax.mul-associative",
+                "ax.mul-commutative",
+                "ax.multiplicative-inverse"
+              ],
+              "note": {
+                "en": "Three spellings of one element, and no rule peculiar to fractions is involved. th.negative-one-times says the unary minus is multiplication by $-1$; a product does not care where a factor stands, so the $-1$ may sit in front, on top, or underneath. Two things are worth saying out loud. There are three positions but not eight combinations: moving the minus twice puts it back, so $\\frac{-a}{-b} = \\frac{a}{b}$. And the front position is the canonical one, because it is the only one that stays readable when the fraction is a term in a longer sum.",
+                "de": "Drei Schreibweisen eines Elements, und keine Regel eigens für Brüche ist im Spiel. th.negative-one-times sagt, das unäre Minus sei die Multiplikation mit $-1$; einem Produkt ist es gleich, wo ein Faktor steht, also darf die $-1$ vorne, oben oder unten sitzen. Zweierlei lohnt sich auszusprechen. Es gibt drei Stellen, aber nicht acht Kombinationen: zweimal verschoben steht das Minus wieder da, wo es war, also ist $\\frac{-a}{-b} = \\frac{a}{b}$. Und die vordere Stelle ist die übliche, denn nur sie bleibt lesbar, wenn der Bruch ein Term in einer längeren Summe ist."
+              }
+            },
+            {
+              "code": "th.divide-by-one",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Dividing by one, and by itself",
+                "de": "Durch eins teilen, und durch sich selbst"
+              },
+              "latex": "\\frac{a}{1} = a \\qquad \\frac{a}{a} = 1",
+              "forall": "a \\in \\mathbb{R}",
+              "cond": "a \\ne 0 \\ \\text{(second only)}",
+              "derivation": "\\begin{aligned} 1 \\cdot 1 = 1 \\;&\\Longrightarrow\\; 1^{-1} = 1 \\;\\Longrightarrow\\; \\frac{a}{1} = a \\cdot 1^{-1} = a \\cdot 1 = a \\\\[2pt] \\frac{a}{a} &= a \\cdot a^{-1} = 1 \\end{aligned}",
+              "derivedFrom": [
+                "def.div",
+                "ax.one-neutral",
+                "ax.multiplicative-inverse",
+                "ix.invisible-one"
+              ],
+              "note": {
+                "en": "The two degenerate cases, and the second is worth its line. $\\frac{a}{a} = 1$ is not a rule about the same thing appearing above and below; unfolded by def.div it *is* ax.multiplicative-inverse, read off directly. Which is also why $\\frac{0}{0}$ is not $1$: the axiom hands out an inverse for every element except $0$, so the condition is not caution but the exact reach of the axiom. The first half needs no condition and works in the other direction too: any expression may be written over $1$, which is how a whole number joins a calculation with fractions in it. Note ix.invisible-one again, one line up: the $1$ that is never written and has to be seen.",
+                "de": "Die beiden Grenzfälle, und der zweite ist seine Zeile wert. $\\frac{a}{a} = 1$ ist keine Regel darüber, dass oben und unten dasselbe steht; mit def.div aufgelöst *ist* es ax.multiplicative-inverse, direkt abgelesen. Und darum ist $\\frac{0}{0}$ auch nicht $1$: das Axiom gibt jedem Element ausser $0$ ein Inverses, die Bedingung ist also keine Vorsicht, sondern die genaue Reichweite des Axioms. Die erste Hälfte braucht keine Bedingung und gilt auch andersherum: jeder Ausdruck darf über eine $1$ geschrieben werden, und so kommt eine ganze Zahl in eine Rechnung mit Brüchen hinein. Man beachte wieder ix.invisible-one, eine Zeile höher: die $1$, die nie geschrieben wird und gesehen werden muss."
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

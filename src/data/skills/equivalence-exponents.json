@@ -219,7 +219,7 @@
       "meta.only-multiplication-distributes"
     ],
     "justifiedBy": [
-      "thm.root-of-product"
+      "th.root-laws"
     ],
     "governedBy": [
       "ix.root"

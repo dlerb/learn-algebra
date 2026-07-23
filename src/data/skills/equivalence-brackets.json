@@ -54,7 +54,7 @@
       "meta.fraction-bar-brackets"
     ],
     "governedBy": [
-      "conv.fraction-bar"
+      "ix.fraction-bar"
     ],
     "errors": [
       "mis.fraction-bar-grouping-lost"
