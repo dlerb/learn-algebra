@@ -28,6 +28,26 @@
                 "de": "Gelesen '$a$ hoch $n$': $n$ Faktoren $a$ miteinander multipliziert. Da $3 = 1+1+1$ ist, sagt es die Lesart $a^{3} = a^{1+1+1}$ direkt: ein Faktor $a$ für jede $1$ im Exponenten. Zwei Plätze, und sie schöpfen nicht aus derselben Quelle. Die Basis darf jedes Element von $\\mathbb{R}$ sein. Der Exponent nicht: $a^{n}$ ist hier nur für $n \\in \\mathbb{N}$ definiert, und $a^{\\sqrt{2}}$ ist kein Wert, den wir zurückhalten, sondern einer, den es noch nicht gibt. Ein Koeffizient kennt diese Einschränkung nicht, und darin liegt der Unterschied. Potenzen sind keine Körperoperation. Der Körper hat $+$ und $\\cdot$ und sonst nichts, während $n \\mapsto a^{n}$ eine Abbildung ist, die in $\\mathbb{N}$ beginnt und in $\\mathbb{R}$ landet, hier aus $\\cdot$ und dem Schritt von $n$ auf $n+1$ gebaut; es gibt keine Körperoperation, von der sie ein Sonderfall wäre. Vielfache stehen besser da. th.multiple-is-product zeigt, dass $n \\cdot a$ das eigene Produkt des Körpers ist; es lässt sich also kostenlos auf jeden linken Faktor ausdehnen, und $1.23 \\cdot a$ braucht nichts Neues. Potenzen haben nichts, worauf sie zurückfallen könnten, und jeder Exponent ausserhalb von $\\mathbb{N}$ muss gebaut und bezahlt werden. Der Exponent $1$ wird genauso weggelassen wie der Koeffizient $1$ (ix.invisible-one): $a$ und $a^{1}$ sind dasselbe Element, und def.pow macht das zum Rekursionsanfang."
               },
               "basedOn": ["op.mul", "def.nat"]
+            },
+            {
+              "code": "ix.power-precedence",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "A power binds tightest, and only to what it touches",
+                "de": "Eine Potenz bindet am stärksten, und nur an das, was sie berührt"
+              },
+              "latex": "a \\cdot b^{n} \\;=\\; a \\cdot \\left( b^{n} \\right)",
+              "basedOn": [
+                "ix.pow",
+                "ix.precedence",
+                "ix.brackets"
+              ],
+              "note": {
+                "en": "The top rung ix.precedence pointed to. The superscript binds tighter than $\\cdot$, so in $a \\cdot b^{n}$ the exponent reaches only $b$, giving $a \\cdot (b^{n})$ and not $(a \\cdot b)^{n}$; the full ranking is $\\text{power} \\succ \\cdot \\succ +$. And it binds to the immediately preceding piece only, an atom or a bracketed group. So $3a^{2}$ is $3 \\cdot (a^{2})$, $ab^{2}$ is $a \\cdot (b^{2})$, and to raise the whole product you must write $(ab)^{2}$: the bracket is the only way to hand the exponent more than one atom (ix.brackets). This is one rule with two everyday faces. $-2^{2} = -4$ is it applied to a described element, and $2 x^{2}$ staying $2 \\cdot x^{2}$ rather than $(2x)^{2}$ is it applied to a coefficient, both the same fact that the power took the atom on its left and nothing more.",
+                "de": "Die obere Stufe, auf die ix.precedence zeigte. Der Hochstellung bindet stärker als $\\cdot$, in $a \\cdot b^{n}$ erreicht der Exponent also nur $b$, ergibt $a \\cdot (b^{n})$ und nicht $(a \\cdot b)^{n}$; die volle Ordnung ist $\\text{Potenz} \\succ \\cdot \\succ +$. Und er bindet nur an das unmittelbar vorangehende Stück, einen Atom oder eine geklammerte Gruppe. So ist $3a^{2}$ gleich $3 \\cdot (a^{2})$, $ab^{2}$ gleich $a \\cdot (b^{2})$, und um das ganze Produkt zu potenzieren, muss man $(ab)^{2}$ schreiben: die Klammer ist der einzige Weg, dem Exponenten mehr als einen Atom zu übergeben (ix.brackets). Das ist eine Regel mit zwei alltäglichen Gesichtern. $-2^{2} = -4$ ist sie, angewandt auf ein beschriebenes Element, und dass $2 x^{2}$ als $2 \\cdot x^{2}$ und nicht als $(2x)^{2}$ stehen bleibt, ist sie, angewandt auf einen Koeffizienten, beides dieselbe Tatsache, dass die Potenz den Atom zu ihrer Linken nahm und sonst nichts."
+              }
             }
           ]
         }
@@ -131,14 +151,27 @@
             },
             {
               "code": "th.negative-base",
-              "concerns": ["add", "mul"],
-              "name": { "en": "Squaring a negative", "de": "Ein negatives Element quadrieren" },
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "Squaring a negative",
+                "de": "Ein negatives Element quadrieren"
+              },
               "latex": "-2^{2} = -4 \\qquad (-2)^{2} = 4",
               "derivation": "-2^{2} = (-1) \\cdot 2^{2} = (-1) \\cdot 4 = -4 \\qquad (-2)^{2} = (-2) \\cdot (-2) = 4",
-              "derivedFrom": ["def.pow", "th.negative-one-times", "th.minus-times-minus", "ix.precedence", "ix.negative-factor", "th.numeral-arithmetic"],
+              "derivedFrom": [
+                "def.pow",
+                "th.negative-one-times",
+                "th.minus-times-minus",
+                "ix.power-precedence",
+                "ix.negative-factor",
+                "th.numeral-arithmetic"
+              ],
               "note": {
-                "en": "Both are correct, and they are answers to two different questions. $-2$ is an ordinary element, atomic, with no internal structure, exactly as much a single number as $2$ is. But the notation gives atomic names only to the non-negative elements. There is no single character for the element $-2$; what we write is a description, namely 'apply the unary minus (ax.additive-inverse) to $2$'. So when a power is attached there are two things it might attach to, the object the description picks out or the last piece of the description, and the written form does not say which. Squaring the object gives $4$; parsing the name gives $-4$. Brackets are the notation's name-maker: $(-2)$ is how a description is made to stand as one thing, and that, rather than keeping a minus attached to a numeral, is what ix.negative-factor is for. Note that no new rule was needed. Reading the minus as $(-1) \\cdot$ through th.negative-one-times turns the question into a precedence question that ix.precedence already answers, so the result is derived and not decreed. Fractions have the same trap in a milder form, $2/3^{2} \\neq (2/3)^{2}$; negatives have it worse, because a fraction at least has $\\tfrac{2}{3}$ as a way of looking atomic and a negative has no atomic spelling at all, ever.",
-                "de": "Beides ist richtig, und beides beantwortet eine andere Frage. $-2$ ist ein gewöhnliches Element, atomar, ohne innere Struktur, genauso sehr eine einzelne Zahl wie $2$. Aber die Schreibweise vergibt atomare Namen nur an die nicht negativen Elemente. Für das Element $-2$ gibt es kein einzelnes Zeichen; was wir schreiben, ist eine Beschreibung, nämlich 'wende das unäre Minus (ax.additive-inverse) auf $2$ an'. Wenn nun eine Potenz angehängt wird, gibt es zwei Dinge, an die sie sich hängen könnte, das Objekt, das die Beschreibung meint, oder das letzte Stück der Beschreibung, und die Schreibweise sagt nicht, welches. Das Objekt quadriert ergibt $4$; den Namen gelesen ergibt $-4$. Klammern sind der Namensmacher der Schreibweise: $(-2)$ ist die Art, eine Beschreibung als ein Ding auftreten zu lassen, und dafür ist ix.negative-factor da, nicht dafür, ein Minus an einer Ziffer festzuhalten. Man beachte, dass keine neue Regel nötig war. Das Minus über th.negative-one-times als $(-1) \\cdot$ zu lesen macht aus der Frage eine Frage der Bindung, die ix.precedence bereits beantwortet; das Ergebnis ist also hergeleitet und nicht verordnet. Brüche haben dieselbe Falle in milderer Form, $2/3^{2} \\neq (2/3)^{2}$; Negative trifft es härter, denn ein Bruch hat mit $\\tfrac{2}{3}$ wenigstens eine Art, atomar auszusehen, und ein negatives Element hat nie eine atomare Schreibung."
+                "en": "Both are correct, and they are answers to two different questions. $-2$ is an ordinary element, atomic, with no internal structure, exactly as much a single number as $2$ is. But the notation gives atomic names only to the non-negative elements. There is no single character for the element $-2$; what we write is a description, namely 'apply the unary minus (ax.additive-inverse) to $2$'. So when a power is attached there are two things it might attach to, the object the description picks out or the last piece of the description, and the written form does not say which. Squaring the object gives $4$; parsing the name gives $-4$. Brackets are the notation's name-maker: $(-2)$ is how a description is made to stand as one thing, and that, rather than keeping a minus attached to a numeral, is what ix.negative-factor is for. Note that no new rule was needed. Reading the minus as $(-1) \\cdot$ through th.negative-one-times turns the question into a precedence question that ix.power-precedence answers, since the power binds to the $2$ before the $(-1)$ multiplies, so the result is derived and not decreed. Fractions have the same trap in a milder form, $2/3^{2} \\neq (2/3)^{2}$; negatives have it worse, because a fraction at least has $\\tfrac{2}{3}$ as a way of looking atomic and a negative has no atomic spelling at all, ever.",
+                "de": "Beides ist richtig, und beides beantwortet eine andere Frage. $-2$ ist ein gewöhnliches Element, atomar, ohne innere Struktur, genauso sehr eine einzelne Zahl wie $2$. Aber die Schreibweise vergibt atomare Namen nur an die nicht negativen Elemente. Für das Element $-2$ gibt es kein einzelnes Zeichen; was wir schreiben, ist eine Beschreibung, nämlich 'wende das unäre Minus (ax.additive-inverse) auf $2$ an'. Wenn nun eine Potenz angehängt wird, gibt es zwei Dinge, an die sie sich hängen könnte, das Objekt, das die Beschreibung meint, oder das letzte Stück der Beschreibung, und die Schreibweise sagt nicht, welches. Das Objekt quadriert ergibt $4$; den Namen gelesen ergibt $-4$. Klammern sind der Namensmacher der Schreibweise: $(-2)$ ist die Art, eine Beschreibung als ein Ding auftreten zu lassen, und dafür ist ix.negative-factor da, nicht dafür, ein Minus an einer Ziffer festzuhalten. Man beachte, dass keine neue Regel nötig war. Das Minus über th.negative-one-times als $(-1) \\cdot$ zu lesen macht aus der Frage eine Frage der Bindung, die ix.power-precedence beantwortet, denn die Potenz bindet an die $2$, bevor die $(-1)$ multipliziert, das Ergebnis ist also hergeleitet und nicht verordnet. Brüche haben dieselbe Falle in milderer Form, $2/3^{2} \\neq (2/3)^{2}$; Negative trifft es härter, denn ein Bruch hat mit $\\tfrac{2}{3}$ wenigstens eine Art, atomar auszusehen, und ein negatives Element hat nie eine atomare Schreibung."
               },
               "intuition": {
                 "en": "The students are not wrong. They assume that being one number means being one symbol, and that was true of every number they had met before this year. The gap is a completion and not a correction: you were right that $-2$ is a number, and nobody mentioned that our notation has no name for it. Told as a reversal, this manufactures the feeling of having been lied to. Told as a completion, it is just news.",
