@@ -1,6 +1,8 @@
 # rationals — the ℚ-exponent layer
 
-The fourth and last layer of the tower, on top of **integers** (`docs/integers.md`).
+The fifth and last layer of the tower, on top of **integers** (`docs/integers.md`).
+`def.rat` moved to the **numbers** layer on 2026-07-23 (`docs/numbers.md`); what
+remains here is powers only.
 Data: `src/data/rationals/cards.json`; page: `/rationals`. Tag: **`≙ aⁿ, n ∈ ℚ`**.
 
 ## What it is
@@ -11,8 +13,8 @@ demands a value; what has differed layer to layer is *who supplies it*:
 | layer | the demand | who supplies |
 |---|---|---|
 | ℕ | none — the recursion builds it | **we do**, by construction |
-| ℤ | $a^{-n}$ must invert $a^n$ | **the field**, via `ax.M4` (`def.pow-neg` exhibits $(a^{-1})^n$) |
-| ℚ | $a^{1/n}$ must be an $n$-th root of $a$ | **nobody below `ax.C1`** |
+| ℤ | $a^{-n}$ must invert $a^n$ | **the field**, via `ax.multiplicative-inverse` (`def.pow-neg` exhibits $(a^{-1})^n$) |
+| ℚ | $a^{1/n}$ must be an $n$-th root of $a$ | **nobody below `ax.completeness`** |
 
 Demand `pl.same-base` for the exponent $1/n$ and $\left(a^{1/n}\right)^n = a$ follows —
 so $a^{1/n}$ has to be an $n$-th root. In ℤ the analogous demand described something we
@@ -21,7 +23,7 @@ rational squares to $2$, though the demand for $2^{1/2}$ is as reasonable there 
 anywhere. **The question stops being *what value* and becomes *is there a value*,** and
 that question is not algebraic.
 
-**This is what `ax.C1` was for.** Every other card in the tower could have been written
+**This is what `ax.completeness` was for.** Every other card in the tower could have been written
 in ℚ and stayed true. `th.root-exists` is false in ℚ, and that is the exact content of
 the word *complete*.
 
@@ -39,7 +41,7 @@ with rising difficulty, and this layer is where the rise becomes visible.
   that a definition may name only something that is there, and that here the obligation
   is real work. A forward-declared theorem would have cost more than it bought.
 - **`th.root-exists` splits cleanly, and the split is the point.** *Uniqueness* is pure
-  order (`ax.O4` + induction). *Existence* is completeness and nothing else.
+  order (`ax.order-mul` + induction). *Existence* is completeness and nothing else.
 - **The `a > 0` fence is not caution** (`th.base-fence`). The chain
   $-2 = (-2)^{2/2} = ((-2)^2)^{1/2} = 2$ is built entirely from laws that hold elsewhere,
   so $a > 0$ is **the largest domain on which the demand is consistent at all**. That is
@@ -66,7 +68,7 @@ with rising difficulty, and this layer is where the rise becomes visible.
 ## Added to fundament0 for this layer
 
 **`def.abs`** (definition section, after `def.sub`/`def.div`) — three cases, one per
-branch of trichotomy (`ax.O1`), built from `ax.A4` and `op.lt`. Its note makes the point
+branch of trichotomy (`ax.order-trichotomy`), built from `ax.additive-inverse` and `op.lt`. Its note makes the point
 `th.principal-root` needs: the definition does **not** say "leave off the minus", which
 is a rule about marks and fails for $|a|$ with a variable. Stopping point in its
 intuition: distance is a picture of the *value*, while the notation tempts a reading of

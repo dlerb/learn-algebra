@@ -24,7 +24,7 @@ const sections = computed<Section[]>(() => layer.value.data.sections)
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 // Citations resolve tower-wide, not just inside this layer: naturals cards rest
-// on fundament0 codes (th.negative-base → th.2, ix.3).
+// on fundament0 codes (th.negative-base → th.negative-one-times, ix.precedence).
 const codeLabel = (code: string) => {
   const x = cardIndex.get(code)
   return x ? `${code} · ${t(x.card.name)}` : code

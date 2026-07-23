@@ -1,30 +1,18 @@
-# naturals — the ℕ-indexed layer
+# naturals — the ℕ-exponent layer
 
-The second layer of the tower, sitting directly on **fundament0** (`docs/fundament0.md`).
-Data: `src/data/naturals/cards.json`; page: `/naturals`. Tag: **`≙ ℕ ⊂ ℝ`**.
+The third layer of the tower, on top of **numbers** (`docs/numbers.md`).
+Data: `src/data/naturals/cards.json`; page: `/naturals`. Tag: **`≙ aⁿ, n ∈ ℕ`**.
 
 ## What it is
 
-The layer that makes *counting* available and then spends it twice: on **multiples**
-($n$ copies added) and on **powers** ($n$ factors multiplied). It is the first layer
-since the axioms that **assumes nothing** — only definitions and their consequences.
+**Repetition made into an operator.** `def.pow` defines $a^n$ by recursion along the
+counting elements — one more factor at each step — and the three power laws follow by
+induction. It assumes nothing: $a^n$ is an abbreviation for a product that could always
+have been written out.
 
-## The ℕ-entry decision (2026-07-22)
-
-The parked draft (`powers.json`, now replaced) imported ℕ as *"a genuine new
-assumption (like order and completeness)"*. **That was rejected as false.** In a
-field, ℕ is *definable*: `def.nat` takes the smallest inductive subset (intersection
-of all $S$ with $1 \in S$ and $x \in S \Rightarrow x+1 \in S$). Nothing is imported.
-
-Consequences that make this the right call, not merely the correct one:
-
-- **Induction is a theorem** (`th.ind`), one line off the definition, not a borrowed
-  axiom. In school it is an exotic technique; here it is the definition read backwards.
-- **`th.multiple-is-product` says "agree", not "correspond".** Because ℕ ⊆ ℝ, the two
-  $n$'s in $\underbrace{a+\dots+a}_{n} = n \cdot a$ are literally the *same object*.
-  An imported ℕ would have forced a map ℕ → ℝ and a weaker statement.
-- The move is set-quantifying, the same flavour as `ax.C1` — but `C1` *assumed*,
-  this *defines*, and a definition may always be made.
+ℕ itself is **not defined here** — it and `th.ind`, `def.numeral`, `def.multiple` moved
+down to the **numbers** layer on 2026-07-23 (see `docs/numbers.md`, "Extracted from the
+powers layers"). This layer uses ℕ for one purpose: as the place an exponent may live.
 
 ### The "counter vs element" framing — RETIRED 2026-07-22
 
@@ -60,32 +48,12 @@ recursion, said in words. Prefer it to any formal phrasing.
 
 ## Settled decisions
 
-- **$0 \notin \mathbb{N}$ here.** $1$ is what `ax.M3` hands us; $0$ would have to be
-  fetched from `ax.A3` for no work it does in this layer, and starting at $0$ would
-  give $a^0$ away as a base case, which the powers design specifically does not want.
-  Swiss textbooks usually include $0$ — that mismatch is **stated on the card**, and
-  stated as the point: whether $0$ is natural is a **convention, not a fact**, and
-  conventions and facts arrive in the same voice.
-- **Numerals stop at ℕ.** `def.numeral` names one element at a time ($2 := 1+1$).
-  Decimal/positional notation is a different machine and belongs upstairs, where it
-  also has to explain $1.23$.
-- **`th.numeral-arithmetic` (added 2026-07-22, the user's point).** $2+3=5$ by `ax.A2`,
-  $2 \cdot 3 = 6$ by `ax.D1`. The times table is a list of **theorems**, not a table, and
-  the axioms that prove its entries are the ones later used on letters. Doing arithmetic
-  and doing algebra are not two subjects. A standard first-week exercise elsewhere.
-- **`th.numerals-distinct` needs order.** That $2 \neq 3$ is not a field fact (a field
-  may satisfy $1+1=0$); `th.6` + `ax.O3` + `ax.O2` is what stops counting from looping.
-  The sharpest dependency-bookkeeping card in the layer.
-- **`ix.juxtaposition` justifies `ix.6` rather than re-licensing it.** fundament0
-  already *prefers* $3a$; this card supplies the proof that the abbreviation loses
-  nothing, plus the two limits (not between numerals — $34$ is another name; and it
-  says *which* multiplication, not how tightly it binds).
 - **`pl.no-sum-law` is kept as a card.** A negative claim by counterexample, and the
   first such card in the tower. It sits one card after `pl.of-product`, and the
   contrast is doing the teaching: powers pass through products because they are made
   of products, and not through sums because they are not made of sums.
 - **`th.negative-base` is filed under theorems, not conventions.** Its content is a
-  derivation ($-2^2 = (-1)\cdot 2^2$ via `th.2`, then `ix.3`), not an agreement — and
+  derivation ($-2^2 = (-1)\cdot 2^2$ via `th.negative-one-times`, then `ix.precedence`), not an agreement — and
   that filing also puts it last on the page, where the payoff belongs. This is the
   "atomic object, composite name" card the backlog had been holding for the power
   layer; the teaching stance ("students are never wrong; a completion, not a
@@ -93,91 +61,23 @@ recursion, said in words. Prefer it to any formal phrasing.
 
 ## Page order
 
-`Preliminaries` (pre.count) → `Notation` (ix.pow · ix.juxtaposition) → `Definitions`
-(def.nat, def.numeral · def.multiple · def.pow) → `Theorems` (th.ind,
-th.numerals-distinct, th.numeral-arithmetic · th.multiple-is-product · pl.same-base,
+`Notation` (ix.pow) → `Definitions` (def.pow) → `Theorems` (pl.same-base,
 pl.of-power, pl.of-product, pl.no-sum-law, th.negative-base).
 
-Sections are **kinds**; "numbers / multiples / powers" are **groups** inside them, so
-a topic's definition and its theorem sit in different sections and are read together.
-
-**Codes are slug-style, never numbered** (`th.ind`, not `th.7`) so nothing can collide
-with fundament0's `th.1…th.6` now that citations resolve tower-wide.
+**Codes are slug-style, never numbered** (`pl.same-base`, not `th.zero-product`) so nothing can
+collide with fundament0's theorem codes now that citations resolve tower-wide.
 
 ## Deferred (not built)
 
 - **ℤ — choice by permanence.** $a^0 := 1$, $a^{-n} := 1/a^n$. The arrow reverses:
   the laws become the constraint and *force* the definition. `pl.same-base` is the
   card the whole layer is built to preserve.
-- **ℚ — existence.** Roots and rational exponents; needs `ax.C1` and $a > 0$.
-- **Decimal numerals**, and with them the full `1.23·a` card — planted in
-  `th.multiple-is-product`'s intuition (copies run out, the product does not).
-- **The multiples/powers divergence card.** Coefficients dissolve into ordinary `·`
-  at ℚ; exponents never do. Statable only where both stories are visible.
+- **ℚ — existence.** Roots and rational exponents; needs `ax.completeness` and $a > 0$.
 
 ## References checked (2026-07-22)
 
-- **`def.nat` is the textbook move**, not an invention: ℕ as the intersection of all
-  inductive subsets, induction from minimality — Spivak *Calculus* ch. 2,
-  [Zakon *Mathematical Analysis* §2.2](https://math.libretexts.org/Bookshelves/Analysis/Mathematical_Analysis_(Zakon)/02:_Real_Numbers_and_Fields/2.02:_Natural_Numbers._Induction)
-  (stated for an arbitrary field, our setting exactly),
-  [ProofWiki](https://proofwiki.org/wiki/Definition:Natural_Numbers/Inductive_Sets_in_Real_Numbers).
 - **ℤ-module action / characteristic** (why the counter framing exists and why ℝ
   dissolves it): [Beachy, *Abstract Algebra Online*](https://faculty.niu.edu/math_beachy/aaol/modules.shtml).
 - **`def.pow` matches the standard monoid/semigroup definition**, including starting
   at $a^1 := a$: [ProofWiki, Power of Element](https://proofwiki.org/wiki/Definition:Power_of_Element/Monoid),
   [Index Laws for Monoid](https://proofwiki.org/wiki/Index_Laws_for_Monoid).
-- **`th.numeral-arithmetic` is standard fare**: $2+2=4$ from $2 := 1+1$ and associativity
-  appears as a first-week exercise, e.g. [Reed math112](https://people.reed.edu/~mayer/math112.html/html1/node16.html),
-  [UChicago IBL sheet 6](https://www.math.uchicago.edu/~boller/IBL/M162script6.pdf).
-- **Keith Devlin, *It Ain't No Repeated Addition* (MAA, 2008)** — the same claim as
-  `th.multiple-is-product`'s intuition (repeated addition is not what multiplication
-  *is*; the model breaks at fractions; scaling is the general notion), and a live
-  argument among teachers, so worth knowing before a colleague raises it.
-  [Overview](https://en.wikipedia.org/wiki/Multiplication_and_repeated_addition).
-
-## Repeated addition vs scaling — the discussion behind the stopping points (2026-07-22)
-
-Devlin's *It Ain't No Repeated Addition* was weighed and largely **set aside**, with
-one part kept. The user's position, which held up:
-
-- **In this frame the slogan is empty.** `op.mul` is a *primitive*: no definition at
-  all, only axioms. So neither repeated addition nor scaling is what multiplication
-  *is*. Devlin's implicit second half ("…it *is* scaling") overreaches exactly as far
-  as the half he attacks.
-- The slogan is **domain-relative**, and that is its whole content. On ℕ via Peano,
-  multiplication literally **is** defined as repeated addition. On a *specified* field
-  it is primitive. On a *constructed* ℝ it is neither. So "abstract on ℚ" is true if
-  you specify ℚ and false if you construct it — the specification/construction seam,
-  one floor down.
-- **Scaling has no independent content on ℚ.** Scaling by $m/n$ is executed as *take
-  the $n$-th part, repeat it $m$ times*, and the $n$-th part is characterised by
-  `ax.M4`. It is repetition closed under its own inverse, not a rival picture. (User's
-  argument, and it generalises further than the $1.5$ case they raised.) It becomes
-  irreducible only at irrational factors — i.e. **the intuition boundary coincides with
-  the `ax.C1` boundary**.
-- **Scaling is not innate-free either way.** The approximate number system is
-  ratio-based (Weber), 6-month-olds abstract ratios (McCrink & Wynn), and size
-  constancy is a scaling computation run continuously. But all of it is *approximate*;
-  exactness lives on the repetition side. **Neither faculty has both**, which is why
-  the number system had to be built rather than perceived.
-- **The picture of $\sqrt2 \cdot a$ is a construction, not a stretch**: the diagonal of
-  the square on $a$. Exact, drawable, no approximation. Geometry has the completeness
-  that arithmetic must be *given* by `ax.C1` — the Greek separation of ratio from
-  number, and Eudoxus' equal-ratios definition is Dedekind's cut 2200 years early.
-
-**Conclusion, and the reason the stopping-point pass happened:** ℝ has no adequate
-intuitive model. Sticks fail at $\sqrt2$, rubber bands fail at exactness, area fails at
-negatives, and nothing at all pictures $(-2)(-3) = 6$ (`th.4` is pure axioms). That is
-*why* ℝ is axiomatised. The teaching debt is not caused by choosing the wrong picture;
-it is caused by never saying that every picture has a stopping point. Hence: each
-`intuition` now names its own.
-
-**Not adopted:** "teach scaling instead" as the fix for *multiplication makes bigger*.
-Fischbein's finding is about the primitive model students **have**; it is no evidence
-that scaling can be **installed**, and classroom experience says it cannot. The fix is
-to make the *extension* visible, which is `th.multiple-is-product` plus the ℚ
-divergence. Still open for the errors layer: **"multiplication makes bigger" is not
-among M1–M10**, which are all notation/structure. It is a different kind of error, a
-property smuggled from the ℕ-model into ℝ, sibling to expecting $a^r$ to behave like
-$a^n$. Candidate new metapattern.

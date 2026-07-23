@@ -40,7 +40,7 @@ on later ≈ one prop + a `:root[data-theme="dark"]` block in `tokens.css`.
 
 **Router** (`router.ts`, updated 2026-07-22): `/skills` (`TaxonomyView`),
 `/fundamentals` (`ReferenceView`), `/tutorial`, `/drills`, **plus one route per
-layer of the fundament tower** — `/fundament0`, `/naturals`, `/integers`,
+layer of the fundament tower** — `/fundament0`, `/numbers`, `/naturals`, `/integers`,
 `/rationals`. Those four are **generated from the manifest** (`src/data/layers.ts`)
 and all render the same component (`LayerView`, selected by a `layerId` prop), so
 adding a layer needs no route and no nav entry; the `NMenu` options are generated

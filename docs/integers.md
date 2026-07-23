@@ -1,6 +1,6 @@
 # integers — the ℤ-exponent layer
 
-The third layer of the tower, on top of **naturals** (`docs/naturals.md`).
+The fourth layer of the tower, on top of **naturals** (`docs/naturals.md`).
 Data: `src/data/integers/cards.json`; page: `/integers`. Tag: **`≙ aⁿ, n ∈ ℤ`**.
 
 ## What it is
@@ -29,7 +29,9 @@ side, which is the best thing the layer teaches:
 | **determined** | $a^0 = 1$, $a^{-n}$ | not free: name the law you keep and the value follows |
 | **proved** | the laws hold on all of ℤ | a theorem, no choice anywhere |
 
-`def.nat` (naturals) already carries the first; this layer supplies the other two.
+`def.nat` (numbers) already carries the first; this layer supplies the other two.
+`def.int` itself moved to the **numbers** layer on 2026-07-23 — see `docs/numbers.md`;
+what remains here is powers only.
 
 ## Settled decisions
 
@@ -57,7 +59,7 @@ side, which is the best thing the layer teaches:
   notation* with a decorative `-1`; here it becomes literally the power with exponent
   $-1$, and the two readings coincide. Same move as `ix.juxtaposition`: notation used
   on trust, paid for later. Also settles the other half — the minus in $a^{-n}$ is the
-  ordinary unary minus of `ax.A4` applied to $n$, not a special mark.
+  ordinary unary minus of `ax.additive-inverse` applied to $n$, not a special mark.
 - **`th.pow-laws-int` is the vindication, and it is not circular.** One law was
   demanded (`pl.same-base`, only in the mixed cases with $0$); *all three* come back
   across ℤ. The extension could have been coherent for the demanded law and broken for
@@ -66,8 +68,8 @@ side, which is the best thing the layer teaches:
 
 ## Added to fundament0 for this layer
 
-**`th.7` zero product** ($ab = 0 \Rightarrow a = 0$ or $b = 0$) — a one-line
-consequence of `ax.M4` + `th.1`, the converse of `th.1`, and the entire basis of
+**`th.zero-product` zero product** ($ab = 0 \Rightarrow a = 0$ or $b = 0$) — a one-line
+consequence of `ax.multiplicative-inverse` + `th.zero-times`, the converse of `th.zero-times`, and the entire basis of
 solving equations by factoring. Not actually *needed* here (see `def.pow-neg` above),
 but its absence looked like an oversight rather than a decision. Its intuition carries
 a stopping point: the property belongs to *fields*, not to multiplication as such —
@@ -80,7 +82,7 @@ def.pow-neg) → `Theorems` (th.inverse-is-power, th.pow-laws-int).
 
 ## Deferred (not built)
 
-- **ℚ — existence.** Roots and rational exponents; needs `ax.C1` and $a > 0$. This is
+- **ℚ — existence.** Roots and rational exponents; needs `ax.completeness` and $a > 0$. This is
   where permanence does worse than fall silent: demanding the laws for $(-2)^{1/2}$
   produces a contradiction, which is why the $a>0$ fence exists and why the ℚ layer is
   a different *kind* of step (existence, not choice).
