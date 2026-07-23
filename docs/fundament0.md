@@ -240,12 +240,24 @@ from any query the one thing a generator needs most.
 Which fields are populated follows from `kind`, but nothing enforces it and the view
 no longer branches on it (see below): `preliminary` → `note` alone; `signature` →
 `symbol`+`type`; `convention` → `latex` *or* `avoid`/`prefer`; `axiom` / `definition`
-/ `theorem` / `remark` → `latex` + quantifier + citations. Seven cards deviate on
-purpose: `ax.zero-not-one` and `ax.completeness` have no `forall` (the second
-quantifies over *sets*); `def.pow-zero` and `def.pow-neg` carry a `derivation`
-although they are definitions — that *is* the ℤ act's thesis, the value is forced;
-`th.no-rational-square-two` and `th.principal-root` carry both `basedOn` and
-`derivedFrom`; `pre.permanence` and `pre.existence` carry an `intuition`.
+/ `theorem` / `remark` → `latex` + domain/condition + citations.
+
+**A missing `forall` is not a deviation — it means the card has no free variables.**
+Eight cards are in that position and all of them state something concrete:
+`ax.zero-not-one` (`0 ≠ 1`), `th.minus-times-minus`, `th.zero-less-than-one`,
+`th.numerals-distinct`, `th.numeral-arithmetic`, `th.negative-base`, `th.base-fence`
+— plus `pl.no-sum-law`, which is the one card that *has* free variables and still
+takes no prefix, because its claim is not universally true (see above).
+
+Six cards genuinely deviate, each on purpose:
+
+- **`def.pow-zero`, `def.pow-neg`** carry a `derivation` although they are
+  definitions. That *is* the ℤ act's thesis — the value is forced, and the chain
+  proves only the conditional. Both cards say so in their notes.
+- **`th.no-rational-square-two`, `th.principal-root`** carry both `basedOn` and
+  `derivedFrom`: a standing dependency plus a proof chain.
+- **`pre.permanence`, `pre.existence`** carry an `intuition` although they are
+  framing cards. Since the render became presence-driven these finally display.
 
 #### Rendering is presence-driven
 
@@ -262,7 +274,7 @@ unknown `concerns` on a non-`preliminary` card; a duplicate section key
 (`slug ?? kind`) within a layer. `scripts/sweep-layers.mjs` adds the KaTeX and prose
 checks. Neither tool checks *field clusters* — those are editorial.
 
-#### Three cards, verbatim
+#### Four cards, verbatim
 
 ```jsonc
 // signature — `symbol` is what puts it in the op grid
@@ -286,7 +298,25 @@ checks. Neither tool checks *field clusters* — those are editorial.
   "derivation": "0 \\cdot a = (0 + 0) \\cdot a = 0 \\cdot a + 0 \\cdot a",
   "derivedFrom": ["ax.zero-neutral", "ax.distributivity",
                   "ax.additive-inverse", "ax.eq-congruence"] }
+
+// theorem — domain and restriction apart, and an EXISTENTIAL statement:
+// `b` is bound inside the claim, which is why the prefix is still universal
+{ "code": "th.root-exists", "concerns": ["mul", "order", "completeness"],
+  "name": { "en": "Roots exist, and there is only one", "de": "…" },
+  "latex": "\\text{there is exactly one } b > 0 \\text{ with } b^{n} = a",
+  "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+  "cond": "a > 0",
+  "derivation": "…",
+  "derivedFrom": ["ax.completeness", "ax.order-mul", "th.ind", "def.pow"],
+  "note": { "en": "…", "de": "…" },
+  "intuition": { "en": "…", "de": "…" } }
 ```
+
+Rendered, that last one reads: **for all** `a ∈ ℝ, n ∈ ℕ` · **provided** `a > 0` ·
+*there is exactly one b > 0 with bⁿ = a*. `th.root-exists` and `ax.completeness`
+were restructured this way on 2026-07-23; they had been carrying their hypotheses
+inline in `latex`, which hid the domain from any query and made their statement
+lines say two things at once.
 
 **Planned, not built — a second prose field per card.** `intuition` is written for
 the *reader of this page* (a teacher, or the author checking dependencies). What is
@@ -302,12 +332,12 @@ Two orthogonal axes, deliberately represented differently:
   *is*, and which section it's filed under.
 - **`concerns[]`** = a *tagging* (multi-valued → a field). Tokens `add · mul · eq ·
   order · completeness`; what a card is *about*. **Bridges are emergent**
-  (`|concerns|>1`) — every theorem, plus E4/D1/N1/O1/O3/O4/C1 — so the `bridge`
+  (`|concerns|>1`) — every theorem, plus ax.eq-congruence · ax.distributivity · ax.zero-not-one · ax.order-trichotomy · ax.order-add · ax.order-mul · ax.completeness — so the `bridge`
   axiom group is no longer the only bridge, just a display home.
 
-The view (`LayerView.vue`) walks the tree with three card layouts (signature
-op-cards, plain preliminaries, one unified statement-card for convention/axiom/
-definition/theorem) and two **filter rows** — `kind` and `concerns` — that **dim**
+The view (`LayerView.vue`) walks the tree with **one presence-driven card template**
+plus the signature op-tile (selected on `symbol`, not on `kind` — see "The card
+format" above), and two **filter rows** — `kind` and `concerns` — that **dim**
 (not hide) non-matching cards. Deselect all concerns but `mul` for the cross-cutting
 "multiplication across all kinds" view the section layout can't produce.
 
