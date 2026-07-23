@@ -161,9 +161,9 @@ this layer**: it is precisely what the tower does not state, and the gap has a s
 The tower is complete for the *linear infix core* — one operation, one term at a
 time — and empty wherever school algebra is two-dimensional or two-termed.
 
-Confirmation that it is ready to write: the 17 survivors already cite **45 tower
+Confirmation that it is ready to write: the survivors already cite **45 tower
 cards** and only **4 of each other**. Every derivation is one or two steps from
-cards that exist.
+cards that exist. `laws.json` is down to **14** after `th.binomial-square` moved in.
 
 **Cluster 1 — the fraction bar.** `def.div` defines `a/b := a·b⁻¹` and stops; every
 `ix.*` convention is about *linear* infix, so nothing in the tower says the bar is
@@ -174,18 +174,25 @@ one) · `thm.split-numerator` · `thm.cancel-common-factor` · `thm.fraction-sig
 · `thm.divide-by-one` · `thm.power-same-base-quotient` · `thm.power-of-quotient` ·
 `thm.root-of-quotient`
 
-**Cluster 2 — the binomial.** Nothing in the tower multiplies two sums.
-`thm.binomial-square` · `thm.square-of-difference` · `thm.difference-of-squares`
+**Cluster 2 — the binomial.** `th.binomial-square` was **built 2026-07-23** into the
+powers layer's ℕ act, directly after `pl.no-sum-law` (see below); the tower can now
+multiply two sums. Remaining: `thm.square-of-difference` · `thm.difference-of-squares`
+— both one step from it, and both needing `def.sub` in the derivation.
 
 **Cluster 3 — minus over sums.** One line each from `th.negative-one-times` +
 `ax.distributivity`; derivable today, but a skill needs a card to point at.
 `thm.minus-over-sum` · `thm.subtract-a-sum` · `thm.collect-like-terms` ·
 `thm.root-of-product` · `thm.root-power-order`
 
-⭐ **Do this one first, whatever else waits:** the tower has `pl.no-sum-law` — *there
-is no law for sums*, `(a+b)ⁿ ≠ aⁿ + bⁿ` — and does **not** have `thm.binomial-square`.
-Students are told what does not work and never what does. That asymmetry is a
-pedagogical bug independent of the layer question.
+⭐ **DONE 2026-07-23.** The tower had `pl.no-sum-law` — *there is no law for sums* —
+and nothing saying what does happen, so students were told only that the obvious move
+fails. `th.binomial-square` now sits immediately after it. Its content is the middle
+term: `ab` and `ba` are the same element by `ax.mul-commutative`, so the two mixed
+products collect into one, and the `2` is counting them — which is exactly the term
+students lose. The last step makes `ix.invisible-one` visible
+(`ab + ab = 1·ab + 1·ab = (1+1)·ab`), and the intuition's stopping point is that the
+square picture needs `a` and `b` to be lengths, so it says nothing about
+`(a + (−b))²`, the case that has to work.
 
 ## Decimal numbers and other special numbers — for the `numbers` layer (2026-07-23)
 
