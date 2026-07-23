@@ -211,6 +211,46 @@
                 "de": "$\\cdot$ bindet stärker als $+$, ein Produkt braucht also keine Klammern in einer Summe."
               },
               "basedOn": ["op.add", "op.mul", "ix.brackets"]
+            },
+            {
+              "code": "ix.fraction-bar",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The bar is a bracket you do not write",
+                "de": "Der Bruchstrich ist eine Klammer, die man nicht schreibt"
+              },
+              "latex": "\\frac{a + b}{c + d} \\;=\\; (a + b) : (c + d)",
+              "basedOn": [
+                "ix.brackets"
+              ],
+              "note": {
+                "en": "Two jobs in one stroke, and the second is invisible. The bar *divides*, which def.div makes precise, and it also *groups*: everything above it is one object and everything below it is another, with no bracket written anywhere. Set the same expression on a line and the brackets have to reappear, which is the whole content of the card. Both directions go wrong in practice. Dropping the bar's brackets turns $\\frac{a+b}{c}$ into $a + \\frac{b}{c}$; inventing brackets that were never there turns $a + b : c$ into $\\frac{a+b}{c}$. ix.brackets says a bracket makes one object out of several; the bar does exactly that while writing nothing, which is why it is the one piece of notation that cannot be read left to right.",
+                "de": "Zwei Aufgaben in einem Strich, und die zweite ist unsichtbar. Der Strich *teilt*, was def.div präzise macht, und er *gruppiert*: alles darüber ist ein Objekt, alles darunter ein anderes, ohne dass irgendwo eine Klammer stünde. Schreibt man denselben Ausdruck auf eine Zeile, müssen die Klammern wieder auftauchen, und das ist der ganze Inhalt dieser Karte. In der Praxis geht es in beide Richtungen schief. Lässt man die Klammern des Strichs weg, wird aus $\\frac{a+b}{c}$ ein $a + \\frac{b}{c}$; erfindet man Klammern, die nie da waren, wird aus $a + b : c$ ein $\\frac{a+b}{c}$. ix.brackets sagt, eine Klammer mache aus mehrerem ein Objekt; genau das tut der Strich, ohne etwas zu schreiben, und darum ist er das eine Stück Notation, das sich nicht von links nach rechts lesen lässt."
+              },
+              "intuition": {
+                "en": "The everyday reading is parts of a whole: $\\frac{3}{4}$ of a cake, three pieces out of four. Where the picture stops, and it stops early: it makes the bar look like a *picture* rather than an operation, so $\\frac{7}{4}$ has no cake to be four quarters of, and $\\frac{a}{b}$ with letters has nothing to cut at all. Read it instead as $a : b$, an instruction with two inputs, and both cases come out right.",
+                "de": "Die alltägliche Lesart ist Teile eines Ganzen: $\\frac{3}{4}$ eines Kuchens, drei Stücke von vieren. Wo das Bild aufhört, und es hört früh auf: es lässt den Strich wie ein *Bild* aussehen statt wie eine Operation, also gibt es bei $\\frac{7}{4}$ keinen Kuchen, von dem das vier Viertel wären, und bei $\\frac{a}{b}$ mit Buchstaben nichts zu zerschneiden. Liest man ihn stattdessen als $a : b$, als Anweisung mit zwei Eingaben, stimmen beide Fälle."
+              }
+            },
+            {
+              "code": "ix.division-signs",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Four spellings, one operation",
+                "de": "Vier Schreibweisen, eine Operation"
+              },
+              "latex": "a : b \\;=\\; a \\div b \\;=\\; a / b \\;=\\; \\frac{a}{b}",
+              "basedOn": [
+                "ix.fraction-bar"
+              ],
+              "note": {
+                "en": "Nothing mathematical distinguishes them. Swiss schoolbooks use $:$, calculators and code use $/$, $\\div$ belongs mostly to English-language material, and all four denote the operation def.div defines. One of them does differ in *notation*, and it is the difference that matters: only the bar groups its two sides by itself (ix.fraction-bar). So $a + b : c$ and $a + \\frac{b}{c}$ say the same thing, while $\\frac{a+b}{c}$ needs written brackets the moment it goes on a line.",
+                "de": "Mathematisch unterscheidet sie nichts. Schweizer Schulbücher verwenden $:$, Taschenrechner und Code $/$, $\\div$ steht meist in englischsprachigem Material, und alle vier bezeichnen die Operation, die def.div definiert. Eine unterscheidet sich in der *Notation*, und das ist der Unterschied, auf den es ankommt: nur der Strich gruppiert seine beiden Seiten von selbst (ix.fraction-bar). $a + b : c$ und $a + \\frac{b}{c}$ sagen also dasselbe, während $\\frac{a+b}{c}$ geschriebene Klammern braucht, sobald es auf eine Zeile kommt."
+              }
             }
           ]
         },
@@ -777,7 +817,7 @@
               "latex": "\\frac{a}{b} := a \\cdot b^{-1}",
               "forall": "a, b \\in \\mathbb{R}",
               "cond": "b \\ne 0",
-              "basedOn": ["ax.multiplicative-inverse", "op.mul"],
+              "basedOn": ["ax.multiplicative-inverse", "op.mul", "ix.fraction-bar"],
               "note": {"en": "Division is not a new operation, just multiplying by the multiplicative inverse. Its special case $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ is the reciprocal of $a$: the same element as the inverse, in the everyday spelling.", "de": "Die Division ist keine neue Operation, sondern die Multiplikation mit dem multiplikativen Inversen. Ihr Spezialfall $\\frac{1}{a} = 1 \\cdot a^{-1} = a^{-1}$ ist der Kehrwert von $a$: dasselbe Element wie das Inverse, in der alltäglichen Schreibweise."}
             },
             {

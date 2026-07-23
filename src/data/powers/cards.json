@@ -247,6 +247,53 @@
               "derivation": "m, n \\ge 0 \\;\\text{: the } \\mathbb{N} \\text{ case} \\qquad m < 0 \\text{ or } n < 0 \\;\\text{: reduce by def.pow-neg to the } \\mathbb{N} \\text{ case}",
               "derivedFrom": ["def.pow-zero", "def.pow-neg", "pl.same-base", "pl.of-power", "pl.of-product"],
               "note": {"en": "Case analysis on whether each exponent is positive, negative or zero, with every case reducing to the natural-exponent version together with the two definitions above. This is the vindication of the method, and it is not circular. We demanded one law, pl.same-base, and only in the mixed cases involving $0$; what comes back is all three laws across the whole of $\\mathbb{Z}$. The extension could have been coherent for the law we asked about and broken for the others. It is not, and that is why permanence is a good method and not merely a tidy one. Note also the change of status. On $\\mathbb{N}$ these were theorems about a recursion; here they are theorems about definitions that were built in order to satisfy them. The same three statements, in a different epistemic position, which is what it means to say the tower's arrow turns around on this layer.", "de": "Fallunterscheidung danach, ob die Exponenten positiv, negativ oder null sind, wobei sich jeder Fall auf die Fassung mit natürlichen Exponenten und die beiden Definitionen oben zurückführt. Das ist die Bewährung der Methode, und sie ist nicht zirkulär. Verlangt haben wir ein Gesetz, pl.same-base, und das nur in den gemischten Fällen mit $0$; zurück kommen alle drei Gesetze auf ganz $\\mathbb{Z}$. Die Erweiterung hätte für das verlangte Gesetz stimmig und für die übrigen kaputt sein können. Sie ist es nicht, und darum ist die Permanenz eine gute und nicht bloss eine ordentliche Methode. Man beachte auch den Wechsel des Status. Auf $\\mathbb{N}$ waren dies Sätze über eine Rekursion; hier sind es Sätze über Definitionen, die gebaut wurden, um sie zu erfüllen. Dieselben drei Aussagen in einer anderen erkenntnismässigen Lage, und genau das heisst es, dass sich der Pfeil des Turms auf dieser Schicht umdreht."}
+            },
+            {
+              "code": "th.pow-quotient-same-base",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Dividing powers is not a fourth law",
+                "de": "Potenzen dividieren ist kein viertes Gesetz"
+              },
+              "latex": "\\frac{a^{m}}{a^{n}} \\;=\\; a^{\\,m-n}",
+              "forall": "a \\in \\mathbb{R},\\ m, n \\in \\mathbb{Z}",
+              "cond": "a \\ne 0",
+              "derivation": "\\frac{a^{m}}{a^{n}} = a^{m} \\cdot (a^{n})^{-1} = a^{m} \\cdot a^{-n} = a^{\\,m + (-n)} = a^{\\,m-n}",
+              "derivedFrom": [
+                "def.div",
+                "def.pow-neg",
+                "th.pow-laws-int",
+                "def.sub"
+              ],
+              "note": {
+                "en": "School teaches 'subtract the exponents when dividing' beside 'add them when multiplying', as though there were two rules. There is one. Division is multiplication by the inverse (def.div), the inverse of a power is a negative exponent (def.pow-neg), and pl.same-base then does all the work; the subtraction at the end is def.sub, not a new operation. Worth reading at $m = n$: the left side is $\\frac{a^{n}}{a^{n}}$, plainly $1$, and the right side is $a^{0}$. That is def.pow-zero arriving a second time, by a different road, which is what a forced definition should do.",
+                "de": "Die Schule lehrt 'beim Dividieren die Exponenten subtrahieren' neben 'beim Multiplizieren addieren', als gäbe es zwei Regeln. Es gibt eine. Dividieren ist Multiplizieren mit dem Inversen (def.div), das Inverse einer Potenz ist ein negativer Exponent (def.pow-neg), und pl.same-base leistet dann alles; die Subtraktion am Schluss ist def.sub und keine neue Operation. Lesenswert bei $m = n$: links steht $\\frac{a^{n}}{a^{n}}$, offensichtlich $1$, rechts $a^{0}$. Das ist def.pow-zero, das ein zweites Mal auf einem anderen Weg ankommt, und genau das sollte eine erzwungene Definition tun."
+              }
+            },
+            {
+              "code": "th.pow-of-quotient",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "A power of a quotient",
+                "de": "Eine Potenz eines Quotienten"
+              },
+              "latex": "\\left( \\frac{a}{b} \\right)^{n} \\;=\\; \\frac{a^{n}}{b^{n}}",
+              "forall": "a, b \\in \\mathbb{R},\\ n \\in \\mathbb{Z}",
+              "cond": "b \\ne 0",
+              "derivation": "\\left( \\frac{a}{b} \\right)^{n} = (a \\cdot b^{-1})^{n} = a^{n} \\cdot (b^{-1})^{n} = a^{n} \\cdot (b^{n})^{-1} = \\frac{a^{n}}{b^{n}}",
+              "derivedFrom": [
+                "def.div",
+                "th.pow-laws-int",
+                "def.pow-neg"
+              ],
+              "note": {
+                "en": "pl.of-product wearing a bar. A quotient is a product with one factor inverted, so the same-exponent law applies unchanged and nothing about fractions is involved. The exponent reaches both parts because ix.fraction-bar has already made them one object: the bracket in $\\left(\\frac{a}{b}\\right)^{n}$ is written, but the grouping inside the bar was there without being written.",
+                "de": "pl.of-product mit einem Bruchstrich. Ein Quotient ist ein Produkt mit einem invertierten Faktor, also gilt das Gesetz gleicher Exponenten unverändert, und mit Brüchen hat es nichts zu tun. Der Exponent erreicht beide Teile, weil ix.fraction-bar sie längst zu einem Objekt gemacht hat: die Klammer in $\\left(\\frac{a}{b}\\right)^{n}$ ist geschrieben, die Gruppierung im Strich war ungeschrieben schon da."
+              }
             }
           ]
         }
@@ -394,6 +441,31 @@
               "cond": "a, b > 0",
               "derivedFrom": ["def.pow-rat", "th.exponent-well-defined", "th.root-exists", "th.pow-laws-int"],
               "note": {"en": "Same shape as th.pow-laws-int and the same moral: one law was demanded, all three come back. But notice what the price was this time. The $\\mathbb{Z}$ extension cost nothing, because the elements were already there. This one cost an axiom, and it bought a smaller domain: the laws now hold only for positive bases, where on $\\mathbb{Z}$ they held for every non-zero base. The tower has been trading domain for reach the whole way up, and this is the first layer where the trade is visible on the card.", "de": "Dieselbe Gestalt wie th.pow-laws-int und dieselbe Moral: verlangt wurde ein Gesetz, zurück kommen alle drei. Man beachte aber den Preis diesmal. Die Erweiterung auf $\\mathbb{Z}$ kostete nichts, denn die Elemente waren schon da. Diese kostete ein Axiom und kaufte einen kleineren Bereich: die Gesetze gelten jetzt nur für positive Basen, während sie auf $\\mathbb{Z}$ für jede von null verschiedene Basis galten. Der Turm tauscht den ganzen Weg hinauf Bereich gegen Reichweite, und hier ist der Tausch zum ersten Mal auf der Karte sichtbar."}
+            },
+            {
+              "code": "th.root-laws",
+              "concerns": [
+                "mul",
+                "completeness"
+              ],
+              "name": {
+                "en": "The same laws, written as radicals",
+                "de": "Dieselben Gesetze, als Wurzeln geschrieben"
+              },
+              "latex": "\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b} \\qquad \\sqrt[n]{\\tfrac{a}{b}} = \\frac{\\sqrt[n]{a}}{\\sqrt[n]{b}}",
+              "forall": "a, b \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+              "cond": "a > 0,\\ b > 0",
+              "derivation": "\\sqrt[n]{a \\cdot b} = (a b)^{1/n} = a^{1/n} b^{1/n} \\qquad \\sqrt[n]{\\tfrac{a}{b}} = \\left(\\tfrac{a}{b}\\right)^{1/n} = \\frac{a^{1/n}}{b^{1/n}}",
+              "derivedFrom": [
+                "ix.root",
+                "th.pow-laws-rat",
+                "th.pow-of-quotient",
+                "def.pow-rat"
+              ],
+              "note": {
+                "en": "Nothing new, and that is the point ix.root was making. Both lines are th.pow-laws-rat at the exponent $\\frac{1}{n}$, translated back into radical notation, and neither would look like an instance of anything if you only ever saw the radical. Learned as radical rules they are two more things to remember; seen as $a^{1/n}$ they are the laws already proved. What is missing from the pair is the same thing missing from pl.no-sum-law, and for the same reason: there is no $\\sqrt[n]{a+b}$ rule, and $\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}$ is one of the two commonest false laws in school algebra.",
+                "de": "Nichts Neues, und genau das war der Punkt von ix.root. Beide Zeilen sind th.pow-laws-rat beim Exponenten $\\frac{1}{n}$, zurückübersetzt in die Wurzelschreibweise, und keine sähe nach einem Spezialfall von irgendetwas aus, wenn man nur je die Wurzel sähe. Als Wurzelregeln gelernt sind es zwei weitere Dinge zum Merken; als $a^{1/n}$ gesehen sind es die längst bewiesenen Gesetze. Was dem Paar fehlt, fehlt aus demselben Grund wie bei pl.no-sum-law: eine Regel für $\\sqrt[n]{a+b}$ gibt es nicht, und $\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}$ ist einer der beiden häufigsten falschen Sätze der Schulalgebra."
+              }
             },
             {
               "code": "th.base-fence",

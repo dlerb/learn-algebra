@@ -8,7 +8,7 @@
     "illustration": "a \\div b = a : b = \\frac{a}{b}",
     "conditions": "b \\ne 0",
     "governedBy": [
-      "conv.division-signs"
+      "ix.division-signs"
     ],
     "errors": [
       "anti.commute-everything"
@@ -40,7 +40,7 @@
       "equivalence.division-variants"
     ],
     "justifiedBy": [
-      "thm.divide-by-one"
+      "th.divide-by-one"
     ]
   },
   {
@@ -59,11 +59,11 @@
       "meta.only-multiplication-distributes"
     ],
     "justifiedBy": [
-      "thm.split-numerator",
+      "th.split-numerator",
       "ax.distributivity"
     ],
     "governedBy": [
-      "conv.fraction-bar"
+      "ix.fraction-bar"
     ]
   },
   {
@@ -82,10 +82,10 @@
       "meta.only-multiplication-distributes"
     ],
     "justifiedBy": [
-      "thm.split-numerator"
+      "th.split-numerator"
     ],
     "governedBy": [
-      "conv.fraction-bar"
+      "ix.fraction-bar"
     ],
     "errors": [
       "anti.linearity"
@@ -106,11 +106,11 @@
       "meta.only-multiplication-distributes"
     ],
     "justifiedBy": [
-      "thm.split-numerator",
-      "thm.cancel-common-factor"
+      "th.split-numerator",
+      "th.cancel-common-factor"
     ],
     "governedBy": [
-      "conv.fraction-bar"
+      "ix.fraction-bar"
     ],
     "errors": [
       "anti.linearity"

@@ -69,7 +69,7 @@
       "def.div"
     ],
     "governedBy": [
-      "conv.division-signs"
+      "ix.division-signs"
     ],
     "errors": [
       "anti.commute-everything"

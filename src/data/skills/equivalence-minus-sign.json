@@ -166,12 +166,12 @@
       "meta.fraction-bar-brackets"
     ],
     "justifiedBy": [
-      "thm.fraction-sign-moves"
+      "th.fraction-minus-moves"
     ],
     "governedBy": [
       "th.negative-one-times",
       "def.sub",
-      "conv.fraction-bar"
+      "ix.fraction-bar"
     ],
     "errors": [
       "mis.minus-roles-confused"
