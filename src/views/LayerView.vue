@@ -36,9 +36,11 @@ const sectionBlurb = (s: Section) => s.blurb ?? (s.groups.length === 1 ? s.group
 const showGroupHeads = (s: Section) => s.groups.length > 1
 
 // Filters. Both sets start full (nothing dimmed). Toggling narrows. The kind
-// row is per-layer (naturals has no signature or axiom section), so it resets
-// when the route swaps the layer under a reused component instance.
-const kinds = computed(() => sections.value.map(s => s.kind))
+// row is per-layer (powers has no signature or axiom section), so it resets
+// when the route swaps the layer under a reused component instance. Deduped:
+// a layer may repeat a kind across sections (powers runs ℕ/ℤ/ℚ as three acts),
+// and one chip must then govern all of them.
+const kinds = computed(() => [...new Set(sections.value.map(s => s.kind))])
 const concernTokens = CONCERN_TOKENS
 const kindActive = ref(new Set<string>(kinds.value))
 watch(kinds, k => (kindActive.value = new Set(k)))
@@ -78,7 +80,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
       </div>
     </header>
 
-    <section v-for="s in sections" :key="s.kind" class="group">
+    <section v-for="s in sections" :key="s.slug ?? s.kind" class="group">
       <div class="group-title">
         <h3>{{ t(s.title) }}</h3>
         <NPopover v-if="sectionBlurb(s)" trigger="click" placement="bottom-start">

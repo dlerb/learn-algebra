@@ -92,9 +92,12 @@ so a topic's definition and its theorem sit in different sections and are read t
   `def.numeral` names one element at a time; positional notation is a different machine.
 - **Divisibility and the primes** — the first structure *inside* ℕ, and the first
   content this layer has that the powers never needed.
-- **The irrationals.** ℝ∖ℚ, and √2 ∉ ℚ. Currently homeless: it exists only as prose
-  inside `ax.completeness`'s intuition, while being the entire motivation for completeness.
-  This layer is where it gets a card.
+- **The irrationals as a set.** ℝ∖ℚ named, now that `th.no-rational-square-two`
+  (built 2026-07-23) has exhibited one. That card proves the hole by **descent** —
+  smallest denominator, then a smaller one — so it needs neither divisibility nor
+  primes nor "lowest terms", only `th.ind` read once more as well-ordering. It is
+  stated as `q·q ≠ 2` rather than `√2 ∉ ℚ` on purpose: roots and power notation live
+  one layer *up*, and this layer may not borrow forward.
 - **The multiples/powers divergence card.** Coefficients dissolve into ordinary `·`
   at ℚ; exponents never do. Statable only where both stories are visible.
 

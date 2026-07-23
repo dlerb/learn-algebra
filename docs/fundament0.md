@@ -179,7 +179,7 @@ definition/theorem) and two **filter rows** — `kind` and `concerns` — that *
   point that cannot be drawn. Intuitions that are not models are exempt (`def.nat`'s
   `0`-convention note, `th.negative-base`'s teaching stance).
   *Background: the discussion that produced this (repeated addition vs scaling,
-  whether ℝ has any adequate picture at all) is summarised in `docs/naturals.md`.*
+  whether ℝ has any adequate picture at all) is summarised in `docs/powers-nat-act.md`.*
   Informal, model-grounded, weighted toward the non-obvious (area model for
   distributivity; number-line "opposite" → subtraction; reciprocal → division;
   balance scale for congruence). It is **recognition on a model, not proof** —
@@ -244,9 +244,9 @@ order relation `op.lt`, the four order axioms `the four `ax.order-*``, the compl
   power are different jobs and the old arrangement left primes, decimals and
   divisibility with no home. `rk.existence` above is what makes it coherent: the sets are
   carved *out of* ℝ, not built *before* it.
-- **The ℕ-indexed layer — BUILT 2026-07-22**, see `docs/naturals.md`. Numerals
+- **The ℕ-indexed layer — BUILT 2026-07-22**, see `docs/powers-nat-act.md`. Numerals
   (`2 := 1+1`), multiples (`3a`) and natural powers (`aⁿ`) live in
-  `src/data/naturals/cards.json` at `/naturals`. It does **not** smuggle in ℕ: the
+  `src/data/powers/cards.json` at `/powers`. It does **not** smuggle in ℕ: the
   parked `pre.nat` import card was rejected as false, and `def.nat` carves ℕ out of
   ℝ as the smallest inductive subset, so the layer assumes nothing and induction
   (`th.ind`) is a theorem. Power laws are theorems by induction, as designed. The
@@ -254,10 +254,10 @@ order relation `op.lt`, the four order axioms `the four `ax.order-*``, the compl
   Still deferred: **decimal numerals** (and with them the full `1.23·a` card). The old
   `laws.json` (`def.power` → `thm.power-same-base`, `def.extended-exponents`,
   `def.root`) remains the worked reference for the school-level versions.
-- **The ℤ-exponent layer — BUILT 2026-07-22**, see `docs/integers.md`. `a⁰` and `a⁻ⁿ`
+- **The ℤ-exponent layer — BUILT 2026-07-22**, see `docs/powers-int-act.md`. `a⁰` and `a⁻ⁿ`
   as *choices forced by permanence*; `th.inverse-is-power` retroactively justifies this
   page's atomic `a^{-1}` notation.
-- **The ℚ-exponent layer — BUILT 2026-07-22**, see `docs/rationals.md`. Roots by
+- **The ℚ-exponent layer — BUILT 2026-07-22**, see `docs/powers-rat-act.md`. Roots by
   *existence*: `th.root-exists` is **the first and only card in the whole tower that
   uses `ax.completeness`**, and the only one that would be false in ℚ. The powers tower is
   complete (ℕ builds → ℤ finds → ℚ must be given), and it ends by naming what it cannot
@@ -332,7 +332,7 @@ intuition / notation), and needs sorting before it is built.
   `pl.no-sum-law` (there is no law for sums, by counterexample). Still open: the
   definitions-by-choice (`a⁰ := 1`, `a⁻ⁿ := 1/aⁿ`, extension by permanence — the ℤ
   layer, where the arrow reverses and the laws *force* the definition) and the
-  existence half (roots and rational powers, needing `ax.completeness`). See `docs/naturals.md`.
+  existence half (roots and rational powers, needing `ax.completeness`). See `docs/powers-nat-act.md`.
 - **The exponent `-1` / `-n`.** One glyph string, three readings: `b^{-1}` at
   fundament0 is *atomic notation* for the inverse (ax.multiplicative-inverse), where the `-1` is
   decorative — not the number `-1`, and not a power (powers don't exist here). In
