@@ -174,6 +174,87 @@ layer → sections[] → groups[] → cards[]
 - **`cards[]`** — `code` is the sole key (`id` dropped; citations always used
   codes). Each carries `concerns` + its kind-specific fields.
 
+### The card format (all three layers, 2026-07-23)
+
+**One schema, 15 fields, two of them required.** Every card in `fundament0`,
+`numbers` and `powers` validates against the same `Card` interface in
+`src/data/layers.ts`; there is no per-kind schema and no field in the data that the
+interface does not declare. `LocalizedString` is `{ en, de }` — both always present.
+
+| field | type | in | what it is |
+|---|---|---|---|
+| `code` | string | **all 76** | the key. Unique **tower-wide**, slug-style, never numbered. Prefix marks the role: `pre. op. ix. ax. def. th. pl. rk.` |
+| `name` | LocalizedString | **all 76** | card title. **Plain text** — rendered with `{{ }}`, so no `$…$` and no LaTeX |
+| `concerns` | string[] | 71 | multi-tag over `add · mul · eq · order · completeness`. Required for every kind except `preliminary` |
+| `symbol` | LaTeX | 4 | the glyph, e.g. `+`. **Its presence selects the signature tile layout** |
+| `type` | LaTeX | 4 | signature, e.g. `\mathbb{R} \times \mathbb{R} \to \mathbb{R}` |
+| `latex` | LaTeX | 64 | the statement, rendered display-style |
+| `avoid` / `prefer` | LaTeX | 3 / 3 | the ✗/✓ pair, used *instead of* `latex` by rewrite conventions |
+| `forall` | LaTeX | 32 | quantifier line, rendered as "for all …" |
+| `cond` | LaTeX | 8 | side condition, rendered as "for …" |
+| `basedOn` | code[] | 42 | standing dependencies → the "rests on" chips |
+| `derivation` | LaTeX | 23 | the proof chain, collapsed behind a toggle |
+| `derivedFrom` | code[] | 26 | what the chain uses → chips under the derivation |
+| `note` | LocalizedString | 67 | prose. RichText: `$…$` inline maths and `*emph*` only |
+| `intuition` | LocalizedString | 31 | the picture **and where it stops**, collapsed behind a toggle |
+
+**Prose fields carry no markdown beyond `*emph*` and no em dashes** — they render
+literally, and `—` also reads as `−`. `scripts/sweep-layers.mjs` fails the build on
+either, and KaTeX-checks every LaTeX field with **no macros defined**.
+
+#### Field clusters are a convention, not a schema
+
+Which fields are populated follows from `kind`, but nothing enforces it and the view
+no longer branches on it (see below): `preliminary` → `note` alone; `signature` →
+`symbol`+`type`; `convention` → `latex` *or* `avoid`/`prefer`; `axiom` / `definition`
+/ `theorem` / `remark` → `latex` + quantifier + citations. Seven cards deviate on
+purpose: `ax.zero-not-one` and `ax.completeness` have no `forall` (the second
+quantifies over *sets*); `def.pow-zero` and `def.pow-neg` carry a `derivation`
+although they are definitions — that *is* the ℤ act's thesis, the value is forced;
+`th.no-rational-square-two` and `th.principal-root` carry both `basedOn` and
+`derivedFrom`; `pre.permanence` and `pre.existence` carry an `intuition`.
+
+#### Rendering is presence-driven
+
+`LayerView.vue` has **one template**. Each part appears iff its field is present, so
+a framing card is simply one with a `note` and nothing else. `kind` is a claim about
+*knowledge*, not about layout, and no longer selects a template — adding a kind needs
+no view change. The single layout variant is the signature tile, keyed on `symbol`.
+
+#### What is validated, and where
+
+`validate()` in `src/data/layers.ts` throws at load time on: a duplicate `code`
+tower-wide; a `basedOn`/`derivedFrom` entry that resolves to nothing; a missing or
+unknown `concerns` on a non-`preliminary` card; a duplicate section key
+(`slug ?? kind`) within a layer. `scripts/sweep-layers.mjs` adds the KaTeX and prose
+checks. Neither tool checks *field clusters* — those are editorial.
+
+#### Three cards, verbatim
+
+```jsonc
+// signature — `symbol` is what puts it in the op grid
+{ "code": "op.add", "concerns": ["add"],
+  "symbol": "+", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}",
+  "name": { "en": "Addition", "de": "Addition" },
+  "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a + b$; …", "de": "…" } }
+
+// convention — the ✗/✓ pair replaces `latex`
+{ "code": "ix.coefficient-front", "concerns": ["mul"],
+  "name": { "en": "Coefficient in front", "de": "Koeffizient nach vorne" },
+  "avoid": "a \\cdot 3", "prefer": "3a",
+  "note": { "en": "A coefficient goes before the variable. …", "de": "…" },
+  "basedOn": ["op.mul", "ax.mul-commutative"] }
+
+// theorem — statement, quantifier, chain, and what the chain used
+{ "code": "th.zero-times", "concerns": ["add", "mul"],
+  "name": { "en": "Zero times anything is zero", "de": "Null mal irgendetwas ist null" },
+  "latex": "0 \\cdot a = 0",
+  "forall": "a \\in \\mathbb{R}",
+  "derivation": "0 \\cdot a = (0 + 0) \\cdot a = 0 \\cdot a + 0 \\cdot a",
+  "derivedFrom": ["ax.zero-neutral", "ax.distributivity",
+                  "ax.additive-inverse", "ax.eq-congruence"] }
+```
+
 **Planned, not built — a second prose field per card.** `intuition` is written for
 the *reader of this page* (a teacher, or the author checking dependencies). What is
 missing is the **classroom-facing** explanation: the same axiom or theorem said the
