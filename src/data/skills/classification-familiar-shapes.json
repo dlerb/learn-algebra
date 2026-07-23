@@ -15,7 +15,7 @@
       "meta.dominant-op-last"
     ],
     "justifiedBy": [
-      "thm.difference-of-squares"
+      "th.difference-of-squares"
     ],
     "governedBy": [
       "ix.precedence",

@@ -153,7 +153,7 @@ in several layers at once; detail in `docs/fundament0.md`):
 
 ---
 
-## The `algebra` layer — the tower's fourth floor (spec'd 2026-07-23, NOT started)
+## The `algebra` layer — STARTED 2026-07-23 (binomials built, fractions not)
 
 House-cleaning on 2026-07-23 made the fundament tower the primary reference and cut
 `laws.json` 38 → 15 and `conventions.json` 12 → 2. **What survives is the spec for
@@ -174,10 +174,12 @@ one) · `thm.split-numerator` · `thm.cancel-common-factor` · `thm.fraction-sig
 · `thm.divide-by-one` · `thm.power-same-base-quotient` · `thm.power-of-quotient` ·
 `thm.root-of-quotient`
 
-**Cluster 2 — the binomial.** `th.binomial-square` was **built 2026-07-23** into the
-powers layer's ℕ act, directly after `pl.no-sum-law` (see below); the tower can now
-multiply two sums. Remaining: `thm.square-of-difference` · `thm.difference-of-squares`
-— both one step from it, and both needing `def.sub` in the derivation.
+**Cluster 2 — the binomial. ✅ DONE 2026-07-23**, and it is what created the layer.
+All three now live in `src/data/algebra/cards.json` (`docs/algebra.md`):
+`th.binomial-square` · `th.square-of-difference` · `th.difference-of-squares`. The card
+built earlier that day in `powers` **moved up**: `th.difference-of-squares` is not a
+statement about exponents, so the binomials could not stay filed under `aⁿ`. The
+adjacency with `pl.no-sum-law` survives as a forward pointer in its note.
 
 **Cluster 3 — minus over sums.** One line each from `th.negative-one-times` +
 `ax.distributivity`; derivable today, but a skill needs a card to point at.
