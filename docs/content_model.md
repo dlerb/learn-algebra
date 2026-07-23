@@ -1,5 +1,16 @@
 # Content model — design rationale
 
+> ⚠️ **Partially superseded 2026-07-23.** The **fundament tower** (`fundamentals ·
+> numbers · powers · terms`, `src/data/<layer>/cards.json`) is now the primary
+> reference, and **`laws.json` / `conventions.json` and their registries
+> (`lawGroups`/`lawKinds`/`conventionGroups`) were DELETED** — everything they held is
+> a tower card, and skills cite card codes. Wherever this doc's older sections (the
+> file-format tables, "Laws & Conventions view", the `lawGroup`/`conventionGroup`
+> enums) describe those files as live, read them as history. The tower is documented
+> in `docs/fundamentals.md` (format spec), the migration in memory `bridge`. The
+> skills/drills/errors rationale below still holds. A full rewrite of this file is
+> pending.
+
 How the algebra content is structured. Everything lives under `src/data/` and is
 validated by `skill.schema.ts` on load. The layers:
 
@@ -14,27 +25,31 @@ validated by `skill.schema.ts` on load. The layers:
   `validateErrors` and at build by `sweep-layers`. The files, their display registries
   (`lawGroups`/`lawKinds`/`conventionGroups`), the Zod schemas and the reference view's
   law/convention segments all went with them; `ReferenceView` is now an errors page.
-- **errors** (`errors.json`) — the error patterns that shadow the above.
-- **meta-patterns** (`metapatterns.json`) — student-facing digests of them.
+- **errors** (`errors.json`) — the error patterns that shadow the tower; each
+  `corrupts` a card. Browsed at `/errors` (`ReferenceView`, now errors-only).
+- **meta-patterns** (`metapatterns.json`) — student-facing digests. ⚠️ **being split
+  (see `docs/TODO.md` / memory `metapatterns-split`)**: the ones that restate a tower
+  card in student voice become a new `plain` field on the card; the reading-heuristic
+  ones move into skills; then the file retires.
 
   *(Note on the word: "layer" means both a **file/role** here and a **floor** of the
   fundament tower, in the sense of mathematical dependency. The two remain separate
   representations — the tower is not generated from the skills side or vice versa —
   but they are no longer disconnected: skills reach into the tower by card code, and
-  `pnpm sweep-layers` fails if any reference resolves to neither a card nor a
-  surviving legacy id.)*
-- **skills** (`skills/*.json`) — curated *strategies/skills* built on the
-  laws × conventions coordinate system: what is worth drilling, and why. Each
-  skill's concrete material lives separately in…
+  `pnpm sweep-layers` fails if any reference resolves to neither a card nor an error/
+  meta id.)*
+- **skills** (`skills/*.json`) — curated *strategies/skills* pointing into the tower:
+  what is worth drilling, and why. `justifiedBy` / `governedBy` are **card codes** now
+  (was law / convention ids). Each skill's concrete material lives separately in…
 - **drills** (`drills/*.json`) — the format-specific drill material for each
   skill. See "Skills vs drills" below.
 
-Laws + conventions are the *coordinate system* skills live in — they justify
-and audit skills, they do not generate them. Group **display** metadata
-(title, order, blurb) lives in sibling registries (`lawGroups.json`,
-`conventionGroups.json`, `skillGroups.json`), each a flat list validated so a
-title can't drift from the values entries carry. Browse laws/conventions/errors
-in the app's **Laws & Conventions view**, skills in the **Taxonomy view**.
+The tower is the *coordinate system* skills live in — they cite cards to justify
+and audit themselves, they do not generate them. Group **display** metadata
+(title, order, blurb) lives in sibling registries (`skillGroups.json`,
+`skillKinds.json`), each a flat list validated so a title can't drift. Browse
+errors at `/errors`, skills in the **Taxonomy view** (`/skills`), the tower one page
+per layer (`/fundamentals`, `/numbers`, `/powers`, `/terms`).
 This doc records the *why*, not the content tables (they would drift).
 
 Ids are kind-prefixed slugs so a derivation chain reads like a proof:
