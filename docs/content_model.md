@@ -6,7 +6,7 @@ validated by `skill.schema.ts` on load. The layers:
 - **the fundament tower** (`src/data/<layer>/cards.json`, composed by
   `src/data/layers.ts`) — **the primary reference since 2026-07-23**: the axioms,
   conventions, definitions and theorems, each traced to what it rests on.
-  `fundament0 · numbers · powers`. See `docs/fundament0.md`.
+  `fundament0 · numbers · powers · algebra`. See `docs/fundament0.md`.
 - **laws** (`laws.json`) + **conventions** (`conventions.json`) — **a legacy stub.**
   These were the original law tower. On 2026-07-23 everything the fundament also
   states was retired from them (38 laws → 15, 12 conventions → 2) and every citation

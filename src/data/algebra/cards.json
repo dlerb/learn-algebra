@@ -1,0 +1,135 @@
+{
+  "layer": {
+    "id": "algebra",
+    "meta": {
+      "characterizes": {"en": "expand · collect · cancel", "de": "ausmultiplizieren · zusammenfassen · kürzen"},
+      "note": {"en": "The floor where the tower stops describing and starts transforming. Below, every card says what something is: what the operations satisfy, which subsets of $\\mathbb{R}$ have names, how a power is built. Here every card says what may be done to an expression that has parts, and nothing new is assumed in order to do it. Each one is ax.distributivity, ax.mul-commutative and the inverses over again, reaching inside a compound expression instead of acting on a single element. This is also the layer that answers the skills tower, since a drill is nearly always one of these moves carried out on particular material, which is why the error patterns point here. It is deliberately unfinished: the binomials are built, the fraction bar is not. The bar groups its two parts without writing a bracket, most of the remaining school algebra lives there, and it is spec'd in docs/TODO.md.", "de": "Das Stockwerk, auf dem der Turm aufhört zu beschreiben und anfängt umzuformen. Darunter sagt jede Karte, was etwas ist: was die Operationen erfüllen, welche Teilmengen von $\\mathbb{R}$ Namen haben, wie eine Potenz gebaut wird. Hier sagt jede Karte, was man mit einem Ausdruck tun darf, der Teile hat, und es wird dafür nichts Neues angenommen. Jede ist wieder ax.distributivity, ax.mul-commutative und die Inversen, die in einen zusammengesetzten Ausdruck hineingreifen statt auf ein einzelnes Element zu wirken. Dies ist auch die Schicht, die dem Skills-Turm antwortet, denn eine Übung ist fast immer einer dieser Züge an bestimmtem Material, und darum zeigen die Fehlermuster hierher. Sie ist bewusst unfertig: die Binome stehen, der Bruchstrich nicht. Er gruppiert seine beiden Teile, ohne eine Klammer zu schreiben, dort wohnt der grösste Teil der übrigen Schulalgebra, und er ist in docs/TODO.md spezifiziert."}
+    }
+  },
+
+  "sections": [
+    {
+      "slug": "prelim",
+      "kind": "preliminary",
+      "title": {"en": "Preliminaries", "de": "Vorbemerkungen"},
+      "groups": [
+        {
+          "slug": "prelim",
+          "cards": [
+            {
+              "code": "pre.compound",
+              "name": {
+                "en": "Expressions with parts",
+                "de": "Ausdrücke mit Teilen"
+              },
+              "note": {
+                "en": "Every layer below says what things *are*. The axioms say what $+$ and $\\cdot$ satisfy, numbers names the parts of $\\mathbb{R}$, powers builds one operation across a widening exponent. From here the cards say what you may *do* to an expression that has already been built: expand a product of sums, collect what repeats, cancel what undoes itself. Nothing new is assumed here either. Every card below is ax.distributivity, ax.mul-commutative and the inverses again, applied to expressions that have parts rather than to single elements, and that is the only new thing: the objects are compound, so a move can reach inside one. It is also why this is the layer the skills tower talks to. A drill is almost always one of these moves, carried out on particular material.",
+                "de": "Jede Schicht darunter sagt, was die Dinge *sind*. Die Axiome sagen, was $+$ und $\\cdot$ erfüllen, numbers benennt die Teile von $\\mathbb{R}$, powers baut eine Operation über einen immer weiteren Exponenten. Von hier an sagen die Karten, was man mit einem bereits gebauten Ausdruck *tun* darf: ein Produkt von Summen ausmultiplizieren, Wiederholtes zusammenfassen, sich Aufhebendes kürzen. Auch hier wird nichts Neues angenommen. Jede Karte unten ist wieder ax.distributivity, ax.mul-commutative und die Inversen, angewandt auf Ausdrücke mit Teilen statt auf einzelne Elemente, und mehr ist neu nicht: die Objekte sind zusammengesetzt, ein Zug kann also in einen hineingreifen. Darum ist dies auch die Schicht, mit der der Skills-Turm spricht. Eine Übung ist fast immer einer dieser Züge, ausgeführt an bestimmtem Material."
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "slug": "binomials",
+      "kind": "theorem",
+      "title": {"en": "Binomials", "de": "Binome"},
+      "note": {"en": "Three cards, one mechanism. Each expands a product of two sums with ax.distributivity and then collects. All that differs is what the two mixed products do, and between them they do all three possible things: double, survive with a minus, or cancel.", "de": "Drei Karten, ein Mechanismus. Jede multipliziert ein Produkt zweier Summen mit ax.distributivity aus und fasst dann zusammen. Verschieden ist nur, was die beiden gemischten Produkte tun, und zusammen tun sie alle drei möglichen Dinge: sich verdoppeln, mit einem Minus überleben oder sich aufheben."},
+      "groups": [
+        {
+          "slug": "binomials",
+          "cards": [
+            {
+              "code": "th.binomial-square",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "What a squared sum really is",
+                "de": "Was eine quadrierte Summe wirklich ist"
+              },
+              "latex": "(a + b)^{2} \\;=\\; a^{2} + 2ab + b^{2}",
+              "forall": "a, b \\in \\mathbb{R}",
+              "derivation": "\\begin{aligned} (a+b)^{2} &= (a+b) \\cdot (a+b) \\\\[2pt] &= a \\cdot (a+b) + b \\cdot (a+b) \\\\[2pt] &= (a \\cdot a + a \\cdot b) + (b \\cdot a + b \\cdot b) \\\\[2pt] &= a^{2} + (ab + ab) + b^{2} \\\\[2pt] &= a^{2} + (1+1) \\cdot ab + b^{2} \\;=\\; a^{2} + 2ab + b^{2} \\end{aligned}",
+              "derivedFrom": [
+                "def.pow",
+                "ax.distributivity",
+                "ax.mul-commutative",
+                "ax.add-associative",
+                "ix.invisible-one",
+                "def.numeral"
+              ],
+              "note": {
+                "en": "The card pl.no-sum-law leaves owed. That one says what does not happen; this one says what does, and without it a student is told only that the obvious move fails. Nothing new is assumed. The expansion is ax.distributivity twice, once to split the left factor and once inside each half, and everything after that is collecting. The middle term is the whole content: $ab$ and $ba$ are the same element by ax.mul-commutative, so the two mixed products fall together into one term, and the coefficient $2$ is counting them. That is the term students lose, and it is lost by expanding only the two 'matching' pairs. The last step is the invisible one of ix.invisible-one made visible: $ab + ab = 1 \\cdot ab + 1 \\cdot ab = (1+1) \\cdot ab$. Read the line right to left and it is the first factoring pattern, the same fact in the harder direction.",
+                "de": "Die Karte, die pl.no-sum-law schuldig bleibt. Jene sagt, was nicht passiert; diese sagt, was passiert, und ohne sie erfährt eine Schülerin nur, dass der naheliegende Zug scheitert. Es wird nichts Neues angenommen. Das Ausmultiplizieren ist zweimal ax.distributivity, einmal um den linken Faktor aufzuteilen und einmal in jeder Hälfte, alles Weitere ist Zusammenfassen. Der mittlere Term ist der ganze Inhalt: $ab$ und $ba$ sind nach ax.mul-commutative dasselbe Element, die beiden gemischten Produkte fallen also zu einem Term zusammen, und der Koeffizient $2$ zählt sie. Genau dieser Term geht verloren, und er geht verloren, wenn man nur die beiden 'passenden' Paare ausmultipliziert. Der letzte Schritt macht die unsichtbare Eins aus ix.invisible-one sichtbar: $ab + ab = 1 \\cdot ab + 1 \\cdot ab = (1+1) \\cdot ab$. Von rechts nach links gelesen ist die Zeile das erste Faktorisierungsmuster, dieselbe Tatsache in der schwierigeren Richtung."
+              },
+              "intuition": {
+                "en": "The square picture: a square of side $a + b$ cuts into four pieces, a square $a^{2}$, a square $b^{2}$, and two rectangles $ab$, one on each side of the diagonal. The two rectangles are what the $2$ counts, and seeing that there are two of them is what makes the middle term hard to forget. Where the picture stops: it needs $a$ and $b$ to be lengths, so it says nothing at all once either is negative, and $(a + (-b))^{2}$ is exactly the case that has to work. The derivation above holds whether $b$ is positive or negative, because it never asks; the picture cannot help asking.",
+                "de": "Das Quadratbild: ein Quadrat der Seite $a + b$ zerfällt in vier Stücke, ein Quadrat $a^{2}$, ein Quadrat $b^{2}$ und zwei Rechtecke $ab$, eines auf jeder Seite der Diagonalen. Die beiden Rechtecke sind das, was die $2$ zählt, und zu sehen, dass es zwei sind, macht den mittleren Term schwer vergesslich. Wo das Bild aufhört: es braucht $a$ und $b$ als Längen und sagt gar nichts mehr, sobald eines negativ ist, und genau $(a + (-b))^{2}$ muss funktionieren. Die Herleitung oben gilt, ob $b$ positiv oder negativ ist, denn sie fragt gar nicht danach; das Bild kann nicht anders als zu fragen."
+              }
+            },
+            {
+              "code": "th.square-of-difference",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "A squared difference is the same identity",
+                "de": "Eine quadrierte Differenz ist dieselbe Identität"
+              },
+              "latex": "(a - b)^{2} \\;=\\; a^{2} - 2ab + b^{2}",
+              "forall": "a, b \\in \\mathbb{R}",
+              "derivation": "\\begin{aligned} (a-b)^{2} &= \\bigl(a + (-b)\\bigr)^{2} \\\\[2pt] &= a^{2} + 2 \\cdot a \\cdot (-b) + (-b)^{2} \\\\[2pt] &= a^{2} - 2ab + b^{2} \\end{aligned}",
+              "derivedFrom": [
+                "th.binomial-square",
+                "def.sub",
+                "th.negative-one-times",
+                "th.minus-times-minus"
+              ],
+              "note": {
+                "en": "Not a second identity, the first one with $b$ replaced by $-b$. That is the whole card, and it is worth a card because school presents the two as a pair to be memorised, which doubles the load and hides the reason. def.sub turns the difference into a sum, th.binomial-square applies unchanged, and then two steps clean up: the middle term picks up a minus by th.negative-one-times, and the last term does not, because $(-b)^{2} = b^{2}$ by th.minus-times-minus. The second of those is where the mistake lives. A student who writes $-b^{2}$ at the end has read the minus as belonging to the $b$ and carried it through the square, which is th.negative-base one layer down, met again inside a longer expression.",
+                "de": "Keine zweite Identität, sondern die erste mit $-b$ statt $b$. Das ist die ganze Karte, und sie lohnt sich, weil die Schule beide als Paar zum Auswendiglernen präsentiert, was die Last verdoppelt und den Grund verbirgt. def.sub macht aus der Differenz eine Summe, th.binomial-square gilt unverändert, und zwei Schritte räumen auf: der mittlere Term bekommt nach th.negative-one-times ein Minus, der letzte nicht, denn $(-b)^{2} = b^{2}$ nach th.minus-times-minus. Beim zweiten sitzt der Fehler. Wer am Ende $-b^{2}$ schreibt, hat das Minus als zum $b$ gehörig gelesen und durch das Quadrat mitgenommen, und das ist th.negative-base eine Schicht tiefer, wiedergetroffen in einem längeren Ausdruck."
+              }
+            },
+            {
+              "code": "th.difference-of-squares",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "When the mixed products cancel",
+                "de": "Wenn sich die gemischten Produkte aufheben"
+              },
+              "latex": "(a + b)(a - b) \\;=\\; a^{2} - b^{2}",
+              "forall": "a, b \\in \\mathbb{R}",
+              "derivation": "\\begin{aligned} (a+b)(a-b) &= a(a-b) + b(a-b) \\\\[2pt] &= (a^{2} - ab) + (ab - b^{2}) \\\\[2pt] &= a^{2} + (-ab + ab) - b^{2} \\\\[2pt] &= a^{2} + 0 - b^{2} \\;=\\; a^{2} - b^{2} \\end{aligned}",
+              "derivedFrom": [
+                "ax.distributivity",
+                "ax.mul-commutative",
+                "def.sub",
+                "ax.add-associative",
+                "ax.add-commutative",
+                "ax.additive-inverse",
+                "ax.zero-neutral",
+                "def.pow"
+              ],
+              "note": {
+                "en": "The same machinery as th.binomial-square and the opposite outcome, which is why the two belong side by side. There too the expansion produced two mixed products $ab$ and $ba$, equal by ax.mul-commutative; there they collected into $2ab$, here one of them arrives negative and they cancel by ax.additive-inverse. Nothing else changed. Reading the line right to left is the more valuable direction and the harder one: a difference of two squares always factors, and seeing that is what turns $x^{2} - 9$ into $(x+3)(x-3)$. Note what the card does *not* say. There is no matching factorisation of a *sum* of two squares, and the reason is not that nobody has found one.",
+                "de": "Dieselbe Maschinerie wie th.binomial-square und das umgekehrte Ergebnis, und darum gehören die beiden nebeneinander. Auch dort lieferte das Ausmultiplizieren zwei gemischte Produkte $ab$ und $ba$, nach ax.mul-commutative gleich; dort fielen sie zu $2ab$ zusammen, hier kommt eines negativ an und sie heben sich nach ax.additive-inverse auf. Sonst ändert sich nichts. Die Zeile von rechts nach links zu lesen ist die wertvollere und die schwierigere Richtung: eine Differenz zweier Quadrate lässt sich immer faktorisieren, und das zu sehen macht aus $x^{2} - 9$ das Produkt $(x+3)(x-3)$. Man beachte, was die Karte *nicht* sagt. Für eine *Summe* zweier Quadrate gibt es keine entsprechende Zerlegung, und das liegt nicht daran, dass niemand eine gefunden hätte."
+              },
+              "intuition": {
+                "en": "Cut a $b \\times b$ corner out of an $a \\times a$ square; the remaining L-shape re-cuts, with one straight cut and a slide, into a rectangle $a+b$ by $a-b$. Mental arithmetic is the same fact: $19 \\cdot 21 = (20-1)(20+1) = 400 - 1$. Where the picture stops: it needs $b < a$ and both to be lengths, so that the L-shape exists at all. The identity does not care, and $a = 2$, $b = 5$ is as true as any other case.",
+                "de": "Schneidet man aus einem $a \\times a$-Quadrat eine $b \\times b$-Ecke heraus, so lässt sich das übrige L mit einem geraden Schnitt und einer Verschiebung zu einem Rechteck der Seiten $a+b$ und $a-b$ umlegen. Kopfrechnen ist dieselbe Tatsache: $19 \\cdot 21 = (20-1)(20+1) = 400 - 1$. Wo das Bild aufhört: es braucht $b < a$ und beide als Längen, damit das L überhaupt existiert. Die Identität kümmert das nicht, und $a = 2$, $b = 5$ ist genauso wahr wie jeder andere Fall."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

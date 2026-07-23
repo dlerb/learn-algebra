@@ -177,44 +177,6 @@
     ]
   },
   {
-    "id": "thm.square-of-difference",
-    "code": "T19",
-    "kind": "theorem",
-    "group": "binomials",
-    "name": {
-      "en": "Square of a difference",
-      "de": "Zweite binomische Formel"
-    },
-    "latex": "(a - b)^2 = a^2 - 2ab + b^2",
-    "derivedFrom": [
-      "def.pow",
-      "ax.distributivity",
-      "def.sub",
-      "th.minus-times-minus",
-      "th.opposite-flips",
-      "ax.add-commutative",
-      "thm.collect-like-terms"
-    ]
-  },
-  {
-    "id": "thm.difference-of-squares",
-    "code": "T20",
-    "kind": "theorem",
-    "group": "binomials",
-    "name": {
-      "en": "Difference of squares",
-      "de": "Dritte binomische Formel"
-    },
-    "latex": "(a + b)(a - b) = a^2 - b^2",
-    "derivedFrom": [
-      "ax.distributivity",
-      "def.sub",
-      "th.minus-times-minus",
-      "th.opposite-flips",
-      "ax.add-commutative"
-    ]
-  },
-  {
     "id": "thm.divide-by-one",
     "code": "T21",
     "kind": "theorem",
