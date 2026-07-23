@@ -112,7 +112,8 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "th.minus-times-minus"
+      "def.sub",
+      "th.minus-in-product"
     ],
     "governedBy": [
       "th.negative-one-times",
@@ -138,8 +139,8 @@
       "meta.three-minuses"
     ],
     "justifiedBy": [
-      "th.minus-times-minus",
-      "th.opposite-flips"
+      "th.minus-in-product",
+      "ix.juxtaposition"
     ],
     "governedBy": [
       "ix.juxtaposition",
