@@ -56,7 +56,6 @@
     "title": "Division is not commutative",
     "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",
     "illustration": "a \\div b = \\frac{a}{b}",
-    "conditions": "b \\ne 0",
     "requires": [
       "equivalence.division-variants"
     ],
