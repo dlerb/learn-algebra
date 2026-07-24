@@ -82,9 +82,9 @@ export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
 // at were folded into the tower and deleted; see docs/content_model.md.
 export const errorPatterns: ErrorDef[] = (errorsRaw as unknown[]).map(e => errorDef.parse(e))
 
-// Every fundament-tower card code, the resolution target for the skill/error/
+// Every fundament-tower card id, the resolution target for the skill/error/
 // meta-pattern references validated below.
-const cardCodes = new Set(cardIndex.keys())
+const cardIds = new Set(cardIndex.keys())
 
 const rawEntries = skillFiles.flat()
 export const skills: Skill[] = parseSkills(rawEntries)
@@ -102,8 +102,8 @@ validateSkillKinds(skillKinds)
 validateMetaPatternRefs(skills, metaPatterns)
 validateSkillLinks(skills)
 validateDrills(drills, skills)
-validateErrors(errorPatterns, cardCodes, metaPatterns)
-validateLayerRefs(skills, metaPatterns, cardCodes, errorPatterns)
+validateErrors(errorPatterns, cardIds)
+validateLayerRefs(skills, metaPatterns, cardIds, errorPatterns)
 validateLatexCompiles(skills, drills, metaPatterns, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.

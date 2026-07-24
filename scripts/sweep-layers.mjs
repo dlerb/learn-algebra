@@ -1,7 +1,7 @@
 // The layer-tree sweep from docs/fundamentals.md "Verifying edits", made runnable:
 // `pnpm sweep-layers`. Compiles every latex field and every inline $…$ fragment
 // with NO macros defined (proving nothing depends on the deleted \num/\nnum),
-// then checks codes are unique tower-wide, citations resolve across layers,
+// then checks ids are unique tower-wide, citations resolve across layers,
 // concerns are present and valid, and the prose rules hold (no em dash, no ß,
 // no retired "sign"/"Vorzeichen"). En dashes are allowed: they spell ranges.
 //
@@ -28,7 +28,7 @@ const scanProse = (s, where) => {
   if (/\b(signs?|Vorzeichen)\b/i.test(s)) errs.push(`retired word "sign" in ${where}`)
 }
 
-const layerOrder = []          // [layerId, [code, …]] in page order
+const layerOrder = []          // [layerId, [id, …]] in page order
 const cardByCode = new Map()
 
 for (const f of files) {
@@ -42,18 +42,18 @@ for (const f of files) {
     for (const g of s.groups) {
       for (const k of ['title','blurb']) if (g[k]) for (const l of ['en','de']) scanProse(g[k][l], `${layer}/${s.kind}/${g.slug}.${k}.${l}`)
       for (const c of g.cards) {
-        if (codes.has(c.code)) errs.push(`duplicate code ${c.code}`)
-        codes.set(c.code, `${layer}/${s.kind}`)
-        cardByCode.set(c.code, c)
-        order.push(c.code)
-        for (const k of LATEX_FIELDS) if (c[k]) tryTex(c[k], `${c.code}.${k}`)
+        if (codes.has(c.id)) errs.push(`duplicate id ${c.id}`)
+        codes.set(c.id, `${layer}/${s.kind}`)
+        cardByCode.set(c.id, c)
+        order.push(c.id)
+        for (const k of LATEX_FIELDS) if (c[k]) tryTex(c[k], `${c.id}.${k}`)
         for (const k of ['name','note','intuition']) if (c[k]) for (const l of ['en','de']) {
-          if (!c[k][l]) errs.push(`${c.code}.${k} missing ${l}`); else scanProse(c[k][l], `${c.code}.${k}.${l}`)
+          if (!c[k][l]) errs.push(`${c.id}.${k} missing ${l}`); else scanProse(c[k][l], `${c.id}.${k}.${l}`)
         }
-        for (const r of [...(c.basedOn||[]), ...(c.derivedFrom||[])]) refs.push([c.code, r])
+        for (const r of [...(c.basedOn||[]), ...(c.derivedFrom||[])]) refs.push([c.id, r])
         if (s.kind !== 'preliminary') {
-          if (!c.concerns?.length) errs.push(`${c.code} has no concerns`)
-          for (const x of c.concerns||[]) if (!CONCERNS.has(x)) errs.push(`${c.code} bad concern ${x}`)
+          if (!c.concerns?.length) errs.push(`${c.id} has no concerns`)
+          for (const x of c.concerns||[]) if (!CONCERNS.has(x)) errs.push(`${c.id} bad concern ${x}`)
         }
       }
     }
@@ -78,15 +78,13 @@ for (const [layer, ordered] of layerOrder) {
 
 // ---- the bridge -----------------------------------------------------------
 // ---- the bridge -----------------------------------------------------------
-// The legacy laws.json / conventions.json were deleted on 2026-07-23; every
-// reference from the skills side (skills' governedBy/justifiedBy, errors'
-// corrupts, meta-patterns' summarizes) must now land on a card code, or on a
-// meta-pattern / error id for the two kinds that legitimately do. Anything else
-// is a dangling reference. This is the build-time twin of validateLayerRefs.
+// The legacy laws.json / conventions.json were deleted on 2026-07-23; since the
+// 2026-07-24 cleanup every reference from the curated side (skills'
+// governedBy/justifiedBy, errors' corrupts, meta-patterns' summarizes) lands on a
+// card id — the curated layers form a downward-only stack over the tower.
+// Anything else is a dangling reference. Build-time twin of validateLayerRefs.
 const readJSON = f => JSON.parse(fs.readFileSync(f, 'utf8'))
-const metaIds = new Set(readJSON('src/data/metapatterns.json').map(m => m.id))
 const errFile = readJSON('src/data/errors.json')
-const errIds = new Set(errFile.map(e => e.id))
 let bridged = 0
 const cite = (from, id, field, pool) => {
   bridged++
@@ -100,10 +98,10 @@ for (const f of fs.readdirSync('src/data/skills')) {
 }
 for (const e of errFile)
   for (const id of e.corrupts || [])
-    cite(e.id, id, 'corrupts', id.startsWith('meta.') ? metaIds : codes)
+    cite(e.id, id, 'corrupts', codes)
 for (const m of readJSON('src/data/metapatterns.json'))
   for (const id of m.summarizes || [])
-    cite(m.id, id, 'summarizes', id.startsWith('sal.') || id.startsWith('mis.') || id.startsWith('anti.') ? errIds : codes)
+    cite(m.id, id, 'summarizes', codes)
 
 console.log(`cards: ${codes.size}   latex fragments checked: ${n}   refs: ${refs.length}`)
 console.log(`bridge: ${bridged} references from the skills side, all resolved into the tower`)

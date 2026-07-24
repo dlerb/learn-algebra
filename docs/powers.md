@@ -61,7 +61,7 @@ layer-level `meta.note` is new, and tells the three-act arc.
 ```
 
 Sections are **(act, kind)** pairs; `kind` is still the epistemic role, `slug` is
-the key. Codes are slug-style throughout the tower (2026-07-23) — no numbered codes.
+the key. Ids are slug-style throughout the tower (2026-07-23) — no numbered ids.
 
 ## Where the layer stops
 

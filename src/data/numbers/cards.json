@@ -17,7 +17,7 @@
           "slug": "prelim",
           "cards": [
             {
-              "code": "pre.count",
+              "id": "pre.count",
               "name": { "en": "Where the counting comes from", "de": "Woher das Zählen kommt" },
               "note": {
                 "en": "To say '$n$ factors of $a$' we have to count, and it looks as though counting must be brought in from outside. It does not. The axioms give us $1$ (ax.one-neutral) and they give us $+$, so they already give us $1$, $1+1$, $1+1+1$, and everything reachable by taking one more step. These are not an import and they are not a second kind of number: they are the part of $\\mathbb{R}$ you reach by starting at $1$ and going on, and $2, 3, 4, \\dots$ are their names. This layer names that part and works out what it lets us build, and it is the first layer since the axioms that assumes nothing at all: only definitions and their consequences. What the cards below take from these elements is not a second nature but a structure. Each of them is reached from $1$ in exactly one way, by a definite number of steps, and that is what lets a definition run along the steps instead of computing with the element. def.multiple and def.pow both do exactly that, and th.ind is what makes it legitimate.",
@@ -40,7 +40,7 @@
           "title": {"en": "The counting elements", "de": "Die Zählelemente"},
           "cards": [
             {
-              "code": "def.nat",
+              "id": "def.nat",
               "concerns": ["add"],
               "name": { "en": "The natural numbers", "de": "Die natürlichen Zahlen" },
               "latex": "\\begin{aligned} S \\subseteq \\mathbb{R} \\ \\text{inductive} \\;&:\\Leftrightarrow\\; 1 \\in S \\;\\text{ and }\\; (x \\in S \\Rightarrow x + 1 \\in S) \\\\[2pt] \\mathbb{N} \\;&:= \\bigcap \\{\\, S \\subseteq \\mathbb{R} \\;:\\; S \\ \\text{inductive} \\,\\} \\end{aligned}",
@@ -55,7 +55,7 @@
               "basedOn": ["op.add", "ax.one-neutral"]
             },
             {
-              "code": "def.numeral",
+              "id": "def.numeral",
               "concerns": ["add"],
               "name": { "en": "Names for the counting elements", "de": "Namen für die Zählelemente" },
               "latex": "2 := 1 + 1, \\quad 3 := 2 + 1, \\quad 4 := 3 + 1, \\quad \\dots",
@@ -73,7 +73,7 @@
           "title": {"en": "Multiples", "de": "Vielfache"},
           "cards": [
             {
-              "code": "def.multiple",
+              "id": "def.multiple",
               "concerns": ["add"],
               "name": {"en": "Copies of an element", "de": "Kopien eines Elements"},
               "latex": "\\begin{aligned} \\underbrace{a + \\dots + a}_{1} &:= a \\\\[2pt] \\underbrace{a + \\dots + a}_{n+1} &:= \\Big( \\underbrace{a + \\dots + a}_{n} \\Big) + a \\end{aligned}",
@@ -91,7 +91,7 @@
           "blurb": {"en": "Cheap by comparison. def.nat needed an intersection over subsets; here ax.additive-inverse already supplies the negatives and ax.multiplicative-inverse the reciprocals, so both sets can be written down directly out of what exists.", "de": "Vergleichsweise billig. def.nat brauchte einen Durchschnitt über Teilmengen; hier liefert ax.additive-inverse bereits die Negativen und ax.multiplicative-inverse die Kehrwerte, sodass sich beide Mengen direkt aus dem Vorhandenen hinschreiben lassen."},
           "cards": [
             {
-              "code": "def.int",
+              "id": "def.int",
               "concerns": ["add"],
               "name": { "en": "The integers", "de": "Die ganzen Zahlen" },
               "latex": "\\mathbb{Z} := \\mathbb{N} \\cup \\{0\\} \\cup \\{\\, -n \\;:\\; n \\in \\mathbb{N} \\,\\}",
@@ -102,7 +102,7 @@
               "basedOn": ["def.nat", "ax.zero-neutral", "ax.additive-inverse"]
             },
             {
-              "code": "def.rat",
+              "id": "def.rat",
               "concerns": ["mul"],
               "name": { "en": "The rational numbers", "de": "Die rationalen Zahlen" },
               "latex": "\\mathbb{Q} := \\{\\, m \\cdot n^{-1} \\;:\\; m \\in \\mathbb{Z},\\ n \\in \\mathbb{N} \\,\\}",
@@ -128,7 +128,7 @@
           "title": {"en": "The counting elements", "de": "Die Zählelemente"},
           "cards": [
             {
-              "code": "th.ind",
+              "id": "th.ind",
               "concerns": ["add"],
               "name": { "en": "Induction", "de": "Induktion" },
               "latex": "1 \\in S \\;\\text{ and }\\; (n \\in S \\Rightarrow n + 1 \\in S) \\;\\Longrightarrow\\; S = \\mathbb{N}",
@@ -141,7 +141,7 @@
               }
             },
             {
-              "code": "th.numerals-distinct",
+              "id": "th.numerals-distinct",
               "concerns": ["add", "order"],
               "name": { "en": "The names are distinct", "de": "Die Namen sind verschieden" },
               "latex": "1 < 2 < 3 < \\dots",
@@ -153,7 +153,7 @@
               }
             },
             {
-              "code": "th.numeral-arithmetic",
+              "id": "th.numeral-arithmetic",
               "concerns": ["add", "mul"],
               "name": { "en": "The times table is derived", "de": "Das Einmaleins ist hergeleitet" },
               "latex": "2 + 3 = 5 \\qquad 2 \\cdot 3 = 6",
@@ -172,7 +172,7 @@
           "title": {"en": "Multiples", "de": "Vielfache"},
           "cards": [
             {
-              "code": "th.multiple-is-product",
+              "id": "th.multiple-is-product",
               "concerns": ["add", "mul"],
               "name": { "en": "Counting agrees with multiplying", "de": "Zählen stimmt mit Multiplizieren überein" },
               "latex": "\\underbrace{a + a + \\dots + a}_{n \\text{ copies}} = n \\cdot a",
@@ -199,7 +199,7 @@
           },
           "cards": [
             {
-              "code": "th.no-rational-square-two",
+              "id": "th.no-rational-square-two",
               "concerns": [
                 "mul",
                 "order"
@@ -242,7 +242,7 @@
           "title": {"en": "Writing", "de": "Schreiben"},
           "cards": [
             {
-              "code": "ix.juxtaposition",
+              "id": "ix.juxtaposition",
               "concerns": ["mul"],
               "name": { "en": "Why 3a is safe", "de": "Warum 3a unbedenklich ist" },
               "latex": "\\underbrace{a + a + a}_{3 \\text{ copies}} \\;=\\; 3 \\cdot a \\;=:\\; 3a",

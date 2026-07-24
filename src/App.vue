@@ -18,8 +18,8 @@ const route = useRoute()
 const router = useRouter()
 
 // Two catalog groups + two activities. The tower layers nest under one dropdown
-// and the curated pedagogy (skills, errors) under another, so the bar stays four
-// wide however many layers the tower grows. Group keys are suffixed `-menu` so
+// and the curated pedagogy (skills, errors, metapatterns) under another, so the
+// bar stays four wide however many layers the tower grows. Group keys are suffixed `-menu` so
 // they never collide with a route name; only leaf keys are route names, and a
 // parent with children just expands (never navigates), so `go` only ever sees a
 // leaf. `route.name` matching a leaf key auto-highlights that leaf and its parent.
@@ -33,6 +33,7 @@ const menuOptions: MenuOption[] = [
     children: [
       { label: 'Skills', key: 'skills' },
       { label: 'Errors', key: 'errors' },
+      { label: 'Metapatterns', key: 'metapatterns' },
     ],
   },
   { label: 'Tutorial', key: 'tutorial' },

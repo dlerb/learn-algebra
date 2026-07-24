@@ -15,7 +15,7 @@ import terms from './terms/cards.json'
 // Adding a layer = write its cards.json, add one entry below.
 
 export interface Card {
-  code: string
+  id: string
   concerns?: string[]
   symbol?: string
   type?: string
@@ -76,9 +76,9 @@ export const layerById = (id: string) => layers.find(l => l.id === id)
 export const cardsOf = (l: Layer) =>
   l.data.sections.flatMap(s => s.groups.flatMap(g => g.cards.map(card => ({ card, kind: s.kind, layer: l }))))
 
-/** Every card in the tower, keyed by code. Codes are unique tower-wide, which
- *  is what lets a card cite another layer's card by bare code. */
-export const cardIndex = new Map(layers.flatMap(l => cardsOf(l).map(e => [e.card.code, e] as const)))
+/** Every card in the tower, keyed by id. Ids are unique tower-wide, which
+ *  is what lets a card cite another layer's card by bare id. */
+export const cardIndex = new Map(layers.flatMap(l => cardsOf(l).map(e => [e.card.id, e] as const)))
 
 export const CONCERN_TOKENS = ['add', 'mul', 'eq', 'order', 'completeness'] as const
 
@@ -99,20 +99,20 @@ function validate() {
   const seen = new Set<string>()
   for (const l of layers) {
     for (const { card } of cardsOf(l)) {
-      if (seen.has(card.code)) throw new Error(`layers: duplicate card code "${card.code}" (layer ${l.id})`)
-      seen.add(card.code)
+      if (seen.has(card.id)) throw new Error(`layers: duplicate card id "${card.id}" (layer ${l.id})`)
+      seen.add(card.id)
     }
   }
   for (const l of layers) {
     for (const { card, kind } of cardsOf(l)) {
       for (const ref of [...(card.basedOn ?? []), ...(card.derivedFrom ?? [])]) {
-        if (!seen.has(ref)) throw new Error(`layers: "${card.code}" cites unknown code "${ref}"`)
+        if (!seen.has(ref)) throw new Error(`layers: "${card.id}" cites unknown id "${ref}"`)
       }
       if (kind !== 'preliminary') {
-        if (!card.concerns?.length) throw new Error(`layers: "${card.code}" (${kind}) has no concerns`)
+        if (!card.concerns?.length) throw new Error(`layers: "${card.id}" (${kind}) has no concerns`)
         for (const c of card.concerns) {
           if (!(CONCERN_TOKENS as readonly string[]).includes(c)) {
-            throw new Error(`layers: "${card.code}" has unknown concern "${c}"`)
+            throw new Error(`layers: "${card.id}" has unknown concern "${c}"`)
           }
         }
       }

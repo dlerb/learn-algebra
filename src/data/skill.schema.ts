@@ -57,8 +57,8 @@ export const skill = z.object({
   gateway: z.boolean().default(false),  // recognising this shape triggers a transformation (familiar shapes)
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   metaPatterns: z.array(z.string()).default([]), // meta-pattern ids (metapatterns.json)
-  justifiedBy: z.array(z.string()).default([]),  // card codes (src/data/layers.ts): the law/def/theorem it rests on
-  governedBy: z.array(z.string()).default([]),   // card codes: the convention it obeys
+  justifiedBy: z.array(z.string()).default([]),  // card ids (src/data/layers.ts): the law/def/theorem it rests on
+  governedBy: z.array(z.string()).default([]),   // card ids: the convention it obeys
   errors: z.array(z.string()).default([]),       // error-pattern ids — the skill's misconception catalog
   conditions: z.string().optional(),    // domain caveat, pure LaTeX
 })
@@ -155,24 +155,20 @@ export function validateGroupRefs(skills: Skill[], groups: GroupsFile): void {
 // reference them by id ("meta.…").
 
 export const metaPatternDef = z.object({
-  id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // globally unique slug, like every other id
-  code: z.string(),    // display code "M1".."M10" — the classroom name, globally unique
+  id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // the single identifier — a dotted slug, like every other entity
   title: localizedString,
   text: localizedString,                  // the student-facing takeaway line in drill feedback
-  summarizes: z.array(z.string()).default([]),  // law/convention/error ids this pattern digests — keeps the classroom voice linked to the layer it summarizes
+  summarizes: z.array(z.string()).default([]),  // card ids this pattern digests — keeps the classroom voice linked to the tower cards it reads (cards only; errors are the skills' concern)
 })
 export type MetaPatternDef = z.infer<typeof metaPatternDef>
 
 export const metaPatternsFile = z.array(metaPatternDef)
 export type MetaPatternsFile = z.infer<typeof metaPatternsFile>
 
-// Cross-check: every metaPattern a skill references must exist; ids and display
-// codes are globally unique.
+// Cross-check: every metaPattern a skill references must exist; ids are globally unique.
 export function validateMetaPatternRefs(skills: Skill[], metas: MetaPatternsFile): void {
   const dupId = metas.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)
   if (dupId) throw new Error(`Duplicate meta-pattern id "${dupId}".`)
-  const dupCode = metas.map(m => m.code).find((c, i, a) => a.indexOf(c) !== i)
-  if (dupCode) throw new Error(`Duplicate meta-pattern code "${dupCode}".`)
 
   const ids = new Set(metas.map(m => m.id))
   for (const f of skills) {
@@ -184,14 +180,11 @@ export function validateMetaPatternRefs(skills: Skill[], metas: MetaPatternsFile
   }
 }
 
-// `code` = Ā1..Ā5 / R1..R15 / S1..
-
 export const errorKind = z.enum(['anti-law', 'misreading', 'salience'])
 export type ErrorKind = z.infer<typeof errorKind>
 
 export const errorDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),
-  code: z.string(),
+  id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),  // the single identifier — a dotted slug
   kind: errorKind,
   corrupts: z.array(z.string()).default([]),
   name: localizedString,
@@ -203,17 +196,19 @@ export type ErrorDef = z.output<typeof errorDef>
 const errorPrefixOfKind: Record<ErrorKind, string> =
   { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
 
-// `cardCodes` is the set of fundament-tower card codes (src/data/layers.ts). Since
+// `cardIds` is the set of fundament-tower card ids (src/data/layers.ts). Since
 // 2026-07-23 the legacy laws.json / conventions.json are gone and every error's
 // `corrupts` target is a card there — an anti-law corrupts a law card, a misreading
-// a convention card — except salience, which still points at a meta-pattern.
+// a convention card, and (since 2026-07-24) a salience error a structure card. Every
+// error kind now points straight into the tower: the curated layers form a clean
+// downward stack (cards ← errors, metapatterns ← skills) with no upward edges.
 export function validateErrors(
-  errors: ErrorDef[], cardCodes: Set<string>, metas: MetaPatternsFile,
+  errors: ErrorDef[], cardIds: Set<string>,
 ): void {
   const poolOfKind: Record<ErrorKind, { ids: Set<string>; name: string }> = {
-    'anti-law': { ids: cardCodes, name: 'law card' },
-    misreading: { ids: cardCodes, name: 'convention card' },
-    salience: { ids: new Set(metas.map(m => m.id)), name: 'meta-pattern' },
+    'anti-law': { ids: cardIds, name: 'law card' },
+    misreading: { ids: cardIds, name: 'convention card' },
+    salience: { ids: cardIds, name: 'structure card' },
   }
   const seen = new Set<string>()
   for (const e of errors) {
@@ -231,21 +226,23 @@ export function validateErrors(
 
 // ── Cross-layer references from skills and meta-patterns ──────────────────
 // The bridge into the fundament tower: `justifiedBy` and `governedBy` are now
-// card codes (was law / convention ids), `errors` → error patterns, and a
-// meta-pattern `summarizes` a card code or an error id. `cardCodes` comes from
+// card ids (was law / convention ids), `errors` → error patterns, and a
+// meta-pattern `summarizes` card ids. Every curated cross-edge points down into
+// the tower — errors and metapatterns cite only cards, skills cite all three — so
+// the graph is a clean stack with no cycles. `cardIds` comes from
 // src/data/layers.ts. This is the runtime twin of scripts/sweep-layers.mjs.
 export function validateLayerRefs(
   skills: Skill[], metas: MetaPatternsFile,
-  cardCodes: Set<string>, errors: ErrorDef[],
+  cardIds: Set<string>, errors: ErrorDef[],
 ): void {
   const errIds = new Set(errors.map(e => e.id))
 
   for (const f of skills) {
     for (const r of f.justifiedBy) {
-      if (!cardCodes.has(r)) throw new Error(`Skill "${f.id}" is justifiedBy unknown card "${r}".`)
+      if (!cardIds.has(r)) throw new Error(`Skill "${f.id}" is justifiedBy unknown card "${r}".`)
     }
     for (const r of f.governedBy) {
-      if (!cardCodes.has(r)) throw new Error(`Skill "${f.id}" governedBy unknown card "${r}".`)
+      if (!cardIds.has(r)) throw new Error(`Skill "${f.id}" governedBy unknown card "${r}".`)
     }
     for (const r of f.errors) {
       if (!errIds.has(r)) throw new Error(`Skill "${f.id}" lists unknown error pattern "${r}".`)
@@ -253,8 +250,8 @@ export function validateLayerRefs(
   }
   for (const m of metas) {
     for (const r of m.summarizes) {
-      if (!cardCodes.has(r) && !errIds.has(r)) {
-        throw new Error(`Meta-pattern ${m.id} summarizes unknown id "${r}".`)
+      if (!cardIds.has(r)) {
+        throw new Error(`Meta-pattern ${m.id} summarizes unknown card "${r}".`)
       }
     }
   }
@@ -278,10 +275,17 @@ export function auditCoverage(
   // Authored ⊆ derived: on a tagged skill, every authored meta-pattern should
   // be reachable from the skill's coordinates via the pattern's summarizes.
   // (Authored stays curation — this only catches a missing tag or a
-  // meta-pattern citation that doesn't fit the skill.)
+  // meta-pattern citation that doesn't fit the skill.) Since 2026-07-24 a
+  // metapattern summarizes CARDS only, so the skill's coordinates are its card
+  // codes: justifiedBy ∪ governedBy, plus the cards its errors corrupt (the two
+  // lenses meet at the tower — skill → error → card mirrors skill → meta → card).
+  const corruptsOf = new Map(errors.map(e => [e.id, e.corrupts]))
   for (const f of skills) {
     if (f.justifiedBy.length === 0 && f.governedBy.length === 0) continue
-    const coords = new Set([...f.justifiedBy, ...f.governedBy, ...f.errors])
+    const coords = new Set([
+      ...f.justifiedBy, ...f.governedBy,
+      ...f.errors.flatMap(eid => corruptsOf.get(eid) ?? []),
+    ])
     const unsupported = f.metaPatterns.filter(mid => {
       const mp = metas.find(m => m.id === mid)
       return mp !== undefined && !mp.summarizes.some(r => coords.has(r))

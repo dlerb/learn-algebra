@@ -172,7 +172,7 @@ axiom rather than caution.
 
 `laws.json` and `conventions.json` are now `[]`. Every axiom, definition, theorem and
 convention they once held is a card in the tower, and every `governedBy` /
-`justifiedBy` / `corrupts` reference from the skills side resolves to a card code —
+`justifiedBy` / `corrupts` reference from the skills side resolves to a card id —
 **163 of 163, zero legacy.** `th.root-power-order` was the last, and it went to
 `powers` (the ℚ act) rather than here: in radical notation it *looks* like a fact
 relating two operations, but both sides are powers and `ax.mul-commutative` on the

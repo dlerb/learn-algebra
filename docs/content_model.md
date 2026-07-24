@@ -1,15 +1,21 @@
 # Content model — design rationale
 
-> ⚠️ **Partially superseded 2026-07-23.** The **fundament tower** (`fundamentals ·
+> ⚠️ **Partially superseded 2026-07-23/24.** The **fundament tower** (`fundamentals ·
 > numbers · powers · terms`, `src/data/<layer>/cards.json`) is now the primary
 > reference, and **`laws.json` / `conventions.json` and their registries
 > (`lawGroups`/`lawKinds`/`conventionGroups`) were DELETED** — everything they held is
-> a tower card, and skills cite card codes. Wherever this doc's older sections (the
-> file-format tables, "Laws & Conventions view", the `lawGroup`/`conventionGroup`
-> enums) describe those files as live, read them as history. The tower is documented
-> in `docs/fundamentals.md` (format spec), the migration in memory `bridge`. The
-> skills/drills/errors rationale below still holds. A full rewrite of this file is
-> pending.
+> a tower card, and skills cite card ids. Wherever this doc's older sections (the
+> "Laws & Conventions view", the `lawGroup`/`conventionGroup` enums) describe those
+> files as live, read them as history. The tower is documented in `docs/fundamentals.md`
+> (format spec), the migration in memory `bridge`.
+>
+> **2026-07-24 updates (current):** (1) metapatterns were NOT split — kept as a central
+> curated repository (see memory `metapatterns-split`). (2) **Every entity now has a
+> single `id` field; all short display codes (A1/M7/S1…) were removed.** (3) The
+> curated layers form a downward-only stack over the tower — errors and metapatterns
+> cite cards ONLY, skills cite all three. The **"JSON format (current)"** section below
+> is the current spec; the dated *Revision notes* at the bottom are left as history.
+> The skills/drills/errors rationale still holds.
 
 How the algebra content is structured. Everything lives under `src/data/` and is
 validated by `skill.schema.ts` on load. The layers:
@@ -21,25 +27,25 @@ validated by `skill.schema.ts` on load. The layers:
 - **~~laws + conventions~~** — **deleted 2026-07-23.** These were the original law
   tower; everything they held is a card in the fundament tower now, and every reference
   from the skills side (`justifiedBy`, `governedBy`, error `corrupts`, meta-pattern
-  `summarizes`) resolves to a **card code**, checked at load by `validateLayerRefs` /
+  `summarizes`) resolves to a **card id**, checked at load by `validateLayerRefs` /
   `validateErrors` and at build by `sweep-layers`. The files, their display registries
   (`lawGroups`/`lawKinds`/`conventionGroups`), the Zod schemas and the reference view's
   law/convention segments all went with them; `ReferenceView` is now an errors page.
 - **errors** (`errors.json`) — the error patterns that shadow the tower; each
   `corrupts` a card. Browsed at `/errors` (`ReferenceView`, now errors-only).
-- **meta-patterns** (`metapatterns.json`) — student-facing digests. ⚠️ **being split
-  (see `docs/TODO.md` / memory `metapatterns-split`)**: the ones that restate a tower
-  card in student voice become a new `plain` field on the card; the reading-heuristic
-  ones move into skills; then the file retires.
+- **meta-patterns** (`metapatterns.json`) — student-facing decoding heuristics; each
+  `summarizes` the tower cards it reads. Kept as a central curated repository (the
+  2026-07-24 split proposal was **rejected** — see memory `metapatterns-split`), browsed
+  at `/metapatterns` (`MetapatternsView`).
 
   *(Note on the word: "layer" means both a **file/role** here and a **floor** of the
   fundament tower, in the sense of mathematical dependency. The two remain separate
   representations — the tower is not generated from the skills side or vice versa —
-  but they are no longer disconnected: skills reach into the tower by card code, and
+  but they are no longer disconnected: skills reach into the tower by card id, and
   `pnpm sweep-layers` fails if any reference resolves to neither a card nor an error/
   meta id.)*
 - **skills** (`skills/*.json`) — curated *strategies/skills* pointing into the tower:
-  what is worth drilling, and why. `justifiedBy` / `governedBy` are **card codes** now
+  what is worth drilling, and why. `justifiedBy` / `governedBy` are **card ids** now
   (was law / convention ids). Each skill's concrete material lives separately in…
 - **drills** (`drills/*.json`) — the format-specific drill material for each
   skill. See "Skills vs drills" below.
@@ -53,11 +59,11 @@ per layer (`/fundamentals`, `/numbers`, `/powers`, `/terms`).
 This doc records the *why*, not the content tables (they would drift).
 
 Ids are kind-prefixed slugs so a derivation chain reads like a proof:
-`ax.add-commutative`, `def.subtraction`, `thm.collect-like-terms`,
-`conv.juxtaposition`, `anti.linearity`, `equivalence.juxtaposition-product`.
-Each entry also carries a short display `code` (A1, D3, T11, N1, Ā1, M7) —
-display data for chips, never identity: everything cites slugs, not codes.
-(Skills carry no code.)
+`ax.add-commutative`, `def.sub`, `th.collect-like-terms`, `ix.juxtaposition`,
+`anti.linearity`, `equivalence.juxtaposition-product`. **The `id` is the single
+identifier for every entity** — cards, errors, metapatterns and skills alike.
+(The old short display codes — A1/D3/T11/N1/Ā1/M7 — were removed 2026-07-24; there
+is now nothing but the slug.)
 
 ### Two classifiers: `kind` and `group`
 
@@ -147,36 +153,190 @@ active manipulation half of "read *and practice*"), and the powers/roots law
 region is thinly skilled. Axioms are excluded from the "unused" mark: a skill
 reaches them transitively through the theorems it cites.
 
-### Files, ids & codes at a glance
+## JSON format (current — 2026-07-24)
 
-| File | Entry | `kind` values | `group` | id prefix | `code` |
-|---|---|---|---|---|---|
-| `laws.json` | law | `axiom` · `definition` · `theorem` | ✓ `lawGroups.json` | `ax.`/`def.`/`thm.` | A/D/T |
-| `conventions.json` | convention | — | ✓ `conventionGroups.json` | `conv.` | N |
-| `errors.json` | error pattern | `anti-law` · `misreading` · `salience` | — (from `corrupts`) | `anti.`/`mis.`/`sal.` | Ā/R/S |
-| `metapatterns.json` | meta-pattern | — | — | `meta.` | M |
-| `skills/<kind>-<group>.json` | skill (strategy) | `equivalence` · `classification` · `chunking` · (`transformation`) | ✓ `skillGroups.json` | `<kind>.` | — |
-| `drills/<kind>-<group>.json` | drill (material) | mirrors its skill | — | keyed by `skill` id | — |
+The five entity kinds — the tower **card** plus the four curated files (**skill ·
+error · meta-pattern · drill**) — share one identity convention (a single `id` slug,
+no display codes) and one prose convention (`LocalizedString`, LaTeX compile-checked).
+Their field-by-field formats follow.
 
-**Group registries** — all three are flat lists of `{ slug, title, blurb? }`
-(array order = display order):
+### Files at a glance
 
-| File | Groups for | Validated |
-|---|---|---|
-| `lawGroups.json` | laws | slug set = the `lawGroup` enum exactly |
-| `conventionGroups.json` | conventions | slug set = the `conventionGroup` enum exactly |
-| `skillGroups.json` | skills | a skill's `group` must exist in the list (this list *is* the source of valid skill groups) |
+The fundament tower (cards) is the floor; the three curated files are lenses over
+it. **Every entity is identified by a single `id` — a kind-prefixed slug; there are
+no display codes.**
 
-**Group vocabularies** — the slugs each defines (titles/blurbs live in the files):
+| File | Entry | `kind` values | `group` | id prefix |
+|---|---|---|---|---|
+| `<layer>/cards.json` | card (the tower) | section kinds: `preliminary`·`signature`·`convention`·`axiom`·`definition`·`theorem`·`remark` | structural (nested) | `pre.`/`op.`/`ix.`/`ax.`/`def.`/`th.`/`pl.`/`rk.` |
+| `errors.json` | error pattern | `anti-law`·`misreading`·`salience` | — (from `corrupts`) | `anti.`/`mis.`/`sal.` |
+| `metapatterns.json` | meta-pattern | — | — | `meta.` |
+| `skills/<kind>-<group>.json` | skill (strategy) | `equivalence`·`classification`·`chunking`·(`transformation`) | ✓ `skillGroups.json` | `<kind>.` |
+| `drills/<kind>-<group>.json` | drill (material) | mirrors its skill | — | keyed by `skill` id |
 
-- **`lawGroups.json`** → `addition` · `multiplication` · `distribution` · `signs` · `fractions` · `powers` · `roots` · `binomials`
-- **`conventionGroups.json`** → `reading` · `grouping` · `form`
-- **`skillGroups.json`** → `multiplication` · `like-terms` · `minus-sign` · `brackets` · `exponents` · `fractions` · `commutativity` · `basic-forms` · `misleading-forms` · `chunking` · `familiar-shapes` · `full-classification`
+**id prefix = `kind`** wherever a kind exists — the validator enforces prefix↔kind
+for errors (`anti`/`mis`/`sal`) and skills (`<kind>.`); metapatterns have no kind so
+take the fixed `meta.` prefix; card prefixes mark epistemic role but are not kind-validated.
+Skill groups live in `skillGroups.json` (a flat `{ slug, title, blurb? }` list, array
+order = display order; a skill's `group` must exist there). The tower's own grouping is
+**structural** — a card nests inside its group inside its section in `cards.json`.
 
-One rule ties the ids together: **id prefix = `kind`** wherever a kind exists —
-the validator enforces prefix↔kind for laws (`ax`/`def`/`thm`), errors
-(`anti`/`mis`/`sal`), and skills (`<kind>.`); conventions and meta-patterns
-have no kind, so they take a fixed prefix.
+### Card format — the tower cards
+
+**One schema, 15 fields, two of them required.** Every card in the four tower layers
+(`fundamentals`, `numbers`, `powers`, `terms`) validates against the same `Card`
+interface in `src/data/layers.ts`; there is no per-kind schema and no field in the
+data that the interface does not declare. `LocalizedString` is `{ en, de }`.
+
+| field | type | in | what it is |
+|---|---|---|---|
+| `id` | string | **all** | the key. Unique **tower-wide**, slug-style, never numbered. Prefix marks the role: `pre. op. ix. ax. def. th. pl. rk.` |
+| `name` | LocalizedString | **all** | card title. **Plain text** — rendered with `{{ }}`, so no `$…$` and no LaTeX |
+| `concerns` | string[] | most | multi-tag over `add · mul · eq · order · completeness`. Required for every kind except `preliminary` |
+| `symbol` | LaTeX | few | the glyph, e.g. `+`. **Its presence selects the signature tile layout** |
+| `type` | LaTeX | few | signature, e.g. `\mathbb{R} \times \mathbb{R} \to \mathbb{R}` |
+| `latex` | LaTeX | most | the statement, rendered display-style |
+| `avoid` / `prefer` | LaTeX | few | the ✗/✓ pair, used *instead of* `latex` by rewrite conventions |
+| `forall` | LaTeX | many | **domain** of the card's free variables, rendered "for all …" / "für alle …" |
+| `cond` | LaTeX | some | **restriction** on those variables, rendered "provided …" / "sofern …" |
+| `basedOn` | id[] | many | standing dependencies → the "rests on" chips |
+| `derivation` | LaTeX | some | the proof chain, collapsed behind a toggle |
+| `derivedFrom` | id[] | some | what the chain uses → chips under the derivation |
+| `note` | LocalizedString | most | prose. RichText: `$…$` inline maths and `*emph*` only |
+| `intuition` | LocalizedString | some | the picture **and where it stops**, collapsed behind a toggle |
+
+**Prose fields carry no markdown beyond `*emph*` and no em dashes** — they render
+literally, and `—` also reads as `−`. `scripts/sweep-layers.mjs` fails the build on
+either, and KaTeX-checks every LaTeX field with **no macros defined**.
+
+**`forall` is the domain, `cond` is the restriction.** `forall` = where the free
+variables live (`a \in \mathbb{R}`, `n \in \mathbb{N}`, `S \subseteq \mathbb{R}`);
+`cond` = what is additionally required of them (`a \ne 0`, `a > 0`); a `cond` never
+appears without a `forall`. `def.div` reads *for all a, b ∈ ℝ · provided b ≠ 0*. The
+separation is not cosmetic: for generating exercises the **domain says where to sample
+and the condition says what to filter**, unrecoverable once merged into one string or
+inlined into `latex`. The quantifier is **not** a field — these prefixes are always
+universal (they scope the free variables), and every existential in the tower is
+*inside* the statement where its variable is bound.
+
+**Field clusters are a convention, not a schema.** Which fields are populated follows
+from `kind` but nothing enforces it and the view no longer branches on it:
+`preliminary` → `note` alone; `signature` → `symbol`+`type`; `convention` → `latex`
+*or* `avoid`/`prefer`; `axiom`/`definition`/`theorem`/`remark` → `latex` +
+domain/condition + citations. A missing `forall` is not a deviation — it means the
+card has no free variables.
+
+**Rendering is presence-driven.** `LayerView.vue` has **one template**; each part
+appears iff its field is present, so a framing card is one with a `note` and nothing
+else. `kind` is a claim about *knowledge*, not about layout, and no longer selects a
+template — adding a kind needs no view change. The single layout variant is the
+signature tile, keyed on `symbol`.
+
+**What is validated, and where.** `validate()` in `src/data/layers.ts` throws at load
+time on: a duplicate `id` tower-wide; a `basedOn`/`derivedFrom` entry that resolves to
+nothing; a missing/unknown `concerns` on a non-`preliminary` card; a missing/duplicated
+section `slug` within a layer. (The JSON is cast rather than parsed, so TypeScript
+cannot enforce the required fields — `validate()` does.) `scripts/sweep-layers.mjs`
+adds the KaTeX and prose checks. Neither tool checks *field clusters* — those are editorial.
+
+Two orthogonal axes, deliberately represented differently: **`kind` / `group`** = the
+*tree* (a partition → structural nesting: what a card *is*, and which section it's
+filed under); **`concerns[]`** = a *tagging* (multi-valued → a field: what a card is
+*about*). Bridges are emergent (`|concerns| > 1`).
+
+Four cards, verbatim:
+
+```jsonc
+// signature — `symbol` is what puts it in the op grid
+{ "id": "op.add", "concerns": ["add"],
+  "symbol": "+", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}",
+  "name": { "en": "Addition", "de": "Addition" },
+  "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a + b$; …", "de": "…" } }
+
+// convention — the ✗/✓ pair replaces `latex`
+{ "id": "ix.coefficient-front", "concerns": ["mul"],
+  "name": { "en": "Coefficient in front", "de": "Koeffizient nach vorne" },
+  "avoid": "a \\cdot 3", "prefer": "3a",
+  "note": { "en": "A coefficient goes before the variable. …", "de": "…" },
+  "basedOn": ["op.mul", "ax.mul-commutative"] }
+
+// theorem — statement, quantifier, chain, and what the chain used
+{ "id": "th.zero-times", "concerns": ["add", "mul"],
+  "name": { "en": "Zero times anything is zero", "de": "Null mal irgendetwas ist null" },
+  "latex": "0 \\cdot a = 0",
+  "forall": "a \\in \\mathbb{R}",
+  "derivation": "0 \\cdot a = (0 + 0) \\cdot a = 0 \\cdot a + 0 \\cdot a",
+  "derivedFrom": ["ax.zero-neutral", "ax.distributivity",
+                  "ax.additive-inverse", "ax.eq-congruence"] }
+
+// theorem — domain and restriction apart, and an EXISTENTIAL statement:
+// `b` is bound inside the claim, which is why the prefix is still universal
+{ "id": "th.root-exists", "concerns": ["mul", "order", "completeness"],
+  "name": { "en": "Roots exist, and there is only one", "de": "…" },
+  "latex": "\\text{there is exactly one } b > 0 \\text{ with } b^{n} = a",
+  "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+  "cond": "a > 0",
+  "derivation": "…",
+  "derivedFrom": ["ax.completeness", "ax.order-mul", "th.ind", "def.pow"],
+  "note": { "en": "…", "de": "…" },
+  "intuition": { "en": "…", "de": "…" } }
+```
+
+> A second, **classroom-facing** prose field per card (the axiom/theorem said to a
+> 15-year-old, alongside `intuition` which is written for the page's reader) is
+> *planned, not built* — field name and writing standard still to decide. See `docs/TODO.md`.
+
+### Curated layers — JSON format
+
+The three curated files are validated by `skill.schema.ts` on load (Zod → the TS
+types). Cross-layer reference fields all hold **card ids** except where noted, and the
+graph is a downward-only stack (cards ← errors, metapatterns ← skills). Prose fields are
+`LocalizedString` (a plain string = English, or `{ en, de }`); LaTeX fields are pure
+KaTeX; both are compile-checked at load.
+
+**skill** — `skills/<kind>-<group>.json`, a strategy (not material):
+
+| field | type | req | meaning |
+|---|---|---|---|
+| `id` | string `"<kind>.<slug>"` | ✓ | the identifier; prefix must equal `kind` |
+| `kind` | `equivalence`\|`classification`\|`chunking`\|`transformation` | ✓ | strategy category (= id prefix) |
+| `group` | string | ✓ | topic slug; must exist in `skillGroups.json` |
+| `title` | LocalizedString | ✓ | |
+| `note` | LocalizedString | ✓ | the rationale — why the skill matters |
+| `illustration` | LaTeX | — | one canonical example that anchors the skill |
+| `gateway` | boolean | — | recognising this shape triggers a transformation (default `false`) |
+| `requires` | string[] (skill ids) | — | direct prerequisite skills; the acyclic dependency graph |
+| `metaPatterns` | string[] (meta ids) | — | decoding heuristics the skill leans on |
+| `justifiedBy` | string[] (card ids) | — | the law/def/theorem cards it rests on |
+| `governedBy` | string[] (card ids) | — | the convention cards it obeys |
+| `errors` | string[] (error ids) | — | the misconception catalog it guards against |
+| `conditions` | LaTeX | — | domain caveat not inherited from a cited card |
+
+**error pattern** — `errors.json`, the tower's shadow:
+
+| field | type | req | meaning |
+|---|---|---|---|
+| `id` | string `"(anti\|mis\|sal).<slug>"` | ✓ | the identifier; prefix must equal `kind` |
+| `kind` | `anti-law`\|`misreading`\|`salience` | ✓ | anti-law = false algebra; misreading = mis-parsed notation; salience = parsing by what is loudest |
+| `corrupts` | string[] (card ids) | — | the card(s) this error distorts (all kinds → cards, since the 2026-07-24 cleanup) |
+| `name` | LocalizedString | ✓ | |
+| `text` | LocalizedString | ✓ | what goes wrong, in prose |
+| `instances` | string[] (LaTeX) | — | typical wrong forms |
+
+**meta-pattern** — `metapatterns.json`, a decoding heuristic:
+
+| field | type | req | meaning |
+|---|---|---|---|
+| `id` | string `"meta.<slug>"` | ✓ | the identifier |
+| `title` | LocalizedString | ✓ | |
+| `text` | LocalizedString | ✓ | the takeaway line a student reads in drill feedback |
+| `summarizes` | string[] (card ids) | — | the tower cards this heuristic reads (cards only — errors are the skills' concern) |
+
+**drill** — `drills/<kind>-<group>.json`, the material for a skill (one entry per
+skill, keyed by `skill` id, discriminated on `kind`): `equivalents` / `examples` /
+`answer` / `chunks` per kind, plus `pitfalls` (each a wrong form + `explainedBy`
+naming which of the skill's `errors` it instantiates, validated ⊆ that set, + optional
+`revise` skill ids). See "Skills vs drills" above.
 
 ---
 
@@ -227,11 +387,11 @@ have no kind, so they take a fixed prefix.
    lineage explicitly. A root form of the *same-base* law has no
    school-standard shape below fractional exponents and is deliberately
    absent.
-8. **Meta-patterns are the student-facing digest of these lists**, not a
+8. **Meta-patterns are the student-facing digest of the tower**, not a
    third independent taxonomy. Each meta-pattern carries `summarizes` links to
-   the law/convention/error ids it digests, so the classroom voice cannot
-   drift from the layer it digests. They follow the same id scheme as
-   everything else (slug `meta.…` + display code M1–M10) and are localized —
+   the card ids it digests (cards only, since the 2026-07-24 cleanup), so the
+   classroom voice cannot drift from the cards it reads. They follow the same id
+   scheme as everything else (a `meta.…` slug, no display code) and are localized —
    their `text` is the takeaway line a student reads in drill feedback.
    Assignment to skills stays **authored** (curation), never derived from
    refs (coverage): tested empirically 2026-07-09, derivation recovers every

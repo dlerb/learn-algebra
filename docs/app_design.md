@@ -165,7 +165,7 @@ You answered: SAME
 The minus distributes and flips the sign of every term inside.
 -(a - b) = -a + b
 
-→ See meta-pattern M2: minus before a bracket means × (−1)
+→ See meta-pattern `meta.implicit-op-before-bracket`: minus before a bracket means × (−1)
 ```
 
 ### No gamification
