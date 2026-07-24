@@ -7,7 +7,7 @@ import { layers } from './data/layers'
 // Activity routes are lazy-loaded so their future weight (Compute Engine for
 // grading) code-splits off the reference pages.
 const routes: RouteRecordRaw[] = [
-  { path: '/', redirect: '/skills' },
+  { path: '/', name: 'home', component: () => import('./views/OverviewView.vue'), meta: { title: 'Overview' } },
   { path: '/skills', name: 'skills', component: () => import('./views/TaxonomyView.vue'), meta: { title: 'Skills' } },
   { path: '/errors', name: 'errors', component: () => import('./views/ReferenceView.vue'), meta: { title: 'Errors' } },
   { path: '/metapatterns', name: 'metapatterns', component: () => import('./views/MetapatternsView.vue'), meta: { title: 'Metapatterns' } },
