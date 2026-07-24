@@ -29,7 +29,7 @@ KaTeX is the critical dependency: all expressions must render as proper mathemat
 
 ---
 
-## App shell & views (as built — 2026-07-15)
+## App shell & views (as built — 2026-07-15, routing/nav updated 2026-07-24)
 
 **Shell** (`App.vue`): a naive-ui header — brand · page nav (`NMenu`) · settings
 popover (`NPopover`). The language switch lives in the settings popover (moved
@@ -38,16 +38,18 @@ out of the per-view headers). **Dark mode is scaffolded but NOT surfaced**:
 color tokens, so enabling the toggle now would darken only the chrome. Turning it
 on later ≈ one prop + a `:root[data-theme="dark"]` block in `tokens.css`.
 
-**Router** (`router.ts`): `/skills` (`TaxonomyView`), `/errors` (`ReferenceView` —
-now an errors-only page), `/tutorial`, `/drills`, **plus one route per layer of the
+**Router** (`router.ts`): `/` (`OverviewView` — the home/landing, an all-SVG clickable
+diagram of the reference stack, reached from the "Algebra" brand link), `/skills`
+(`TaxonomyView`), `/errors` (`ReferenceView` — errors only), `/metapatterns`
+(`MetapatternsView`), `/tutorial`, `/drills`, **plus one route per layer of the
 tower** — `/fundamentals`, `/numbers`, `/powers`, `/terms`. Those four are
 **generated from the manifest** (`src/data/layers.ts`) and all render the same
 component (`LayerView`, selected by a `layerId` prop), so adding a layer needs no
 route. The **nav groups them** (`App.vue`): a "Fundament" dropdown over the four
-layers, a "Curated" dropdown over Skills + Errors, then Tutorial and Drills. Group
-headers use `-menu` keys so they never collide with a route. Activity routes are
-lazy-loaded so their future weight (CE grading) code-splits off the reference pages.
-**Tutorial and Drills are empty stubs.**
+layers, a "Curated" dropdown over Errors · Metapatterns · Skills (ordered bottom-up to
+echo the reference stack), then Tutorial and Drills. Group headers use `-menu` keys so
+they never collide with a route. Activity routes are lazy-loaded so their future weight
+(CE grading) code-splits off the reference pages. **Tutorial and Drills are empty stubs.**
 
 **Two audiences.** `Skills`, `Fundamentals` and the four **layer** pages are
 *browsable catalogs* and today are **teacher/dev inspection surfaces** — they show
@@ -57,20 +59,23 @@ in `docs/TODO.md`). `Tutorial` and `Drills` are the (unbuilt) **student** surfac
 Design rule for when they're built: **Tutorial *drives* Drills — one drill-runner,
 two drivers** (guided `requires`-traversal vs. free pick). Don't fork the runner.
 
-**Card system** (both catalogs, one system): a card rests quiet — an absolute
-coordinate *eyebrow* (`kind · group`, pinned under the top border), title, the
-primary content (a law's statement / a skill's forms), and the note. Everything
-else — ids, coordinates, links, pitfalls, raw JSON — sits behind a per-card
-`details` disclosure, each row **labeled with its field name**. Group/kind/layer
-descriptions are tap-triggered **info-dot popovers** (mobile-friendly, not hover).
-`Fundamentals` switches Laws · Conventions · Errors (+ a contextual "N unused"
-chip); each of Laws and Skills also switches `by group` / `by kind`.
+**Card system** (all catalogs, one system): a card rests quiet — an absolute
+coordinate *eyebrow* (`kind · group`, pinned under the top border), **`name`**, the
+primary content (a card's statement / a skill's forms), and the prose (`note`, or a
+metapattern's `rule`). Everything else — ids, coordinates, links, pitfalls, raw JSON —
+sits behind a per-card `details` disclosure, each row **labeled with its field name**.
+Group/kind/layer descriptions are tap-triggered **info-dot popovers** (mobile-friendly,
+not hover). `Errors` and `Metapatterns` are the curated-lens pages (each with a role
+header + a contextual "N unused" chip); `Skills` also switches `by group` / `by kind`.
+(The old Laws · Conventions · Errors segment switch is gone — laws/conventions became
+tower cards in the 2026-07-23 bridge.)
 
 **Design tokens** (`src/styles/tokens.css`): one quiet neutral-led palette, color
-reserved for signal. This *is* the dark-mode groundwork. **All display prose lives
-in data registries**, never hardcoded in components: `skillGroups`/`lawGroups`/
-`conventionGroups`, `skillKinds`/`lawKinds` (slug-set validated == the kind enum),
-and `layers.json` (the Laws/Conventions/Errors one-liners).
+reserved for signal. This *is* the dark-mode groundwork. **Display prose for the
+curated side lives in data registries**, never hardcoded in components: `skillGroups`
+and `skillKinds` (slug-set validated == the kind enum). (The old `lawGroups`/
+`conventionGroups`/`lawKinds` registries went with laws.json/conventions.json in the
+bridge; the tower's own section/group titles live inline in each `cards.json`.)
 
 **Mobile:** cards are single-column by default, multi-column at ≥560px —
 mobile-*aware*, not a mobile-first pass (that's reserved for the greenfield drill

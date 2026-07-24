@@ -4,6 +4,24 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## NEXT SESSION — validate skills against real common mistakes, then prune (2026-07-24)
+
+Go through the **65 skills** and judge whether each actually targets a *common*
+first-year-HS algebra mistake — **60+ is too many** and likely padded with invented or
+rare cases.
+
+- [ ] **Assemble a catalog of common algebra mistakes FIRST** — from the web /
+  maths-didactics literature, at Swiss first-year-HS level. (Web research; this is the
+  gating step — the judgement needs an external ground truth, not our own priors.)
+- [ ] Compare the 65 skills **and their declared `errors`** against that catalog; mark
+  each skill: evidence-backed common mistake / plausible-but-rare / invented.
+- [ ] **Prune** to a leaner, evidence-backed set; retire or merge the rest.
+
+Research + curation, not code. The skill/error data model is clean and stable (the
+2026-07-24 naming/structure pass is done — see below and `docs/content_model.md`).
+
+---
+
 ## fundamentals + naturals — current thread (2026-07-22)
 
 Isolated clean rebuild of the field-axioms bedrock, separate from the `laws.json`
