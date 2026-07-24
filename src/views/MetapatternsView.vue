@@ -25,12 +25,12 @@ const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : ope
 const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
 
 interface MetaVM {
-  id: string; title: string; rule: string
+  id: string; name: string; rule: string
   summarizes: string[]; unused: boolean; json: string
 }
 function metaVM(m: MetaPatternDef): MetaVM {
   return {
-    id: m.id, title: loc(m.title, lang.value), rule: loc(m.rule, lang.value),
+    id: m.id, name: loc(m.name, lang.value), rule: loc(m.rule, lang.value),
     summarizes: m.summarizes.map(label), unused: !citedMetas.has(m.id), json: JSON.stringify(m, null, 2),
   }
 }
@@ -58,7 +58,7 @@ const items = computed(() => metaPatterns.map(metaVM))
             <button class="disclose" @click="toggle(m.id)">{{ open.has(m.id) ? 'less' : 'details' }}</button>
           </span>
         </div>
-        <div class="card-head"><h4>{{ m.title }}</h4></div>
+        <div class="card-head"><h4>{{ m.name }}</h4></div>
         <p class="body"><RichText :text="m.rule" /></p>
         <div v-if="open.has(m.id)" class="details">
           <dl class="fields">

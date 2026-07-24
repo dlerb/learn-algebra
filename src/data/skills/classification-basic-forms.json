@@ -3,7 +3,7 @@
     "kind": "classification",
     "id": "classification.sum",
     "group": "basic-forms",
-    "title": "Sum",
+    "name": "Sum",
     "note": "Dominant op = the outermost $+$; its terms are the chunks.",
     "illustration": "a + b",
     "requires": [
@@ -22,7 +22,7 @@
     "kind": "classification",
     "id": "classification.difference",
     "group": "basic-forms",
-    "title": "Difference",
+    "name": "Difference",
     "note": "The last operation applied is subtraction. The chunks are the two terms.",
     "illustration": "a - b",
     "requires": [
@@ -36,7 +36,7 @@
     "kind": "classification",
     "id": "classification.product",
     "group": "basic-forms",
-    "title": "Product",
+    "name": "Product",
     "note": "Dominant op = the outermost $\\cdot$; its factors are the chunks.",
     "illustration": "ab",
     "requires": [
@@ -58,7 +58,7 @@
     "kind": "classification",
     "id": "classification.quotient",
     "group": "basic-forms",
-    "title": "Quotient",
+    "name": "Quotient",
     "note": "The last operation applied is division. The chunks are numerator and denominator.",
     "illustration": "\\frac{a}{b}",
     "requires": [
@@ -72,7 +72,7 @@
     "kind": "classification",
     "id": "classification.power",
     "group": "basic-forms",
-    "title": "Power",
+    "name": "Power",
     "note": "Dominant op = the power; base and exponent are the chunks.",
     "illustration": "a^2",
     "requires": [

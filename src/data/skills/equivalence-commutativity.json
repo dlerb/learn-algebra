@@ -3,7 +3,7 @@
     "kind": "equivalence",
     "id": "equivalence.addition-commutative",
     "group": "commutativity",
-    "title": "Addition is commutative",
+    "name": "Addition is commutative",
     "note": "Order does not matter for addition: a + b = b + a.",
     "illustration": "a + b = b + a",
     "restsOn": [
@@ -14,7 +14,7 @@
     "kind": "equivalence",
     "id": "equivalence.multiplication-commutative",
     "group": "commutativity",
-    "title": "Multiplication is commutative",
+    "name": "Multiplication is commutative",
     "note": "Order does not matter for multiplication: ab = ba.",
     "illustration": "ab = ba",
     "requires": [
@@ -32,7 +32,7 @@
     "kind": "equivalence",
     "id": "equivalence.subtraction-not-commutative",
     "group": "commutativity",
-    "title": "Subtraction is not commutative",
+    "name": "Subtraction is not commutative",
     "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
     "illustration": "a - b = -(b - a)",
     "requires": [
@@ -53,7 +53,7 @@
     "kind": "equivalence",
     "id": "equivalence.division-not-commutative",
     "group": "commutativity",
-    "title": "Division is not commutative",
+    "name": "Division is not commutative",
     "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",
     "illustration": "a \\div b = \\frac{a}{b}",
     "requires": [

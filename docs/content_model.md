@@ -303,7 +303,7 @@ KaTeX; both are compile-checked at load.
 | `id` | string `"<kind>.<slug>"` | ✓ | the identifier; prefix must equal `kind` |
 | `kind` | `equivalence`\|`classification`\|`chunking`\|`transformation` | ✓ | strategy category (= id prefix) |
 | `group` | string | ✓ | topic slug; must exist in `skillGroups.json` |
-| `title` | LocalizedString | ✓ | |
+| `name` | LocalizedString | ✓ | the display heading (like a card's `name`) |
 | `note` | LocalizedString | ✓ | the rationale — why the skill matters |
 | `illustration` | LaTeX | — | one canonical example that anchors the skill |
 | `requires` | string[] (skill ids) | — | direct prerequisite skills; the acyclic dependency graph |
@@ -328,7 +328,7 @@ KaTeX; both are compile-checked at load.
 | field | type | req | meaning |
 |---|---|---|---|
 | `id` | string `"meta.<slug>"` | ✓ | the identifier |
-| `title` | LocalizedString | ✓ | |
+| `name` | LocalizedString | ✓ | the display heading (like a card's `name`) |
 | `rule` | LocalizedString | ✓ | the decoding rule itself — the takeaway line a student reads in drill feedback |
 | `summarizes` | string[] (card ids) | — | the tower cards this heuristic reads (cards only — errors are the skills' concern) |
 
@@ -409,7 +409,7 @@ naming which of the skill's `errors` it instantiates, validated ⊆ that set, + 
    A load-time compile check runs every latex field and every `$…$` segment
    through KaTeX with `throwOnError: true` — a typo'd escape fails at startup
    with its id and field named, instead of rendering as red mush in a card.
-10. **Localization.** Prose fields (names, texts, notes, skill titles,
+10. **Localization.** Prose fields (names, notes, metapattern rules,
    pitfall explanations) are `LocalizedString`: a plain string (= English) or
    `{ en, de }`, with English fallback so nothing renders blank; `de` means
    Schweizer Hochdeutsch. LaTeX math is language-neutral and never

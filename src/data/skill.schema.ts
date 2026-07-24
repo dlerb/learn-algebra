@@ -51,7 +51,7 @@ export const skill = z.object({
     'id must be "<kind>.<slug>" (kind ∈ equivalence|classification|chunking|transformation)'),
   kind: skillKind,                     // = id prefix (validated); a plain category label
   group: z.string(),                    // topic slug; must exist in skillGroups.json
-  title: localizedString,
+  name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
@@ -154,7 +154,7 @@ export function validateGroupRefs(skills: Skill[], groups: GroupsFile): void {
 
 export const metaPatternDef = z.object({
   id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // the single identifier — a dotted slug, like every other entity
-  title: localizedString,
+  name: localizedString,                  // the metapattern's display heading (like a card's `name`)
   rule: localizedString,                  // the decoding rule itself — the student-facing takeaway line in drill feedback
   summarizes: z.array(z.string()).default([]),  // card ids this pattern digests — keeps the classroom voice linked to the tower cards it reads (cards only; errors are the skills' concern)
 })
