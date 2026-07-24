@@ -387,15 +387,19 @@ Tier 3 = chains Tier 1 equivalences, located via Tier 2 parsing, toward a target
   `factor` is the awkward case). `steps` demote to teaching aid, not answer key;
   map common wrong endpoints to causes in `pitfalls`.
 - New `kind:"transformation"` (greenfield — not yet in schema) + a new id-prefix
-  namespace (e.g. `transform.`). The `structure` `gateway: true` skills are the
-  Tier 2→Tier 3 recognition hinge that feeds it.
+  namespace (e.g. `transform.`). The five `familiar-shapes` skills
+  (difference-of-squares, perfect-square-trinomial, common-factor, linear-form,
+  quadratic-form) are the Tier 2→Tier 3 recognition hinge that feeds it. ⚠️ The
+  `gateway: true` flag these carried was **removed 2026-07-24** (dead field, nothing
+  read it); re-introduce a trigger mechanism — likely a typed edge, not a boolean —
+  when this is actually built.
 
 - [ ] Research MathLive as input component
 - [ ] Design Tier 3 exercise format (endpoint-graded per above)
 - [ ] Compute Engine for equivalence checking + per-direction normalizers
 - [ ] **Drill "dirty" expressions** — Tier-3 terms will need to contain messy sub-forms (`a/1`, `--a`, unsimplified coefficients) that the student must handle/clean as part of the transformation. Deferred, but a real requirement for the transformation drills.
 - [ ] Add the `transformation` `kind` to the schema (`target` field); ids get the `transformation.` prefix like every other kind (no separate namespace — skill derives from kind)
-- [ ] Author Tier 3 skills; wire the `gateway` shapes as their recognition triggers
+- [ ] Author Tier 3 skills; wire the `familiar-shapes` skills as their recognition triggers (the old `gateway` flag was removed — see note above)
 - [ ] **Coefficient-lens chunking** (`2x(x+1) → [2x, (x+1)]`, keeping the coefficient with its variable): operation-relative grouping, the recognition-half of an *expand* move — author as a Tier-3 skill. The example was removed from the Tier-2 `chunking.chunks-in-product` card on 2026-07-11 (Tier-2 chunking is maximal/flat: `[2, x, (x+1)]`); this is where its coefficient-lens version lands.
 
 ## Open questions — salvaged from archived taxonomy docs (2026-07-13)

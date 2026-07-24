@@ -9,7 +9,7 @@
     "metaPatterns": [
       "meta.juxtaposition"
     ],
-    "governedBy": [
+    "restsOn": [
       "ix.juxtaposition",
       "ix.coefficient-front"
     ],
@@ -31,7 +31,7 @@
       "meta.juxtaposition",
       "meta.implicit-op-before-bracket"
     ],
-    "governedBy": [
+    "restsOn": [
       "ix.juxtaposition",
       "ix.brackets"
     ],
@@ -54,10 +54,8 @@
       "meta.juxtaposition",
       "meta.three-minuses"
     ],
-    "justifiedBy": [
-      "th.negative-one-times"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.negative-one-times",
       "ix.invisible-one",
       "ix.juxtaposition"
     ],
@@ -78,10 +76,8 @@
     "metaPatterns": [
       "meta.juxtaposition"
     ],
-    "justifiedBy": [
-      "th.zero-times"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.zero-times",
       "ix.juxtaposition"
     ],
     "errors": [
@@ -101,10 +97,8 @@
     "metaPatterns": [
       "meta.juxtaposition"
     ],
-    "justifiedBy": [
-      "def.multiple"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "def.multiple",
       "ix.juxtaposition"
     ],
     "errors": [

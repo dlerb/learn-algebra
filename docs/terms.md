@@ -37,7 +37,7 @@ They are different objects that point at each other, and the relation is **one c
 many skills**: `th.split-numerator` is drilled by three (`splitting-a-fraction` does
 it, `no-splitting-the-denominator` blocks the wrong one, `no-cancelling-in-a-sum` is
 the neighbouring trap); `th.collect-like-terms` by four. A theorem can also have *no*
-skill (stated, not yet drilled), and a skill's `justifiedBy` can cite several cards.
+skill (stated, not yet drilled), and a skill's `restsOn` can cite several cards.
 So the fan-out is the signature of a clean boundary, not a smell.
 
 The tower is the *determined → curated* gradient made explicit: `fundamentals` /
@@ -171,8 +171,8 @@ axiom rather than caution.
 ## The legacy files are empty (2026-07-23)
 
 `laws.json` and `conventions.json` are now `[]`. Every axiom, definition, theorem and
-convention they once held is a card in the tower, and every `governedBy` /
-`justifiedBy` / `corrupts` reference from the skills side resolves to a card id —
+convention they once held is a card in the tower, and every `restsOn` /
+`corrupts` reference from the skills side resolves to a card id —
 **163 of 163, zero legacy.** `th.root-power-order` was the last, and it went to
 `powers` (the ℚ act) rather than here: in radical notation it *looks* like a fact
 relating two operations, but both sides are powers and `ax.mul-commutative` on the

@@ -9,12 +9,9 @@
     "metaPatterns": [
       "meta.three-minuses"
     ],
-    "justifiedBy": [
-      "def.sub"
-    ],
-    "governedBy": [
-      "th.negative-one-times",
-      "def.sub"
+    "restsOn": [
+      "def.sub",
+      "th.negative-one-times"
     ],
     "errors": [
       "anti.commute-everything"
@@ -33,13 +30,9 @@
     "metaPatterns": [
       "meta.three-minuses"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.sub",
       "th.negative-one-times"
-    ],
-    "governedBy": [
-      "th.negative-one-times",
-      "def.sub"
     ],
     "errors": [
       "mis.minus-roles-confused"
@@ -59,10 +52,8 @@
       "meta.three-minuses",
       "meta.implicit-op-before-bracket"
     ],
-    "justifiedBy": [
-      "th.minus-over-sum"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.minus-over-sum",
       "th.negative-one-times",
       "def.sub",
       "ix.brackets"
@@ -86,10 +77,8 @@
       "meta.three-minuses",
       "meta.implicit-op-before-bracket"
     ],
-    "justifiedBy": [
-      "th.minus-over-sum"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.minus-over-sum",
       "th.negative-one-times",
       "def.sub",
       "ix.brackets"
@@ -111,13 +100,10 @@
     "metaPatterns": [
       "meta.three-minuses"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.sub",
-      "th.minus-in-product"
-    ],
-    "governedBy": [
-      "th.negative-one-times",
-      "def.sub"
+      "th.minus-in-product",
+      "th.negative-one-times"
     ],
     "errors": [
       "mis.minus-roles-confused"
@@ -138,11 +124,8 @@
       "meta.juxtaposition",
       "meta.three-minuses"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "th.minus-in-product",
-      "ix.juxtaposition"
-    ],
-    "governedBy": [
       "ix.juxtaposition",
       "th.negative-one-times",
       "def.sub"
@@ -166,10 +149,8 @@
       "meta.three-minuses",
       "meta.fraction-bar-brackets"
     ],
-    "justifiedBy": [
-      "th.fraction-minus-moves"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.fraction-minus-moves",
       "th.negative-one-times",
       "def.sub",
       "ix.fraction-bar"
@@ -192,10 +173,8 @@
       "meta.three-minuses",
       "meta.implicit-op-before-bracket"
     ],
-    "justifiedBy": [
-      "th.subtract-a-sum"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.subtract-a-sum",
       "th.negative-one-times",
       "def.sub",
       "ix.brackets"
@@ -218,10 +197,8 @@
       "meta.three-minuses",
       "meta.implicit-op-before-bracket"
     ],
-    "justifiedBy": [
-      "th.subtract-a-sum"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.subtract-a-sum",
       "th.negative-one-times",
       "def.sub",
       "ix.brackets"

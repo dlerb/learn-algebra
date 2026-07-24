@@ -9,14 +9,14 @@ import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 
 // The skills catalog. A card rests quiet — title · the forms the skill looks
-// like · the rationale note — and reveals its coordinates (justifiedBy/governedBy
+// like · the rationale note — and reveals its coordinates (restsOn
 // resolve into the fundament tower now, plus meta-patterns / errors),
 // prerequisites, drill pitfalls and raw JSON behind a per-card `details` toggle.
 function metaLabel(id: string): string {
   const m = metaPatterns.find(mp => mp.id === id)
   return m ? `${m.id} · ${loc(m.title, lang.value)}` : id
 }
-// `justifiedBy`, `governedBy` and error `explainedBy` are card ids or error ids.
+// `restsOn` and error `explainedBy` are card ids or error ids.
 const errName = new Map(errorPatterns.map(e => [e.id, e] as const))
 function layerLabel(id: string): string {
   const card = cardIndex.get(id)
@@ -48,8 +48,7 @@ interface CardVM {
   errors: string[]
   metas: string[]
   requires: string[]
-  laws: string[]
-  governedBy: string[]
+  restsOn: string[]
   equivChain?: string
   equivPitfalls?: { latex: string; revise: string[]; explainedBy: string[] }[]
   classExamples?: string[]
@@ -70,8 +69,7 @@ function toVM(f: Skill): CardVM {
     json: JSON.stringify(rawById.get(f.id), null, 2),
     metas: f.metaPatterns.map(m => metaLabel(m)),
     requires: f.requires.map(skillTitle),
-    laws: f.justifiedBy.map(layerLabel),
-    governedBy: f.governedBy.map(layerLabel),
+    restsOn: f.restsOn.map(layerLabel),
   }
   const d = drillBySkill.get(f.id)
   if (d?.kind === 'equivalence') {
@@ -198,11 +196,8 @@ function hasErrors(c: CardVM): boolean {
               <div v-if="c.requires.length" class="field">
                 <dt>requires</dt><dd><span v-for="(r, i) in c.requires" :key="i" class="chip">{{ r }}</span></dd>
               </div>
-              <div v-if="c.laws.length" class="field">
-                <dt>justifiedBy</dt><dd><span v-for="(l, i) in c.laws" :key="i" class="chip">{{ l }}</span></dd>
-              </div>
-              <div v-if="c.governedBy.length" class="field">
-                <dt>governedBy</dt><dd><span v-for="(cv, i) in c.governedBy" :key="i" class="chip">{{ cv }}</span></dd>
+              <div v-if="c.restsOn.length" class="field">
+                <dt>restsOn</dt><dd><span v-for="(l, i) in c.restsOn" :key="i" class="chip">{{ l }}</span></dd>
               </div>
               <div v-if="c.metas.length" class="field">
                 <dt>metaPatterns</dt><dd><span v-for="(m, i) in c.metas" :key="i" class="chip">{{ m }}</span></dd>

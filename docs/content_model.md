@@ -26,7 +26,7 @@ validated by `skill.schema.ts` on load. The layers:
   `fundamentals · numbers · powers · terms`. See `docs/fundamentals.md`.
 - **~~laws + conventions~~** — **deleted 2026-07-23.** These were the original law
   tower; everything they held is a card in the fundament tower now, and every reference
-  from the skills side (`justifiedBy`, `governedBy`, error `corrupts`, meta-pattern
+  from the skills side (`restsOn`, error `corrupts`, meta-pattern
   `summarizes`) resolves to a **card id**, checked at load by `validateLayerRefs` /
   `validateErrors` and at build by `sweep-layers`. The files, their display registries
   (`lawGroups`/`lawKinds`/`conventionGroups`), the Zod schemas and the reference view's
@@ -45,7 +45,7 @@ validated by `skill.schema.ts` on load. The layers:
   `pnpm sweep-layers` fails if any reference resolves to neither a card nor an error/
   meta id.)*
 - **skills** (`skills/*.json`) — curated *strategies/skills* pointing into the tower:
-  what is worth drilling, and why. `justifiedBy` / `governedBy` are **card ids** now
+  what is worth drilling, and why. `restsOn` is **card ids** now
   (was law / convention ids). Each skill's concrete material lives separately in…
 - **drills** (`drills/*.json`) — the format-specific drill material for each
   skill. See "Skills vs drills" below.
@@ -95,7 +95,7 @@ the kinds are finer and open-ended, so nothing should freeze a fixed 3-way skill
 A **skill** is a curated *strategy*, not a problem set. It says what the skill
 is, why it matters, and links into the other layers — nothing format-specific:
 `note` (the rationale), one canonical `illustration`, `errors` (the misconception
-catalog → error-pattern ids), `justifiedBy` / `governedBy` / `metaPatterns`
+catalog → error-pattern ids), `restsOn` / `metaPatterns`
 links, `requires` (prerequisite skills), plus `kind` + `group`.
 
 All the concrete material lives in the **drill** layer (`drills/<kind>-<group>
@@ -125,11 +125,13 @@ authored *curation*: it selects a coherent coordinate-region of the fundamentals
 and declares "this intersection is one thing worth getting fluent at." Nothing
 derives skills from the fundamentals — the "what matters" judgement is human,
 the same reason meta-pattern assignment stays authored, not derived. This is why
-a skill has exactly four cross-layer arrays and no more: they are **one arrow
-into each face of the fundament** — `justifiedBy` → laws (truth), `governedBy` →
-conventions (notation), `errors` → error patterns (the negative image),
-`metaPatterns` → the digest. A skill draws together *coordinates* (justification),
-not drill *material* — the material is authored separately in `drills/`.
+a skill has just three cross-layer arrays and no more, **one into each lens over
+the tower** — `restsOn` → cards (the fundament it rests on, laws and notation
+conventions alike; the original `justifiedBy`/`governedBy` split collapsed once
+laws and conventions became one tower, since the card prefix already says which),
+`errors` → error patterns (the negative image), `metaPatterns` → the digest. A
+skill draws together *coordinates*, not drill *material* — the material is authored
+separately in `drills/`.
 
 A skill carries no linear order — only the `requires` **dependency** graph (a
 partial order). This one graph feeds two different projections:
@@ -304,11 +306,9 @@ KaTeX; both are compile-checked at load.
 | `title` | LocalizedString | ✓ | |
 | `note` | LocalizedString | ✓ | the rationale — why the skill matters |
 | `illustration` | LaTeX | — | one canonical example that anchors the skill |
-| `gateway` | boolean | — | recognising this shape triggers a transformation (default `false`) |
 | `requires` | string[] (skill ids) | — | direct prerequisite skills; the acyclic dependency graph |
 | `metaPatterns` | string[] (meta ids) | — | decoding heuristics the skill leans on |
-| `justifiedBy` | string[] (card ids) | — | the law/def/theorem cards it rests on |
-| `governedBy` | string[] (card ids) | — | the convention cards it obeys |
+| `restsOn` | string[] (card ids) | — | the tower cards it rests on — laws/defs/theorems it is justified by **and** the notation conventions it obeys (law vs convention is read off the card prefix). Merged 2026-07-24 from the old `justifiedBy` + `governedBy` |
 | `errors` | string[] (error ids) | — | the misconception catalog it guards against |
 | `conditions` | LaTeX | — | domain caveat not inherited from a cited card |
 
@@ -465,9 +465,9 @@ familiar-shapes group (binomial square, difference of squares).
 4. **False laws stay flat** — no `derivedFrom` on error patterns; the
    machinery isn't worth it. (They do carry the `of` link to what they
    distort.)
-5. **Conditions live on laws**; skills inherit the conditions of the laws
-   they cite via `justifiedBy` instead of restating them, keeping the
-   skill-level `conditions` field only for caveats that aren't law-derived.
+5. **Conditions live on the cards**; skills inherit the conditions of the
+   cards they cite via `restsOn` instead of restating them, keeping the
+   skill-level `conditions` field only for caveats that aren't card-derived.
 
 ## Revision notes
 

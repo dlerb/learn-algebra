@@ -7,7 +7,7 @@
     "note": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
     "illustration": "a \\div b = a : b = \\frac{a}{b}",
     "conditions": "b \\ne 0",
-    "governedBy": [
+    "restsOn": [
       "ix.division-symbols"
     ],
     "errors": [
@@ -25,7 +25,7 @@
     "requires": [
       "equivalence.division-variants"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.div"
     ]
   },
@@ -39,7 +39,7 @@
     "requires": [
       "equivalence.division-variants"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "th.divide-by-one"
     ]
   },
@@ -58,11 +58,9 @@
       "meta.fraction-bar-brackets",
       "meta.only-multiplication-distributes"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "th.split-numerator",
-      "ax.distributivity"
-    ],
-    "governedBy": [
+      "ax.distributivity",
       "ix.fraction-bar"
     ]
   },
@@ -81,10 +79,8 @@
       "meta.fraction-bar-brackets",
       "meta.only-multiplication-distributes"
     ],
-    "justifiedBy": [
-      "th.split-numerator"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.split-numerator",
       "ix.fraction-bar"
     ],
     "errors": [
@@ -105,11 +101,9 @@
       "meta.fraction-bar-brackets",
       "meta.only-multiplication-distributes"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "th.split-numerator",
-      "th.cancel-common-factor"
-    ],
-    "governedBy": [
+      "th.cancel-common-factor",
       "ix.fraction-bar"
     ],
     "errors": [

@@ -6,7 +6,7 @@
     "title": "Addition is commutative",
     "note": "Order does not matter for addition: a + b = b + a.",
     "illustration": "a + b = b + a",
-    "justifiedBy": [
+    "restsOn": [
       "ax.add-commutative"
     ]
   },
@@ -23,10 +23,8 @@
     "metaPatterns": [
       "meta.juxtaposition"
     ],
-    "justifiedBy": [
-      "ax.mul-commutative"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "ax.mul-commutative",
       "ix.juxtaposition"
     ]
   },
@@ -43,12 +41,9 @@
     "metaPatterns": [
       "meta.three-minuses"
     ],
-    "justifiedBy": [
-      "def.sub"
-    ],
-    "governedBy": [
-      "th.negative-one-times",
-      "def.sub"
+    "restsOn": [
+      "def.sub",
+      "th.negative-one-times"
     ],
     "errors": [
       "anti.commute-everything"
@@ -65,10 +60,8 @@
     "requires": [
       "equivalence.division-variants"
     ],
-    "justifiedBy": [
-      "def.div"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "def.div",
       "ix.division-symbols"
     ],
     "errors": [

@@ -12,10 +12,8 @@
     "metaPatterns": [
       "meta.juxtaposition"
     ],
-    "justifiedBy": [
-      "th.collect-like-terms"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.collect-like-terms",
       "ix.juxtaposition"
     ],
     "errors": [
@@ -35,10 +33,8 @@
     "metaPatterns": [
       "meta.juxtaposition"
     ],
-    "justifiedBy": [
-      "th.collect-like-terms"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.collect-like-terms",
       "ix.juxtaposition"
     ],
     "errors": [
@@ -56,7 +52,7 @@
       "equivalence.exponent-as-repeated-product",
       "equivalence.number-plus-term"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "th.collect-like-terms"
     ],
     "errors": [

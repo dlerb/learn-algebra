@@ -80,7 +80,7 @@ for (const [layer, ordered] of layerOrder) {
 // ---- the bridge -----------------------------------------------------------
 // The legacy laws.json / conventions.json were deleted on 2026-07-23; since the
 // 2026-07-24 cleanup every reference from the curated side (skills'
-// governedBy/justifiedBy, errors' corrupts, meta-patterns' summarizes) lands on a
+// restsOn, errors' corrupts, meta-patterns' summarizes) lands on a
 // card id — the curated layers form a downward-only stack over the tower.
 // Anything else is a dangling reference. Build-time twin of validateLayerRefs.
 const readJSON = f => JSON.parse(fs.readFileSync(f, 'utf8'))
@@ -92,8 +92,7 @@ const cite = (from, id, field, pool) => {
 }
 for (const f of fs.readdirSync('src/data/skills')) {
   for (const sk of readJSON(`src/data/skills/${f}`)) {
-    for (const field of ['governedBy', 'justifiedBy'])
-      for (const id of sk[field] || []) cite(sk.id, id, field, codes)
+    for (const id of sk.restsOn || []) cite(sk.id, id, 'restsOn', codes)
   }
 }
 for (const e of errFile)
