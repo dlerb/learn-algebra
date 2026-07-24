@@ -29,11 +29,14 @@ const menuOptions: MenuOption[] = [
     children: layers.map(l => ({ label: l.title, key: l.slug })),
   },
   {
+    // Ordered to echo the reference stack bottom-up: the Fundament dropdown (the
+    // tower/floor) sits left, then within Curated the two lenses that cite only
+    // cards (Errors, Metapatterns), then Skills on top, which cites all three.
     label: 'Curated', key: 'curated-menu',
     children: [
-      { label: 'Skills', key: 'skills' },
       { label: 'Errors', key: 'errors' },
       { label: 'Metapatterns', key: 'metapatterns' },
+      { label: 'Skills', key: 'skills' },
     ],
   },
   { label: 'Tutorial', key: 'tutorial' },
