@@ -261,11 +261,26 @@ export function validateLayerRefs(
 
 export function auditCoverage(
   skills: Skill[], metas: MetaPatternsFile, errors: ErrorDef[],
+  cardConds: Map<string, string | undefined> = new Map(),
 ): string[] {
   const lines: string[] = []
   const untagged = skills.filter(f => f.restsOn.length === 0)
   if (untagged.length > 0) {
     lines.push(`${untagged.length}/${skills.length} skills have no layer coordinates yet (restsOn).`)
+  }
+
+  // A skill's `conditions` should hold only caveats its cited cards don't already
+  // carry (content_model design decision 5): if it restates a cited card's `cond`
+  // verbatim (whitespace/LaTeX-spacing normalized), the domain is already inherited
+  // via restsOn, so the restatement is redundant — inherit instead.
+  const norm = (s: string) => s.replace(/\\[,;: ]|\s+/g, '')
+  for (const f of skills) {
+    if (!f.conditions) continue
+    const dup = f.restsOn.find(r => {
+      const c = cardConds.get(r)
+      return c !== undefined && norm(c) === norm(f.conditions!)
+    })
+    if (dup) lines.push(`"${f.id}" restates a condition already on card "${dup}" — inherit via restsOn instead.`)
   }
 
   // Authored ⊆ derived: on a tagged skill, every authored meta-pattern should

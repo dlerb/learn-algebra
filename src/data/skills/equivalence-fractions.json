@@ -6,9 +6,9 @@
     "title": "Division notation variants",
     "note": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
     "illustration": "a \\div b = a : b = \\frac{a}{b}",
-    "conditions": "b \\ne 0",
     "restsOn": [
-      "ix.division-symbols"
+      "ix.division-symbols",
+      "def.div"
     ],
     "errors": [
       "anti.commute-everything"
@@ -21,7 +21,6 @@
     "title": "Fraction as multiplication by a reciprocal",
     "note": "Dividing by $b$ is multiplying by $1/b$: $a/b = a \\cdot (1/b)$. This is why dividing by a fraction means multiplying by its reciprocal.",
     "illustration": "\\frac{a}{b} = a \\cdot \\frac{1}{b}",
-    "conditions": "b \\ne 0",
     "requires": [
       "equivalence.division-variants"
     ],
@@ -50,7 +49,6 @@
     "title": "Splitting a fraction over addition",
     "note": "You may split a sum in the numerator: (a+b)/c = a/c + b/c. You may NOT split the denominator: a/(b+c) is not a/b + a/c.",
     "illustration": "\\frac{a+b}{c} = \\frac{a}{c} + \\frac{b}{c}",
-    "conditions": "c \\ne 0",
     "requires": [
       "equivalence.fraction-bar-grouping"
     ],

@@ -512,7 +512,7 @@
               },
               "latex": "\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b} \\qquad \\sqrt[n]{\\tfrac{a}{b}} = \\frac{\\sqrt[n]{a}}{\\sqrt[n]{b}}",
               "forall": "a, b \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
-              "cond": "a > 0,\\ b > 0",
+              "cond": "a \\ge 0,\\ b > 0",
               "derivation": "\\sqrt[n]{a \\cdot b} = (a b)^{1/n} = a^{1/n} b^{1/n} \\qquad \\sqrt[n]{\\tfrac{a}{b}} = \\left(\\tfrac{a}{b}\\right)^{1/n} = \\frac{a^{1/n}}{b^{1/n}}",
               "derivedFrom": [
                 "ix.root",

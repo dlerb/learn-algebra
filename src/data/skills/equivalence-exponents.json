@@ -94,7 +94,6 @@
     "title": "Zero and one as exponents",
     "note": "Any nonzero base to the power 0 is 1: $a^0 = 1$, not $0$. And $a^1 = a$.",
     "illustration": "a^0 = 1",
-    "conditions": "a \\ne 0",
     "requires": [
       "equivalence.exponent-as-repeated-product"
     ],
@@ -110,7 +109,6 @@
     "title": "Negative exponent as a reciprocal",
     "note": "A negative exponent means reciprocal, not a negative number: $a^{-n} = 1/a^n$. So $a^{-1} = 1/a$, and $1/a^{-n} = a^n$.",
     "illustration": "a^{-n} = \\frac{1}{a^n}",
-    "conditions": "a \\ne 0",
     "requires": [
       "equivalence.exponent-as-repeated-product",
       "equivalence.division-variants"
@@ -132,7 +130,6 @@
     "title": "Fractional exponent as a root",
     "note": "A fractional exponent is a root: the denominator is the root index, the numerator the power.",
     "illustration": "a^{m/n} = \\sqrt[n]{a^m} = (\\sqrt[n]{a})^m",
-    "conditions": "a > 0",
     "requires": [
       "equivalence.exponent-as-repeated-product"
     ],
@@ -152,7 +149,6 @@
     "title": "Negative fractional exponent",
     "note": "Combine the two rules: a^(-m/n) = 1 / (nth root of aᵐ). The minus gives the reciprocal, the fraction gives the root.",
     "illustration": "a^{-m/n} = \\frac{1}{\\sqrt[n]{a^m}} = \\frac{1}{a^{m/n}}",
-    "conditions": "a > 0",
     "requires": [
       "equivalence.negative-exponent",
       "equivalence.fractional-exponent-root"
@@ -199,7 +195,6 @@
     "title": "Root of a product",
     "note": "A root splits over $\\times$: $\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$.",
     "illustration": "\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}",
-    "conditions": "a \\ge 0, b \\ge 0",
     "requires": [
       "equivalence.explicit-vs-implicit-product"
     ],
