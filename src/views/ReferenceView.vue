@@ -29,12 +29,12 @@ const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : ope
 const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
 
 interface ErrVM {
-  id: string; kind: string; name: string; text: string
+  id: string; kind: string; name: string; note: string
   corrupts: string[]; instances: string[]; unused: boolean; json: string
 }
 function errVM(e: ErrorDef): ErrVM {
   return {
-    id: e.id, kind: e.kind, name: loc(e.name, lang.value), text: loc(e.text, lang.value),
+    id: e.id, kind: e.kind, name: loc(e.name, lang.value), note: loc(e.note, lang.value),
     corrupts: e.corrupts.map(label), instances: e.instances, unused: !citedErrs.has(e.id), json: JSON.stringify(e, null, 2),
   }
 }
@@ -73,7 +73,7 @@ const errorSections = computed(() => [
             </span>
           </div>
           <div class="card-head"><h4>{{ e.name }}</h4></div>
-          <p class="body"><RichText :text="e.text" /></p>
+          <p class="body"><RichText :text="e.note" /></p>
           <div v-if="open.has(e.id)" class="details">
             <dl class="fields">
               <div class="field"><dt>kind</dt><dd>{{ e.kind }}</dd></div>

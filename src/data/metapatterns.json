@@ -5,7 +5,7 @@
       "en": "Juxtaposition means multiplication",
       "de": "Nebeneinanderschreiben bedeutet Multiplikation"
     },
-    "text": {
+    "rule": {
       "en": "Anything written next to anything else, with no symbol between, means multiply: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ are all products.",
       "de": "Alles, was ohne Zeichen nebeneinander steht, wird multipliziert: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ sind alles Produkte."
     },
@@ -19,7 +19,7 @@
       "en": "A minus is one of two things",
       "de": "Ein Minus ist eines von zwei Dingen"
     },
-    "text": {
+    "rule": {
       "en": "A minus is either binary subtraction ($a - b$) or negation ($-a$), the opposite of an element. That is all — two roles. A minus in front of a bracket, $-(\\ldots)$, is negation; and since $-1 \\cdot x = -x$ you may read it as multiplying the bracket by $(-1)$, but that is a theorem, not a third minus. When a minus confuses you, ask which of the two it is.",
       "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$), das Gegenteil eines Elements. Mehr nicht, zwei Rollen. Ein Minus vor einer Klammer, $-(\\ldots)$, ist Negation; und weil $-1 \\cdot x = -x$ gilt, darfst du es als Multiplikation der Klammer mit $(-1)$ lesen, aber das ist ein Satz, kein drittes Minus. Wenn dich ein Minus verwirrt, frage dich, welches der zwei es ist."
     },
@@ -35,7 +35,7 @@
       "en": "Brackets carry an implicit operation in front",
       "de": "Vor einer Klammer steht eine unsichtbare Operation"
     },
-    "text": {
+    "rule": {
       "en": "No explicit symbol before a bracket means multiplication (juxtaposition). A minus before a bracket means times $(-1)$.",
       "de": "Kein Zeichen vor der Klammer heisst Multiplikation (Nebeneinanderschreiben). Ein Minus vor der Klammer heisst mal $(-1)$."
     },
@@ -50,7 +50,7 @@
       "en": "Exponents bind tighter than coefficients and signs",
       "de": "Exponenten binden stärker als Koeffizienten und Vorzeichen"
     },
-    "text": {
+    "rule": {
       "en": "$-a^2$ means $-(a^2)$, not $(-a)^2$. The exponent applies first, the minus after.",
       "de": "$-a^2$ bedeutet $-(a^2)$, nicht $(-a)^2$. Zuerst wirkt der Exponent, dann das Minus."
     },
@@ -65,7 +65,7 @@
       "en": "The fraction bar is a bracket",
       "de": "Der Bruchstrich ist eine Klammer"
     },
-    "text": {
+    "rule": {
       "en": "Everything above the line is one grouped object, everything below another. $a + b/c$ and $(a+b)/c$ are different things.",
       "de": "Alles über dem Strich ist EIN Objekt, alles darunter ein anderes. $a + b/c$ und $(a+b)/c$ sind verschiedene Dinge."
     },
@@ -79,7 +79,7 @@
       "en": "Only multiplication distributes over a sum",
       "de": "Nur die Multiplikation verteilt sich über eine Summe"
     },
-    "text": {
+    "rule": {
       "en": "$a(b+c) = ab + ac$, and dividing by $c$ works too (it is multiplying by $1/c$). Nothing else distributes: $(a+b)^2$ is not $a^2 + b^2$, the root of $a+b$ is not the sum of the roots, and a single term of a sum cannot be cancelled.",
       "de": "$a(b+c) = ab + ac$, und Teilen durch $c$ geht auch (es ist Multiplizieren mit $1/c$). Sonst verteilt sich nichts: $(a+b)^2$ ist nicht $a^2 + b^2$, die Wurzel aus $a+b$ ist nicht die Summe der Wurzeln, und ein einzelner Summand lässt sich nicht kürzen."
     },
@@ -93,7 +93,7 @@
       "en": "The dominant operation is the last one applied",
       "de": "Die dominante Operation ist die zuletzt ausgeführte"
     },
-    "text": {
+    "rule": {
       "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
       "de": "Würdest du den Term Schritt für Schritt ausrechnen, wäre die zuletzt ausgeführte Operation die dominante. Alles andere passiert innerhalb von Chunks."
     },
@@ -110,7 +110,7 @@
       "en": "Brackets make a chunk",
       "de": "Klammern bilden einen Chunk"
     },
-    "text": {
+    "rule": {
       "en": "Whatever is inside brackets is a single object. The dominant operation is always outside all brackets.",
       "de": "Was in Klammern steht, ist EIN Objekt. Die dominante Operation steht immer ausserhalb aller Klammern."
     },
@@ -124,7 +124,7 @@
       "en": "Multiplication binds tighter than addition and subtraction",
       "de": "Multiplikation bindet stärker als Plus und Minus"
     },
-    "text": {
+    "rule": {
       "en": "In $3x + 2y$ the multiplication is used up inside the terms; the dominant operation is the $+$. It is a sum, not a product.",
       "de": "In $3x + 2y$ ist die Multiplikation innerhalb der Terme verbraucht; die dominante Operation ist das $+$. Es ist eine Summe, kein Produkt."
     },
@@ -138,7 +138,7 @@
       "en": "The dominant operation determines which tools apply",
       "de": "Die dominante Operation bestimmt die Werkzeuge"
     },
-    "text": {
+    "rule": {
       "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
       "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen."
     }

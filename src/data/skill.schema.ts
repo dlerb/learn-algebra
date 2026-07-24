@@ -56,7 +56,7 @@ export const skill = z.object({
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   metaPatterns: z.array(z.string()).default([]), // meta-pattern ids (metapatterns.json)
-  restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the laws/defs/theorems it rests on and the notation conventions it obeys (law vs convention is read off the card prefix)
+  restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
   errors: z.array(z.string()).default([]),       // error-pattern ids — the skill's misconception catalog
   conditions: z.string().optional(),    // domain caveat, pure LaTeX
 })
@@ -155,7 +155,7 @@ export function validateGroupRefs(skills: Skill[], groups: GroupsFile): void {
 export const metaPatternDef = z.object({
   id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // the single identifier — a dotted slug, like every other entity
   title: localizedString,
-  text: localizedString,                  // the student-facing takeaway line in drill feedback
+  rule: localizedString,                  // the decoding rule itself — the student-facing takeaway line in drill feedback
   summarizes: z.array(z.string()).default([]),  // card ids this pattern digests — keeps the classroom voice linked to the tower cards it reads (cards only; errors are the skills' concern)
 })
 export type MetaPatternDef = z.infer<typeof metaPatternDef>
@@ -186,7 +186,7 @@ export const errorDef = z.object({
   kind: errorKind,
   corrupts: z.array(z.string()).default([]),
   name: localizedString,
-  text: localizedString,
+  note: localizedString,                        // prose beside `instances`: what the misconception is (like a card's note beside its latex)
   instances: z.array(z.string()).default([]),   // typical wrong forms, KaTeX
 })
 export type ErrorDef = z.output<typeof errorDef>
@@ -255,7 +255,7 @@ export function validateLayerRefs(
 
 // ── Matrix audit ─────────────────────────────────────────────────────────────
 // The completeness report, not a validator: which skills have no coordinates
-// yet, and which laws / conventions / error patterns no skill uses. An empty
+// yet, and which cards / error patterns no skill uses. An empty
 // cell is a QUESTION (gap, or deliberately inert?), never automatically an
 // error — so this warns, it does not throw.
 
@@ -320,8 +320,8 @@ export function auditCoverage(
   const countDirty = (fields: string[][]) => fields.filter(f => f.some(s => unicodeMath.test(s))).length
   const dirty = {
     'skill notes': countDirty(skills.map(f => locVals(f.note))),
-    'error texts': countDirty(errors.map(e => locVals(e.text))),
-    'meta-pattern texts': countDirty(metas.map(m => locVals(m.text))),
+    'error notes': countDirty(errors.map(e => locVals(e.note))),
+    'meta-pattern rules': countDirty(metas.map(m => locVals(m.rule))),
   }
   const parts = Object.entries(dirty).filter(([, n]) => n > 0).map(([k, n]) => `${k}: ${n}`)
   if (parts.length > 0) lines.push(`Prose fields with unmigrated unicode math (→ inline $…$): ${parts.join(', ')}`)
@@ -408,9 +408,9 @@ export function validateLatexCompiles(
   }
   for (const e of errors) {
     e.instances.forEach((x, i) => check(e.id, `instances[${i}]`, x))
-    proseMath(e.text).forEach(m => check(e.id, 'text', m))
+    proseMath(e.note).forEach(m => check(e.id, 'note', m))
   }
-  for (const m of metas) proseMath(m.text).forEach(s => check(m.id, 'text', s))
+  for (const m of metas) proseMath(m.rule).forEach(s => check(m.id, 'rule', s))
 
   if (failures.length > 0) {
     throw new Error(`LaTeX compile failures:\n${failures.join('\n')}`)

@@ -320,7 +320,7 @@ KaTeX; both are compile-checked at load.
 | `kind` | `anti-law`\|`misreading`\|`salience` | ✓ | anti-law = false algebra; misreading = mis-parsed notation; salience = parsing by what is loudest |
 | `corrupts` | string[] (card ids) | — | the card(s) this error distorts (all kinds → cards, since the 2026-07-24 cleanup) |
 | `name` | LocalizedString | ✓ | |
-| `text` | LocalizedString | ✓ | what goes wrong, in prose |
+| `note` | LocalizedString | ✓ | what goes wrong, in prose (the counterpart to `instances`, as a card's `note` is to its `latex`) |
 | `instances` | string[] (LaTeX) | — | typical wrong forms |
 
 **meta-pattern** — `metapatterns.json`, a decoding heuristic:
@@ -329,7 +329,7 @@ KaTeX; both are compile-checked at load.
 |---|---|---|---|
 | `id` | string `"meta.<slug>"` | ✓ | the identifier |
 | `title` | LocalizedString | ✓ | |
-| `text` | LocalizedString | ✓ | the takeaway line a student reads in drill feedback |
+| `rule` | LocalizedString | ✓ | the decoding rule itself — the takeaway line a student reads in drill feedback |
 | `summarizes` | string[] (card ids) | — | the tower cards this heuristic reads (cards only — errors are the skills' concern) |
 
 **drill** — `drills/<kind>-<group>.json`, the material for a skill (one entry per
@@ -392,7 +392,7 @@ naming which of the skill's `errors` it instantiates, validated ⊆ that set, + 
    the card ids it digests (cards only, since the 2026-07-24 cleanup), so the
    classroom voice cannot drift from the cards it reads. They follow the same id
    scheme as everything else (a `meta.…` slug, no display code) and are localized —
-   their `text` is the takeaway line a student reads in drill feedback.
+   their `rule` is the takeaway line a student reads in drill feedback.
    Assignment to skills stays **authored** (curation), never derived from
    refs (coverage): tested empirically 2026-07-09, derivation recovers every
    authored assignment but over-generates true-but-beside-the-point extras.
