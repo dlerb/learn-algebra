@@ -152,10 +152,11 @@ gap that would break a skill-based path. The `auditCoverage` report lists these
 on load (`[audit] … cited by no skill`), and the **Laws & Conventions view**
 marks each such card *unused* (amber, dashed). A hole is tolerable for a *catalog*
 but disqualifying for a *path*. Most present holes are simply unimplemented
-skills — notably the entire **`transformation` kind is empty** (all current
-skills are recognition — equivalence/classification/chunking — none are the
-active manipulation half of "read *and practice*"), and the powers/roots law
-region is thinly skilled. Axioms are excluded from the "unused" mark: a skill
+skills. The **`transformation` kind was seeded 2026-07-24** (7 skills: expand,
+factor, collect, simplify-power, cancel, combine-fractions) — the active
+manipulation half of "read *and practice*", the recognition half being
+equivalence/classification/chunking. It is still partial (roots, more binomials),
+and the powers/roots law region is thinly skilled. Axioms are excluded from the "unused" mark: a skill
 reaches them transitively through the theorems it cites.
 
 ## JSON format (current — 2026-07-24)
