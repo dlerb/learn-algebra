@@ -30,10 +30,10 @@ const sections = computed<Section[]>(() => layer.value.data.sections)
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 // Citations resolve tower-wide, not just inside this layer: naturals cards rest
-// on fundamentals codes (th.negative-base → th.negative-one-times, ix.precedence).
-const codeLabel = (code: string) => {
-  const x = cardIndex.get(code)
-  return x ? `${code} · ${t(x.card.name)}` : code
+// on fundamentals ids (th.negative-base → th.negative-one-times, ix.precedence).
+const idLabel = (id: string) => {
+  const x = cardIndex.get(id)
+  return x ? `${id} · ${t(x.card.name)}` : id
 }
 
 // A single-group section shows its cards directly (no sub-heading); its group
@@ -71,7 +71,7 @@ const toggleConcern = (c: string) => (concernActive.value.has(c) ? concernActive
 const matched = (c: Card, kind: string) =>
   kindActive.value.has(kind) && (c.concerns ? c.concerns.some(x => concernActive.value.has(x)) : true)
 
-// Per-card disclosure, keyed by code (unique).
+// Per-card disclosure, keyed by id (unique).
 const open = ref(new Set<string>())
 const jsonOpen = ref(new Set<string>())
 const intuitionOpen = ref(new Set<string>())
@@ -121,11 +121,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
         </div>
 
         <div :class="isOpGroup(g) ? 'ops' : 'cards'">
-          <template v-for="c in g.cards" :key="c.code">
+          <template v-for="c in g.cards" :key="c.id">
             <!-- Signature cards: a glyph over a type. Selected by `c.symbol`, not by
                  kind — a card carrying a symbol IS this shape, whatever it is called. -->
             <article v-if="c.symbol" class="op" :class="{ dimmed: !matched(c, s.kind) }">
-              <div class="op-eyebrow">{{ c.code }}</div>
+              <div class="op-eyebrow">{{ c.id }}</div>
               <div class="op-top">
                 <span class="op-sym"><MathExpr :latex="c.symbol" /></span>
                 <span class="op-type"><MathExpr :latex="c.type!" /></span>
@@ -138,8 +138,8 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
                  framing card is simply one that has a note and nothing else. -->
             <article v-else class="card" :class="{ dimmed: !matched(c, s.kind) }">
               <div class="card-top">
-                <span class="eyebrow">{{ c.code }}</span>
-                <button class="disclose" @click="toggle(open, c.code)">{{ open.has(c.code) ? 'less' : 'details' }}</button>
+                <span class="eyebrow">{{ c.id }}</span>
+                <button class="disclose" @click="toggle(open, c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
               </div>
               <div class="card-head"><h4>{{ t(c.name) }}</h4></div>
 
@@ -155,28 +155,28 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 
               <div v-if="c.basedOn" class="basedon">
                 <span class="basedon-label">rests on</span>
-                <span v-for="r in c.basedOn" :key="r" class="chip">{{ codeLabel(r) }}</span>
+                <span v-for="r in c.basedOn" :key="r" class="chip">{{ idLabel(r) }}</span>
               </div>
 
-              <button v-if="c.intuition" class="intuition-toggle" @click="toggle(intuitionOpen, c.code)">{{ intuitionOpen.has(c.code) ? '▾ intuition' : '▸ intuition' }}</button>
-              <div v-if="c.intuition && intuitionOpen.has(c.code)" class="intuition"><RichText :text="t(c.intuition)" /></div>
+              <button v-if="c.intuition" class="intuition-toggle" @click="toggle(intuitionOpen, c.id)">{{ intuitionOpen.has(c.id) ? '▾ intuition' : '▸ intuition' }}</button>
+              <div v-if="c.intuition && intuitionOpen.has(c.id)" class="intuition"><RichText :text="t(c.intuition)" /></div>
 
-              <button v-if="c.derivation" class="intuition-toggle" @click="toggle(derivOpen, c.code)">{{ derivOpen.has(c.code) ? '▾ derivation' : '▸ derivation' }}</button>
-              <div v-if="c.derivation && derivOpen.has(c.code)" class="derivation">
+              <button v-if="c.derivation" class="intuition-toggle" @click="toggle(derivOpen, c.id)">{{ derivOpen.has(c.id) ? '▾ derivation' : '▸ derivation' }}</button>
+              <div v-if="c.derivation && derivOpen.has(c.id)" class="derivation">
                 <MathExpr :latex="c.derivation" display />
                 <div v-if="c.derivedFrom" class="basedon">
                   <span class="basedon-label">from</span>
-                  <span v-for="r in c.derivedFrom" :key="r" class="chip">{{ codeLabel(r) }}</span>
+                  <span v-for="r in c.derivedFrom" :key="r" class="chip">{{ idLabel(r) }}</span>
                 </div>
               </div>
 
-              <div v-if="open.has(c.code)" class="details">
+              <div v-if="open.has(c.id)" class="details">
                 <dl class="fields">
-                  <div class="field"><dt>code</dt><dd>{{ c.code }}</dd></div>
+                  <div class="field"><dt>id</dt><dd>{{ c.id }}</dd></div>
                   <div v-if="c.concerns" class="field"><dt>concerns</dt><dd>{{ c.concerns.join(', ') }}</dd></div>
                 </dl>
-                <button class="json-toggle" @click="toggle(jsonOpen, c.code)">{{ jsonOpen.has(c.code) ? 'hide json' : 'json' }}</button>
-                <pre v-if="jsonOpen.has(c.code)" class="json">{{ json(c) }}</pre>
+                <button class="json-toggle" @click="toggle(jsonOpen, c.id)">{{ jsonOpen.has(c.id) ? 'hide json' : 'json' }}</button>
+                <pre v-if="jsonOpen.has(c.id)" class="json">{{ json(c) }}</pre>
               </div>
             </article>
           </template>

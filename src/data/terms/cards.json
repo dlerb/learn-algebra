@@ -17,7 +17,7 @@
           "slug": "prelim",
           "cards": [
             {
-              "code": "pre.compound",
+              "id": "pre.compound",
               "name": {
                 "en": "Expressions with parts",
                 "de": "Ausdrücke mit Teilen"
@@ -42,7 +42,7 @@
           "slug": "distributing",
           "cards": [
             {
-              "code": "th.minus-over-sum",
+              "id": "th.minus-over-sum",
               "concerns": [
                 "add",
                 "mul"
@@ -65,7 +65,7 @@
               }
             },
             {
-              "code": "th.subtract-a-sum",
+              "id": "th.subtract-a-sum",
               "concerns": [
                 "add",
                 "mul"
@@ -88,7 +88,7 @@
               }
             },
             {
-              "code": "th.collect-like-terms",
+              "id": "th.collect-like-terms",
               "concerns": [
                 "add",
                 "mul"
@@ -125,7 +125,7 @@
           "slug": "binomials",
           "cards": [
             {
-              "code": "th.binomial-square",
+              "id": "th.binomial-square",
               "concerns": [
                 "add",
                 "mul"
@@ -156,7 +156,7 @@
               }
             },
             {
-              "code": "th.square-of-difference",
+              "id": "th.square-of-difference",
               "concerns": [
                 "add",
                 "mul"
@@ -180,7 +180,7 @@
               }
             },
             {
-              "code": "th.difference-of-squares",
+              "id": "th.difference-of-squares",
               "concerns": [
                 "add",
                 "mul"
@@ -226,7 +226,7 @@
           "slug": "fractions",
           "cards": [
             {
-              "code": "th.split-numerator",
+              "id": "th.split-numerator",
               "concerns": [
                 "add",
                 "mul"
@@ -251,7 +251,7 @@
               }
             },
             {
-              "code": "th.cancel-common-factor",
+              "id": "th.cancel-common-factor",
               "concerns": [
                 "mul"
               ],
@@ -276,7 +276,7 @@
               }
             },
             {
-              "code": "th.fraction-minus-moves",
+              "id": "th.fraction-minus-moves",
               "concerns": [
                 "add",
                 "mul"
@@ -303,7 +303,7 @@
               }
             },
             {
-              "code": "th.divide-by-one",
+              "id": "th.divide-by-one",
               "concerns": [
                 "mul"
               ],

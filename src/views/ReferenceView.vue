@@ -11,15 +11,12 @@ import { lang } from '../lang'
 // The fundament's SHADOW. Since 2026-07-23 the fundament itself is the tower
 // (fundamentals · numbers · powers · terms, each on its own /layer page), and
 // laws.json / conventions.json are gone. What is left here is errors.json: each
-// pattern `corrupts` a card in the tower, and this page renders them grouped by
-// kind. A card code resolves to its name via cardIndex; an error id (salience
-// corrupts a meta-pattern, but those are shown as raw ids) falls through.
-const errName = new Map(errorPatterns.map(e => [e.id, e] as const))
+// pattern `corrupts` a card in the tower — ALL kinds now, salience included since
+// the 2026-07-24 cleanup — and this page renders them grouped by kind. A card
+// code resolves to its name via cardIndex.
 function label(id: string): string {
   const card = cardIndex.get(id)
-  if (card) return `${id} · ${loc(card.card.name, lang.value)}`
-  const e = errName.get(id)
-  return e ? `${e.code} · ${loc(e.name, lang.value)}` : id
+  return card ? `${id} · ${loc(card.card.name, lang.value)}` : id
 }
 
 const citedErrs = new Set(skills.flatMap(s => s.errors))
@@ -32,12 +29,12 @@ const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : ope
 const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
 
 interface ErrVM {
-  id: string; code: string; kind: string; name: string; text: string
+  id: string; kind: string; name: string; text: string
   corrupts: string[]; instances: string[]; unused: boolean; json: string
 }
 function errVM(e: ErrorDef): ErrVM {
   return {
-    id: e.id, code: e.code, kind: e.kind, name: loc(e.name, lang.value), text: loc(e.text, lang.value),
+    id: e.id, kind: e.kind, name: loc(e.name, lang.value), text: loc(e.text, lang.value),
     corrupts: e.corrupts.map(label), instances: e.instances, unused: !citedErrs.has(e.id), json: JSON.stringify(e, null, 2),
   }
 }
@@ -62,6 +59,7 @@ const errorSections = computed(() => [
         <span v-if="unused" class="unused-chip" title="not drawn on by any skill yet">{{ unused }} unused</span>
       </div>
     </div>
+    <p class="role">The tower's shadow — each error <strong>corrupts</strong> one card.</p>
 
     <div v-for="s in errorSections" :key="s.title" class="group">
       <div class="group-title"><h3>{{ s.title }}</h3></div>
@@ -80,7 +78,6 @@ const errorSections = computed(() => [
             <dl class="fields">
               <div class="field"><dt>kind</dt><dd>{{ e.kind }}</dd></div>
               <div class="field"><dt>id</dt><dd><code>{{ e.id }}</code></dd></div>
-              <div class="field"><dt>code</dt><dd>{{ e.code }}</dd></div>
               <div v-if="e.corrupts.length" class="field">
                 <dt>corrupts</dt>
                 <dd><span v-for="(x, i) in e.corrupts" :key="i" class="chip">{{ x }}</span></dd>
@@ -103,7 +100,10 @@ const errorSections = computed(() => [
 .refv { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
 /* Top bar: layer switch · contextual unused chip · (laws-only) grouping toggle */
-.layer-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .75rem; }
+.layer-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem; }
+.refv-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; }
+.role { margin: 0 0 .5rem; font-size: .8rem; line-height: 1.45; color: var(--text-muted); max-width: 60ch; }
+.role strong { font-weight: 600; color: var(--text); }
 .bar-left { display: flex; align-items: center; gap: .5rem; }
 .bar-right { display: flex; align-items: center; gap: .6rem; }
 .info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }

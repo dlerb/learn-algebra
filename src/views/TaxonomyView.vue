@@ -14,15 +14,15 @@ import { lang } from '../lang'
 // prerequisites, drill pitfalls and raw JSON behind a per-card `details` toggle.
 function metaLabel(id: string): string {
   const m = metaPatterns.find(mp => mp.id === id)
-  return m ? `${m.code} · ${loc(m.title, lang.value)}` : id
+  return m ? `${m.id} · ${loc(m.title, lang.value)}` : id
 }
-// `justifiedBy`, `governedBy` and error `explainedBy` are card codes or error ids.
+// `justifiedBy`, `governedBy` and error `explainedBy` are card ids or error ids.
 const errName = new Map(errorPatterns.map(e => [e.id, e] as const))
 function layerLabel(id: string): string {
   const card = cardIndex.get(id)
   if (card) return `${id} · ${loc(card.card.name, lang.value)}`
   const e = errName.get(id)
-  return e ? `${e.code} · ${loc(e.name, lang.value)}` : id
+  return e ? `${e.id} · ${loc(e.name, lang.value)}` : id
 }
 function skillTitle(id: string): string {
   const f = skills.find(f => f.id === id)
@@ -137,11 +137,15 @@ function hasErrors(c: CardVM): boolean {
 
 <template>
   <div class="tax">
-    <div class="top-bar">
-      <div class="mode">
-        <button :class="{ active: groupBy === 'group' }" @click="groupBy = 'group'">by group</button>
-        <button :class="{ active: groupBy === 'kind' }" @click="groupBy = 'kind'">by kind</button>
+    <div class="tax-head">
+      <div class="head-row">
+        <h2 class="tax-title">Skills</h2>
+        <div class="mode">
+          <button :class="{ active: groupBy === 'group' }" @click="groupBy = 'group'">by group</button>
+          <button :class="{ active: groupBy === 'kind' }" @click="groupBy = 'kind'">by kind</button>
+        </div>
       </div>
+      <p class="role">Strategies — resting on <strong>cards</strong>, guarding against <strong>errors</strong>, reading via <strong>metapatterns</strong>.</p>
     </div>
 
     <section v-for="g in sections" :key="g.slug" class="group">
@@ -245,7 +249,11 @@ function hasErrors(c: CardVM): boolean {
 <style scoped>
 .tax { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
-.top-bar { display: flex; justify-content: flex-end; margin-bottom: .25rem; }
+.tax-head { margin-bottom: .5rem; }
+.head-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem; }
+.tax-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; }
+.role { margin: 0; font-size: .8rem; line-height: 1.45; color: var(--text-muted); max-width: 60ch; }
+.role strong { font-weight: 600; color: var(--text); }
 .mode { display: flex; gap: .4rem; }
 .mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-muted); cursor: pointer; }
 .mode button.active { background: var(--text); border-color: var(--text); color: #fff; }

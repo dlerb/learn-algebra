@@ -1,7 +1,6 @@
 [
   {
     "id": "meta.juxtaposition",
-    "code": "M1",
     "title": {
       "en": "Juxtaposition means multiplication",
       "de": "Nebeneinanderschreiben bedeutet Multiplikation"
@@ -16,30 +15,29 @@
   },
   {
     "id": "meta.three-minuses",
-    "code": "M2",
     "title": {
-      "en": "The minus sign is one of three things",
-      "de": "Das Minus ist eines von drei Dingen"
+      "en": "A minus is one of two things",
+      "de": "Ein Minus ist eines von zwei Dingen"
     },
     "text": {
-      "en": "Binary subtraction ($a - b$), unary negation ($-a$), or multiply-by-$(-1)$ in front of a bracket $-(\\ldots)$. When a minus confuses you, ask which of the three it is.",
-      "de": "Subtraktion ($a - b$), Vorzeichen ($-a$) oder Mal-$(-1)$ vor einer Klammer $-(\\ldots)$. Wenn dich ein Minus verwirrt, frage dich, welches der drei es ist."
+      "en": "A minus is either binary subtraction ($a - b$) or negation ($-a$), the opposite of an element. That is all — two roles. A minus in front of a bracket, $-(\\ldots)$, is negation; and since $-1 \\cdot x = -x$ you may read it as multiplying the bracket by $(-1)$, but that is a theorem, not a third minus. When a minus confuses you, ask which of the two it is.",
+      "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$), das Gegenteil eines Elements. Mehr nicht, zwei Rollen. Ein Minus vor einer Klammer, $-(\\ldots)$, ist Negation; und weil $-1 \\cdot x = -x$ gilt, darfst du es als Multiplikation der Klammer mit $(-1)$ lesen, aber das ist ein Satz, kein drittes Minus. Wenn dich ein Minus verwirrt, frage dich, welches der zwei es ist."
     },
     "summarizes": [
-      "th.negative-one-times",
-      "def.sub"
+      "ax.additive-inverse",
+      "def.sub",
+      "th.negative-one-times"
     ]
   },
   {
     "id": "meta.implicit-op-before-bracket",
-    "code": "M3",
     "title": {
       "en": "Brackets carry an implicit operation in front",
       "de": "Vor einer Klammer steht eine unsichtbare Operation"
     },
     "text": {
-      "en": "No explicit symbol before a bracket means multiplication (M1). A minus before a bracket means times $(-1)$ (M2).",
-      "de": "Kein Zeichen vor der Klammer heisst Multiplikation (M1). Ein Minus vor der Klammer heisst mal $(-1)$ (M2)."
+      "en": "No explicit symbol before a bracket means multiplication (juxtaposition). A minus before a bracket means times $(-1)$.",
+      "de": "Kein Zeichen vor der Klammer heisst Multiplikation (Nebeneinanderschreiben). Ein Minus vor der Klammer heisst mal $(-1)$."
     },
     "summarizes": [
       "ix.brackets",
@@ -48,7 +46,6 @@
   },
   {
     "id": "meta.exponent-binds-tighter",
-    "code": "M4",
     "title": {
       "en": "Exponents bind tighter than coefficients and signs",
       "de": "Exponenten binden stärker als Koeffizienten und Vorzeichen"
@@ -64,7 +61,6 @@
   },
   {
     "id": "meta.fraction-bar-brackets",
-    "code": "M5",
     "title": {
       "en": "The fraction bar is a bracket",
       "de": "Der Bruchstrich ist eine Klammer"
@@ -79,7 +75,6 @@
   },
   {
     "id": "meta.only-multiplication-distributes",
-    "code": "M6",
     "title": {
       "en": "Only multiplication distributes over a sum",
       "de": "Nur die Multiplikation verteilt sich über eine Summe"
@@ -89,13 +84,11 @@
       "de": "$a(b+c) = ab + ac$, und Teilen durch $c$ geht auch (es ist Multiplizieren mit $1/c$). Sonst verteilt sich nichts: $(a+b)^2$ ist nicht $a^2 + b^2$, die Wurzel aus $a+b$ ist nicht die Summe der Wurzeln, und ein einzelner Summand lässt sich nicht kürzen."
     },
     "summarizes": [
-      "ax.distributivity",
-      "anti.linearity"
+      "ax.distributivity"
     ]
   },
   {
     "id": "meta.dominant-op-last",
-    "code": "M7",
     "title": {
       "en": "The dominant operation is the last one applied",
       "de": "Die dominante Operation ist die zuletzt ausgeführte"
@@ -108,13 +101,11 @@
       "ix.precedence",
       "ix.pow",
       "th.negative-base",
-      "ix.brackets",
-      "sal.loudest-op-wins"
+      "ix.brackets"
     ]
   },
   {
     "id": "meta.bracket-chunk",
-    "code": "M8",
     "title": {
       "en": "Brackets make a chunk",
       "de": "Klammern bilden einen Chunk"
@@ -129,7 +120,6 @@
   },
   {
     "id": "meta.multiplication-binds-tighter",
-    "code": "M9",
     "title": {
       "en": "Multiplication binds tighter than addition and subtraction",
       "de": "Multiplikation bindet stärker als Plus und Minus"
@@ -139,13 +129,11 @@
       "de": "In $3x + 2y$ ist die Multiplikation innerhalb der Terme verbraucht; die dominante Operation ist das $+$. Es ist eine Summe, kein Produkt."
     },
     "summarizes": [
-      "ix.precedence",
-      "sal.implicit-op-overlooked"
+      "ix.precedence"
     ]
   },
   {
     "id": "meta.dominant-op-tools",
-    "code": "M10",
     "title": {
       "en": "The dominant operation determines which tools apply",
       "de": "Die dominante Operation bestimmt die Werkzeuge"

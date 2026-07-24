@@ -25,7 +25,7 @@
           "slug": "prelim",
           "cards": [
             {
-              "code": "pre.elements",
+              "id": "pre.elements",
               "name": {
                 "en": "The elements",
                 "de": "Die Elemente"
@@ -36,7 +36,7 @@
               }
             },
             {
-              "code": "pre.variables",
+              "id": "pre.variables",
               "name": {
                 "en": "Variables & constants",
                 "de": "Variablen & Konstanten"
@@ -66,7 +66,7 @@
           },
           "cards": [
             {
-              "code": "op.add",
+              "id": "op.add",
               "concerns": [
                 "add"
               ],
@@ -82,7 +82,7 @@
               }
             },
             {
-              "code": "op.mul",
+              "id": "op.mul",
               "concerns": [
                 "mul"
               ],
@@ -107,7 +107,7 @@
           },
           "cards": [
             {
-              "code": "op.eq",
+              "id": "op.eq",
               "concerns": [
                 "eq"
               ],
@@ -123,7 +123,7 @@
               }
             },
             {
-              "code": "op.lt",
+              "id": "op.lt",
               "concerns": [
                 "order"
               ],
@@ -156,7 +156,7 @@
           },
           "cards": [
             {
-              "code": "ix.brackets",
+              "id": "ix.brackets",
               "concerns": [
                 "add",
                 "mul"
@@ -173,7 +173,7 @@
               "basedOn": ["op.add", "op.mul"]
             },
             {
-              "code": "ix.left-to-right",
+              "id": "ix.left-to-right",
               "concerns": [
                 "add",
                 "mul"
@@ -190,7 +190,7 @@
               "basedOn": ["op.add", "op.mul", "ix.brackets"]
             },
             {
-              "code": "ix.precedence",
+              "id": "ix.precedence",
               "concerns": [
                 "add",
                 "mul"
@@ -234,7 +234,7 @@
           },
           "cards": [
             {
-              "code": "ax.eq-reflexive",
+              "id": "ax.eq-reflexive",
               "concerns": [
                 "eq"
               ],
@@ -251,7 +251,7 @@
               "basedOn": ["op.eq"]
             },
             {
-              "code": "ax.eq-symmetric",
+              "id": "ax.eq-symmetric",
               "concerns": [
                 "eq"
               ],
@@ -268,7 +268,7 @@
               "basedOn": ["op.eq"]
             },
             {
-              "code": "ax.eq-transitive",
+              "id": "ax.eq-transitive",
               "concerns": [
                 "eq"
               ],
@@ -285,7 +285,7 @@
               "basedOn": ["op.eq"]
             },
             {
-              "code": "ax.eq-congruence",
+              "id": "ax.eq-congruence",
               "concerns": [
                 "eq",
                 "add",
@@ -321,7 +321,7 @@
           },
           "cards": [
             {
-              "code": "ax.add-commutative",
+              "id": "ax.add-commutative",
               "concerns": [
                 "add"
               ],
@@ -338,7 +338,7 @@
               "basedOn": ["op.add"]
             },
             {
-              "code": "ax.add-associative",
+              "id": "ax.add-associative",
               "concerns": [
                 "add"
               ],
@@ -355,7 +355,7 @@
               "basedOn": ["op.add", "ix.brackets"]
             },
             {
-              "code": "ax.zero-neutral",
+              "id": "ax.zero-neutral",
               "concerns": [
                 "add"
               ],
@@ -376,7 +376,7 @@
               "basedOn": ["op.add"]
             },
             {
-              "code": "ax.additive-inverse",
+              "id": "ax.additive-inverse",
               "concerns": [
                 "add"
               ],
@@ -410,7 +410,7 @@
           },
           "cards": [
             {
-              "code": "ax.mul-commutative",
+              "id": "ax.mul-commutative",
               "concerns": [
                 "mul"
               ],
@@ -427,7 +427,7 @@
               "basedOn": ["op.mul"]
             },
             {
-              "code": "ax.mul-associative",
+              "id": "ax.mul-associative",
               "concerns": [
                 "mul"
               ],
@@ -444,7 +444,7 @@
               "basedOn": ["op.mul", "ix.brackets"]
             },
             {
-              "code": "ax.one-neutral",
+              "id": "ax.one-neutral",
               "concerns": [
                 "mul"
               ],
@@ -465,7 +465,7 @@
               "basedOn": ["op.mul"]
             },
             {
-              "code": "ax.multiplicative-inverse",
+              "id": "ax.multiplicative-inverse",
               "concerns": ["mul"],
               "name": {"en": "Inverse element of multiplication", "de": "Inverses Element der Multiplikation"},
               "latex": "a \\cdot a^{-1} = 1",
@@ -489,7 +489,7 @@
           },
           "cards": [
             {
-              "code": "ax.distributivity",
+              "id": "ax.distributivity",
               "concerns": [
                 "add",
                 "mul"
@@ -511,7 +511,7 @@
               "basedOn": ["op.add", "op.mul", "ix.brackets", "ix.precedence"]
             },
             {
-              "code": "ax.zero-not-one",
+              "id": "ax.zero-not-one",
               "concerns": [
                 "add",
                 "mul"
@@ -545,7 +545,7 @@
           },
           "cards": [
             {
-              "code": "ax.order-trichotomy",
+              "id": "ax.order-trichotomy",
               "concerns": [
                 "order",
                 "eq"
@@ -567,7 +567,7 @@
               "basedOn": ["op.lt", "op.eq"]
             },
             {
-              "code": "ax.order-transitive",
+              "id": "ax.order-transitive",
               "concerns": [
                 "order"
               ],
@@ -584,7 +584,7 @@
               "basedOn": ["op.lt"]
             },
             {
-              "code": "ax.order-add",
+              "id": "ax.order-add",
               "concerns": [
                 "order",
                 "add"
@@ -606,7 +606,7 @@
               "basedOn": ["op.lt", "op.add"]
             },
             {
-              "code": "ax.order-mul",
+              "id": "ax.order-mul",
               "concerns": [
                 "order",
                 "mul"
@@ -641,7 +641,7 @@
           },
           "cards": [
             {
-              "code": "ax.completeness",
+              "id": "ax.completeness",
               "concerns": ["order", "completeness"],
               "name": {"en": "Completeness axiom", "de": "Vollständigkeitsaxiom"},
               "latex": "\\sup S \\in \\mathbb{R}",
@@ -680,7 +680,7 @@
           },
           "cards": [
             {
-              "code": "def.sub",
+              "id": "def.sub",
               "concerns": [
                 "add"
               ],
@@ -700,7 +700,7 @@
               }
             },
             {
-              "code": "def.div",
+              "id": "def.div",
               "concerns": [
                 "mul"
               ],
@@ -721,7 +721,7 @@
               }
             },
             {
-              "code": "def.abs",
+              "id": "def.abs",
               "concerns": ["add", "order"],
               "name": { "en": "Absolute value", "de": "Betrag" },
               "latex": "|a| := \\begin{cases} a & 0 < a \\\\ 0 & a = 0 \\\\ -a & a < 0 \\end{cases}",
@@ -755,7 +755,7 @@
           },
           "cards": [
             {
-              "code": "ix.negative-factor",
+              "id": "ix.negative-factor",
               "concerns": [
                 "mul"
               ],
@@ -772,7 +772,7 @@
               "basedOn": ["ax.additive-inverse", "ix.brackets"]
             },
             {
-              "code": "ix.no-adjacent-operator",
+              "id": "ix.no-adjacent-operator",
               "concerns": [
                 "add",
                 "mul"
@@ -790,7 +790,7 @@
               "basedOn": ["ax.additive-inverse", "ix.brackets"]
             },
             {
-              "code": "ix.coefficient-front",
+              "id": "ix.coefficient-front",
               "concerns": [
                 "mul"
               ],
@@ -807,7 +807,7 @@
               "basedOn": ["op.mul", "ax.mul-commutative"]
             },
             {
-              "code": "ix.invisible-one",
+              "id": "ix.invisible-one",
               "concerns": [
                 "mul"
               ],
@@ -827,7 +827,7 @@
               }
             },
             {
-              "code": "ix.fraction-bar",
+              "id": "ix.fraction-bar",
               "concerns": [
                 "mul"
               ],
@@ -850,7 +850,7 @@
               }
             },
             {
-              "code": "ix.division-symbols",
+              "id": "ix.division-symbols",
               "concerns": [
                 "mul"
               ],
@@ -893,7 +893,7 @@
           },
           "cards": [
             {
-              "code": "th.zero-times",
+              "id": "th.zero-times",
               "concerns": [
                 "add",
                 "mul"
@@ -908,7 +908,7 @@
               "derivedFrom": ["ax.zero-neutral", "ax.distributivity", "ax.additive-inverse", "ax.eq-congruence"]
             },
             {
-              "code": "th.negative-one-times",
+              "id": "th.negative-one-times",
               "concerns": [
                 "add",
                 "mul"
@@ -927,7 +927,7 @@
               }
             },
             {
-              "code": "th.minus-times-minus",
+              "id": "th.minus-times-minus",
               "concerns": [
                 "add",
                 "mul"
@@ -945,7 +945,7 @@
               }
             },
             {
-              "code": "th.minus-in-product",
+              "id": "th.minus-in-product",
               "concerns": [
                 "add",
                 "mul"
@@ -970,7 +970,7 @@
               }
             },
             {
-              "code": "th.zero-product",
+              "id": "th.zero-product",
               "concerns": ["mul"],
               "name": { "en": "Zero product", "de": "Nullprodukt" },
               "latex": "a \\cdot b = 0 \\;\\Rightarrow\\; a = 0 \\;\\text{ or }\\; b = 0",
@@ -996,7 +996,7 @@
           },
           "cards": [
             {
-              "code": "th.opposite-flips",
+              "id": "th.opposite-flips",
               "concerns": [
                 "order",
                 "add"
@@ -1015,7 +1015,7 @@
               }
             },
             {
-              "code": "th.square-positive",
+              "id": "th.square-positive",
               "concerns": [
                 "order",
                 "mul"
@@ -1040,7 +1040,7 @@
               }
             },
             {
-              "code": "th.zero-less-than-one",
+              "id": "th.zero-less-than-one",
               "concerns": [
                 "order",
                 "mul"
@@ -1081,7 +1081,7 @@
           "slug": "existence",
           "cards": [
             {
-              "code": "rk.existence",
+              "id": "rk.existence",
               "concerns": [
                 "add",
                 "mul",
@@ -1100,7 +1100,7 @@
               }
             },
             {
-              "code": "rk.uniqueness",
+              "id": "rk.uniqueness",
               "concerns": [
                 "add",
                 "mul",
