@@ -114,6 +114,24 @@
           "errors": [
             "anti.linearity"
           ]
+        },
+        {
+          "id": "transformation.combine-fractions",
+          "name": "Combine fractions into one",
+          "note": "Write a sum, difference, or quotient of fractions as a single fraction. Multiplying and dividing go straight across ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$, and dividing flips the divisor: $\\frac{a/b}{c/d} = \\frac{ad}{bc}$); adding and subtracting do not — they need a common denominator first, so $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$. The straight-across reflex is the whole trap: right for a product, wrong for a sum, because the fraction bar is built from multiplication and not from addition.",
+          "illustration": "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}",
+          "requires": [
+            "equivalence.fraction-as-reciprocal-product",
+            "equivalence.no-splitting-the-denominator"
+          ],
+          "restsOn": [
+            "th.fraction-multiply",
+            "th.fraction-divide",
+            "th.fraction-add"
+          ],
+          "errors": [
+            "anti.fraction-addition"
+          ]
         }
       ]
     }
