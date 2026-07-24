@@ -82,7 +82,10 @@ The page tells one linear story:
    (zero product, `ab=0 ⟹ a=0 or b=0` — the converse of `th.zero-times` and the licence for
    solving by factoring; added 2026-07-22 with the ℤ layer)**, `th.minus-times-minus`
    (`(−1)(−1)=1`, "minus times minus is plus", proved with **no order** — the audit's
-   showcase). Order: `th.opposite-flips` (the opposite flips positive/negative, `0<a ⟺ −a<0` —
+   showcase), **`th.inverse-of-product` (`(ab)⁻¹=a⁻¹b⁻¹`, the multiplicative twin of
+   `th.minus-in-product`; the field law the fraction arithmetic rests on, so
+   `th.cancel-common-factor`/`th.fraction-multiply` cite it instead of re-deriving it;
+   added 2026-07-24)**. Order: `th.opposite-flips` (the opposite flips positive/negative, `0<a ⟺ −a<0` —
    the untangler: the unary minus does not *make* things negative, it swaps),
    `th.square-positive` (a non-zero square is positive — why `a·a+1=0` has no solution), `th.zero-less-than-one`
    (`0<1`, a corollary of `th.square-positive`). Each shows a collapsed derivation and cites what

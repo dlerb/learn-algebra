@@ -1,0 +1,121 @@
+{
+  "kind": "transformation",
+  "title": "Transformation",
+  "blurb": "Directed manipulation — factor, expand, simplify.",
+  "groups": [
+    {
+      "slug": "expanding",
+      "title": "Expanding",
+      "blurb": "Producing the multiplied-out form: distribute a factor, square a binomial. The active twin of the recognition skills.",
+      "skills": [
+        {
+          "id": "transformation.expand-distribute",
+          "name": "Expand: multiply into a bracket",
+          "note": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$. This is the active twin of recognising $2(x+1) = 2x+2$ — there you check equality, here you generate it — and the commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
+          "illustration": "a(b + c) = ab + ac",
+          "requires": [
+            "equivalence.multiplying-into-a-bracket"
+          ],
+          "restsOn": [
+            "ax.distributivity"
+          ],
+          "errors": [
+            "anti.partial-distribution"
+          ]
+        },
+        {
+          "id": "transformation.expand-binomial-square",
+          "name": "Expand a squared binomial",
+          "note": "$(a+b)^2$ is $(a+b)(a+b)$, not $a^2 + b^2$. Expanding gives the cross term twice: $(a+b)^2 = a^2 + 2ab + b^2$. Dropping the $2ab$ is the single most common error in school algebra — a power does not distribute over a sum, because it is built from multiplication, not addition.",
+          "illustration": "(a + b)^2 = a^2 + 2ab + b^2",
+          "requires": [
+            "transformation.expand-distribute"
+          ],
+          "restsOn": [
+            "th.binomial-square"
+          ],
+          "errors": [
+            "anti.linearity"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "factoring",
+      "title": "Factoring",
+      "blurb": "The reverse of expanding — pulling a shared factor back out front.",
+      "skills": [
+        {
+          "id": "transformation.factor-common",
+          "name": "Factor out a common factor",
+          "note": "The reverse of expanding: pull the factor shared by every term out in front. $ab + ac = a(b+c)$. It only works when the factor is in every term — $ab + c$ has no common factor to pull. Check by multiplying back: $a(b+c) = ab + ac$.",
+          "illustration": "ab + ac = a(b + c)",
+          "requires": [
+            "classification.common-factor",
+            "transformation.expand-distribute"
+          ],
+          "restsOn": [
+            "ax.distributivity"
+          ],
+          "errors": [
+            "anti.partial-distribution"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "simplifying",
+      "title": "Simplifying",
+      "blurb": "Collecting like terms, combining powers, cancelling a common factor to a shorter equal form.",
+      "skills": [
+        {
+          "id": "transformation.collect-like-terms",
+          "name": "Collect like terms",
+          "note": "Add the coefficients of like terms; unlike terms stay apart. $3x + 2x = 5x$, but $3x + 2$ stays open — a term and a constant are not alike. This is the active twin of recognising that $2 + 3x$ does not collapse: there you judge which terms are alike, here you perform the merge.",
+          "illustration": "3x + 2x = 5x",
+          "requires": [
+            "equivalence.number-plus-term"
+          ],
+          "restsOn": [
+            "th.collect-like-terms"
+          ],
+          "errors": [
+            "anti.conjoining"
+          ]
+        },
+        {
+          "id": "transformation.simplify-power-product",
+          "name": "Simplify a product of powers",
+          "note": "Same base, so add the exponents: $x^a \\cdot x^b = x^{a+b}$, not $x^{ab}$. A power counts factors, and multiplying two powers stacks their factors, so the counts add. The mirror slip — multiplying the exponents — is what $(x^a)^b = x^{ab}$ actually does, one step away.",
+          "illustration": "x^a \\cdot x^b = x^{a+b}",
+          "requires": [
+            "equivalence.exponent-as-repeated-product"
+          ],
+          "restsOn": [
+            "pl.same-base"
+          ],
+          "errors": [
+            "anti.exponent-arithmetic"
+          ]
+        },
+        {
+          "id": "transformation.cancel-common-factor",
+          "name": "Cancel a common factor",
+          "note": "A factor shared by the whole numerator and the whole denominator cancels: $\\frac{ak}{bk} = \\frac{a}{b}$. What you cannot do is cancel against one term of a sum — $\\frac{3x+2}{3} \\ne x + 2$. Cancelling needs a factor of everything above and below, which is why you often factor first.",
+          "illustration": "\\frac{ak}{bk} = \\frac{a}{b}",
+          "conditions": "b \\ne 0,\\ k \\ne 0",
+          "requires": [
+            "transformation.factor-common",
+            "equivalence.no-cancelling-in-a-sum"
+          ],
+          "restsOn": [
+            "th.cancel-common-factor"
+          ],
+          "errors": [
+            "anti.linearity"
+          ]
+        }
+      ]
+    }
+  ]
+}

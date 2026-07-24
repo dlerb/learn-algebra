@@ -25,6 +25,24 @@
               "de": "Wiederholte Addition (Vielfaches) und wiederholte Multiplikation (Potenz) verwechselt." },
     "instances": ["a^2 = 2a", "x + x = x^2"] },
 
+  { "id": "anti.exponent-arithmetic", "kind": "anti-law", "corrupts": ["pl.same-base", "pl.of-power"],
+    "name": { "en": "Exponent arithmetic confused", "de": "Exponenten-Arithmetik verwechselt" },
+    "note": { "en": "Powers combined by the wrong operation on the exponents: $x^a \\cdot x^b$ read as $x^{ab}$ (the exponents add), or $(x^a)^b$ as $x^{a+b}$ (they multiply).",
+              "de": "Potenzen mit der falschen Operation auf den Exponenten verbunden: $x^a \\cdot x^b$ als $x^{ab}$ gelesen (die Exponenten addieren sich), oder $(x^a)^b$ als $x^{a+b}$ (sie multiplizieren sich)." },
+    "instances": ["x^a \\cdot x^b = x^{ab}", "(x^a)^b = x^{a+b}"] },
+
+  { "id": "anti.power-of-product-partial", "kind": "anti-law", "corrupts": ["pl.of-product"],
+    "name": { "en": "Power not distributed over a product", "de": "Potenz nicht über das Produkt verteilt" },
+    "note": { "en": "A power over a product must reach every factor, the coefficient included; here it lands on one factor only.",
+              "de": "Eine Potenz über einem Produkt muss jeden Faktor erreichen, auch den Koeffizienten; hier trifft sie nur einen Faktor." },
+    "instances": ["(4x)^2 = 4x^2", "(ab)^n = ab^n"] },
+
+  { "id": "anti.fraction-addition", "kind": "anti-law", "corrupts": ["th.fraction-add"],
+    "name": { "en": "Fractions added straight across", "de": "Brüche direkt gliedweise addiert" },
+    "note": { "en": "Fractions with unlike denominators added numerator-over-numerator and denominator-over-denominator, skipping the common denominator: $\\frac{a}{b}+\\frac{c}{d}$ is $\\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$.",
+              "de": "Brüche mit ungleichen Nennern Zähler über Zähler und Nenner über Nenner addiert, ohne den gemeinsamen Nenner: $\\frac{a}{b}+\\frac{c}{d}$ ist $\\frac{ad+bc}{bd}$, nie $\\frac{a+c}{b+d}$." },
+    "instances": ["\\frac{a}{b} + \\frac{c}{d} = \\frac{a+c}{b+d}", "\\frac{1}{2} + \\frac{1}{3} = \\frac{2}{5}"] },
+
   { "id": "mis.juxtaposition-as-plus", "kind": "misreading", "corrupts": ["ix.juxtaposition"],
     "name": { "en": "Juxtaposition read as addition", "de": "Nebeneinander als Addition gelesen" },
     "note": { "en": "$3x$ read as $3 + x$ — the mixed-number carryover ($2\\tfrac{1}{2} = 2 + \\tfrac{1}{2}$).",

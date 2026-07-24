@@ -10,7 +10,7 @@
 import katex from 'katex'
 import fs from 'fs'
 
-const files = ['src/data/fundamentals/cards.json', 'src/data/numbers/cards.json', 'src/data/powers/cards.json', 'src/data/terms/cards.json']
+const files = ['src/data/fundament/fundamentals/cards.json', 'src/data/fundament/numbers/cards.json', 'src/data/fundament/powers/cards.json', 'src/data/fundament/terms/cards.json']
 const LATEX_FIELDS = ['latex','derivation','cond','forall','avoid','prefer','symbol','type']
 let errs = [], codes = new Map(), refs = [], n = 0
 const CONCERNS = new Set(['add','mul','eq','order','completeness'])
@@ -90,10 +90,12 @@ const cite = (from, id, field, pool) => {
   bridged++
   if (!pool.has(id)) errs.push(`${from}.${field} cites unknown ${id}`)
 }
+// Skills are one file per kind: a `kind → groups[] → skills[]` tree (2026-07-24).
 for (const f of fs.readdirSync('src/data/skills')) {
-  for (const sk of readJSON(`src/data/skills/${f}`)) {
-    for (const id of sk.restsOn || []) cite(sk.id, id, 'restsOn', codes)
-  }
+  const kindFile = readJSON(`src/data/skills/${f}`)
+  for (const g of kindFile.groups || [])
+    for (const sk of g.skills || [])
+      for (const id of sk.restsOn || []) cite(sk.id, id, 'restsOn', codes)
 }
 for (const e of errFile)
   for (const id of e.corrupts || [])

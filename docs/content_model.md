@@ -52,10 +52,13 @@ validated by `skill.schema.ts` on load. The layers:
 
 The tower is the *coordinate system* skills live in — they cite cards to justify
 and audit themselves, they do not generate them. Group **display** metadata
-(title, order, blurb) lives in sibling registries (`skillGroups.json`,
-`skillKinds.json`), each a flat list validated so a title can't drift. Browse
-errors at `/errors`, skills in the **Taxonomy view** (`/skills`), the tower one page
-per layer (`/fundamentals`, `/numbers`, `/powers`, `/terms`).
+(title, order, blurb) is authored **inline** in the per-kind skill tree files
+(a group node carries its own title/blurb; array order = display order) — the old
+sibling registries `skillGroups.json` / `skillKinds.json` were absorbed and
+deleted (2026-07-24), and `parseSkillTree` derives the flat `groups` / `skillKinds`
+lists from the tree. Browse errors at `/errors`, skills in the **Taxonomy view**
+(`/skills`), the tower one page per layer (`/fundamentals`, `/numbers`, `/powers`,
+`/terms`).
 This doc records the *why*, not the content tables (they would drift).
 
 Ids are kind-prefixed slugs so a derivation chain reads like a proof:
@@ -175,18 +178,22 @@ no display codes.**
 
 | File | Entry | `kind` values | `group` | id prefix |
 |---|---|---|---|---|
-| `<layer>/cards.json` | card (the tower) | section kinds: `preliminary`·`signature`·`convention`·`axiom`·`definition`·`theorem`·`remark` | structural (nested) | `pre.`/`op.`/`ix.`/`ax.`/`def.`/`th.`/`pl.`/`rk.` |
+| `fundament/<layer>/cards.json` | card (the tower) | section kinds: `preliminary`·`signature`·`convention`·`axiom`·`definition`·`theorem`·`remark` | structural (nested) | `pre.`/`op.`/`ix.`/`ax.`/`def.`/`th.`/`pl.`/`rk.` |
 | `errors.json` | error pattern | `anti-law`·`misreading`·`salience` | — (from `corrupts`) | `anti.`/`mis.`/`sal.` |
 | `metapatterns.json` | meta-pattern | — | — | `meta.` |
-| `skills/<kind>-<group>.json` | skill (strategy) | `equivalence`·`classification`·`chunking`·(`transformation`) | ✓ `skillGroups.json` | `<kind>.` |
+| `skills/<kind>.json` | skill (strategy) | `equivalence`·`classification`·`chunking`·`transformation` | structural (nested) | `<kind>.` |
 | `drills/<kind>-<group>.json` | drill (material) | mirrors its skill | — | keyed by `skill` id |
 
 **id prefix = `kind`** wherever a kind exists — the validator enforces prefix↔kind
 for errors (`anti`/`mis`/`sal`) and skills (`<kind>.`); metapatterns have no kind so
 take the fixed `meta.` prefix; card prefixes mark epistemic role but are not kind-validated.
-Skill groups live in `skillGroups.json` (a flat `{ slug, title, blurb? }` list, array
-order = display order; a skill's `group` must exist there). The tower's own grouping is
-**structural** — a card nests inside its group inside its section in `cards.json`.
+Skills are now grouped **structurally**, like the tower: one file per kind holds a
+`kind → groups[] → skills[]` tree (2026-07-24), so a skill's `kind` and `group` are
+positional (the file, and the group node it sits in) and re-attached at load by
+`parseSkillTree`; `{ slug, title, blurb? }` display metadata lives inline on each
+group node, array order = display order. The old `skillGroups.json`/`skillKinds.json`
+registries were absorbed and deleted. The tower mirrors this — a card nests inside its
+group inside its section in `cards.json`.
 
 ### Card format — the tower cards
 
@@ -301,13 +308,18 @@ graph is a downward-only stack (cards ← errors, metapatterns ← skills). Pros
 `LocalizedString` (a plain string = English, or `{ en, de }`); LaTeX fields are pure
 KaTeX; both are compile-checked at load.
 
-**skill** — `skills/<kind>-<group>.json`, a strategy (not material):
+**skill** — a leaf in `skills/<kind>.json`, which is a tree
+`{ kind, title, blurb?, groups: [ { slug, title, blurb?, skills: [ …leaf… ] } ] }`
+(one file per kind, mirroring `<layer>/cards.json`). A leaf holds the fields below;
+`kind` and `group` are **positional** (the file, and the group node it sits in) — not
+written on the leaf — and re-attached at load by `parseSkillTree`, which also derives
+the flat `groups` / `skillKinds` display registries from the tree.
 
 | field | type | req | meaning |
 |---|---|---|---|
-| `id` | string `"<kind>.<slug>"` | ✓ | the identifier; prefix must equal `kind` |
-| `kind` | `equivalence`\|`classification`\|`chunking`\|`transformation` | ✓ | strategy category (= id prefix) |
-| `group` | string | ✓ | topic slug; must exist in `skillGroups.json` |
+| `id` | string `"<kind>.<slug>"` | ✓ | the identifier; prefix must equal the file's `kind` |
+| `kind` | `equivalence`\|`classification`\|`chunking`\|`transformation` | positional | strategy category (= id prefix = file); not authored on the leaf |
+| `group` | string | positional | topic slug = the containing group node's `slug`; not authored on the leaf |
 | `name` | LocalizedString | ✓ | the display heading (like a card's `name`) |
 | `note` | LocalizedString | ✓ | the rationale — why the skill matters |
 | `illustration` | LaTeX | — | one canonical example that anchors the skill |

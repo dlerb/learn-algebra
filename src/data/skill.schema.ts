@@ -49,8 +49,8 @@ export type SkillKind = z.infer<typeof skillKind>
 export const skill = z.object({
   id: z.string().regex(/^(equivalence|classification|chunking|transformation)\.[a-z0-9-]+$/,
     'id must be "<kind>.<slug>" (kind ∈ equivalence|classification|chunking|transformation)'),
-  kind: skillKind,                     // = id prefix (validated); a plain category label
-  group: z.string(),                    // topic slug; must exist in skillGroups.json
+  kind: skillKind,                     // = id prefix (validated); positional in the kind file, re-attached by parseSkillTree
+  group: z.string(),                    // topic slug; positional in the kind file (= the containing group node), re-attached by parseSkillTree
   name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
@@ -108,9 +108,11 @@ export const drill = z.discriminatedUnion('kind', [
 export type Drill = z.infer<typeof drill>
 
 // ── Groups ───────────────────────────────────────────────────────────────────
-// Groups organize skills into ordered sections in the lookup view. Defined once
-// in skillGroups.json as a flat list (array order = display order); a skill
-// references its group by slug.
+// Groups organize skills into ordered sections in the lookup view. Authored
+// inline in the per-kind tree files (a group node = { slug, title, blurb?,
+// skills[] }); `groups` and `skillKinds` are the flattened registries
+// parseSkillTree derives from them (array order = display order). GroupDef is the
+// shared { slug, title, blurb? } shape both derived registries use.
 
 export const groupDef = z.object({
   slug: z.string(),
@@ -122,8 +124,8 @@ export type GroupDef = z.infer<typeof groupDef>
 export const groupsFile = z.array(groupDef)
 export type GroupsFile = z.infer<typeof groupsFile>
 
-// A display registry (skillKinds.json, …) must name exactly the enum it titles:
-// no duplicate slug, no unknown slug, no missing title.
+// A derived display registry (the skillKinds list, …) must name exactly the enum
+// it titles: no duplicate slug, no unknown slug, no missing title.
 function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[], file: string): void {
   const slugs = registry.map(g => g.slug)
   const dup = slugs.find((s, i) => slugs.indexOf(s) !== i)
@@ -135,17 +137,7 @@ function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[],
 }
 
 export function validateSkillKinds(registry: GroupDef[]): void {
-  validateGroupRegistry(registry, skillKind.options, 'skillKinds.json')
-}
-
-// Cross-check: every skill's group slug must exist in skillGroups.json.
-export function validateGroupRefs(skills: Skill[], groups: GroupsFile): void {
-  const slugs = new Set(groups.map(g => g.slug))
-  for (const f of skills) {
-    if (!slugs.has(f.group)) {
-      throw new Error(`Skill "${f.id}" references unknown group "${f.group}".`)
-    }
-  }
+  validateGroupRegistry(registry, skillKind.options, 'the skill kind files')
 }
 
 // ── Meta-patterns ────────────────────────────────────────────────────────────
@@ -439,6 +431,55 @@ export function parseSkills(raw: unknown[]): Skill[] {
     }
     return result.data
   })
+}
+
+// ── Skill tree files (one per kind) ───────────────────────────────────────────
+// Since 2026-07-24 skills are authored as one file per KIND, mirroring the
+// fundament tower's one-file-per-layer containment tree: `kind → groups[] →
+// skills[]`. `kind` and `group` are POSITIONAL — a skill body in the file carries
+// neither — and re-injected at load, so the runtime Skill keeps both fields while
+// the two side registries (skillGroups.json / skillKinds.json) are gone: their
+// titles and display order now live inline in the tree. `groups` (flattened, in
+// display order) and `skillKinds` (one per file) are derived here, not authored.
+const skillGroupNode = groupDef.extend({
+  skills: z.array(z.record(z.string(), z.unknown())).min(1),
+})
+export const skillKindFile = z.object({
+  kind: skillKind,
+  title: z.string(),
+  blurb: z.string().optional(),
+  groups: z.array(skillGroupNode).min(1),
+})
+export type SkillKindFile = z.infer<typeof skillKindFile>
+
+export interface SkillTree {
+  skills: Skill[]
+  groups: GroupDef[]      // flattened across kinds, in display (array) order
+  skillKinds: GroupDef[]  // one entry per kind file, in file order
+  rawEntries: unknown[]   // kind/group-injected skill bodies, keyed by id downstream
+}
+
+// Parse the per-kind tree files into the flat runtime shape the app has always
+// consumed: a flat Skill[] (kind/group re-attached from tree position), plus the
+// derived group and kind registries. The offending id is named on any failure.
+export function parseSkillTree(files: unknown[]): SkillTree {
+  const groups: GroupDef[] = []
+  const skillKinds: GroupDef[] = []
+  const rawEntries: unknown[] = []
+  files.forEach((f, i) => {
+    const parsed = skillKindFile.safeParse(f)
+    if (!parsed.success) {
+      const kind = (f as { kind?: string })?.kind ?? `index ${i}`
+      throw new Error(`Invalid skill file "${kind}":\n${z.prettifyError(parsed.error)}`)
+    }
+    const kf = parsed.data
+    skillKinds.push({ slug: kf.kind, title: kf.title, blurb: kf.blurb })
+    for (const g of kf.groups) {
+      groups.push({ slug: g.slug, title: g.title, blurb: g.blurb })
+      for (const s of g.skills) rawEntries.push({ ...s, kind: kf.kind, group: g.slug })
+    }
+  })
+  return { skills: parseSkills(rawEntries), groups, skillKinds, rawEntries }
 }
 
 // ── Drill validation ─────────────────────────────────────────────────────────

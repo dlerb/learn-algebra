@@ -59,24 +59,6 @@
   },
   {
     "kind": "equivalence",
-    "skill": "equivalence.minus-as-times-negative-one",
-    "equivalents": [
-      "-(a + b)",
-      "(-1)(a + b)",
-      "-a - b"
-    ],
-    "pitfalls": [
-      {
-        "expr": "-a + b",
-        "explainedBy": [
-          "anti.partial-distribution",
-          "mis.minus-roles-confused"
-        ]
-      }
-    ]
-  },
-  {
-    "kind": "equivalence",
     "skill": "equivalence.multiplying-into-a-bracket",
     "equivalents": [
       "2(x + 1)",

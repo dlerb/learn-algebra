@@ -2,29 +2,21 @@
 // duplicate id, a dangling group, or a dangling meta-pattern reference throws
 // here immediately with the offending id named.
 import {
-  parseSkills, parseDrills, groupsFile, metaPatternsFile, errorDef,
-  validateUniqueIds, validateGroupRefs, validateSkillKinds, validateMetaPatternRefs, validateSkillLinks,
+  parseSkillTree, parseDrills, groupsFile, metaPatternsFile, errorDef,
+  validateUniqueIds, validateSkillKinds, validateMetaPatternRefs, validateSkillLinks,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Skill, type Drill, type GroupsFile, type MetaPatternsFile, type ErrorDef,
+  type Drill, type GroupsFile, type MetaPatternsFile, type ErrorDef,
 } from './skill.schema'
 import { cardIndex } from './layers'
-import groupsRaw from './skillGroups.json'
-import skillKindsRaw from './skillKinds.json'
 import layersRaw from './layers.json'
 import metasRaw from './metapatterns.json'
 import errorsRaw from './errors.json'
-import equivalenceMultiplication from './skills/equivalence-multiplication.json'
-import equivalenceLikeTerms from './skills/equivalence-like-terms.json'
-import equivalenceMinusSign from './skills/equivalence-minus-sign.json'
-import equivalenceBrackets from './skills/equivalence-brackets.json'
-import equivalenceExponents from './skills/equivalence-exponents.json'
-import equivalenceFractions from './skills/equivalence-fractions.json'
-import equivalenceCommutativity from './skills/equivalence-commutativity.json'
-import classificationBasicForms from './skills/classification-basic-forms.json'
-import classificationMisleadingForms from './skills/classification-misleading-forms.json'
-import chunkingChunking from './skills/chunking-chunking.json'
-import classificationFamiliarShapes from './skills/classification-familiar-shapes.json'
-import equivalenceFullClassification from './skills/equivalence-full-classification.json'
+// Skills: one file per kind (kind → groups[] → skills[]), mirroring the fundament
+// tower's one-file-per-layer tree. Add a kind = add a file + one line below.
+import equivalenceSkills from './skills/equivalence.json'
+import classificationSkills from './skills/classification.json'
+import chunkingSkills from './skills/chunking.json'
+import transformationSkills from './skills/transformation.json'
 import dEquivalenceMultiplication from './drills/equivalence-multiplication.json'
 import dEquivalenceLikeTerms from './drills/equivalence-like-terms.json'
 import dEquivalenceMinusSign from './drills/equivalence-minus-sign.json'
@@ -37,23 +29,6 @@ import dClassificationMisleadingForms from './drills/classification-misleading-f
 import dChunkingChunking from './drills/chunking-chunking.json'
 import dClassificationFamiliarShapes from './drills/classification-familiar-shapes.json'
 import dEquivalenceFullClassification from './drills/equivalence-full-classification.json'
-
-// Per-group skill files (named <kind>-<group>). Each has a parallel drills/
-// file holding its drill material. Add new groups in both lists.
-const skillFiles: unknown[][] = [
-  equivalenceMultiplication as unknown[],
-  equivalenceLikeTerms as unknown[],
-  equivalenceMinusSign as unknown[],
-  equivalenceBrackets as unknown[],
-  equivalenceExponents as unknown[],
-  equivalenceFractions as unknown[],
-  equivalenceCommutativity as unknown[],
-  classificationBasicForms as unknown[],
-  classificationMisleadingForms as unknown[],
-  chunkingChunking as unknown[],
-  classificationFamiliarShapes as unknown[],
-  equivalenceFullClassification as unknown[],
-]
 
 const drillFiles: unknown[][] = [
   dEquivalenceMultiplication as unknown[],
@@ -70,8 +45,15 @@ const drillFiles: unknown[][] = [
   dEquivalenceFullClassification as unknown[],
 ]
 
-export const groups: GroupsFile = groupsFile.parse(groupsRaw)
-export const skillKinds: GroupsFile = groupsFile.parse(skillKindsRaw)
+// Skills load as a tree (one file per kind); the flat Skill[] plus the derived
+// group and kind registries all come out of parseSkillTree, which re-attaches
+// kind/group from tree position so downstream sees the same flat shape as before.
+const skillTree = parseSkillTree([
+  equivalenceSkills, classificationSkills, chunkingSkills, transformationSkills,
+])
+export const skills = skillTree.skills
+export const groups: GroupsFile = skillTree.groups
+export const skillKinds: GroupsFile = skillTree.skillKinds
 // Display metadata for the reference view's segment switch (now errors only; the
 // laws/conventions segments retired with those files on 2026-07-23).
 export const layers: GroupsFile = groupsFile.parse(layersRaw)
@@ -86,18 +68,16 @@ export const errorPatterns: ErrorDef[] = (errorsRaw as unknown[]).map(e => error
 // meta-pattern references validated below.
 const cardIds = new Set(cardIndex.keys())
 
-const rawEntries = skillFiles.flat()
-export const skills: Skill[] = parseSkills(rawEntries)
 export const drills: Drill[] = parseDrills(drillFiles.flat())
 
-// Raw authored entries by id — for the inspection view, which shows the JSON
-// exactly as written in the file, not the parsed/normalized form.
+// Raw entries by id — for the inspection view. These are the authored skill
+// bodies with kind/group re-attached from tree position (the two fields are
+// positional in the file), so the inspector shows a complete skill object.
 export const rawById = new Map<string, unknown>(
-  rawEntries.map(e => [(e as { id: string }).id, e]),
+  skillTree.rawEntries.map(e => [(e as { id: string }).id, e]),
 )
 
 validateUniqueIds(skills)
-validateGroupRefs(skills, groups)
 validateSkillKinds(skillKinds)
 validateMetaPatternRefs(skills, metaPatterns)
 validateSkillLinks(skills)

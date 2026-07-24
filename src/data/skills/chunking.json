@@ -1,0 +1,75 @@
+{
+  "kind": "chunking",
+  "title": "Chunking",
+  "blurb": "Breaking a term into its top-level operands.",
+  "groups": [
+    {
+      "slug": "chunking",
+      "title": "Chunking",
+      "skills": [
+        {
+          "id": "chunking.chunks-in-sum",
+          "name": "Chunks in a sum or difference",
+          "note": "Break at the + and − signs, keeping each sign with its term. Each product like 3x stays whole.",
+          "illustration": "3x + 2y - z",
+          "requires": [
+            "equivalence.explicit-vs-implicit-product"
+          ],
+          "metaPatterns": [
+            "meta.multiplication-binds-tighter"
+          ],
+          "errors": [
+            "sal.implicit-op-overlooked"
+          ]
+        },
+        {
+          "id": "chunking.chunks-in-product",
+          "name": "Chunks in a product",
+          "note": "Break at the multiplication points. Each bracket is one factor.",
+          "illustration": "3 \\cdot x \\cdot (x+1)",
+          "requires": [
+            "equivalence.product-with-brackets"
+          ],
+          "metaPatterns": [
+            "meta.bracket-chunk"
+          ]
+        },
+        {
+          "id": "chunking.implicit-chunking",
+          "name": "Implicit chunking — multiplication precedence",
+          "note": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
+          "illustration": "3x + 2y",
+          "requires": [
+            "equivalence.precedence-brackets"
+          ],
+          "metaPatterns": [
+            "meta.dominant-op-last"
+          ],
+          "restsOn": [
+            "ax.add-associative",
+            "ax.add-commutative",
+            "ix.precedence"
+          ],
+          "errors": [
+            "mis.precedence-ignored"
+          ]
+        },
+        {
+          "id": "chunking.bracket-as-chunk",
+          "name": "Bracket as a single chunk",
+          "note": "Resist expanding — treat the whole bracket as one object.",
+          "illustration": "3(x+1) - 2(x-1)",
+          "requires": [
+            "equivalence.product-with-brackets"
+          ],
+          "metaPatterns": [
+            "meta.bracket-chunk"
+          ],
+          "errors": [
+            "mis.bracket-dissolved"
+          ]
+        }
+      ]
+    }
+  ]
+}

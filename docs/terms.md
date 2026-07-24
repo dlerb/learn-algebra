@@ -115,7 +115,7 @@ Teaching points carried on the cards:
   picture needs `b < a` and both to be lengths; the identity does not care, and
   `a = 2, b = 5` is as true as any other case.
 
-## The fractions — built 2026-07-23, and split across three layers
+## The fractions — built 2026-07-23 (arithmetic added 2026-07-24), split across three layers
 
 The fraction cluster does not sit in one place, because the same filing logic that
 moved the binomials up here sends its pieces to three different floors:
@@ -167,6 +167,31 @@ about the same thing appearing above and below. Unfolded by `def.div` it **is**
 `ax.multiplicative-inverse`, which is also exactly why `0/0` is not `1` — the axiom
 hands out an inverse for every element except `0`, so the condition is the reach of the
 axiom rather than caution.
+
+### The arithmetic — added 2026-07-24
+
+The cards above rewrite *one* fraction; these combine *two* — the actual *Bruchrechnen*,
+which had been an acknowledged hole. All of it rests on one field law that was missing
+from fundamentals, **`th.inverse-of-product`** (`(ab)⁻¹ = a⁻¹b⁻¹`) — the multiplicative
+twin of `th.minus-in-product`, and the fact `th.cancel-common-factor` had been
+re-deriving inline until this card gave it a name (it now cites it).
+
+- **`th.fraction-multiply`** (`(a/b)(c/d) = ac/bd`) does exactly what it looks like, and
+  the only fact underneath is `th.inverse-of-product`, which turns `b⁻¹d⁻¹` into `(bd)⁻¹`.
+- **`th.fraction-divide`** carries the **double fraction**: the reciprocal read twice
+  (`(c/d)⁻¹ = d/c`, so dividing by a fraction multiplies by its flip), the stacked form,
+  and the mixed cases `(a/b)/c = a/bc` and `a/(b/c) = ac/b`. *Which* bar is the dividing
+  one is a reading question, so that half lives on `ix.fraction-bar`, whose note now
+  covers nested bars: the longer bar, level with the line, is the main division — flat on
+  one line `a/b/c` has no such cue and needs brackets.
+- **`th.fraction-add`** (`a/b + c/d = (ad+bc)/bd`) is the rule the linearity reflex gets
+  wrong (`½ + ⅓` is `⅚`, not `⅖`). Each fraction is put over `bd` by a disguised `1`
+  (`th.divide-by-one`, `th.fraction-multiply`), then `th.split-numerator` read right to
+  left joins the numerators. It is the card `anti.fraction-addition` corrupts.
+
+`bd` is *a* common denominator, always available; the smallest is a convenience, not a
+different rule. Still open: a `transformation.combine-fractions` skill to drill these,
+which would finally give `anti.fraction-addition` a skill.
 
 ## The legacy files are empty (2026-07-23)
 
