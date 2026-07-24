@@ -127,7 +127,7 @@ moved the binomials up here sends its pieces to three different floors:
   cites `ix.fraction-bar`.
 - **The quotient power laws are powers'.** `th.pow-quotient-same-base` (ℤ act) and
   `th.pow-of-quotient` (ℤ act) are statements about exponents wearing a bar, not facts
-  about fractions; `th.root-laws` (ℚ act) is the same two laws in radical form.
+  about fractions; `th.root-of-product` / `th.root-of-quotient` (ℚ act) are the same two laws in radical form.
 - **The transformations are the `terms` layer's** — the `fractions` section here.
 
 ### `ix.fraction-bar` is the load-bearing one

@@ -501,28 +501,51 @@
               }
             },
             {
-              "id": "th.root-laws",
+              "id": "th.root-of-product",
               "concerns": [
                 "mul",
                 "completeness"
               ],
               "name": {
-                "en": "The same laws, written as radicals",
-                "de": "Dieselben Gesetze, als Wurzeln geschrieben"
+                "en": "The root of a product",
+                "de": "Die Wurzel eines Produkts"
               },
-              "latex": "\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b} \\qquad \\sqrt[n]{\\tfrac{a}{b}} = \\frac{\\sqrt[n]{a}}{\\sqrt[n]{b}}",
+              "latex": "\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b}",
               "forall": "a, b \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
-              "cond": "a \\ge 0,\\ b > 0",
-              "derivation": "\\sqrt[n]{a \\cdot b} = (a b)^{1/n} = a^{1/n} b^{1/n} \\qquad \\sqrt[n]{\\tfrac{a}{b}} = \\left(\\tfrac{a}{b}\\right)^{1/n} = \\frac{a^{1/n}}{b^{1/n}}",
+              "cond": "a \\ge 0,\\ b \\ge 0",
+              "derivation": "\\sqrt[n]{a \\cdot b} = (a b)^{1/n} = a^{1/n} b^{1/n}",
               "derivedFrom": [
                 "ix.root",
                 "th.pow-laws-rat",
+                "def.pow-rat"
+              ],
+              "note": {
+                "en": "Nothing new, and that is the point ix.root was making. This is th.pow-laws-rat at the exponent $\\frac{1}{n}$, translated back into radical notation, and it would not look like an instance of anything if you only ever saw the radical. Learned as a radical rule it is one more thing to remember; seen as $a^{1/n}$ it is the law already proved. What has no partner here is the sum: there is no $\\sqrt[n]{a+b}$ rule, and $\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}$ is one of the two commonest false laws in school algebra, the radical shadow of pl.no-sum-law. Both factors may be zero: $\\sqrt[n]{0} = 0$ costs the law nothing, which is why the domain reaches down to $a, b \\ge 0$.",
+                "de": "Nichts Neues, und genau das war der Punkt von ix.root. Dies ist th.pow-laws-rat beim Exponenten $\\frac{1}{n}$, zurückübersetzt in die Wurzelschreibweise, und es sähe nach keinem Spezialfall von irgendetwas aus, wenn man nur je die Wurzel sähe. Als Wurzelregel gelernt ist es ein weiteres Ding zum Merken; als $a^{1/n}$ gesehen ist es das längst bewiesene Gesetz. Ohne Partner bleibt hier die Summe: eine Regel für $\\sqrt[n]{a+b}$ gibt es nicht, und $\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}$ ist einer der beiden häufigsten falschen Sätze der Schulalgebra, der Wurzelschatten von pl.no-sum-law. Beide Faktoren dürfen null sein: $\\sqrt[n]{0} = 0$ kostet das Gesetz nichts, weshalb der Bereich bis $a, b \\ge 0$ hinunterreicht."
+              }
+            },
+            {
+              "id": "th.root-of-quotient",
+              "concerns": [
+                "mul",
+                "completeness"
+              ],
+              "name": {
+                "en": "The root of a quotient",
+                "de": "Die Wurzel eines Quotienten"
+              },
+              "latex": "\\sqrt[n]{\\tfrac{a}{b}} = \\frac{\\sqrt[n]{a}}{\\sqrt[n]{b}}",
+              "forall": "a, b \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
+              "cond": "a \\ge 0,\\ b > 0",
+              "derivation": "\\sqrt[n]{\\tfrac{a}{b}} = \\left(\\tfrac{a}{b}\\right)^{1/n} = \\frac{a^{1/n}}{b^{1/n}}",
+              "derivedFrom": [
+                "ix.root",
                 "th.pow-of-quotient",
                 "def.pow-rat"
               ],
               "note": {
-                "en": "Nothing new, and that is the point ix.root was making. Both lines are th.pow-laws-rat at the exponent $\\frac{1}{n}$, translated back into radical notation, and neither would look like an instance of anything if you only ever saw the radical. Learned as radical rules they are two more things to remember; seen as $a^{1/n}$ they are the laws already proved. What is missing from the pair is the same thing missing from pl.no-sum-law, and for the same reason: there is no $\\sqrt[n]{a+b}$ rule, and $\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}$ is one of the two commonest false laws in school algebra.",
-                "de": "Nichts Neues, und genau das war der Punkt von ix.root. Beide Zeilen sind th.pow-laws-rat beim Exponenten $\\frac{1}{n}$, zurückübersetzt in die Wurzelschreibweise, und keine sähe nach einem Spezialfall von irgendetwas aus, wenn man nur je die Wurzel sähe. Als Wurzelregeln gelernt sind es zwei weitere Dinge zum Merken; als $a^{1/n}$ gesehen sind es die längst bewiesenen Gesetze. Was dem Paar fehlt, fehlt aus demselben Grund wie bei pl.no-sum-law: eine Regel für $\\sqrt[n]{a+b}$ gibt es nicht, und $\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}$ ist einer der beiden häufigsten falschen Sätze der Schulalgebra."
+                "en": "The same move for the quotient: th.pow-of-quotient at the exponent $\\frac{1}{n}$, read back as a radical. The one caveat the product form does not have is $b > 0$, not merely $b \\ge 0$: the product tolerates a zero factor, but here $b$ sits under a division, and $\\sqrt[n]{a/0}$ names nothing.",
+                "de": "Derselbe Zug für den Quotienten: th.pow-of-quotient beim Exponenten $\\frac{1}{n}$, als Wurzel zurückgelesen. Die eine Bedingung, die die Produktform nicht hat, ist $b > 0$, nicht bloss $b \\ge 0$: das Produkt verträgt einen Faktor null, hier aber steht $b$ unter einem Bruch, und $\\sqrt[n]{a/0}$ benennt nichts."
               }
             },
             {
