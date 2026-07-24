@@ -66,8 +66,8 @@ recursion, said in words. Prefer it to any formal phrasing.
 `Notation` (ix.pow) → `Definitions` (def.pow) → `Theorems` (pl.same-base,
 pl.of-power, pl.of-product, pl.no-sum-law, th.negative-base).
 
-**Codes are slug-style, never numbered** (`pl.same-base`, not `th.zero-product`) so nothing can
-collide with fundamentals's theorem codes now that citations resolve tower-wide.
+**Ids are slug-style, never numbered** (`pl.same-base`, not `th.zero-product`) so nothing can
+collide with fundamentals's theorem ids now that citations resolve tower-wide.
 
 ## Deferred (not built)
 

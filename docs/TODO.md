@@ -218,7 +218,7 @@ vocabulary for naming their elements*, and both halves have obvious holes:
 - [x] Project setup (Vue 3, Vite, Pinia, Naive UI, UnoCSS, KaTeX)
 - [x] Skill schema as Zod (`src/data/skill.schema.ts`) — single source for validator + `Skill` type
   - [x] `kind` discriminator = the skill's *mental step*: `equivalence` (equal-forms set), `recognition` (equal-forms set, but a Tier-2 "same value across different structure" step), `classification` (`examples` + `answer`), `chunking` (`examples[].chunks`); `transformation` reserved for Tier 3.
-  - [x] Exercise type derived from `kind`, not stored; `flag`/`code` dropped as redundant
+  - [x] Exercise type derived from `kind`, not stored; `flag`/`id` dropped as redundant
   - [x] Readable slug ids **kind-prefixed** (`<kind>.<slug>`), mirroring law `ax/def/thm`. `skill` (equivalence/classification/transformation) is DERIVED from kind via `skillOf()`, not stored, not in the id — the notation/structure namespace was retired 2026-07-13 (commit a05749f) because it conflated skill with naming and couldn't hold a third skill.
 - [x] All 54 skills authored as JSON, one file per group (`src/data/skills/*.json`)
 - [x] Groups + meta-patterns as namespaced data (`skillGroups.json`, `metapatterns.json`), referenced by skills
@@ -292,7 +292,7 @@ and distractor items below are done. Only incremental threads remain.
 - [ ] German translations of skill notes/whys (incremental & cross-skill — better as one bilingual pass over notation + structure; layer files and meta-patterns already bilingual).
 - [ ] Cite the 4 uncited exponent-extension distractors (`zero-and-one-exponent`, `negative-exponent`, `fractional-exponent-root`, `negative-fractional-exponent`) — blocked on an error pattern that fits, not on authoring.
 - [ ] **Candidate metapattern: "multiplication makes bigger"** (2026-07-22). Not among
-  M1–M10, which are all notation/structure. This one is a different kind: a property
+  the ten existing metapatterns, which are all notation/structure. This one is a different kind: a property
   smuggled from the ℕ-model into ℝ (sibling: expecting `a^r` to behave like `aⁿ`).
   Errors-layer work; rationale in `docs/powers-nat-act.md`.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).

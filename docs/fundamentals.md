@@ -46,7 +46,7 @@ The page tells one linear story:
    `−2` the additive inverse of `2`. Told apart by ordinary italic/upright (no house
    typography; see Design decisions).
 1. **Operations & relations** — the given data: `+`, `·` (both `ℝ×ℝ→ℝ`), `=` and
-   `<` (relations `ℝ×ℝ→{true,false}`). Codes `op.add/mul/eq/lt`. Naming lives here:
+   `<` (relations `ℝ×ℝ→{true,false}`). Ids `op.add/mul/eq/lt`. Naming lives here:
    summands, factors, coefficient. **`op.lt` also defines *positive* (`0<a`) and
    *negative* (`a<0`)** — the terms live with the relation that makes them possible,
    not in a `def.` card. There is no `def.sign`.
@@ -86,7 +86,7 @@ The page tells one linear story:
    the untangler: the unary minus does not *make* things negative, it swaps),
    `th.square-positive` (a non-zero square is positive — why `a·a+1=0` has no solution), `th.zero-less-than-one`
    (`0<1`, a corollary of `th.square-positive`). Each shows a collapsed derivation and cites what
-   it rests on (by **code**; the earlier `th.zero-times`-by-id citation bug is fixed).
+   it rests on (by **id**).
 7. **Existence & uniqueness** (`rk.existence` *Is there such a thing?*, `rk.uniqueness` *Is there more
    than one?*; kind `remark`, added 2026-07-23) — the page's closing honesty. Every
    card above starts from *suppose* `R` is a complete ordered field; nothing had said
@@ -166,8 +166,8 @@ layer → sections[] → groups[] → cards[]
   2026-07-22 with the naturals layer): it fixes the reading order of the tower,
   generates the routes and nav entries (one `LayerView`, a `layerId` prop), and
   resolves citations **across** layers — `th.negative-base` in naturals rests on
-  `th.negative-one-times` and `ix.precedence` here. Codes are unique tower-wide, and it throws at load time
-  on a duplicate code, an unresolvable citation, or a bad/missing `concerns`.
+  `th.negative-one-times` and `ix.precedence` here. Ids are unique tower-wide, and it throws at load time
+  on a duplicate id, an unresolvable citation, or a bad/missing `concerns`.
 - **`sections[]`** — ordered; each has a **`slug`** (unique per layer, and the key the
   rendered list is built on — required since 2026-07-23, because `kind` cannot key it
   once a layer repeats one: `powers` runs ℕ/ℤ/ℚ as three acts and so has three
@@ -186,8 +186,8 @@ layer → sections[] → groups[] → cards[]
   inside its group, so the old `group` foreign-key field is gone. New sub-groups the
   flat files couldn't show: signature→operations/relations, convention→
   reading/writing, theorem→field/order.
-- **`cards[]`** — `code` is the sole key (`id` dropped; citations always used
-  codes). Each carries `concerns` + its kind-specific fields.
+- **`cards[]`** — `id` is the sole key (a dotted slug; citations use it). Each
+  carries `concerns` + its kind-specific fields.
 
 ### Page order is a dependency order (enforced 2026-07-23)
 
@@ -233,173 +233,14 @@ asserting four spellings are equal while none of them has a meaning. It was rena
 from `ix.division-signs` because the sweep rejects "sign" — a card titled *signs*
 invites exactly the ± confusion that word was retired for.
 
-### The card format (all three layers, 2026-07-23)
+### The card format → moved to `docs/content_model.md`
 
-**One schema, 15 fields, two of them required.** Every card in `fundamentals`,
-`numbers` and `powers` validates against the same `Card` interface in
-`src/data/layers.ts`; there is no per-kind schema and no field in the data that the
-interface does not declare. `LocalizedString` is `{ en, de }` — both always present.
-
-| field | type | in | what it is |
-|---|---|---|---|
-| `code` | string | **all 76** | the key. Unique **tower-wide**, slug-style, never numbered. Prefix marks the role: `pre. op. ix. ax. def. th. pl. rk.` |
-| `name` | LocalizedString | **all 76** | card title. **Plain text** — rendered with `{{ }}`, so no `$…$` and no LaTeX |
-| `concerns` | string[] | 71 | multi-tag over `add · mul · eq · order · completeness`. Required for every kind except `preliminary` |
-| `symbol` | LaTeX | 4 | the glyph, e.g. `+`. **Its presence selects the signature tile layout** |
-| `type` | LaTeX | 4 | signature, e.g. `\mathbb{R} \times \mathbb{R} \to \mathbb{R}` |
-| `latex` | LaTeX | 64 | the statement, rendered display-style |
-| `avoid` / `prefer` | LaTeX | 3 / 3 | the ✗/✓ pair, used *instead of* `latex` by rewrite conventions |
-| `forall` | LaTeX | 44 | **domain** of the card's free variables, rendered "for all …" / "für alle …" |
-| `cond` | LaTeX | 13 | **restriction** on those variables, rendered "provided …" / "sofern …" |
-| `basedOn` | code[] | 42 | standing dependencies → the "rests on" chips |
-| `derivation` | LaTeX | 23 | the proof chain, collapsed behind a toggle |
-| `derivedFrom` | code[] | 26 | what the chain uses → chips under the derivation |
-| `note` | LocalizedString | 67 | prose. RichText: `$…$` inline maths and `*emph*` only |
-| `intuition` | LocalizedString | 31 | the picture **and where it stops**, collapsed behind a toggle |
-
-**Prose fields carry no markdown beyond `*emph*` and no em dashes** — they render
-literally, and `—` also reads as `−`. `scripts/sweep-layers.mjs` fails the build on
-either, and KaTeX-checks every LaTeX field with **no macros defined**.
-
-#### `forall` is the domain, `cond` is the restriction (split 2026-07-23)
-
-The two used to hold the same thing: definitions drifted to `cond`, theorems to
-`forall`, and several cards mashed both into one field, so identical content showed
-up under two names with two labels. The rule now, enforced editorially:
-
-- **`forall` = where the free variables live** — `a \in \mathbb{R}`, `n \in \mathbb{N}`,
-  `S \subseteq \mathbb{R}`. 22 of the 44 are one of three stock strings, which is the
-  sign that this is a type declaration rather than part of the claim.
-- **`cond` = what is additionally required of them** — `a \ne 0`, `a > 0`,
-  `S \ne \emptyset`. A `cond` never appears without a `forall`.
-
-`def.div` reads `for all a, b ∈ ℝ · provided b ≠ 0`, which is how you would say it
-aloud. The separation is not cosmetic: for generating exercises the **domain says
-where to sample and the condition says what to filter**, and that is unrecoverable
-once the two are merged into one string — or inlined into `latex`.
-
-**Why the quantifier is not a field.** These prefixes are always universal, because
-they scope the *free* variables and a stated law quantifies its free variables
-universally by construction. Every existential in the tower is **inside** the
-statement, where its variable is bound and so cannot appear in the prefix:
-`def.root`'s "the unique $b > 0$ with $b^{n} = a$", `th.root-exists`'s "there is
-exactly one $b$", `ax.completeness`'s $\sup S$. A `quantifier` token would read
-`all` on all 44 cards. The one genuine exception argues the same way:
-`pl.no-sum-law` states $(a+b)^n \neq a^n + b^n$, which is *not* universally true (it
-fails at $n = 1$), and it therefore carries **no prefix at all** — absence already
-encodes it, and its note explains that it is a counterexample card.
-
-**Why not `\forall` inside `latex`.** It would put a logic symbol students meet
-nowhere on 44 cards, against the standing rule; it would push an identical prefix in
-front of 19 axioms whose statement line should be the statement; and it would hide
-from any query the one thing a generator needs most.
-
-#### Field clusters are a convention, not a schema
-
-Which fields are populated follows from `kind`, but nothing enforces it and the view
-no longer branches on it (see below): `preliminary` → `note` alone; `signature` →
-`symbol`+`type`; `convention` → `latex` *or* `avoid`/`prefer`; `axiom` / `definition`
-/ `theorem` / `remark` → `latex` + domain/condition + citations.
-
-**A missing `forall` is not a deviation — it means the card has no free variables.**
-Eight cards are in that position and all of them state something concrete:
-`ax.zero-not-one` (`0 ≠ 1`), `th.minus-times-minus`, `th.zero-less-than-one`,
-`th.numerals-distinct`, `th.numeral-arithmetic`, `th.negative-base`, `th.base-fence`
-— plus `pl.no-sum-law`, which is the one card that *has* free variables and still
-takes no prefix, because its claim is not universally true (see above).
-
-Six cards genuinely deviate, each on purpose:
-
-- **`def.pow-zero`, `def.pow-neg`** carry a `derivation` although they are
-  definitions. That *is* the ℤ act's thesis — the value is forced, and the chain
-  proves only the conditional. Both cards say so in their notes.
-- **`th.no-rational-square-two`, `th.principal-root`** carry both `basedOn` and
-  `derivedFrom`: a standing dependency plus a proof chain.
-- **`pre.permanence`, `pre.existence`** carry an `intuition` although they are
-  framing cards. Since the render became presence-driven these finally display.
-
-#### Rendering is presence-driven
-
-`LayerView.vue` has **one template**. Each part appears iff its field is present, so
-a framing card is simply one with a `note` and nothing else. `kind` is a claim about
-*knowledge*, not about layout, and no longer selects a template — adding a kind needs
-no view change. The single layout variant is the signature tile, keyed on `symbol`.
-
-#### What is validated, and where
-
-`validate()` in `src/data/layers.ts` throws at load time on: a duplicate `code`
-tower-wide; a `basedOn`/`derivedFrom` entry that resolves to nothing; a missing or
-unknown `concerns` on a non-`preliminary` card; a missing or duplicated section `slug`
-within a layer. (The JSON is cast rather than parsed, so TypeScript cannot enforce the
-required fields — `validate()` is what does.) `scripts/sweep-layers.mjs` adds the KaTeX and prose
-checks. Neither tool checks *field clusters* — those are editorial.
-
-#### Four cards, verbatim
-
-```jsonc
-// signature — `symbol` is what puts it in the op grid
-{ "code": "op.add", "concerns": ["add"],
-  "symbol": "+", "type": "\\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}",
-  "name": { "en": "Addition", "de": "Addition" },
-  "note": { "en": "A binary operation on $\\mathbb{R}$. Written $a + b$; …", "de": "…" } }
-
-// convention — the ✗/✓ pair replaces `latex`
-{ "code": "ix.coefficient-front", "concerns": ["mul"],
-  "name": { "en": "Coefficient in front", "de": "Koeffizient nach vorne" },
-  "avoid": "a \\cdot 3", "prefer": "3a",
-  "note": { "en": "A coefficient goes before the variable. …", "de": "…" },
-  "basedOn": ["op.mul", "ax.mul-commutative"] }
-
-// theorem — statement, quantifier, chain, and what the chain used
-{ "code": "th.zero-times", "concerns": ["add", "mul"],
-  "name": { "en": "Zero times anything is zero", "de": "Null mal irgendetwas ist null" },
-  "latex": "0 \\cdot a = 0",
-  "forall": "a \\in \\mathbb{R}",
-  "derivation": "0 \\cdot a = (0 + 0) \\cdot a = 0 \\cdot a + 0 \\cdot a",
-  "derivedFrom": ["ax.zero-neutral", "ax.distributivity",
-                  "ax.additive-inverse", "ax.eq-congruence"] }
-
-// theorem — domain and restriction apart, and an EXISTENTIAL statement:
-// `b` is bound inside the claim, which is why the prefix is still universal
-{ "code": "th.root-exists", "concerns": ["mul", "order", "completeness"],
-  "name": { "en": "Roots exist, and there is only one", "de": "…" },
-  "latex": "\\text{there is exactly one } b > 0 \\text{ with } b^{n} = a",
-  "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
-  "cond": "a > 0",
-  "derivation": "…",
-  "derivedFrom": ["ax.completeness", "ax.order-mul", "th.ind", "def.pow"],
-  "note": { "en": "…", "de": "…" },
-  "intuition": { "en": "…", "de": "…" } }
-```
-
-Rendered, that last one reads: **for all** `a ∈ ℝ, n ∈ ℕ` · **provided** `a > 0` ·
-*there is exactly one b > 0 with bⁿ = a*. `th.root-exists` and `ax.completeness`
-were restructured this way on 2026-07-23; they had been carrying their hypotheses
-inline in `latex`, which hid the domain from any query and made their statement
-lines say two things at once.
-
-**Planned, not built — a second prose field per card.** `intuition` is written for
-the *reader of this page* (a teacher, or the author checking dependencies). What is
-missing is the **classroom-facing** explanation: the same axiom or theorem said the
-way it would be said to a 15-year-old. It wants its own named field alongside
-`intuition`, not a rewrite of it, because the two have different audiences and
-different failure modes. Deferred deliberately — the field name and the writing
-standard both need deciding, and the skills tower may turn out to be the better home
-for some of it. See `docs/TODO.md`.
-
-Two orthogonal axes, deliberately represented differently:
-- **`kind` / `group`** = the *tree* (a partition → structural nesting). What a card
-  *is*, and which section it's filed under.
-- **`concerns[]`** = a *tagging* (multi-valued → a field). Tokens `add · mul · eq ·
-  order · completeness`; what a card is *about*. **Bridges are emergent**
-  (`|concerns|>1`) — every theorem, plus ax.eq-congruence · ax.distributivity · ax.zero-not-one · ax.order-trichotomy · ax.order-add · ax.order-mul · ax.completeness — so the `bridge`
-  axiom group is no longer the only bridge, just a display home.
-
-The view (`LayerView.vue`) walks the tree with **one presence-driven card template**
-plus the signature op-tile (selected on `symbol`, not on `kind` — see "The card
-format" above), and two **filter rows** — `kind` and `concerns` — that **dim**
-(not hide) non-matching cards. Deselect all concerns but `mul` for the cross-cutting
-"multiplication across all kinds" view the section layout can't produce.
+The per-card field schema (the 15 `Card` fields, the `forall`/`cond` split, field
+clusters, what is validated, and worked JSON examples) now lives with the other
+entity formats in **`docs/content_model.md` → "JSON format (current)" → "Card
+format"**, so all five formats (card · skill · error · meta-pattern · drill) sit in
+one place. This doc keeps the *tower-specific* structure above — the layer manifest,
+the section/group tree, and page order = dependency order.
 
 ## Design decisions (settled)
 
@@ -474,7 +315,7 @@ format" above), and two **filter rows** — `kind` and `concerns` — that **dim
   coefficient (`op.mul`), variable vs constant (`pre.elements`), unary minus (`ax.additive-inverse`),
   multiplicative inverse (`ax.multiplicative-inverse`), reciprocal (`def.div`), positive/negative
   (`op.lt`).
-- **Codes** are prefixed by category: `pre.`, `op.`, `ix.`, `ax.`, `def.`, `th.`.
+- **Ids** are prefixed by category: `pre.`, `op.`, `ix.`, `ax.`, `def.`, `th.`.
   Bilingual (English + Swiss German). Prose uses `$…$` for math and **no markdown**
   — the `RichText` renderer only does math, so `**bold**`/`*italic*` and em dashes
   `—` render literally (em dashes were purged for looking like `−`).
@@ -628,7 +469,7 @@ a check needs changing:
   check; no browser tooling installed for pixels).
 - No em dashes / stray markdown (they render literally; `—` also reads as `−`), no
   `ß` in German, no "sign"/"Vorzeichen" leak.
-- Every `derivedFrom`/`basedOn` code resolves against a card `code`, and every card
-  code is unique.
+- Every `derivedFrom`/`basedOn` id resolves against a card `id`, and every card
+  id is unique.
 - Every non-`preliminary` card has `concerns`; every `concerns` token is one of
   `add·mul·eq·order·completeness`.
