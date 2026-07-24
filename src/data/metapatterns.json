@@ -142,5 +142,17 @@
       "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
       "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen."
     }
+  },
+  {
+    "id": "meta.variable-is-a-fixed-number",
+    "name": {
+      "en": "A letter is one fixed number",
+      "de": "Ein Buchstabe ist eine feste Zahl"
+    },
+    "rule": {
+      "en": "A letter stands for a number you do not yet know — not a label, not a box. Within one expression every occurrence of the same letter is the same number: both $a$'s in $a + a$ are equal, so $a + a = 2a$. Different letters may differ; the same letter may not.",
+      "de": "Ein Buchstabe steht für eine noch unbekannte Zahl — kein Etikett, keine Schachtel. Innerhalb eines Ausdrucks ist jedes Vorkommen desselben Buchstabens dieselbe Zahl: die beiden $a$ in $a + a$ sind gleich, also $a + a = 2a$. Verschiedene Buchstaben dürfen sich unterscheiden, derselbe Buchstabe nicht."
+    },
+    "summarizes": ["pre.variables"]
   }
 ]

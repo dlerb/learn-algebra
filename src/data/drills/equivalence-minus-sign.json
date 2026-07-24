@@ -38,6 +38,7 @@
     "skill": "equivalence.minus-over-sum",
     "equivalents": [
       "-(a + b)",
+      "(-1)(a + b)",
       "-a - b"
     ],
     "pitfalls": [

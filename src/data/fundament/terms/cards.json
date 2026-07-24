@@ -3,7 +3,7 @@
     "id": "terms",
     "meta": {
       "characterizes": {"en": "expand · collect · cancel", "de": "ausmultiplizieren · zusammenfassen · kürzen"},
-      "note": {"en": "The floor where the tower stops describing and starts transforming. Below, every card says what something is: what the operations satisfy, which subsets of $\\mathbb{R}$ have names, how a power is built. Here every card says what may be done to an expression that has parts, and nothing new is assumed in order to do it. Each one is ax.distributivity, ax.mul-commutative and the inverses over again, reaching inside a compound expression instead of acting on a single element. This is also the layer that answers the skills tower, since a drill is nearly always one of these moves carried out on particular material, which is why the error patterns point here. It is deliberately unfinished: the binomials are built, the fraction bar is not. The bar groups its two parts without writing a bracket, most of the remaining school algebra lives there, and it is spec'd in docs/TODO.md.", "de": "Das Stockwerk, auf dem der Turm aufhört zu beschreiben und anfängt umzuformen. Darunter sagt jede Karte, was etwas ist: was die Operationen erfüllen, welche Teilmengen von $\\mathbb{R}$ Namen haben, wie eine Potenz gebaut wird. Hier sagt jede Karte, was man mit einem Ausdruck tun darf, der Teile hat, und es wird dafür nichts Neues angenommen. Jede ist wieder ax.distributivity, ax.mul-commutative und die Inversen, die in einen zusammengesetzten Ausdruck hineingreifen statt auf ein einzelnes Element zu wirken. Dies ist auch die Schicht, die dem Skills-Turm antwortet, denn eine Übung ist fast immer einer dieser Züge an bestimmtem Material, und darum zeigen die Fehlermuster hierher. Sie ist bewusst unfertig: die Binome stehen, der Bruchstrich nicht. Er gruppiert seine beiden Teile, ohne eine Klammer zu schreiben, dort wohnt der grösste Teil der übrigen Schulalgebra, und er ist in docs/TODO.md spezifiziert."}
+      "note": {"en": "The floor where the tower stops describing and starts transforming. Below, every card says what something is: what the operations satisfy, which subsets of $\\mathbb{R}$ have names, how a power is built. Here every card says what may be done to an expression that has parts, and nothing new is assumed in order to do it. Each one is ax.distributivity, ax.mul-commutative and the inverses over again, reaching inside a compound expression instead of acting on a single element. This is also the layer that answers the skills tower, since a drill is nearly always one of these moves carried out on particular material, which is why the error patterns point here. The binomials are built, and the fraction arithmetic with them: multiplying, dividing and adding fractions, and the double fraction, all resting on th.inverse-of-product one floor down. Whatever a later pass still adds is spec'd in docs/TODO.md.", "de": "Das Stockwerk, auf dem der Turm aufhört zu beschreiben und anfängt umzuformen. Darunter sagt jede Karte, was etwas ist: was die Operationen erfüllen, welche Teilmengen von $\\mathbb{R}$ Namen haben, wie eine Potenz gebaut wird. Hier sagt jede Karte, was man mit einem Ausdruck tun darf, der Teile hat, und es wird dafür nichts Neues angenommen. Jede ist wieder ax.distributivity, ax.mul-commutative und die Inversen, die in einen zusammengesetzten Ausdruck hineingreifen statt auf ein einzelnes Element zu wirken. Dies ist auch die Schicht, die dem Skills-Turm antwortet, denn eine Übung ist fast immer einer dieser Züge an bestimmtem Material, und darum zeigen die Fehlermuster hierher. Die Binome stehen, und die Bruchrechnung mit ihnen: Brüche multiplizieren, dividieren und addieren, dazu der Doppelbruch, alles auf th.inverse-of-product ein Stockwerk tiefer gestützt. Was ein späterer Durchgang noch ergänzt, ist in docs/TODO.md spezifiziert."}
     }
   },
 
@@ -262,9 +262,10 @@
               "latex": "\\frac{a \\cdot c}{b \\cdot c} \\;=\\; \\frac{a}{b}",
               "forall": "a, b, c \\in \\mathbb{R}",
               "cond": "b \\ne 0,\\ c \\ne 0",
-              "derivation": "\\begin{aligned} (b \\cdot c) \\cdot (b^{-1} c^{-1}) &= (b b^{-1})(c c^{-1}) = 1 \\;\\Longrightarrow\\; (bc)^{-1} = b^{-1} c^{-1} \\\\[2pt] \\frac{ac}{bc} &= (ac)(b^{-1}c^{-1}) = (a b^{-1})(c c^{-1}) = \\frac{a}{b} \\cdot 1 = \\frac{a}{b} \\end{aligned}",
+              "derivation": "\\frac{ac}{bc} = (ac)(bc)^{-1} = (ac)(b^{-1}c^{-1}) = (a b^{-1})(c c^{-1}) = \\frac{a}{b} \\cdot 1 = \\frac{a}{b}",
               "derivedFrom": [
                 "def.div",
+                "th.inverse-of-product",
                 "ax.mul-associative",
                 "ax.mul-commutative",
                 "ax.multiplicative-inverse",
@@ -324,6 +325,79 @@
               "note": {
                 "en": "The two degenerate cases, and the second is worth its line. $\\frac{a}{a} = 1$ is not a rule about the same thing appearing above and below; unfolded by def.div it *is* ax.multiplicative-inverse, read off directly. Which is also why $\\frac{0}{0}$ is not $1$: the axiom hands out an inverse for every element except $0$, so the condition is not caution but the exact reach of the axiom. The first half needs no condition and works in the other direction too: any expression may be written over $1$, which is how a whole number joins a calculation with fractions in it. Note ix.invisible-one again, one line up: the $1$ that is never written and has to be seen.",
                 "de": "Die beiden Grenzfälle, und der zweite ist seine Zeile wert. $\\frac{a}{a} = 1$ ist keine Regel darüber, dass oben und unten dasselbe steht; mit def.div aufgelöst *ist* es ax.multiplicative-inverse, direkt abgelesen. Und darum ist $\\frac{0}{0}$ auch nicht $1$: das Axiom gibt jedem Element ausser $0$ ein Inverses, die Bedingung ist also keine Vorsicht, sondern die genaue Reichweite des Axioms. Die erste Hälfte braucht keine Bedingung und gilt auch andersherum: jeder Ausdruck darf über eine $1$ geschrieben werden, und so kommt eine ganze Zahl in eine Rechnung mit Brüchen hinein. Man beachte wieder ix.invisible-one, eine Zeile höher: die $1$, die nie geschrieben wird und gesehen werden muss."
+              }
+            },
+            {
+              "id": "th.fraction-multiply",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Multiply straight across",
+                "de": "Zähler mal Zähler, Nenner mal Nenner"
+              },
+              "latex": "\\frac{a}{b} \\cdot \\frac{c}{d} \\;=\\; \\frac{a \\cdot c}{b \\cdot d}",
+              "forall": "a, b, c, d \\in \\mathbb{R}",
+              "cond": "b \\ne 0,\\ d \\ne 0",
+              "derivation": "\\frac{a}{b} \\cdot \\frac{c}{d} = (a b^{-1})(c d^{-1}) = (ac)(b^{-1} d^{-1}) = (ac)(bd)^{-1} = \\frac{ac}{bd}",
+              "derivedFrom": [
+                "def.div",
+                "th.inverse-of-product",
+                "ax.mul-associative",
+                "ax.mul-commutative"
+              ],
+              "note": {
+                "en": "The one fraction rule that does exactly what it looks like, numerators multiply, denominators multiply, and the only fact underneath is th.inverse-of-product, which turns $b^{-1} d^{-1}$ into $(bd)^{-1}$. It is worth pinning next to addition, one card down, where straight-across is precisely the error: a product combines across ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$) but a sum does not, because the fraction bar is built from multiplication and not from addition. Two special cases earn a look: $a \\cdot \\frac{c}{d} = \\frac{ac}{d}$ (write $a$ as $\\frac{a}{1}$, th.divide-by-one), and $\\frac{a}{b} \\cdot \\frac{b}{a} = 1$, which is the reciprocal th.fraction-divide turns on.",
+                "de": "Die eine Bruchregel, die genau das tut, wonach sie aussieht, Zähler multiplizieren, Nenner multiplizieren, und die einzige Tatsache darunter ist th.inverse-of-product, die $b^{-1} d^{-1}$ zu $(bd)^{-1}$ macht. Man merke sie sich neben der Addition, eine Karte weiter, wo das Geradeaus gerade der Fehler ist: ein Produkt verbindet gliedweise ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$), eine Summe nicht, weil der Bruchstrich aus Multiplikation gebaut ist und nicht aus Addition. Zwei Spezialfälle lohnen den Blick: $a \\cdot \\frac{c}{d} = \\frac{ac}{d}$ (schreibe $a$ als $\\frac{a}{1}$, th.divide-by-one), und $\\frac{a}{b} \\cdot \\frac{b}{a} = 1$, der Kehrwert, um den es bei th.fraction-divide geht."
+              }
+            },
+            {
+              "id": "th.fraction-divide",
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Dividing by a fraction: flip and multiply",
+                "de": "Durch einen Bruch teilen: kehren und multiplizieren"
+              },
+              "latex": "\\dfrac{\\;\\frac{a}{b}\\;}{\\;\\frac{c}{d}\\;} \\;=\\; \\frac{a}{b} \\cdot \\frac{d}{c} \\;=\\; \\frac{a \\cdot d}{b \\cdot c}",
+              "forall": "a, b, c, d \\in \\mathbb{R}",
+              "cond": "b \\ne 0,\\ c \\ne 0,\\ d \\ne 0",
+              "derivation": "\\begin{aligned} \\left( \\frac{c}{d} \\right)^{-1} &= (c\\, d^{-1})^{-1} = c^{-1} (d^{-1})^{-1} = c^{-1} d = \\frac{d}{c} \\\\[2pt] \\dfrac{\\,a/b\\,}{\\,c/d\\,} &= \\frac{a}{b} \\cdot \\left( \\frac{c}{d} \\right)^{-1} = \\frac{a}{b} \\cdot \\frac{d}{c} = \\frac{ad}{bc} \\end{aligned}",
+              "derivedFrom": [
+                "def.div",
+                "th.inverse-of-product",
+                "th.fraction-multiply",
+                "ax.multiplicative-inverse"
+              ],
+              "note": {
+                "en": "A fraction whose numerator or denominator is itself a fraction, a *double fraction*, and the rule is the reciprocal read twice. First the reciprocal of one fraction: $\\left(\\frac{c}{d}\\right)^{-1} = \\frac{d}{c}$, since $\\frac{c}{d}$ and $\\frac{d}{c}$ multiply to $1$ (and $(d^{-1})^{-1} = d$ for the same reason). Dividing by $\\frac{c}{d}$ is then multiplying by $\\frac{d}{c}$ (def.div), and th.fraction-multiply finishes it. The trap is flipping the wrong fraction: only the *divisor* turns over, never the dividend. The mixed cases are the same rule with an unwritten $1$: $\\dfrac{a/b}{c} = \\dfrac{a}{bc}$ (divisor $c = \\frac{c}{1}$) and $\\dfrac{a}{b/c} = \\dfrac{ac}{b}$. Which bar is the dividing one is a reading question, settled by ix.fraction-bar: the longer bar, level with the surrounding line, is the main division. Flat on one line, $a/b/c$ lacks that cue and needs brackets.",
+                "de": "Ein Bruch, dessen Zähler oder Nenner selbst ein Bruch ist, ein *Doppelbruch*, und die Regel ist der zweimal gelesene Kehrwert. Zuerst der Kehrwert eines Bruchs: $\\left(\\frac{c}{d}\\right)^{-1} = \\frac{d}{c}$, denn $\\frac{c}{d}$ und $\\frac{d}{c}$ multiplizieren zu $1$ (und $(d^{-1})^{-1} = d$ aus demselben Grund). Durch $\\frac{c}{d}$ teilen heisst dann mit $\\frac{d}{c}$ multiplizieren (def.div), und th.fraction-multiply schliesst ab. Die Falle ist, den falschen Bruch zu kehren: nur der *Divisor* wird umgedreht, nie der Dividend. Die gemischten Fälle sind dieselbe Regel mit einer ungeschriebenen $1$: $\\dfrac{a/b}{c} = \\dfrac{a}{bc}$ (Divisor $c = \\frac{c}{1}$) und $\\dfrac{a}{b/c} = \\dfrac{ac}{b}$. Welcher Strich der teilende ist, ist eine Lesefrage, die ix.fraction-bar klärt: der längere Strich, auf Höhe der umgebenden Zeile, ist die Hauptdivision. Flach auf einer Zeile fehlt $a/b/c$ dieser Hinweis, und es braucht Klammern."
+              }
+            },
+            {
+              "id": "th.fraction-add",
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "Adding fractions: a common denominator first",
+                "de": "Brüche addieren: zuerst ein gemeinsamer Nenner"
+              },
+              "latex": "\\frac{a}{b} + \\frac{c}{d} \\;=\\; \\frac{a \\cdot d + b \\cdot c}{b \\cdot d} \\qquad \\frac{a}{b} + \\frac{c}{b} = \\frac{a + c}{b}",
+              "forall": "a, b, c, d \\in \\mathbb{R}",
+              "cond": "b \\ne 0,\\ d \\ne 0",
+              "derivation": "\\begin{aligned} \\frac{a}{b} + \\frac{c}{d} &= \\frac{a}{b} \\cdot \\frac{d}{d} + \\frac{c}{d} \\cdot \\frac{b}{b} = \\frac{ad}{bd} + \\frac{cb}{bd} \\\\[2pt] &= \\frac{ad + cb}{bd} = \\frac{ad + bc}{bd} \\end{aligned}",
+              "derivedFrom": [
+                "th.fraction-multiply",
+                "th.split-numerator",
+                "th.divide-by-one",
+                "ax.mul-commutative"
+              ],
+              "note": {
+                "en": "The rule the linearity reflex gets wrong: $\\frac{a}{b} + \\frac{c}{d}$ is **not** $\\frac{a+c}{b+d}$ (check $\\frac{1}{2} + \\frac{1}{3}$: it is $\\frac{5}{6}$, not $\\frac{2}{5}$). Addition needs the two fractions over *one* denominator first. Each is rewritten by multiplying by a disguised $1$, $\\frac{d}{d}$ and $\\frac{b}{b}$ (th.divide-by-one, th.fraction-multiply), until both stand over $bd$; then th.split-numerator, read right to left, joins the numerators. When the denominators already match this collapses to the everyday special case $\\frac{a}{b} + \\frac{c}{b} = \\frac{a+c}{b}$. Note $bd$ is *a* common denominator, always available; the smallest one is a convenience, not a different rule. This is the card anti.fraction-addition corrupts.",
+                "de": "Die Regel, die der Linearitätsreflex verfehlt: $\\frac{a}{b} + \\frac{c}{d}$ ist **nicht** $\\frac{a+c}{b+d}$ (prüfe $\\frac{1}{2} + \\frac{1}{3}$: es ist $\\frac{5}{6}$, nicht $\\frac{2}{5}$). Die Addition braucht die beiden Brüche zuerst über *einem* Nenner. Jeder wird umgeschrieben, indem man mit einer verkleideten $1$ multipliziert, $\\frac{d}{d}$ und $\\frac{b}{b}$ (th.divide-by-one, th.fraction-multiply), bis beide über $bd$ stehen; dann fügt th.split-numerator, von rechts nach links gelesen, die Zähler zusammen. Stimmen die Nenner schon überein, fällt es auf den alltäglichen Spezialfall $\\frac{a}{b} + \\frac{c}{b} = \\frac{a+c}{b}$ zusammen. $bd$ ist *ein* gemeinsamer Nenner, immer verfügbar; der kleinste ist eine Bequemlichkeit, keine andere Regel. Das ist die Karte, die anti.fraction-addition verletzt."
               }
             }
           ]

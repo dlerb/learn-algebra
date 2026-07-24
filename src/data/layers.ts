@@ -1,8 +1,8 @@
 import type { LocalizedString } from './skill.schema'
-import fundamentals from './fundamentals/cards.json'
-import numbers from './numbers/cards.json'
-import powers from './powers/cards.json'
-import terms from './terms/cards.json'
+import fundamentals from './fundament/fundamentals/cards.json'
+import numbers from './fundament/numbers/cards.json'
+import powers from './fundament/powers/cards.json'
+import terms from './fundament/terms/cards.json'
 
 // The layer manifest. Each layer is one cards.json — a containment tree
 // `layer → sections[] → groups[] → cards[]`, page order = array order at every
