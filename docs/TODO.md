@@ -4,21 +4,46 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — validate skills against real common mistakes, then prune (2026-07-24)
+## NEXT SESSION — the WrongRight component (2026-07-24)
 
-Go through the **65 skills** and judge whether each actually targets a *common*
-first-year-HS algebra mistake — **60+ is too many** and likely padded with invented or
-rare cases.
+Extract the wrong→right (✗/✓) presentation into a reusable component and use it across
+the app. The user liked the wrong→right pairing in `docs/common_mistakes.md` and asked
+to surface it more. **The pattern already exists inline** in `LayerView.vue` (the card
+`avoid`/`prefer` block, ~L147–149: `.rewrite` > `.ex.bad`✗ / `.ex.good`✓, each an
+`<MathExpr>`). That block is the seed to generalize.
 
-- [ ] **Assemble a catalog of common algebra mistakes FIRST** — from the web /
-  maths-didactics literature, at Swiss first-year-HS level. (Web research; this is the
-  gating step — the judgement needs an external ground truth, not our own priors.)
-- [ ] Compare the 65 skills **and their declared `errors`** against that catalog; mark
-  each skill: evidence-backed common mistake / plausible-but-rare / invented.
-- [ ] **Prune** to a leaner, evidence-backed set; retire or merge the rest.
+The ✗/✓ structure is latent in every layer's data:
 
-Research + curation, not code. The skill/error data model is clean and stable (the
-2026-07-24 naming/structure pass is done — see below and `docs/content_model.md`).
+| layer | ✗ wrong | ✓ right |
+|---|---|---|
+| errors | `instances[]` | the corrupted card's `latex` (or a skill's `illustration`) |
+| skills | the skill's `errors` → their instances | `illustration` |
+| cards | `avoid` | `prefer` |
+| drills | `pitfalls` | `equivalents` / `answer` |
+
+- [ ] Extract `src/components/WrongRight.vue` from the LayerView `.rewrite` block —
+  props `wrong` / `right` (LaTeX), renders `✗ <MathExpr> = ✓ <MathExpr>` with the
+  existing styles; swap LayerView's inline block for it (no visual change — the
+  refactor-safe first step).
+- [ ] Use it in **ErrorsView (`ReferenceView.vue`) FIRST** — highest payoff: render each
+  error `instance` as ✗ paired with its ✓ correction, turning `/errors` into the
+  wrong→right reference the catalog format shows.
+- [ ] Then TaxonomyView (skill `illustration` ✓ beside its errors' instances ✗); later,
+  drill feedback (✗ your answer → ✓ correct).
+
+**OPEN DESIGN QUESTION — settle before ErrorsView:** an error `instance` (✗) has no
+authored ✓ partner. (a) DERIVE it from the corrupted card's `latex` — no schema change,
+but a card states the *general law*, not the specific correction of that instance, so
+the pairing can be loose; or (b) add an optional per-instance `corrected[]` field —
+authored, exact, but schema + data work. **Recommendation: derive first, author
+corrections only where derivation is ambiguous.** This is the crux.
+
+Infra: `MathExpr.vue` (KaTeX renderer, props `latex` + `display`), `RichText.vue`
+(prose + inline `$…$`). Rationale + full ✗/✓ table: `docs/common_mistakes.md`.
+
+**Prior NEXT-SESSION task (skill validation/prune) is ✅ DONE** — catalog assembled
+(`docs/common_mistakes.md`), skills rebalanced (65→71, Tier-3 seeded), errors/metapatterns
+extended, fraction arithmetic added to the tower. See the dated entries below.
 
 ---
 
@@ -192,7 +217,7 @@ now cites the bar it is written with); the **quotient power laws** went to `powe
 (`th.split-numerator`, `th.cancel-common-factor`, `th.fraction-minus-moves`,
 `th.divide-by-one`). See `docs/terms.md`. **`conventions.json` is now empty and
 `laws.json` is down to 4.**
-  - **Fraction arithmetic completed 2026-07-24** (was the acknowledged hole): `th.inverse-of-product` `(ab)⁻¹=a⁻¹b⁻¹` added to `fundamentals` Field theorems (the multiplicative twin of `th.minus-in-product`; `th.cancel-common-factor` now cites it instead of re-deriving inline), and `th.fraction-multiply`, `th.fraction-divide` (reciprocal + **double fractions**: stacked form, mixed cases, "which bar is the main one" reading folded into `ix.fraction-bar`), `th.fraction-add` (common denominator `bd`; special case `a/b+c/b`) added to `terms` fractions. `anti.fraction-addition` re-pointed to `th.fraction-add`. Tower now **101 cards**. Still open: a `transformation.combine-fractions` skill to drill them (would finally wire `anti.fraction-addition` to a skill).
+  - **Fraction arithmetic completed 2026-07-24** (was the acknowledged hole): `th.inverse-of-product` `(ab)⁻¹=a⁻¹b⁻¹` added to `fundamentals` Field theorems (the multiplicative twin of `th.minus-in-product`; `th.cancel-common-factor` now cites it instead of re-deriving inline), and `th.fraction-multiply`, `th.fraction-divide` (reciprocal + **double fractions**: stacked form, mixed cases, "which bar is the main one" reading folded into `ix.fraction-bar`), `th.fraction-add` (common denominator `bd`; special case `a/b+c/b`) added to `terms` fractions. `anti.fraction-addition` re-pointed to `th.fraction-add`. Tower now **101 cards**. Drilled by **`transformation.combine-fractions`** (added 2026-07-24), which wires `anti.fraction-addition` to a skill.
 
 **Cluster 2 — the binomial. ✅ DONE 2026-07-23**, and it is what created the layer.
 All three now live in `src/data/terms/cards.json` (`docs/terms.md`):
