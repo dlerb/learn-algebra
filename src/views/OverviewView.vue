@@ -16,7 +16,7 @@ const n = {
   metas: metaPatterns.length,
 }
 // the four tower layers, laid out as the floor
-const chips = layers.map((l, i) => ({ slug: l.slug, x: 80 + i * 166 }))
+const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 166 }))
 </script>
 
 <template>
@@ -88,9 +88,9 @@ const chips = layers.map((l, i) => ({ slug: l.slug, x: 80 + i * 166 }))
           Fundament — the tower · {{ n.cards }} cards
         </text>
         <g v-for="c in chips" :key="c.slug" class="chip-g" tabindex="0" role="link"
-           :aria-label="c.slug" @click="go('/' + c.slug)" @keyup.enter="go('/' + c.slug)">
+           :aria-label="c.title" @click="go('/' + c.slug)" @keyup.enter="go('/' + c.slug)">
           <rect class="chip" :x="c.x" y="466" width="150" height="42" rx="8" />
-          <text class="chip-label" :x="c.x + 75" y="492" text-anchor="middle" font-size="12">{{ c.slug }}</text>
+          <text class="chip-label" :x="c.x + 75" y="492" text-anchor="middle" font-size="12">{{ c.title }}</text>
         </g>
       </g>
     </svg>
