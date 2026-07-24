@@ -65,9 +65,9 @@ export interface Layer {
 }
 
 export const layers: Layer[] = [
-  { id: 'fundamentals', slug: 'fundamentals', title: 'fundamentals', data: fundamentals as unknown as LayerData },
-  { id: 'numbers', slug: 'numbers', title: 'numbers', data: numbers as unknown as LayerData },
-  { id: 'powers', slug: 'powers', title: 'powers', data: powers as unknown as LayerData },
+  { id: 'fundamentals', slug: 'fundamentals', title: 'Fundamentals', data: fundamentals as unknown as LayerData },
+  { id: 'numbers', slug: 'numbers', title: 'Numbers', data: numbers as unknown as LayerData },
+  { id: 'powers', slug: 'powers', title: 'Powers', data: powers as unknown as LayerData },
   { id: 'terms', slug: 'terms', title: 'Term manipulations', data: terms as unknown as LayerData },
 ]
 
