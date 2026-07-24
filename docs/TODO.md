@@ -169,8 +169,8 @@ cards that exist. `laws.json` is down to **14** after `th.binomial-square` moved
 same filing logic that placed the binomials: the **notation** went to `fundamentals`
 (`ix.fraction-bar`, `ix.division-symbols` in the `infix`/reading group, and `def.div`
 now cites the bar it is written with); the **quotient power laws** went to `powers`
-(`th.pow-quotient-same-base`, `th.pow-of-quotient` in the ℤ act, `th.root-laws` in the
-ℚ act); the **transformations** went to the `terms` layer's new `fractions` section
+(`th.pow-quotient-same-base`, `th.pow-of-quotient` in the ℤ act, `th.root-of-product` /
+`th.root-of-quotient` in the ℚ act); the **transformations** went to the `terms` layer's new `fractions` section
 (`th.split-numerator`, `th.cancel-common-factor`, `th.fraction-minus-moves`,
 `th.divide-by-one`). See `docs/terms.md`. **`conventions.json` is now empty and
 `laws.json` is down to 4.**
