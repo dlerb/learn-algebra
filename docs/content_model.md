@@ -162,6 +162,11 @@ error · meta-pattern · drill**) — share one identity convention (a single `i
 no display codes) and one prose convention (`LocalizedString`, LaTeX compile-checked).
 Their field-by-field formats follow.
 
+**Heading convention:** every **entity** (card, error, skill, meta-pattern) names its
+display heading **`name`**; every **structural container** (a layer, a section, a
+group) names its heading **`title`**. So `name` = "the heading of a thing", `title` =
+"the heading of a level of the tree" — never mixed.
+
 ### Files at a glance
 
 The fundament tower (cards) is the floor; the three curated files are lenses over
