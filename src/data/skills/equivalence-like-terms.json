@@ -3,7 +3,7 @@
     "kind": "equivalence",
     "id": "equivalence.number-plus-term",
     "group": "like-terms",
-    "title": "A number plus a term stays open",
+    "name": "A number plus a term stays open",
     "note": "$2 + 3x$ is a finished object — it does not collapse to $5x$. Only like terms combine ($x + x = 2x$); $2$ and $3x$ are not like.",
     "illustration": "2 + 3x = 3x + 2",
     "requires": [
@@ -24,7 +24,7 @@
     "kind": "equivalence",
     "id": "equivalence.unlike-variable-terms",
     "group": "like-terms",
-    "title": "Terms with different variables stay open",
+    "name": "Terms with different variables stay open",
     "note": "3x + 2y cannot combine into one term — x and y are different objects. 5xy would be a product, something else entirely.",
     "illustration": "3x + 2y = 2y + 3x",
     "requires": [
@@ -45,7 +45,7 @@
     "kind": "equivalence",
     "id": "equivalence.adding-powers",
     "group": "like-terms",
-    "title": "A power plus a term stays open",
+    "name": "A power plus a term stays open",
     "note": "$x^2 + x$ has two unlike terms — it is not $x^3$. Exponents grow when powers are multiplied ($x^2 \\cdot x = x^3$), never when they are added.",
     "illustration": "x^2 + x = x + x^2",
     "requires": [

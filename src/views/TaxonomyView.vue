@@ -8,13 +8,13 @@ import { loc, type Skill, type Drill } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 
-// The skills catalog. A card rests quiet — title · the forms the skill looks
+// The skills catalog. A card rests quiet — name · the forms the skill looks
 // like · the rationale note — and reveals its coordinates (restsOn
 // resolve into the fundament tower now, plus meta-patterns / errors),
 // prerequisites, drill pitfalls and raw JSON behind a per-card `details` toggle.
 function metaLabel(id: string): string {
   const m = metaPatterns.find(mp => mp.id === id)
-  return m ? `${m.id} · ${loc(m.title, lang.value)}` : id
+  return m ? `${m.id} · ${loc(m.name, lang.value)}` : id
 }
 // `restsOn` and error `explainedBy` are card ids or error ids.
 const errName = new Map(errorPatterns.map(e => [e.id, e] as const))
@@ -24,9 +24,9 @@ function layerLabel(id: string): string {
   const e = errName.get(id)
   return e ? `${e.id} · ${loc(e.name, lang.value)}` : id
 }
-function skillTitle(id: string): string {
+function skillName(id: string): string {
   const f = skills.find(f => f.id === id)
-  return f ? loc(f.title, lang.value) : id
+  return f ? loc(f.name, lang.value) : id
 }
 
 // Per-card disclosure state (the extra fields, and the raw JSON within them).
@@ -38,7 +38,7 @@ const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.dele
 // Flatten each skill into a dumb view-model so the template needs no narrowing.
 interface CardVM {
   id: string
-  title: string
+  name: string
   kind: string
   group: string
   json: string
@@ -63,12 +63,12 @@ const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
 
 function toVM(f: Skill): CardVM {
   const base = {
-    id: f.id, title: loc(f.title, lang.value), kind: f.kind, group: f.group,
+    id: f.id, name: loc(f.name, lang.value), kind: f.kind, group: f.group,
     conditions: f.conditions, note: loc(f.note, lang.value),
     illustration: f.illustration, errors: f.errors.map(layerLabel),
     json: JSON.stringify(rawById.get(f.id), null, 2),
     metas: f.metaPatterns.map(m => metaLabel(m)),
-    requires: f.requires.map(skillTitle),
+    requires: f.requires.map(skillName),
     restsOn: f.restsOn.map(layerLabel),
   }
   const d = drillBySkill.get(f.id)
@@ -78,7 +78,7 @@ function toVM(f: Skill): CardVM {
       equivChain: d.equivalents.join(' = '),
       equivPitfalls: d.pitfalls.map(p => ({
         latex: `${d.equivalents[0]} \\neq ${p.expr}`,
-        revise: (p.revise ?? []).map(skillTitle),
+        revise: (p.revise ?? []).map(skillName),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
@@ -88,7 +88,7 @@ function toVM(f: Skill): CardVM {
       ...base, classExamples: d.examples, classAnswer: d.answer,
       classPitfalls: d.pitfalls.map(p => ({
         answer: p.answer, why: loc(p.why, lang.value),
-        revise: (p.revise ?? []).map(skillTitle),
+        revise: (p.revise ?? []).map(skillName),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
@@ -98,7 +98,7 @@ function toVM(f: Skill): CardVM {
       ...base, decomp: d.examples,
       decompPitfalls: d.pitfalls.map(p => ({
         why: loc(p.why, lang.value),
-        revise: (p.revise ?? []).map(skillTitle),
+        revise: (p.revise ?? []).map(skillName),
         explainedBy: (p.explainedBy ?? []).map(layerLabel),
       })),
     }
@@ -106,11 +106,11 @@ function toVM(f: Skill): CardVM {
   return base
 }
 
-const byTitle = (a: Skill, b: Skill) =>
-  loc(a.title, lang.value).localeCompare(loc(b.title, lang.value))
+const byName = (a: Skill, b: Skill) =>
+  loc(a.name, lang.value).localeCompare(loc(b.name, lang.value))
 
 // Skills can be sectioned by `group` (classroom topic, skillGroups order) or by
-// `kind` (the strategy type). Cards sort by title within a section; skills carry
+// `kind` (the strategy type). Cards sort by name within a section; skills carry
 // no drilling sequence — that lives in the drill layer.
 const groupBy = ref<'group' | 'kind'>('group')
 
@@ -118,12 +118,12 @@ interface Section { slug: string; title: string; blurb?: string; cards: CardVM[]
 
 const groupSections = computed<Section[]>(() =>
   groups
-    .map(g => ({ slug: g.slug, title: g.title, blurb: g.blurb, cards: skills.filter(f => f.group === g.slug).sort(byTitle).map(toVM) }))
+    .map(g => ({ slug: g.slug, title: g.title, blurb: g.blurb, cards: skills.filter(f => f.group === g.slug).sort(byName).map(toVM) }))
     .filter(s => s.cards.length > 0),
 )
 const kindSections = computed<Section[]>(() =>
   skillKinds
-    .map(k => ({ slug: k.slug, title: k.title, blurb: k.blurb, cards: skills.filter(f => f.kind === k.slug).sort(byTitle).map(toVM) }))
+    .map(k => ({ slug: k.slug, title: k.title, blurb: k.blurb, cards: skills.filter(f => f.kind === k.slug).sort(byName).map(toVM) }))
     .filter(s => s.cards.length > 0),
 )
 const sections = computed(() => (groupBy.value === 'group' ? groupSections.value : kindSections.value))
@@ -162,7 +162,7 @@ function hasErrors(c: CardVM): boolean {
             <button class="disclose" @click="toggle(c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
           </div>
           <div class="card-head">
-            <h4>{{ c.title }}</h4>
+            <h4>{{ c.name }}</h4>
           </div>
 
           <!-- primary content: what this skill looks like -->

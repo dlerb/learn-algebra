@@ -1,7 +1,7 @@
 [
   {
     "id": "meta.juxtaposition",
-    "title": {
+    "name": {
       "en": "Juxtaposition means multiplication",
       "de": "Nebeneinanderschreiben bedeutet Multiplikation"
     },
@@ -15,7 +15,7 @@
   },
   {
     "id": "meta.three-minuses",
-    "title": {
+    "name": {
       "en": "A minus is one of two things",
       "de": "Ein Minus ist eines von zwei Dingen"
     },
@@ -31,7 +31,7 @@
   },
   {
     "id": "meta.implicit-op-before-bracket",
-    "title": {
+    "name": {
       "en": "Brackets carry an implicit operation in front",
       "de": "Vor einer Klammer steht eine unsichtbare Operation"
     },
@@ -46,7 +46,7 @@
   },
   {
     "id": "meta.exponent-binds-tighter",
-    "title": {
+    "name": {
       "en": "Exponents bind tighter than coefficients and signs",
       "de": "Exponenten binden stärker als Koeffizienten und Vorzeichen"
     },
@@ -61,7 +61,7 @@
   },
   {
     "id": "meta.fraction-bar-brackets",
-    "title": {
+    "name": {
       "en": "The fraction bar is a bracket",
       "de": "Der Bruchstrich ist eine Klammer"
     },
@@ -75,7 +75,7 @@
   },
   {
     "id": "meta.only-multiplication-distributes",
-    "title": {
+    "name": {
       "en": "Only multiplication distributes over a sum",
       "de": "Nur die Multiplikation verteilt sich über eine Summe"
     },
@@ -89,7 +89,7 @@
   },
   {
     "id": "meta.dominant-op-last",
-    "title": {
+    "name": {
       "en": "The dominant operation is the last one applied",
       "de": "Die dominante Operation ist die zuletzt ausgeführte"
     },
@@ -106,7 +106,7 @@
   },
   {
     "id": "meta.bracket-chunk",
-    "title": {
+    "name": {
       "en": "Brackets make a chunk",
       "de": "Klammern bilden einen Chunk"
     },
@@ -120,7 +120,7 @@
   },
   {
     "id": "meta.multiplication-binds-tighter",
-    "title": {
+    "name": {
       "en": "Multiplication binds tighter than addition and subtraction",
       "de": "Multiplikation bindet stärker als Plus und Minus"
     },
@@ -134,7 +134,7 @@
   },
   {
     "id": "meta.dominant-op-tools",
-    "title": {
+    "name": {
       "en": "The dominant operation determines which tools apply",
       "de": "Die dominante Operation bestimmt die Werkzeuge"
     },
