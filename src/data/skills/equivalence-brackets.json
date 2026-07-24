@@ -6,7 +6,7 @@
     "title": "Bracket types are interchangeable",
     "note": "Round, square, and curly brackets group in exactly the same way: (a+b), [a+b] and {a+b} are identical.",
     "illustration": "(a + b) = [a + b] = \\{a + b\\}",
-    "governedBy": [
+    "restsOn": [
       "ix.brackets"
     ]
   },
@@ -17,7 +17,7 @@
     "title": "Redundant brackets",
     "note": "Brackets around something already whole can be dropped: ((a+b)) = (a+b) = a+b, and (x) = x.",
     "illustration": "((a + b)) = (a + b) = a + b",
-    "governedBy": [
+    "restsOn": [
       "ix.brackets"
     ]
   },
@@ -31,7 +31,7 @@
     "requires": [
       "equivalence.explicit-vs-implicit-product"
     ],
-    "governedBy": [
+    "restsOn": [
       "ix.precedence",
       "ix.brackets"
     ],
@@ -53,7 +53,7 @@
     "metaPatterns": [
       "meta.fraction-bar-brackets"
     ],
-    "governedBy": [
+    "restsOn": [
       "ix.fraction-bar"
     ],
     "errors": [
@@ -75,12 +75,9 @@
       "meta.three-minuses",
       "meta.implicit-op-before-bracket"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "th.negative-one-times",
-      "th.minus-over-sum"
-    ],
-    "governedBy": [
-      "th.negative-one-times",
+      "th.minus-over-sum",
       "def.sub",
       "ix.brackets"
     ],
@@ -103,10 +100,8 @@
       "meta.implicit-op-before-bracket",
       "meta.only-multiplication-distributes"
     ],
-    "justifiedBy": [
-      "ax.distributivity"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "ax.distributivity",
       "ix.juxtaposition",
       "ix.brackets"
     ],

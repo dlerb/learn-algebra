@@ -12,11 +12,9 @@
     "metaPatterns": [
       "meta.dominant-op-last"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "ax.add-associative",
-      "ax.add-commutative"
-    ],
-    "governedBy": [
+      "ax.add-commutative",
       "ix.precedence"
     ]
   },
@@ -48,11 +46,9 @@
     "metaPatterns": [
       "meta.dominant-op-last"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "ax.mul-associative",
-      "ax.mul-commutative"
-    ],
-    "governedBy": [
+      "ax.mul-commutative",
       "ix.juxtaposition",
       "ix.brackets",
       "ix.precedence"
@@ -85,10 +81,8 @@
     "metaPatterns": [
       "meta.dominant-op-last"
     ],
-    "justifiedBy": [
-      "def.pow"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "def.pow",
       "ix.pow",
       "th.negative-base"
     ]

@@ -43,11 +43,9 @@
     "metaPatterns": [
       "meta.dominant-op-last"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "ax.add-associative",
-      "ax.add-commutative"
-    ],
-    "governedBy": [
+      "ax.add-commutative",
       "ix.precedence"
     ],
     "errors": [

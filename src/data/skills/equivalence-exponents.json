@@ -9,7 +9,7 @@
     "requires": [
       "equivalence.explicit-vs-implicit-product"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.pow"
     ],
     "errors": [
@@ -30,11 +30,9 @@
     "metaPatterns": [
       "meta.juxtaposition"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.multiple",
-      "def.pow"
-    ],
-    "governedBy": [
+      "def.pow",
       "ix.juxtaposition",
       "ix.invisible-one"
     ],
@@ -56,7 +54,7 @@
     "metaPatterns": [
       "meta.exponent-binds-tighter"
     ],
-    "governedBy": [
+    "restsOn": [
       "ix.pow",
       "th.negative-base",
       "th.negative-one-times",
@@ -80,10 +78,8 @@
     "metaPatterns": [
       "meta.exponent-binds-tighter"
     ],
-    "justifiedBy": [
-      "pl.of-product"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "pl.of-product",
       "ix.pow",
       "th.negative-base"
     ],
@@ -102,7 +98,7 @@
     "requires": [
       "equivalence.exponent-as-repeated-product"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.pow-zero",
       "def.pow-neg"
     ]
@@ -122,11 +118,9 @@
     "metaPatterns": [
       "meta.exponent-binds-tighter"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.pow-zero",
-      "def.pow-neg"
-    ],
-    "governedBy": [
+      "def.pow-neg",
       "ix.pow",
       "th.negative-base"
     ]
@@ -145,10 +139,8 @@
     "metaPatterns": [
       "meta.exponent-binds-tighter"
     ],
-    "justifiedBy": [
-      "def.pow-rat"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "def.pow-rat",
       "ix.pow",
       "th.negative-base"
     ]
@@ -168,12 +160,10 @@
     "metaPatterns": [
       "meta.exponent-binds-tighter"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.pow-zero",
       "def.pow-neg",
-      "def.pow-rat"
-    ],
-    "governedBy": [
+      "def.pow-rat",
       "ix.pow",
       "th.negative-base"
     ]
@@ -192,11 +182,9 @@
     "metaPatterns": [
       "meta.only-multiplication-distributes"
     ],
-    "justifiedBy": [
+    "restsOn": [
       "def.pow",
-      "th.binomial-square"
-    ],
-    "governedBy": [
+      "th.binomial-square",
       "ix.pow",
       "th.negative-base"
     ],
@@ -218,10 +206,8 @@
     "metaPatterns": [
       "meta.only-multiplication-distributes"
     ],
-    "justifiedBy": [
-      "th.root-laws"
-    ],
-    "governedBy": [
+    "restsOn": [
+      "th.root-laws",
       "ix.root"
     ],
     "errors": [
@@ -242,7 +228,7 @@
     "metaPatterns": [
       "meta.only-multiplication-distributes"
     ],
-    "governedBy": [
+    "restsOn": [
       "ix.root"
     ],
     "errors": [
