@@ -8,8 +8,10 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "validate": "vite-node scripts/validate.ts",
-    "sweep-layers": "node scripts/sweep-layers.mjs"
+    "validate": "node scripts/content-format.mjs --check && vite-node scripts/validate.ts",
+    "sweep-layers": "node scripts/sweep-layers.mjs",
+    "format-content": "node scripts/content-format.mjs",
+    "format-content:check": "node scripts/content-format.mjs --check"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.7",
