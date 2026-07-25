@@ -195,8 +195,27 @@ Empirically grounded, and it only became available once errors carried frequency
    - [x] ~~`chunking.chunks-in-product`~~ **DONE**: added to `transformation.factor-common`
      and `-cancel-common-factor` as an ordinary prerequisite (you must read a term's
      factors before pulling one out). **Unreached 10 → 9.**
-   - [ ] **Next: author the three Tier-3 factoring skills.** That unblocks five skills at
-     once and is the only remaining repair for them.
+   - [x] ~~**Author the three Tier-3 factoring skills.**~~ **DONE 2026-07-25**, skills
+     **71 → 74**, unreached **9 → 7**. The `factoring` group is no longer a group of one:
+     `transformation.factor-difference-of-squares` (restsOn `th.difference-of-squares`),
+     `-factor-perfect-square` (`th.binomial-square` + `th.square-of-difference`),
+     `-factor-quadratic` (`ax.distributivity` + `th.collect-like-terms`). Each requires its
+     recognition shape, which is what closed the chain: `difference-of-squares`,
+     `classification.difference` and `perfect-square-trinomial` all went green.
+   - [ ] ⚠️ **BLOCKED, and the audit now says so precisely**: `factor-quadratic` has an
+     empty `errors[]`, so it is not seeded — and `quadratic-form` + `linear-form` stay red
+     behind it. The error is real and undocumented in our catalog:
+     **$x^2 + 5x + 6 \to (x+5)(x+6)$** — the visible numbers used directly as the bracket
+     numbers, instead of the pair that multiplies to $6$ and adds to $5$ (plus its sign
+     variants, $x^2 - 5x + 6 \to (x-2)(x+3)$).
+     **The blocker is the TOPIC taxonomy, not the authoring.** The six topic sections come
+     from `common_mistakes.md`'s A–F families, and that catalog was assembled from web
+     sources about *expression reading* — it has **no factoring family at all**. So this
+     error has nowhere to live. Needs a decision: add a 7th topic (`factoring`, which would
+     also house future Tier-3 factoring errors), or stretch one of the six. A user call —
+     do not force it into `distributing`, which means "distributing where there is no rule".
+     **This is also a general finding: the error layer is thin exactly where Tier 3 is,
+     because the evidence base was collected for a different question.**
 
    **Why an error cannot rescue these** (worth keeping — it is the general rule): failing
    to recognise a shape produces **no wrong answer**, only inaction. The student does not
