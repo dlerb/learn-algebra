@@ -1,124 +1,335 @@
-[
-  { "id": "anti.linearity", "kind": "anti-law", "corrupts": ["ax.distributivity"],
-    "name": { "en": "Linearity illusion", "de": "Linearitäts-Illusion" },
-    "note": { "en": "Every operation distributes over $+$. In truth only multiplication (and division by the numerator side) does.",
-              "de": "Jede Operation verteile sich über $+$. In Wahrheit tut das nur die Multiplikation (und die Division über den Zähler)." },
-    "instances": ["(a+b)^2 = a^2 + b^2", "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}", "\\frac{3x+2}{3} = x + 2"] },
-  { "id": "anti.commute-everything", "kind": "anti-law", "corrupts": ["ax.add-commutative", "ax.mul-commutative"],
-    "name": { "en": "Everything commutes", "de": "Alles ist vertauschbar" },
-    "note": { "en": "Commutativity over-generalized to subtraction and division.",
-              "de": "Kommutativität fälschlich auf Subtraktion und Division übertragen." },
-    "instances": ["a - b = b - a", "\\frac{a}{b} = \\frac{b}{a}"] },
-  { "id": "anti.conjoining", "kind": "anti-law", "corrupts": [],
-    "name": { "en": "Conjoining / closure compulsion", "de": "Zusammenziehen / Abschlusszwang" },
-    "note": { "en": "An unfinished sum must collapse to one term. Links to no true law — the drive is psychological: an open sum does not feel like an answer.",
-              "de": "Eine offene Summe müsse sich zu EINEM Term zusammenziehen lassen. Verzerrt kein wahres Gesetz — der Drang ist psychologisch: eine offene Summe fühlt sich nicht wie ein Resultat an." },
-    "instances": ["2 + 3x = 5x", "3x + 2y = 5xy", "x^2 + x = x^3"] },
-  { "id": "anti.partial-distribution", "kind": "anti-law", "corrupts": ["ax.distributivity"],
-    "name": { "en": "Partial distribution", "de": "Teilweises Verteilen" },
-    "note": { "en": "Distributing onto the first term only.",
-              "de": "Nur auf den ersten Summanden verteilt." },
-    "instances": ["-(a+b) = -a + b", "2(x+1) = 2x + 1"] },
-  { "id": "anti.repetition-confusion", "kind": "anti-law", "corrupts": ["def.multiple", "def.pow"],
-    "name": { "en": "The two repetitions confused", "de": "Die zwei Wiederholungen verwechselt" },
-    "note": { "en": "Repeated addition (multiple) and repeated multiplication (power) mixed up.",
-              "de": "Wiederholte Addition (Vielfaches) und wiederholte Multiplikation (Potenz) verwechselt." },
-    "instances": ["a^2 = 2a", "x + x = x^2"] },
-
-  { "id": "anti.exponent-arithmetic", "kind": "anti-law", "corrupts": ["pl.same-base", "pl.of-power"],
-    "name": { "en": "Exponent arithmetic confused", "de": "Exponenten-Arithmetik verwechselt" },
-    "note": { "en": "Powers combined by the wrong operation on the exponents: $x^a \\cdot x^b$ read as $x^{ab}$ (the exponents add), or $(x^a)^b$ as $x^{a+b}$ (they multiply).",
-              "de": "Potenzen mit der falschen Operation auf den Exponenten verbunden: $x^a \\cdot x^b$ als $x^{ab}$ gelesen (die Exponenten addieren sich), oder $(x^a)^b$ als $x^{a+b}$ (sie multiplizieren sich)." },
-    "instances": ["x^a \\cdot x^b = x^{ab}", "(x^a)^b = x^{a+b}"] },
-
-  { "id": "anti.power-of-product-partial", "kind": "anti-law", "corrupts": ["pl.of-product"],
-    "name": { "en": "Power not distributed over a product", "de": "Potenz nicht über das Produkt verteilt" },
-    "note": { "en": "A power over a product must reach every factor, the coefficient included; here it lands on one factor only.",
-              "de": "Eine Potenz über einem Produkt muss jeden Faktor erreichen, auch den Koeffizienten; hier trifft sie nur einen Faktor." },
-    "instances": ["(4x)^2 = 4x^2", "(ab)^n = ab^n"] },
-
-  { "id": "anti.fraction-addition", "kind": "anti-law", "corrupts": ["th.fraction-add"],
-    "name": { "en": "Fractions added straight across", "de": "Brüche direkt gliedweise addiert" },
-    "note": { "en": "Fractions with unlike denominators added numerator-over-numerator and denominator-over-denominator, skipping the common denominator: $\\frac{a}{b}+\\frac{c}{d}$ is $\\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$.",
-              "de": "Brüche mit ungleichen Nennern Zähler über Zähler und Nenner über Nenner addiert, ohne den gemeinsamen Nenner: $\\frac{a}{b}+\\frac{c}{d}$ ist $\\frac{ad+bc}{bd}$, nie $\\frac{a+c}{b+d}$." },
-    "instances": ["\\frac{a}{b} + \\frac{c}{d} = \\frac{a+c}{b+d}", "\\frac{1}{2} + \\frac{1}{3} = \\frac{2}{5}"] },
-
-  { "id": "mis.juxtaposition-as-plus", "kind": "misreading", "corrupts": ["ix.juxtaposition"],
-    "name": { "en": "Juxtaposition read as addition", "de": "Nebeneinander als Addition gelesen" },
-    "note": { "en": "$3x$ read as $3 + x$ — the mixed-number carryover ($2\\tfrac{1}{2} = 2 + \\tfrac{1}{2}$).",
-              "de": "$3x$ als $3 + x$ gelesen — der Übertrag von den gemischten Zahlen ($2\\tfrac{1}{2} = 2 + \\tfrac{1}{2}$)." },
-    "instances": ["3x = 3 + x"] },
-  { "id": "mis.invisible-one-lost", "kind": "misreading", "corrupts": ["ix.invisible-one"],
-    "name": { "en": "The invisible one lost", "de": "Die unsichtbare Eins verloren" },
-    "note": { "en": "\"$a$ has no coefficient\"; $a + 3a$ collected as $3a$.",
-              "de": "«$a$ hat keinen Koeffizienten»; $a + 3a$ wird zu $3a$ zusammengefasst." },
-    "instances": ["a + 3a = 3a"] },
-  { "id": "mis.minus-roles-confused", "kind": "misreading", "corrupts": ["th.negative-one-times", "def.sub"],
-    "name": { "en": "Minus roles confused", "de": "Minus-Rollen verwechselt" },
-    "note": { "en": "Every minus treated as binary subtraction; a unary minus dropped.",
-              "de": "Jedes Minus als Subtraktion behandelt; ein unäres Minus geht verloren." } },
-  { "id": "mis.subtraction-as-times-negative", "kind": "misreading", "corrupts": ["th.negative-one-times", "def.sub"],
-    "name": { "en": "Subtraction read as times-negative", "de": "Subtraktion als Mal-Minus gelesen" },
-    "note": { "en": "$a - b$ read as $a \\cdot (-b)$ — the $\\cdot(-1)$ reading over-applied to subtraction.",
-              "de": "$a - b$ als $a \\cdot (-b)$ gelesen — die $\\cdot(-1)$-Lesart fälschlich auf die Subtraktion übertragen." },
-    "instances": ["a - b = a \\cdot (-b)"] },
-  { "id": "mis.bracket-dissolved", "kind": "misreading", "corrupts": ["ix.brackets"],
-    "name": { "en": "Bracket dissolved without distributing", "de": "Klammer aufgelöst ohne zu verteilen" },
-    "note": { "en": "The bracket is dropped as if it did nothing.",
-              "de": "Die Klammer wird weggelassen, als hätte sie keine Wirkung." } },
-  { "id": "mis.redundant-brackets-kept", "kind": "misreading", "corrupts": ["ix.brackets"],
-    "name": { "en": "Redundant brackets left standing", "de": "Überflüssige Klammern bleiben stehen" },
-    "note": { "en": "The term stays needlessly complicated. Not a wrong-answer error: a fluency deficit, visible as slowness and clutter.",
-              "de": "Der Term bleibt unnötig kompliziert. Kein Fehler mit falschem Resultat: ein Geläufigkeitsdefizit, sichtbar als Langsamkeit und Unordnung." } },
-  { "id": "mis.precedence-ignored", "kind": "misreading", "corrupts": ["ix.precedence"],
-    "name": { "en": "Precedence ignored", "de": "Vorrang missachtet" },
-    "note": { "en": "Evaluated left to right: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$.",
-              "de": "Von links nach rechts gerechnet: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$." },
-    "instances": ["a + bc = (a + b)c"] },
-  { "id": "mis.fraction-bar-grouping-lost", "kind": "misreading", "corrupts": ["ix.fraction-bar"],
-    "name": { "en": "The bar's grouping lost", "de": "Die Klammerwirkung des Bruchstrichs verloren" },
-    "note": { "en": "The invisible brackets of the bar are dropped.",
-              "de": "Die unsichtbaren Klammern des Bruchstrichs werden fallengelassen." },
-    "instances": ["\\frac{a+b}{c} = a + \\frac{b}{c}"] },
-  { "id": "mis.linear-slash-overgrouped", "kind": "misreading", "corrupts": ["ix.fraction-bar"],
-    "name": { "en": "Linear slash over-grouped", "de": "Schrägstrich zu stark geklammert" },
-    "note": { "en": "Linear $a + b/c$ transcribed as if the whole left side were the numerator.",
-              "de": "Linear geschriebenes $a + b/c$ wird übertragen, als wäre die ganze linke Seite der Zähler." },
-    "instances": ["a + b/c = \\frac{a+b}{c}"] },
-  { "id": "mis.bar-not-division", "kind": "misreading", "corrupts": ["ix.fraction-bar", "ix.division-symbols"],
-    "name": { "en": "The fraction bar not recognized as division", "de": "Der Bruchstrich wird nicht als Division erkannt" },
-    "note": { "en": "The bar is seen as a picture of a fraction, not as the operation $a \\div b$.",
-              "de": "Der Strich wird als Bild eines Bruchs gesehen, nicht als die Operation $a \\div b$." } },
-  { "id": "mis.exponent-scope", "kind": "misreading", "corrupts": ["ix.power-precedence", "th.negative-base"],
-    "name": { "en": "Exponent scope misread", "de": "Geltungsbereich des Exponenten verlesen" },
-    "note": { "en": "The exponent applied to more than the immediately preceding atom.",
-              "de": "Der Exponent wird auf mehr als das unmittelbar davorstehende Zeichen angewendet." },
-    "instances": ["-a^2 = (-a)^2", "ab^2 = (ab)^2"] },
-  { "id": "mis.root-scope", "kind": "misreading", "corrupts": ["ix.root"],
-    "name": { "en": "Root scope misread", "de": "Geltungsbereich der Wurzel verlesen" },
-    "note": { "en": "The vinculum's grouping lost, or index and exponent swapped.",
-              "de": "Die Klammerwirkung des Wurzelstrichs geht verloren, oder Wurzelexponent und Potenz werden vertauscht." },
-    "instances": ["\\sqrt{a+b} = \\sqrt{a} + b", "\\sqrt[n]{a^m} = \\sqrt[m]{a^n}"] },
-  { "id": "mis.letters-differ", "kind": "misreading", "corrupts": ["pre.variables"],
-    "name": { "en": "Same letter treated as different values", "de": "Gleicher Buchstabe als verschieden behandelt" },
-    "note": { "en": "The two $a$'s in $a + a$ treated as free to differ.",
-              "de": "Die beiden $a$ in $a + a$ werden behandelt, als dürften sie verschieden sein." } },
-  { "id": "mis.order-blindness", "kind": "misreading", "corrupts": ["ix.coefficient-front"],
-    "name": { "en": "Non-canonical order not recognized", "de": "Nicht-kanonische Reihenfolge nicht erkannt" },
-    "note": { "en": "$x \\cdot 3$ not recognized as the same term as $3x$.",
-              "de": "$x \\cdot 3$ wird nicht als derselbe Term wie $3x$ erkannt." } },
-  { "id": "mis.adjacent-signs", "kind": "misreading", "corrupts": ["ix.no-adjacent-operator"],
-    "name": { "en": "Adjacent signs written unbracketed", "de": "Rechenzeichen ohne Klammern aneinandergereiht" },
-    "note": { "en": "Two operation signs written next to each other.",
-              "de": "Zwei Rechenzeichen werden direkt nebeneinander geschrieben." },
-    "instances": ["a + -b", "a - -b"] },
-
-  { "id": "sal.loudest-op-wins", "kind": "salience", "corrupts": ["ix.precedence"],
-    "name": { "en": "The loudest operation wins", "de": "Die auffälligste Operation gewinnt" },
-    "note": { "en": "The most visually prominent operation is named as the structure, instead of the dominant (last-applied) one: the $\\cdot$ in $3x + 2y$, or the $+$ trapped inside a bracket in $3(x+1)$.",
-              "de": "Die optisch auffälligste Operation wird als Struktur benannt statt der dominanten (zuletzt ausgeführten): das $\\cdot$ in $3x + 2y$ oder das $+$ in der Klammer von $3(x+1)$." } },
-  { "id": "sal.implicit-op-overlooked", "kind": "salience", "corrupts": ["ix.juxtaposition"],
-    "name": { "en": "The symbol-less operation overlooked", "de": "Die zeichenlose Operation übersehen" },
-    "note": { "en": "An operation with no visible symbol (juxtaposition) is not seen, so a term is split wrong: $3x$ read as the two chunks $3$ and $x$.",
-              "de": "Eine Operation ohne sichtbares Zeichen (Nebeneinanderschreiben) wird übersehen, sodass ein Term falsch zerlegt wird: $3x$ als die zwei Chunks $3$ und $x$ gelesen." } }
-]
+{
+  "layer": "errors",
+  "title": { "en": "Common mistakes", "de": "Häufige Fehler" },
+  "blurb": { "en": "The mistakes that actually get made — each one shown wrong, then right.",
+             "de": "Die Fehler, die wirklich passieren — jeder einmal falsch, dann richtig." },
+  "note": { "en": "The fundament tower's shadow: every error `corrupts` a card in fundamentals · numbers · powers · terms. Grouped by TOPIC (the student's reading order, authored — the tower's own sections are organised by kind of statement and make the wrong grouping here); `kind` cross-cuts topic and stays a tag on the entry.",
+            "de": "Der Schatten des Fundament-Turms: jeder Fehler verfälscht (`corrupts`) eine Karte in fundamentals · numbers · powers · terms. Gruppiert nach THEMA (die Lesereihenfolge der Schülerinnen und Schüler, von Hand gesetzt); `kind` quert das Thema und bleibt eine Markierung am Eintrag." },
+  "sections": [
+    {
+      "slug": "minus",
+      "title": { "en": "Minus & subtraction", "de": "Minus und Subtraktion" },
+      "blurb": { "en": "The minus wears more than one hat — operator on one number, operator between two — and most of these come from mixing them up.",
+                 "de": "Das Minus hat mehr als eine Rolle — Operator auf einer Zahl, Operator zwischen zweien — und die meisten dieser Fehler entstehen beim Verwechseln." },
+      "groups": [
+        {
+          "slug": "minus",
+          "errors": [
+            { "id": "mis.minus-roles-confused", "kind": "misreading", "frequency": 3,
+              "corrupts": ["th.negative-one-times", "def.sub"],
+              "name": { "en": "Minus roles confused", "de": "Minus-Rollen verwechselt" },
+              "note": { "en": "Every minus treated as binary subtraction; a unary minus dropped.",
+                        "de": "Jedes Minus als Subtraktion behandelt; ein unäres Minus geht verloren." },
+              "instances": [
+                { "from": "-(-3)", "wrong": "-3", "right": "3" },
+                { "from": "a - (-b)", "wrong": "a - b", "right": "a + b" }
+              ] },
+            { "id": "anti.commute-everything", "kind": "anti-law", "frequency": 2,
+              "corrupts": ["ax.add-commutative", "ax.mul-commutative"],
+              "name": { "en": "Everything commutes", "de": "Alles ist vertauschbar" },
+              "note": { "en": "Commutativity over-generalized to subtraction and division.",
+                        "de": "Kommutativität fälschlich auf Subtraktion und Division übertragen." },
+              "instances": [
+                { "from": "a - b", "wrong": "b - a", "right": "-(b - a)",
+                  "hint": { "en": "reversing a subtraction flips the whole thing",
+                            "de": "eine Subtraktion umzudrehen kehrt das Ganze um" } },
+                { "from": "\\frac{a}{b}", "wrong": "\\frac{b}{a}",
+                  "hint": { "en": "no rule — $\\frac{b}{a}$ is the reciprocal, a different number",
+                            "de": "keine Regel — $\\frac{b}{a}$ ist der Kehrwert, eine andere Zahl" } }
+              ] },
+            { "id": "mis.adjacent-signs", "kind": "misreading", "frequency": 2,
+              "corrupts": ["ix.no-adjacent-operator"],
+              "name": { "en": "Adjacent signs written unbracketed", "de": "Rechenzeichen ohne Klammern aneinandergereiht" },
+              "note": { "en": "Two operation signs written next to each other.",
+                        "de": "Zwei Rechenzeichen werden direkt nebeneinander geschrieben." },
+              "instances": [
+                { "wrong": "a + -b", "right": "a + (-b)" },
+                { "wrong": "a - -b", "right": "a - (-b)" }
+              ] },
+            { "id": "mis.subtraction-as-times-negative", "kind": "misreading", "frequency": 1,
+              "corrupts": ["th.negative-one-times", "def.sub"],
+              "name": { "en": "Subtraction read as times-negative", "de": "Subtraktion als Mal-Minus gelesen" },
+              "note": { "en": "$a - b$ read as $a \\cdot (-b)$ — the $\\cdot(-1)$ reading over-applied to subtraction.",
+                        "de": "$a - b$ als $a \\cdot (-b)$ gelesen — die $\\cdot(-1)$-Lesart fälschlich auf die Subtraktion übertragen." },
+              "instances": [
+                { "from": "a - b", "wrong": "a \\cdot (-b)", "right": "a + (-b)" }
+              ] }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "reading",
+      "title": { "en": "Reading an expression", "de": "Einen Term lesen" },
+      "blurb": { "en": "Before anything can be done to a term it has to be read correctly: what binds first, what a bracket covers, how far an exponent reaches.",
+                 "de": "Bevor an einem Term etwas gemacht werden kann, muss er richtig gelesen werden: was zuerst bindet, was eine Klammer umfasst, wie weit ein Exponent reicht." },
+      "groups": [
+        {
+          "slug": "reading",
+          "errors": [
+            { "id": "mis.precedence-ignored", "kind": "misreading", "frequency": 3,
+              "corrupts": ["ix.precedence"],
+              "name": { "en": "Precedence ignored", "de": "Vorrang missachtet" },
+              "note": { "en": "Evaluated left to right: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$.",
+                        "de": "Von links nach rechts gerechnet: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$." },
+              "instances": [
+                { "from": "2 + 3 \\cdot 4", "wrong": "20", "right": "14" },
+                { "from": "a + bc", "wrong": "(a + b)c", "right": "a + (b \\cdot c)" }
+              ] },
+            { "id": "mis.exponent-scope", "kind": "misreading", "frequency": 3,
+              "corrupts": ["ix.power-precedence", "th.negative-base"],
+              "name": { "en": "Exponent scope misread", "de": "Geltungsbereich des Exponenten verlesen" },
+              "note": { "en": "The exponent applied to more than the immediately preceding atom.",
+                        "de": "Der Exponent wird auf mehr als das unmittelbar davorstehende Zeichen angewendet." },
+              "instances": [
+                { "from": "-a^2", "wrong": "(-a)^2", "right": "-(a^2)" },
+                { "from": "ab^2", "wrong": "(ab)^2", "right": "a \\cdot (b^2)" }
+              ] },
+            { "id": "mis.bracket-dissolved", "kind": "misreading", "frequency": 2,
+              "corrupts": ["ix.brackets"],
+              "name": { "en": "Bracket dissolved without distributing", "de": "Klammer aufgelöst ohne zu verteilen" },
+              "note": { "en": "The bracket is dropped as if it did nothing.",
+                        "de": "Die Klammer wird weggelassen, als hätte sie keine Wirkung." },
+              "instances": [
+                { "from": "(a + b)c", "wrong": "a + bc", "right": "ac + bc" },
+                { "from": "(a + b)^2", "wrong": "a + b^2", "right": "a^2 + 2ab + b^2" }
+              ] },
+            { "id": "sal.loudest-op-wins", "kind": "salience", "frequency": 2,
+              "corrupts": ["ix.precedence"],
+              "name": { "en": "The loudest operation wins", "de": "Die auffälligste Operation gewinnt" },
+              "note": { "en": "The most visually prominent operation is named as the structure, instead of the dominant (last-applied) one: the $\\cdot$ in $3x + 2y$, or the $+$ trapped inside a bracket in $3(x+1)$.",
+                        "de": "Die optisch auffälligste Operation wird als Struktur benannt statt der dominanten (zuletzt ausgeführten): das $\\cdot$ in $3x + 2y$ oder das $+$ in der Klammer von $3(x+1)$." },
+              "instances": [
+                { "from": "3x + 2y", "wrong": "\\text{a product}", "right": "\\text{a sum}",
+                  "hint": { "en": "the $\\cdot$ is louder, but the $+$ is applied last",
+                            "de": "das $\\cdot$ ist auffälliger, aber das $+$ wird zuletzt ausgeführt" } },
+                { "from": "3(x+1)", "wrong": "\\text{a sum}", "right": "\\text{a product}",
+                  "hint": { "en": "the $+$ is trapped inside the bracket — it is not the dominant operation",
+                            "de": "das $+$ steckt in der Klammer — es ist nicht die dominante Operation" } }
+              ] },
+            { "id": "mis.redundant-brackets-kept", "kind": "misreading", "frequency": 1,
+              "corrupts": ["ix.brackets"],
+              "name": { "en": "Redundant brackets left standing", "de": "Überflüssige Klammern bleiben stehen" },
+              "note": { "en": "The term stays needlessly complicated. Not a wrong-answer error: a fluency deficit, visible as slowness and clutter.",
+                        "de": "Der Term bleibt unnötig kompliziert. Kein Fehler mit falschem Resultat: ein Geläufigkeitsdefizit, sichtbar als Langsamkeit und Unordnung." },
+              "instances": [
+                { "wrong": "(ab)c \\neq abc",
+                  "hint": { "en": "the same product — those brackets change nothing, so they may be dropped",
+                            "de": "dasselbe Produkt — diese Klammern ändern nichts und dürfen wegfallen" } }
+              ] }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "distributing",
+      "title": { "en": "Distributing where there is no rule", "de": "Verteilen, wo es keine Regel gibt" },
+      "blurb": { "en": "Multiplication distributes over a sum. Almost nothing else does — but the pattern is so familiar it gets fired everywhere.",
+                 "de": "Die Multiplikation verteilt sich über eine Summe. Fast nichts sonst — aber das Muster ist so vertraut, dass es überall abgerufen wird." },
+      "groups": [
+        {
+          "slug": "distributing",
+          "errors": [
+            { "id": "anti.linearity", "kind": "anti-law", "frequency": 3,
+              "corrupts": ["ax.distributivity"],
+              "name": { "en": "Linearity illusion", "de": "Linearitäts-Illusion" },
+              "note": { "en": "Every operation distributes over $+$. In truth only multiplication (and division by the numerator side) does.",
+                        "de": "Jede Operation verteile sich über $+$. In Wahrheit tut das nur die Multiplikation (und die Division über den Zähler)." },
+              "instances": [
+                { "from": "(a+b)^2", "wrong": "a^2 + b^2", "right": "a^2 + 2ab + b^2" },
+                { "from": "\\sqrt{a+b}", "wrong": "\\sqrt{a} + \\sqrt{b}",
+                  "hint": { "en": "no rule — a sum under a root does not split",
+                            "de": "keine Regel — eine Summe unter der Wurzel lässt sich nicht aufteilen" } },
+                { "from": "\\frac{3x+2}{3}", "wrong": "x + 2", "right": "x + \\frac{2}{3}" }
+              ] },
+            { "id": "anti.partial-distribution", "kind": "anti-law", "frequency": 3,
+              "corrupts": ["ax.distributivity"],
+              "name": { "en": "Partial distribution", "de": "Teilweises Verteilen" },
+              "note": { "en": "Distributing onto the first term only.",
+                        "de": "Nur auf den ersten Summanden verteilt." },
+              "instances": [
+                { "from": "-(a+b)", "wrong": "-a + b", "right": "-a - b" },
+                { "from": "2(x+1)", "wrong": "2x + 1", "right": "2x + 2" }
+              ] },
+            { "id": "anti.power-of-product-partial", "kind": "anti-law", "frequency": 2,
+              "corrupts": ["pl.of-product"],
+              "name": { "en": "Power not distributed over a product", "de": "Potenz nicht über das Produkt verteilt" },
+              "note": { "en": "A power over a product must reach every factor, the coefficient included; here it lands on one factor only.",
+                        "de": "Eine Potenz über einem Produkt muss jeden Faktor erreichen, auch den Koeffizienten; hier trifft sie nur einen Faktor." },
+              "instances": [
+                { "from": "(4x)^2", "wrong": "4x^2", "right": "16x^2" },
+                { "from": "(ab)^n", "wrong": "ab^n", "right": "a^n b^n" }
+              ] }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "powers",
+      "title": { "en": "Powers & roots", "de": "Potenzen und Wurzeln" },
+      "blurb": { "en": "A power is repeated multiplication, not repeated addition — and its laws act on the exponents, which is where the operations get swapped.",
+                 "de": "Eine Potenz ist wiederholte Multiplikation, nicht wiederholte Addition — und ihre Gesetze wirken auf den Exponenten, wo die Operationen vertauscht werden." },
+      "groups": [
+        {
+          "slug": "powers",
+          "errors": [
+            { "id": "anti.exponent-arithmetic", "kind": "anti-law", "frequency": 3,
+              "corrupts": ["pl.same-base", "pl.of-power"],
+              "name": { "en": "Exponent arithmetic confused", "de": "Exponenten-Arithmetik verwechselt" },
+              "note": { "en": "Powers combined by the wrong operation on the exponents: $x^a \\cdot x^b$ read as $x^{ab}$ (the exponents add), or $(x^a)^b$ as $x^{a+b}$ (they multiply).",
+                        "de": "Potenzen mit der falschen Operation auf den Exponenten verbunden: $x^a \\cdot x^b$ als $x^{ab}$ gelesen (die Exponenten addieren sich), oder $(x^a)^b$ als $x^{a+b}$ (sie multiplizieren sich)." },
+              "instances": [
+                { "from": "x^a \\cdot x^b", "wrong": "x^{ab}", "right": "x^{a+b}" },
+                { "from": "(x^a)^b", "wrong": "x^{a+b}", "right": "x^{ab}" }
+              ] },
+            { "id": "anti.repetition-confusion", "kind": "anti-law", "frequency": 2,
+              "corrupts": ["def.multiple", "def.pow"],
+              "name": { "en": "The two repetitions confused", "de": "Die zwei Wiederholungen verwechselt" },
+              "note": { "en": "Repeated addition (multiple) and repeated multiplication (power) mixed up.",
+                        "de": "Wiederholte Addition (Vielfaches) und wiederholte Multiplikation (Potenz) verwechselt." },
+              "instances": [
+                { "from": "a^2", "wrong": "2a", "right": "a \\cdot a" },
+                { "from": "x + x", "wrong": "x^2", "right": "2x" }
+              ] },
+            { "id": "mis.root-scope", "kind": "misreading", "frequency": 2,
+              "corrupts": ["ix.root"],
+              "name": { "en": "Root scope misread", "de": "Geltungsbereich der Wurzel verlesen" },
+              "note": { "en": "The vinculum's grouping lost, or index and exponent swapped.",
+                        "de": "Die Klammerwirkung des Wurzelstrichs geht verloren, oder Wurzelexponent und Potenz werden vertauscht." },
+              "instances": [
+                { "from": "\\sqrt{a+b}", "wrong": "\\sqrt{a} + b",
+                  "hint": { "en": "the bar covers the whole radicand — both terms are under it",
+                            "de": "der Strich überdeckt den ganzen Radikanden — beide Glieder stehen darunter" } },
+                { "from": "\\sqrt[n]{a^m}", "wrong": "\\sqrt[m]{a^n}", "right": "a^{\\frac{m}{n}}" }
+              ] }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "fractions",
+      "title": { "en": "Fractions", "de": "Brüche" },
+      "blurb": { "en": "The fraction bar is two things at once: a division, and a pair of invisible brackets. Losing either one is a mistake.",
+                 "de": "Der Bruchstrich ist zweierlei zugleich: eine Division und ein Paar unsichtbarer Klammern. Beides kann verloren gehen." },
+      "groups": [
+        {
+          "slug": "fractions",
+          "errors": [
+            { "id": "anti.fraction-addition", "kind": "anti-law", "frequency": 3,
+              "corrupts": ["th.fraction-add"],
+              "name": { "en": "Fractions added straight across", "de": "Brüche direkt gliedweise addiert" },
+              "note": { "en": "Fractions with unlike denominators added numerator-over-numerator and denominator-over-denominator, skipping the common denominator: $\\frac{a}{b}+\\frac{c}{d}$ is $\\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$.",
+                        "de": "Brüche mit ungleichen Nennern Zähler über Zähler und Nenner über Nenner addiert, ohne den gemeinsamen Nenner: $\\frac{a}{b}+\\frac{c}{d}$ ist $\\frac{ad+bc}{bd}$, nie $\\frac{a+c}{b+d}$." },
+              "instances": [
+                { "from": "\\frac{a}{b} + \\frac{c}{d}", "wrong": "\\frac{a+c}{b+d}", "right": "\\frac{ad+bc}{bd}" },
+                { "from": "\\frac{1}{2} + \\frac{1}{3}", "wrong": "\\frac{2}{5}", "right": "\\frac{5}{6}" }
+              ] },
+            { "id": "mis.fraction-bar-grouping-lost", "kind": "misreading", "frequency": 2,
+              "corrupts": ["ix.fraction-bar"],
+              "name": { "en": "The bar's grouping lost", "de": "Die Klammerwirkung des Bruchstrichs verloren" },
+              "note": { "en": "The invisible brackets of the bar are dropped.",
+                        "de": "Die unsichtbaren Klammern des Bruchstrichs werden fallengelassen." },
+              "instances": [
+                { "from": "\\frac{a+b}{c}", "wrong": "a + \\frac{b}{c}", "right": "\\frac{a}{c} + \\frac{b}{c}" }
+              ] },
+            { "id": "mis.linear-slash-overgrouped", "kind": "misreading", "frequency": 1,
+              "corrupts": ["ix.fraction-bar"],
+              "name": { "en": "Linear slash over-grouped", "de": "Schrägstrich zu stark geklammert" },
+              "note": { "en": "Linear $a + b/c$ transcribed as if the whole left side were the numerator.",
+                        "de": "Linear geschriebenes $a + b/c$ wird übertragen, als wäre die ganze linke Seite der Zähler." },
+              "instances": [
+                { "from": "a + b/c", "wrong": "\\frac{a+b}{c}", "right": "a + \\frac{b}{c}" }
+              ] },
+            { "id": "mis.bar-not-division", "kind": "misreading", "frequency": 1,
+              "corrupts": ["ix.fraction-bar", "ix.division-symbols"],
+              "name": { "en": "The fraction bar not recognized as division", "de": "Der Bruchstrich wird nicht als Division erkannt" },
+              "note": { "en": "The bar is seen as a picture of a fraction, not as the operation $a \\div b$.",
+                        "de": "Der Strich wird als Bild eines Bruchs gesehen, nicht als die Operation $a \\div b$." },
+              "instances": [
+                { "wrong": "\\frac{3}{4} \\neq 3 : 4",
+                  "hint": { "en": "the bar IS division — a fraction is a quotient, not a different kind of object",
+                            "de": "der Strich IST die Division — ein Bruch ist ein Quotient, keine andere Art von Objekt" } }
+              ] }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "terms",
+      "title": { "en": "Terms & variables", "de": "Terme und Variablen" },
+      "blurb": { "en": "A letter stands for a number, and an unfinished sum is allowed to stay unfinished. Most mistakes here come from wanting one tidy answer.",
+                 "de": "Ein Buchstabe steht für eine Zahl, und eine offene Summe darf offen bleiben. Die meisten Fehler hier entstehen aus dem Wunsch nach einer einzigen aufgeräumten Antwort." },
+      "groups": [
+        {
+          "slug": "terms",
+          "errors": [
+            { "id": "anti.conjoining", "kind": "anti-law", "frequency": 3,
+              "corrupts": [],
+              "name": { "en": "Conjoining / closure compulsion", "de": "Zusammenziehen / Abschlusszwang" },
+              "note": { "en": "An unfinished sum must collapse to one term. Links to no true law — the drive is psychological: an open sum does not feel like an answer.",
+                        "de": "Eine offene Summe müsse sich zu EINEM Term zusammenziehen lassen. Verzerrt kein wahres Gesetz — der Drang ist psychologisch: eine offene Summe fühlt sich nicht wie ein Resultat an." },
+              "instances": [
+                { "from": "2 + 3x", "wrong": "5x",
+                  "hint": { "en": "nothing to do — unlike terms stay apart, and the open sum IS the answer",
+                            "de": "nichts zu tun — ungleichartige Glieder bleiben getrennt, und die offene Summe IST das Resultat" } },
+                { "from": "3x + 2y", "wrong": "5xy",
+                  "hint": { "en": "nothing to do — $x$ and $y$ are different numbers",
+                            "de": "nichts zu tun — $x$ und $y$ sind verschiedene Zahlen" } },
+                { "from": "x^2 + x", "wrong": "x^3",
+                  "hint": { "en": "nothing to do — adding does not add exponents",
+                            "de": "nichts zu tun — Addieren addiert keine Exponenten" } }
+              ] },
+            { "id": "mis.juxtaposition-as-plus", "kind": "misreading", "frequency": 2,
+              "corrupts": ["ix.juxtaposition"],
+              "name": { "en": "Juxtaposition read as addition", "de": "Nebeneinander als Addition gelesen" },
+              "note": { "en": "$3x$ read as $3 + x$ — the mixed-number carryover ($2\\tfrac{1}{2} = 2 + \\tfrac{1}{2}$).",
+                        "de": "$3x$ als $3 + x$ gelesen — der Übertrag von den gemischten Zahlen ($2\\tfrac{1}{2} = 2 + \\tfrac{1}{2}$)." },
+              "instances": [
+                { "from": "3x", "wrong": "3 + x", "right": "3 \\cdot x" }
+              ] },
+            { "id": "mis.invisible-one-lost", "kind": "misreading", "frequency": 2,
+              "corrupts": ["ix.invisible-one"],
+              "name": { "en": "The invisible one lost", "de": "Die unsichtbare Eins verloren" },
+              "note": { "en": "\"$a$ has no coefficient\"; $a + 3a$ collected as $3a$.",
+                        "de": "«$a$ hat keinen Koeffizienten»; $a + 3a$ wird zu $3a$ zusammengefasst." },
+              "instances": [
+                { "from": "a + 3a", "wrong": "3a", "right": "4a" }
+              ] },
+            { "id": "sal.implicit-op-overlooked", "kind": "salience", "frequency": 2,
+              "corrupts": ["ix.juxtaposition"],
+              "name": { "en": "The symbol-less operation overlooked", "de": "Die zeichenlose Operation übersehen" },
+              "note": { "en": "An operation with no visible symbol (juxtaposition) is not seen, so a term is split wrong: $3x$ read as the two chunks $3$ and $x$.",
+                        "de": "Eine Operation ohne sichtbares Zeichen (Nebeneinanderschreiben) wird übersehen, sodass ein Term falsch zerlegt wird: $3x$ als die zwei Chunks $3$ und $x$ gelesen." },
+              "instances": [
+                { "from": "2a \\text{, } a = 3", "wrong": "23", "right": "6" },
+                { "from": "3x", "wrong": "\\text{two things side by side}", "right": "\\text{one product}" }
+              ] },
+            { "id": "mis.letters-differ", "kind": "misreading", "frequency": 1,
+              "corrupts": ["pre.variables"],
+              "name": { "en": "The letter read as a label, not a number", "de": "Der Buchstabe als Etikett statt als Zahl gelesen" },
+              "note": { "en": "A letter is taken for a thing, a unit or a word rather than for a number — and then the two $a$'s in $a + a$ are treated as free to differ.",
+                        "de": "Ein Buchstabe wird für ein Ding, eine Einheit oder ein Wort gehalten statt für eine Zahl — und dann werden die beiden $a$ in $a + a$ behandelt, als dürften sie verschieden sein." },
+              "instances": [
+                { "from": "3m", "wrong": "3 \\text{ metres}", "right": "3 \\cdot m",
+                  "hint": { "en": "$m$ is a number here, not a unit and not a word",
+                            "de": "$m$ ist hier eine Zahl, keine Einheit und kein Wort" } },
+                { "wrong": "a + a \\neq 2a",
+                  "hint": { "en": "the same letter is the same number, every time it appears",
+                            "de": "derselbe Buchstabe ist dieselbe Zahl, jedes Mal wenn er auftritt" } }
+              ] },
+            { "id": "mis.order-blindness", "kind": "misreading", "frequency": 1,
+              "corrupts": ["ix.coefficient-front"],
+              "name": { "en": "Non-canonical order not recognized", "de": "Nicht-kanonische Reihenfolge nicht erkannt" },
+              "note": { "en": "$x \\cdot 3$ not recognized as the same term as $3x$.",
+                        "de": "$x \\cdot 3$ wird nicht als derselbe Term wie $3x$ erkannt." },
+              "instances": [
+                { "wrong": "a \\cdot 3 \\neq 3a",
+                  "hint": { "en": "the same product — writing the number in front is a convention, not a change",
+                            "de": "dasselbe Produkt — die Zahl vorne zu schreiben ist eine Konvention, keine Änderung" } }
+              ] }
+          ]
+        }
+      ]
+    }
+  ]
+}

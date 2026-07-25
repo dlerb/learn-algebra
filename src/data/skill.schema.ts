@@ -173,14 +173,39 @@ export function validateMetaPatternRefs(skills: Skill[], metas: MetaPatternsFile
 export const errorKind = z.enum(['anti-law', 'misreading', 'salience'])
 export type ErrorKind = z.infer<typeof errorKind>
 
+// An INSTANCE is one concrete wrong→right pair — the unit the /errors page shows a
+// student and the unit `WrongRight.vue` renders. `wrong` is ALWAYS a false claim;
+// `from` and `right` are the shorthand for the common case where that claim is an
+// equation with a shared left-hand side, so the two candidates can be stacked
+// against an invariant stem (`(a+b)^2` ✗ `a^2+b^2` / ✓ `a^2+2ab+b^2`).
+//
+// Three shapes fall out of that, all authored, none derivable (a card states the
+// general law; the correction of a specific instance usually lives on a DIFFERENT
+// card than the one the error `corrupts` — see docs/TODO.md):
+//   rewrite  — from + wrong + right       the common case
+//   dead end — from + wrong + hint        the right move is "none": no rule applies,
+//                                         or the term was already finished
+//   belief   — wrong (a `\neq` claim) + hint
+//               the student thinks two equal forms differ; nothing was transformed,
+//               so there is no stem and no rewrite, only a false claim to deny.
+export const errorInstance = z.object({
+  from: z.string().optional(),    // the shared stem, KaTeX; absent = the claim stands alone
+  wrong: z.string(),              // the false claim / the wrong continuation, KaTeX
+  right: z.string().optional(),   // the correction, KaTeX
+  hint: localizedString.optional(),  // prose correction — required when `right` cannot say it
+})
+export type ErrorInstance = z.output<typeof errorInstance>
+
 export const errorDef = z.object({
   id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),  // the single identifier — a dotted slug
-  kind: errorKind,
+  kind: errorKind,                 // cross-cuts `topic`, so it stays a field, not a tree level
+  topic: z.string(),               // POSITIONAL — the section slug, re-attached by parseErrorTree
+  frequency: z.number().int().min(1).max(3).default(1),  // ★–★★★, from docs/common_mistakes.md
   corrupts: z.array(z.string()).default([]),
   name: localizedString,
   note: localizedString,                        // prose beside `instances`: what the misconception is (like a card's note beside its latex)
-  instances: z.array(z.string()).default([]),   // typical wrong forms, KaTeX
-})
+  instances: z.array(errorInstance).min(1),     // see above; at least one, enforced so a
+})                                              // bare error cannot silently reach the page
 export type ErrorDef = z.output<typeof errorDef>
 
 const errorPrefixOfKind: Record<ErrorKind, string> =
@@ -211,6 +236,81 @@ export function validateErrors(
     for (const r of e.corrupts) {
       if (!pool.ids.has(r)) throw new Error(`Error "${e.id}" corrupts unknown ${pool.name} "${r}".`)
     }
+    // The ✗ must never be shown without its ✓. An instance with neither `right`
+    // nor `hint` would render as an unanswered wrong form — the one thing the
+    // research on incorrect worked examples says not to do.
+    e.instances.forEach((x, i) => {
+      if (!x.right && !x.hint) {
+        throw new Error(`Error "${e.id}" instances[${i}] has no correction: give it "right" or "hint".`)
+      }
+    })
+  }
+}
+
+// ── Error tree file ──────────────────────────────────────────────────────────
+// Errors are authored as ONE containment tree, the same shape as a fundament
+// layer (`layer → sections[] → groups[] → entries[]`, page order = array order at
+// every level) — see src/data/layers.ts. The sections are TOPICS, not kinds: a
+// topic is how a student looks a mistake up ("I keep messing up fractions"),
+// whereas `kind` (anti-law / misreading / salience) cross-cuts it — the `minus`
+// topic holds three misreadings and an anti-law — so kind stays a field on the
+// entry and is shown in inspection mode only. `topic` is POSITIONAL and injected
+// here, exactly as parseSkillTree injects kind/group.
+//
+// The group level is kept even though every topic currently has a single
+// anonymous group: that is precisely how the `terms` layer is authored, and it
+// leaves room to sub-group a topic later without a schema change.
+const errorGroupNode = z.object({
+  slug: z.string(),
+  title: localizedString.optional(),
+  blurb: localizedString.optional(),
+  errors: z.array(z.record(z.string(), z.unknown())).min(1),
+})
+const errorSectionNode = z.object({
+  slug: z.string(),
+  title: localizedString,
+  blurb: localizedString.optional(),
+  groups: z.array(errorGroupNode).min(1),
+})
+export const errorTreeFile = z.object({
+  layer: z.literal('errors'),
+  title: localizedString,
+  blurb: localizedString,   // the student-facing lede
+  note: localizedString,    // the authoring/inspection note
+  sections: z.array(errorSectionNode).min(1),
+})
+export type ErrorSection = z.output<typeof errorSectionNode>
+
+export interface ErrorTree {
+  meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
+  errors: ErrorDef[]                                    // flat, in tree order
+  sections: { slug: string; title: LocalizedString; blurb?: LocalizedString; errors: ErrorDef[] }[]
+}
+
+export function parseErrorTree(raw: unknown): ErrorTree {
+  const parsed = errorTreeFile.safeParse(raw)
+  if (!parsed.success) throw new Error(`Invalid errors file:\n${z.prettifyError(parsed.error)}`)
+  const f = parsed.data
+
+  const seenSlug = new Set<string>()
+  const sections = f.sections.map(s => {
+    if (seenSlug.has(s.slug)) throw new Error(`errors: duplicate section slug "${s.slug}"`)
+    seenSlug.add(s.slug)
+    const errors = s.groups.flatMap(g => g.errors.map(e => {
+      const result = errorDef.safeParse({ ...e, topic: s.slug })
+      if (!result.success) {
+        const id = (e as { id?: string })?.id ?? `(no id) in section ${s.slug}`
+        throw new Error(`Invalid error "${id}":\n${z.prettifyError(result.error)}`)
+      }
+      return result.data
+    }))
+    return { slug: s.slug, title: s.title, blurb: s.blurb, errors }
+  })
+
+  return {
+    meta: { title: f.title, blurb: f.blurb, note: f.note },
+    errors: sections.flatMap(s => s.errors),
+    sections,
   }
 }
 
@@ -399,7 +499,12 @@ export function validateLatexCompiles(
     }
   }
   for (const e of errors) {
-    e.instances.forEach((x, i) => check(e.id, `instances[${i}]`, x))
+    e.instances.forEach((x, i) => {
+      if (x.from) check(e.id, `instances[${i}].from`, x.from)
+      check(e.id, `instances[${i}].wrong`, x.wrong)
+      if (x.right) check(e.id, `instances[${i}].right`, x.right)
+      proseMath(x.hint).forEach(m => check(e.id, `instances[${i}].hint`, m))
+    })
     proseMath(e.note).forEach(m => check(e.id, 'note', m))
   }
   for (const m of metas) proseMath(m.rule).forEach(s => check(m.id, 'rule', s))

@@ -4,7 +4,82 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — the WrongRight component (2026-07-24)
+## ✅ DONE 2026-07-25 — WrongRight + the errors page as the student page
+
+`/errors` **is** the student-facing mistakes page (no separate `/mistakes` route — the
+nav's **Curated** group was always the student layer). One body of content, two modes.
+
+**Data.** `errors.json` is now a containment tree — `sections[] → groups[] → errors[]`,
+the same shape as a fundament layer, page order = array order. **Sections are TOPICS**,
+authored, six of them (`minus` · `reading` · `distributing` · `powers` · `fractions` ·
+`terms`), matching `docs/common_mistakes.md`'s A–F families so doc and app share one
+taxonomy. ⚠️ **Topic is NOT derivable from `corrupts`** — this was tried and rejected:
+the tower's sections are organised by *kind of statement*, so `anti.linearity` (the most-
+cited algebra error) resolves to "Axioms · Bridge axioms", and `anti.repetition-confusion`
+corrupts cards in two different layers. `kind` (anti-law/misreading/salience) **cross-cuts**
+topic — the `minus` topic holds three misreadings and an anti-law — so it stays a *field*,
+shown in inspection only. `topic` is positional, injected by `parseErrorTree`.
+
+**Instances reshaped** `string[]` → `{ from?, wrong, right?, hint? }[]`. `wrong` is always
+a *false claim*; `from`/`right` is the shorthand for the common case where that claim is an
+equation with a shared stem, so the two candidates stack against an invariant background
+(variation theory: pair only what shares a stem). Three shapes fall out: **rewrite**
+(from+wrong+right), **dead end** (from+wrong+hint — "no rule applies" / "already finished",
+which is `anti.conjoining`'s entire content), **belief** (a `\neq` claim + hint, for the four
+errors where nothing was transformed). All 25 errors now carry instances (was 17/25) and
+`frequency` 1–3 (the catalog's ★). Load-time validator: **every instance needs `right` or
+`hint`** — a ✗ is never shown without its ✓.
+
+**Component.** `src/components/WrongRight.vue`, props `from?/wrong/right?/hint?/relation`.
+`relation="style"` is the card `avoid`/`prefer` case, where the two sides **are equal** —
+so they are joined by a literal `=` and the marks go muted. Same red ✗ for "false" and for
+"clumsy but correct" would teach ✗ = wrong and then contradict it. `LayerView` now uses it.
+
+**Mode.** `src/inspect.ts` — **presentation is the DEFAULT**; `inspect` is opt-in and its
+toggle only renders in dev or with `?inspect`, so a build shows students the page and
+nothing else. The author is in this app far more than any student, so defaulting to
+inspection would let the student view rot unseen.
+
+**Also:** `src/data/layers.json` **deleted** (its title/blurb moved to the head of the
+errors tree) — its `layers` export collided by name with the tower manifest in
+`src/data/layers.ts`. `layers` now means the tower and only the tower.
+
+### Findings to act on
+- [ ] **`sal.loudest-op-wins` vs `mis.precedence-ignored` did NOT collide** — the merge
+  predicted before authoring never materialised, and the reason is worth keeping: salience
+  is a **classification** error (*name* the structure: `3x + 2y` called a product) while
+  precedence-ignored is an **evaluation** error (`2 + 3·4 = 20`). Both salience errors turn
+  out to be classification-shaped, so their ✗/✓ are names of structure, not expressions.
+  Keep both; no action beyond not re-opening it.
+- [ ] **Two errors resist a single topic**, and both look too broad rather than
+  mis-filed: `anti.commute-everything` (one instance is a minus error, one a fraction
+  error) and `anti.partial-distribution` (minus vs coefficient). Filed under `minus` and
+  `distributing` respectively. Splitting each in two is the likely fix — decide when the
+  drill layer needs them separately.
+- [ ] **Nine errors are still cited by no skill** (the audit line lists them). Now more
+  visible than before, since each has instances and renders as a full card.
+- [ ] German `hint` prose is authored but unreviewed by a native reader.
+
+### Follow-up — manifest unification (deliberately deferred)
+Skills and metapatterns should join the same container: extend `src/data/layers.ts` into
+**one manifest for all seven layers** (four `fundament`, three `curated`) with a `family`
+discriminator driving the nav grouping `App.vue` hardcodes. Then the three curated pages
+share one parser, one set of validators, and one presentation/inspection switch — but
+**per-layer card renderers**, since a card, a skill, an error and a metapattern carry
+genuinely different fields and a generic renderer would be a pile of `v-if`s. Deferred on
+purpose: it touches three views for no user-visible gain, and errors had to prove the
+container carries a second, non-tower layer first. Notes: metapatterns is still a flat
+array of 11 (no sections); skills is one layer split across four files by section, which
+the manifest should bless rather than the filesystem be changed.
+
+Metapatterns is the cheap next one (already authored as student-facing bilingual
+takeaways; `summarizes` is its only real inspection field). **Skills last, and
+under-invested** — a skill stripped to student view is a *progress* surface, and it cannot
+be that until the drill runtime exists.
+
+---
+
+## Superseded — the original WrongRight handover (2026-07-24)
 
 Extract the wrong→right (✗/✓) presentation into a reusable component and use it across
 the app. The user liked the wrong→right pairing in `docs/common_mistakes.md` and asked
@@ -31,12 +106,16 @@ The ✗/✓ structure is latent in every layer's data:
 - [ ] Then TaxonomyView (skill `illustration` ✓ beside its errors' instances ✗); later,
   drill feedback (✗ your answer → ✓ correct).
 
-**OPEN DESIGN QUESTION — settle before ErrorsView:** an error `instance` (✗) has no
-authored ✓ partner. (a) DERIVE it from the corrupted card's `latex` — no schema change,
-but a card states the *general law*, not the specific correction of that instance, so
-the pairing can be loose; or (b) add an optional per-instance `corrected[]` field —
-authored, exact, but schema + data work. **Recommendation: derive first, author
-corrections only where derivation is ambiguous.** This is the crux.
+**OPEN DESIGN QUESTION — RESOLVED 2026-07-25, and the recommendation below was WRONG.**
+Deriving the ✓ from the corrupted card does not work: a card states the *general law*,
+and the correction of a specific instance usually lives on a **different card than the
+one the error corrupts** (`anti.linearity` corrupts `ax.distributivity`; its ✓ comes from
+`th.binomial-square`). `anti.conjoining` corrupts nothing at all. And roughly a third of
+corrections are prose, not formulas. All corrections are **authored** — see the DONE
+entry at the top.
+
+~~(a) DERIVE it from the corrupted card's `latex`; or (b) add an optional per-instance
+`corrected[]` field. Recommendation: derive first.~~
 
 Infra: `MathExpr.vue` (KaTeX renderer, props `latex` + `display`), `RichText.vue`
 (prose + inline `$…$`). Rationale + full ✗/✓ table: `docs/common_mistakes.md`.
