@@ -33,9 +33,14 @@ function cardLink(id: string) {
 // Two hops, no authoring: error → `corrupts` (cards) → the meta-patterns that
 // summarize those cards. The error is the disease, the meta-pattern is the
 // positive rule that stops it firing — the most useful link on the page.
+//
+// Capped at two. The hop is generous (`mis.exponent-scope` reaches four), and the
+// names are sentence-length, so an uncapped list ran three grey lines and became
+// the loudest thing on an entry — louder than the mistake it hangs off.
+const META_LIMIT = 2
 function metasFor(e: ErrorDef) {
   const cards = new Set(e.corrupts)
-  return metaPatterns.filter(m => m.summarizes.some(c => cards.has(c)))
+  return metaPatterns.filter(m => m.summarizes.some(c => cards.has(c))).slice(0, META_LIMIT)
 }
 
 interface ErrVM {
@@ -85,44 +90,51 @@ const sections = computed(() => errorTree.sections.map(s => ({
     <section v-for="s in sections" :key="s.slug" class="group">
       <div class="group-title"><h3>{{ s.title }}</h3></div>
       <p v-if="s.blurb" class="group-blurb">{{ s.blurb }}</p>
-      <div class="cards">
-        <article v-for="e in s.items" :key="e.id" class="card" :class="{ unused: inspect && e.unused }">
-          <div v-if="inspect" class="card-top">
-            <span class="eyebrow">{{ e.kind }} · {{ e.id }}</span>
-            <span class="top-right">
-              <span v-if="e.unused" class="badge unused">unused</span>
-              <button class="disclose" @click="toggle(open, e.id)">{{ open.has(e.id) ? 'less' : 'details' }}</button>
-            </span>
-          </div>
-
-          <div class="card-head">
-            <h4>{{ e.name }}</h4>
-            <span class="freq" :title="`${e.frequency} of 3 — how often the sources flag it`">{{ '★'.repeat(e.frequency) }}</span>
+      <!-- Landscape rows, not a mosaic of boxes: the content is math that does not
+           reflow, so narrow columns broke the pairs and made 25 bordered cards
+           compete with each other. Name and prose sit in a left rail, the ✗/✓ table
+           gets the width, and a hairline does the separating a border used to. -->
+      <div class="entries">
+        <article v-for="e in s.items" :key="e.id" class="entry" :class="{ unused: inspect && e.unused }">
+          <div class="rail">
+            <div v-if="inspect" class="card-top">
+              <span class="eyebrow">{{ e.kind }} · {{ e.id }}</span>
+              <span class="top-right">
+                <span v-if="e.unused" class="badge unused">unused</span>
+                <button class="disclose" @click="toggle(open, e.id)">{{ open.has(e.id) ? 'less' : 'details' }}</button>
+              </span>
+            </div>
+            <h4 class="name">
+              {{ e.name }}
+              <span class="freq" :title="`${e.frequency} of 3 — how often the sources flag it`">{{ '★'.repeat(e.frequency) }}</span>
+            </h4>
+            <p class="body"><RichText :text="e.note" /></p>
           </div>
 
           <!-- The pairs ARE the content: a student arrives recognising a shape,
-               not reading a definition, so they lead and the prose follows. -->
-          <WrongRight
-            v-for="(x, i) in e.instances" :key="i"
-            :from="x.from" :wrong="x.wrong" :right="x.right"
-            :hint="x.hint ? t(x.hint) : undefined"
-          />
-
-          <p class="body"><RichText :text="e.note" /></p>
-
-          <div v-if="e.rules.length || e.metas.length" class="links">
-            <p v-if="e.rules.length" class="link-line">
-              <span class="link-label">The rule this breaks:</span>
-              <template v-for="(r, i) in e.rules" :key="r.id">
-                <span v-if="i" class="sep">·</span>
-                <RouterLink class="lnk" :to="`/${r.layer}`">{{ r.name }}</RouterLink>
-              </template>
-            </p>
-            <p v-for="m in e.metas" :key="m.id" class="link-line">
-              <span class="link-label">Read more:</span>
-              <RouterLink class="lnk" to="/metapatterns">{{ m.name }}</RouterLink>
-            </p>
+               not reading a definition. One shared grid so stem / ✗ / ✓ line up
+               as columns across every instance on the card. -->
+          <div class="wr-rows">
+            <WrongRight
+              v-for="(x, i) in e.instances" :key="i"
+              :from="x.from" :wrong="x.wrong" :right="x.right"
+              :hint="x.hint ? t(x.hint) : undefined"
+            />
           </div>
+
+          <!-- Its own grid cell, not part of the rail: on a phone the entry
+               collapses to one column in DOM order, and the pairs must reach the
+               reader before the links do. -->
+          <p v-if="e.rules.length || e.metas.length" class="links">
+            <template v-for="(r, i) in e.rules" :key="r.id">
+              <span v-if="i" class="sep">·</span>
+              <RouterLink class="lnk rule" :to="`/${r.layer}`">{{ r.name }}</RouterLink>
+            </template>
+            <template v-for="m in e.metas" :key="m.id">
+              <span class="sep">·</span>
+              <RouterLink class="lnk" to="/metapatterns">{{ m.name }}</RouterLink>
+            </template>
+          </p>
 
           <div v-if="inspect && open.has(e.id)" class="details">
             <dl class="fields">
@@ -158,33 +170,45 @@ const sections = computed(() => errorTree.sections.map(s => ({
 .mode-toggle.on { background: var(--text); border-color: var(--text); color: #fff; }
 .unused-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
 
-.group-title { display: flex; align-items: center; gap: .4rem; margin: 1.8rem 0 .3rem; }
+.group-title { display: flex; align-items: center; gap: .4rem; margin: 2.2rem 0 .3rem; }
 .group-title h3 { font-size: .95rem; font-weight: 700; color: var(--text); margin: 0; }
-.group-blurb { margin: 0 0 .7rem; font-size: .8rem; line-height: 1.5; color: var(--text-muted); max-width: 68ch; }
-.cards { display: grid; grid-template-columns: 1fr; gap: .7rem; }
-@media (min-width: 700px) { .cards { grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); } }
+.group-blurb { margin: 0 0 .3rem; font-size: .8rem; line-height: 1.5; color: var(--text-muted); max-width: 68ch; }
 
-.card { position: relative; border: 1px solid var(--border); border-radius: var(--radius); padding: .8rem .9rem .8rem; background: var(--surface); }
-.card.unused { border-style: dashed; border-color: var(--warn-border); }
-.card-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .3rem; }
+/* One landscape row per mistake, separated by a hairline. */
+.entries { display: grid; }
+.entry { display: grid; grid-template-columns: 1fr; gap: .45rem 2rem; padding: .95rem 0; border-top: 1px solid var(--border); }
+@media (min-width: 820px) {
+  .entry { grid-template-columns: minmax(0, 21rem) minmax(0, 1fr); align-items: start; }
+  .rail { grid-area: 1 / 1; }
+  .links { grid-area: 2 / 1; }
+  .wr-rows { grid-area: 1 / 2 / span 2 / 3; }
+}
+.entry.unused .rail { border-left: 2px dashed var(--warn-border); padding-left: .6rem; margin-left: -.8rem; }
+
+.rail { min-width: 0; }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .2rem; }
 .eyebrow { flex: 1; min-width: 0; font-size: .6rem; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .top-right { display: flex; align-items: center; gap: .35rem; flex-shrink: 0; }
-.card-head { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
-.card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); }
-.freq { font-size: .68rem; color: var(--text-faint); letter-spacing: .06em; flex-shrink: 0; }
+.name { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); line-height: 1.4; }
+.freq { font-size: .62rem; color: var(--text-faint); letter-spacing: .08em; margin-left: .3rem; white-space: nowrap; }
 .disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
 .disclose:hover { color: var(--accent); }
 
-.body { font-size: .82rem; color: var(--text-muted); margin: .7rem 0 0; line-height: 1.5; }
+.body { font-size: .8rem; color: var(--text-muted); margin: .3rem 0 0; line-height: 1.5; }
 
-.links { margin-top: .6rem; display: grid; gap: .15rem; }
-.link-line { margin: 0; font-size: .74rem; line-height: 1.5; color: var(--text-faint); }
-.link-label { margin-right: .35rem; }
-.lnk { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
+/* One line, no labels: the rule comes first and is weighted, the meta-patterns
+   trail it. Labelled two-line link blocks were louder than the mistakes. */
+.links { margin: .35rem 0 0; font-size: .72rem; line-height: 1.6; color: var(--text-faint); }
+.lnk { color: var(--text-faint); text-decoration: none; border-bottom: 1px solid var(--border); }
+.lnk.rule { color: var(--text-muted); }
 .lnk:hover { color: var(--accent); border-color: var(--accent); }
-.sep { margin: 0 .3rem; color: var(--text-faint); }
+.sep { margin: 0 .3rem; color: var(--border-strong); }
 
-.details { margin-top: .65rem; border-top: 1px solid var(--border); padding-top: .55rem; }
+/* The shared grid WrongRight fills: stem | ✗ wrong | ✓ right as real columns,
+   so several instances on one card line up instead of scattering. */
+.wr-rows { display: grid; grid-template-columns: auto auto minmax(0, 1fr); column-gap: 1.1rem; row-gap: .35rem; align-items: baseline; min-width: 0; }
+
+.details { grid-column: 1 / -1; margin-top: .3rem; border-top: 1px solid var(--border); padding-top: .55rem; }
 .fields { margin: 0; display: grid; gap: .32rem; }
 .field { display: grid; grid-template-columns: 92px 1fr; gap: .5rem; align-items: baseline; }
 .field dt { font-size: .7rem; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
