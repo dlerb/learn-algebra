@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
 import WrongRight from '../components/WrongRight.vue'
+import OpenInSource from '../components/OpenInSource.vue'
 import { errorTree, skills, metaPatterns } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type ErrorDef, type LocalizedString } from '../data/skill.schema'
@@ -114,6 +115,7 @@ const sections = computed(() => errorTree.sections.map(s => ({
               <span class="eyebrow">{{ e.kind }} · {{ e.id }}</span>
               <span class="top-right">
                 <span v-if="e.unused" class="badge unused">unused</span>
+                <OpenInSource :id="e.id" />
                 <button class="disclose" @click="toggle(open, e.id)">{{ open.has(e.id) ? 'less' : 'details' }}</button>
               </span>
             </div>

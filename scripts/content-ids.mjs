@@ -62,9 +62,46 @@ export function entityIndex(files = contentFiles()) {
   return { index, duplicates }
 }
 
-// CLI: the invariant check.
+/** id → `{ id, file, line, path }`, the source location of an entity.
+ *
+ *  The LINE is found by text search rather than by counting the tree, because a
+ *  line number is a property of the bytes and nothing else. `"id": "th.foo"` is
+ *  unambiguous: the key is part of the pattern, so a bare mention of the same id
+ *  in a `basedOn` array cannot match, and canonical form (one space after the
+ *  colon — see scripts/content-format.mjs) makes the spacing predictable.
+ *
+ *  Resolved fresh on every call against the file as it is on disk right now.
+ *  Nothing is cached, so an edit in VS Code between two clicks cannot produce a
+ *  stale line. */
+export function locate(id, files = contentFiles()) {
+  const { index } = entityIndex(files)
+  const hit = index.get(id)
+  if (!hit) return null
+  const text = fs.readFileSync(hit.file, 'utf8')
+  const needle = `"id": ${JSON.stringify(id)}`
+  const at = text.indexOf(needle)
+  // The index found the entity, so the text must contain it. If it does not,
+  // the file is not in canonical form and `pnpm validate` would have said so —
+  // fall back to the file's first line rather than guessing.
+  const line = at === -1 ? 1 : text.slice(0, at).split('\n').length
+  return { id, file: hit.file, line, path: hit.path }
+}
+
+// CLI: `node scripts/content-ids.mjs` checks the invariant,
+//      `node scripts/content-ids.mjs <id>` prints one entity's source location.
 if (import.meta.filename === process.argv[1]) {
   const files = contentFiles()
+  const wanted = process.argv[2]
+  if (wanted) {
+    const hit = locate(wanted, files)
+    if (!hit) {
+      console.error(`✗ no entity with id "${wanted}"`)
+      process.exit(1)
+    }
+    console.log(`${hit.file}:${hit.line}`)
+    console.log(`  path: ${hit.path.join(' → ')}`)
+    process.exit(0)
+  }
   const { index, duplicates } = entityIndex(files)
   if (duplicates.length) {
     console.error(`\n✗ ${duplicates.length} duplicate id(s) across ${files.length} content files:\n`)

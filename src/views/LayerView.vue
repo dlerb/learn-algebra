@@ -5,6 +5,7 @@ import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import WrongRight from '../components/WrongRight.vue'
+import OpenInSource from '../components/OpenInSource.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
 import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Group, type Section } from '../data/layers'
@@ -134,7 +135,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
             <!-- Signature cards: a glyph over a type. Selected by `c.symbol`, not by
                  kind — a card carrying a symbol IS this shape, whatever it is called. -->
             <article v-if="c.symbol" :id="c.id" class="op" :class="{ dimmed: !matched(c, s.kind), targeted: c.id === targetId }">
-              <div class="op-eyebrow">{{ c.id }}</div>
+              <div class="op-eyebrow">{{ c.id }}<OpenInSource :id="c.id" /></div>
               <div class="op-top">
                 <span class="op-sym"><MathExpr :latex="c.symbol" /></span>
                 <span class="op-type"><MathExpr :latex="c.type!" /></span>
@@ -148,6 +149,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
             <article v-else :id="c.id" class="card" :class="{ dimmed: !matched(c, s.kind), targeted: c.id === targetId }">
               <div class="card-top">
                 <span class="eyebrow">{{ c.id }}</span>
+                <OpenInSource :id="c.id" />
                 <button class="disclose" @click="toggle(open, c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
               </div>
               <div class="card-head"><h4>{{ t(c.name) }}</h4></div>

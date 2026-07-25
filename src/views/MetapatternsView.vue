@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
+import OpenInSource from '../components/OpenInSource.vue'
 import { metaTree, metaPatterns, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type MetaPatternDef, type LocalizedString } from '../data/skill.schema'
@@ -88,6 +89,7 @@ const items = computed(() => metaPatterns.map(m => ({
             <span class="eyebrow">{{ m.id }}</span>
             <span class="top-right">
               <span v-if="m.unused" class="badge unused">unused</span>
+              <OpenInSource :id="m.id" />
               <button class="disclose" @click="toggle(open, m.id)">{{ open.has(m.id) ? 'less' : 'details' }}</button>
             </span>
           </div>
