@@ -1,74 +1,121 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
-import { metaPatterns, skills } from '../data'
+import { metaTree, metaPatterns, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
-import { loc, type MetaPatternDef } from '../data/skill.schema'
+import { loc, type MetaPatternDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
+import { inspect, inspectAvailable } from '../inspect'
 
-// The DECODING lens. A metapattern is a reading heuristic — how to parse the
-// notation into structure. Like errors, it is curation that points DOWN into the
-// tower: since the 2026-07-24 cleanup each `summarizes` a card code only (never
-// an error), so the curated layers form a clean stack. This page renders them as
-// a flat list; a card code resolves to its name via cardIndex.
-function label(id: string): string {
-  const card = cardIndex.get(id)
-  return card ? `${id} · ${loc(card.card.name, lang.value)}` : id
-}
+// The DECODING lens, and the second curated page to get the presentation /
+// inspection split (src/inspect.ts). A metapattern is the POSITIVE twin of an
+// error: /errors says "here is the mistake, here is the fix", this page says
+// "here is the reading rule that stops it happening". Both halves of that pairing
+// are derived, never authored — metapattern → summarizes → card ← corrupts ←
+// error — which is why neither layer references the other directly.
+const t = (ls: LocalizedString) => loc(ls, lang.value)
+const L = computed(() => lang.value === 'de'
+  ? { reads: 'liest', prevents: 'verhindert' }
+  : { reads: 'reads',  prevents: 'prevents' })
+
+const route = useRoute()
+const targetId = computed(() => route.hash.slice(1))
 
 const citedMetas = new Set(skills.flatMap(s => s.metaPatterns))
 const unused = computed(() => metaPatterns.filter(m => !citedMetas.has(m.id)).length)
 
 const open = ref(new Set<string>())
 const jsonOpen = ref(new Set<string>())
-const toggle = (id: string) => (open.value.has(id) ? open.value.delete(id) : open.value.add(id))
-const toggleJson = (id: string) => (jsonOpen.value.has(id) ? jsonOpen.value.delete(id) : jsonOpen.value.add(id))
+const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add(id))
 
-interface MetaVM {
-  id: string; name: string; rule: string
-  summarizes: string[]; unused: boolean; json: string
+function cardLink(id: string) {
+  const e = cardIndex.get(id)
+  return { id, name: e ? t(e.card.name) : id, layer: e?.layer.slug }
 }
-function metaVM(m: MetaPatternDef): MetaVM {
-  return {
-    id: m.id, name: loc(m.name, lang.value), rule: loc(m.rule, lang.value),
-    summarizes: m.summarizes.map(label), unused: !citedMetas.has(m.id), json: JSON.stringify(m, null, 2),
-  }
+
+// The mirror of the /errors page's "read more" link, walked the other way: the
+// mistakes this rule heads off. Capped, because `meta.dominant-op-last` reaches
+// five and the error names are sentence-length.
+const PREVENTS_LIMIT = 4
+function preventedBy(m: MetaPatternDef) {
+  const cards = new Set(m.summarizes)
+  return errorPatterns
+    .filter(e => e.corrupts.some(c => cards.has(c)))
+    .sort((a, b) => b.frequency - a.frequency)
+    .slice(0, PREVENTS_LIMIT)
+    .map(e => ({ id: e.id, name: t(e.name) }))
 }
-const items = computed(() => metaPatterns.map(metaVM))
+
+const items = computed(() => metaPatterns.map(m => ({
+  id: m.id, name: t(m.name), rule: t(m.rule),
+  cards: m.summarizes.map(cardLink),
+  errors: preventedBy(m),
+  unused: !citedMetas.has(m.id), json: JSON.stringify(m, null, 2),
+})))
 </script>
 
 <template>
   <div class="metav">
     <div class="layer-bar">
       <div class="bar-left">
-        <h2 class="metav-title">Metapatterns</h2>
+        <h2 class="metav-title">{{ t(metaTree.meta.title) }}</h2>
+        <NPopover v-if="inspect" trigger="click" placement="bottom-start">
+          <template #trigger><button class="info" aria-label="About metapatterns">i</button></template>
+          <div class="pop"><RichText :text="t(metaTree.meta.note)" /></div>
+        </NPopover>
       </div>
       <div class="bar-right">
-        <span v-if="unused" class="unused-chip" title="cited by no skill yet">{{ unused }} unused</span>
+        <span v-if="inspect && unused" class="unused-chip" title="cited by no skill yet">{{ unused }} unused</span>
+        <button v-if="inspectAvailable" class="mode-toggle" :class="{ on: inspect }" @click="inspect = !inspect">
+          {{ inspect ? 'inspecting' : 'inspect' }}
+        </button>
       </div>
     </div>
-    <p class="role">How to read the notation — each <strong>summarizes</strong> the cards it decodes.</p>
+    <p class="role">{{ t(metaTree.meta.blurb) }}</p>
 
-    <div class="cards">
-      <article v-for="m in items" :key="m.id" class="card" :class="{ unused: m.unused }">
-        <div class="card-top">
-          <span class="eyebrow">metapattern</span>
-          <span class="top-right">
-            <span v-if="m.unused" class="badge unused">unused</span>
-            <button class="disclose" @click="toggle(m.id)">{{ open.has(m.id) ? 'less' : 'details' }}</button>
-          </span>
+    <!-- Flat: eleven rules need no sections. Same landscape row as /errors so the
+         Curated group reads as one thing — name in the rail, the rule in the wide
+         column, derived cross-links underneath. -->
+    <div class="entries">
+      <article
+        v-for="m in items" :key="m.id" :id="m.id"
+        class="entry" :class="{ unused: inspect && m.unused, targeted: m.id === targetId }"
+      >
+        <div class="rail">
+          <div v-if="inspect" class="card-top">
+            <span class="eyebrow">{{ m.id }}</span>
+            <span class="top-right">
+              <span v-if="m.unused" class="badge unused">unused</span>
+              <button class="disclose" @click="toggle(open, m.id)">{{ open.has(m.id) ? 'less' : 'details' }}</button>
+            </span>
+          </div>
+          <h4 class="name">{{ m.name }}</h4>
         </div>
-        <div class="card-head"><h4>{{ m.name }}</h4></div>
-        <p class="body"><RichText :text="m.rule" /></p>
-        <div v-if="open.has(m.id)" class="details">
+
+        <p class="rule"><RichText :text="m.rule" /></p>
+
+        <div v-if="m.cards.length || m.errors.length" class="refs">
+          <p v-if="m.cards.length" class="ref-line">
+            <span class="ref-label">{{ L.reads }}</span>
+            <RouterLink v-for="c in m.cards" :key="c.id" class="chip card" :to="`/${c.layer}#${c.id}`">{{ c.name }}</RouterLink>
+          </p>
+          <p v-if="m.errors.length" class="ref-line">
+            <span class="ref-label">{{ L.prevents }}</span>
+            <RouterLink v-for="e in m.errors" :key="e.id" class="chip" :to="`/errors#${e.id}`">{{ e.name }}</RouterLink>
+          </p>
+        </div>
+
+        <div v-if="inspect && open.has(m.id)" class="details">
           <dl class="fields">
             <div class="field"><dt>id</dt><dd><code>{{ m.id }}</code></dd></div>
-            <div v-if="m.summarizes.length" class="field">
+            <div v-if="m.cards.length" class="field">
               <dt>summarizes</dt>
-              <dd><span v-for="(x, i) in m.summarizes" :key="i" class="chip">{{ x }}</span></dd>
+              <dd><span v-for="c in m.cards" :key="c.id" class="chip">{{ c.id }} · {{ c.name }}</span></dd>
             </div>
           </dl>
-          <button class="json-toggle" @click="toggleJson(m.id)">{{ jsonOpen.has(m.id) ? 'hide json' : 'json' }}</button>
+          <button class="json-toggle" @click="toggle(jsonOpen, m.id)">{{ jsonOpen.has(m.id) ? 'hide json' : 'json' }}</button>
           <pre v-if="jsonOpen.has(m.id)" class="json">{{ m.json }}</pre>
         </div>
       </article>
@@ -77,40 +124,55 @@ const items = computed(() => metaPatterns.map(metaVM))
 </template>
 
 <style scoped>
-.metav { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
+.metav { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
 .layer-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem; }
 .bar-left { display: flex; align-items: center; gap: .5rem; }
 .bar-right { display: flex; align-items: center; gap: .6rem; }
 .metav-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; }
-.role { margin: 0 0 .5rem; font-size: .8rem; line-height: 1.45; color: var(--text-muted); max-width: 60ch; }
-.role strong { font-weight: 600; color: var(--text); }
+.role { margin: 0 0 .5rem; font-size: .8rem; line-height: 1.45; color: var(--text-muted); max-width: 62ch; }
+.info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
+.info:hover { color: var(--accent); border-color: var(--accent); }
+.pop { max-width: 300px; font-size: .8rem; line-height: 1.45; color: var(--text); }
+.mode-toggle { font-size: .7rem; padding: .16rem .55rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-faint); cursor: pointer; }
+.mode-toggle.on { background: var(--text); border-color: var(--text); color: #fff; }
 .unused-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
 
-.cards { display: grid; grid-template-columns: 1fr; gap: .7rem; margin-top: 1rem; }
-@media (min-width: 560px) { .cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
+.entries { display: grid; margin-top: 1rem; }
+.entry { display: grid; grid-template-columns: 1fr; gap: .45rem 2rem; padding: .95rem 0; border-top: 1px solid var(--border); scroll-margin-top: 4.5rem; }
+@media (min-width: 820px) {
+  .entry { grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); align-items: start; }
+  .rail { grid-area: 1 / 1; }
+  .rule { grid-area: 1 / 2; }
+  .refs { grid-area: 2 / 1 / 3 / -1; }
+}
+.entry.targeted { background: var(--chip-bg); box-shadow: 0 0 0 .55rem var(--chip-bg); border-radius: 2px; }
+.entry.unused .rail { border-left: 2px dashed var(--warn-border); padding-left: .6rem; margin-left: -.8rem; }
 
-.card { position: relative; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem .9rem .8rem; background: var(--surface); }
-.card.unused { border-style: dashed; border-color: var(--warn-border); }
-.card-top { position: absolute; top: .35rem; left: .9rem; right: .9rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.rail { min-width: 0; }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .2rem; }
 .eyebrow { flex: 1; min-width: 0; font-size: .6rem; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .top-right { display: flex; align-items: center; gap: .35rem; flex-shrink: 0; }
-.card-head { display: flex; align-items: baseline; gap: .5rem; }
-.card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); }
+.name { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); line-height: 1.4; }
 .disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
 .disclose:hover { color: var(--accent); }
-.body { font-size: .84rem; color: var(--text); margin: .5rem 0 0; line-height: 1.45; }
 
-.details { margin-top: .65rem; border-top: 1px solid var(--border); padding-top: .55rem; }
+.rule { margin: 0; font-size: .85rem; line-height: 1.6; color: var(--text); }
+
+.refs { margin: .1rem 0 0; display: grid; gap: .3rem; }
+.ref-line { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem; }
+.ref-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-right: .1rem; }
+.chip { font-size: .7rem; padding: .12rem .5rem; max-width: 100%; background: var(--chip-bg); color: var(--text-muted); border: 1px solid transparent; border-radius: 999px; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+a.chip:hover { color: var(--accent); border-color: var(--accent); }
+a.chip.card { color: var(--text); }
+
+.details { grid-column: 1 / -1; margin-top: .3rem; border-top: 1px solid var(--border); padding-top: .55rem; }
 .fields { margin: 0; display: grid; gap: .32rem; }
 .field { display: grid; grid-template-columns: 92px 1fr; gap: .5rem; align-items: baseline; }
 .field dt { font-size: .7rem; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .field dd { margin: 0; font-size: .8rem; color: var(--text); display: flex; flex-wrap: wrap; gap: .3rem; align-items: baseline; }
 .field dd code { font-size: .74rem; color: var(--text-muted); }
-.chip { font-size: .7rem; padding: .1rem .45rem; background: var(--chip-bg); color: var(--text-muted); border-radius: 999px; }
-
 .badge.unused { font-size: .62rem; padding: .1rem .4rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; }
-
 .json-toggle { margin-top: .55rem; font-size: .68rem; color: var(--text-muted); background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: .12rem .45rem; cursor: pointer; }
 .json-toggle:hover { color: var(--text); }
 .json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: #374151; }

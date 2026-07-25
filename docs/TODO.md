@@ -314,10 +314,27 @@ container carries a second, non-tower layer first. Notes: metapatterns is still 
 array of 11 (no sections); skills is one layer split across four files by section, which
 the manifest should bless rather than the filesystem be changed.
 
-Metapatterns is the cheap next one (already authored as student-facing bilingual
-takeaways; `summarizes` is its only real inspection field). **Skills last, and
-under-invested** — a skill stripped to student view is a *progress* surface, and it cannot
-be that until the drill runtime exists.
+- [x] ~~**Metapatterns presentation pass.**~~ **DONE 2026-07-25.** `/metapatterns` now has
+  the presentation/inspection split, the landscape row layout and the chip vocabulary of
+  `/errors`, so the Curated group reads as one thing.
+  - `metapatterns.json` gained a **layer head** (`layer`/`title`/`blurb`/`note` +
+    `patterns[]`), matching `errors.json`, so the page lede is content rather than
+    hardcoded view prose. **The list stays FLAT** — eleven rules need no sections, and
+    that was half the point: it proves the container tolerates a flat layer before the
+    manifest commits to a shape. `metaPatterns` downstream is still the plain array, so no
+    consumer changed. (`scripts/sweep-layers.mjs` needed the `.patterns` hop.)
+  - **New derived cross-link, the mirror of the errors page's**: each rule lists the
+    mistakes it PREVENTS, walked metapattern → `summarizes` → card ← `corrupts` ← error.
+    No authoring, and it is the pitch for the whole layer — *learn this one rule and these
+    four mistakes stop happening*. Capped at 4 (`meta.dominant-op-last` reaches five).
+  - **Both curated pages are now deep-linkable and cross-link BOTH ways**: entries carry
+    `:id`, the router resolves the hash, and the arrived-at entry gets `.targeted`. So
+    /errors "read →" lands on the exact rule, and /metapatterns "prevents →" lands on the
+    exact mistake. Verified end to end.
+
+**Skills last, and under-invested** — a skill stripped to student view is a *progress*
+surface, and it cannot be that until the drill runtime exists. **Now hard-blocked by the
+drill freeze** (see the banner at the top).
 
 ---
 

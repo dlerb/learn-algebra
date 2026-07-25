@@ -155,6 +155,29 @@ export type MetaPatternDef = z.infer<typeof metaPatternDef>
 export const metaPatternsFile = z.array(metaPatternDef)
 export type MetaPatternsFile = z.infer<typeof metaPatternsFile>
 
+// Authored since 2026-07-25 with a layer head, like errors.json — title, the
+// student-facing `blurb` (the page lede) and the authoring `note`, then the
+// entries. The list stays FLAT: eleven patterns need no sections, and proving the
+// container tolerates a flat layer is half the point of doing metapatterns before
+// the manifest unification. `metaPatterns` downstream is still the plain array.
+export const metaPatternsTree = z.object({
+  layer: z.literal('metapatterns'),
+  title: localizedString,
+  blurb: localizedString,
+  note: localizedString,
+  patterns: z.array(metaPatternDef).min(1),
+})
+export interface MetaTree {
+  meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
+  patterns: MetaPatternsFile
+}
+export function parseMetaTree(raw: unknown): MetaTree {
+  const r = metaPatternsTree.safeParse(raw)
+  if (!r.success) throw new Error(`Invalid metapatterns file:\n${z.prettifyError(r.error)}`)
+  const { title, blurb, note, patterns } = r.data
+  return { meta: { title, blurb, note }, patterns }
+}
+
 // Cross-check: every metaPattern a skill references must exist; ids are globally unique.
 export function validateMetaPatternRefs(skills: Skill[], metas: MetaPatternsFile): void {
   const dupId = metas.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)

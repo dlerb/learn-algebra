@@ -2,10 +2,10 @@
 // duplicate id, a dangling group, or a dangling meta-pattern reference throws
 // here immediately with the offending id named.
 import {
-  parseSkillTree, parseDrills, parseErrorTree, metaPatternsFile,
+  parseSkillTree, parseDrills, parseErrorTree, parseMetaTree,
   validateUniqueIds, validateSkillKinds, validateMetaPatternRefs, validateSkillLinks,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Drill, type GroupsFile, type MetaPatternsFile, type ErrorDef, type ErrorTree,
+  type Drill, type GroupsFile, type MetaPatternsFile, type MetaTree, type ErrorDef, type ErrorTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
 import metasRaw from './metapatterns.json'
@@ -57,7 +57,8 @@ export const skillKinds: GroupsFile = skillTree.skillKinds
 // blurb) was deleted 2026-07-25 — that metadata now lives at the head of the
 // errors tree itself, and its export here collided by name with the tower manifest
 // in src/data/layers.ts. `layers` means the tower, and only the tower.
-export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
+export const metaTree: MetaTree = parseMetaTree(metasRaw)
+export const metaPatterns: MetaPatternsFile = metaTree.patterns
 
 // The fundament's shadow: false laws and misreadings, each `corrupts` a card in
 // the tower (src/data/layers.ts). The laws/conventions files they used to point
