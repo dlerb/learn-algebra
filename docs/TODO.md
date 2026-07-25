@@ -141,25 +141,43 @@ Empirically grounded, and it only became available once errors carried frequency
 - *Skills no error reaches* — seeded from skills naming an error (directly or via a drill
   pitfall's `explainedBy`), closed downward over `requires`. Currently **16/71**.
 
-⚠️ **The 16 are not one problem, they are three, with opposite repairs:**
-1. **Wire it** — the error exists, the skill just doesn't cite it
-   (`equivalence.redundant-brackets` ↔ `mis.redundant-brackets-kept`,
-   `equivalence.order-…` ↔ `mis.order-blindness`). Cheapest, do first.
-2. **Author the error** — the 4 exponent-extension skills
-   (`zero-and-one-exponent`, `negative-exponent`, `fractional-exponent-root`,
-   `negative-fractional-exponent`). `common_mistakes.md` **D5 `x⁰ = 0` ★** has no entry in
-   `errors.json`. This is the case where fine-graining the error layer DOES make it 1:1.
-3. **Missing edge, not missing justification** — the five `classification.*` shapes and
-   `chunking.chunks-in-product` are unreached only because the Tier-3 factoring skills do
-   not declare them in `requires`. That is the trigger mechanism the `gateway` removal left
-   dangling (see the Tier-3 section).
+⚠️ **The gaps are not one problem, they are four, with opposite repairs:**
 
-Plus a fourth case that must NOT be repaired by inventing an error: **contrast skills** —
-the commutativity pair, `divide-by-one`, `bracket-types` exist to make the *non*-commutative
-twin visible. They will never own an error, and authoring one would be fabricating evidence.
-The mechanism to wire them already exists and was left empty by decision: a drill pitfall
-citing the error the contrast guards against (`anti.commute-everything`). Reversing that
-decision needs no new field.
+1. [x] ~~**Wire it** — the error exists, the skill just doesn't cite it.~~ **DONE
+   2026-07-25**, and it was most of the gap: **undrilled errors 9 → 1, unreached skills
+   16 → 13**, purely by adding `errors` refs to skills whose content already covered them.
+   No new data, no new fields. The ten edges:
+   `mis.adjacent-signs` → `subtraction-as-adding-opposite` + `double-negative` ·
+   `mis.root-scope` → `root-of-a-sum` + `fractional-exponent-root` ·
+   `mis.invisible-one-lost` → `transformation.collect-like-terms` ·
+   `mis.subtraction-as-times-negative` → `subtraction-as-adding-opposite` ·
+   `mis.redundant-brackets-kept` → `redundant-brackets` ·
+   `mis.linear-slash-overgrouped` → `fraction-bar-grouping` (the twin of
+   `-grouping-lost`) · `mis.bar-not-division` → `division-variants` +
+   `fraction-as-reciprocal-product` · `mis.order-blindness` →
+   `multiplication-commutative`.
+   ⚠️ **That last one corrects the claim below**: `equivalence.multiplication-commutative`
+   DOES own an error — `a \cdot 3` not recognised as `3a` is a commutativity failure. Only
+   `addition-commutative` is a pure contrast skill.
+2. [ ] **Author the error** — 3 exponent-extension skills left
+   (`zero-and-one-exponent`, `negative-exponent`, `negative-fractional-exponent`;
+   `fractional-exponent-root` got wired above). `common_mistakes.md` **D5 `x⁰ = 0` ★** and
+   **D4 negative exponent ★★** have no entry in `errors.json`. This is the case where
+   fine-graining the error layer DOES make it 1:1.
+3. [ ] **Missing edge, not missing justification** — the five `classification.*` shapes,
+   `classification.difference` and `chunking.chunks-in-product` are unreached only because
+   the Tier-3 factoring skills do not declare them in `requires`. That is the trigger
+   mechanism the `gateway` removal left dangling (see the Tier-3 section).
+4. [ ] **Contrast skills — do NOT invent an error.** `addition-commutative`,
+   `divide-by-one`, `bracket-types`, `same-value-different-structure` exist to make the
+   *wrong* twin visible; no student believes $a+b \ne b+a$, and authoring an error for it
+   would be fabricating evidence. The mechanism to wire them already exists and was left
+   empty by decision: a drill pitfall citing the error the contrast guards against
+   (`anti.commute-everything`). Reversing that decision needs no new field.
+
+- [ ] **One error still has no skill at all**: `mis.letters-differ` ("a letter is a number,
+  not a word"). Not a wiring gap — there is no variables/fluency skill to attach it to. Its
+  positive form exists as `meta.variable-is-a-fixed-number`. Needs a skill or a decision.
 
 ### Findings to act on
 - [ ] **`sal.loudest-op-wins` vs `mis.precedence-ignored` did NOT collide** — the merge
