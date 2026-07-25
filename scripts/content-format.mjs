@@ -50,27 +50,33 @@ export function normalized(file) {
   return { before, after, changed: before !== after }
 }
 
-const check = process.argv.includes('--check')
-const files = contentFiles()
-const changed = []
+// CLI. Guarded: this module is also imported for `contentFiles`/`serializeContent`
+// (by scripts/content-ids.mjs, and by the card editor's write endpoint), and an
+// unguarded CLI would make a mere import rewrite every content file as a side
+// effect of asking for a helper.
+if (import.meta.filename === process.argv[1]) {
+  const check = process.argv.includes('--check')
+  const files = contentFiles()
+  const changed = []
 
-for (const f of files) {
-  const { after, changed: dirty } = normalized(f)
-  if (!dirty) continue
-  changed.push(f)
-  if (!check) fs.writeFileSync(f, after)
-}
-
-if (check) {
-  if (changed.length) {
-    console.error(`\n✗ ${changed.length} of ${files.length} content file(s) are not in canonical form:\n`)
-    for (const f of changed) console.error('  ' + f)
-    console.error('\nRun `pnpm format-content` to fix.')
-    process.exit(1)
+  for (const f of files) {
+    const { after, changed: dirty } = normalized(f)
+    if (!dirty) continue
+    changed.push(f)
+    if (!check) fs.writeFileSync(f, after)
   }
-  console.log(`✓ all ${files.length} content files are in canonical form.`)
-} else {
-  console.log(changed.length
-    ? `✓ normalized ${changed.length} of ${files.length} content file(s):\n` + changed.map(f => '  ' + f).join('\n')
-    : `✓ all ${files.length} content files were already canonical.`)
+
+  if (check) {
+    if (changed.length) {
+      console.error(`\n✗ ${changed.length} of ${files.length} content file(s) are not in canonical form:\n`)
+      for (const f of changed) console.error('  ' + f)
+      console.error('\nRun `pnpm format-content` to fix.')
+      process.exit(1)
+    }
+    console.log(`✓ all ${files.length} content files are in canonical form.`)
+  } else {
+    console.log(changed.length
+      ? `✓ normalized ${changed.length} of ${files.length} content file(s):\n` + changed.map(f => '  ' + f).join('\n')
+      : `✓ all ${files.length} content files were already canonical.`)
+  }
 }
