@@ -7,8 +7,13 @@
 //
 // Structural validation also runs at load time in src/data/layers.ts; this
 // script is the part that needs KaTeX and so stays out of the app bundle.
-import katex from 'katex'
+//
+// The prose rules themselves moved to scripts/content-prose.mjs on 2026-07-25, so
+// that the in-app editor's write endpoint checks text against the very same rules
+// before saving it. A checker and a writer that disagreed would hand you a green
+// save and then a red sweep.
 import fs from 'fs'
+import { checkLatex, checkProse } from './content-prose.mjs'
 
 const files = ['src/data/fundament/fundamentals/cards.json', 'src/data/fundament/numbers/cards.json', 'src/data/fundament/powers/cards.json', 'src/data/fundament/terms/cards.json']
 const LATEX_FIELDS = ['latex','derivation','cond','forall','avoid','prefer','symbol','type']
@@ -16,16 +21,16 @@ let errs = [], codes = new Map(), refs = [], n = 0
 const CONCERNS = new Set(['add','mul','eq','order','completeness'])
 
 const tryTex = (tex, where) => { n++
-  try { katex.renderToString(tex, { throwOnError: true, displayMode: false }) }
-  catch (e) { errs.push(`KaTeX ${where}: ${e.message.split('\n')[0]}  <<${tex}>>`) } }
+  const bad = checkLatex(tex)
+  if (bad) errs.push(`KaTeX ${where}: ${bad}`)
+}
 
+// The tower is exactly what the STYLE tier of the rules applies to, which is why
+// `style: true` is unconditional here — this script reads nothing else.
 const scanProse = (s, where) => {
-  const re = /\$([^$]+)\$/g
-  for (let m = re.exec(s); m; m = re.exec(s)) tryTex(m[1], where)
-  if ((s.match(/\$/g) || []).length % 2) errs.push(`unpaired $ in ${where}`)
-  if (/—/.test(s)) errs.push(`em dash in ${where}`)  // en dash ok in numeric ranges
-  if (/ß/.test(s)) errs.push(`sharp s in ${where}`)
-  if (/\b(signs?|Vorzeichen)\b/i.test(s)) errs.push(`retired word "sign" in ${where}`)
+  const { problems, fragments } = checkProse(s, { style: true })
+  n += fragments
+  for (const p of problems) errs.push(`${p} in ${where}`)
 }
 
 const layerOrder = []          // [layerId, [id, …]] in page order
