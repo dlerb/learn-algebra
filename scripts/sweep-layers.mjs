@@ -103,7 +103,9 @@ const allErrors = (errFile.sections || []).flatMap(s => (s.groups || []).flatMap
 for (const e of allErrors)
   for (const id of e.corrupts || [])
     cite(e.id, id, 'corrupts', codes)
-for (const m of readJSON('src/data/metapatterns.json'))
+// Metapatterns gained a layer head (title/blurb/note) on 2026-07-25; the entries
+// live under `patterns`. The list itself stays flat — eleven need no sections.
+for (const m of readJSON('src/data/metapatterns.json').patterns)
   for (const id of m.summarizes || [])
     cite(m.id, id, 'summarizes', codes)
 

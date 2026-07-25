@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
 import WrongRight from '../components/WrongRight.vue'
@@ -20,6 +21,10 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 const L = computed(() => lang.value === 'de'
   ? { breaks: 'verletzt', read: 'dazu' }
   : { breaks: 'breaks',   read: 'read' })
+
+// Deep link from /metapatterns, where each rule lists the mistakes it prevents.
+const route = useRoute()
+const targetId = computed(() => route.hash.slice(1))
 
 const citedErrs = new Set(skills.flatMap(s => s.errors))
 const unused = computed(() => errorTree.errors.filter(e => !citedErrs.has(e.id)).length)
@@ -100,7 +105,10 @@ const sections = computed(() => errorTree.sections.map(s => ({
            compete with each other. Name and prose sit in a left rail, the ✗/✓ table
            gets the width, and a hairline does the separating a border used to. -->
       <div class="entries">
-        <article v-for="e in s.items" :key="e.id" class="entry" :class="{ unused: inspect && e.unused }">
+        <article
+          v-for="e in s.items" :key="e.id" :id="e.id"
+          class="entry" :class="{ unused: inspect && e.unused, targeted: e.id === targetId }"
+        >
           <div class="rail">
             <div v-if="inspect" class="card-top">
               <span class="eyebrow">{{ e.kind }} · {{ e.id }}</span>
@@ -146,7 +154,7 @@ const sections = computed(() => errorTree.sections.map(s => ({
             </p>
             <p v-if="e.metas.length" class="ref-line">
               <span class="ref-label">{{ L.read }}</span>
-              <RouterLink v-for="m in e.metas" :key="m.id" class="chip" to="/metapatterns">{{ m.name }}</RouterLink>
+              <RouterLink v-for="m in e.metas" :key="m.id" class="chip" :to="`/metapatterns#${m.id}`">{{ m.name }}</RouterLink>
             </p>
           </div>
 
@@ -196,7 +204,8 @@ const sections = computed(() => errorTree.sections.map(s => ({
 
 /* One landscape row per mistake, separated by a hairline. */
 .entries { display: grid; }
-.entry { display: grid; grid-template-columns: 1fr; gap: .45rem 2rem; padding: .95rem 0; border-top: 1px solid var(--border); }
+.entry { display: grid; grid-template-columns: 1fr; gap: .45rem 2rem; padding: .95rem 0; border-top: 1px solid var(--border); scroll-margin-top: 4.5rem; }
+.entry.targeted { background: var(--chip-bg); box-shadow: 0 0 0 .55rem var(--chip-bg); border-radius: 2px; }
 @media (min-width: 820px) {
   .entry { grid-template-columns: minmax(0, 21rem) minmax(0, 1fr); align-items: start; }
   .rail { grid-area: 1 / 1; }
