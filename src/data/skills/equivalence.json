@@ -203,7 +203,9 @@
             "th.negative-one-times"
           ],
           "errors": [
-            "mis.minus-roles-confused"
+            "mis.minus-roles-confused",
+            "mis.adjacent-signs",
+            "mis.subtraction-as-times-negative"
           ]
         },
         {
@@ -268,7 +270,8 @@
             "th.negative-one-times"
           ],
           "errors": [
-            "mis.minus-roles-confused"
+            "mis.minus-roles-confused",
+            "mis.adjacent-signs"
           ]
         },
         {
@@ -383,6 +386,9 @@
           "illustration": "((a + b)) = (a + b) = a + b",
           "restsOn": [
             "ix.brackets"
+          ],
+          "errors": [
+            "mis.redundant-brackets-kept"
           ]
         },
         {
@@ -417,7 +423,8 @@
             "ix.fraction-bar"
           ],
           "errors": [
-            "mis.fraction-bar-grouping-lost"
+            "mis.fraction-bar-grouping-lost",
+            "mis.linear-slash-overgrouped"
           ]
         },
         {
@@ -575,6 +582,9 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
+          ],
+          "errors": [
+            "mis.root-scope"
           ]
         },
         {
@@ -654,7 +664,8 @@
             "ix.root"
           ],
           "errors": [
-            "anti.linearity"
+            "anti.linearity",
+            "mis.root-scope"
           ]
         }
       ]
@@ -673,7 +684,8 @@
             "def.div"
           ],
           "errors": [
-            "anti.commute-everything"
+            "anti.commute-everything",
+            "mis.bar-not-division"
           ]
         },
         {
@@ -686,6 +698,9 @@
           ],
           "restsOn": [
             "def.div"
+          ],
+          "errors": [
+            "mis.bar-not-division"
           ]
         },
         {
@@ -789,6 +804,9 @@
           "restsOn": [
             "ax.mul-commutative",
             "ix.juxtaposition"
+          ],
+          "errors": [
+            "mis.order-blindness"
           ]
         },
         {
