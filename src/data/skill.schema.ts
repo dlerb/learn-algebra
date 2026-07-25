@@ -367,6 +367,7 @@ export function validateLayerRefs(
 export function auditCoverage(
   skills: Skill[], metas: MetaPatternsFile, errors: ErrorDef[],
   cardConds: Map<string, string | undefined> = new Map(),
+  drills: Drill[] = [],
 ): string[] {
   const lines: string[] = []
   const untagged = skills.filter(f => f.restsOn.length === 0)
@@ -410,12 +411,49 @@ export function auditCoverage(
       lines.push(`"${f.id}" declares meta-patterns its coordinates don't support: ${unsupported.join(', ')}`)
     }
   }
+  // ── Coverage, both directions ──────────────────────────────────────────────
+  // The skill layer is the INTERVENTION and the error layer is the EVIDENCE, so
+  // the two should account for each other. Neither direction is a validator: an
+  // empty cell is a question, and the three usual answers are different repairs.
+  //
+  // Direction 1 — errors nothing drills. Frequency-ranked, because a ★★★ mistake
+  // with no skill is a curriculum hole and a ★ one may just be rare.
   const citedErrs = new Set(skills.flatMap(f => f.errors))
-  const uncited = (kind: string, ids: string[], cited: Set<string>) => {
-    const free = ids.filter(id => !cited.has(id))
-    if (free.length > 0) lines.push(`${kind} cited by no skill: ${free.join(', ')}`)
+  const undrilled = errors.filter(e => !citedErrs.has(e.id)).sort((a, b) => b.frequency - a.frequency)
+  if (undrilled.length > 0) {
+    lines.push(`Errors no skill drills (${undrilled.length}): ` +
+      undrilled.map(e => `${'★'.repeat(e.frequency)} ${e.id}`).join(', '))
   }
-  uncited('Error patterns', errors.map(e => e.id), citedErrs)
+
+  // Direction 2 — skills no error justifies. Seed with every skill that names an
+  // error (directly, or through a drill pitfall's `explainedBy`), then close
+  // DOWNWARD over `requires`: a prerequisite of a justified skill is justified,
+  // which is what keeps the fluency tier honest without demanding an error per
+  // skill. Whatever is left over is a QUESTION with three known answers, and they
+  // call for opposite repairs — see docs/TODO.md:
+  //   · the error exists but the skill does not cite it        → wire it
+  //   · the error was never authored                           → author it
+  //   · the skill is a CONTRAST (the true-form twin of a wrong
+  //     one, e.g. the commutativity pair against
+  //     anti.commute-everything) and will never own an error   → cite it from
+  //     the drill's pitfalls, which is the mechanism that already exists
+  const byId = new Map(skills.map(s => [s.id, s]))
+  const viaDrill = new Set(
+    drills.filter(d => d.pitfalls.some(p => (p.explainedBy?.length ?? 0) > 0)).map(d => d.skill))
+  const justified = new Set(skills.filter(f => f.errors.length > 0 || viaDrill.has(f.id)).map(f => f.id))
+  for (let grew = true; grew;) {
+    grew = false
+    for (const id of [...justified]) {
+      for (const r of byId.get(id)?.requires ?? []) {
+        if (byId.has(r) && !justified.has(r)) { justified.add(r); grew = true }
+      }
+    }
+  }
+  const unjustified = skills.filter(f => !justified.has(f.id))
+  if (unjustified.length > 0) {
+    lines.push(`Skills no error reaches (${unjustified.length}/${skills.length}, incl. via requires): ` +
+      unjustified.map(f => f.id).join(', '))
+  }
 
   // Prose format contract: text with inline $…$ KaTeX. Improvised unicode
   // math in prose (2x², √, ÷ …) predates the contract; count what remains

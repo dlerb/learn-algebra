@@ -91,6 +91,6 @@ validateLatexCompiles(skills, drills, metaPatterns, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.
 const cardConds = new Map([...cardIndex].map(([id, e]) => [id, e.card.cond]))
-for (const line of auditCoverage(skills, metaPatterns, errorPatterns, cardConds)) {
+for (const line of auditCoverage(skills, metaPatterns, errorPatterns, cardConds, drills)) {
   console.info(`[audit] ${line}`)
 }

@@ -112,6 +112,55 @@ moved into `anti.conjoining`'s note rather than dropped.
   the content). Not looked at in a browser — the user is checking. If it still drifts, try
   `minmax(0, max-content)` on the pairs column next.
 
+## Errors as evidence, skills as intervention (2026-07-25)
+
+The dependency inverted during this work: **errors now inform which skills exist**, not the
+other way round. That is the right order — you only drill what students get wrong — but it
+is an *epistemic* order, not a merger. Skills are not the other face of the error coin:
+
+- **The coin-ness varies by tier.** At Tier 3 they nearly coincide
+  (`transformation.combine-fractions` ↔ `anti.fraction-addition`), which is why seeding
+  Tier 3 from the mistake catalog worked. At Tier 1 they diverge, because fluency fails
+  *silently*. Measured: **every `anti-law` is cited by a Tier-1 or Tier-3 skill and none by
+  Tier 2; every uncited error is a `misreading`**; anti-laws average 2.3 instances and
+  ★2.6, misreadings 1.5 and ★1.8. The kinds already encode the gradient.
+- **Errors cannot supply ordering.** `frequency` says what to prioritise, `requires` says
+  what must be automatic first. 7 skills are justified *only* as prerequisites.
+- **Errors cannot supply decomposition.** One error threads three tiers
+  (`docs/common_mistakes.md` mapping table); that one-to-many map is the pedagogical
+  content.
+- **An error is not drillable.** Drill material is keyed per skill; you drill a capability
+  and *detect* an error.
+
+**Consequence for the parked `priority`** (`drills/_parked-priority.json`): emphasis should
+derive from the `frequency` of the errors a skill guards, ordering from the `requires` DAG.
+Empirically grounded, and it only became available once errors carried frequency.
+
+**Bidirectional audit added** to `auditCoverage` (both lines are questions, never throws):
+- *Errors no skill drills* — frequency-ranked, currently **9**, three of them ★★.
+- *Skills no error reaches* — seeded from skills naming an error (directly or via a drill
+  pitfall's `explainedBy`), closed downward over `requires`. Currently **16/71**.
+
+⚠️ **The 16 are not one problem, they are three, with opposite repairs:**
+1. **Wire it** — the error exists, the skill just doesn't cite it
+   (`equivalence.redundant-brackets` ↔ `mis.redundant-brackets-kept`,
+   `equivalence.order-…` ↔ `mis.order-blindness`). Cheapest, do first.
+2. **Author the error** — the 4 exponent-extension skills
+   (`zero-and-one-exponent`, `negative-exponent`, `fractional-exponent-root`,
+   `negative-fractional-exponent`). `common_mistakes.md` **D5 `x⁰ = 0` ★** has no entry in
+   `errors.json`. This is the case where fine-graining the error layer DOES make it 1:1.
+3. **Missing edge, not missing justification** — the five `classification.*` shapes and
+   `chunking.chunks-in-product` are unreached only because the Tier-3 factoring skills do
+   not declare them in `requires`. That is the trigger mechanism the `gateway` removal left
+   dangling (see the Tier-3 section).
+
+Plus a fourth case that must NOT be repaired by inventing an error: **contrast skills** —
+the commutativity pair, `divide-by-one`, `bracket-types` exist to make the *non*-commutative
+twin visible. They will never own an error, and authoring one would be fabricating evidence.
+The mechanism to wire them already exists and was left empty by decision: a drill pitfall
+citing the error the contrast guards against (`anti.commute-everything`). Reversing that
+decision needs no new field.
+
 ### Findings to act on
 - [ ] **`sal.loudest-op-wins` vs `mis.precedence-ignored` did NOT collide** — the merge
   predicted before authoring never materialised, and the reason is worth keeping: salience
