@@ -1,25 +1,30 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import { layers } from './data/layers'
+import { allLayers } from './data/layers'
 
-// Skills + the tower layers + Errors + Metapatterns are browsable catalogs; Tutorial and Drills
-// are the (not-yet-built) stateful activities (docs/content_model.md, "Skills are
-// the pedagogical bridge").
-// Activity routes are lazy-loaded so their future weight (Compute Engine for
-// grading) code-splits off the reference pages.
+// The seven layers are browsable catalogs; Tutorial and Drills are the
+// (not-yet-built) stateful activities (docs/content_model.md, "Skills are the
+// pedagogical bridge"). Every layer route is GENERATED from the manifest
+// (src/data/layers.ts) — adding a layer of either family needs no change here
+// beyond a line in `viewOf` if it is curated.
+//
+// All routes are lazy so the activities' future weight (Compute Engine for
+// grading) code-splits off the reference pages. The tower shares one view
+// parameterized by `layerId`; each curated layer has its own.
+const viewOf: Record<string, () => Promise<unknown>> = {
+  errors: () => import('./views/ReferenceView.vue'),
+  metapatterns: () => import('./views/MetapatternsView.vue'),
+  skills: () => import('./views/TaxonomyView.vue'),
+}
+
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: () => import('./views/OverviewView.vue'), meta: { title: 'Overview' } },
-  { path: '/skills', name: 'skills', component: () => import('./views/TaxonomyView.vue'), meta: { title: 'Skills' } },
-  { path: '/errors', name: 'errors', component: () => import('./views/ReferenceView.vue'), meta: { title: 'Errors' } },
-  { path: '/metapatterns', name: 'metapatterns', component: () => import('./views/MetapatternsView.vue'), meta: { title: 'Metapatterns' } },
-  // One route per layer of the tower, generated from the manifest: same
-  // LayerView, different `layerId` prop. Adding a layer needs no route.
-  ...layers.map<RouteRecordRaw>(l => ({
+  ...allLayers.map(l => ({
     path: `/${l.slug}`,
     name: l.slug,
-    component: () => import('./views/LayerView.vue'),
-    props: { layerId: l.id },
+    component: l.family === 'fundament' ? () => import('./views/LayerView.vue') : viewOf[l.id],
+    ...(l.family === 'fundament' ? { props: { layerId: l.id } } : {}),
     meta: { title: l.title },
-  })),
+  } as RouteRecordRaw)),
   { path: '/tutorial', name: 'tutorial', component: () => import('./views/TutorialView.vue'), meta: { title: 'Tutorial' } },
   { path: '/drills', name: 'drills', component: () => import('./views/DrillsView.vue'), meta: { title: 'Drills' } },
 ]

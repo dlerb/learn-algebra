@@ -302,17 +302,31 @@ Empirically grounded, and it only became available once errors carried frequency
   visible than before, since each has instances and renders as a full card.
 - [ ] German `hint` prose is authored but unreviewed by a native reader.
 
-### Follow-up — manifest unification (deliberately deferred)
-Skills and metapatterns should join the same container: extend `src/data/layers.ts` into
-**one manifest for all seven layers** (four `fundament`, three `curated`) with a `family`
-discriminator driving the nav grouping `App.vue` hardcodes. Then the three curated pages
-share one parser, one set of validators, and one presentation/inspection switch — but
-**per-layer card renderers**, since a card, a skill, an error and a metapattern carry
-genuinely different fields and a generic renderer would be a pile of `v-if`s. Deferred on
-purpose: it touches three views for no user-visible gain, and errors had to prove the
-container carries a second, non-tower layer first. Notes: metapatterns is still a flat
-array of 11 (no sections); skills is one layer split across four files by section, which
-the manifest should bless rather than the filesystem be changed.
+### ✅ Manifest unification — DONE 2026-07-25
+`src/data/layers.ts` is now **the manifest for all seven layers**: `layers` (4 `fundament`,
+each with its cards tree), `curatedLayers` (3), `allLayers`, and `layersOf(family)`.
+- **`router.ts` generates every layer route** from `allLayers` — the tower shares
+  `LayerView` parameterized by `layerId`, curated layers map id → view in one `viewOf`
+  table. **`App.vue` generates BOTH dropdowns** from `layersOf(family)`; the hardcoded
+  Errors/Metapatterns/Skills list is gone. Adding a layer of either family is one manifest
+  line (plus one `viewOf` line if curated).
+- **Slug uniqueness is validated across both families**, not just within the tower — slugs
+  are route paths and nav keys now.
+- ⚠️ **The manifest carries NO curated data, and cannot**: `src/data/index.ts` imports
+  `cardIndex` from `layers.ts`, so importing errors.json/metapatterns.json back would close
+  a cycle. Each curated view imports its own data. Price: a curated layer's nav `title` is
+  a plain English label while its PAGE title is the localized one in its data head.
+- **Nav labels changed to the student-facing page names** — "Errors" → *Common mistakes*,
+  "Metapatterns" → *Reading rules*. The nav had been contradicting the page titles since
+  the presentation passes. One line each in `curatedLayers` to revert.
+- **NOT unified, on purpose**: the card renderers. A card, a skill, an error and a
+  metapattern carry genuinely different fields; a generic renderer would be a pile of
+  `v-if`s. Uniform container, per-layer view.
+- Still true and still fine: metapatterns is a flat layer (11, no sections), and skills is
+  one layer split across four files by section. The manifest blesses both rather than
+  forcing a filesystem change.
+- [ ] **Skills is the one curated layer with no layer head** (no `title`/`blurb`/`note` in
+  data, no presentation/inspection split). Blocked by the drill freeze — see the banner.
 
 - [x] ~~**Metapatterns presentation pass.**~~ **DONE 2026-07-25.** `/metapatterns` now has
   the presentation/inspection split, the landscape row layout and the chip vocabulary of
