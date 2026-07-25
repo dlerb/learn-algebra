@@ -4,6 +4,58 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## NEXT SESSION — a CARD EDITOR (2026-07-25). Brainstorm first, do not build.
+
+**The user's problem, in their words:** editing cards in VS Code is too hard, because
+**context gets lost** — the cards above and below, and the page as a whole, are not
+visible while you edit one card's JSON. Start the session by discussing this; no design
+has been chosen.
+
+**Read that carefully before proposing anything.** The ask is *context while editing*, not
+*better JSON tooling*. That distinction kills the obvious cheap answer: the parked
+"JSON Schema for IDE authoring" item (further down, `z.toJSONSchema` + `.vscode/settings.json`)
+gives autocomplete and inline validation and would **not** help at all, because the missing
+thing is the neighbours, not the field names. Worth naming that explicitly so it is not
+proposed as the fix.
+
+**What the app already has that is half an editor:**
+- `LayerView` renders the whole tree in page order, so the *context view already exists* —
+  the question is whether editing can happen inside it.
+- Inspection mode already discloses each card's **raw JSON** per card (`json` toggle), and
+  `/errors` + `/metapatterns` now have the same presentation/inspection switch
+  (`src/inspect.ts`, presentation default, toggle gated on dev or `?inspect`).
+- The **manifest unification landed this session**, so an editor could be layer-generic
+  from day one rather than fundament-only — all seven layers are one list with a `family`.
+
+**Facts the design has to respect:**
+- 101 cards over 4 files, tree `layer → sections[] → groups[] → cards[]`, **page order =
+  array order at every level** — so "move a card" is an array splice, and reordering is a
+  first-class edit, not an afterthought.
+- Card fields: `id · concerns[] · symbol · type · name · latex · avoid · prefer · forall ·
+  cond · basedOn[] · derivation · derivedFrom[] · note · intuition` (`src/data/layers.ts`).
+  `name/note/intuition` are bilingual `{en,de}`; several fields are **LaTeX**, and prose
+  carries inline `$…$` (the RichText contract).
+- Cross-layer `basedOn`/`derivedFrom` refs resolve tower-wide, so an id rename is a
+  multi-file edit — an editor that can rename safely is worth more than one that cannot.
+- Everything must keep passing: `layers.ts` load validation, `pnpm sweep-layers`,
+  `npx vite-node src/data/index.ts`.
+
+**The open question to actually brainstorm — where do the edits go?** The app is a static
+Vite site with no backend, so persistence is the crux, and the honest options differ a lot
+in cost:
+  (a) a **dev-only Vite plugin** with a tiny write endpoint → real files on disk, works
+      only under `pnpm dev`, which is where authoring happens anyway;
+  (b) the **File System Access API** → the browser writes the JSON directly, no server,
+      Chromium-only;
+  (c) **edit in the page, export a patch** to paste back — no write path at all, cheapest,
+      worst ergonomics;
+  (d) not an in-app editor at all — e.g. a **split-view preview** beside VS Code.
+Also open: whole-card form vs inline field editing, live KaTeX preview, and whether the
+same editor should serve the curated layers (errors already has a much richer shape:
+sections, instances with `from/wrong/right/hint`, `fix`, `frequency`).
+
+---
+
 ## 🧊 FROZEN — the DRILL layer (2026-07-25)
 
 **Do not start drill work.** The user is planning a substantial revision of the drill
