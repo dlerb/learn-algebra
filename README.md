@@ -16,34 +16,44 @@ teachers, not for students. Four layers, each one JSON file rendered by one view
 
 | layer | page | what it adds |
 |---|---|---|
-| `fundament0` | `/fundament0` | ℝ as the complete ordered field: `+ · = <`, the axioms, `−`/`/`/`\|·\|` as definitions, the first theorems |
-| `naturals` | `/naturals` | ℕ carved out of ℝ, numerals, multiples, natural powers |
-| `integers` | `/integers` | `a⁰` and `a⁻ⁿ` as choices *forced by permanence* |
-| `rationals` | `/rationals` | roots and rational exponents, by *existence* — the tower's only use of the completeness axiom |
+| `fundamentals` | `/fundamentals` | ℝ as the complete ordered field: `+ · = <`, the axioms, `−`/`/`/`\|·\|` as definitions, the first theorems |
+| `numbers` | `/numbers` | ℕ, ℤ and ℚ carved out of ℝ — numerals, multiples, divisibility, the √2 hole |
+| `powers` | `/powers` | `aⁿ` in three acts: ℕ *builds*, ℤ *finds* (forced by permanence), ℚ *must be given* (the tower's only use of completeness) |
+| `terms` | `/terms` | term manipulation: distributing, the binomials, the fraction bar and fraction arithmetic |
 
-Each layer is a containment tree `layer → sections[] → groups[] → cards[]`, where
-page order is array order at every level. `src/data/layers.ts` is the manifest: it
-fixes the reading order, generates the routes and nav entries, resolves citations
-*across* layers, and validates at load time.
+**101 cards.** Each layer is a containment tree `layer → sections[] → groups[] →
+cards[]`, where page order is array order at every level.
 
-**The skills tower** — the pedagogical bridge, and the part that faces students.
-Laws, conventions, error patterns and meta-patterns as data (`laws.json`,
-`conventions.json`, `errors.json`, `metapatterns.json`), with **skills**
-(`skills/*.json`) as curated strategies built on those coordinates and **drills**
-(`drills/*.json`) holding the concrete material. See `docs/content_model.md`.
+**The curated layers** — the pedagogy on top, and the part that faces students:
+**errors** (`errors.json`, 28 common mistakes grouped by topic, each shown wrong →
+right), **metapatterns** (`metapatterns.json`, 11 reading rules) and **skills**
+(`skills/*.json`, 74 curated strategies) with **drills** (`drills/*.json`) holding
+the concrete material. Every curated entry points *down* into a tower card, so the
+stack is acyclic: cards ← errors/metapatterns ← skills. See `docs/content_model.md`.
 
-The two towers are separate representations of the same mathematics and are **not**
-to be merged. Note that both use the word *layer*: in the skills tower it means a
-file and a role (`src/data/layers.json`), in the fundament it means a floor of
-mathematical dependency (`src/data/layers.ts`).
+`src/data/layers.ts` is the manifest for **all seven layers**: it fixes the reading
+order, generates every route and both nav dropdowns (grouped by `family`:
+`fundament` or `curated`), resolves citations *across* tower layers, and validates
+at load time. Adding a layer is one entry there.
+
+The two families are separate representations of the same mathematics and are
+**not** to be merged.
 
 ## Pages
 
-`/skills` and `/fundamentals` are browsable catalogs; the four layer pages are the
-deepest inspection surfaces. All of these are **teacher/dev** views — they show ids,
-raw JSON and coverage markers. `/tutorial` and `/drills` are the student surfaces
-and are **empty stubs**: the drill runner is not built. Design rule for when it is:
-Tutorial *drives* Drills, one runner with two drivers. See `docs/app_design.md`.
+The four tower pages are **teacher/dev** inspection surfaces — ids, raw JSON,
+coverage markers.
+
+`/errors` (*Common mistakes*) and `/metapatterns` (*Reading rules*) are
+**student-facing**, and each has two modes: **presentation is the default**, with
+an `inspect` toggle that adds ids, raw JSON and coverage warnings. The toggle only
+appears in dev or with `?inspect`, so a build shows students the page and nothing
+else — and because presentation is the default, the student view cannot rot unseen.
+`/skills` has no split yet.
+
+`/tutorial` and `/drills` are the remaining student surfaces and are **empty
+stubs**: the drill runner is not built. Design rule for when it is: Tutorial
+*drives* Drills, one runner with two drivers. See `docs/app_design.md`.
 
 ## Running it
 
