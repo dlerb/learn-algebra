@@ -82,6 +82,28 @@ inspection would let the student view rot unseen.
 errors tree) — its `layers` export collided by name with the tower manifest in
 `src/data/layers.ts`. `layers` now means the tower and only the tower.
 
+**Third pass — `fix` vs `note` (2026-07-25).** The notes were written when `/errors` was
+the tower's shadow, addressed to the author, and they stayed that way on a student page:
+*"Every minus treated as binary subtraction; a unary minus dropped"* uses two words no
+15-year-old knows. New division of labour: **`name` says WHICH mistake, `fix` says HOW TO
+GET IT RIGHT** ("Two minuses make a plus: $-(-3) = 3$"), authored for all 25, bilingual,
+required by the schema. **`note` is untouched** and demoted to inspection — it is the
+*diagnosis* (mechanism, cause, why the entry exists in the taxonomy), which is exactly
+what makes an entry useful to a teacher; rewriting it in place would have deleted the
+better material. Authoring rule where the two could collide: the meta-pattern chip carries
+the GENERAL decoding rule, `fix` the CONCRETE one for this mistake (and 8 of 25 errors
+reach no meta-pattern at all, so `fix` is not redundant with them).
+
+- [ ] **Names are still teacher register**, one level up from the same problem —
+  "Linearity illusion", "Conjoining / closure compulsion", "The loudest operation wins".
+  Left alone on purpose: a name only has to be a label to point at, and `fix` now does the
+  explaining underneath. Worth a pass later.
+- [ ] ⚠️ **UNVERIFIED**: `.refv` max-width 1100px → 900px, the one-line attempt at "the
+  pairs drift right on a wide screen" (the rail is a fixed 21rem, so past ~1200px each
+  entry showed a wide empty gutter right of the ✓ column and the hairline ran well past
+  the content). Not looked at in a browser — the user is checking. If it still drifts, try
+  `minmax(0, max-content)` on the pairs column next.
+
 ### Findings to act on
 - [ ] **`sal.loudest-op-wins` vs `mis.precedence-ignored` did NOT collide** — the merge
   predicted before authoring never materialised, and the reason is worth keeping: salience

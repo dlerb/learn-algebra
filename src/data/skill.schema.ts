@@ -203,7 +203,20 @@ export const errorDef = z.object({
   frequency: z.number().int().min(1).max(3).default(1),  // ★–★★★, from docs/common_mistakes.md
   corrupts: z.array(z.string()).default([]),
   name: localizedString,
-  note: localizedString,                        // prose beside `instances`: what the misconception is (like a card's note beside its latex)
+  // TWO PROSE FIELDS, two readers (2026-07-25). `name` says WHICH mistake this is;
+  // `fix` says HOW TO GET IT RIGHT, in a 15-year-old's language, and is the entry's
+  // main prose in presentation mode. `note` is the DIAGNOSIS — the mechanism, the
+  // cause, why the error exists in the taxonomy — written for a teacher and shown
+  // in inspection only. It is not student prose and rewriting it in place would
+  // have deleted the better material ("$3x$ read as $3+x$ — the mixed-number
+  // carryover" names a cause no student needs and no teacher should lose).
+  //
+  // `fix` vs the meta-pattern chip: the meta-pattern is the general decoding rule
+  // shared across many errors, `fix` is the concrete one for THIS mistake. Where
+  // they would coincide, keep `fix` concrete ("two minuses make a plus") and let
+  // the chip carry the general form. 8 of the 25 errors reach no meta-pattern at all.
+  fix: localizedString,
+  note: localizedString,
   instances: z.array(errorInstance).min(1),     // see above; at least one, enforced so a
 })                                              // bare error cannot silently reach the page
 export type ErrorDef = z.output<typeof errorDef>
@@ -505,6 +518,7 @@ export function validateLatexCompiles(
       if (x.right) check(e.id, `instances[${i}].right`, x.right)
       proseMath(x.hint).forEach(m => check(e.id, `instances[${i}].hint`, m))
     })
+    proseMath(e.fix).forEach(m => check(e.id, 'fix', m))
     proseMath(e.note).forEach(m => check(e.id, 'note', m))
   }
   for (const m of metas) proseMath(m.rule).forEach(s => check(m.id, 'rule', s))

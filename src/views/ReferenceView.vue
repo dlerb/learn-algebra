@@ -49,7 +49,7 @@ function metasFor(e: ErrorDef) {
 }
 
 interface ErrVM {
-  id: string; kind: string; name: string; note: string; frequency: number
+  id: string; kind: string; name: string; fix: string; note: string; frequency: number
   instances: ErrorDef['instances']
   rules: ReturnType<typeof cardLink>[]
   metas: { id: string; name: string }[]
@@ -57,7 +57,7 @@ interface ErrVM {
 }
 function errVM(e: ErrorDef): ErrVM {
   return {
-    id: e.id, kind: e.kind, name: t(e.name), note: t(e.note), frequency: e.frequency,
+    id: e.id, kind: e.kind, name: t(e.name), fix: t(e.fix), note: t(e.note), frequency: e.frequency,
     instances: e.instances,
     rules: e.corrupts.map(cardLink),
     metas: metasFor(e).map(m => ({ id: m.id, name: t(m.name) })),
@@ -113,7 +113,10 @@ const sections = computed(() => errorTree.sections.map(s => ({
               {{ e.name }}
               <span class="freq" :title="`${e.frequency} of 3 — how often the sources flag it`">{{ '★'.repeat(e.frequency) }}</span>
             </h4>
-            <p class="body"><RichText :text="e.note" /></p>
+            <!-- `fix` is the entry's prose for a student: how to get it right.
+                 `note` is the diagnosis, written for a teacher — inspection only. -->
+            <p class="fix"><RichText :text="e.fix" /></p>
+            <p v-if="inspect" class="body"><RichText :text="e.note" /></p>
           </div>
 
           <!-- The pairs ARE the content: a student arrives recognising a shape,
@@ -167,7 +170,13 @@ const sections = computed(() => errorTree.sections.map(s => ({
 </template>
 
 <style scoped>
-.refv { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
+/* UNVERIFIED (2026-07-25) — the one-line attempt at "the pairs drift right on a
+   wide screen". The rail is a fixed 21rem and the pairs start right after it, but
+   the hairline ran the full 1100px, so past ~1200px viewport each entry showed a
+   wide empty gutter to the right of the ✓ column and the pairs read as adrift.
+   Narrowing the container ends the rule near where the content ends. If it still
+   drifts, the next thing to try is `minmax(0, max-content)` on the pairs column. */
+.refv { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
 .layer-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem; }
 .refv-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; }
@@ -208,7 +217,8 @@ const sections = computed(() => errorTree.sections.map(s => ({
 .disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
 .disclose:hover { color: var(--accent); }
 
-.body { font-size: .8rem; color: var(--text-muted); margin: .3rem 0 0; line-height: 1.5; }
+.fix { font-size: .82rem; color: var(--text); margin: .3rem 0 0; line-height: 1.55; }
+.body { font-size: .78rem; color: var(--text-faint); margin: .35rem 0 0; line-height: 1.5; font-style: italic; }
 
 /* Pointers into the tower, dressed as pointers — the same small-caps label +
    pill pattern LayerView uses for `rests on`. As bare grey text they read as
