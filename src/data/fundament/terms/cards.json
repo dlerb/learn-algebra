@@ -2,16 +2,24 @@
   "layer": {
     "id": "terms",
     "meta": {
-      "characterizes": {"en": "expand · collect · cancel", "de": "ausmultiplizieren · zusammenfassen · kürzen"},
-      "note": {"en": "The floor where the tower stops describing and starts transforming. Below, every card says what something is: what the operations satisfy, which subsets of $\\mathbb{R}$ have names, how a power is built. Here every card says what may be done to an expression that has parts, and nothing new is assumed in order to do it. Each one is ax.distributivity, ax.mul-commutative and the inverses over again, reaching inside a compound expression instead of acting on a single element. This is also the layer that answers the skills tower, since a drill is nearly always one of these moves carried out on particular material, which is why the error patterns point here. The binomials are built, and the fraction arithmetic with them: multiplying, dividing and adding fractions, and the double fraction, all resting on th.inverse-of-product one floor down. Whatever a later pass still adds is spec'd in docs/TODO.md.", "de": "Das Stockwerk, auf dem der Turm aufhört zu beschreiben und anfängt umzuformen. Darunter sagt jede Karte, was etwas ist: was die Operationen erfüllen, welche Teilmengen von $\\mathbb{R}$ Namen haben, wie eine Potenz gebaut wird. Hier sagt jede Karte, was man mit einem Ausdruck tun darf, der Teile hat, und es wird dafür nichts Neues angenommen. Jede ist wieder ax.distributivity, ax.mul-commutative und die Inversen, die in einen zusammengesetzten Ausdruck hineingreifen statt auf ein einzelnes Element zu wirken. Dies ist auch die Schicht, die dem Skills-Turm antwortet, denn eine Übung ist fast immer einer dieser Züge an bestimmtem Material, und darum zeigen die Fehlermuster hierher. Die Binome stehen, und die Bruchrechnung mit ihnen: Brüche multiplizieren, dividieren und addieren, dazu der Doppelbruch, alles auf th.inverse-of-product ein Stockwerk tiefer gestützt. Was ein späterer Durchgang noch ergänzt, ist in docs/TODO.md spezifiziert."}
+      "characterizes": {
+        "en": "expand · collect · cancel",
+        "de": "ausmultiplizieren · zusammenfassen · kürzen"
+      },
+      "note": {
+        "en": "The floor where the tower stops describing and starts transforming. Below, every card says what something is: what the operations satisfy, which subsets of $\\mathbb{R}$ have names, how a power is built. Here every card says what may be done to an expression that has parts, and nothing new is assumed in order to do it. Each one is ax.distributivity, ax.mul-commutative and the inverses over again, reaching inside a compound expression instead of acting on a single element. This is also the layer that answers the skills tower, since a drill is nearly always one of these moves carried out on particular material, which is why the error patterns point here. The binomials are built, and the fraction arithmetic with them: multiplying, dividing and adding fractions, and the double fraction, all resting on th.inverse-of-product one floor down. Whatever a later pass still adds is spec'd in docs/TODO.md.",
+        "de": "Das Stockwerk, auf dem der Turm aufhört zu beschreiben und anfängt umzuformen. Darunter sagt jede Karte, was etwas ist: was die Operationen erfüllen, welche Teilmengen von $\\mathbb{R}$ Namen haben, wie eine Potenz gebaut wird. Hier sagt jede Karte, was man mit einem Ausdruck tun darf, der Teile hat, und es wird dafür nichts Neues angenommen. Jede ist wieder ax.distributivity, ax.mul-commutative und die Inversen, die in einen zusammengesetzten Ausdruck hineingreifen statt auf ein einzelnes Element zu wirken. Dies ist auch die Schicht, die dem Skills-Turm antwortet, denn eine Übung ist fast immer einer dieser Züge an bestimmtem Material, und darum zeigen die Fehlermuster hierher. Die Binome stehen, und die Bruchrechnung mit ihnen: Brüche multiplizieren, dividieren und addieren, dazu der Doppelbruch, alles auf th.inverse-of-product ein Stockwerk tiefer gestützt. Was ein späterer Durchgang noch ergänzt, ist in docs/TODO.md spezifiziert."
+      }
     }
   },
-
   "sections": [
     {
       "slug": "prelim",
       "kind": "preliminary",
-      "title": {"en": "Preliminaries", "de": "Vorbemerkungen"},
+      "title": {
+        "en": "Preliminaries",
+        "de": "Vorbemerkungen"
+      },
       "groups": [
         {
           "slug": "prelim",
@@ -31,12 +39,17 @@
         }
       ]
     },
-
-        {
+    {
       "slug": "distributing",
       "kind": "theorem",
-      "title": {"en": "Distributing and collecting", "de": "Verteilen und Zusammenfassen"},
-      "note": {"en": "One axiom, read in both directions. Forwards, with $-1$ as the factor, it takes a minus over a bracket; backwards it collects what shares a factor. Nothing else is involved, and the two commonest slips in school algebra are a forwards move stopped halfway and a backwards move made where there is no common factor.", "de": "Ein Axiom, in beide Richtungen gelesen. Vorwärts, mit $-1$ als Faktor, trägt es ein Minus über eine Klammer; rückwärts fasst es zusammen, was einen Faktor teilt. Mehr ist nicht im Spiel, und die beiden häufigsten Pannen der Schulalgebra sind ein auf halbem Weg abgebrochener Vorwärtszug und ein Rückwärtszug dort, wo es keinen gemeinsamen Faktor gibt."},
+      "title": {
+        "en": "Distributing and collecting",
+        "de": "Verteilen und Zusammenfassen"
+      },
+      "note": {
+        "en": "One axiom, read in both directions. Forwards, with $-1$ as the factor, it takes a minus over a bracket; backwards it collects what shares a factor. Nothing else is involved, and the two commonest slips in school algebra are a forwards move stopped halfway and a backwards move made where there is no common factor.",
+        "de": "Ein Axiom, in beide Richtungen gelesen. Vorwärts, mit $-1$ als Faktor, trägt es ein Minus über eine Klammer; rückwärts fasst es zusammen, was einen Faktor teilt. Mehr ist nicht im Spiel, und die beiden häufigsten Pannen der Schulalgebra sind ein auf halbem Weg abgebrochener Vorwärtszug und ein Rückwärtszug dort, wo es keinen gemeinsamen Faktor gibt."
+      },
       "groups": [
         {
           "slug": "distributing",
@@ -114,12 +127,17 @@
         }
       ]
     },
-
     {
       "slug": "binomials",
       "kind": "theorem",
-      "title": {"en": "Binomials", "de": "Binome"},
-      "note": {"en": "Three cards, one mechanism. Each expands a product of two sums with ax.distributivity and then collects. All that differs is what the two mixed products do, and between them they do all three possible things: double, survive with a minus, or cancel.", "de": "Drei Karten, ein Mechanismus. Jede multipliziert ein Produkt zweier Summen mit ax.distributivity aus und fasst dann zusammen. Verschieden ist nur, was die beiden gemischten Produkte tun, und zusammen tun sie alle drei möglichen Dinge: sich verdoppeln, mit einem Minus überleben oder sich aufheben."},
+      "title": {
+        "en": "Binomials",
+        "de": "Binome"
+      },
+      "note": {
+        "en": "Three cards, one mechanism. Each expands a product of two sums with ax.distributivity and then collects. All that differs is what the two mixed products do, and between them they do all three possible things: double, survive with a minus, or cancel.",
+        "de": "Drei Karten, ein Mechanismus. Jede multipliziert ein Produkt zweier Summen mit ax.distributivity aus und fasst dann zusammen. Verschieden ist nur, was die beiden gemischten Produkte tun, und zusammen tun sie alle drei möglichen Dinge: sich verdoppeln, mit einem Minus überleben oder sich aufheben."
+      },
       "groups": [
         {
           "slug": "binomials",
@@ -215,12 +233,17 @@
         }
       ]
     },
-
     {
       "slug": "fractions",
       "kind": "theorem",
-      "title": {"en": "Fractions", "de": "Brüche"},
-      "note": {"en": "Four cards, and three of them are really about where a move is allowed to reach. The bar has already made its two sides into single objects (ix.fraction-bar); what these say is that splitting and cancelling reach factors, never summands, and that the minus reaches anywhere because it is only a factor itself.", "de": "Vier Karten, und drei davon handeln eigentlich davon, wohin ein Zug greifen darf. Der Strich hat seine beiden Seiten längst zu einzelnen Objekten gemacht (ix.fraction-bar); diese Karten sagen, dass Aufteilen und Kürzen Faktoren erreichen und nie Summanden, und dass das Minus überallhin darf, weil es selbst nur ein Faktor ist."},
+      "title": {
+        "en": "Fractions",
+        "de": "Brüche"
+      },
+      "note": {
+        "en": "Four cards, and three of them are really about where a move is allowed to reach. The bar has already made its two sides into single objects (ix.fraction-bar); what these say is that splitting and cancelling reach factors, never summands, and that the minus reaches anywhere because it is only a factor itself.",
+        "de": "Vier Karten, und drei davon handeln eigentlich davon, wohin ein Zug greifen darf. Der Strich hat seine beiden Seiten längst zu einzelnen Objekten gemacht (ix.fraction-bar); diese Karten sagen, dass Aufteilen und Kürzen Faktoren erreichen und nie Summanden, und dass das Minus überallhin darf, weil es selbst nur ein Faktor ist."
+      },
       "groups": [
         {
           "slug": "fractions",

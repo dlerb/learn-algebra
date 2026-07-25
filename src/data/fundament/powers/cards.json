@@ -2,32 +2,54 @@
   "layer": {
     "id": "powers",
     "meta": {
-      "characterizes": {"en": "aⁿ, n ∈ ℕ → ℤ → ℚ", "de": "aⁿ, n ∈ ℕ → ℤ → ℚ"},
-      "note": {"en": "One operation, three times over, and the three times are not the same kind of step. On $\\mathbb{N}$ the exponent counts factors and the power is *built* by recursion, so the laws come out as theorems. On $\\mathbb{Z}$ the recursion is silent, since counting starts at one: $a^{0}$ and $a^{-n}$ are not facts waiting to be found but a choice, and the point of that act is that the choice is not free. Name the law that must keep holding and the values follow uniquely, which reverses the direction of everything below, where definitions came first and laws were proved from them. On $\\mathbb{Q}$ the demand describes an element the field cannot produce, and the question stops being what value it must take and becomes whether there is a value to take. That question is not algebraic, and it is where ax.completeness is finally spent. The unifier: permanence always demands a value, and what changes from act to act is who can supply it. $\\mathbb{N}$ builds it, $\\mathbb{Z}$ finds it, $\\mathbb{Q}$ must be given it. The sets themselves are defined one layer down, in numbers; here they serve only as the place an exponent is allowed to live.", "de": "Eine Operation, dreimal, und die drei Male sind nicht dieselbe Art von Schritt. Auf $\\mathbb{N}$ zählt der Exponent Faktoren und die Potenz wird rekursiv *gebaut*, die Gesetze fallen also als Sätze an. Auf $\\mathbb{Z}$ schweigt die Rekursion, denn das Zählen beginnt bei eins: $a^{0}$ und $a^{-n}$ sind keine Tatsachen, die auf ihre Entdeckung warten, sondern eine Wahl, und der Punkt dieses Akts ist, dass die Wahl nicht frei ist. Man nenne das Gesetz, das weiter gelten soll, und die Werte folgen eindeutig; das kehrt die Richtung von allem darunter um, wo zuerst die Definitionen standen und die Gesetze daraus bewiesen wurden. Auf $\\mathbb{Q}$ beschreibt die Forderung ein Element, das der Körper nicht erzeugen kann, und die Frage ist nicht mehr, welchen Wert es annehmen muss, sondern ob es einen Wert zu nehmen gibt. Diese Frage ist nicht algebraisch, und hier wird ax.completeness endlich ausgegeben. Der gemeinsame Faden: die Permanenz verlangt immer einen Wert, und was sich von Akt zu Akt ändert, ist, wer ihn liefern kann. $\\mathbb{N}$ baut ihn, $\\mathbb{Z}$ findet ihn, $\\mathbb{Q}$ muss ihn geschenkt bekommen. Die Mengen selbst werden eine Schicht tiefer definiert, in numbers; hier sind sie nur der Ort, an dem ein Exponent leben darf."}
+      "characterizes": {
+        "en": "aⁿ, n ∈ ℕ → ℤ → ℚ",
+        "de": "aⁿ, n ∈ ℕ → ℤ → ℚ"
+      },
+      "note": {
+        "en": "One operation, three times over, and the three times are not the same kind of step. On $\\mathbb{N}$ the exponent counts factors and the power is *built* by recursion, so the laws come out as theorems. On $\\mathbb{Z}$ the recursion is silent, since counting starts at one: $a^{0}$ and $a^{-n}$ are not facts waiting to be found but a choice, and the point of that act is that the choice is not free. Name the law that must keep holding and the values follow uniquely, which reverses the direction of everything below, where definitions came first and laws were proved from them. On $\\mathbb{Q}$ the demand describes an element the field cannot produce, and the question stops being what value it must take and becomes whether there is a value to take. That question is not algebraic, and it is where ax.completeness is finally spent. The unifier: permanence always demands a value, and what changes from act to act is who can supply it. $\\mathbb{N}$ builds it, $\\mathbb{Z}$ finds it, $\\mathbb{Q}$ must be given it. The sets themselves are defined one layer down, in numbers; here they serve only as the place an exponent is allowed to live.",
+        "de": "Eine Operation, dreimal, und die drei Male sind nicht dieselbe Art von Schritt. Auf $\\mathbb{N}$ zählt der Exponent Faktoren und die Potenz wird rekursiv *gebaut*, die Gesetze fallen also als Sätze an. Auf $\\mathbb{Z}$ schweigt die Rekursion, denn das Zählen beginnt bei eins: $a^{0}$ und $a^{-n}$ sind keine Tatsachen, die auf ihre Entdeckung warten, sondern eine Wahl, und der Punkt dieses Akts ist, dass die Wahl nicht frei ist. Man nenne das Gesetz, das weiter gelten soll, und die Werte folgen eindeutig; das kehrt die Richtung von allem darunter um, wo zuerst die Definitionen standen und die Gesetze daraus bewiesen wurden. Auf $\\mathbb{Q}$ beschreibt die Forderung ein Element, das der Körper nicht erzeugen kann, und die Frage ist nicht mehr, welchen Wert es annehmen muss, sondern ob es einen Wert zu nehmen gibt. Diese Frage ist nicht algebraisch, und hier wird ax.completeness endlich ausgegeben. Der gemeinsame Faden: die Permanenz verlangt immer einen Wert, und was sich von Akt zu Akt ändert, ist, wer ihn liefern kann. $\\mathbb{N}$ baut ihn, $\\mathbb{Z}$ findet ihn, $\\mathbb{Q}$ muss ihn geschenkt bekommen. Die Mengen selbst werden eine Schicht tiefer definiert, in numbers; hier sind sie nur der Ort, an dem ein Exponent leben darf."
+      }
     }
   },
-
   "sections": [
     {
       "slug": "nat-notation",
       "kind": "convention",
-      "title": {"en": "ℕ · Notation", "de": "ℕ · Schreibweise"},
-      "note": {"en": "Repetition made into an operator. Multiplication repeats addition, and a power repeats multiplication: $a^{n}$ is defined by recursion along the counting elements, one more factor at each step. The exponent counts factors and that is all it can do here, which is why it must be a natural number while the base may be any element at all. Everything else on the page follows by induction (th.ind, one layer down): the three power laws are theorems proved from the definition and the multiplication axioms, not rules to be learned, and the absence of a fourth law for sums is a fact about the definition rather than an oversight. $a^{0}$, negative exponents and fractional exponents say nothing yet: they are a choice and an existence claim respectively, and they are the two layers above.", "de": "Wiederholung, zu einem Operator gemacht. Die Multiplikation wiederholt die Addition, die Potenz wiederholt die Multiplikation: $a^{n}$ wird rekursiv entlang der Zählelemente definiert, bei jedem Schritt ein Faktor mehr. Der Exponent zählt Faktoren, und mehr kann er hier nicht; darum muss er eine natürliche Zahl sein, während die Basis jedes beliebige Element sein darf. Alles Übrige auf dieser Seite folgt durch Induktion (th.ind, eine Schicht tiefer): die drei Potenzgesetze sind Sätze, bewiesen aus der Definition und den Multiplikationsaxiomen, und keine Regeln zum Lernen; und dass es kein viertes Gesetz für Summen gibt, ist eine Tatsache über die Definition und kein Versehen. $a^{0}$, negative und gebrochene Exponenten sagen noch nichts: sie sind eine Wahl beziehungsweise eine Existenzaussage und bilden die beiden Schichten darüber."},
+      "title": {
+        "en": "ℕ · Notation",
+        "de": "ℕ · Schreibweise"
+      },
+      "note": {
+        "en": "Repetition made into an operator. Multiplication repeats addition, and a power repeats multiplication: $a^{n}$ is defined by recursion along the counting elements, one more factor at each step. The exponent counts factors and that is all it can do here, which is why it must be a natural number while the base may be any element at all. Everything else on the page follows by induction (th.ind, one layer down): the three power laws are theorems proved from the definition and the multiplication axioms, not rules to be learned, and the absence of a fourth law for sums is a fact about the definition rather than an oversight. $a^{0}$, negative exponents and fractional exponents say nothing yet: they are a choice and an existence claim respectively, and they are the two layers above.",
+        "de": "Wiederholung, zu einem Operator gemacht. Die Multiplikation wiederholt die Addition, die Potenz wiederholt die Multiplikation: $a^{n}$ wird rekursiv entlang der Zählelemente definiert, bei jedem Schritt ein Faktor mehr. Der Exponent zählt Faktoren, und mehr kann er hier nicht; darum muss er eine natürliche Zahl sein, während die Basis jedes beliebige Element sein darf. Alles Übrige auf dieser Seite folgt durch Induktion (th.ind, eine Schicht tiefer): die drei Potenzgesetze sind Sätze, bewiesen aus der Definition und den Multiplikationsaxiomen, und keine Regeln zum Lernen; und dass es kein viertes Gesetz für Summen gibt, ist eine Tatsache über die Definition und kein Versehen. $a^{0}$, negative und gebrochene Exponenten sagen noch nichts: sie sind eine Wahl beziehungsweise eine Existenzaussage und bilden die beiden Schichten darüber."
+      },
       "groups": [
         {
           "slug": "reading",
-          "title": { "en": "Reading", "de": "Lesen" },
+          "title": {
+            "en": "Reading",
+            "de": "Lesen"
+          },
           "cards": [
             {
               "id": "ix.pow",
-              "concerns": ["mul"],
-              "name": { "en": "Reading a power", "de": "Eine Potenz lesen" },
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Reading a power",
+                "de": "Eine Potenz lesen"
+              },
               "latex": "a^n",
               "note": {
                 "en": "Read '$a$ to the $n$-th': $n$ factors of $a$ multiplied together. Since $3 = 1+1+1$, the reading $a^{3} = a^{1+1+1}$ says it directly: one factor $a$ for each $1$ in the exponent. Two slots, and they do not draw from the same place. The base may be any element of $\\mathbb{R}$. The exponent may not: $a^{n}$ is defined here only for $n \\in \\mathbb{N}$, and $a^{\\sqrt{2}}$ is not a value being withheld, it is a value that does not yet exist. A coefficient has no such restriction, and that is the difference between the two. Powers are not a field operation. The field has $+$ and $\\cdot$ and nothing else, while $n \\mapsto a^{n}$ is a map that starts in $\\mathbb{N}$ and lands in $\\mathbb{R}$, built here out of $\\cdot$ and the step from $n$ to $n+1$; there is no operation of the field for it to be a special case of. Multiples are better off. th.multiple-is-product shows that $n \\cdot a$ is the field's own product, so it extends to every left factor at no cost and $1.23 \\cdot a$ needs nothing new. Powers have nothing to fall back on, and every exponent beyond $\\mathbb{N}$ has to be built and paid for. The exponent $1$ is omitted just as the coefficient $1$ is (ix.invisible-one): $a$ and $a^{1}$ are the same element, and def.pow makes that the base case.",
                 "de": "Gelesen '$a$ hoch $n$': $n$ Faktoren $a$ miteinander multipliziert. Da $3 = 1+1+1$ ist, sagt es die Lesart $a^{3} = a^{1+1+1}$ direkt: ein Faktor $a$ für jede $1$ im Exponenten. Zwei Plätze, und sie schöpfen nicht aus derselben Quelle. Die Basis darf jedes Element von $\\mathbb{R}$ sein. Der Exponent nicht: $a^{n}$ ist hier nur für $n \\in \\mathbb{N}$ definiert, und $a^{\\sqrt{2}}$ ist kein Wert, den wir zurückhalten, sondern einer, den es noch nicht gibt. Ein Koeffizient kennt diese Einschränkung nicht, und darin liegt der Unterschied. Potenzen sind keine Körperoperation. Der Körper hat $+$ und $\\cdot$ und sonst nichts, während $n \\mapsto a^{n}$ eine Abbildung ist, die in $\\mathbb{N}$ beginnt und in $\\mathbb{R}$ landet, hier aus $\\cdot$ und dem Schritt von $n$ auf $n+1$ gebaut; es gibt keine Körperoperation, von der sie ein Sonderfall wäre. Vielfache stehen besser da. th.multiple-is-product zeigt, dass $n \\cdot a$ das eigene Produkt des Körpers ist; es lässt sich also kostenlos auf jeden linken Faktor ausdehnen, und $1.23 \\cdot a$ braucht nichts Neues. Potenzen haben nichts, worauf sie zurückfallen könnten, und jeder Exponent ausserhalb von $\\mathbb{N}$ muss gebaut und bezahlt werden. Der Exponent $1$ wird genauso weggelassen wie der Koeffizient $1$ (ix.invisible-one): $a$ und $a^{1}$ sind dasselbe Element, und def.pow macht das zum Rekursionsanfang."
               },
-              "basedOn": ["op.mul", "def.nat"]
+              "basedOn": [
+                "op.mul",
+                "def.nat"
+              ]
             },
             {
               "id": "ix.power-precedence",
@@ -53,11 +75,13 @@
         }
       ]
     },
-
     {
       "slug": "nat-definition",
       "kind": "definition",
-      "title": {"en": "ℕ · Natural exponents", "de": "ℕ · Natürliche Exponenten"},
+      "title": {
+        "en": "ℕ · Natural exponents",
+        "de": "ℕ · Natürliche Exponenten"
+      },
       "note": {
         "en": "One card, and it assumes nothing: $a^{n}$ is not a new field operation but an abbreviation for a product that could always have been written out, once the number of factors is a counting element.",
         "de": "Eine Karte, und sie nimmt nichts an: $a^{n}$ ist keine neue Körperoperation, sondern eine Abkürzung für ein Produkt, das sich immer schon hätte ausschreiben lassen, sobald die Anzahl der Faktoren ein Zählelement ist."
@@ -65,26 +89,43 @@
       "groups": [
         {
           "slug": "powers",
-          "title": { "en": "Powers", "de": "Potenzen" },
+          "title": {
+            "en": "Powers",
+            "de": "Potenzen"
+          },
           "cards": [
             {
               "id": "def.pow",
-              "concerns": ["mul"],
-              "name": {"en": "Power with a natural exponent", "de": "Potenz mit natürlichem Exponenten"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Power with a natural exponent",
+                "de": "Potenz mit natürlichem Exponenten"
+              },
               "latex": "a^{1} := a \\qquad a^{\\,n+1} := a^{n} \\cdot a",
               "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
-              "basedOn": ["op.mul", "def.nat", "ix.pow"],
-              "note": {"en": "Repeated multiplication, by recursion on the exponent: one factor is $a$ itself, and each further step multiplies on one more $a$. So $a^{2} = a \\cdot a$ and $a^{3} = a \\cdot a \\cdot a$. This is a genuine construction: it says what $a^{n}$ is, built from $\\cdot$ alone. It is def.multiple with the operation swapped, since copies are to $+$ what factors are to $\\cdot$: same recursion, same counter, different operation underneath. The parallel is exact here and does not survive the trip upstairs. It uses no inverse, so it holds for every base including $0$, where $0^{n} = 0$ for every $n$ with nothing special happening. The value $a^{0}$ is deliberately not here. The recursion starts at one factor because counting starts at one: 'zero copies of $a$' is not something counting hands you, it is something you would have to decide. Leaving the gap open is the point, so that $a^{0} = 1$ later arrives visibly as a choice with a reason instead of being smuggled in as a base case nobody looked at. The same holds for negative exponents. Only natural exponents live in this layer.", "de": "Wiederholte Multiplikation, rekursiv über den Exponenten: ein Faktor ist $a$ selbst, und jeder weitere Schritt multipliziert ein weiteres $a$ dazu. Also $a^{2} = a \\cdot a$ und $a^{3} = a \\cdot a \\cdot a$. Das ist eine echte Konstruktion: sie sagt, was $a^{n}$ ist, allein aus $\\cdot$ gebaut. Sie ist def.multiple mit vertauschter Operation, denn Kopien verhalten sich zu $+$ wie Faktoren zu $\\cdot$: dieselbe Rekursion, derselbe Zähler, eine andere Operation darunter. Die Parallele ist hier exakt und übersteht den Weg nach oben nicht. Sie braucht kein Inverses, gilt also für jede Basis, auch $0$, wo $0^{n} = 0$ für jedes $n$ ist, ohne dass etwas Besonderes passiert. Der Wert $a^{0}$ steht bewusst nicht hier. Die Rekursion beginnt bei einem Faktor, weil das Zählen bei eins beginnt: 'null Kopien von $a$' liefert das Zählen nicht, das müsste man entscheiden. Die Lücke offen zu lassen ist der Punkt, damit $a^{0} = 1$ später sichtbar als begründete Wahl auftritt und nicht als Anfangsfall hereingeschmuggelt wird, den niemand angeschaut hat. Für negative Exponenten gilt dasselbe. In dieser Schicht wohnen nur natürliche Exponenten."}
+              "basedOn": [
+                "op.mul",
+                "def.nat",
+                "ix.pow"
+              ],
+              "note": {
+                "en": "Repeated multiplication, by recursion on the exponent: one factor is $a$ itself, and each further step multiplies on one more $a$. So $a^{2} = a \\cdot a$ and $a^{3} = a \\cdot a \\cdot a$. This is a genuine construction: it says what $a^{n}$ is, built from $\\cdot$ alone. It is def.multiple with the operation swapped, since copies are to $+$ what factors are to $\\cdot$: same recursion, same counter, different operation underneath. The parallel is exact here and does not survive the trip upstairs. It uses no inverse, so it holds for every base including $0$, where $0^{n} = 0$ for every $n$ with nothing special happening. The value $a^{0}$ is deliberately not here. The recursion starts at one factor because counting starts at one: 'zero copies of $a$' is not something counting hands you, it is something you would have to decide. Leaving the gap open is the point, so that $a^{0} = 1$ later arrives visibly as a choice with a reason instead of being smuggled in as a base case nobody looked at. The same holds for negative exponents. Only natural exponents live in this layer.",
+                "de": "Wiederholte Multiplikation, rekursiv über den Exponenten: ein Faktor ist $a$ selbst, und jeder weitere Schritt multipliziert ein weiteres $a$ dazu. Also $a^{2} = a \\cdot a$ und $a^{3} = a \\cdot a \\cdot a$. Das ist eine echte Konstruktion: sie sagt, was $a^{n}$ ist, allein aus $\\cdot$ gebaut. Sie ist def.multiple mit vertauschter Operation, denn Kopien verhalten sich zu $+$ wie Faktoren zu $\\cdot$: dieselbe Rekursion, derselbe Zähler, eine andere Operation darunter. Die Parallele ist hier exakt und übersteht den Weg nach oben nicht. Sie braucht kein Inverses, gilt also für jede Basis, auch $0$, wo $0^{n} = 0$ für jedes $n$ ist, ohne dass etwas Besonderes passiert. Der Wert $a^{0}$ steht bewusst nicht hier. Die Rekursion beginnt bei einem Faktor, weil das Zählen bei eins beginnt: 'null Kopien von $a$' liefert das Zählen nicht, das müsste man entscheiden. Die Lücke offen zu lassen ist der Punkt, damit $a^{0} = 1$ später sichtbar als begründete Wahl auftritt und nicht als Anfangsfall hereingeschmuggelt wird, den niemand angeschaut hat. Für negative Exponenten gilt dasselbe. In dieser Schicht wohnen nur natürliche Exponenten."
+              }
             }
           ]
         }
       ]
     },
-
     {
       "slug": "nat-laws",
       "kind": "theorem",
-      "title": {"en": "ℕ · Power laws", "de": "ℕ · Potenzgesetze"},
+      "title": {
+        "en": "ℕ · Power laws",
+        "de": "ℕ · Potenzgesetze"
+      },
       "note": {
         "en": "Every proof in this section has the same two beats, check $1$ and pass the step from $n$ to $n+1$, because that is the shape def.nat has.",
         "de": "Jeder Beweis in diesem Abschnitt hat dieselben zwei Takte, $1$ prüfen und den Schritt von $n$ auf $n+1$ weitergeben, weil def.nat genau diese Gestalt hat."
@@ -92,7 +133,10 @@
       "groups": [
         {
           "slug": "powers",
-          "title": { "en": "Power laws", "de": "Potenzgesetze" },
+          "title": {
+            "en": "Power laws",
+            "de": "Potenzgesetze"
+          },
           "blurb": {
             "en": "Theorems, not axioms: each is proved from def.pow by induction, using only the multiplication axioms. No new assumption. These are the laws the layers above are built to preserve.",
             "de": "Sätze, keine Axiome: jedes wird aus def.pow durch Induktion bewiesen, allein mit den Multiplikationsaxiomen. Keine neue Annahme. Das sind die Gesetze, welche die Schichten darüber erhalten sollen."
@@ -100,12 +144,21 @@
           "cards": [
             {
               "id": "pl.same-base",
-              "concerns": ["mul"],
-              "name": { "en": "Product of powers", "de": "Produkt von Potenzen" },
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Product of powers",
+                "de": "Produkt von Potenzen"
+              },
               "latex": "a^{m+n} = a^{m} \\cdot a^{n}",
               "forall": "a \\in \\mathbb{R},\\ m, n \\in \\mathbb{N}",
               "derivation": "a^{m+(n+1)} = a^{(m+n)+1} = a^{m+n} \\cdot a = (a^{m} \\cdot a^{n}) \\cdot a = a^{m} \\cdot (a^{n} \\cdot a) = a^{m} \\cdot a^{\\,n+1}",
-              "derivedFrom": ["def.pow", "th.ind", "ax.mul-associative"],
+              "derivedFrom": [
+                "def.pow",
+                "th.ind",
+                "ax.mul-associative"
+              ],
               "note": {
                 "en": "Induction on $n$. Base $n=1$: $a^{m+1} = a^{m} \\cdot a$ is def.pow. The step is shown and rests on associativity of $\\cdot$ (ax.mul-associative) and on arithmetic among the counters. Read what the law says: addition in the counter slot becomes multiplication in the element slot. That is the whole behaviour of powers in one line, and everything the layers above do is an attempt to keep this sentence true once the exponent stops being a count. The values $a^{0} = 1$ and $a^{-n} = 1/a^{n}$ are not conventions somebody picked; they are the only values that keep this law standing. So this is the load-bearing card of the layer, not because it is used most, but because it is the constraint the next layers are built to satisfy.",
                 "de": "Induktion über $n$. Basis $n=1$: $a^{m+1} = a^{m} \\cdot a$ ist def.pow. Der Schritt ist gezeigt und ruht auf der Assoziativität von $\\cdot$ (ax.mul-associative) und auf dem Rechnen unter den Zählern. Man lese, was das Gesetz sagt: Addition im Zählplatz wird zu Multiplikation im Elementplatz. Das ist das ganze Verhalten der Potenzen in einer Zeile, und alles, was die Schichten darüber tun, ist ein Versuch, diesen Satz wahr zu halten, sobald der Exponent aufhört, eine Anzahl zu sein. Die Werte $a^{0} = 1$ und $a^{-n} = 1/a^{n}$ sind keine Konventionen, die jemand ausgesucht hat; sie sind die einzigen Werte, die dieses Gesetz stehen lassen. Das ist also die tragende Karte der Schicht, nicht weil sie am häufigsten gebraucht wird, sondern weil sie die Bedingung ist, die die nächsten Schichten erfüllen sollen."
@@ -113,12 +166,22 @@
             },
             {
               "id": "pl.of-power",
-              "concerns": ["mul"],
-              "name": { "en": "Power of a power", "de": "Potenz einer Potenz" },
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Power of a power",
+                "de": "Potenz einer Potenz"
+              },
               "latex": "(a^{m})^{n} = a^{m \\cdot n}",
               "forall": "a \\in \\mathbb{R},\\ m, n \\in \\mathbb{N}",
               "derivation": "(a^{m})^{\\,n+1} = (a^{m})^{n} \\cdot a^{m} = a^{m \\cdot n} \\cdot a^{m} = a^{m \\cdot n + m} = a^{m \\cdot (n+1)}",
-              "derivedFrom": ["def.pow", "pl.same-base", "th.ind", "ax.distributivity"],
+              "derivedFrom": [
+                "def.pow",
+                "pl.same-base",
+                "th.ind",
+                "ax.distributivity"
+              ],
               "note": {
                 "en": "Induction on $n$, using pl.same-base for the middle step and distributivity among the counters for $mn + m = m(n+1)$. Base $n=1$: $(a^{m})^{1} = a^{m} = a^{m \\cdot 1}$. Note where the work happens. Every manipulation in this proof is on the exponents, up in the counting slot, while the base never moves. That is what makes this law feel unlike the others.",
                 "de": "Induktion über $n$, mit pl.same-base für den mittleren Schritt und der Distributivität unter den Zählern für $mn + m = m(n+1)$. Basis $n=1$: $(a^{m})^{1} = a^{m} = a^{m \\cdot 1}$. Man beachte, wo die Arbeit geschieht. Jede Umformung in diesem Beweis betrifft die Exponenten, oben im Zählplatz, während die Basis sich nie bewegt. Das macht dieses Gesetz anders im Gefühl als die übrigen."
@@ -126,12 +189,22 @@
             },
             {
               "id": "pl.of-product",
-              "concerns": ["mul"],
-              "name": { "en": "Power of a product", "de": "Potenz eines Produkts" },
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Power of a product",
+                "de": "Potenz eines Produkts"
+              },
               "latex": "(a \\cdot b)^{n} = a^{n} \\cdot b^{n}",
               "forall": "a, b \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
               "derivation": "(a b)^{\\,n+1} = (a b)^{n} \\cdot a b = a^{n} b^{n} \\cdot a \\cdot b = a^{n} \\cdot a \\cdot b^{n} \\cdot b = a^{\\,n+1} \\cdot b^{\\,n+1}",
-              "derivedFrom": ["def.pow", "th.ind", "ax.mul-commutative", "ax.mul-associative"],
+              "derivedFrom": [
+                "def.pow",
+                "th.ind",
+                "ax.mul-commutative",
+                "ax.mul-associative"
+              ],
               "note": {
                 "en": "Induction on $n$; base $n=1$ is $(ab)^{1} = ab$. The rearrangement in the middle is the only interesting move: commutativity (ax.mul-commutative) and associativity (ax.mul-associative) sort the $a$-factors away from the $b$-factors. The law is true because multiplication does not care about order, and for no deeper reason than that. Which is exactly why the next card is false.",
                 "de": "Induktion über $n$; die Basis $n=1$ ist $(ab)^{1} = ab$. Die Umsortierung in der Mitte ist der einzige interessante Zug: Kommutativität (ax.mul-commutative) und Assoziativität (ax.mul-associative) trennen die $a$-Faktoren von den $b$-Faktoren. Das Gesetz gilt, weil die Multiplikation die Reihenfolge nicht beachtet, und aus keinem tieferen Grund. Und genau darum ist die nächste Karte falsch."
@@ -139,11 +212,21 @@
             },
             {
               "id": "pl.no-sum-law",
-              "concerns": ["add", "mul"],
-              "name": { "en": "There is no law for sums", "de": "Für Summen gibt es kein Gesetz" },
+              "concerns": [
+                "add",
+                "mul"
+              ],
+              "name": {
+                "en": "There is no law for sums",
+                "de": "Für Summen gibt es kein Gesetz"
+              },
               "latex": "(a + b)^{n} \\neq a^{n} + b^{n}",
               "derivation": "(1 + 1)^{2} = 2^{2} = 4 \\qquad 1^{2} + 1^{2} = 2",
-              "derivedFrom": ["def.pow", "ax.distributivity", "th.numeral-arithmetic"],
+              "derivedFrom": [
+                "def.pow",
+                "ax.distributivity",
+                "th.numeral-arithmetic"
+              ],
               "note": {
                 "en": "One counterexample settles it, and the counterexample is as small as it gets. What *does* happen is th.binomial-square, one layer up, in Term manipulations. The reason is structural. Every law above is proved by pulling one factor off the end and using a property of $\\cdot$. def.pow is built out of $\\cdot$ and nothing else, so a sum sitting inside the base offers the recursion no handle. Addition can only enter a power through ax.distributivity, and ax.distributivity applied repeatedly does not produce $a^{n} + b^{n}$; it produces the cross terms, which is what $(a+b)^{2} = a^{2} + 2ab + b^{2}$ records. Expecting the law to hold is not stupidity: it is the pattern of pl.of-product applied one operation over, and three of the four laws on this page really do pass through their operation. The sentence that separates them: powers distribute over products because they are made of products, and do not distribute over sums because they are not made of sums.",
                 "de": "Ein Gegenbeispiel entscheidet die Sache, und das Gegenbeispiel ist so klein wie möglich. Was tatsächlich passiert, sagt th.binomial-square, eine Schicht höher, in Term manipulations. Der Grund ist struktureller Art. Jedes Gesetz oben wird bewiesen, indem man hinten einen Faktor abzieht und eine Eigenschaft von $\\cdot$ benutzt. def.pow ist allein aus $\\cdot$ gebaut, und eine Summe in der Basis bietet der Rekursion keinen Griff. Die Addition kann nur über ax.distributivity in eine Potenz gelangen, und ax.distributivity wiederholt angewendet liefert nicht $a^{n} + b^{n}$; es liefert die gemischten Glieder, und das hält $(a+b)^{2} = a^{2} + 2ab + b^{2}$ fest. Zu erwarten, dass das Gesetz gilt, ist keine Dummheit: es ist das Muster von pl.of-product, eine Operation weiter angewendet, und drei der vier Gesetze auf dieser Seite gehen tatsächlich durch ihre Operation hindurch. Der Satz, der sie trennt: Potenzen gehen durch Produkte hindurch, weil sie aus Produkten gebaut sind, und nicht durch Summen, weil sie nicht aus Summen gebaut sind."
@@ -182,19 +265,27 @@
         }
       ]
     },
-
     {
       "slug": "int-preliminary",
       "kind": "preliminary",
-      "title": {"en": "ℤ · Extending a definition", "de": "ℤ · Eine Definition erweitern"},
-      "note": {"en": "One question opens this layer: what is $a^{0}$? The recursion of def.pow answers only for exponents that count, so for $0$ and for negative exponents it says nothing at all, and there is no fact waiting to be found. What fills the gap is a decision. The point of the layer is that the decision is not free: state which law is to keep holding, and the values follow, uniquely. That reverses the direction of everything below, where definitions came first and the laws were proved from them; here the law is the constraint and the definition is what comes out. Three species of the word 'convention' end up side by side on this page as a result: the arbitrary (whether $0$ is a natural number), the determined ($a^{0} = 1$), and the proved (the laws holding across all of $\\mathbb{Z}$). School calls all three by the same name.", "de": "Eine Frage eröffnet diese Schicht: was ist $a^{0}$? Die Rekursion von def.pow antwortet nur für Exponenten, die zählen; für $0$ und für negative Exponenten sagt sie gar nichts, und es wartet keine Tatsache darauf, gefunden zu werden. Die Lücke füllt eine Entscheidung. Der Punkt dieser Schicht ist, dass die Entscheidung nicht frei ist: man sage, welches Gesetz weiter gelten soll, und die Werte folgen eindeutig. Das kehrt die Richtung von allem darunter um, wo zuerst die Definitionen standen und die Gesetze daraus bewiesen wurden; hier ist das Gesetz die Bedingung und die Definition das Ergebnis. Drei Arten des Wortes 'Konvention' stehen darum auf dieser Seite nebeneinander: die willkürliche (ob $0$ eine natürliche Zahl ist), die bestimmte ($a^{0} = 1$) und die bewiesene (dass die Gesetze auf ganz $\\mathbb{Z}$ gelten). Die Schule nennt alle drei gleich."},
+      "title": {
+        "en": "ℤ · Extending a definition",
+        "de": "ℤ · Eine Definition erweitern"
+      },
+      "note": {
+        "en": "One question opens this layer: what is $a^{0}$? The recursion of def.pow answers only for exponents that count, so for $0$ and for negative exponents it says nothing at all, and there is no fact waiting to be found. What fills the gap is a decision. The point of the layer is that the decision is not free: state which law is to keep holding, and the values follow, uniquely. That reverses the direction of everything below, where definitions came first and the laws were proved from them; here the law is the constraint and the definition is what comes out. Three species of the word 'convention' end up side by side on this page as a result: the arbitrary (whether $0$ is a natural number), the determined ($a^{0} = 1$), and the proved (the laws holding across all of $\\mathbb{Z}$). School calls all three by the same name.",
+        "de": "Eine Frage eröffnet diese Schicht: was ist $a^{0}$? Die Rekursion von def.pow antwortet nur für Exponenten, die zählen; für $0$ und für negative Exponenten sagt sie gar nichts, und es wartet keine Tatsache darauf, gefunden zu werden. Die Lücke füllt eine Entscheidung. Der Punkt dieser Schicht ist, dass die Entscheidung nicht frei ist: man sage, welches Gesetz weiter gelten soll, und die Werte folgen eindeutig. Das kehrt die Richtung von allem darunter um, wo zuerst die Definitionen standen und die Gesetze daraus bewiesen wurden; hier ist das Gesetz die Bedingung und die Definition das Ergebnis. Drei Arten des Wortes 'Konvention' stehen darum auf dieser Seite nebeneinander: die willkürliche (ob $0$ eine natürliche Zahl ist), die bestimmte ($a^{0} = 1$) und die bewiesene (dass die Gesetze auf ganz $\\mathbb{Z}$ gelten). Die Schule nennt alle drei gleich."
+      },
       "groups": [
         {
           "slug": "prelim",
           "cards": [
             {
               "id": "pre.permanence",
-              "name": { "en": "Extending a definition", "de": "Eine Definition erweitern" },
+              "name": {
+                "en": "Extending a definition",
+                "de": "Eine Definition erweitern"
+              },
               "note": {
                 "en": "def.pow defines $a^{n}$ by recursion, and a recursion reaches only what counting reaches. For $n = 0$ and for negative $n$ the definition is silent, and silent is the right word: it is not being evasive, there is no fact of the matter to look up. Extending it is therefore not a discovery but a decision, and the only question worth asking is whether anything makes the decision for us. Something does. The power laws were proved on $\\mathbb{N}$, and we may demand that they keep holding on the larger range. The demand is not itself provable; it is a methodological choice, made because a rule with an exception is worth less than a rule without one. Given the demand, the values are forced. This is a named principle, the Permanenzprinzip, stated by Peacock in 1834 and by Hankel in 1867: when a number system or an operation is extended, the laws of the old domain should go on holding as far as they can. It is neither an axiom nor a theorem. It is a way of choosing.",
                 "de": "def.pow definiert $a^{n}$ rekursiv, und eine Rekursion reicht nur so weit wie das Zählen. Für $n = 0$ und für negative $n$ schweigt die Definition, und schweigen ist das richtige Wort: sie weicht nicht aus, es gibt schlicht keine Tatsache nachzuschlagen. Die Erweiterung ist darum keine Entdeckung, sondern eine Entscheidung, und die einzige lohnende Frage ist, ob uns etwas die Entscheidung abnimmt. Etwas tut es. Die Potenzgesetze wurden auf $\\mathbb{N}$ bewiesen, und wir dürfen verlangen, dass sie im grösseren Bereich weiter gelten. Diese Forderung ist selbst nicht beweisbar; sie ist eine methodische Wahl, getroffen, weil eine Regel mit Ausnahme weniger wert ist als eine ohne. Ist die Forderung gestellt, sind die Werte erzwungen. Das ist ein benanntes Prinzip, das Permanenzprinzip, formuliert von Peacock 1834 und von Hankel 1867: wird ein Zahlbereich oder eine Operation erweitert, so sollen die Gesetze des alten Bereichs so weit wie möglich weiter gelten. Es ist weder ein Axiom noch ein Satz. Es ist eine Art zu wählen."
@@ -208,11 +299,13 @@
         }
       ]
     },
-
     {
       "slug": "int-definition",
       "kind": "definition",
-      "title": {"en": "ℤ · Integer exponents", "de": "ℤ · Ganzzahlige Exponenten"},
+      "title": {
+        "en": "ℤ · Integer exponents",
+        "de": "ℤ · Ganzzahlige Exponenten"
+      },
       "note": {
         "en": "Both cards below are choices, not constructions. Each shows the demand that determines it, and the derivation on such a card proves only that no other value is possible.",
         "de": "Beide Karten unten sind Wahlen und keine Konstruktionen. Jede zeigt die Forderung, die sie bestimmt, und die Herleitung auf einer solchen Karte beweist nur, dass kein anderer Wert möglich ist."
@@ -220,66 +313,132 @@
       "groups": [
         {
           "slug": "powers",
-          "title": { "en": "Powers", "de": "Potenzen" },
+          "title": {
+            "en": "Powers",
+            "de": "Potenzen"
+          },
           "cards": [
             {
               "id": "def.pow-zero",
-              "concerns": ["mul"],
-              "name": {"en": "The exponent zero", "de": "Der Exponent null"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The exponent zero",
+                "de": "Der Exponent null"
+              },
               "latex": "a^{0} := 1",
               "forall": "a \\in \\mathbb{R}",
               "cond": "a \\ne 0",
               "derivation": "a = a^{1} = a^{1+0} = a^{1} \\cdot a^{0} = a \\cdot a^{0} \\;\\Longrightarrow\\; a^{0} = 1",
-              "derivedFrom": ["pre.permanence", "pl.same-base", "def.pow", "ax.multiplicative-inverse", "ax.eq-congruence"],
-              "note": {"en": "Demand that pl.same-base holds when one exponent is $0$, and the chain follows; since $a \\ne 0$, multiplying by $a^{-1}$ (ax.multiplicative-inverse) leaves $a^{0} = 1$, and no other value is possible. Read the chain for what it is. It does not prove that $a^{0} = 1$, because before the definition there is no such object to prove anything about. It proves that if a value is to exist at all and keep pl.same-base true, it can only be $1$. That conditional is the whole content of the layer, and it is worth saying out loud, because the chain looks exactly like a proof and is not one. $0^{0}$ is left undefined, and precisely where you would expect: the argument used $a^{-1}$, which $0$ does not have. That is not squeamishness, it is the demand failing to reach, and it puts $0^{0}$ back among the genuinely arbitrary choices. Different parts of mathematics do choose differently; $0^{0} = 1$ is standard in combinatorics and for power series, while analysis leaves it open.", "de": "Man verlange, dass pl.same-base auch gilt, wenn ein Exponent $0$ ist; dann folgt die Kette, und da $a \\ne 0$ ist, bleibt nach Multiplikation mit $a^{-1}$ (ax.multiplicative-inverse) $a^{0} = 1$ übrig, und kein anderer Wert ist möglich. Man lese die Kette als das, was sie ist. Sie beweist nicht, dass $a^{0} = 1$ ist, denn vor der Definition gibt es kein Objekt, über das sich etwas beweisen liesse. Sie beweist, dass ein Wert, wenn es ihn überhaupt geben soll und wenn pl.same-base wahr bleiben soll, nur $1$ sein kann. Diese Bedingtheit ist der ganze Inhalt der Schicht, und man sollte sie aussprechen, denn die Kette sieht genau wie ein Beweis aus und ist keiner. $0^{0}$ bleibt undefiniert, und zwar genau dort, wo man es erwarten würde: das Argument brauchte $a^{-1}$, und das hat $0$ nicht. Das ist keine Zimperlichkeit, sondern die Forderung, die nicht hinreicht, und sie stellt $0^{0}$ zurück zu den wirklich willkürlichen Wahlen. Verschiedene Gebiete der Mathematik entscheiden verschieden; $0^{0} = 1$ ist in der Kombinatorik und bei Potenzreihen üblich, die Analysis lässt es offen."},
-              "intuition": {"en": "$2^{3}, 2^{2}, 2^{1}$ is $8, 4, 2$: each step down divides by $2$, so the next one is $1$. That is the school picture and it is a good one. Where the picture stops: a pattern is a suggestion and not an argument, since any pattern can be continued some other way. What makes this one binding is that dividing by the base at each step down is pl.same-base itself. The picture is the law in disguise, which is why it feels convincing: it is right.", "de": "$2^{3}, 2^{2}, 2^{1}$ ist $8, 4, 2$: jeder Schritt nach unten teilt durch $2$, der nächste ist also $1$. Das ist das Schulbild, und es ist ein gutes. Wo das Bild aufhört: ein Muster ist ein Vorschlag und kein Argument, denn jedes Muster liesse sich auch anders fortsetzen. Verbindlich wird dieses dadurch, dass das Teilen durch die Basis bei jedem Schritt nach unten genau pl.same-base ist. Das Bild ist das Gesetz in Verkleidung, und darum überzeugt es: es hat recht."}
+              "derivedFrom": [
+                "pre.permanence",
+                "pl.same-base",
+                "def.pow",
+                "ax.multiplicative-inverse",
+                "ax.eq-congruence"
+              ],
+              "note": {
+                "en": "Demand that pl.same-base holds when one exponent is $0$, and the chain follows; since $a \\ne 0$, multiplying by $a^{-1}$ (ax.multiplicative-inverse) leaves $a^{0} = 1$, and no other value is possible. Read the chain for what it is. It does not prove that $a^{0} = 1$, because before the definition there is no such object to prove anything about. It proves that if a value is to exist at all and keep pl.same-base true, it can only be $1$. That conditional is the whole content of the layer, and it is worth saying out loud, because the chain looks exactly like a proof and is not one. $0^{0}$ is left undefined, and precisely where you would expect: the argument used $a^{-1}$, which $0$ does not have. That is not squeamishness, it is the demand failing to reach, and it puts $0^{0}$ back among the genuinely arbitrary choices. Different parts of mathematics do choose differently; $0^{0} = 1$ is standard in combinatorics and for power series, while analysis leaves it open.",
+                "de": "Man verlange, dass pl.same-base auch gilt, wenn ein Exponent $0$ ist; dann folgt die Kette, und da $a \\ne 0$ ist, bleibt nach Multiplikation mit $a^{-1}$ (ax.multiplicative-inverse) $a^{0} = 1$ übrig, und kein anderer Wert ist möglich. Man lese die Kette als das, was sie ist. Sie beweist nicht, dass $a^{0} = 1$ ist, denn vor der Definition gibt es kein Objekt, über das sich etwas beweisen liesse. Sie beweist, dass ein Wert, wenn es ihn überhaupt geben soll und wenn pl.same-base wahr bleiben soll, nur $1$ sein kann. Diese Bedingtheit ist der ganze Inhalt der Schicht, und man sollte sie aussprechen, denn die Kette sieht genau wie ein Beweis aus und ist keiner. $0^{0}$ bleibt undefiniert, und zwar genau dort, wo man es erwarten würde: das Argument brauchte $a^{-1}$, und das hat $0$ nicht. Das ist keine Zimperlichkeit, sondern die Forderung, die nicht hinreicht, und sie stellt $0^{0}$ zurück zu den wirklich willkürlichen Wahlen. Verschiedene Gebiete der Mathematik entscheiden verschieden; $0^{0} = 1$ ist in der Kombinatorik und bei Potenzreihen üblich, die Analysis lässt es offen."
+              },
+              "intuition": {
+                "en": "$2^{3}, 2^{2}, 2^{1}$ is $8, 4, 2$: each step down divides by $2$, so the next one is $1$. That is the school picture and it is a good one. Where the picture stops: a pattern is a suggestion and not an argument, since any pattern can be continued some other way. What makes this one binding is that dividing by the base at each step down is pl.same-base itself. The picture is the law in disguise, which is why it feels convincing: it is right.",
+                "de": "$2^{3}, 2^{2}, 2^{1}$ ist $8, 4, 2$: jeder Schritt nach unten teilt durch $2$, der nächste ist also $1$. Das ist das Schulbild, und es ist ein gutes. Wo das Bild aufhört: ein Muster ist ein Vorschlag und kein Argument, denn jedes Muster liesse sich auch anders fortsetzen. Verbindlich wird dieses dadurch, dass das Teilen durch die Basis bei jedem Schritt nach unten genau pl.same-base ist. Das Bild ist das Gesetz in Verkleidung, und darum überzeugt es: es hat recht."
+              }
             },
             {
               "id": "def.pow-neg",
-              "concerns": ["mul"],
-              "name": {"en": "Negative exponents", "de": "Negative Exponenten"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Negative exponents",
+                "de": "Negative Exponenten"
+              },
               "latex": "a^{-n} := (a^{n})^{-1}",
               "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
               "cond": "a \\ne 0",
               "derivation": "a^{n} \\cdot a^{-n} = a^{\\,n + (-n)} = a^{0} = 1 \\qquad a^{n} \\cdot (a^{-1})^{n} = (a \\cdot a^{-1})^{n} = 1^{n} = 1",
-              "derivedFrom": ["pre.permanence", "pl.same-base", "def.pow-zero", "pl.of-product", "ax.multiplicative-inverse", "ax.eq-congruence"],
-              "note": {"en": "The first chain demands pl.same-base for the exponents $n$ and $-n$: whatever $a^{-n}$ is, it multiplies with $a^{n}$ to give $1$, so it can only be the multiplicative inverse of $a^{n}$. The second chain shows such an element exists, by exhibiting it: $(a^{-1})^{n}$ does the job, via pl.of-product. So the demand both determines the value and supplies it. Three spellings of one element: $(a^{n})^{-1}$, which the demand produces; $(a^{-1})^{n}$, which shows it exists; and $1/a^{n}$, which is what school writes and which is the most downstream of the three, since it needs def.div, despite looking the most elementary. Keep the word 'multiplicative inverse' for $a^{-1}$ and 'reciprocal' for $1/a$, so that each name travels with its notation. One more thing settles here: the minus in $a^{-n}$ is the ordinary unary minus of ax.additive-inverse applied to $n$, no different from the minus in $-2$. It is not a special negative-exponent mark. Nothing new enters the notation on this card.", "de": "Die erste Kette verlangt pl.same-base für die Exponenten $n$ und $-n$: was immer $a^{-n}$ ist, multipliziert mit $a^{n}$ ergibt es $1$, es kann also nur das multiplikative Inverse von $a^{n}$ sein. Die zweite Kette zeigt, dass ein solches Element existiert, indem sie es vorweist: $(a^{-1})^{n}$ leistet es, über pl.of-product. Die Forderung bestimmt den Wert also und liefert ihn zugleich. Drei Schreibweisen eines Elements: $(a^{n})^{-1}$, das die Forderung erzeugt; $(a^{-1})^{n}$, das die Existenz zeigt; und $1/a^{n}$, das die Schule schreibt und das von den dreien am weitesten flussabwärts liegt, denn es braucht def.div, obwohl es am elementarsten aussieht. Man behalte 'multiplikatives Inverses' für $a^{-1}$ und 'Kehrwert' für $1/a$, damit jeder Name bei seiner Schreibweise bleibt. Und noch etwas klärt sich hier: das Minus in $a^{-n}$ ist das gewöhnliche unäre Minus aus ax.additive-inverse, auf $n$ angewendet, nicht anders als das Minus in $-2$. Es ist kein besonderes Zeichen für negative Exponenten. Auf dieser Karte kommt nichts Neues in die Schreibweise."}
+              "derivedFrom": [
+                "pre.permanence",
+                "pl.same-base",
+                "def.pow-zero",
+                "pl.of-product",
+                "ax.multiplicative-inverse",
+                "ax.eq-congruence"
+              ],
+              "note": {
+                "en": "The first chain demands pl.same-base for the exponents $n$ and $-n$: whatever $a^{-n}$ is, it multiplies with $a^{n}$ to give $1$, so it can only be the multiplicative inverse of $a^{n}$. The second chain shows such an element exists, by exhibiting it: $(a^{-1})^{n}$ does the job, via pl.of-product. So the demand both determines the value and supplies it. Three spellings of one element: $(a^{n})^{-1}$, which the demand produces; $(a^{-1})^{n}$, which shows it exists; and $1/a^{n}$, which is what school writes and which is the most downstream of the three, since it needs def.div, despite looking the most elementary. Keep the word 'multiplicative inverse' for $a^{-1}$ and 'reciprocal' for $1/a$, so that each name travels with its notation. One more thing settles here: the minus in $a^{-n}$ is the ordinary unary minus of ax.additive-inverse applied to $n$, no different from the minus in $-2$. It is not a special negative-exponent mark. Nothing new enters the notation on this card.",
+                "de": "Die erste Kette verlangt pl.same-base für die Exponenten $n$ und $-n$: was immer $a^{-n}$ ist, multipliziert mit $a^{n}$ ergibt es $1$, es kann also nur das multiplikative Inverse von $a^{n}$ sein. Die zweite Kette zeigt, dass ein solches Element existiert, indem sie es vorweist: $(a^{-1})^{n}$ leistet es, über pl.of-product. Die Forderung bestimmt den Wert also und liefert ihn zugleich. Drei Schreibweisen eines Elements: $(a^{n})^{-1}$, das die Forderung erzeugt; $(a^{-1})^{n}$, das die Existenz zeigt; und $1/a^{n}$, das die Schule schreibt und das von den dreien am weitesten flussabwärts liegt, denn es braucht def.div, obwohl es am elementarsten aussieht. Man behalte 'multiplikatives Inverses' für $a^{-1}$ und 'Kehrwert' für $1/a$, damit jeder Name bei seiner Schreibweise bleibt. Und noch etwas klärt sich hier: das Minus in $a^{-n}$ ist das gewöhnliche unäre Minus aus ax.additive-inverse, auf $n$ angewendet, nicht anders als das Minus in $-2$. Es ist kein besonderes Zeichen für negative Exponenten. Auf dieser Karte kommt nichts Neues in die Schreibweise."
+              }
             }
           ]
         }
       ]
     },
-
     {
       "slug": "int-laws",
       "kind": "theorem",
-      "title": {"en": "ℤ · The laws survive", "de": "ℤ · Die Gesetze überleben"},
+      "title": {
+        "en": "ℤ · The laws survive",
+        "de": "ℤ · Die Gesetze überleben"
+      },
       "groups": [
         {
           "slug": "powers",
-          "title": { "en": "Powers", "de": "Potenzen" },
+          "title": {
+            "en": "Powers",
+            "de": "Potenzen"
+          },
           "cards": [
             {
               "id": "th.inverse-is-power",
-              "concerns": ["mul"],
-              "name": {"en": "The old notation was a power all along", "de": "Die alte Schreibweise war immer schon eine Potenz"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The old notation was a power all along",
+                "de": "Die alte Schreibweise war immer schon eine Potenz"
+              },
               "latex": "a^{-1} \\;\\text{(ax.multiplicative-inverse)} \\;=\\; a^{-1} \\;\\text{(power)}",
               "forall": "a \\in \\mathbb{R}",
               "cond": "a \\ne 0",
               "derivation": "a^{-1} = (a^{1})^{-1} = a^{-1}",
-              "derivedFrom": ["def.pow-neg", "def.pow", "ax.multiplicative-inverse"],
-              "note": {"en": "At fundamentals, $a^{-1}$ was atomic notation: a name for the element ax.multiplicative-inverse asserts to exist, with the $-1$ decorative, not the number $-1$ and not an exponent, because powers did not exist there. The card that introduced it had to say so. Now the two readings coincide: put $n = 1$ into def.pow-neg and the power with exponent $-1$ is the multiplicative inverse, which is what the symbol always denoted. The notation is justified in retrospect, and what looked like a pun turns out to be literally true. This is the same move as ix.juxtaposition one layer down, a notation used on trust and paid for later. It is a habit worth noticing: mathematics adopts suggestive notation first and earns it afterwards, and students are rarely told which of the two states a given symbol is in.", "de": "Bei fundamentals war $a^{-1}$ atomare Schreibweise: ein Name für das Element, dessen Existenz ax.multiplicative-inverse behauptet, mit dekorativer $-1$, nicht die Zahl $-1$ und kein Exponent, denn Potenzen gab es dort nicht. Die einführende Karte musste das sagen. Jetzt fallen die beiden Lesarten zusammen: setzt man $n = 1$ in def.pow-neg ein, so ist die Potenz mit Exponent $-1$ das multiplikative Inverse, und genau das hat das Zeichen immer bezeichnet. Die Schreibweise ist im Nachhinein gerechtfertigt, und was wie ein Wortspiel aussah, ist buchstäblich wahr. Das ist derselbe Zug wie bei ix.juxtaposition eine Schicht tiefer: eine Schreibweise wird auf Vertrauen benutzt und später bezahlt. Die Gewohnheit lohnt es zu bemerken: die Mathematik übernimmt suggestive Schreibweisen zuerst und verdient sie danach, und den Lernenden wird selten gesagt, in welchem der beiden Zustände ein Zeichen gerade ist."}
+              "derivedFrom": [
+                "def.pow-neg",
+                "def.pow",
+                "ax.multiplicative-inverse"
+              ],
+              "note": {
+                "en": "At fundamentals, $a^{-1}$ was atomic notation: a name for the element ax.multiplicative-inverse asserts to exist, with the $-1$ decorative, not the number $-1$ and not an exponent, because powers did not exist there. The card that introduced it had to say so. Now the two readings coincide: put $n = 1$ into def.pow-neg and the power with exponent $-1$ is the multiplicative inverse, which is what the symbol always denoted. The notation is justified in retrospect, and what looked like a pun turns out to be literally true. This is the same move as ix.juxtaposition one layer down, a notation used on trust and paid for later. It is a habit worth noticing: mathematics adopts suggestive notation first and earns it afterwards, and students are rarely told which of the two states a given symbol is in.",
+                "de": "Bei fundamentals war $a^{-1}$ atomare Schreibweise: ein Name für das Element, dessen Existenz ax.multiplicative-inverse behauptet, mit dekorativer $-1$, nicht die Zahl $-1$ und kein Exponent, denn Potenzen gab es dort nicht. Die einführende Karte musste das sagen. Jetzt fallen die beiden Lesarten zusammen: setzt man $n = 1$ in def.pow-neg ein, so ist die Potenz mit Exponent $-1$ das multiplikative Inverse, und genau das hat das Zeichen immer bezeichnet. Die Schreibweise ist im Nachhinein gerechtfertigt, und was wie ein Wortspiel aussah, ist buchstäblich wahr. Das ist derselbe Zug wie bei ix.juxtaposition eine Schicht tiefer: eine Schreibweise wird auf Vertrauen benutzt und später bezahlt. Die Gewohnheit lohnt es zu bemerken: die Mathematik übernimmt suggestive Schreibweisen zuerst und verdient sie danach, und den Lernenden wird selten gesagt, in welchem der beiden Zustände ein Zeichen gerade ist."
+              }
             },
             {
               "id": "th.pow-laws-int",
-              "concerns": ["mul"],
-              "name": {"en": "The laws survive", "de": "Die Gesetze überleben"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The laws survive",
+                "de": "Die Gesetze überleben"
+              },
               "latex": "a^{m+n} = a^{m} \\cdot a^{n} \\qquad (a^{m})^{n} = a^{m \\cdot n} \\qquad (a \\cdot b)^{n} = a^{n} \\cdot b^{n}",
               "forall": "a, b \\in \\mathbb{R},\\ m, n \\in \\mathbb{Z}",
               "cond": "a, b \\ne 0",
               "derivation": "m, n \\ge 0 \\;\\text{: the } \\mathbb{N} \\text{ case} \\qquad m < 0 \\text{ or } n < 0 \\;\\text{: reduce by def.pow-neg to the } \\mathbb{N} \\text{ case}",
-              "derivedFrom": ["def.pow-zero", "def.pow-neg", "pl.same-base", "pl.of-power", "pl.of-product"],
-              "note": {"en": "Case analysis on whether each exponent is positive, negative or zero, with every case reducing to the natural-exponent version together with the two definitions above. This is the vindication of the method, and it is not circular. We demanded one law, pl.same-base, and only in the mixed cases involving $0$; what comes back is all three laws across the whole of $\\mathbb{Z}$. The extension could have been coherent for the law we asked about and broken for the others. It is not, and that is why permanence is a good method and not merely a tidy one. Note also the change of status. On $\\mathbb{N}$ these were theorems about a recursion; here they are theorems about definitions that were built in order to satisfy them. The same three statements, in a different epistemic position, which is what it means to say the tower's arrow turns around on this layer.", "de": "Fallunterscheidung danach, ob die Exponenten positiv, negativ oder null sind, wobei sich jeder Fall auf die Fassung mit natürlichen Exponenten und die beiden Definitionen oben zurückführt. Das ist die Bewährung der Methode, und sie ist nicht zirkulär. Verlangt haben wir ein Gesetz, pl.same-base, und das nur in den gemischten Fällen mit $0$; zurück kommen alle drei Gesetze auf ganz $\\mathbb{Z}$. Die Erweiterung hätte für das verlangte Gesetz stimmig und für die übrigen kaputt sein können. Sie ist es nicht, und darum ist die Permanenz eine gute und nicht bloss eine ordentliche Methode. Man beachte auch den Wechsel des Status. Auf $\\mathbb{N}$ waren dies Sätze über eine Rekursion; hier sind es Sätze über Definitionen, die gebaut wurden, um sie zu erfüllen. Dieselben drei Aussagen in einer anderen erkenntnismässigen Lage, und genau das heisst es, dass sich der Pfeil des Turms auf dieser Schicht umdreht."}
+              "derivedFrom": [
+                "def.pow-zero",
+                "def.pow-neg",
+                "pl.same-base",
+                "pl.of-power",
+                "pl.of-product"
+              ],
+              "note": {
+                "en": "Case analysis on whether each exponent is positive, negative or zero, with every case reducing to the natural-exponent version together with the two definitions above. This is the vindication of the method, and it is not circular. We demanded one law, pl.same-base, and only in the mixed cases involving $0$; what comes back is all three laws across the whole of $\\mathbb{Z}$. The extension could have been coherent for the law we asked about and broken for the others. It is not, and that is why permanence is a good method and not merely a tidy one. Note also the change of status. On $\\mathbb{N}$ these were theorems about a recursion; here they are theorems about definitions that were built in order to satisfy them. The same three statements, in a different epistemic position, which is what it means to say the tower's arrow turns around on this layer.",
+                "de": "Fallunterscheidung danach, ob die Exponenten positiv, negativ oder null sind, wobei sich jeder Fall auf die Fassung mit natürlichen Exponenten und die beiden Definitionen oben zurückführt. Das ist die Bewährung der Methode, und sie ist nicht zirkulär. Verlangt haben wir ein Gesetz, pl.same-base, und das nur in den gemischten Fällen mit $0$; zurück kommen alle drei Gesetze auf ganz $\\mathbb{Z}$. Die Erweiterung hätte für das verlangte Gesetz stimmig und für die übrigen kaputt sein können. Sie ist es nicht, und darum ist die Permanenz eine gute und nicht bloss eine ordentliche Methode. Man beachte auch den Wechsel des Status. Auf $\\mathbb{N}$ waren dies Sätze über eine Rekursion; hier sind es Sätze über Definitionen, die gebaut wurden, um sie zu erfüllen. Dieselben drei Aussagen in einer anderen erkenntnismässigen Lage, und genau das heisst es, dass sich der Pfeil des Turms auf dieser Schicht umdreht."
+              }
             },
             {
               "id": "th.pow-quotient-same-base",
@@ -332,19 +491,27 @@
         }
       ]
     },
-
     {
       "slug": "rat-preliminary",
       "kind": "preliminary",
-      "title": {"en": "ℚ · When a demand names what is not there", "de": "ℚ · Wenn eine Forderung etwas benennt, das es nicht gibt"},
-      "note": {"en": "The top step, and a different kind of step. Permanence always demands a value; what has differed from layer to layer is who can supply it. On $\\mathbb{N}$ we built the value ourselves by recursion. On $\\mathbb{Z}$ the demand described something the field already contained, and def.pow-neg could point at it. Here the demand says that $a^{1/n}$ must be an element whose $n$-th power is $a$, and below ax.completeness there is nobody to supply one: $\\mathbb{Q}$ itself is the proof, since nothing rational squares to $2$ while the demand for $2^{1/2}$ is exactly as reasonable there as anywhere. So the question stops being what value it must take and becomes whether there is a value to take, and that question is not algebraic. This is where the seam that ax.completeness was written to mark is finally crossed. It is also where the fundament ends: $a^{\\sqrt{2}}$ is not reachable from here, because there is no rational name to read and no demand that settles it.", "de": "Die oberste Stufe, und eine Stufe anderer Art. Die Permanenz verlangt immer einen Wert; was sich von Schicht zu Schicht unterschied, ist, wer ihn liefern kann. Auf $\\mathbb{N}$ haben wir den Wert selbst gebaut, rekursiv. Auf $\\mathbb{Z}$ beschrieb die Forderung etwas, das der Körper bereits enthielt, und def.pow-neg konnte darauf zeigen. Hier sagt die Forderung, dass $a^{1/n}$ ein Element sein muss, dessen $n$-te Potenz $a$ ist, und unterhalb von ax.completeness gibt es niemanden, der eines liefert: $\\mathbb{Q}$ selbst ist der Beweis, denn nichts Rationales ergibt quadriert $2$, während die Forderung nach $2^{1/2}$ dort genauso vernünftig ist wie überall. Die Frage ist also nicht mehr, welchen Wert es annehmen muss, sondern ob es einen Wert zu nehmen gibt, und diese Frage ist nicht algebraisch. Hier wird die Naht überschritten, die ax.completeness markieren sollte. Und hier endet das Fundament: $a^{\\sqrt{2}}$ ist von hier aus nicht erreichbar, denn es gibt keinen rationalen Namen zu lesen und keine Forderung, die es entscheidet."},
+      "title": {
+        "en": "ℚ · When a demand names what is not there",
+        "de": "ℚ · Wenn eine Forderung etwas benennt, das es nicht gibt"
+      },
+      "note": {
+        "en": "The top step, and a different kind of step. Permanence always demands a value; what has differed from layer to layer is who can supply it. On $\\mathbb{N}$ we built the value ourselves by recursion. On $\\mathbb{Z}$ the demand described something the field already contained, and def.pow-neg could point at it. Here the demand says that $a^{1/n}$ must be an element whose $n$-th power is $a$, and below ax.completeness there is nobody to supply one: $\\mathbb{Q}$ itself is the proof, since nothing rational squares to $2$ while the demand for $2^{1/2}$ is exactly as reasonable there as anywhere. So the question stops being what value it must take and becomes whether there is a value to take, and that question is not algebraic. This is where the seam that ax.completeness was written to mark is finally crossed. It is also where the fundament ends: $a^{\\sqrt{2}}$ is not reachable from here, because there is no rational name to read and no demand that settles it.",
+        "de": "Die oberste Stufe, und eine Stufe anderer Art. Die Permanenz verlangt immer einen Wert; was sich von Schicht zu Schicht unterschied, ist, wer ihn liefern kann. Auf $\\mathbb{N}$ haben wir den Wert selbst gebaut, rekursiv. Auf $\\mathbb{Z}$ beschrieb die Forderung etwas, das der Körper bereits enthielt, und def.pow-neg konnte darauf zeigen. Hier sagt die Forderung, dass $a^{1/n}$ ein Element sein muss, dessen $n$-te Potenz $a$ ist, und unterhalb von ax.completeness gibt es niemanden, der eines liefert: $\\mathbb{Q}$ selbst ist der Beweis, denn nichts Rationales ergibt quadriert $2$, während die Forderung nach $2^{1/2}$ dort genauso vernünftig ist wie überall. Die Frage ist also nicht mehr, welchen Wert es annehmen muss, sondern ob es einen Wert zu nehmen gibt, und diese Frage ist nicht algebraisch. Hier wird die Naht überschritten, die ax.completeness markieren sollte. Und hier endet das Fundament: $a^{\\sqrt{2}}$ ist von hier aus nicht erreichbar, denn es gibt keinen rationalen Namen zu lesen und keine Forderung, die es entscheidet."
+      },
       "groups": [
         {
           "slug": "prelim",
           "cards": [
             {
               "id": "pre.existence",
-              "name": { "en": "When a demand names something that is not there", "de": "Wenn eine Forderung etwas benennt, das es nicht gibt" },
+              "name": {
+                "en": "When a demand names something that is not there",
+                "de": "Wenn eine Forderung etwas benennt, das es nicht gibt"
+              },
               "note": {
                 "en": "The method has not changed since the last layer: state which law is to keep holding, and read off what the new value must be. What changes is what happens next. For $a^{0}$ and $a^{-n}$ the demand described an element the field already contained, and the definition could simply name it. For $a^{1/n}$ it describes an element that need not exist at all. So the question stops being 'what value must it take?' and becomes 'is there a value to take?', and that question is not algebraic: no axiom about $+$, $\\cdot$ or $<$ produces new elements. Only ax.completeness does, and it does so by speaking about sets rather than about elements. There is a second theme running through this page, and it is worth watching. Definitions carry existence obligations. def.pow had none, since a recursion always defines something. def.pow-neg discharged one in a line by exhibiting a witness. Here it takes a theorem resting on an axiom. Students meet definitions as free stipulations; three cards in this tower say otherwise, with rising difficulty, and this is where the rise becomes visible.",
                 "de": "Die Methode hat sich seit der letzten Schicht nicht geändert: man sage, welches Gesetz weiter gelten soll, und lese ab, welchen Wert das Neue haben muss. Was sich ändert, ist, was danach geschieht. Bei $a^{0}$ und $a^{-n}$ beschrieb die Forderung ein Element, das der Körper schon enthielt, und die Definition konnte es einfach benennen. Bei $a^{1/n}$ beschreibt sie ein Element, das gar nicht zu existieren braucht. Die Frage ist also nicht mehr 'welchen Wert muss es haben?', sondern 'gibt es einen Wert zu nehmen?', und diese Frage ist nicht algebraisch: kein Axiom über $+$, $\\cdot$ oder $<$ erzeugt neue Elemente. Nur ax.completeness tut das, und es tut es, indem es über Mengen statt über Elemente spricht. Ein zweites Thema zieht sich durch diese Seite, und es lohnt sich, darauf zu achten. Definitionen tragen Existenzpflichten. def.pow hatte keine, denn eine Rekursion definiert immer etwas. def.pow-neg erledigte eine in einer Zeile, indem es einen Zeugen vorwies. Hier braucht es dafür einen Satz, der auf einem Axiom ruht. Lernende begegnen Definitionen als freien Festsetzungen; drei Karten dieses Turms sagen das Gegenteil, mit steigender Schwierigkeit, und hier wird der Anstieg sichtbar."
@@ -358,11 +525,13 @@
         }
       ]
     },
-
     {
       "slug": "rat-definition",
       "kind": "definition",
-      "title": {"en": "ℚ · Roots and rational exponents", "de": "ℚ · Wurzeln und rationale Exponenten"},
+      "title": {
+        "en": "ℚ · Roots and rational exponents",
+        "de": "ℚ · Wurzeln und rationale Exponenten"
+      },
       "note": {
         "en": "def.root is a definition by description: it says which element is meant and cannot by itself produce one. Its licence is th.root-exists, below.",
         "de": "def.root ist eine Definition durch Beschreibung: sie sagt, welches Element gemeint ist, und kann selbst keines erzeugen. Ihre Erlaubnis ist th.root-exists, weiter unten."
@@ -370,110 +539,221 @@
       "groups": [
         {
           "slug": "powers",
-          "title": { "en": "Roots and rational exponents", "de": "Wurzeln und rationale Exponenten" },
+          "title": {
+            "en": "Roots and rational exponents",
+            "de": "Wurzeln und rationale Exponenten"
+          },
           "cards": [
             {
               "id": "def.root",
-              "concerns": ["mul", "order"],
-              "name": {"en": "The n-th root", "de": "Die n-te Wurzel"},
+              "concerns": [
+                "mul",
+                "order"
+              ],
+              "name": {
+                "en": "The n-th root",
+                "de": "Die n-te Wurzel"
+              },
               "latex": "a^{1/n} := \\text{the unique } b > 0 \\text{ with } b^{n} = a",
               "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
               "cond": "a > 0",
-              "basedOn": ["pre.existence", "pl.same-base", "def.pow", "op.lt"],
-              "note": {"en": "A definition by description, not by construction: it says which element is meant, and the element's existence has to come from somewhere else. It comes from th.root-exists, which is the only reason this card is allowed to stand. A definition may name only something that is there, and here that obligation is real work rather than a formality: the same obligation def.pow-neg discharged in one line by exhibiting $(a^{-1})^{n}$, and that def.pow never had at all. Two conditions, each earning its place. $a > 0$ because the demand is inconsistent otherwise (th.base-fence), not because negative bases are distasteful. $b > 0$ because $x^{2} = 4$ has two solutions and a function must return one: this is the principal root, and the choice is forced rather than free (th.principal-root). Two small cases: $0^{1/n} = 0$, and $0$ with a negative rational exponent is undefined, for the reason it always was.", "de": "Eine Definition durch Beschreibung und nicht durch Konstruktion: sie sagt, welches Element gemeint ist, und die Existenz des Elements muss von anderswo kommen. Sie kommt von th.root-exists, und nur darum darf diese Karte stehen. Eine Definition darf nur benennen, was da ist, und hier ist diese Pflicht echte Arbeit und keine Formsache: dieselbe Pflicht, die def.pow-neg in einer Zeile mit dem Vorweisen von $(a^{-1})^{n}$ erledigt hat und die def.pow gar nie hatte. Zwei Bedingungen, jede verdient. $a > 0$, weil die Forderung sonst widersprüchlich ist (th.base-fence), und nicht, weil negative Basen anstössig wären. $b > 0$, weil $x^{2} = 4$ zwei Lösungen hat und eine Funktion eine zurückgeben muss: das ist die Hauptwurzel, und die Wahl ist erzwungen und nicht frei (th.principal-root). Zwei kleine Fälle: $0^{1/n} = 0$, und $0$ mit negativem rationalem Exponenten ist undefiniert, aus dem Grund, aus dem es das immer war."},
-              "intuition": {"en": "$\\sqrt{a}$ is the side of a square of area $a$, and it can be constructed exactly with ruler and compass long before it can be written down as a numeral. Where the picture stops: a square's side is a length, so the picture hands you the positive root only and never shows $-2$ as a square root of $4$. The picture is quietly making the principal-root choice on your behalf without saying so, which is exactly why $\\sqrt{x^{2}} = x$ feels obviously true and is false.", "de": "$\\sqrt{a}$ ist die Seite eines Quadrats mit Flächeninhalt $a$, und sie lässt sich mit Zirkel und Lineal exakt konstruieren, lange bevor sie sich als Zahl hinschreiben lässt. Wo das Bild aufhört: die Seite eines Quadrats ist eine Länge, das Bild liefert also nur die positive Wurzel und zeigt nie $-2$ als Quadratwurzel von $4$. Das Bild trifft die Wahl der Hauptwurzel stillschweigend für Sie, ohne es zu sagen, und genau darum fühlt sich $\\sqrt{x^{2}} = x$ offensichtlich richtig an und ist falsch."}
+              "basedOn": [
+                "pre.existence",
+                "pl.same-base",
+                "def.pow",
+                "op.lt"
+              ],
+              "note": {
+                "en": "A definition by description, not by construction: it says which element is meant, and the element's existence has to come from somewhere else. It comes from th.root-exists, which is the only reason this card is allowed to stand. A definition may name only something that is there, and here that obligation is real work rather than a formality: the same obligation def.pow-neg discharged in one line by exhibiting $(a^{-1})^{n}$, and that def.pow never had at all. Two conditions, each earning its place. $a > 0$ because the demand is inconsistent otherwise (th.base-fence), not because negative bases are distasteful. $b > 0$ because $x^{2} = 4$ has two solutions and a function must return one: this is the principal root, and the choice is forced rather than free (th.principal-root). Two small cases: $0^{1/n} = 0$, and $0$ with a negative rational exponent is undefined, for the reason it always was.",
+                "de": "Eine Definition durch Beschreibung und nicht durch Konstruktion: sie sagt, welches Element gemeint ist, und die Existenz des Elements muss von anderswo kommen. Sie kommt von th.root-exists, und nur darum darf diese Karte stehen. Eine Definition darf nur benennen, was da ist, und hier ist diese Pflicht echte Arbeit und keine Formsache: dieselbe Pflicht, die def.pow-neg in einer Zeile mit dem Vorweisen von $(a^{-1})^{n}$ erledigt hat und die def.pow gar nie hatte. Zwei Bedingungen, jede verdient. $a > 0$, weil die Forderung sonst widersprüchlich ist (th.base-fence), und nicht, weil negative Basen anstössig wären. $b > 0$, weil $x^{2} = 4$ zwei Lösungen hat und eine Funktion eine zurückgeben muss: das ist die Hauptwurzel, und die Wahl ist erzwungen und nicht frei (th.principal-root). Zwei kleine Fälle: $0^{1/n} = 0$, und $0$ mit negativem rationalem Exponenten ist undefiniert, aus dem Grund, aus dem es das immer war."
+              },
+              "intuition": {
+                "en": "$\\sqrt{a}$ is the side of a square of area $a$, and it can be constructed exactly with ruler and compass long before it can be written down as a numeral. Where the picture stops: a square's side is a length, so the picture hands you the positive root only and never shows $-2$ as a square root of $4$. The picture is quietly making the principal-root choice on your behalf without saying so, which is exactly why $\\sqrt{x^{2}} = x$ feels obviously true and is false.",
+                "de": "$\\sqrt{a}$ ist die Seite eines Quadrats mit Flächeninhalt $a$, und sie lässt sich mit Zirkel und Lineal exakt konstruieren, lange bevor sie sich als Zahl hinschreiben lässt. Wo das Bild aufhört: die Seite eines Quadrats ist eine Länge, das Bild liefert also nur die positive Wurzel und zeigt nie $-2$ als Quadratwurzel von $4$. Das Bild trifft die Wahl der Hauptwurzel stillschweigend für Sie, ohne es zu sagen, und genau darum fühlt sich $\\sqrt{x^{2}} = x$ offensichtlich richtig an und ist falsch."
+              }
             },
             {
               "id": "def.pow-rat",
-              "concerns": ["mul"],
-              "name": {"en": "Rational exponents", "de": "Rationale Exponenten"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Rational exponents",
+                "de": "Rationale Exponenten"
+              },
               "latex": "a^{m/n} := \\left( a^{1/n} \\right)^{m}",
               "forall": "a \\in \\mathbb{R},\\ m \\in \\mathbb{Z},\\ n \\in \\mathbb{N}",
               "cond": "a > 0",
-              "basedOn": ["def.root", "def.pow", "def.pow-neg", "def.rat", "def.div"],
-              "note": {"en": "Built from the two layers below: the inner step is this layer's root, the outer is def.pow, or def.pow-neg when $m$ is negative. Nothing new is demanded here. Once $a^{1/n}$ exists, everything rational is reachable by composing what the tower already has, which is why the root card carries the whole of the layer's difficulty and this one is bookkeeping. Except for one thing, and it is genuinely new: the definition is stated in terms of $m$ and $n$, and those are a name for the exponent rather than the exponent itself. See th.exponent-well-defined.", "de": "Aus den beiden Schichten darunter gebaut: der innere Schritt ist die Wurzel dieser Schicht, der äussere ist def.pow, oder def.pow-neg, wenn $m$ negativ ist. Neues wird hier nicht verlangt. Sobald $a^{1/n}$ existiert, ist alles Rationale durch Zusammensetzen dessen erreichbar, was der Turm schon hat; darum trägt die Wurzelkarte die ganze Schwierigkeit der Schicht und diese hier ist Buchhaltung. Bis auf eines, und das ist wirklich neu: die Definition ist über $m$ und $n$ formuliert, und die sind ein Name für den Exponenten und nicht der Exponent selbst. Siehe th.exponent-well-defined."}
+              "basedOn": [
+                "def.root",
+                "def.pow",
+                "def.pow-neg",
+                "def.rat",
+                "def.div"
+              ],
+              "note": {
+                "en": "Built from the two layers below: the inner step is this layer's root, the outer is def.pow, or def.pow-neg when $m$ is negative. Nothing new is demanded here. Once $a^{1/n}$ exists, everything rational is reachable by composing what the tower already has, which is why the root card carries the whole of the layer's difficulty and this one is bookkeeping. Except for one thing, and it is genuinely new: the definition is stated in terms of $m$ and $n$, and those are a name for the exponent rather than the exponent itself. See th.exponent-well-defined.",
+                "de": "Aus den beiden Schichten darunter gebaut: der innere Schritt ist die Wurzel dieser Schicht, der äussere ist def.pow, oder def.pow-neg, wenn $m$ negativ ist. Neues wird hier nicht verlangt. Sobald $a^{1/n}$ existiert, ist alles Rationale durch Zusammensetzen dessen erreichbar, was der Turm schon hat; darum trägt die Wurzelkarte die ganze Schwierigkeit der Schicht und diese hier ist Buchhaltung. Bis auf eines, und das ist wirklich neu: die Definition ist über $m$ und $n$ formuliert, und die sind ein Name für den Exponenten und nicht der Exponent selbst. Siehe th.exponent-well-defined."
+              }
             }
           ]
         }
       ]
     },
-
     {
       "slug": "rat-notation",
       "kind": "convention",
-      "title": {"en": "ℚ · Radical notation", "de": "ℚ · Wurzelschreibweise"},
+      "title": {
+        "en": "ℚ · Radical notation",
+        "de": "ℚ · Wurzelschreibweise"
+      },
       "groups": [
         {
           "slug": "reading",
           "cards": [
             {
               "id": "ix.root",
-              "concerns": ["mul"],
-              "name": { "en": "Radical and exponent", "de": "Wurzel und Exponent" },
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Radical and exponent",
+                "de": "Wurzel und Exponent"
+              },
               "latex": "\\sqrt[n]{a} \\;=\\; a^{1/n} \\qquad \\sqrt{a} \\;=\\; \\sqrt[2]{a}",
               "note": {
                 "en": "Two notations for one element. The radical is much older and it hides the laws: nothing in the symbol $\\sqrt{\\phantom{a}}$ suggests that $\\sqrt{a} \\cdot \\sqrt{a} = a$ is an instance of the same rule as $a^{2} \\cdot a^{3} = a^{5}$. Written $a^{1/2}$ it visibly is. That is the whole case for the exponent form: the power laws are the useful spelling and the radical is the traditional one. One difference between them is not cosmetic. The radical can be extended where the exponent notation cannot: many school books write $\\sqrt[3]{-8} = -2$, which is consistent as a root, since $(-2)^{3} = -8$ and odd powers do not collide. Writing $(-8)^{1/3}$ instead invites pl.of-power and lands in the contradiction of th.base-fence. So the two notations have genuinely different domains, and the radical's extra reach is bought by giving up the laws.",
                 "de": "Zwei Schreibweisen für ein Element. Die Wurzel ist viel älter und verbirgt die Gesetze: nichts am Zeichen $\\sqrt{\\phantom{a}}$ legt nahe, dass $\\sqrt{a} \\cdot \\sqrt{a} = a$ ein Fall derselben Regel ist wie $a^{2} \\cdot a^{3} = a^{5}$. Als $a^{1/2}$ geschrieben, ist es sichtbar so. Das ist der ganze Grund für die Exponentenform: die Potenzgesetze sind die nützliche Schreibweise, die Wurzel die überlieferte. Ein Unterschied zwischen beiden ist nicht kosmetisch. Die Wurzel lässt sich dort erweitern, wo die Exponentenschreibweise es nicht kann: viele Lehrmittel schreiben $\\sqrt[3]{-8} = -2$, was als Wurzel stimmig ist, denn $(-2)^{3} = -8$, und ungerade Potenzen stossen nicht zusammen. Schreibt man stattdessen $(-8)^{1/3}$, so ruft man pl.of-power auf den Plan und landet im Widerspruch von th.base-fence. Die beiden Schreibweisen haben also wirklich verschiedene Bereiche, und die grössere Reichweite der Wurzel ist mit dem Verzicht auf die Gesetze bezahlt."
               },
-              "basedOn": ["def.root"]
+              "basedOn": [
+                "def.root"
+              ]
             }
           ]
         }
       ]
     },
-
     {
       "slug": "rat-laws",
       "kind": "theorem",
-      "title": {"en": "ℚ · Existence, uniqueness, and the fence", "de": "ℚ · Existenz, Eindeutigkeit und der Zaun"},
+      "title": {
+        "en": "ℚ · Existence, uniqueness, and the fence",
+        "de": "ℚ · Existenz, Eindeutigkeit und der Zaun"
+      },
       "groups": [
         {
           "slug": "powers",
-          "title": { "en": "Roots and rational exponents", "de": "Wurzeln und rationale Exponenten" },
+          "title": {
+            "en": "Roots and rational exponents",
+            "de": "Wurzeln und rationale Exponenten"
+          },
           "cards": [
             {
               "id": "th.root-exists",
-              "concerns": ["mul", "order", "completeness"],
-              "name": {"en": "Roots exist, and there is only one", "de": "Wurzeln existieren, und es gibt nur eine"},
+              "concerns": [
+                "mul",
+                "order",
+                "completeness"
+              ],
+              "name": {
+                "en": "Roots exist, and there is only one",
+                "de": "Wurzeln existieren, und es gibt nur eine"
+              },
               "latex": "\\text{there is exactly one } b > 0 \\text{ with } b^{n} = a",
               "forall": "a \\in \\mathbb{R},\\ n \\in \\mathbb{N}",
               "cond": "a > 0",
               "derivation": "\\begin{aligned} S &:= \\{\\, x > 0 \\;:\\; x^{n} < a \\,\\}, \\qquad b := \\sup S \\;\\;(\\text{ax.completeness}), \\qquad b^{n} = a \\\\[2pt] 0 &< b < c \\;\\Longrightarrow\\; b^{n} < c^{n} \\qquad (\\text{ax.order-mul, induction}) \\end{aligned}",
-              "derivedFrom": ["ax.completeness", "ax.order-mul", "th.ind", "def.pow"],
-              "note": {"en": "Existence: $S$ is non-empty and bounded above, so it has a supremum $b$ by ax.completeness, and $b^{n} = a$, since both strict inequalities can be excluded. Uniqueness: raising to the $n$-th power is strictly increasing on the positive elements, by induction from ax.order-mul, so two different positive elements cannot share an $n$-th power. The two halves come from different places and it is worth watching which. Uniqueness is pure order, the same machinery as the naturals layer. Existence is completeness and nothing else. ax.completeness has been sitting at the bottom of fundamentals since it was written, used by nothing; this is what it was for. Every other card in this tower could have been written in $\\mathbb{Q}$ and stayed true. This one is false in $\\mathbb{Q}$, and that is the exact content of the word complete.", "de": "Existenz: $S$ ist nicht leer und nach oben beschränkt, hat also nach ax.completeness ein Supremum $b$, und $b^{n} = a$, denn beide strikten Ungleichungen lassen sich ausschliessen. Eindeutigkeit: das Potenzieren mit $n$ ist auf den positiven Elementen streng wachsend, durch Induktion aus ax.order-mul, also können zwei verschiedene positive Elemente nicht dieselbe $n$-te Potenz haben. Die beiden Hälften kommen von verschiedenen Orten, und es lohnt sich, darauf zu achten. Die Eindeutigkeit ist reine Ordnung, dieselbe Maschinerie wie in der Schicht der natürlichen Zahlen. Die Existenz ist Vollständigkeit und sonst nichts. ax.completeness sitzt seit seiner Niederschrift unten in fundamentals und wurde von nichts gebraucht; dafür war es da. Jede andere Karte dieses Turms hätte sich in $\\mathbb{Q}$ schreiben lassen und wäre wahr geblieben. Diese ist in $\\mathbb{Q}$ falsch, und genau das ist der Inhalt des Wortes vollständig."},
-              "intuition": {"en": "Climb up through the positive elements: below some point the $n$-th power undershoots $a$, above it overshoots, and the root is where the two regions meet. Completeness is the assertion that there is a point where they meet rather than a gap. Where the picture stops: the climb never arrives. No finite calculation produces $\\sqrt{2}$; it can only be trapped between rationals, tighter and tighter. ax.completeness does not say how to find the meeting point, it asserts that one is there. That is the difference between algebra and analysis, in one card.", "de": "Man steige durch die positiven Elemente hinauf: unterhalb eines Punktes bleibt die $n$-te Potenz unter $a$, oberhalb schiesst sie darüber hinaus, und die Wurzel ist dort, wo sich die beiden Bereiche treffen. Die Vollständigkeit behauptet, dass es einen Treffpunkt gibt und keine Lücke. Wo das Bild aufhört: der Aufstieg kommt nie an. Keine endliche Rechnung liefert $\\sqrt{2}$; es lässt sich nur zwischen rationalen Zahlen einschliessen, immer enger. ax.completeness sagt nicht, wie der Treffpunkt zu finden ist, es behauptet, dass es einen gibt. Das ist der Unterschied zwischen Algebra und Analysis, auf einer Karte."}
+              "derivedFrom": [
+                "ax.completeness",
+                "ax.order-mul",
+                "th.ind",
+                "def.pow"
+              ],
+              "note": {
+                "en": "Existence: $S$ is non-empty and bounded above, so it has a supremum $b$ by ax.completeness, and $b^{n} = a$, since both strict inequalities can be excluded. Uniqueness: raising to the $n$-th power is strictly increasing on the positive elements, by induction from ax.order-mul, so two different positive elements cannot share an $n$-th power. The two halves come from different places and it is worth watching which. Uniqueness is pure order, the same machinery as the naturals layer. Existence is completeness and nothing else. ax.completeness has been sitting at the bottom of fundamentals since it was written, used by nothing; this is what it was for. Every other card in this tower could have been written in $\\mathbb{Q}$ and stayed true. This one is false in $\\mathbb{Q}$, and that is the exact content of the word complete.",
+                "de": "Existenz: $S$ ist nicht leer und nach oben beschränkt, hat also nach ax.completeness ein Supremum $b$, und $b^{n} = a$, denn beide strikten Ungleichungen lassen sich ausschliessen. Eindeutigkeit: das Potenzieren mit $n$ ist auf den positiven Elementen streng wachsend, durch Induktion aus ax.order-mul, also können zwei verschiedene positive Elemente nicht dieselbe $n$-te Potenz haben. Die beiden Hälften kommen von verschiedenen Orten, und es lohnt sich, darauf zu achten. Die Eindeutigkeit ist reine Ordnung, dieselbe Maschinerie wie in der Schicht der natürlichen Zahlen. Die Existenz ist Vollständigkeit und sonst nichts. ax.completeness sitzt seit seiner Niederschrift unten in fundamentals und wurde von nichts gebraucht; dafür war es da. Jede andere Karte dieses Turms hätte sich in $\\mathbb{Q}$ schreiben lassen und wäre wahr geblieben. Diese ist in $\\mathbb{Q}$ falsch, und genau das ist der Inhalt des Wortes vollständig."
+              },
+              "intuition": {
+                "en": "Climb up through the positive elements: below some point the $n$-th power undershoots $a$, above it overshoots, and the root is where the two regions meet. Completeness is the assertion that there is a point where they meet rather than a gap. Where the picture stops: the climb never arrives. No finite calculation produces $\\sqrt{2}$; it can only be trapped between rationals, tighter and tighter. ax.completeness does not say how to find the meeting point, it asserts that one is there. That is the difference between algebra and analysis, in one card.",
+                "de": "Man steige durch die positiven Elemente hinauf: unterhalb eines Punktes bleibt die $n$-te Potenz unter $a$, oberhalb schiesst sie darüber hinaus, und die Wurzel ist dort, wo sich die beiden Bereiche treffen. Die Vollständigkeit behauptet, dass es einen Treffpunkt gibt und keine Lücke. Wo das Bild aufhört: der Aufstieg kommt nie an. Keine endliche Rechnung liefert $\\sqrt{2}$; es lässt sich nur zwischen rationalen Zahlen einschliessen, immer enger. ax.completeness sagt nicht, wie der Treffpunkt zu finden ist, es behauptet, dass es einen gibt. Das ist der Unterschied zwischen Algebra und Analysis, auf einer Karte."
+              }
             },
             {
               "id": "th.principal-root",
-              "concerns": ["mul", "order"],
-              "name": {"en": "The positive choice is not free", "de": "Die Wahl der positiven Wurzel ist nicht frei"},
+              "concerns": [
+                "mul",
+                "order"
+              ],
+              "name": {
+                "en": "The positive choice is not free",
+                "de": "Die Wahl der positiven Wurzel ist nicht frei"
+              },
               "latex": "\\left( a^{1/4} \\right)^{2} = a^{1/2}",
               "forall": "a \\in \\mathbb{R}",
               "cond": "a > 0",
-              "basedOn": ["def.abs"],
+              "basedOn": [
+                "def.abs"
+              ],
               "derivation": "a^{1/4} := -p,\\ p > 0 \\;\\Longrightarrow\\; \\left( a^{1/4} \\right)^{2} = p^{2} > 0, \\quad\\text{but}\\quad a^{1/2} < 0",
-              "derivedFrom": ["pl.of-power", "def.root", "th.square-positive"],
-              "note": {"en": "Suppose the negative root were chosen for even $n$. With $p$ the positive fourth root of $a$, pl.of-power requires $\\left(a^{1/4}\\right)^{2} = a^{2/4} = a^{1/2}$; the left side is $p^{2}$, which is positive, while the right side was chosen negative. So 'take the positive one' is not a tidiness convention, and it is not the arbitrary sort of choice that $0 \\in \\mathbb{N}$ was. It is determined: name the law you keep, and the choice follows. Being single-valued has to be some choice, since $x^{2} = 4$ genuinely has two solutions; which one it is, is then decided for you. This is also where the most reliable of all school errors lives. $\\sqrt{x^{2}} = x$ is false, as $x = -2$ shows, because the radical returns the principal root while $x$ ranges over both. The correct statement is $\\sqrt{x^{2}} = |x|$ (def.abs), and the reason it is not $x$ is on this card.", "de": "Angenommen, für gerade $n$ würde die negative Wurzel gewählt. Ist $p$ die positive vierte Wurzel von $a$, so verlangt pl.of-power $\\left(a^{1/4}\\right)^{2} = a^{2/4} = a^{1/2}$; links steht $p^{2}$, also etwas Positives, rechts das negativ Gewählte. 'Nimm die positive' ist also keine Ordnungskonvention und auch nicht die willkürliche Art von Wahl, die $0 \\in \\mathbb{N}$ war. Sie ist bestimmt: man nenne das Gesetz, das man behält, und die Wahl folgt. Eindeutig zu sein verlangt irgendeine Wahl, denn $x^{2} = 4$ hat wirklich zwei Lösungen; welche es ist, wird einem dann abgenommen. Hier wohnt auch der zuverlässigste aller Schulfehler. $\\sqrt{x^{2}} = x$ ist falsch, wie $x = -2$ zeigt, denn die Wurzel liefert die Hauptwurzel, während $x$ beide Vorzeichenbereiche durchläuft. Richtig ist $\\sqrt{x^{2}} = |x|$ (def.abs), und der Grund, warum es nicht $x$ ist, steht auf dieser Karte."}
+              "derivedFrom": [
+                "pl.of-power",
+                "def.root",
+                "th.square-positive"
+              ],
+              "note": {
+                "en": "Suppose the negative root were chosen for even $n$. With $p$ the positive fourth root of $a$, pl.of-power requires $\\left(a^{1/4}\\right)^{2} = a^{2/4} = a^{1/2}$; the left side is $p^{2}$, which is positive, while the right side was chosen negative. So 'take the positive one' is not a tidiness convention, and it is not the arbitrary sort of choice that $0 \\in \\mathbb{N}$ was. It is determined: name the law you keep, and the choice follows. Being single-valued has to be some choice, since $x^{2} = 4$ genuinely has two solutions; which one it is, is then decided for you. This is also where the most reliable of all school errors lives. $\\sqrt{x^{2}} = x$ is false, as $x = -2$ shows, because the radical returns the principal root while $x$ ranges over both. The correct statement is $\\sqrt{x^{2}} = |x|$ (def.abs), and the reason it is not $x$ is on this card.",
+                "de": "Angenommen, für gerade $n$ würde die negative Wurzel gewählt. Ist $p$ die positive vierte Wurzel von $a$, so verlangt pl.of-power $\\left(a^{1/4}\\right)^{2} = a^{2/4} = a^{1/2}$; links steht $p^{2}$, also etwas Positives, rechts das negativ Gewählte. 'Nimm die positive' ist also keine Ordnungskonvention und auch nicht die willkürliche Art von Wahl, die $0 \\in \\mathbb{N}$ war. Sie ist bestimmt: man nenne das Gesetz, das man behält, und die Wahl folgt. Eindeutig zu sein verlangt irgendeine Wahl, denn $x^{2} = 4$ hat wirklich zwei Lösungen; welche es ist, wird einem dann abgenommen. Hier wohnt auch der zuverlässigste aller Schulfehler. $\\sqrt{x^{2}} = x$ ist falsch, wie $x = -2$ zeigt, denn die Wurzel liefert die Hauptwurzel, während $x$ beide Vorzeichenbereiche durchläuft. Richtig ist $\\sqrt{x^{2}} = |x|$ (def.abs), und der Grund, warum es nicht $x$ ist, steht auf dieser Karte."
+              }
             },
             {
               "id": "th.exponent-well-defined",
-              "concerns": ["mul"],
-              "name": {"en": "The name must not matter", "de": "Der Name darf nicht zählen"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The name must not matter",
+                "de": "Der Name darf nicht zählen"
+              },
               "latex": "\\frac{m}{n} = \\frac{p}{q} \\;\\Longrightarrow\\; \\left( a^{1/n} \\right)^{m} = \\left( a^{1/q} \\right)^{p}",
               "forall": "a \\in \\mathbb{R},\\ m, p \\in \\mathbb{Z},\\ n, q \\in \\mathbb{N}",
               "cond": "a > 0",
-              "derivedFrom": ["def.pow-rat", "def.root", "pl.of-power", "th.root-exists", "ax.eq-reflexive", "ax.eq-symmetric", "ax.eq-transitive"],
-              "note": {"en": "A new obligation, and the tower has never had it before. def.pow-rat is stated in terms of $m$ and $n$, but $m/n$ is a name for the exponent, and unlike every exponent so far it is not the only one: $a^{2/4}$ and $a^{1/2}$ must not be allowed to disagree. The definition is legitimate only once the value is shown to depend on the exponent and not on how it was written; both sides are positive and their $nq$-th powers agree, so uniqueness in th.root-exists finishes it. The naturals layer had this for free and never had to mention it, because def.nat made each element reachable from $1$ in exactly one way, so a natural exponent had exactly one name. The moment names multiply, the freedom has to be paid for. Worth keeping as a general habit: whenever a definition reads a name rather than an object, something has to be checked. It is the same obligation that makes cancelling a common factor legitimate, and students meet that one with no idea it was ever in question.", "de": "Eine neue Pflicht, die der Turm bisher nie hatte. def.pow-rat ist über $m$ und $n$ formuliert, aber $m/n$ ist ein Name für den Exponenten, und anders als jeder Exponent bisher ist er nicht der einzige: $a^{2/4}$ und $a^{1/2}$ dürfen sich nicht widersprechen. Die Definition ist erst dann zulässig, wenn gezeigt ist, dass der Wert vom Exponenten abhängt und nicht davon, wie er geschrieben wurde; beide Seiten sind positiv und ihre $nq$-ten Potenzen stimmen überein, also erledigt die Eindeutigkeit aus th.root-exists den Rest. Die Schicht der natürlichen Zahlen bekam das geschenkt und musste es nie erwähnen, denn def.nat machte jedes Element von $1$ aus auf genau einem Weg erreichbar, ein natürlicher Exponent hatte also genau einen Namen. Sobald sich die Namen vermehren, muss die Freiheit bezahlt werden. Als allgemeine Gewohnheit behaltenswert: wo eine Definition einen Namen liest statt eines Objekts, ist etwas zu prüfen. Es ist dieselbe Pflicht, die das Kürzen eines gemeinsamen Faktors zulässig macht, und die begegnet den Lernenden, ohne dass sie je erführen, dass sie je in Frage stand."}
+              "derivedFrom": [
+                "def.pow-rat",
+                "def.root",
+                "pl.of-power",
+                "th.root-exists",
+                "ax.eq-reflexive",
+                "ax.eq-symmetric",
+                "ax.eq-transitive"
+              ],
+              "note": {
+                "en": "A new obligation, and the tower has never had it before. def.pow-rat is stated in terms of $m$ and $n$, but $m/n$ is a name for the exponent, and unlike every exponent so far it is not the only one: $a^{2/4}$ and $a^{1/2}$ must not be allowed to disagree. The definition is legitimate only once the value is shown to depend on the exponent and not on how it was written; both sides are positive and their $nq$-th powers agree, so uniqueness in th.root-exists finishes it. The naturals layer had this for free and never had to mention it, because def.nat made each element reachable from $1$ in exactly one way, so a natural exponent had exactly one name. The moment names multiply, the freedom has to be paid for. Worth keeping as a general habit: whenever a definition reads a name rather than an object, something has to be checked. It is the same obligation that makes cancelling a common factor legitimate, and students meet that one with no idea it was ever in question.",
+                "de": "Eine neue Pflicht, die der Turm bisher nie hatte. def.pow-rat ist über $m$ und $n$ formuliert, aber $m/n$ ist ein Name für den Exponenten, und anders als jeder Exponent bisher ist er nicht der einzige: $a^{2/4}$ und $a^{1/2}$ dürfen sich nicht widersprechen. Die Definition ist erst dann zulässig, wenn gezeigt ist, dass der Wert vom Exponenten abhängt und nicht davon, wie er geschrieben wurde; beide Seiten sind positiv und ihre $nq$-ten Potenzen stimmen überein, also erledigt die Eindeutigkeit aus th.root-exists den Rest. Die Schicht der natürlichen Zahlen bekam das geschenkt und musste es nie erwähnen, denn def.nat machte jedes Element von $1$ aus auf genau einem Weg erreichbar, ein natürlicher Exponent hatte also genau einen Namen. Sobald sich die Namen vermehren, muss die Freiheit bezahlt werden. Als allgemeine Gewohnheit behaltenswert: wo eine Definition einen Namen liest statt eines Objekts, ist etwas zu prüfen. Es ist dieselbe Pflicht, die das Kürzen eines gemeinsamen Faktors zulässig macht, und die begegnet den Lernenden, ohne dass sie je erführen, dass sie je in Frage stand."
+              }
             },
             {
               "id": "th.pow-laws-rat",
-              "concerns": ["mul", "order"],
-              "name": {"en": "The laws survive again", "de": "Die Gesetze überleben erneut"},
+              "concerns": [
+                "mul",
+                "order"
+              ],
+              "name": {
+                "en": "The laws survive again",
+                "de": "Die Gesetze überleben erneut"
+              },
               "latex": "a^{m+n} = a^{m} \\cdot a^{n} \\qquad (a^{m})^{n} = a^{m \\cdot n} \\qquad (a \\cdot b)^{n} = a^{n} \\cdot b^{n}",
               "forall": "a, b \\in \\mathbb{R},\\ m, n \\in \\mathbb{Q}",
               "cond": "a, b > 0",
-              "derivedFrom": ["def.pow-rat", "th.exponent-well-defined", "th.root-exists", "th.pow-laws-int"],
-              "note": {"en": "Same shape as th.pow-laws-int and the same moral: one law was demanded, all three come back. But notice what the price was this time. The $\\mathbb{Z}$ extension cost nothing, because the elements were already there. This one cost an axiom, and it bought a smaller domain: the laws now hold only for positive bases, where on $\\mathbb{Z}$ they held for every non-zero base. The tower has been trading domain for reach the whole way up, and this is the first layer where the trade is visible on the card.", "de": "Dieselbe Gestalt wie th.pow-laws-int und dieselbe Moral: verlangt wurde ein Gesetz, zurück kommen alle drei. Man beachte aber den Preis diesmal. Die Erweiterung auf $\\mathbb{Z}$ kostete nichts, denn die Elemente waren schon da. Diese kostete ein Axiom und kaufte einen kleineren Bereich: die Gesetze gelten jetzt nur für positive Basen, während sie auf $\\mathbb{Z}$ für jede von null verschiedene Basis galten. Der Turm tauscht den ganzen Weg hinauf Bereich gegen Reichweite, und hier ist der Tausch zum ersten Mal auf der Karte sichtbar."}
+              "derivedFrom": [
+                "def.pow-rat",
+                "th.exponent-well-defined",
+                "th.root-exists",
+                "th.pow-laws-int"
+              ],
+              "note": {
+                "en": "Same shape as th.pow-laws-int and the same moral: one law was demanded, all three come back. But notice what the price was this time. The $\\mathbb{Z}$ extension cost nothing, because the elements were already there. This one cost an axiom, and it bought a smaller domain: the laws now hold only for positive bases, where on $\\mathbb{Z}$ they held for every non-zero base. The tower has been trading domain for reach the whole way up, and this is the first layer where the trade is visible on the card.",
+                "de": "Dieselbe Gestalt wie th.pow-laws-int und dieselbe Moral: verlangt wurde ein Gesetz, zurück kommen alle drei. Man beachte aber den Preis diesmal. Die Erweiterung auf $\\mathbb{Z}$ kostete nichts, denn die Elemente waren schon da. Diese kostete ein Axiom und kaufte einen kleineren Bereich: die Gesetze gelten jetzt nur für positive Basen, während sie auf $\\mathbb{Z}$ für jede von null verschiedene Basis galten. Der Turm tauscht den ganzen Weg hinauf Bereich gegen Reichweite, und hier ist der Tausch zum ersten Mal auf der Karte sichtbar."
+              }
             },
             {
               "id": "th.root-power-order",
@@ -550,10 +830,21 @@
             },
             {
               "id": "th.base-fence",
-              "concerns": ["mul", "order"],
-              "name": { "en": "Why the base must be positive", "de": "Warum die Basis positiv sein muss" },
+              "concerns": [
+                "mul",
+                "order"
+              ],
+              "name": {
+                "en": "Why the base must be positive",
+                "de": "Warum die Basis positiv sein muss"
+              },
               "latex": "-2 = (-2)^{1} = (-2)^{2/2} = \\left( (-2)^{2} \\right)^{1/2} = 4^{1/2} = 2",
-              "derivedFrom": ["def.pow-rat", "pl.of-power", "th.square-positive", "ax.eq-transitive"],
+              "derivedFrom": [
+                "def.pow-rat",
+                "pl.of-power",
+                "th.square-positive",
+                "ax.eq-transitive"
+              ],
               "note": {
                 "en": "Every step in the chain is an instance of a law that holds elsewhere, and together they are false. So the condition $a > 0$ is not a restriction imposed out of caution: it is the largest domain on which the demand is consistent at all. That is a different kind of fact from 'we chose not to define this', and it arrives as a fourth species of convention, alongside the arbitrary, the determined and the proved: forced by the absence of any consistent alternative. Two smaller points. Even roots of negatives fail for a second and independent reason, since a square is never negative (th.square-positive), so $x^{2} = -4$ has no solution at all and no convention could rescue it. Odd roots do not have that problem, since $(-2)^{3} = -8$ honestly, which is why $\\sqrt[3]{-8}$ appears in textbooks while $(-8)^{1/3}$ should not. The fence stands on the exponent notation, because the exponent notation is what invites the laws.",
                 "de": "Jeder Schritt der Kette ist ein Fall eines Gesetzes, das anderswo gilt, und zusammen sind sie falsch. Die Bedingung $a > 0$ ist also keine aus Vorsicht auferlegte Einschränkung: sie ist der grösste Bereich, auf dem die Forderung überhaupt widerspruchsfrei ist. Das ist eine andere Art von Tatsache als 'wir haben uns entschieden, das nicht zu definieren', und sie tritt als vierte Art von Konvention auf, neben der willkürlichen, der bestimmten und der bewiesenen: erzwungen durch das Fehlen jeder widerspruchsfreien Alternative. Zwei kleinere Punkte. Gerade Wurzeln aus negativen Elementen versagen aus einem zweiten, unabhängigen Grund, denn ein Quadrat ist nie negativ (th.square-positive), also hat $x^{2} = -4$ überhaupt keine Lösung, und keine Konvention könnte das retten. Ungerade Wurzeln haben dieses Problem nicht, denn $(-2)^{3} = -8$ stimmt ehrlich, und darum steht $\\sqrt[3]{-8}$ in Lehrmitteln und $(-8)^{1/3}$ sollte es nicht. Der Zaun steht bei der Exponentenschreibweise, denn sie ist es, die die Gesetze herbeiruft."

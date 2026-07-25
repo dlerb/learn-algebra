@@ -145,8 +145,14 @@
     {
       "slug": "reading",
       "kind": "convention",
-      "title": {"en": "Reading an expression", "de": "Einen Ausdruck lesen"},
-      "blurb": {"en": "The parsing rules, and they sit before the axioms because the axioms cannot be *stated* without them: association and distribution both need brackets and precedence to be written down at all. Nothing here rests on anything below it, which is exactly why the fraction bar is not in this section: it denotes an operation the signature does not have, so it has to wait for def.div.", "de": "Die Regeln des Lesens, und sie stehen vor den Axiomen, weil sich die Axiome ohne sie gar nicht *formulieren* lassen: Assoziativität und Distributivität brauchen beide Klammern und Vorrang, um überhaupt hingeschrieben zu werden. Nichts hier ruht auf etwas weiter unten, und genau darum steht der Bruchstrich nicht in diesem Abschnitt: er bezeichnet eine Operation, die die Signatur nicht hat, und muss auf def.div warten."},
+      "title": {
+        "en": "Reading an expression",
+        "de": "Einen Ausdruck lesen"
+      },
+      "blurb": {
+        "en": "The parsing rules, and they sit before the axioms because the axioms cannot be *stated* without them: association and distribution both need brackets and precedence to be written down at all. Nothing here rests on anything below it, which is exactly why the fraction bar is not in this section: it denotes an operation the signature does not have, so it has to wait for def.div.",
+        "de": "Die Regeln des Lesens, und sie stehen vor den Axiomen, weil sich die Axiome ohne sie gar nicht *formulieren* lassen: Assoziativität und Distributivität brauchen beide Klammern und Vorrang, um überhaupt hingeschrieben zu werden. Nichts hier ruht auf etwas weiter unten, und genau darum steht der Bruchstrich nicht in diesem Abschnitt: er bezeichnet eine Operation, die die Signatur nicht hat, und muss auf def.div warten."
+      },
       "groups": [
         {
           "slug": "reading",
@@ -170,7 +176,10 @@
                 "en": "Brackets say what to compute first: $a \\cdot (b + c)$ is $a$ times the result of $b + c$; $(a + b) + c$ is the result of $a + b$, then added to $c$.",
                 "de": "Klammern sagen, was zuerst zu berechnen ist: $a \\cdot (b + c)$ ist $a$ mal das Ergebnis von $b + c$; $(a + b) + c$ ist das Ergebnis von $a + b$, dann zu $c$ addiert."
               },
-              "basedOn": ["op.add", "op.mul"]
+              "basedOn": [
+                "op.add",
+                "op.mul"
+              ]
             },
             {
               "id": "ix.left-to-right",
@@ -187,7 +196,11 @@
                 "en": "A chain of one operator is read left to right.",
                 "de": "Eine Kette eines Operators wird von links nach rechts gelesen."
               },
-              "basedOn": ["op.add", "op.mul", "ix.brackets"]
+              "basedOn": [
+                "op.add",
+                "op.mul",
+                "ix.brackets"
+              ]
             },
             {
               "id": "ix.precedence",
@@ -248,7 +261,9 @@
                 "en": "Anything is the same value as itself, the obvious anchor that lets $=$ mean 'same value'. The picture is of a fixed number, and there the statement is nearly empty. Said of a variable it claims something about every value at once, and nothing in the notation marks which reading is meant.",
                 "de": "Alles ist derselbe Wert wie es selbst, der offensichtliche Anker, damit $=$ 'derselbe Wert' bedeutet. Das Bild ist das einer festen Zahl, und da ist die Aussage fast leer. Von einer Variablen gesagt, behauptet sie etwas über alle Werte auf einmal, und nichts in der Schreibweise zeigt an, welche Lesart gemeint ist."
               },
-              "basedOn": ["op.eq"]
+              "basedOn": [
+                "op.eq"
+              ]
             },
             {
               "id": "ax.eq-symmetric",
@@ -265,7 +280,9 @@
                 "en": "An equation is a two-way statement of sameness, not a one-way 'compute this'. If $a$ is $b$, then $b$ is $a$. For a fixed number this is almost content-free; it earns its keep with variables, where reading the equation in the other direction is a real move.",
                 "de": "Eine Gleichung ist eine beidseitige Aussage über Gleichheit, kein einseitiges 'rechne dies aus'. Ist $a$ gleich $b$, so ist $b$ gleich $a$. Für eine feste Zahl ist das beinahe inhaltsleer; seinen Wert bekommt es bei Variablen, wo das Lesen der Gleichung in die andere Richtung ein echter Schritt ist."
               },
-              "basedOn": ["op.eq"]
+              "basedOn": [
+                "op.eq"
+              ]
             },
             {
               "id": "ax.eq-transitive",
@@ -282,7 +299,9 @@
                 "en": "If each line of a calculation equals the next, the first equals the last. This is what lets you chain steps. Where the picture stops: a chain of equalities has no direction. The calculation you wrote has one, the equality does not, and the axiom will not tell you which way you were working.",
                 "de": "Wenn jede Zeile einer Rechnung der nächsten gleicht, gleicht die erste der letzten. So lassen sich Schritte verketten. Wo das Bild aufhört: eine Kette von Gleichheiten hat keine Richtung. Die Rechnung, die Sie geschrieben haben, hat eine, die Gleichheit nicht, und das Axiom sagt nicht, in welche Richtung gearbeitet wurde."
               },
-              "basedOn": ["op.eq"]
+              "basedOn": [
+                "op.eq"
+              ]
             },
             {
               "id": "ax.eq-congruence",
@@ -305,7 +324,11 @@
                 "en": "Since $=$ means 'same value', swapping a thing for an equal thing cannot change a result. A balance scale: do the same to both sides and it stays balanced. Where the picture stops: the scale stays balanced under any equal operation, multiplying both sides by $0$ included. So it cannot tell you which steps can be undone. ax.eq-congruence licenses the step; it says nothing about getting back.",
                 "de": "Da $=$ 'derselbe Wert' heisst, ändert das Ersetzen durch Gleiches kein Ergebnis. Eine Waage: tut man auf beiden Seiten dasselbe, bleibt sie im Gleichgewicht. Wo das Bild aufhört: die Waage bleibt bei jeder gleichen Operation im Gleichgewicht, auch beim Multiplizieren beider Seiten mit $0$. Sie kann also nicht sagen, welche Schritte sich rückgängig machen lassen. ax.eq-congruence erlaubt den Schritt; über den Rückweg sagt es nichts."
               },
-              "basedOn": ["op.eq", "op.add", "op.mul"]
+              "basedOn": [
+                "op.eq",
+                "op.add",
+                "op.mul"
+              ]
             }
           ]
         },
@@ -335,7 +358,9 @@
                 "en": "Combining two amounts does not depend on order: 3 apples then 2 more, or 2 then 3, is 5 either way. Where the picture stops: apples are things you can count. The axiom speaks of every element, including those no counting reaches.",
                 "de": "Zwei Mengen zusammenzulegen hängt nicht von der Reihenfolge ab: 3 Äpfel und dann 2, oder 2 und dann 3, ergibt beides 5. Wo das Bild aufhört: Äpfel kann man zählen. Das Axiom spricht von jedem Element, auch von solchen, die kein Zählen erreicht."
               },
-              "basedOn": ["op.add"]
+              "basedOn": [
+                "op.add"
+              ]
             },
             {
               "id": "ax.add-associative",
@@ -352,7 +377,10 @@
                 "en": "Adding three amounts, it makes no difference which pair you combine first. Where the picture stops: as in ax.add-commutative, the amounts are imagined as countable. The axiom holds for all elements, and the picture only makes it plausible.",
                 "de": "Beim Addieren dreier Mengen ist es egal, welches Paar man zuerst zusammenfasst. Wo das Bild aufhört: wie bei ax.add-commutative werden die Mengen als zählbar vorgestellt. Das Axiom gilt für alle Elemente, und das Bild macht es nur plausibel."
               },
-              "basedOn": ["op.add", "ix.brackets"]
+              "basedOn": [
+                "op.add",
+                "ix.brackets"
+              ]
             },
             {
               "id": "ax.zero-neutral",
@@ -373,7 +401,9 @@
                 "en": "Adding nothing leaves the amount unchanged. Where the picture stops: 'nothing' is the weak part. $0$ is an element like any other, brought into existence by this axiom, and not the absence of one.",
                 "de": "Nichts dazuzuzählen lässt die Menge unverändert. Wo das Bild aufhört: 'nichts' ist der schwache Teil. $0$ ist ein Element wie jedes andere, von diesem Axiom ins Dasein gerufen, und keine Abwesenheit."
               },
-              "basedOn": ["op.add"]
+              "basedOn": [
+                "op.add"
+              ]
             },
             {
               "id": "ax.additive-inverse",
@@ -394,7 +424,9 @@
                 "en": "Every step forward has an equal step back to the start. On the number line, $-a$ is $a$ mirrored across $0$, the 'opposite', and where subtraction comes from. Where the picture stops: a mirror needs a line to mirror in, and that line is order, which this axiom does not have. $-a$ is the opposite of $a$, not the negative one; th.opposite-flips is where that difference is finally made, and it needs the order axioms to make it.",
                 "de": "Jeder Schritt vorwärts hat einen gleich grossen zurück zum Start. Auf der Zahlengeraden ist $-a$ das an $0$ gespiegelte $a$, die 'Gegenzahl', und der Ursprung der Subtraktion. Wo das Bild aufhört: ein Spiegel braucht eine Gerade, an der gespiegelt wird, und diese Gerade ist die Ordnung, die dieses Axiom nicht hat. $-a$ ist das Gegenteil von $a$, nicht das negative; th.opposite-flips ist der Ort, wo dieser Unterschied gemacht wird, und dafür braucht es die Ordnungsaxiome."
               },
-              "basedOn": ["op.add"]
+              "basedOn": [
+                "op.add"
+              ]
             }
           ]
         },
@@ -424,7 +456,9 @@
                 "en": "A rectangle $a$ by $b$ has the same area as $b$ by $a$, just turn it; rows become columns. Where the picture stops: an area is a length times a length, and neither can be negative. The picture says nothing about $(-2) \\cdot 3$, which is why th.minus-times-minus is proved from the axioms and not from a rectangle.",
                 "de": "Ein Rechteck $a$ mal $b$ hat denselben Flächeninhalt wie $b$ mal $a$, einfach gedreht; Zeilen werden Spalten. Wo das Bild aufhört: eine Fläche ist Länge mal Länge, und keine davon kann negativ sein. Über $(-2) \\cdot 3$ sagt das Bild nichts, und darum wird th.minus-times-minus aus den Axiomen bewiesen und nicht an einem Rechteck."
               },
-              "basedOn": ["op.mul"]
+              "basedOn": [
+                "op.mul"
+              ]
             },
             {
               "id": "ax.mul-associative",
@@ -441,7 +475,10 @@
                 "en": "A box $a \\times b \\times c$ has one volume, however you group the factors. Where the picture stops: at three factors. There is no fourth direction to lay a box in, while the axiom chains as far as you like.",
                 "de": "Ein Quader $a \\times b \\times c$ hat ein Volumen, wie auch immer man die Faktoren gruppiert. Wo das Bild aufhört: bei drei Faktoren. Es gibt keine vierte Richtung, in die sich ein Quader legen liesse, während sich das Axiom beliebig weit verketten lässt."
               },
-              "basedOn": ["op.mul", "ix.brackets"]
+              "basedOn": [
+                "op.mul",
+                "ix.brackets"
+              ]
             },
             {
               "id": "ax.one-neutral",
@@ -462,18 +499,33 @@
                 "en": "One copy of $a$ is just $a$; scaling by $1$ changes nothing. Where the picture stops: 'one copy' counts copies, so it reaches only the counting elements. 'Scaling by $1$' has no such limit, and it is the reading to keep.",
                 "de": "Eine Kopie von $a$ ist einfach $a$; Skalieren mit $1$ ändert nichts. Wo das Bild aufhört: 'eine Kopie' zählt Kopien und erreicht damit nur die Zählelemente. 'Mit $1$ skalieren' kennt diese Grenze nicht und ist die Lesart, die man behalten sollte."
               },
-              "basedOn": ["op.mul"]
+              "basedOn": [
+                "op.mul"
+              ]
             },
             {
               "id": "ax.multiplicative-inverse",
-              "concerns": ["mul"],
-              "name": {"en": "Inverse element of multiplication", "de": "Inverses Element der Multiplikation"},
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Inverse element of multiplication",
+                "de": "Inverses Element der Multiplikation"
+              },
               "latex": "a \\cdot a^{-1} = 1",
               "forall": "a \\in \\mathbb{R}",
               "cond": "a \\ne 0",
-              "basedOn": ["op.mul"],
-              "note": {"en": "The element $a^{-1}$ is the multiplicative inverse of $a$. Unlike the additive case it has no prefix operator, so it is written postfix as $a^{-1}$.", "de": "Das Element $a^{-1}$ ist das multiplikative Inverse von $a$. Anders als bei der Addition gibt es keinen vorangestellten Operator, daher die nachgestellte Schreibweise $a^{-1}$."},
-              "intuition": {"en": "For any nonzero $a$ there is a reciprocal that scales it back to $1$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $0$ up to $1$. Where the picture stops: 'how much of $a$ makes one' is a partition, and partitions reach the fractions and no further. For $a = \\sqrt{2}$ the reciprocal is not a number of pieces; the axiom asserts it exists anyway.", "de": "Für jedes $a \\ne 0$ gibt es einen Kehrwert, der es auf $1$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $0$ auf $1$. Wo das Bild aufhört: 'wie viel von $a$ gibt eins' ist eine Aufteilung, und Aufteilungen reichen bis zu den Brüchen und nicht weiter. Für $a = \\sqrt{2}$ ist der Kehrwert keine Anzahl Stücke; das Axiom behauptet trotzdem, dass er existiert."}
+              "basedOn": [
+                "op.mul"
+              ],
+              "note": {
+                "en": "The element $a^{-1}$ is the multiplicative inverse of $a$. Unlike the additive case it has no prefix operator, so it is written postfix as $a^{-1}$.",
+                "de": "Das Element $a^{-1}$ ist das multiplikative Inverse von $a$. Anders als bei der Addition gibt es keinen vorangestellten Operator, daher die nachgestellte Schreibweise $a^{-1}$."
+              },
+              "intuition": {
+                "en": "For any nonzero $a$ there is a reciprocal that scales it back to $1$, 'how much of $a$ makes one'. This is where division comes from. Zero has none: nothing scales $0$ up to $1$. Where the picture stops: 'how much of $a$ makes one' is a partition, and partitions reach the fractions and no further. For $a = \\sqrt{2}$ the reciprocal is not a number of pieces; the axiom asserts it exists anyway.",
+                "de": "Für jedes $a \\ne 0$ gibt es einen Kehrwert, der es auf $1$ zurückskaliert, 'wie viel von $a$ ergibt eins'. Daher kommt die Division. Die Null hat keinen: nichts skaliert $0$ auf $1$. Wo das Bild aufhört: 'wie viel von $a$ gibt eins' ist eine Aufteilung, und Aufteilungen reichen bis zu den Brüchen und nicht weiter. Für $a = \\sqrt{2}$ ist der Kehrwert keine Anzahl Stücke; das Axiom behauptet trotzdem, dass er existiert."
+              }
             }
           ]
         },
@@ -508,7 +560,12 @@
                 "en": "The area picture: a rectangle $a$ wide and $b + c$ tall splits into two, of areas $a \\cdot b$ and $a \\cdot c$. Multiplying a sum means multiplying each part and adding. Where the picture stops: the rectangle needs $a$, $b$ and $c$ to be lengths. Distributivity holds for negative elements too, where there is no rectangle to split.",
                 "de": "Das Flächenbild: ein Rechteck $a$ breit und $b + c$ hoch zerfällt in zwei mit Flächen $a \\cdot b$ und $a \\cdot c$. Eine Summe zu multiplizieren heisst, jeden Teil zu multiplizieren und zu addieren. Wo das Bild aufhört: das Rechteck braucht $a$, $b$ und $c$ als Längen. Die Distributivität gilt auch für negative Elemente, wo es kein Rechteck zu zerschneiden gibt."
               },
-              "basedOn": ["op.add", "op.mul", "ix.brackets", "ix.precedence"]
+              "basedOn": [
+                "op.add",
+                "op.mul",
+                "ix.brackets",
+                "ix.precedence"
+              ]
             },
             {
               "id": "ax.zero-not-one",
@@ -529,7 +586,11 @@
                 "en": "There is genuinely 'nothing' and 'one thing', and they differ; otherwise every number would collapse into one. Where the picture stops: the picture counts things, while the axiom rules out a structure. Without it a single element could satisfy every other axiom, and everything below would be true and empty.",
                 "de": "Es gibt wirklich 'nichts' und 'ein Ding', und sie sind verschieden; sonst fielen alle Zahlen zu einer zusammen. Wo das Bild aufhört: das Bild zählt Dinge, das Axiom schliesst eine Struktur aus. Ohne es könnte ein einziges Element alle übrigen Axiome erfüllen, und alles Weitere wäre wahr und leer."
               },
-              "basedOn": ["op.eq", "ax.zero-neutral", "ax.one-neutral"]
+              "basedOn": [
+                "op.eq",
+                "ax.zero-neutral",
+                "ax.one-neutral"
+              ]
             }
           ]
         },
@@ -564,7 +625,10 @@
                 "en": "Place the elements on a line: of any two, either they coincide or one lies strictly left of the other, never both. This is what makes $<$ a total order. Where the picture stops: there is no line yet. The line is what these axioms describe, so drawing it assumes the answer. And not every field admits one: $\\mathbb{C}$ has no order compatible with its operations.",
                 "de": "Man lege die Elemente auf eine Gerade: von je zweien fallen sie entweder zusammen, oder eines liegt strikt links vom anderen, nie beides. Das macht $<$ zu einer totalen Ordnung. Wo das Bild aufhört: eine Gerade gibt es noch nicht. Die Gerade ist das, was diese Axiome beschreiben; sie zu zeichnen heisst, die Antwort vorauszusetzen. Und nicht jeder Körper lässt eine zu: $\\mathbb{C}$ hat keine mit seinen Operationen verträgliche Ordnung."
               },
-              "basedOn": ["op.lt", "op.eq"]
+              "basedOn": [
+                "op.lt",
+                "op.eq"
+              ]
             },
             {
               "id": "ax.order-transitive",
@@ -581,7 +645,9 @@
                 "en": "If $a$ lies left of $b$ and $b$ left of $c$, then $a$ lies left of $c$. Order carries along the line. Where the picture stops: as in ax.order-trichotomy, the line is what is being described here, not something we may use.",
                 "de": "Liegt $a$ links von $b$ und $b$ links von $c$, so liegt $a$ links von $c$. Die Ordnung überträgt sich entlang der Geraden. Wo das Bild aufhört: wie bei ax.order-trichotomy wird die Gerade hier beschrieben und ist nichts, was wir schon benutzen dürfen."
               },
-              "basedOn": ["op.lt"]
+              "basedOn": [
+                "op.lt"
+              ]
             },
             {
               "id": "ax.order-add",
@@ -603,7 +669,10 @@
                 "en": "Sliding two points by the same step keeps their left-to-right relation. Where the picture stops: sliding pictures a step to the right. The axiom asks nothing of $c$, and says exactly the same when the step goes left.",
                 "de": "Zwei Punkte um denselben Schritt zu verschieben erhält ihre Links-rechts-Beziehung. Wo das Bild aufhört: das Schieben zeigt einen Schritt nach rechts. Das Axiom verlangt nichts von $c$ und sagt genau dasselbe, wenn der Schritt nach links geht."
               },
-              "basedOn": ["op.lt", "op.add"]
+              "basedOn": [
+                "op.lt",
+                "op.add"
+              ]
             },
             {
               "id": "ax.order-mul",
@@ -625,7 +694,10 @@
                 "en": "Scaling two points by a positive factor keeps their order (a stretch). A negative factor mirrors across $0$ and reverses it, which is why $<$ turns into $>$. The rule lives in this one condition, not in a separate decree. Where the picture stops: a stretch can be seen only for a factor that can be seen. For $c = \\sqrt{2}$ nothing is being pictured, and the axiom does not mind.",
                 "de": "Zwei Punkte mit einem positiven Faktor zu skalieren erhält ihre Ordnung (eine Streckung). Ein negativer Faktor spiegelt an $0$ und kehrt sie um, weshalb $<$ zu $>$ wird. Die Regel steckt in dieser einen Bedingung, nicht in einem eigenen Erlass. Wo das Bild aufhört: eine Streckung sieht man nur bei einem Faktor, den man sehen kann. Für $c = \\sqrt{2}$ wird nichts abgebildet, und das Axiom stört das nicht."
               },
-              "basedOn": ["op.lt", "op.mul"]
+              "basedOn": [
+                "op.lt",
+                "op.mul"
+              ]
             }
           ]
         },
@@ -642,20 +714,33 @@
           "cards": [
             {
               "id": "ax.completeness",
-              "concerns": ["order", "completeness"],
-              "name": {"en": "Completeness axiom", "de": "Vollständigkeitsaxiom"},
+              "concerns": [
+                "order",
+                "completeness"
+              ],
+              "name": {
+                "en": "Completeness axiom",
+                "de": "Vollständigkeitsaxiom"
+              },
               "latex": "\\sup S \\in \\mathbb{R}",
               "forall": "S \\subseteq \\mathbb{R}",
               "cond": "S \\ne \\emptyset,\\ S \\text{ bounded above}",
-              "basedOn": ["op.lt"],
-              "note": {"en": "An upper bound of a set $S$ is an element $b$ with $x \\le b$ for every $x \\in S$; $S$ is bounded above if it has one. The least upper bound $\\sup S$ is the smallest upper bound. The axiom: every non-empty set that is capped above has a smallest cap, and it lies in $\\mathbb{R}$.", "de": "Eine obere Schranke einer Menge $S$ ist ein Element $b$ mit $x \\le b$ für jedes $x \\in S$; $S$ ist nach oben beschränkt, wenn sie eine besitzt. Die kleinste obere Schranke $\\sup S$ ist die kleinste solche Schranke. Das Axiom: jede nicht-leere, nach oben beschränkte Menge hat eine kleinste Schranke, und sie liegt in $\\mathbb{R}$."},
-              "intuition": {"en": "The number line has no gaps. This is the one assumption that leaves algebra behind: it speaks not of single elements and operations but of whole sets and their bounds. It is exactly what tells $\\mathbb{R}$ from $\\mathbb{Q}$: the rationals whose square is below $2$ are bounded above, yet among the rationals there is no least bound, so $\\mathbb{Q}$ has a hole where $\\sqrt{2}$ should be. Completeness fills every such hole, and from it the roots of positive elements exist (to be defined). Where the picture stops, and this one is worth the trouble: the gapless line is not evidence for this axiom, it is a picture of it. Anyone who draws the line has already assumed what is being asserted. Nor can the hole at $\\sqrt{2}$ be seen, since the missing point is exactly what cannot be drawn. That circularity is why completeness has to be assumed rather than shown.", "de": "Die Zahlengerade hat keine Lücken. Dies ist die eine Annahme, die die Algebra hinter sich lässt: sie spricht nicht von einzelnen Elementen und Operationen, sondern von ganzen Mengen und ihren Schranken. Genau sie unterscheidet $\\mathbb{R}$ von $\\mathbb{Q}$: die rationalen Zahlen mit Quadrat unter $2$ sind nach oben beschränkt, doch unter den rationalen Zahlen gibt es keine kleinste Schranke, also hat $\\mathbb{Q}$ ein Loch dort, wo $\\sqrt{2}$ sein sollte. Die Vollständigkeit füllt jedes solche Loch, und aus ihr existieren die Wurzeln positiver Elemente (noch zu definieren). Wo das Bild aufhört, und hier lohnt sich die Mühe: die lückenlose Gerade ist kein Beleg für dieses Axiom, sie ist ein Bild davon. Wer die Gerade zeichnet, hat das Behauptete schon vorausgesetzt. Auch die Lücke bei $\\sqrt{2}$ lässt sich nicht sehen, denn der fehlende Punkt ist genau das, was sich nicht zeichnen lässt. Diese Zirkularität ist der Grund, warum die Vollständigkeit angenommen und nicht gezeigt werden muss."}
+              "basedOn": [
+                "op.lt"
+              ],
+              "note": {
+                "en": "An upper bound of a set $S$ is an element $b$ with $x \\le b$ for every $x \\in S$; $S$ is bounded above if it has one. The least upper bound $\\sup S$ is the smallest upper bound. The axiom: every non-empty set that is capped above has a smallest cap, and it lies in $\\mathbb{R}$.",
+                "de": "Eine obere Schranke einer Menge $S$ ist ein Element $b$ mit $x \\le b$ für jedes $x \\in S$; $S$ ist nach oben beschränkt, wenn sie eine besitzt. Die kleinste obere Schranke $\\sup S$ ist die kleinste solche Schranke. Das Axiom: jede nicht-leere, nach oben beschränkte Menge hat eine kleinste Schranke, und sie liegt in $\\mathbb{R}$."
+              },
+              "intuition": {
+                "en": "The number line has no gaps. This is the one assumption that leaves algebra behind: it speaks not of single elements and operations but of whole sets and their bounds. It is exactly what tells $\\mathbb{R}$ from $\\mathbb{Q}$: the rationals whose square is below $2$ are bounded above, yet among the rationals there is no least bound, so $\\mathbb{Q}$ has a hole where $\\sqrt{2}$ should be. Completeness fills every such hole, and from it the roots of positive elements exist (to be defined). Where the picture stops, and this one is worth the trouble: the gapless line is not evidence for this axiom, it is a picture of it. Anyone who draws the line has already assumed what is being asserted. Nor can the hole at $\\sqrt{2}$ be seen, since the missing point is exactly what cannot be drawn. That circularity is why completeness has to be assumed rather than shown.",
+                "de": "Die Zahlengerade hat keine Lücken. Dies ist die eine Annahme, die die Algebra hinter sich lässt: sie spricht nicht von einzelnen Elementen und Operationen, sondern von ganzen Mengen und ihren Schranken. Genau sie unterscheidet $\\mathbb{R}$ von $\\mathbb{Q}$: die rationalen Zahlen mit Quadrat unter $2$ sind nach oben beschränkt, doch unter den rationalen Zahlen gibt es keine kleinste Schranke, also hat $\\mathbb{Q}$ ein Loch dort, wo $\\sqrt{2}$ sein sollte. Die Vollständigkeit füllt jedes solche Loch, und aus ihr existieren die Wurzeln positiver Elemente (noch zu definieren). Wo das Bild aufhört, und hier lohnt sich die Mühe: die lückenlose Gerade ist kein Beleg für dieses Axiom, sie ist ein Bild davon. Wer die Gerade zeichnet, hat das Behauptete schon vorausgesetzt. Auch die Lücke bei $\\sqrt{2}$ lässt sich nicht sehen, denn der fehlende Punkt ist genau das, was sich nicht zeichnen lässt. Diese Zirkularität ist der Grund, warum die Vollständigkeit angenommen und nicht gezeigt werden muss."
+              }
             }
           ]
         }
       ]
     },
-
     {
       "slug": "definitions",
       "kind": "definition",
@@ -722,8 +807,14 @@
             },
             {
               "id": "def.abs",
-              "concerns": ["add", "order"],
-              "name": { "en": "Absolute value", "de": "Betrag" },
+              "concerns": [
+                "add",
+                "order"
+              ],
+              "name": {
+                "en": "Absolute value",
+                "de": "Betrag"
+              },
               "latex": "|a| := \\begin{cases} a & 0 < a \\\\ 0 & a = 0 \\\\ -a & a < 0 \\end{cases}",
               "forall": "a \\in \\mathbb{R}",
               "note": {
@@ -734,18 +825,27 @@
                 "en": "The distance from $a$ to $0$, with the direction thrown away. Where the picture stops: distance is a picture of the *value*, while the notation tempts you to read $|\\cdot|$ as an instruction to the *marks* inside it. Those come apart exactly where it matters, at $|x|$ with $x$ a variable, which is why $\\sqrt{x^{2}} = |x|$ and not $x$.",
                 "de": "Der Abstand von $a$ zu $0$, ohne die Richtung. Wo das Bild aufhört: der Abstand ist ein Bild des *Werts*, während die Schreibweise dazu verführt, $|\\cdot|$ als Anweisung an die *Zeichen* darin zu lesen. Genau dort, wo es zählt, fallen die beiden auseinander, nämlich bei $|x|$ mit einer Variablen $x$, und darum ist $\\sqrt{x^{2}} = |x|$ und nicht $x$."
               },
-              "basedOn": ["op.lt", "ax.additive-inverse", "ax.order-trichotomy"]
+              "basedOn": [
+                "op.lt",
+                "ax.additive-inverse",
+                "ax.order-trichotomy"
+              ]
             }
           ]
         }
       ]
     },
-
     {
       "slug": "writing",
       "kind": "convention",
-      "title": {"en": "Writing without ambiguity", "de": "Eindeutig schreiben"},
-      "note": {"en": "These sit *after* the axioms and definitions, unlike the parsing rules above, and the placement is the content: every one of them presupposes something already given. ix.negative-factor and ix.no-adjacent-operator need the unary minus of ax.additive-inverse; ix.coefficient-front needs ax.mul-commutative to know its two spellings name one element; ix.invisible-one needs ax.one-neutral; and ix.fraction-bar and ix.division-symbols need def.div, because a bar cannot be a convention for an operation the page has not got yet. A parsing rule is what makes the axioms writable; a writing rule is a recommendation about expressions whose meaning is already fixed.", "de": "Diese stehen *nach* den Axiomen und Definitionen, anders als die Leseregeln oben, und die Stellung ist der Inhalt: jede setzt etwas bereits Gegebenes voraus. ix.negative-factor und ix.no-adjacent-operator brauchen das unäre Minus aus ax.additive-inverse; ix.coefficient-front braucht ax.mul-commutative, um zu wissen, dass seine beiden Schreibweisen ein Element benennen; ix.invisible-one braucht ax.one-neutral; und ix.fraction-bar und ix.division-symbols brauchen def.div, denn ein Strich kann keine Konvention für eine Operation sein, die die Seite noch gar nicht hat. Eine Leseregel macht die Axiome überhaupt schreibbar; eine Schreibregel ist eine Empfehlung zu Ausdrücken, deren Bedeutung schon feststeht."},
+      "title": {
+        "en": "Writing without ambiguity",
+        "de": "Eindeutig schreiben"
+      },
+      "note": {
+        "en": "These sit *after* the axioms and definitions, unlike the parsing rules above, and the placement is the content: every one of them presupposes something already given. ix.negative-factor and ix.no-adjacent-operator need the unary minus of ax.additive-inverse; ix.coefficient-front needs ax.mul-commutative to know its two spellings name one element; ix.invisible-one needs ax.one-neutral; and ix.fraction-bar and ix.division-symbols need def.div, because a bar cannot be a convention for an operation the page has not got yet. A parsing rule is what makes the axioms writable; a writing rule is a recommendation about expressions whose meaning is already fixed.",
+        "de": "Diese stehen *nach* den Axiomen und Definitionen, anders als die Leseregeln oben, und die Stellung ist der Inhalt: jede setzt etwas bereits Gegebenes voraus. ix.negative-factor und ix.no-adjacent-operator brauchen das unäre Minus aus ax.additive-inverse; ix.coefficient-front braucht ax.mul-commutative, um zu wissen, dass seine beiden Schreibweisen ein Element benennen; ix.invisible-one braucht ax.one-neutral; und ix.fraction-bar und ix.division-symbols brauchen def.div, denn ein Strich kann keine Konvention für eine Operation sein, die die Seite noch gar nicht hat. Eine Leseregel macht die Axiome überhaupt schreibbar; eine Schreibregel ist eine Empfehlung zu Ausdrücken, deren Bedeutung schon feststeht."
+      },
       "groups": [
         {
           "slug": "writing",
@@ -769,7 +869,10 @@
                 "en": "A negative number used as a factor takes brackets, so that $-1$ reads as a single factor. There is no name for that element (ax.additive-inverse), only the description $-1$, and brackets are what let a description stand as one thing. Here both readings agree in value, since $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.negative-one-times); the brackets say which one is meant.",
                 "de": "Eine negative Zahl als Faktor wird geklammert, damit $-1$ als ein einzelner Faktor gelesen wird. Für dieses Element gibt es keinen Namen (ax.additive-inverse), nur die Beschreibung $-1$, und Klammern lassen eine Beschreibung als ein Ding stehen. Hier stimmen beide Lesarten im Wert überein, denn $-(1 \\cdot a) = (-1) \\cdot a = -a$ (th.negative-one-times); die Klammern sagen, welche gemeint ist."
               },
-              "basedOn": ["ax.additive-inverse", "ix.brackets"]
+              "basedOn": [
+                "ax.additive-inverse",
+                "ix.brackets"
+              ]
             },
             {
               "id": "ix.no-adjacent-operator",
@@ -787,7 +890,10 @@
                 "en": "A binary operator and a unary minus must not sit side by side; bracket the negated operand. The sum then reads as a subtraction: $a + (-b) = a - b$.",
                 "de": "Ein binärer Operator und ein unäres Minus dürfen nicht nebeneinander stehen; der negierte Operand wird geklammert. Die Summe liest sich dann als Subtraktion: $a + (-b) = a - b$."
               },
-              "basedOn": ["ax.additive-inverse", "ix.brackets"]
+              "basedOn": [
+                "ax.additive-inverse",
+                "ix.brackets"
+              ]
             },
             {
               "id": "ix.coefficient-front",
@@ -804,7 +910,10 @@
                 "en": "A coefficient goes before the variable. And $a3$ reads as a name, not $3 \\cdot a$.",
                 "de": "Ein Koeffizient steht vor der Variablen. Und $a3$ liest sich wie ein Name, nicht als $3 \\cdot a$."
               },
-              "basedOn": ["op.mul", "ax.mul-commutative"]
+              "basedOn": [
+                "op.mul",
+                "ax.mul-commutative"
+              ]
             },
             {
               "id": "ix.invisible-one",
@@ -872,7 +981,6 @@
         }
       ]
     },
-
     {
       "slug": "theorems",
       "kind": "theorem",
@@ -905,7 +1013,12 @@
               "latex": "0 \\cdot a = 0",
               "forall": "a \\in \\mathbb{R}",
               "derivation": "0 \\cdot a = (0 + 0) \\cdot a = 0 \\cdot a + 0 \\cdot a",
-              "derivedFrom": ["ax.zero-neutral", "ax.distributivity", "ax.additive-inverse", "ax.eq-congruence"]
+              "derivedFrom": [
+                "ax.zero-neutral",
+                "ax.distributivity",
+                "ax.additive-inverse",
+                "ax.eq-congruence"
+              ]
             },
             {
               "id": "th.negative-one-times",
@@ -920,7 +1033,14 @@
               "latex": "-a = (-1) \\cdot a",
               "forall": "a \\in \\mathbb{R}",
               "derivation": "a + (-1) \\cdot a = 1 \\cdot a + (-1) \\cdot a = \\bigl(1 + (-1)\\bigr) \\cdot a = 0 \\cdot a = 0",
-              "derivedFrom": ["ax.one-neutral", "ax.distributivity", "ax.additive-inverse", "th.zero-times", "ax.eq-congruence", "ax.eq-symmetric"],
+              "derivedFrom": [
+                "ax.one-neutral",
+                "ax.distributivity",
+                "ax.additive-inverse",
+                "th.zero-times",
+                "ax.eq-congruence",
+                "ax.eq-symmetric"
+              ],
               "note": {
                 "en": "So $-a$ is the inverse of $a$, and the unary minus is nothing but multiplication by the constant $-1$. It therefore needs no rules of its own: wherever a unary minus stands, an ordinary product is at work, and it follows the rules products already follow. The brackets in $(-1)$ are what let it stand as a single factor.",
                 "de": "$-a$ ist also das Inverse von $a$, und das unäre Minus ist nichts anderes als die Multiplikation mit der Konstanten $-1$. Es braucht daher keine eigenen Regeln: wo ein unäres Minus steht, wirkt ein gewöhnliches Produkt, und es folgt den Regeln, denen Produkte ohnehin folgen. Die Klammern in $(-1)$ lassen es als einzelnen Faktor stehen."
@@ -938,7 +1058,14 @@
               },
               "latex": "(-1) \\cdot (-1) = 1",
               "derivation": "(-1) + (-1) \\cdot (-1) = (-1) \\cdot 1 + (-1) \\cdot (-1) = (-1) \\cdot \\bigl(1 + (-1)\\bigr) = (-1) \\cdot 0 = 0",
-              "derivedFrom": ["ax.one-neutral", "ax.distributivity", "ax.additive-inverse", "th.zero-times", "ax.eq-congruence", "ax.mul-commutative"],
+              "derivedFrom": [
+                "ax.one-neutral",
+                "ax.distributivity",
+                "ax.additive-inverse",
+                "th.zero-times",
+                "ax.eq-congruence",
+                "ax.mul-commutative"
+              ],
               "note": {
                 "en": "The chain shows $(-1) + (-1) \\cdot (-1) = 0$, so $(-1) \\cdot (-1)$ is the additive inverse of $-1$. But so is $1$ (ax.additive-inverse), and an inverse is unique, hence $(-1) \\cdot (-1) = 1$. This used no order at all: 'minus times minus is plus' is a fact of the field, not of the number line, though it is almost always taught with a number-line story.",
                 "de": "Die Kette zeigt $(-1) + (-1) \\cdot (-1) = 0$, also ist $(-1) \\cdot (-1)$ das additive Inverse von $-1$. Das ist aber auch $1$ (ax.additive-inverse), und ein Inverses ist eindeutig, folglich $(-1) \\cdot (-1) = 1$. Das brauchte keine Ordnung: 'Minus mal Minus ist plus' ist eine Tatsache des Körpers, nicht der Zahlengeraden, obwohl es fast immer mit einer Zahlengeraden-Geschichte gelehrt wird."
@@ -971,12 +1098,24 @@
             },
             {
               "id": "th.zero-product",
-              "concerns": ["mul"],
-              "name": { "en": "Zero product", "de": "Nullprodukt" },
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "Zero product",
+                "de": "Nullprodukt"
+              },
               "latex": "a \\cdot b = 0 \\;\\Rightarrow\\; a = 0 \\;\\text{ or }\\; b = 0",
               "forall": "a, b \\in \\mathbb{R}",
               "derivation": "a \\ne 0 \\;\\Rightarrow\\; b = 1 \\cdot b = (a^{-1} \\cdot a) \\cdot b = a^{-1} \\cdot (a \\cdot b) = a^{-1} \\cdot 0 = 0",
-              "derivedFrom": ["ax.multiplicative-inverse", "ax.one-neutral", "ax.mul-associative", "ax.mul-commutative", "th.zero-times", "ax.eq-congruence"],
+              "derivedFrom": [
+                "ax.multiplicative-inverse",
+                "ax.one-neutral",
+                "ax.mul-associative",
+                "ax.mul-commutative",
+                "th.zero-times",
+                "ax.eq-congruence"
+              ],
               "note": {
                 "en": "Read the chain as a case split: if $a$ is not $0$ it has a reciprocal (ax.multiplicative-inverse), and applying it to $a \\cdot b = 0$ leaves $b = 0$. So at least one factor was $0$ to begin with. This is the converse of th.zero-times, and it is what licenses solving an equation by factoring: from $(x-2)(x+3) = 0$ one may conclude $x = 2$ or $x = -3$. That step is this theorem and not a rule of thumb.",
                 "de": "Die Kette ist eine Fallunterscheidung: ist $a$ nicht $0$, so hat es einen Kehrwert (ax.multiplicative-inverse), und wendet man ihn auf $a \\cdot b = 0$ an, bleibt $b = 0$. Mindestens ein Faktor war also von Anfang an $0$. Das ist die Umkehrung von th.zero-times, und es ist das, was das Lösen einer Gleichung durch Faktorisieren erlaubt: aus $(x-2)(x+3) = 0$ darf man auf $x = 2$ oder $x = -3$ schliessen. Dieser Schritt ist dieser Satz und keine Faustregel."
@@ -988,13 +1127,23 @@
             },
             {
               "id": "th.inverse-of-product",
-              "concerns": ["mul"],
-              "name": { "en": "The inverse of a product", "de": "Das Inverse eines Produkts" },
+              "concerns": [
+                "mul"
+              ],
+              "name": {
+                "en": "The inverse of a product",
+                "de": "Das Inverse eines Produkts"
+              },
               "latex": "(a \\cdot b)^{-1} \\;=\\; a^{-1} \\cdot b^{-1}",
               "forall": "a, b \\in \\mathbb{R}",
               "cond": "a \\ne 0,\\ b \\ne 0",
               "derivation": "(a b)(a^{-1} b^{-1}) = (a a^{-1})(b b^{-1}) = 1 \\cdot 1 = 1 \\;\\Longrightarrow\\; (ab)^{-1} = a^{-1} b^{-1}",
-              "derivedFrom": ["ax.multiplicative-inverse", "ax.mul-associative", "ax.mul-commutative", "ax.one-neutral"],
+              "derivedFrom": [
+                "ax.multiplicative-inverse",
+                "ax.mul-associative",
+                "ax.mul-commutative",
+                "ax.one-neutral"
+              ],
               "note": {
                 "en": "The multiplicative twin of th.minus-in-product: there a minus in a product came to the front, here the inverse of a product splits across its factors. The proof is the standard one for any inverse: exhibit a partner that multiplies to $1$. Regroup $(ab)(a^{-1}b^{-1})$ so each factor meets its own inverse, and since an inverse is unique, $a^{-1}b^{-1}$ *is* $(ab)^{-1}$. Both must be nonzero, because only nonzero elements have an inverse at all (ax.multiplicative-inverse). This is the one field fact the whole of fraction arithmetic rests on, multiplying, dividing and adding fractions all reduce to it, so it is stated once here rather than re-derived each time in the term-manipulation layer.",
                 "de": "Das multiplikative Gegenstück zu th.minus-in-product: dort trat ein Minus in einem Produkt nach vorne, hier verteilt sich das Inverse eines Produkts auf seine Faktoren. Der Beweis ist der übliche für jedes Inverse: man weist einen Partner vor, der zu $1$ multipliziert. Gruppiere $(ab)(a^{-1}b^{-1})$ so um, dass jeder Faktor sein eigenes Inverses trifft, und da ein Inverses eindeutig ist, *ist* $a^{-1}b^{-1}$ gleich $(ab)^{-1}$. Beide müssen von null verschieden sein, denn nur solche Elemente haben überhaupt ein Inverses (ax.multiplicative-inverse). Das ist die eine Körpertatsache, auf der die ganze Bruchrechnung ruht, Multiplizieren, Dividieren und Addieren von Brüchen führen alle darauf zurück, und darum wird sie hier einmal festgehalten und nicht in der Termumformungsschicht jedes Mal neu hergeleitet."
@@ -1022,7 +1171,12 @@
               "latex": "0 < a \\;\\Leftrightarrow\\; -a < 0",
               "forall": "a \\in \\mathbb{R}",
               "derivation": "0 < a \\;\\Rightarrow\\; 0 + (-a) < a + (-a) \\;\\Rightarrow\\; -a < 0",
-              "derivedFrom": ["ax.order-add", "ax.zero-neutral", "ax.additive-inverse", "ax.add-commutative"],
+              "derivedFrom": [
+                "ax.order-add",
+                "ax.zero-neutral",
+                "ax.additive-inverse",
+                "ax.add-commutative"
+              ],
               "note": {
                 "en": "So $-a$ is negative exactly when $a$ is positive, and positive when $a$ is negative: the unary minus does not make an element negative, it swaps positive and negative. Forward: add $-a$ to both sides of $0 < a$ (ax.order-add). Reverse: add $a$ to $-a < 0$. Obvious for a concrete number like $a = 2$, but for a variable it is the exact point students miss.",
                 "de": "$-a$ ist also genau dann negativ, wenn $a$ positiv ist, und positiv, wenn $a$ negativ ist: das unäre Minus macht ein Element nicht negativ, es vertauscht positiv und negativ. Hin: addiere $-a$ auf beiden Seiten von $0 < a$ (ax.order-add). Zurück: addiere $a$ zu $-a < 0$. Für eine konkrete Zahl wie $a = 2$ offensichtlich, doch für eine Variable genau der Punkt, den man übersieht."
