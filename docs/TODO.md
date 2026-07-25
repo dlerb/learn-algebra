@@ -4,6 +4,31 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## 🧊 FROZEN — the DRILL layer (2026-07-25)
+
+**Do not start drill work.** The user is planning a substantial revision of the drill
+layer, so anything that authors, reshapes, or builds on `src/data/drills/*.json` waits
+for that. Frozen: the *Exercise generators* section, *Drill / session + progression*,
+the undefined `chunking` drill format, Compute-Engine drill checks in `pnpm validate`,
+`_parked-priority.json`, Tier-3 endpoint grading and MathLive input, and the
+`frequency` → drill-emphasis idea recorded under "Errors as evidence" below.
+
+Also frozen by dependency: **presentation mode for the skills page** — a skill stripped
+to student view is really a *progress* surface, and that needs the drill runtime.
+
+**Not affected**, since they touch only the tower / errors / skills / metapattern layers:
+the manifest unification, the metapatterns presentation pass, the school-facing
+simplification of the fundament, the ℝ layer, the `numbers`-layer gaps (decimals,
+divisibility, primes), German prose, and the residue of the coverage triage
+(`mis.letters-differ` needs a skill; 14/74 skills still have no `restsOn`).
+
+⚠️ The two drill pitfalls added 2026-07-25 (`divide-by-one`, `same-value-different-structure`)
+need **no unwinding**: the skills carry the matching `errors` refs independently, and the
+coverage audit seeds on `errors` OR a drill pitfall — so those skills stay justified
+however the drill layer is rebuilt.
+
+---
+
 ## ✅ DONE 2026-07-25 — WrongRight + the errors page as the student page
 
 `/errors` **is** the student-facing mistakes page (no separate `/mistakes` route — the
