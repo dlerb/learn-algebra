@@ -1,0 +1,9 @@
+# Revisions to skip when running `git blame` — bulk reformats that touched
+# every line without changing a word. Use with:
+#
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# (GitHub and most editors honour the file automatically.)
+
+# style: normalize the content JSON to canonical form (whitespace only)
+ea519d8091e6624fcbf14e27f4e95ebc50e5f9c1
