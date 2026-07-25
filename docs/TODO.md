@@ -94,10 +94,18 @@ better material. Authoring rule where the two could collide: the meta-pattern ch
 the GENERAL decoding rule, `fix` the CONCRETE one for this mistake (and 8 of 25 errors
 reach no meta-pattern at all, so `fix` is not redundant with them).
 
-- [ ] **Names are still teacher register**, one level up from the same problem —
-  "Linearity illusion", "Conjoining / closure compulsion", "The loudest operation wins".
-  Left alone on purpose: a name only has to be a label to point at, and `fix` now does the
-  explaining underneath. Worth a pass later.
+**Fourth pass — the names (2026-07-25).** All 25 rewritten student-facing and bilingual:
+they now name the mistake **as the student made it**, not as the literature classifies it.
+"Linearity illusion" → *Spreading an operation over a plus*; "Precedence ignored" →
+*Calculated left to right*; "The two repetitions confused" → *Squaring and doubling mixed
+up*; "Conjoining / closure compulsion" → *Forcing unlike terms together*.
+
+**Replaced in place, no second field** — unlike the `note`/`fix` split, where the diagnosis
+was rich prose worth preserving. A name is only a label, and the technical handle survives
+in two places already: the **id** (`anti.linearity`, `sal.loudest-op-wins`) and the
+inspection-only `note`. `TaxonomyView` renders errors as `id · name`, so the id is beside
+the name there too. The one term that lived *only* in a name — "closure compulsion" — was
+moved into `anti.conjoining`'s note rather than dropped.
 - [ ] ⚠️ **UNVERIFIED**: `.refv` max-width 1100px → 900px, the one-line attempt at "the
   pairs drift right on a wide screen" (the rail is a fixed 21rem, so past ~1200px each
   entry showed a wide empty gutter right of the ✓ column and the hairline ran well past
