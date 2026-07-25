@@ -6,6 +6,13 @@
       "x^2 - 1",
       "(x+1)(x-1)"
     ],
-    "pitfalls": []
+    "pitfalls": [
+      {
+        "expr": "(x-1)^2",
+        "explainedBy": [
+          "anti.linearity"
+        ]
+      }
+    ]
   }
 ]

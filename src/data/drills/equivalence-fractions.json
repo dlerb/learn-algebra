@@ -32,7 +32,14 @@
       "\\frac{a}{1}",
       "a"
     ],
-    "pitfalls": []
+    "pitfalls": [
+      {
+        "expr": "\\frac{1}{a}",
+        "explainedBy": [
+          "anti.commute-everything"
+        ]
+      }
+    ]
   },
   {
     "kind": "equivalence",
