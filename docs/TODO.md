@@ -55,6 +55,24 @@ structural rather than cosmetic:
 - `relation="style"` glues the `=` to the form it introduces, so a wrap leaves it leading
   the second line instead of dangling off the end of the first.
 
+**Second pass, same day.** Two more from looking at it:
+- **One geometry down the page.** Track minimums on `.wr-rows`
+  (`minmax(4.5rem,auto) minmax(7rem,auto) auto` + `justify-content: start`) put ✗ at a
+  single x for all 25 entries and ✓ at three near-identical ones. The cause of the drift
+  was a prose `hint` in the ✓ column: as an `auto` track it took the sentence's full
+  max-content width (670px on some entries, 250px on others), so the ✓ jumped as you
+  scrolled. `.hint` is now `max-width: 22rem` and wraps.
+- **The refs were noise.** Bare grey text after grey prose reads as more prose. They are
+  now the tower's own `rests on` vocabulary — small-caps label (`breaks` / `read`,
+  localized) plus pills — spanning the full entry width so sentence-long names sit on one
+  line. **And each chip deep-links to the card it names**: `LayerView` cards carry
+  `:id="c.id"`, the router's `scrollBehavior` resolves the hash, and the landed-on card
+  gets a `.targeted` highlight. Three traps, all of which fail silently: the layer views
+  are lazily loaded so the element does not exist when `scrollBehavior` first runs; card
+  ids are dotted so a selector string needs `CSS.escape` — **and vue-router then refuses
+  the escaped `#…` string and requires an Element**; and `:target` does not update on a
+  pushState navigation, so a CSS-only highlight never fires (hence the route-driven class).
+
 **Mode.** `src/inspect.ts` — **presentation is the DEFAULT**; `inspect` is opt-in and its
 toggle only renders in dev or with `?inspect`, so a build shows students the page and
 nothing else. The author is in this app far more than any student, so defaulting to

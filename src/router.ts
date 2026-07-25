@@ -27,5 +27,27 @@ const routes: RouteRecordRaw[] = [
 export const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior: () => ({ top: 0 }),
+  // A hash means a deep link to one tower card (`/fundamentals#ax.distributivity`,
+  // as the /errors page emits): scroll to it rather than to the top.
+  //
+  // Two things make the naive version silently do nothing. The layer views are
+  // lazily loaded, so the card is not in the DOM when scrollBehavior first runs;
+  // and every card renders its LaTeX in onMounted, which moves everything below it.
+  // So: wait for the element, then one more frame for KaTeX to settle.
+  //
+  // Card ids are dotted (`th.negative-one-times`), so a selector STRING has to be
+  // escaped — and vue-router then refuses it, warning that an escaped `#…` must be
+  // passed as an element instead. Hence the lookup here and `el` as an Element.
+  scrollBehavior: async to => {
+    if (!to.hash) return { top: 0 }
+    const sel = `#${CSS.escape(to.hash.slice(1))}`
+    let el = document.querySelector(sel)
+    for (let i = 0; i < 40 && !el; i++) {
+      await new Promise(requestAnimationFrame)
+      el = document.querySelector(sel)
+    }
+    if (!el) return { top: 0 }
+    await new Promise(requestAnimationFrame)
+    return { el: el as HTMLElement, top: 72, behavior: 'smooth' }
+  },
 })

@@ -16,6 +16,11 @@ import { inspect, inspectAvailable } from '../inspect'
 // the author's causal taxonomy and cross-cuts topic, so it is a tag, not a level.
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
+// The only prose this view owns, so it localizes like everything else.
+const L = computed(() => lang.value === 'de'
+  ? { breaks: 'verletzt', read: 'dazu' }
+  : { breaks: 'breaks',   read: 'read' })
+
 const citedErrs = new Set(skills.flatMap(s => s.errors))
 const unused = computed(() => errorTree.errors.filter(e => !citedErrs.has(e.id)).length)
 
@@ -124,17 +129,23 @@ const sections = computed(() => errorTree.sections.map(s => ({
 
           <!-- Its own grid cell, not part of the rail: on a phone the entry
                collapses to one column in DOM order, and the pairs must reach the
-               reader before the links do. -->
-          <p v-if="e.rules.length || e.metas.length" class="links">
-            <template v-for="(r, i) in e.rules" :key="r.id">
-              <span v-if="i" class="sep">·</span>
-              <RouterLink class="lnk rule" :to="`/${r.layer}`">{{ r.name }}</RouterLink>
-            </template>
-            <template v-for="m in e.metas" :key="m.id">
-              <span class="sep">·</span>
-              <RouterLink class="lnk" to="/metapatterns">{{ m.name }}</RouterLink>
-            </template>
-          </p>
+               reader before the links do.
+
+               CHIPS, not a run of grey text. These are pointers into the tower and
+               they read as noise unless they look like pointers — so they borrow
+               the `rests on` vocabulary LayerView already uses for exactly this
+               (small-caps label + pills), and each one deep-links to the card it
+               names rather than dumping you at the top of a layer. -->
+          <div v-if="e.rules.length || e.metas.length" class="refs">
+            <p v-if="e.rules.length" class="ref-line">
+              <span class="ref-label">{{ L.breaks }}</span>
+              <RouterLink v-for="r in e.rules" :key="r.id" class="chip rule" :to="`/${r.layer}#${r.id}`">{{ r.name }}</RouterLink>
+            </p>
+            <p v-if="e.metas.length" class="ref-line">
+              <span class="ref-label">{{ L.read }}</span>
+              <RouterLink v-for="m in e.metas" :key="m.id" class="chip" to="/metapatterns">{{ m.name }}</RouterLink>
+            </p>
+          </div>
 
           <div v-if="inspect && open.has(e.id)" class="details">
             <dl class="fields">
@@ -180,8 +191,11 @@ const sections = computed(() => errorTree.sections.map(s => ({
 @media (min-width: 820px) {
   .entry { grid-template-columns: minmax(0, 21rem) minmax(0, 1fr); align-items: start; }
   .rail { grid-area: 1 / 1; }
-  .links { grid-area: 2 / 1; }
-  .wr-rows { grid-area: 1 / 2 / span 2 / 3; }
+  .wr-rows { grid-area: 1 / 2; }
+  /* Full entry width, not squeezed into the rail: chip names are sentence-long
+     and inside 21rem they wrapped INSIDE the pill, which a 999px radius turns
+     into a lozenge. Across the full width they sit on one line each. */
+  .refs { grid-area: 2 / 1 / 3 / -1; }
 }
 .entry.unused .rail { border-left: 2px dashed var(--warn-border); padding-left: .6rem; margin-left: -.8rem; }
 
@@ -196,17 +210,24 @@ const sections = computed(() => errorTree.sections.map(s => ({
 
 .body { font-size: .8rem; color: var(--text-muted); margin: .3rem 0 0; line-height: 1.5; }
 
-/* One line, no labels: the rule comes first and is weighted, the meta-patterns
-   trail it. Labelled two-line link blocks were louder than the mistakes. */
-.links { margin: .35rem 0 0; font-size: .72rem; line-height: 1.6; color: var(--text-faint); }
-.lnk { color: var(--text-faint); text-decoration: none; border-bottom: 1px solid var(--border); }
-.lnk.rule { color: var(--text-muted); }
-.lnk:hover { color: var(--accent); border-color: var(--accent); }
-.sep { margin: 0 .3rem; color: var(--border-strong); }
+/* Pointers into the tower, dressed as pointers — the same small-caps label +
+   pill pattern LayerView uses for `rests on`. As bare grey text they read as
+   more prose and the eye slid off them. */
+.refs { margin: .5rem 0 0; display: grid; gap: .3rem; }
+.ref-line { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem; }
+.ref-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-right: .1rem; }
+.chip { font-size: .7rem; padding: .12rem .5rem; max-width: 100%; background: var(--chip-bg); color: var(--text-muted); border: 1px solid transparent; border-radius: 999px; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+a.chip:hover { color: var(--accent); border-color: var(--accent); }
+.chip.rule { color: var(--text); }
 
 /* The shared grid WrongRight fills: stem | ✗ wrong | ✓ right as real columns,
-   so several instances on one card line up instead of scattering. */
-.wr-rows { display: grid; grid-template-columns: auto auto minmax(0, 1fr); column-gap: 1.1rem; row-gap: .35rem; align-items: baseline; min-width: 0; }
+   so several instances on one card line up instead of scattering.
+   `justify-content: start` keeps the tracks at content width — with an `fr`
+   track the ✓ column absorbed the free space and the pairs drifted rightward on
+   a wide screen instead of sitting at a fixed place. The track MINIMUMS then give
+   the page one geometry: most stems and wrong forms fit inside them, so ✗ and ✓
+   land at the same x on entry after entry rather than shuffling per card. */
+.wr-rows { display: grid; grid-template-columns: minmax(4.5rem, auto) minmax(7rem, auto) auto; justify-content: start; column-gap: 1.1rem; row-gap: .35rem; align-items: baseline; min-width: 0; }
 
 .details { grid-column: 1 / -1; margin-top: .3rem; border-top: 1px solid var(--border); padding-top: .55rem; }
 .fields { margin: 0; display: grid; gap: .32rem; }
