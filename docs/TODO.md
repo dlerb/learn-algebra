@@ -225,11 +225,32 @@ Empirically grounded, and it only became available once errors carried frequency
    why the audit's downward `requires` closure is the right test for them, and why its
    failure here is a TRUE signal that Tier 3 is underbuilt rather than a wiring artifact.
    Same conclusion `docs/common_mistakes.md` reached: *"Tier 3: build, don't cut."*
-4. [ ] **Contrast skills — do NOT invent an error. THE ONLY CATEGORY LEFT** (4 skills:
-   `bracket-types`, `divide-by-one`, `addition-commutative`,
-   `same-value-different-structure`). Categories 1–3 are done; the audit now reads
-   **1 undrilled error, 4/74 unreached skills**, and both numbers are the honest floor
-   rather than a backlog. `addition-commutative`,
+4. [x] **Contrast skills — worked 2026-07-25, and the "distractor-free by decision" call
+   was HALF wrong.** Two of the four did have a tempting wrong form after all, and an
+   existing error already explained it, so both got a drill pitfall + the matching
+   `errors` ref (`explainedBy` is validated ⊆ the skill's `errors`). **Unreached 4 → 2.**
+   - `divide-by-one`: pitfall `\frac{1}{a}` ← `anti.commute-everything`. Reading $a/1$ as
+     the reciprocal is an exact instance of $a/b = b/a$.
+   - `same-value-different-structure`: pitfall `(x-1)^2` ← `anti.linearity`. "Factoring"
+     $x^2-1$ as $(x-1)^2$ is the freshman's dream mirrored — $a^2-b^2=(a-b)^2$ is the same
+     false identity as $(a+b)^2=a^2+b^2$, which is why
+     `transformation.factor-difference-of-squares` cites it too.
+
+- [ ] ⚠️ **THE FLOOR: 2 skills, 1 error — and they should probably stay.** The audit will
+  never read 0/0, and that is correct rather than a backlog:
+  - `equivalence.bracket-types` and `equivalence.addition-commutative` have **no tempting
+    wrong form at all**. No student believes $a+b \ne b+a$ or that $[a+b]$ groups
+    differently from $(a+b)$. Note these are **exactly the two** `docs/common_mistakes.md`
+    named as cut candidates ("notation-trivia / the two commutativity-holds skills") — the
+    audit and the pruning rubric converged independently, which is some evidence both are
+    reading something real.
+  - **But there is a drill-design reason to KEEP them that the error layer can never
+    express**: a Same-or-Different session needs items whose answer is *same*. A drill set
+    made only of distractor-bearing skills trains students to answer "different" by
+    reflex. Pure-positive skills are the control items. So: keep, and read the red line as
+    "these are the contrast set", not as work outstanding.
+  - `mis.letters-differ` still has no skill (a letter read as a word/unit). Its positive
+    form is `meta.variable-is-a-fixed-number`. Needs a skill or a decision. `addition-commutative`,
    `divide-by-one`, `bracket-types`, `same-value-different-structure` exist to make the
    *wrong* twin visible; no student believes $a+b \ne b+a$, and authoring an error for it
    would be fabricating evidence. The mechanism to wire them already exists and was left

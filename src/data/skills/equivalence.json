@@ -723,6 +723,9 @@
           ],
           "restsOn": [
             "th.divide-by-one"
+          ],
+          "errors": [
+            "anti.commute-everything"
           ]
         },
         {
@@ -871,6 +874,9 @@
           ],
           "metaPatterns": [
             "meta.dominant-op-last"
+          ],
+          "errors": [
+            "anti.linearity"
           ]
         }
       ]
