@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
+import OpenInSource from '../components/OpenInSource.vue'
 import { skills, drills, groups, skillKinds, metaPatterns, errorPatterns, rawById } from '../data'
 import { loc, type Skill, type Drill } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
@@ -159,6 +160,7 @@ function hasErrors(c: CardVM): boolean {
         <article v-for="c in g.cards" :key="c.id" class="card">
           <div class="card-top">
             <span class="eyebrow">{{ c.kind }} · {{ c.group }}</span>
+            <OpenInSource :id="c.id" />
             <button class="disclose" @click="toggle(c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
           </div>
           <div class="card-head">
