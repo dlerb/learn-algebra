@@ -159,11 +159,21 @@ Empirically grounded, and it only became available once errors carried frequency
    ⚠️ **That last one corrects the claim below**: `equivalence.multiplication-commutative`
    DOES own an error — `a \cdot 3` not recognised as `3a` is a commutativity failure. Only
    `addition-commutative` is a pure contrast skill.
-2. [ ] **Author the error** — 3 exponent-extension skills left
-   (`zero-and-one-exponent`, `negative-exponent`, `negative-fractional-exponent`;
-   `fractional-exponent-root` got wired above). `common_mistakes.md` **D5 `x⁰ = 0` ★** and
-   **D4 negative exponent ★★** have no entry in `errors.json`. This is the case where
-   fine-graining the error layer DOES make it 1:1.
+2. [x] ~~**Author the error** — the exponent-extension skills.~~ **DONE 2026-07-25**,
+   **unreached skills 13 → 10**, and it confirmed the user's pushback: here fine-graining
+   the error layer DOES make it 1:1. Two errors authored, tower now cited by **27** errors:
+   - **`anti.zero-exponent`** ★ (catalog D5) — `x^0` ✗ `0` ✓ `1`, `x^1` ✗ `1` ✓ `x`;
+     corrupts `def.pow-zero`, `def.pow`. Kind `anti-law`: nothing is misparsed, a wrong
+     *rule* is applied, and it is generative ($5^0$, $x^0$, $(a+b)^0$ all come out `0`).
+   - **`mis.negative-exponent-negates`** ★★ (catalog D4) — `x^{-1}` ✗ `-x` ✓ `1/x`;
+     corrupts `def.pow-neg`, `th.inverse-is-power`. Kind `misreading`: the minus is read as
+     attaching to the *value* rather than the exponent — `mis.minus-roles-confused` one
+     floor up, in the exponent.
+   - Neither was invented: both skills' own notes already said "not $0$" and "not a
+     negative number". `negative-fractional-exponent` needed **no third error** — it cites
+     the new misreading (the minus half) plus `mis.root-scope` (the root half).
+   - The kind split also matches the measured gradient: the false *rule* is an anti-law,
+     the misread *glyph* is a misreading.
 3. [ ] **Missing edge, not missing justification** — the five `classification.*` shapes,
    `classification.difference` and `chunking.chunks-in-product` are unreached only because
    the Tier-3 factoring skills do not declare them in `requires`. That is the trigger

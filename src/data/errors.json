@@ -219,6 +219,28 @@
                 { "from": "a^2", "wrong": "2a", "right": "a \\cdot a" },
                 { "from": "x + x", "wrong": "x^2", "right": "2x" }
               ] },
+            { "id": "anti.zero-exponent", "kind": "anti-law", "frequency": 1,
+              "corrupts": ["def.pow-zero", "def.pow"],
+              "name": { "en": "Zero exponent read as zero", "de": "Exponent Null als Null gelesen" },
+              "fix": { "en": "Anything except $0$ raised to the power $0$ is $1$, not $0$ — and $x^1$ is just $x$.",
+                       "de": "Alles ausser $0$ hoch $0$ ist $1$, nicht $0$ — und $x^1$ ist einfach $x$." },
+              "note": { "en": "The exponent is read off as the value: $x^0$ answered $0$, $x^1$ answered $1$. $a^0 = 1$ is not a decree — it is forced by $a^m \\cdot a^n = a^{m+n}$, which is why def.pow-zero derives it. What unsettles students is the genuine exception: $0^0$ really is undefined, and a rule with a hole in it feels less like a rule.",
+                        "de": "Der Exponent wird als Wert gelesen: $x^0$ ergibt angeblich $0$, $x^1$ angeblich $1$. $a^0 = 1$ ist keine Setzung — es wird durch $a^m \\cdot a^n = a^{m+n}$ erzwungen, weshalb def.pow-zero es herleitet. Verunsichernd ist die echte Ausnahme: $0^0$ ist tatsächlich undefiniert, und eine Regel mit einem Loch wirkt weniger wie eine Regel." },
+              "instances": [
+                { "from": "x^0", "wrong": "0", "right": "1" },
+                { "from": "x^1", "wrong": "1", "right": "x" }
+              ] },
+            { "id": "mis.negative-exponent-negates", "kind": "misreading", "frequency": 2,
+              "corrupts": ["def.pow-neg", "th.inverse-is-power"],
+              "name": { "en": "A negative exponent read as a negative value", "de": "Negativer Exponent als negativer Wert gelesen" },
+              "fix": { "en": "A minus in the exponent means a reciprocal, not a negative number: $x^{-1} = \\frac{1}{x}$ and $x^{-2} = \\frac{1}{x^2}$.",
+                       "de": "Ein Minus im Exponenten bedeutet einen Kehrwert, keine negative Zahl: $x^{-1} = \\frac{1}{x}$ und $x^{-2} = \\frac{1}{x^2}$." },
+              "note": { "en": "The minus is taken to attach to the value instead of to the exponent, so $x^{-1}$ comes out as $-x$. Two identical glyphs doing different jobs — the same conflation as mis.minus-roles-confused, one floor up in the exponent. $a^{-n} := (a^n)^{-1}$ (def.pow-neg) is forced by permanence, and for positive $a$ it never yields a negative number at all.",
+                        "de": "Das Minus wird auf den Wert bezogen statt auf den Exponenten, sodass $x^{-1}$ als $-x$ herauskommt. Zwei gleiche Zeichen mit verschiedenen Aufgaben — dieselbe Verwechslung wie bei mis.minus-roles-confused, eine Etage höher im Exponenten. $a^{-n} := (a^n)^{-1}$ (def.pow-neg) wird durch die Permanenz erzwungen und ergibt für positives $a$ nie eine negative Zahl." },
+              "instances": [
+                { "from": "x^{-1}", "wrong": "-x", "right": "\\frac{1}{x}" },
+                { "from": "x^{-2}", "wrong": "-x^2", "right": "\\frac{1}{x^2}" }
+              ] },
             { "id": "mis.root-scope", "kind": "misreading", "frequency": 2,
               "corrupts": ["ix.root"],
               "name": { "en": "The root did not cover everything", "de": "Die Wurzel hat nicht alles überdeckt" },
