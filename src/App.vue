@@ -6,7 +6,7 @@ import {
   NButton, NRadioGroup, NRadioButton, type MenuOption,
 } from 'naive-ui'
 import { lang } from './lang'
-import { layers } from './data/layers'
+import { layersOf } from './data/layers'
 
 // Global app chrome: brand · page nav · settings. Page-specific controls stay
 // in the pages; only truly global state (language now, dark mode later) lives
@@ -17,28 +17,21 @@ import { layers } from './data/layers'
 const route = useRoute()
 const router = useRouter()
 
-// Two catalog groups + two activities. The tower layers nest under one dropdown
-// and the curated pedagogy (skills, errors, metapatterns) under another, so the
-// bar stays four wide however many layers the tower grows. Group keys are suffixed `-menu` so
-// they never collide with a route name; only leaf keys are route names, and a
-// parent with children just expands (never navigates), so `go` only ever sees a
-// leaf. `route.name` matching a leaf key auto-highlights that leaf and its parent.
+// Two catalog groups + two activities. BOTH dropdowns are generated from the one
+// manifest (src/data/layers.ts) by `family`, so the bar stays four wide however
+// many layers either family grows, and adding a layer touches no code here.
+// Group keys are suffixed `-menu` so they never collide with a route name; only
+// leaf keys are route names, and a parent with children just expands (never
+// navigates), so `go` only ever sees a leaf. `route.name` matching a leaf key
+// auto-highlights that leaf and its parent.
+const layerMenu = (family: 'fundament' | 'curated') =>
+  layersOf(family).map(l => ({ label: l.title, key: l.slug }))
+
 const menuOptions: MenuOption[] = [
-  {
-    label: 'Fundament', key: 'tower-menu',
-    children: layers.map(l => ({ label: l.title, key: l.slug })),
-  },
-  {
-    // Ordered to echo the reference stack bottom-up: the Fundament dropdown (the
-    // tower/floor) sits left, then within Curated the two lenses that cite only
-    // cards (Errors, Metapatterns), then Skills on top, which cites all three.
-    label: 'Curated', key: 'curated-menu',
-    children: [
-      { label: 'Errors', key: 'errors' },
-      { label: 'Metapatterns', key: 'metapatterns' },
-      { label: 'Skills', key: 'skills' },
-    ],
-  },
+  { label: 'Fundament', key: 'tower-menu', children: layerMenu('fundament') },
+  // Curated is ordered in the manifest to echo the reference stack bottom-up:
+  // the two lenses that cite only cards, then Skills, which cites all three.
+  { label: 'Curated', key: 'curated-menu', children: layerMenu('curated') },
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },
 ]
