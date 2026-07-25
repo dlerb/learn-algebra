@@ -174,10 +174,37 @@ Empirically grounded, and it only became available once errors carried frequency
      the new misreading (the minus half) plus `mis.root-scope` (the root half).
    - The kind split also matches the measured gradient: the false *rule* is an anti-law,
      the misread *glyph* is a misreading.
-3. [ ] **Missing edge, not missing justification** — the five `classification.*` shapes,
-   `classification.difference` and `chunking.chunks-in-product` are unreached only because
-   the Tier-3 factoring skills do not declare them in `requires`. That is the trigger
-   mechanism the `gateway` removal left dangling (see the Tier-3 section).
+3. [~] **Missing edge — and mostly BLOCKED ON MISSING TIER-3 SKILLS** (investigated
+   2026-07-25). Two conclusions:
+   - ✅ **The trigger mechanism needs no new field.** `transformation.factor-common`
+     already requires `classification.common-factor`, which is why that is the one shape
+     the audit reaches. Plain `requires` IS the Tier-2→Tier-3 trigger; **do not
+     reintroduce `gateway` or a typed edge** (closes that open question in the Tier-3
+     section below).
+   - ❌ **Four shapes have nothing to be required BY.** The factoring group holds exactly
+     one skill. Each remaining shape needs a Tier-3 skill that does not exist:
+     `difference-of-squares` → `transformation.factor-difference-of-squares`;
+     `perfect-square-trinomial` → `transformation.factor-perfect-square`;
+     `quadratic-form` → `transformation.factor-quadratic`. And **two of the six are
+     chained, not orphaned** — `classification.difference` is already required by
+     `difference-of-squares`, and `linear-form` by `quadratic-form`, so fixing the head of
+     each chain resolves them for free. **Three missing skills, not six missing edges.**
+   - Not faked: `expand-binomial-square` does NOT require `perfect-square-trinomial` —
+     expanding $(a+b)^2$ reads a bracket-power, while recognising $a^2+2ab+b^2$ is the
+     *factoring* side. Pointing the edge there would invert the dependency.
+   - [x] ~~`chunking.chunks-in-product`~~ **DONE**: added to `transformation.factor-common`
+     and `-cancel-common-factor` as an ordinary prerequisite (you must read a term's
+     factors before pulling one out). **Unreached 10 → 9.**
+   - [ ] **Next: author the three Tier-3 factoring skills.** That unblocks five skills at
+     once and is the only remaining repair for them.
+
+   **Why an error cannot rescue these** (worth keeping — it is the general rule): failing
+   to recognise a shape produces **no wrong answer**, only inaction. The student does not
+   write a false form, they leave the term unfactored. So recognition skills are justified
+   **downstream** by what they enable, never **upstream** by what they prevent — which is
+   why the audit's downward `requires` closure is the right test for them, and why its
+   failure here is a TRUE signal that Tier 3 is underbuilt rather than a wiring artifact.
+   Same conclusion `docs/common_mistakes.md` reached: *"Tier 3: build, don't cut."*
 4. [ ] **Contrast skills — do NOT invent an error.** `addition-commutative`,
    `divide-by-one`, `bracket-types`, `same-value-different-structure` exist to make the
    *wrong* twin visible; no student believes $a+b \ne b+a$, and authoring an error for it
