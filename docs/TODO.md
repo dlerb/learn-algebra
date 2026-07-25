@@ -4,7 +4,61 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — a CARD EDITOR (2026-07-25). Brainstorm first, do not build.
+## NEXT SESSION — the editor's LAYOUT, and the fields it still cannot reach (2026-07-25)
+
+The card editor is **built** (see "DONE — the card editor" below, and
+`docs/app_design.md` → "Authoring tooling" for the architecture). Two threads left, in
+this order:
+
+**1. Layout — brainstorm before touching CSS.** The panel currently opens *inside* the
+card, so it inherits the card's width: a 300px grid column, which is far too narrow for
+two languages of a paragraph-length `note`. Options named so far: a popup/modal, or
+abandoning the card grid for a **horizontal layout** while editing. The user has already
+flagged the risk that this turns into many CSS fine-tuning loops — so decide the shape
+first, in prose, and only then write styles. Worth weighing: the editor's *value* is that
+the card is visible in its place in the layer, and a modal that covers the page gives that
+away, which is the thing VS Code already fails at.
+
+**2. The prose fields the editor still cannot reach.** Not design choices, just gaps:
+- **sections and groups** — their `title`, `blurb` and `note` are localized prose, but a
+  section/group carries `slug`, not `id`, so the shape-blind entity walk in
+  `scripts/content-ids.mjs` never finds them. Fixing means either giving them ids (they
+  would enter the global id namespace, and `pnpm check-ids` would then guard them) or
+  teaching the resolver a second address form. Prefer the first: one identity model.
+- **`instances[].hint`** on an error — localized prose nested in an array under the entity,
+  so it needs a sub-selector (`instances.3.hint`) rather than a flat field name. The
+  allowlist and the write path already take dotted paths; what is missing is an index.
+
+Deliberately still OUT of scope, and not a gap: ids, `basedOn`/`derivedFrom`/`corrupts`/
+`restsOn`, card order, adding or deleting cards, and the `latex` fields. Those stay VS Code
+work, which is what the `source` button is the handoff for.
+
+---
+
+## ✅ DONE 2026-07-25 — the card editor
+
+Built in four merges, each resting on the one before:
+
+1. **`chore: one canonical form for the content JSON`** — `serializeContent` in
+   `scripts/content-format.mjs` is the single serializer every writer goes through, plus
+   the normalizing commit (whitespace only, proved a no-op three ways). Without this, every
+   save would have reformatted a whole file and buried the actual edit in diff churn.
+2. **`chore: enforce globally unique entity ids`** — `pnpm check-ids`. Ids were unique
+   across all 23 content files as a measured fact; the editor addresses entities by bare id,
+   so it became an enforced invariant *before* anything depended on it.
+3. **`feat: open a card's source from the page`** — the read-only half. Permanent, not a
+   stepping stone: it is the handoff for every edit the prose editor deliberately won't do.
+4. **`feat: edit card prose in place`** — en/de textareas with live KaTeX preview, on every
+   entity in all seven layers.
+
+The brainstorm that chose this shape rejected Firestore and IndexedDB (they buy multi-user
+writes nobody needs, and cost git history, load-time validation, and Claude Code's ability
+to read the content), and dropped `jsonc-parser` once it turned out the hand-tuned JSON
+layout it would have protected was Claude's from earlier sessions, not the author's.
+
+---
+
+## Superseded — the card-editor brief (2026-07-25, kept for the reasoning)
 
 **The user's problem, in their words:** editing cards in VS Code is too hard, because
 **context gets lost** — the cards above and below, and the page as a whole, are not

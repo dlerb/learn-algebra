@@ -59,10 +59,12 @@ stubs**: the drill runner is not built. Design rule for when it is: Tutorial
 
 ```bash
 pnpm install
-pnpm dev            # vite dev server
-pnpm build          # vue-tsc && vite build
-pnpm validate       # skills/drills: schema, id uniqueness, graph + Compute Engine checks
-pnpm sweep-layers   # fundament: KaTeX (no macros), citations, concerns, prose rules
+pnpm dev             # vite dev server (also serves the content editor — see below)
+pnpm build           # vue-tsc && vite build
+pnpm validate        # canonical form + id uniqueness, then schema, graph, Compute Engine
+pnpm sweep-layers    # fundament: KaTeX (no macros), citations, concerns, prose rules
+pnpm format-content  # rewrite src/data JSON in canonical form (`:check` to verify only)
+pnpm check-ids       # entity ids unique across every content file
 ```
 
 `pnpm sweep-layers` compiles every LaTeX field and every inline `$…$` fragment with
@@ -73,12 +75,37 @@ load time in `src/data/layers.ts`, so a broken citation throws rather than rende
 Stack: Vue 3 + TypeScript + Vite, naive-ui, UnoCSS, Pinia, vue-router, KaTeX, Zod,
 Compute Engine.
 
+## Editing content in the app (dev only)
+
+Under `pnpm dev`, every card, error, meta-pattern, skill and layer head grows two small
+author-only buttons: **`source`** opens that entity's line in VS Code, and **`edit prose`**
+opens `en`/`de` textareas for its prose, with a live KaTeX preview of any `$…$`. Saving
+writes the JSON file on disk, so the change lands as an ordinary `git diff` you review and
+commit; Vite reloads and the page returns to the card you were on.
+
+The editor is scoped to **prose only** — `name`, `note`, `intuition`, `fix`, `rule`,
+`meta.*`. It cannot touch ids, `basedOn`/`corrupts`/`restsOn`, card order, or the `latex`
+fields, and that is enforced on the server, not in the UI. An editor that only reaches leaf
+strings cannot break the ~197 cross-references, which is what makes it safe to use without
+care; everything else stays VS Code work, which is what the `source` button is for.
+
+None of this exists in a build: the endpoints live in a `apply: 'serve'` Vite plugin, so the
+deployed site renders no buttons and answers 404. See `docs/app_design.md` →
+"Authoring tooling" for the architecture and its invariants.
+
 ## Prose format
 
 Content text is plain text with inline `$…$` KaTeX — deliberately **not** markdown
 (`RichText.vue` has no parser). Fields like `latex`, `derivation`, `forall` and
-`cond` are pure LaTeX. No em dashes in data (they render literally, and `—` reads as
-`−`), and Swiss orthography in German: `ss`, never `ß`.
+`cond` are pure LaTeX.
+
+The rules are checked by `scripts/content-prose.mjs`, shared by `pnpm sweep-layers` and the
+in-app editor's write path so the two cannot disagree, and they come in **two tiers**.
+*Correctness* applies everywhere: every `$…$` fragment must compile with no macros defined,
+and the delimiters must pair. *House style* applies to the **fundament tower only** — no em
+dashes (they render literally, and `—` reads as `−`), Swiss orthography in German (`ss`,
+never `ß`), and none of the retired word "sign"/"Vorzeichen". The curated layers are exempt
+by design: `errors.json` uses em dashes in its own prose.
 
 ## Docs
 
@@ -87,10 +114,12 @@ Content text is plain text with inline `$…$` KaTeX — deliberately **not** ma
 | `docs/vision.md` | why the project exists |
 | `docs/TODO.md` | the live thread list, including everything parked |
 | `docs/content_model.md` | the skills tower: rationale and revisions |
-| `docs/app_design.md` | shell, views, card system, drill-runner design |
-| `docs/fundament0.md` | the fundament's design decisions and the untangling backlog |
-| `docs/naturals.md` · `docs/integers.md` · `docs/rationals.md` | one per layer above fundament0 |
+| `docs/app_design.md` | shell, views, card system, drill-runner design, **authoring tooling** |
+| `docs/fundamentals.md` | the fundament layer's design decisions and data structure |
+| `docs/numbers.md` · `docs/powers.md` · `docs/terms.md` | one per further layer of the tower |
+| `docs/powers-nat-act.md` · `docs/powers-int-act.md` · `docs/powers-rat-act.md` | the three acts of the powers layer |
+| `docs/common_mistakes.md` | the web-sourced catalogue behind `/errors` |
 | `docs/skill2_grammar.md` | Tier-2 grammar notes |
 
-Start with `docs/TODO.md` for where things stand and `docs/fundament0.md` for why
+Start with `docs/TODO.md` for where things stand and `docs/fundamentals.md` for why
 the fundament is built the way it is.
