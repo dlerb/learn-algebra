@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
 import OpenInSource from '../components/OpenInSource.vue'
+import ProseEditor from '../components/ProseEditor.vue'
 import { metaTree, metaPatterns, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type MetaPatternDef, type LocalizedString } from '../data/skill.schema'
@@ -120,6 +121,8 @@ const items = computed(() => metaPatterns.map(m => ({
           <button class="json-toggle" @click="toggle(jsonOpen, m.id)">{{ jsonOpen.has(m.id) ? 'hide json' : 'json' }}</button>
           <pre v-if="jsonOpen.has(m.id)" class="json">{{ m.json }}</pre>
         </div>
+
+        <ProseEditor v-if="inspect" :id="m.id" />
       </article>
     </div>
   </div>
