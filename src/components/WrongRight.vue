@@ -65,12 +65,15 @@ const hintInline = () => Boolean(props.hint && !props.right)
 .cand.bad { grid-column: 2; }
 .cand.good { grid-column: 3; }
 .cand { font-size: .95rem; line-height: 1.6; min-width: 0; overflow-x: auto; white-space: nowrap; }
-.hint-row { grid-column: 2 / -1; margin-top: -.1rem; font-size: .78rem; line-height: 1.5; color: var(--text-muted); font-style: italic; }
+.hint-row { grid-column: 2 / -1; margin-top: -.1rem; max-width: 34rem; font-size: .78rem; line-height: 1.5; color: var(--text-muted); font-style: italic; }
 
 .mark { font-weight: 600; font-size: .85em; margin-right: .45rem; }
 .bad .mark { color: var(--bad); }
 .good .mark { color: var(--good); }
-.hint { font-size: .82rem; color: var(--text-muted); font-style: italic; white-space: normal; }
+/* Capped so a sentence-long correction WRAPS instead of stretching the ✓ track.
+   Uncapped, one prose hint pushed that column to 670px on some entries and 250px
+   on others, and the ✓ jumped horizontally as you scrolled down the page. */
+.hint { display: inline-block; max-width: 22rem; font-size: .82rem; color: var(--text-muted); font-style: italic; white-space: normal; vertical-align: top; }
 
 .wr-style { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .55rem; margin: .5rem 0 0; }
 .wr-style .tail { display: inline-flex; align-items: baseline; gap: .55rem; min-width: 0; }

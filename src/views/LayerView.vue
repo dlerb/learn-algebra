@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
@@ -23,6 +24,13 @@ import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Group, type Secti
 // layout variant is the signature tile, keyed on `symbol` — see isOpGroup.
 
 const props = defineProps<{ layerId: string }>()
+
+// Deep link from /errors: `/fundamentals#ax.distributivity` marks the card the
+// mistake breaks. Driven off the route rather than the `:target` pseudo-class —
+// `:target` does not update on a pushState navigation, which is all vue-router
+// does, so a CSS-only highlight silently never fires.
+const route = useRoute()
+const targetId = computed(() => route.hash.slice(1))
 
 const layer = computed(() => layerById(props.layerId)!)
 const meta = computed(() => layer.value.data.layer.meta)
@@ -125,7 +133,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
           <template v-for="c in g.cards" :key="c.id">
             <!-- Signature cards: a glyph over a type. Selected by `c.symbol`, not by
                  kind — a card carrying a symbol IS this shape, whatever it is called. -->
-            <article v-if="c.symbol" class="op" :class="{ dimmed: !matched(c, s.kind) }">
+            <article v-if="c.symbol" :id="c.id" class="op" :class="{ dimmed: !matched(c, s.kind), targeted: c.id === targetId }">
               <div class="op-eyebrow">{{ c.id }}</div>
               <div class="op-top">
                 <span class="op-sym"><MathExpr :latex="c.symbol" /></span>
@@ -137,7 +145,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 
             <!-- Every other card. Each part appears iff its field is present, so a
                  framing card is simply one that has a note and nothing else. -->
-            <article v-else class="card" :class="{ dimmed: !matched(c, s.kind) }">
+            <article v-else :id="c.id" class="card" :class="{ dimmed: !matched(c, s.kind), targeted: c.id === targetId }">
               <div class="card-top">
                 <span class="eyebrow">{{ c.id }}</span>
                 <button class="disclose" @click="toggle(open, c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
@@ -229,6 +237,13 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .cards { display: grid; grid-template-columns: 1fr; gap: .7rem; }
 @media (min-width: 560px) { .cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
 .card { position: relative; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem .9rem .8rem; background: var(--surface); }
+
+/* Every card is an anchor: `/fundamentals#ax.distributivity`. The /errors page
+   links a mistake to the exact card it breaks, so the ref has to LAND on that
+   card — jumping to the top of the layer is what made those refs read as noise.
+   `:target` says which one you arrived at; scroll-margin clears the app header. */
+.op, .card { scroll-margin-top: 4.5rem; }
+.op.targeted, .card.targeted { border-color: var(--accent); box-shadow: 0 0 0 3px var(--chip-bg); }
 .card-top { position: absolute; top: .35rem; left: .9rem; right: .9rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
 .eyebrow { font-size: .62rem; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .card-head h4 { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); }
