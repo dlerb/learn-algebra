@@ -15,6 +15,12 @@ Each entry: a canonical **wrong → right** pair, a one-line note on the trap, a
 how often the sources flag it (★★★ = named by nearly every source / canonical in
 Paul's; ★★ = common; ★ = mentioned).
 
+**Shipped into the app 2026-07-25.** The A–F families below are now the six *topic
+sections* of `src/data/errors.json`, and the ★ rating is its `frequency` field — so
+this doc and `/errors` share one taxonomy rather than drifting. The wrong→right pairs
+render through `src/components/WrongRight.vue`. Sections here map to section slugs as:
+A→`minus`, B→`reading`, C→`distributing`, D→`powers`, E→`fractions`, F→`terms`.
+
 ---
 
 ## A. Minus sign & subtraction

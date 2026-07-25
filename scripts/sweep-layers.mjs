@@ -97,7 +97,10 @@ for (const f of fs.readdirSync('src/data/skills')) {
     for (const sk of g.skills || [])
       for (const id of sk.restsOn || []) cite(sk.id, id, 'restsOn', codes)
 }
-for (const e of errFile)
+// Errors are one containment tree: `sections[] → groups[] → errors[]` (2026-07-25),
+// the same shape as a fundament layer. Sections are topics, not kinds.
+const allErrors = (errFile.sections || []).flatMap(s => (s.groups || []).flatMap(g => g.errors || []))
+for (const e of allErrors)
   for (const id of e.corrupts || [])
     cite(e.id, id, 'corrupts', codes)
 for (const m of readJSON('src/data/metapatterns.json'))

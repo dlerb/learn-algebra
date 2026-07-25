@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
+import WrongRight from '../components/WrongRight.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
 import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Group, type Section } from '../data/layers'
@@ -144,10 +145,9 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
               <div class="card-head"><h4>{{ t(c.name) }}</h4></div>
 
               <div v-if="c.latex" class="statement"><MathExpr :latex="c.latex" display /></div>
-              <div v-else-if="c.avoid" class="rewrite">
-                <div class="ex bad"><span class="mark">✗</span><MathExpr :latex="c.avoid" /></div>
-                <div class="ex good"><span class="mark">✓</span><MathExpr :latex="c.prefer!" /></div>
-              </div>
+              <!-- avoid/prefer is the `style` relation: the two forms are EQUAL,
+                   one is just better written, so WrongRight joins them with `=`. -->
+              <WrongRight v-else-if="c.avoid" :wrong="c.avoid" :right="c.prefer!" relation="style" />
 
               <div v-if="c.forall" class="forall">{{ L.forall }} <MathExpr :latex="c.forall" /></div>
               <div v-if="c.cond" class="forall">{{ L.cond }} <MathExpr :latex="c.cond" /></div>
@@ -235,11 +235,6 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
 .disclose:hover { color: var(--accent); }
 .statement { margin: .5rem 0 0; overflow-x: auto; }
-.rewrite { margin: .5rem 0 0; display: grid; gap: .3rem; }
-.ex { font-size: .95rem; line-height: 1.5; overflow-x: auto; white-space: nowrap; }
-.ex .mark { font-weight: 700; margin-right: .5rem; }
-.ex.bad .mark { color: var(--bad); }
-.ex.good .mark { color: var(--good); }
 .forall { font-size: .74rem; color: var(--text-muted); margin-top: .35rem; }
 .note { font-size: .8rem; color: var(--text-muted); margin: .55rem 0 0; line-height: 1.5; }
 

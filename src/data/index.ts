@@ -2,13 +2,12 @@
 // duplicate id, a dangling group, or a dangling meta-pattern reference throws
 // here immediately with the offending id named.
 import {
-  parseSkillTree, parseDrills, groupsFile, metaPatternsFile, errorDef,
+  parseSkillTree, parseDrills, parseErrorTree, metaPatternsFile,
   validateUniqueIds, validateSkillKinds, validateMetaPatternRefs, validateSkillLinks,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Drill, type GroupsFile, type MetaPatternsFile, type ErrorDef,
+  type Drill, type GroupsFile, type MetaPatternsFile, type ErrorDef, type ErrorTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
-import layersRaw from './layers.json'
 import metasRaw from './metapatterns.json'
 import errorsRaw from './errors.json'
 // Skills: one file per kind (kind → groups[] → skills[]), mirroring the fundament
@@ -54,15 +53,19 @@ const skillTree = parseSkillTree([
 export const skills = skillTree.skills
 export const groups: GroupsFile = skillTree.groups
 export const skillKinds: GroupsFile = skillTree.skillKinds
-// Display metadata for the reference view's segment switch (now errors only; the
-// laws/conventions segments retired with those files on 2026-07-23).
-export const layers: GroupsFile = groupsFile.parse(layersRaw)
+// NOTE: `layers.json` (a one-entry GroupsFile holding the errors page's title and
+// blurb) was deleted 2026-07-25 — that metadata now lives at the head of the
+// errors tree itself, and its export here collided by name with the tower manifest
+// in src/data/layers.ts. `layers` means the tower, and only the tower.
 export const metaPatterns: MetaPatternsFile = metaPatternsFile.parse(metasRaw)
 
 // The fundament's shadow: false laws and misreadings, each `corrupts` a card in
 // the tower (src/data/layers.ts). The laws/conventions files they used to point
 // at were folded into the tower and deleted; see docs/content_model.md.
-export const errorPatterns: ErrorDef[] = (errorsRaw as unknown[]).map(e => errorDef.parse(e))
+// Authored since 2026-07-25 as a containment tree (sections = TOPICS) like a
+// fundament layer; `errorPatterns` stays the flat list every consumer already had.
+export const errorTree: ErrorTree = parseErrorTree(errorsRaw)
+export const errorPatterns: ErrorDef[] = errorTree.errors
 
 // Every fundament-tower card id, the resolution target for the skill/error/
 // meta-pattern references validated below.
