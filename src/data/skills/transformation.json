@@ -109,7 +109,9 @@
             "ax.distributivity",
             "th.collect-like-terms"
           ],
-          "errors": []
+          "errors": [
+            "anti.quadratic-pair-unchecked"
+          ]
         }
       ]
     },

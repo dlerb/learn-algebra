@@ -402,6 +402,34 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "factoring",
+      "title": { "en": "Factoring", "de": "Faktorisieren" },
+      "blurb": { "en": "Writing a sum as a product — multiplying out, run backwards. What goes wrong here is a shape not recognised, or the numbers in the brackets never checked.",
+                 "de": "Eine Summe als Produkt schreiben — Ausmultiplizieren, rückwärts gelesen. Falsch läuft es hier, wenn eine Form nicht erkannt oder die Zahlen in den Klammern nicht überprüft werden." },
+      "groups": [
+        {
+          "slug": "factoring",
+          "errors": [
+            { "id": "anti.quadratic-pair-unchecked", "kind": "anti-law", "frequency": 2,
+              "corrupts": ["ax.distributivity", "th.collect-like-terms"],
+              "name": { "en": "The wrong pair of numbers in the brackets", "de": "Das falsche Zahlenpaar in den Klammern" },
+              "fix": { "en": "The two numbers must do BOTH jobs: multiplied they give the constant, added they give the middle number. For $x^2 + 5x + 6$ that is $2$ and $3$, because $2 \\cdot 3 = 6$ and $2 + 3 = 5$.",
+                       "de": "Die zwei Zahlen müssen BEIDES erfüllen: multipliziert ergeben sie die Konstante, addiert die mittlere Zahl. Bei $x^2 + 5x + 6$ sind das $2$ und $3$, denn $2 \\cdot 3 = 6$ und $2 + 3 = 5$." },
+              "note": { "en": "Either the numbers are copied straight out of the expression ($5$ and $6$ from $x^2 + 5x + 6$), or a pair is found that satisfies one condition and never checked against the other. Both are the same missing step. The two conditions are not a recipe to memorize: expanding $(x+m)(x+n)$ gives $x^2 + (m+n)x + mn$ (ax.distributivity, then th.collect-like-terms), so the middle coefficient IS a collected sum and the constant IS a product. A student who has never multiplied a pair of brackets out has no reason to believe either condition, which is why the check-by-expanding step is the teaching, not an afterthought.",
+                        "de": "Entweder werden die Zahlen direkt aus dem Term übernommen ($5$ und $6$ aus $x^2 + 5x + 6$), oder es wird ein Paar gefunden, das eine Bedingung erfüllt und nie an der anderen geprüft wird. Beides ist derselbe fehlende Schritt. Die zwei Bedingungen sind kein Rezept zum Auswendiglernen: $(x+m)(x+n)$ ausmultipliziert ergibt $x^2 + (m+n)x + mn$ (ax.distributivity, dann th.collect-like-terms), also IST die mittlere Zahl eine zusammengefasste Summe und die Konstante ein Produkt. Wer noch nie ein Klammerpaar ausmultipliziert hat, hat keinen Grund, eine der Bedingungen zu glauben — darum ist die Probe durch Ausmultiplizieren die Lehre selbst und kein Anhängsel." },
+              "instances": [
+                { "from": "x^2 + 5x + 6", "wrong": "(x+5)(x+6)", "right": "(x+2)(x+3)",
+                  "hint": { "en": "the numbers were copied out of the term instead of worked out",
+                            "de": "die Zahlen wurden aus dem Term übernommen statt bestimmt" } },
+                { "from": "x^2 + 7x + 12", "wrong": "(x+2)(x+5)", "right": "(x+3)(x+4)",
+                  "hint": { "en": "only the sum was checked — $2 + 5 = 7$, but $2 \\cdot 5 \\neq 12$",
+                            "de": "nur die Summe wurde geprüft — $2 + 5 = 7$, aber $2 \\cdot 5 \\neq 12$" } }
+              ] }
+          ]
+        }
+      ]
     }
   ]
 }
