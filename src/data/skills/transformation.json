@@ -52,7 +52,8 @@
           "illustration": "ab + ac = a(b + c)",
           "requires": [
             "classification.common-factor",
-            "transformation.expand-distribute"
+            "transformation.expand-distribute",
+            "chunking.chunks-in-product"
           ],
           "restsOn": [
             "ax.distributivity"
@@ -107,7 +108,8 @@
           "conditions": "b \\ne 0,\\ k \\ne 0",
           "requires": [
             "transformation.factor-common",
-            "equivalence.no-cancelling-in-a-sum"
+            "equivalence.no-cancelling-in-a-sum",
+            "chunking.chunks-in-product"
           ],
           "restsOn": [
             "th.cancel-common-factor"
