@@ -21,6 +21,15 @@ this doc and `/errors` share one taxonomy rather than drifting. The wrong→righ
 render through `src/components/WrongRight.vue`. Sections here map to section slugs as:
 A→`minus`, B→`reading`, C→`distributing`, D→`powers`, E→`fractions`, F→`terms`.
 
+⚠️ **The app has a 7th topic this doc does not: `factoring`** (added 2026-07-25). That is
+not an oversight here — it is a **gap in this evidence base**. The sources were all about
+*reading and judging* expressions, so they record no factoring errors at all, even though
+factoring is squarely in scope for expression fluency. The consequence showed up in the
+coverage audit: the error layer is thin exactly where Tier 3 is, because the evidence was
+collected for a different question. `anti.quadratic-pair-unchecked` was authored from
+teaching experience rather than from a source, and **its ★★ is teacher judgement, not a
+source count** — the only entry in the app for which that is true.
+
 ---
 
 ## A. Minus sign & subtraction

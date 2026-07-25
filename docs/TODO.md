@@ -202,20 +202,21 @@ Empirically grounded, and it only became available once errors carried frequency
      `-factor-quadratic` (`ax.distributivity` + `th.collect-like-terms`). Each requires its
      recognition shape, which is what closed the chain: `difference-of-squares`,
      `classification.difference` and `perfect-square-trinomial` all went green.
-   - [ ] ⚠️ **BLOCKED, and the audit now says so precisely**: `factor-quadratic` has an
-     empty `errors[]`, so it is not seeded — and `quadratic-form` + `linear-form` stay red
-     behind it. The error is real and undocumented in our catalog:
-     **$x^2 + 5x + 6 \to (x+5)(x+6)$** — the visible numbers used directly as the bracket
-     numbers, instead of the pair that multiplies to $6$ and adds to $5$ (plus its sign
-     variants, $x^2 - 5x + 6 \to (x-2)(x+3)$).
-     **The blocker is the TOPIC taxonomy, not the authoring.** The six topic sections come
-     from `common_mistakes.md`'s A–F families, and that catalog was assembled from web
-     sources about *expression reading* — it has **no factoring family at all**. So this
-     error has nowhere to live. Needs a decision: add a 7th topic (`factoring`, which would
-     also house future Tier-3 factoring errors), or stretch one of the six. A user call —
-     do not force it into `distributing`, which means "distributing where there is no rule".
-     **This is also a general finding: the error layer is thin exactly where Tier 3 is,
-     because the evidence base was collected for a different question.**
+   - [x] ~~**BLOCKED**: `factor-quadratic` had no error, so `quadratic-form` +
+     `linear-form` stayed red behind it.~~ **RESOLVED 2026-07-25** by a **7th topic
+     section, `factoring`** (placed last — it depends on everything above it) holding
+     **`anti.quadratic-pair-unchecked`** ★★: $x^2+5x+6$ ✗ $(x+5)(x+6)$ ✓ $(x+2)(x+3)$
+     (numbers copied out of the term) and $x^2+7x+12$ ✗ $(x+2)(x+5)$ ✓ $(x+3)(x+4)$ (only
+     the sum checked — $2+5=7$ but $2 \cdot 5 \ne 12$). Corrupts `ax.distributivity` +
+     `th.collect-like-terms`, because the two conditions are not a recipe: expanding
+     $(x+m)(x+n)$ *produces* $x^2+(m+n)x+mn$, so the middle coefficient IS a collected sum
+     and the constant IS a product. **Unreached 7 → 4.**
+     ⚠️ Two honest caveats, both recorded in `docs/common_mistakes.md` too: the new topic
+     has **no counterpart in the catalog**, and this error's **★★ is teacher judgement, not
+     a source count** — the only entry for which that is true. The catalog's sources were
+     about *reading and judging* expressions, so they record no factoring errors at all.
+     The general lesson stands: **the error layer is thin exactly where Tier 3 is, because
+     the evidence base was collected for a different question.**
 
    **Why an error cannot rescue these** (worth keeping — it is the general rule): failing
    to recognise a shape produces **no wrong answer**, only inaction. The student does not
@@ -224,7 +225,11 @@ Empirically grounded, and it only became available once errors carried frequency
    why the audit's downward `requires` closure is the right test for them, and why its
    failure here is a TRUE signal that Tier 3 is underbuilt rather than a wiring artifact.
    Same conclusion `docs/common_mistakes.md` reached: *"Tier 3: build, don't cut."*
-4. [ ] **Contrast skills — do NOT invent an error.** `addition-commutative`,
+4. [ ] **Contrast skills — do NOT invent an error. THE ONLY CATEGORY LEFT** (4 skills:
+   `bracket-types`, `divide-by-one`, `addition-commutative`,
+   `same-value-different-structure`). Categories 1–3 are done; the audit now reads
+   **1 undrilled error, 4/74 unreached skills**, and both numbers are the honest floor
+   rather than a backlog. `addition-commutative`,
    `divide-by-one`, `bracket-types`, `same-value-different-structure` exist to make the
    *wrong* twin visible; no student believes $a+b \ne b+a$, and authoring an error for it
    would be fabricating evidence. The mechanism to wire them already exists and was left
