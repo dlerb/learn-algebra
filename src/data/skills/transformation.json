@@ -43,7 +43,7 @@
     {
       "slug": "factoring",
       "title": "Factoring",
-      "blurb": "The reverse of expanding — pulling a shared factor back out front.",
+      "blurb": "The reverse of expanding — pulling a shared factor back out front, or recognising a whole shape and writing it as a product.",
       "skills": [
         {
           "id": "transformation.factor-common",
@@ -61,6 +61,55 @@
           "errors": [
             "anti.partial-distribution"
           ]
+        },
+        {
+          "id": "transformation.factor-difference-of-squares",
+          "name": "Factor a difference of squares",
+          "note": "Two squares with a minus between them factor into the two matching brackets: $a^2 - b^2 = (a+b)(a-b)$. It works because the mixed products cancel — expanding gives $a^2 - ab + ab - b^2$, and $-ab + ab$ is $0$ (th.difference-of-squares). Two things to hold on to: the SUM of squares does not factor this way at all, and the answer is not $(a-b)^2$ — squaring a difference leaves a middle term ($-2ab$), which the true factorisation has none of. Check by multiplying back.",
+          "illustration": "a^2 - b^2 = (a + b)(a - b)",
+          "requires": [
+            "classification.difference-of-squares",
+            "transformation.expand-distribute"
+          ],
+          "restsOn": [
+            "th.difference-of-squares"
+          ],
+          "errors": [
+            "anti.linearity"
+          ]
+        },
+        {
+          "id": "transformation.factor-perfect-square",
+          "name": "Factor a perfect square trinomial",
+          "note": "Three terms in the shape $a^2 + 2ab + b^2$ collapse into one square: $(a+b)^2$ (th.binomial-square, read right to left). The middle term is what identifies it — it must be exactly twice the product of the two roots, which is the term students drop when they expand and the term they must find when they factor. With a minus in the middle the same identity gives $(a-b)^2$ (th.square-of-difference). Check by expanding.",
+          "illustration": "a^2 + 2ab + b^2 = (a + b)^2",
+          "requires": [
+            "classification.perfect-square-trinomial",
+            "transformation.expand-binomial-square"
+          ],
+          "restsOn": [
+            "th.binomial-square",
+            "th.square-of-difference"
+          ],
+          "errors": [
+            "anti.linearity"
+          ]
+        },
+        {
+          "id": "transformation.factor-quadratic",
+          "name": "Factor a quadratic",
+          "note": "For $x^2 + px + q$, find two numbers that MULTIPLY to $q$ and ADD to $p$; they are the numbers in the brackets. $x^2 + 5x + 6 = (x+2)(x+3)$ because $2 \\cdot 3 = 6$ and $2 + 3 = 5$. The two conditions come straight from expanding: $(x+m)(x+n) = x^2 + (m+n)x + mn$ (ax.distributivity, then th.collect-like-terms), so the middle coefficient is a collected sum and the constant a product. Both conditions must hold — a pair that gives the right constant but the wrong middle term is not a factorisation. Not every quadratic factors over the rationals; check by multiplying back.",
+          "illustration": "x^2 + 5x + 6 = (x + 2)(x + 3)",
+          "requires": [
+            "classification.quadratic-form",
+            "transformation.expand-distribute",
+            "transformation.collect-like-terms"
+          ],
+          "restsOn": [
+            "ax.distributivity",
+            "th.collect-like-terms"
+          ],
+          "errors": []
         }
       ]
     },
