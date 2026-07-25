@@ -546,6 +546,9 @@
           "restsOn": [
             "def.pow-zero",
             "def.pow-neg"
+          ],
+          "errors": [
+            "anti.zero-exponent"
           ]
         },
         {
@@ -565,6 +568,9 @@
             "def.pow-neg",
             "ix.pow",
             "th.negative-base"
+          ],
+          "errors": [
+            "mis.negative-exponent-negates"
           ]
         },
         {
@@ -605,6 +611,10 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
+          ],
+          "errors": [
+            "mis.negative-exponent-negates",
+            "mis.root-scope"
           ]
         },
         {
