@@ -35,6 +35,26 @@ errors where nothing was transformed). All 25 errors now carry instances (was 17
 so they are joined by a literal `=` and the marks go muted. Same red ✗ for "false" and for
 "clumsy but correct" would teach ✗ = wrong and then contradict it. `LayerView` now uses it.
 
+**Layout, revised 2026-07-25 after looking at the rendered page.** Three fixes, all
+structural rather than cosmetic:
+- **One shared grid per entry.** `WrongRight` renders `display: contents` grid *cells*
+  into a `.wr-rows` parent (`grid-template-columns: auto auto minmax(0,1fr)`), so stem /
+  ✗ / ✓ are real COLUMNS across every instance on a card. Per-instance grids put the
+  marks at a different x for each stem width and the block read as scattered — the
+  invariant background is the whole point of the contrast.
+- **One row per instance; `hint` on its own row.** It used to trail the ✓ inline (and
+  without a space: `✓ −(b−a)reversing a subtraction…`). Where there is no `right` — a
+  dead end or a belief — the hint moves *up* into the ✓ column, so that column always
+  holds the correction whether formula or prose.
+- **Landscape rows, not a mosaic.** Three narrow bordered cards broke the math (which
+  does not reflow) and 25 boxes competed with each other. Now: name + note in a left
+  rail, the ✗/✓ table in the wide right column, entries separated by a hairline. Links
+  are their own grid cell so that on a phone (single column, DOM order) the pairs reach
+  the reader before the links. Meta-pattern links capped at 2 — the two-hop is generous
+  and the names are sentence-length, so uncapped they were the loudest thing on the page.
+- `relation="style"` glues the `=` to the form it introduces, so a wrap leaves it leading
+  the second line instead of dangling off the end of the first.
+
 **Mode.** `src/inspect.ts` — **presentation is the DEFAULT**; `inspect` is opt-in and its
 toggle only renders in dev or with `?inspect`, so a build shows students the page and
 nothing else. The author is in this app far more than any student, so defaulting to

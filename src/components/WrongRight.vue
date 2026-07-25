@@ -12,54 +12,69 @@ import RichText from './RichText.vue'
 // case the two forms are joined by an actual `=`, in the `false` case nothing
 // joins them, because nothing can.
 //
-// LAYOUT. When `from` is given the two candidates stack against that invariant
-// stem, so the eye lands on the one thing that varies:
-//     (a+b)²   ✗  a² + b²
-//              ✓  a² + 2ab + b²
-// Pair only what shares a stem. Juxtaposing a rule and an unrelated instance
-// claims a correspondence the data does not have — show those as a list instead.
+// LAYOUT CONTRACT (relation="false"). This renders GRID CELLS via `display:
+// contents`, not a self-contained block, and must live inside a `.wr-rows` grid:
+//
+//   .wr-rows { display: grid; grid-template-columns: auto auto minmax(0, 1fr); }
+//
+// The reason is alignment ACROSS instances. When one card carries three pairs with
+// stems of different widths ((a+b)², √(a+b), (3x+2)/3), a per-instance grid puts
+// the ✗ and ✓ at three different x positions and the block reads as scattered.
+// Sharing one grid makes the stem, the wrong form and the right form each a
+// COLUMN, so the eye can run down them — the invariant background that makes the
+// contrast legible in the first place. One row per instance; the prose `hint` gets
+// its own row underneath rather than trailing the ✓ inline.
+//
+// `style` has no siblings to align with, so it stays self-contained.
 const props = withDefaults(defineProps<{
   from?: string       // shared left-hand side (KaTeX); omit for a standalone claim
   wrong: string       // the false claim / clumsy form (KaTeX)
   right?: string      // the correction (KaTeX)
-  hint?: string       // prose correction — carries it when `right` cannot
+  hint?: string       // prose correction — carries it alone when `right` cannot
   relation?: 'false' | 'style'
 }>(), { relation: 'false' })
 
-const stemmed = () => Boolean(props.from)
+// The ✓ column always holds the correction, formula or prose: with no `right`
+// (a dead end — "no rule applies" — or a belief) the hint moves up into it.
+const hintInline = () => Boolean(props.hint && !props.right)
 </script>
 
 <template>
-  <div class="wr" :class="[relation, { stemmed: stemmed() }]">
-    <div v-if="from" class="stem"><MathExpr :latex="from" /></div>
+  <template v-if="relation === 'false'">
+    <div class="stem"><MathExpr v-if="from" :latex="from" /></div>
     <div class="cand bad"><span class="mark">✗</span><MathExpr :latex="wrong" /></div>
-    <div v-if="relation === 'style'" class="eq">=</div>
     <div class="cand good">
       <span class="mark">✓</span>
       <MathExpr v-if="right" :latex="right" />
-      <span v-if="hint" class="hint" :class="{ solo: !right }"><RichText :text="hint" /></span>
+      <span v-else-if="hintInline()" class="hint"><RichText :text="hint!" /></span>
     </div>
+    <div v-if="right && hint" class="hint-row"><RichText :text="hint" /></div>
+  </template>
+
+  <!-- Equal forms, one better written: joined by the `=` that says so. -->
+  <div v-else class="wr-style">
+    <span class="cand bad"><span class="mark">✗</span><MathExpr :latex="wrong" /></span>
+    <!-- `=` is glued to the form it introduces, so a wrap leaves it leading the
+         second line rather than dangling off the end of the first. -->
+    <span class="tail"><span class="eq">=</span><span class="cand good"><span class="mark">✓</span><MathExpr :latex="right!" /></span></span>
   </div>
 </template>
 
 <style scoped>
-/* `false`: a two-row grid, stem in the gutter spanning both rows. */
-.wr.false { display: grid; grid-template-columns: 1fr; row-gap: .2rem; align-items: baseline; margin: .5rem 0 0; }
-.wr.false.stemmed { grid-template-columns: auto 1fr; column-gap: 1rem; }
-.wr.false.stemmed .stem { grid-row: 1 / span 2; grid-column: 1; }
-.wr.false.stemmed .cand { grid-column: 2; }
+.stem { grid-column: 1; font-size: .95rem; line-height: 1.6; color: var(--text); white-space: nowrap; }
+.cand.bad { grid-column: 2; }
+.cand.good { grid-column: 3; }
+.cand { font-size: .95rem; line-height: 1.6; min-width: 0; overflow-x: auto; white-space: nowrap; }
+.hint-row { grid-column: 2 / -1; margin-top: -.1rem; font-size: .78rem; line-height: 1.5; color: var(--text-muted); font-style: italic; }
 
-/* `style`: one line, the two forms joined by the equals sign that makes the
-   claim honest — these ARE the same thing. */
-.wr.style { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .55rem; margin: .5rem 0 0; }
-.wr.style .mark { color: var(--text-faint); }
-.wr.style .eq { color: var(--text-faint); }
-
-.stem { font-size: .95rem; line-height: 1.5; color: var(--text); white-space: nowrap; }
-.cand { font-size: .95rem; line-height: 1.5; overflow-x: auto; }
-.mark { font-weight: 700; margin-right: .5rem; }
+.mark { font-weight: 600; font-size: .85em; margin-right: .45rem; }
 .bad .mark { color: var(--bad); }
 .good .mark { color: var(--good); }
-.hint { font-size: .82rem; color: var(--text-muted); }
-.hint.solo { font-style: italic; }
+.hint { font-size: .82rem; color: var(--text-muted); font-style: italic; white-space: normal; }
+
+.wr-style { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .55rem; margin: .5rem 0 0; }
+.wr-style .tail { display: inline-flex; align-items: baseline; gap: .55rem; min-width: 0; }
+.wr-style .cand { white-space: normal; }
+.wr-style .mark { color: var(--text-faint); }
+.wr-style .eq { color: var(--text-faint); }
 </style>
