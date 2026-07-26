@@ -13,8 +13,9 @@
 // has two readings and they differ in whether the prose stays readable:
 //   stacked — rail | maths | prose, three columns, intuition above note in the
 //             third. Fits the 900px measure the other row views already use.
-//   quad    — rail | maths | intuition | note, four real columns. Needs a wider
-//             page: at 900px each prose cell would be ~22 characters per line.
+//   quad    — rail | maths | intuition | note, four real columns, 88rem wide so
+//             each prose cell lands at 56 characters. Needs the width: at 900px a
+//             prose cell would be ~22 characters per line.
 // Switch at the top of the page and judge by looking.
 
 import { computed, ref } from 'vue'
@@ -138,7 +139,7 @@ const L = computed(() => lang.value === 'de'
       </p>
       <p class="controls">
         <button class="ctl" :class="{ on: variant === 'stacked' }" @click="variant = 'stacked'">stacked · 3 col · 900px</button>
-        <button class="ctl" :class="{ on: variant === 'quad' }" @click="variant = 'quad'">quad · 4 col · 1240px</button>
+        <button class="ctl" :class="{ on: variant === 'quad' }" @click="variant = 'quad'">quad · 4 col · 88rem</button>
         <button class="ctl" @click="lang = lang === 'de' ? 'en' : 'de'">lang: {{ lang }}</button>
       </p>
     </header>
@@ -202,8 +203,14 @@ const L = computed(() => lang.value === 'de'
 </template>
 
 <style scoped>
-.proto { margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); max-width: 900px; }
-.proto.quad { max-width: 1240px; }
+/* ONE MEASURE, and the page width is derived from it rather than picked.
+   A prose column is 28.5rem (~56 characters at the cell's .8rem), so the quad
+   page is rail 11 + maths 13 + 28.5 + 28.5 + three 1.6rem gaps + 2rem padding
+   ≈ 88rem. Sizing the column instead of the page is what makes the cap below
+   exact: a cell that spans two columns is capped to the SAME measure as one, so
+   no row ever sets its prose wider than its neighbours. */
+.proto { --measure: 28.5rem; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); max-width: 900px; }
+.proto.quad { max-width: 88rem; }
 .intro h2 { font-size: 1.15rem; font-weight: 700; margin: 0 0 .3rem; }
 .lead { margin: 0 0 .5rem; font-size: .8rem; line-height: 1.5; color: var(--text-muted); max-width: 62ch; }
 .controls { display: flex; gap: .4rem; margin: 0; flex-wrap: wrap; }
@@ -234,7 +241,7 @@ const L = computed(() => lang.value === 'de'
 /* FOUR COLUMNS: the two prose cells side by side. Needs the wider page; each cell
    lands near 46 characters, the floor of readable measure. */
 @media (min-width: 1100px) {
-  .quad .row { grid-template-columns: minmax(0, 11rem) minmax(0, 13rem) minmax(0, 1fr) minmax(0, 1fr); }
+  .quad .row { grid-template-columns: minmax(0, 11rem) minmax(0, 13rem) minmax(0, var(--measure)) minmax(0, var(--measure)); }
   .quad .strip { grid-area: 1 / 1 / 2 / -1; }
   .quad .rail  { grid-area: 2 / 1; }
   .quad .maths { grid-area: 2 / 2; }
@@ -312,9 +319,13 @@ const L = computed(() => lang.value === 'de'
 .quant { display: flex; flex-wrap: wrap; gap: .1rem .9rem; font-size: .74rem; color: var(--text-muted); margin-top: .15rem; }
 
 /* --- prose cells --------------------------------------------------------- */
-/* The measure is capped in characters, not left to the column: a cell that ever
-   gets a wide grid area must still break its lines where prose is readable. */
-.cell { min-width: 0; max-width: 68ch; font-size: .8rem; line-height: 1.6; }
+/* Capped at exactly one column's measure. This is what fixes the prose-only
+   cards: their note spans columns 2–4 to avoid leaving a hole where the maths
+   would be, and without the cap it ran the full span — much wider than every
+   other cell on the page. Note the cause was never the missing maths making a
+   column collapse; the columns are `1fr`, fixed proportions, so nothing shrinks
+   and no `\phantom` is needed. It was this span, uncapped. */
+.cell { min-width: 0; max-width: var(--measure); font-size: .8rem; line-height: 1.6; }
 .cell.intuition { color: var(--text); }
 .cell.note { color: var(--text-muted); }
 /* Stacked by the base grid below the breakpoints, so they need their own gap. */
