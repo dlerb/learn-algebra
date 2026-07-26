@@ -27,9 +27,6 @@ const routes: RouteRecordRaw[] = [
   } as RouteRecordRaw)),
   { path: '/tutorial', name: 'tutorial', component: () => import('./views/TutorialView.vue'), meta: { title: 'Tutorial' } },
   { path: '/drills', name: 'drills', component: () => import('./views/DrillsView.vue'), meta: { title: 'Drills' } },
-  // THROWAWAY: the row-layout prototype (2026-07-26). Not in the nav; delete
-  // this line and the view together once the layout question is settled.
-  { path: '/proto', name: 'proto', component: () => import('./views/ProtoView.vue'), meta: { title: 'Proto' } },
 ]
 
 export const router = createRouter({

@@ -4,35 +4,36 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — ONE ROW LAYOUT for all four content views (2026-07-26)
+## NEXT SESSION — dark mode, then the curated views (2026-07-26)
 
-**Decided:** rows everywhere, consistently. All of this content is for **look-up**, not
-front-to-back reading, and the card grid produces a restless ragged right edge — cards
-stacked vertically *and* horizontally, each drawing its own box. Rows are quieter.
-`/errors` and `/metapatterns` already are rows (rail · body, hairline separators); the tower
-and `/skills` are still `repeat(auto-fill, minmax(300px, 1fr))` grids. Unify on the row.
+**1. Dark mode.** The tokens are done and the block exists (`:root[data-theme="dark"]` in
+`src/styles/tokens.css`, an inverted elevation ladder on Radix gray dark). What is missing is
+the switch: `NConfigProvider` is already in `App.vue`, so this is a toggle that stamps
+`data-theme` on the root plus naive-ui's `darkTheme`, and then a pass over the views for
+anything still theme-blind. Most hardcoded hex is already gone; grep for `#` in the `<style>`
+blocks before starting.
+
+**2. The curated views** — `/errors`, `/metapatterns`, `/skills` — onto the same shell. They
+are the only three left; the whole fundament tower is already on it, since `LayerView` serves
+all four layers.
+- `/errors` and `/metapatterns` are already landscape rows (rail · body) but on the OLD
+  system: 900px page, 820px breakpoint, no panels, no elevation ladder, chip-bg highlights.
+- `/skills` is still a `repeat(auto-fill, minmax(300px, 1fr))` card grid — the last one.
+- Extract the shell rather than copying `LayerView` three times. The chrome is shared (panel,
+  strip with fold + id-as-source-link, rail with name, the prose cells, the full-width folds);
+  the BODIES genuinely differ — a latex statement, WrongRight pairs, pitfalls, a rule — so the
+  body wants to be a slot, not a prop soup.
+- Note the two breakpoints doing the same job today (820px in the curated views, 820px now in
+  LayerView too — these agree, but the 900px vs 91rem page widths do not).
 
 **It must be aesthetically pleasing.** This is the actual requirement, not a finishing touch:
 nobody reads these cards unless the design draws them in. Judge every step against that.
 
-**Mobile is a first-class target, and rows make it simpler, not harder.** Below 560px the
-card grids already collapse to one column — a phone is *already* seeing rows, so the
-multi-column grid is the exception, not the mobile view a fallback. Note also that the four
-views currently use **two different breakpoints for the same job**: 560px in
-`LayerView`/`TaxonomyView`, 820px in `ReferenceView`/`MetapatternsView`. One shell, one
-number.
-
-Order of work: (1) inventory what each layer actually has to display; (2) design one row
-anatomy that fits all of them; (3) build it as a shared shell with the body as a slot —
-the bodies genuinely differ (latex statement · WrongRight pairs · pitfalls · a rule) and
-forcing them into one component would be prop soup.
-
-Constraints to carry: keep `overflow-x: auto` on every display-math container
-(`.statement`, `.derivation`, `.forms`, WrongRight's `.cand`) — unwrappable KaTeX is what
-breaks maths pages on phones, and it is already handled; the identity rail must **stack**
-below the breakpoint, never shrink; and `.ops` (signature cards: a glyph over a type) is the
-one place a tile grid genuinely earns its keep — those are short, homogeneous and meant to be
-compared at a glance.
+Constraints to carry: keep `overflow-x: auto` plus vertical padding on every display-math
+container — `overflow-x: auto` makes the computed `overflow-y` auto too, so tall formulas get
+a surprise vertical scrollbar; the identity rail must **stack** below the breakpoint, never
+shrink; and every cell keeps its column even when empty, because a gap in the same place on
+every row reads as structure while a gap that moves reads as breakage.
 
 **The drill layer is a separate question** and stays frozen — see below.
 

@@ -94,6 +94,20 @@ prose editor existed briefly (2026-07-25 to 2026-07-26) and was removed as unnec
 `docs/app_design.md` → "Authoring tooling" for the architecture and the three content
 invariants it left behind, and `docs/TODO.md` for the commit to restore it from.
 
+## Look and feel
+
+The tower pages are **landscape rows**, not a card grid: the content is a linear argument and
+these pages are for look-up, so one row per card, four columns
+(`rail | maths | intuition | note`), one panel per section on a three-step elevation ladder
+(page → band → panel, pure neutrals, no white). Card content is set in **Latin Modern Roman**
+— the face LaTeX uses — because the inline `$…$` fragments are Computer Modern and prose in
+anything else changes typeface at every formula. Structure is the plain sans; mono is left for
+ids and codes. Dark-mode tokens exist but the switch is not wired up yet.
+
+`docs/app_design.md` → "The visual system" has the reasoning, the measurements behind the
+column widths, and the traps (a stray `overflow-x: auto` gives display maths a *vertical*
+scrollbar; card names at weight 560 silently render bold).
+
 ## Prose format
 
 Content text is plain text with inline `$…$` KaTeX — deliberately **not** markdown
