@@ -8,7 +8,7 @@ import WrongRight from '../components/WrongRight.vue'
 import OpenInSource from '../components/OpenInSource.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
-import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Group, type Section } from '../data/layers'
+import { layerById, cardsOf, cardIndex, CONCERN_TOKENS, type Card, type Group, type Section } from '../data/layers'
 
 // Inspection page for ONE layer of the tower, selected by the `layerId` route
 // prop (src/data/layers.ts is the manifest). One source file per layer
@@ -73,6 +73,26 @@ const L = computed(() => lang.value === 'de'
 // and one chip must then govern all of them.
 const kinds = computed(() => [...new Set(sections.value.map(s => s.kind))])
 const concernTokens = CONCERN_TOKENS
+
+// Counts on the chips, PER LAYER — the chip filters this page, so a tower-wide
+// number would be a different claim. They earn their place by making a filter's
+// selectivity visible instead of hidden: `mul 29` warns you it selects most of
+// fundamentals, `eq 8` promises it narrows hard. And a zero is real information
+// about the tower's shape — `eq 0` on three of four layers says equality is only
+// ever discussed on the ground floor — so zero chips are shown, and made inert
+// rather than removed.
+const cards = computed(() => cardsOf(layer.value))
+const kindCount = computed(() => {
+  const m: Record<string, number> = {}
+  for (const { kind } of cards.value) m[kind] = (m[kind] ?? 0) + 1
+  return m
+})
+const concernCount = computed(() => {
+  const m: Record<string, number> = Object.fromEntries(concernTokens.map(t => [t, 0]))
+  for (const { card } of cards.value) for (const t of card.concerns ?? []) m[t] = (m[t] ?? 0) + 1
+  return m
+})
+
 const kindActive = ref(new Set<string>(kinds.value))
 watch(kinds, k => (kindActive.value = new Set(k)))
 const concernActive = ref(new Set<string>(concernTokens))
@@ -102,11 +122,17 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
       <div class="filters">
         <div class="filter-row">
           <span class="filter-label">kind</span>
-          <button v-for="k in kinds" :key="k" class="fchip" :class="{ off: !kindActive.has(k) }" @click="toggleKind(k)">{{ k }}</button>
+          <button v-for="k in kinds" :key="k" class="fchip" :class="{ off: !kindActive.has(k) }" @click="toggleKind(k)">{{ k }}<span class="fcount">{{ kindCount[k] }}</span></button>
         </div>
         <div class="filter-row">
           <span class="filter-label">concerns</span>
-          <button v-for="c in concernTokens" :key="c" class="fchip concern" :class="{ off: !concernActive.has(c) }" @click="toggleConcern(c)">{{ c }}</button>
+          <button
+            v-for="c in concernTokens" :key="c"
+            class="fchip concern" :class="{ off: !concernActive.has(c) }"
+            :disabled="!concernCount[c]"
+            :title="concernCount[c] ? undefined : `no card in this layer concerns ${c}`"
+            @click="toggleConcern(c)"
+          >{{ c }}<span class="fcount">{{ concernCount[c] }}</span></button>
         </div>
       </div>
     </header>
@@ -213,7 +239,13 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .fchip { font-size: .72rem; padding: .16rem .55rem; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
 .fchip.concern { border-color: var(--border-strong); background: var(--text-muted); }
 .fchip.off { background: transparent; color: var(--text-muted); border-color: var(--border-strong); }
-.fchip:hover { filter: brightness(1.08); }
+.fchip:hover:not(:disabled) { filter: brightness(1.08); }
+/* The count rides inside the chip, a step quieter than the label: it informs the
+   choice, it is not the thing you are choosing. */
+.fcount { margin-left: .3rem; font-size: .64rem; opacity: .7; font-variant-numeric: tabular-nums; }
+/* A zero-count chip stays visible — that a layer touches no `order` is worth
+   knowing — but stops pretending to be a control. */
+.fchip:disabled { background: transparent; color: var(--text-faint); border-color: var(--border); cursor: default; }
 
 .group-title { display: flex; align-items: center; gap: .4rem; margin: 1.6rem 0 .7rem; }
 .group-title h3 { font-size: .95rem; font-weight: 700; color: var(--text); margin: 0; }
