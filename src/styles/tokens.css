@@ -34,9 +34,14 @@
      panel AND still lighter than the page, the page must sit below it — there is
      no room between #f0f0f0 and #ffffff for a third step that reads as either. So
      the page takes step 4. */
-  --bg: #e8e8e8;          /* page, lowest — gray-4 */
-  --band: #f0f0f0;        /* subdivision inside a panel — gray-3 */
-  --surface: #ffffff;     /* panel, highest */
+  /* NO PURE WHITE. A #ffffff panel against a grey page is a 23-value jump, and a
+     large field of it dominates the screen and reads as glare rather than as
+     calm. The ladder instead runs in even ~10-value steps and stops short of
+     white, which keeps all three planes distinguishable while lowering the
+     overall contrast of the page. */
+  --bg: #e6e6e6;          /* page, lowest */
+  --band: #f1f1f1;        /* subdivision inside a panel */
+  --surface: #fbfbfb;     /* panel, highest */
   --border: #e6e6e6;      /* hairline */
   --border-strong: #d9d9d9; /* gray-6 */
 
@@ -55,8 +60,22 @@
 
   /* Darker than the page, so a chip reads as a pill on BOTH planes: a gentle fill
      on a white panel, a definite one on the page in /errors and /metapatterns. */
-  --chip-bg: #e0e0e0;     /* gray-5 — a step below the page, so it reads on both planes */
-  --code-bg: #f0f0f0;
+  --chip-bg: #dcdcdc;     /* a step below the page, so it reads on both planes */
+  --code-bg: #f1f1f1;
+
+  /* THREE VOICES. Structure is mono (ids, kinds, section and group headings, the
+     layer title), UI chrome is the sans body font, and CARD CONTENT is a serif —
+     names and prose. The serif is not decoration: inline `$…$` fragments render in
+     KaTeX's Computer Modern, which IS a serif, so mathematical prose set in sans
+     changes typeface at every formula. In a serif the fragments blend into the
+     sentence instead of interrupting it.
+     Not KaTeX's own fonts, though the effect would be exact: KaTeX_Main has no
+     ä, ö or ü (measured), and half this content is German, so every umlaut would
+     silently substitute mid-word. A book-serif stack has full coverage and gets
+     close. For an exact Computer Modern match the answer is self-hosting Latin
+     Modern Roman, at the cost of a real font dependency. */
+  --font-content: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, 'Times New Roman', serif;
+
   --radius: 10px;
 }
 
@@ -70,9 +89,9 @@
  * separate, which is why these are further apart than their light counterparts.
  * Values are Radix `gray` dark. */
 :root[data-theme="dark"] {
-  --bg: #111111;          /* page, lowest — gray-1 */
-  --band: #191919;        /* subdivision inside a panel — gray-2 */
-  --surface: #222222;     /* panel, highest — gray-3 */
+  --bg: #131313;          /* page, lowest */
+  --band: #1d1d1d;        /* subdivision inside a panel */
+  --surface: #272727;     /* panel, highest */
   --border: #2a2a2a;      /* gray-4 */
   --border-strong: #3a3a3a; /* gray-6 */
 

@@ -516,9 +516,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 
 /* --- rail ---------------------------------------------------------------- */
 .rail { min-width: 0; }
-/* Lighter than it was (650 → 560): the name is the row's subject, but the section
+/* Serif, like the prose and like the formulas — see --font-content. Structure is
+   mono, chrome is sans, content is serif, and a card name is content.
+   Lighter than it was (650 → 560): the name is the row's subject, but the section
    heading above it is the page's structure, and the two were competing. */
-.name { margin: 0; font-size: 1rem; font-weight: 560; line-height: 1.32; color: var(--text); text-wrap: balance; }
+.name { margin: 0; font-family: var(--font-content); font-size: 1.04rem; font-weight: 560; line-height: 1.32; color: var(--text); text-wrap: balance; }
 /* `vertical-align: middle` is NOT the optical middle — it aligns to half the
    parent's x-height, while a title's visible centre is half its cap height, and
    KaTeX adds a strut below the glyph. Measured against the name's real font
@@ -554,7 +556,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 /* --- prose cells --------------------------------------------------------- */
 /* Capped at exactly one column's measure, so no row can ever set its prose wider
    than its neighbours. */
-.cell { min-width: 0; max-width: var(--measure); font-size: .8rem; line-height: 1.6; }
+/* Serif: the inline `$…$` in this prose is Computer Modern, so a sans setting
+   changed typeface at every formula. Serif text is also read at a slightly larger
+   size for the same apparent weight, hence .86 against the sans .8. */
+.cell { min-width: 0; max-width: var(--measure); font-family: var(--font-content); font-size: .86rem; line-height: 1.6; }
 .cell.intuition { color: var(--text); }
 .cell.note { color: var(--text-muted); }
 .cell + .cell { margin-top: .5rem; }
