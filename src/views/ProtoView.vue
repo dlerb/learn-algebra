@@ -170,7 +170,7 @@ const L = computed(() => lang.value === 'de'
           <h3 class="name">
             {{ r.name }}<span
               v-if="r.concerns.length" class="glyphs" :title="glyphTitle(r.concerns)"
-            ><span v-for="k in r.concerns" :key="k" class="glyph"><MathExpr :latex="glyphOf(k)" /></span></span>
+            ><MathExpr v-for="k in r.concerns" :key="k" :latex="glyphOf(k)" /></span>
           </h3>
         </div>
 
@@ -279,27 +279,24 @@ const L = computed(() => lang.value === 'de'
 /* --- rail ---------------------------------------------------------------- */
 .rail { min-width: 0; }
 .name { margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.3; text-wrap: balance; }
-/* Small chips ATTACHED to the title and raised against its cap height, like a
-   badge rather than a trailing word. Two earlier passes tried bare glyphs at
-   larger sizes and darker greys; the problem was never contrast, it was that an
-   unframed mark has no boundary, so a single dot could not read as a tag. A chip
-   gives it one, and then the glyph inside can go back to being small and quiet.
-   `align-items: baseline` on the row keeps the raise from shifting the name. */
+/* Bare glyphs trailing the name: no frame, small, and centred on the title's
+   middle rather than raised. The chip version framed each mark unambiguously but
+   drew too much attention for something the student is not meant to read — two
+   bordered boxes beside every name were louder than the name. `vertical-align:
+   middle` on the inline-flex sits the strip on the text's centre, which is what
+   keeps it from reading as a superscript. */
 .glyphs {
-  display: inline-flex; gap: .18rem; margin-left: .4rem;
-  vertical-align: text-top; transform: translateY(-.12em);
+  display: inline-flex; align-items: center; gap: .32rem;
+  margin-left: .45rem;
+  /* `vertical-align: middle` is not the optical middle. It aligns to half the
+     parent's X-HEIGHT above the baseline, while the visible centre of a title is
+     half its CAP height — and KaTeX adds its own strut below the glyph. Measured
+     against the name's real font metrics, that leaves the mark 2.2px low, which is
+     exactly the "sits too low" of the first attempt. The correction is in em so it
+     survives a font-size change. This is centring, not the badge-style raise. */
+  vertical-align: middle; transform: translateY(-.22em);
+  font-size: .62rem; color: var(--text-faint); font-weight: 400;
   white-space: nowrap; cursor: help;
-}
-.glyph {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 1.35em; height: 1.35em; padding: 0 .22em;
-  border-radius: 4px;
-  /* --chip-bg (#f3f4f6) alone against --surface (#ffffff) is a 3% step, which
-     did not read as a chip at all — the mark still had no boundary. The hairline
-     is what makes it one; the fill only keeps it from looking like an input. */
-  background: var(--chip-bg); border: 1px solid var(--border-strong);
-  color: var(--text-muted);
-  font-size: .68rem; font-weight: 400; line-height: 1;
 }
 
 /* --- maths --------------------------------------------------------------- */
