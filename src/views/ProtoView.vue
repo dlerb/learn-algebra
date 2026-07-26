@@ -145,14 +145,11 @@ const L = computed(() => lang.value === 'de'
     </header>
 
     <div class="rows">
-      <!-- Absent parts release their column rather than leaving a hole: only 34
-           of 101 cards carry an intuition and 13 carry no maths, so without this
-           two thirds of rows would strand the note in the last column with a gap
-           beside it. -->
-      <article
-        v-for="r in rows" :key="r.id" class="row"
-        :class="{ 'no-int': !r.intuition, 'no-note': !r.note, 'no-maths': !r.latex && !r.symbol }"
-      >
+      <!-- Every cell keeps its column, on every row, whatever is missing — see the
+           grid rules. The three modifier classes this used to carry ('no-int',
+           'no-note', 'no-maths') existed only to move cells into the gaps, and
+           every attempt at that was worse than the gap. -->
+      <article v-for="r in rows" :key="r.id" class="row">
         <!-- HEADER: kind first, the references folded away, and the id at the right
              doubling as the deep link into the source. -->
         <div class="strip">
@@ -256,9 +253,13 @@ const L = computed(() => lang.value === 'de'
      makes a reference list read as composed rather than assembled.
      So the intuition column stays, and is simply empty on the 67 cards that
      have no intuition. A gap in the same place on every row reads as structure;
-     a gap that moves reads as breakage. Only the prose-only cards (no maths AND
-     no intuition) span, and the max-width cap keeps them readable. */
-  .quad .row.no-maths.no-int .note { grid-column: 2 / -1; }
+     a gap that moves reads as breakage.
+     The prose-only cards (no maths AND no intuition) briefly spanned their note
+     across columns 2–4 so the row would not open with two empty cells. That was
+     the same mistake once more: it collapsed the maths column on those rows and
+     put their note at x=248 while every other note starts at 963. They keep
+     their columns too — two empty cells in the same place beats one row that
+     breaks the grid. */
 }
 
 /* --- header -------------------------------------------------------------- */
