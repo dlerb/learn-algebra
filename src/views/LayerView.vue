@@ -186,7 +186,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
     <header class="intro">
       <div class="title-row">
         <h2>{{ layer.title }}</h2>
-        <span class="tag field">≙ {{ t(meta.characterizes) }}</span>
+        <!-- NOT `class="tag field"` any more: `.field` is also the details block's
+             row class in this same scoped stylesheet, so the tag was silently
+             inheriting `display: grid; grid-template-columns: 92px 1fr` and sat at
+             a fixed 115px whatever it contained. That was the "chip too wide". -->
+        <span class="tag">≙ {{ t(meta.characterizes) }}</span>
       </div>
       <p class="lead"><RichText :text="t(meta.note)" /></p>
 
@@ -236,6 +240,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
             class="row" :class="{ dimmed: !matched(c, s.kind), targeted: c.id === targetId }"
           >
             <div class="strip">
+              <!-- `kind` is repeated on every row despite the section heading
+                   above stating it: on a long page you are usually mid-section
+                   with the heading scrolled away, and "axiom" or "theorem" is the
+                   first thing that orients you. -->
+              <span class="kind">{{ s.kind }}</span>
               <details v-if="c.basedOn?.length" class="fold">
                 <summary>{{ L.rests }} <span class="n">{{ c.basedOn.length }}</span></summary>
                 <span class="fold-body">
@@ -327,12 +336,39 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    `.cell` exact: a cell can never be wider than one column's measure. */
 .layer { --measure: 26rem; --maths: 19rem; max-width: 89rem; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
-.intro { margin-bottom: 1.4rem; }
-.title-row { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
-.intro h2 { font-size: 1.35rem; font-weight: 700; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-.tag { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; padding: .16rem .5rem; border-radius: 999px; }
-.tag.field { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
-.lead { font-size: .88rem; line-height: 1.55; color: var(--text-muted); margin: .5rem 0 0; max-width: 72ch; }
+/* The intro sits on the SAME grid as the rows, so the title lands in the rail
+   column and the blurb starts where every statement starts. Before, the lead was
+   a 72ch block floating at the page's left edge with no relation to anything
+   below it — which is what "does not have the width of the cards" was seeing. It
+   is alignment that was missing, not width: the measure stays readable, the left
+   edge now agrees with the maths column and the right with the prose. */
+.intro { margin-bottom: 1.6rem; }
+@media (min-width: 820px) {
+  .intro {
+    display: grid; gap: .2rem 1.6rem;
+    grid-template-columns: minmax(0, 11rem) minmax(0, var(--maths)) minmax(0, var(--measure)) minmax(0, var(--measure));
+  }
+  .title-row { grid-area: 1 / 1 / 2 / 2; }
+  .lead { grid-area: 1 / 2 / 2 / 4; margin: 0; }
+  .filters { grid-area: 2 / 2 / 3 / -1; }
+}
+/* Column, not row: the characterizes tag under the title rather than beside it.
+   Beside it, a long one ("expand · collect · cancel") pushed the line and, being a
+   999px pill, turned into a lozenge as soon as it wrapped. */
+.title-row { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; }
+.intro h2 { font-size: 1.25rem; font-weight: 700; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.2; }
+/* A small radius, not a pill. `border-radius: 999px` only reads as a pill on a
+   single line; on two it becomes a huge ellipse, which is what "Term
+   manipulations" did with three words in it. */
+/* Not uppercased. `≙ expand · collect · cancel` is a characterising PHRASE, not a
+   label, and capitalising it inflated three words into three lines inside the
+   11rem rail. Sentence case fits, and reads as something to be read. */
+.tag {
+  font-size: .68rem; letter-spacing: .01em; padding: .16rem .4rem;
+  border-radius: 4px; line-height: 1.4;
+  background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe;
+}
+.lead { font-size: .84rem; line-height: 1.6; color: var(--text-muted); margin: .5rem 0 0; }
 
 /* Filters */
 .filters { margin-top: 1rem; display: grid; gap: .4rem; }
@@ -349,11 +385,26 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    knowing — but stops pretending to be a control. */
 .fchip:disabled { background: transparent; color: var(--text-faint); border-color: var(--border); cursor: default; }
 
-.group-title { display: flex; align-items: center; gap: .4rem; margin: 1.8rem 0 .5rem; }
-.group-title h3 { font-size: .95rem; font-weight: 700; color: var(--text); margin: 0; }
+/* STRUCTURE IS MONO, CONTENT IS THE BODY FONT. Section and group headings named
+   the tree; card names name the mathematics; and at .95rem/700 against a card's
+   1rem/650 the two were near-indistinguishable, so a heading read as just another
+   card. Rather than push the weights further apart, they now differ in TYPEFACE —
+   the same distinction the layer title already made — which separates them at a
+   glance and lets the card name go lighter instead of louder. A rule under the
+   section heading does the rest of the work a size jump would have. */
+.group-title { display: flex; align-items: center; gap: .4rem; margin: 2rem 0 .5rem; padding-bottom: .3rem; border-bottom: 1px solid var(--border-strong); }
+.group-title h3 {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .82rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--text); margin: 0;
+}
 .section-note { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: -.1rem 0 .6rem; max-width: 74ch; }
-.subhead { display: flex; align-items: center; gap: .4rem; margin: 1.1rem 0 .35rem; }
-.subhead h4 { font-size: .8rem; font-weight: 600; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: .03em; }
+.subhead { display: flex; align-items: center; gap: .4rem; margin: 1.2rem 0 .35rem; }
+.subhead h4 {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .7rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-faint); margin: 0;
+}
 .info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
 .info:hover { color: var(--accent); border-color: var(--accent); }
 .pop { max-width: 280px; font-size: .8rem; line-height: 1.45; color: var(--text); }
@@ -389,12 +440,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .row.targeted { background: var(--chip-bg); box-shadow: 0 0 0 .5rem var(--chip-bg); border-radius: 2px; }
 
 /* --- header strip -------------------------------------------------------- */
-/* `kind` is deliberately absent: the section heading above already states it, and
-   repeating it on every row would be the loudest redundancy on the page. */
 .strip {
   display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .7rem;
   margin-bottom: .45rem; font-size: .62rem; line-height: 1.4;
 }
+.kind { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .03em; color: var(--text-muted); }
 /* A native fold: no component state, keyboard-operable for free. */
 .fold { font-size: .62rem; min-width: 0; }
 .fold summary { cursor: pointer; color: var(--text-faint); list-style: none; }
@@ -412,7 +462,9 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 
 /* --- rail ---------------------------------------------------------------- */
 .rail { min-width: 0; }
-.name { margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.3; color: var(--text); text-wrap: balance; }
+/* Lighter than it was (650 → 560): the name is the row's subject, but the section
+   heading above it is the page's structure, and the two were competing. */
+.name { margin: 0; font-size: 1rem; font-weight: 560; line-height: 1.32; color: var(--text); text-wrap: balance; }
 /* `vertical-align: middle` is NOT the optical middle — it aligns to half the
    parent's x-height, while a title's visible centre is half its cap height, and
    KaTeX adds a strut below the glyph. Measured against the name's real font
