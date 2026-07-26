@@ -341,6 +341,15 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    only needs one, which read as noise. A page header is a title, its tag, and the
    text under it; the rows below are a different thing and do not need the header
    to pretend otherwise. */
+/* ONE LEFT EDGE for everything on the page. The panels carry 1rem of inner
+   padding, so row content starts 1rem inside the panel border; giving the header
+   and the section headings the same padding puts every piece of text on the page —
+   title, blurb, headings, card names — on a single vertical line. That, plus the
+   removed max-width below, is what "not the width of the cards" was asking for. */
+/* `calc(1rem + 1px)`, not `1rem`: the panel's own 1px border sits inside its box,
+   so row content starts a pixel further right than page content would. Without the
+   pixel every heading on the page is off by one against every card name. */
+.intro, .group-title, .section-note, .subhead { padding-left: calc(1rem + 1px); padding-right: calc(1rem + 1px); }
 .intro { margin-bottom: 1.5rem; }
 .title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem .7rem; }
 .intro h2 { font-size: 1.25rem; font-weight: 700; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.2; }
@@ -355,7 +364,12 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
   border-radius: 4px; line-height: 1.4;
   background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe;
 }
-.lead { font-size: .84rem; line-height: 1.6; color: var(--text-muted); margin: .55rem 0 0; max-width: 78ch; }
+/* No max-width: the blurb runs the panel width, as asked. Note the consequence —
+   at 91rem that is ~205 characters per line, well past the 45–75 that keeps the
+   eye on the line. If it reads badly, the fix that keeps the full width is to flow
+   it into columns (`column-width: 26rem`), which fills the measure with two or
+   three readable columns instead of one long one. */
+.lead { font-size: .84rem; line-height: 1.6; color: var(--text-muted); margin: .55rem 0 0; }
 
 /* Filters */
 .filters { margin-top: 1rem; display: grid; gap: .4rem; }
@@ -388,7 +402,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
   font-size: .82rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
   color: var(--text); margin: 0;
 }
-.section-note { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: -.1rem 0 .6rem; max-width: 74ch; }
+.section-note { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: -.1rem 0 .6rem; }
 .subhead { display: flex; align-items: center; gap: .4rem; margin: 1.2rem 0 .35rem; }
 .subhead h4 {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
