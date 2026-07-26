@@ -334,28 +334,15 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    is inside the readable band, and the page stays at 89rem.
    Sizing the COLUMNS and letting the page fall out is what makes the cap on
    `.cell` exact: a cell can never be wider than one column's measure. */
-.layer { --measure: 26rem; --maths: 19rem; max-width: 89rem; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
+.layer { --measure: 26rem; --maths: 19rem; max-width: 91rem; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
-/* The intro sits on the SAME grid as the rows, so the title lands in the rail
-   column and the blurb starts where every statement starts. Before, the lead was
-   a 72ch block floating at the page's left edge with no relation to anything
-   below it — which is what "does not have the width of the cards" was seeing. It
-   is alignment that was missing, not width: the measure stays readable, the left
-   edge now agrees with the maths column and the right with the prose. */
-.intro { margin-bottom: 1.6rem; }
-@media (min-width: 820px) {
-  .intro {
-    display: grid; gap: .2rem 1.6rem;
-    grid-template-columns: minmax(0, 11rem) minmax(0, var(--maths)) minmax(0, var(--measure)) minmax(0, var(--measure));
-  }
-  .title-row { grid-area: 1 / 1 / 2 / 2; }
-  .lead { grid-area: 1 / 2 / 2 / 4; margin: 0; }
-  .filters { grid-area: 2 / 2 / 3 / -1; }
-}
-/* Column, not row: the characterizes tag under the title rather than beside it.
-   Beside it, a long one ("expand · collect · cancel") pushed the line and, being a
-   999px pill, turned into a lozenge as soon as it wrapped. */
-.title-row { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; }
+/* A PAGE HEADER, not a row. Putting the intro on the row grid made the layer title
+   into a narrow rail and the blurb into a column — a second layout on a page that
+   only needs one, which read as noise. A page header is a title, its tag, and the
+   text under it; the rows below are a different thing and do not need the header
+   to pretend otherwise. */
+.intro { margin-bottom: 1.5rem; }
+.title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem .7rem; }
 .intro h2 { font-size: 1.25rem; font-weight: 700; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.2; }
 /* A small radius, not a pill. `border-radius: 999px` only reads as a pill on a
    single line; on two it becomes a huge ellipse, which is what "Term
@@ -368,7 +355,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
   border-radius: 4px; line-height: 1.4;
   background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe;
 }
-.lead { font-size: .84rem; line-height: 1.6; color: var(--text-muted); margin: .5rem 0 0; }
+.lead { font-size: .84rem; line-height: 1.6; color: var(--text-muted); margin: .55rem 0 0; max-width: 78ch; }
 
 /* Filters */
 .filters { margin-top: 1rem; display: grid; gap: .4rem; }
@@ -392,7 +379,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    the same distinction the layer title already made — which separates them at a
    glance and lets the card name go lighter instead of louder. A rule under the
    section heading does the rest of the work a size jump would have. */
-.group-title { display: flex; align-items: center; gap: .4rem; margin: 2rem 0 .5rem; padding-bottom: .3rem; border-bottom: 1px solid var(--border-strong); }
+/* No rule under the heading: the panel's own top edge sits a few pixels below it,
+   so a border here made two horizontal lines in a row — exactly the noise the
+   card grid's 404 borders were removed to avoid. */
+.group-title { display: flex; align-items: center; gap: .4rem; margin: 1.9rem 0 .5rem; }
 .group-title h3 {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: .82rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
@@ -409,15 +399,29 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .info:hover { color: var(--accent); border-color: var(--accent); }
 .pop { max-width: 280px; font-size: .8rem; line-height: 1.45; color: var(--text); }
 
-/* --- the row ------------------------------------------------------------- */
-/* One hairline per row, no boxes: 101 bordered cards were 404 borders competing
-   for attention, one rule per row is a rhythm. Mobile is the base case —
-   everything stacks in DOM order, which is already the student's reading order. */
+/* --- the panel and the row ------------------------------------------------ */
+/* ONE SURFACE PER GROUP, not per card. The page is --bg (#fafafa) and the panel is
+   --surface (#ffffff) — a distinction the tokens were written for, where --surface
+   is commented "card". Structure (the section and group headings) sits on the page
+   OUTSIDE the panel; content sits on the raised surface INSIDE it, divided by
+   hairlines.
+   This is what settles the heading-versus-card-name competition, and it settles it
+   without typography: the two are on different planes, so neither has to shout.
+   It is also not a return to cards — 101 bordered boxes become about ten panels,
+   and contiguous rows read as one continuous table rather than as a mosaic. */
+.rows {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 0 1rem;
+}
+/* One hairline per row, no boxes. Mobile is the base case — everything stacks in
+   DOM order, which is already the student's reading order. */
 .row {
   display: grid; grid-template-columns: 1fr; gap: .1rem 1.6rem;
   padding: 1.05rem 0 1.15rem; border-top: 1px solid var(--border);
   scroll-margin-top: 4.5rem;
 }
+/* The panel's own edge is the first row's divider. */
+.row:first-child { border-top: none; }
 @media (min-width: 820px) {
   .row {
     grid-template-columns: minmax(0, 11rem) minmax(0, var(--maths)) minmax(0, var(--measure)) minmax(0, var(--measure));
