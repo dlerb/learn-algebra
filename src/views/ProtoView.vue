@@ -309,12 +309,22 @@ const L = computed(() => lang.value === 'de'
 
 /* --- maths --------------------------------------------------------------- */
 .maths { min-width: 0; }
-.sig { display: flex; align-items: baseline; gap: .7rem; }
+/* Same vertical room as `.stmt`: a signature's glyph is display-size maths too,
+   and the two should sit at the same height when you scan down the column. */
+.sig { display: flex; align-items: baseline; gap: .7rem; padding: .4rem 0; }
 .sig-sym { font-size: 1.4rem; }
 .sig-type { font-size: .82rem; color: var(--text-muted); }
 /* KaTeX centres display mode, which would float each formula in its cell and
-   break the vertical lines the columns make. Force left. */
-.stmt { overflow-x: auto; }
+   break the vertical lines the columns make. Force left.
+   The padding is not decoration. `overflow-x: auto` makes the computed
+   `overflow-y` AUTO as well (the spec turns `visible` into `auto` when paired
+   with a non-visible value), so any formula whose ink exceeds its line box gets a
+   VERTICAL scrollbar. Zeroing katex-display's margin below is what exposed it:
+   th.root-of-quotient, a radical over a fraction, ran 46px of content in a 41px
+   box. Vertical padding absorbs that — scrollHeight counts the padding box, so
+   content that overflows by 5px sits inside 6px of padding — and it gives tall
+   formulas room at the top as well, where a radical or an exponent reaches. */
+.stmt { overflow-x: auto; padding: .4rem 0; }
 .stmt :deep(.katex-display) { margin: 0; text-align: left; }
 .stmt :deep(.katex-display > .katex) { text-align: left; }
 .quant { display: flex; flex-wrap: wrap; gap: .1rem .9rem; font-size: .74rem; color: var(--text-muted); margin-top: .15rem; }
