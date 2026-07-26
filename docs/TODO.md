@@ -30,8 +30,30 @@ all four layers.
 - Note the two breakpoints doing the same job today (820px in the curated views, 820px now in
   LayerView too — these agree, but the 900px vs 91rem page widths do not).
 
+**DECIDED 2026-07-26: the gate is DEV vs PRODUCTION, not `inspect`.** The `source` deep link
+must be stripped from a build anyway (its endpoint does not exist there), and production needs
+no `json` either. So the author plumbing — `source`, `json`, coverage warnings — keys off
+`import.meta.env.DEV`, and `src/inspect.ts`'s presentation/inspection switch is a separate
+question that may not survive. Settle this while extracting the shell; today the tower shows
+`json` to everyone while `/errors` and `/metapatterns` hide theirs behind `inspect`.
+
 **It must be aesthetically pleasing.** This is the actual requirement, not a finishing touch:
 nobody reads these cards unless the design draws them in. Judge every step against that.
+
+**TASTE CALIBRATION — do not re-run these experiments.** Each was tried on the tower and
+rejected by the author, and the reasons generalise:
+- **Pills/chips for reference links are too loud.** They became the second-loudest thing on a
+  row after the name. Plain middot-separated text at the strip's own size instead.
+- **Small caps on headings** read as shouting; size and weight carry the levels.
+- **Whitespace alone as a group separator** reads as an accident — "wait, what changed here?".
+  A tinted band works; a rule does not, because hairlines already mean "next row".
+- **Bordered chips around the concern glyphs** drew more attention than the name they qualify.
+  Bare glyphs, optically centred (`vertical-align: middle` is NOT the optical middle — it aligns
+  to half the x-height while a title's centre is half its CAP height; correct by ~.22em).
+- **Anything grey inside a panel** risks reading as a hole punched through to the page. Check
+  it against `--band`, which exists for exactly this.
+- The author reads a lot of LaTeX and will notice a serif that is not Computer Modern.
+  `--font-content` is Latin Modern; do not substitute a system stack.
 
 Constraints to carry: keep `overflow-x: auto` plus vertical padding on every display-math
 container — `overflow-x: auto` makes the computed `overflow-y` auto too, so tall formulas get
