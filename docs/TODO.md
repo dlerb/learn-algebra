@@ -4,14 +4,18 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — dark mode, then the curated views (2026-07-26)
+## NEXT SESSION — the curated views onto the row shell (2026-07-26)
 
-**1. Dark mode.** The tokens are done and the block exists (`:root[data-theme="dark"]` in
-`src/styles/tokens.css`, an inverted elevation ladder on Radix gray dark). What is missing is
-the switch: `NConfigProvider` is already in `App.vue`, so this is a toggle that stamps
-`data-theme` on the root plus naive-ui's `darkTheme`, and then a pass over the views for
-anything still theme-blind. Most hardcoded hex is already gone; grep for `#` in the `<style>`
-blocks before starting.
+**1. ~~Dark mode~~ — DONE 2026-07-26.** `src/theme.ts` owns the switch (stamps
+`data-theme`, defaults to `prefers-color-scheme`, stored choice wins); App.vue hands naive-ui
+its `darkTheme` separately — those are two halves and missing either gives a dark shell over
+light pages. Nothing outside `tokens.css` hardcodes a hex any more. Audited for WCAG contrast
+on 8 routes in both themes.
+
+⚠️ **Left open**: light mode has 5 distinct nodes at 2.66:1 — `filter-label`, `ref-label`,
+the `freq` stars, filter-chip counts — all ~10px labels using `--text-faint` against the PAGE
+plane, where the darker background costs contrast that the panel plane does not. Either move
+them to `--text-muted` or accept them as decorative; it predates dark mode.
 
 **2. The curated views** — `/errors`, `/metapatterns`, `/skills` — onto the same shell. They
 are the only three left; the whole fundament tower is already on it, since `LayerView` serves

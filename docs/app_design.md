@@ -173,8 +173,24 @@ exceeds its line box gets a surprise VERTICAL scrollbar — `th.root-of-quotient
 content in a 41px box. Every display-math container needs vertical padding, not just
 `overflow-x`.
 
-Dark mode is prepared in `tokens.css` (same ladder inverted, wider steps because dark
-surfaces need more separation) but not surfaced; see docs/TODO.md.
+### Dark mode
+
+Live. `src/theme.ts` stamps `data-theme` on the root, which selects the second token block in
+`tokens.css` — the same elevation ladder inverted in value but not meaning, with wider steps
+because dark surfaces need more separation to read apart. It defaults to
+`prefers-color-scheme` and follows the system until the user chooses in Settings, after which
+the stored choice wins.
+
+⚠️ **It is TWO halves.** The token block covers everything the views draw; naive-ui's own
+components (header, menu, popover, radio) style themselves and cannot see our variables, so
+`App.vue` hands them `darkTheme` separately. Miss either half and you get a dark shell over
+light pages, or the reverse — including in any automated check that sets the attribute
+without updating the ref.
+
+Two tokens exist purely for inverted states, and both were literal `#fff` before: `--on-accent`
+(text on an accent fill — dark in dark mode, because the accent lifts to a pale indigo), and
+the "on" toggles, which use `--surface` since that is the opposite end of the ramp in both
+themes.
 
 ---
 
