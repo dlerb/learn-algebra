@@ -5,9 +5,9 @@
 // name, the maths, the intuition, and to be able to skim the note. Kind,
 // `restsOn` and `concerns` are the teacher's interest, so they are present but
 // demoted — kind opens the header quietly, references fold away, and concerns
-// moves to the rail phrased as language ("for mul, add") rather than as a row of
-// jargon pills. The id doubles as the deep link into the source, so there is one
-// affordance where there were two.
+// trails the name in the rail as the OPERATOR GLYPHS themselves rather than as
+// tokens to decode. The id doubles as the deep link into the source, so there is
+// one affordance where there were two.
 //
 // TWO VARIANTS of one instruction, because "two cells to the right of the maths"
 // has two readings and they differ in whether the prose stays readable:
@@ -21,7 +21,7 @@ import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import OpenInSource from '../components/OpenInSource.vue'
-import { cardIndex } from '../data/layers'
+import { cardIndex, CONCERN_TOKENS } from '../data/layers'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
 
@@ -40,7 +40,30 @@ const SAMPLE = [
   'ax.zero-not-one',
 ]
 
-const variant = ref<'stacked' | 'quad'>('stacked')
+const variant = ref<'stacked' | 'quad'>('quad')
+
+// CONCERNS AS GLYPHS, following the name. The glyph for a concern is the SYMBOL
+// OF THE CARD WHERE THAT CONCERN ENTERS THE TOWER — the same entry points
+// sweep-layers' audit derives — so the tag is not a new vocabulary to learn: it
+// is the operator the card is about, written the way the tower writes it.
+//
+// `completeness` is the one that has no symbol, because it is an axiom rather
+// than an operation, so nothing carries a glyph for it. It does have exactly one
+// notation in the tower: ax.completeness states itself as `\sup S \in \mathbb{R}`
+// (the only other use is th.root-exists' derivation). So `\sup` is not invented
+// here — it is the form the student has already met on the card itself.
+const CONCERN_ENTRY: Record<string, string> = {
+  add: 'op.add', mul: 'op.mul', eq: 'op.eq', order: 'op.lt', completeness: 'ax.completeness',
+}
+const CONCERN_GLYPH: Record<string, string> = { completeness: '\\sup' }
+const glyphOf = (token: string) =>
+  CONCERN_GLYPH[token] ?? cardIndex.get(CONCERN_ENTRY[token])?.card.symbol ?? token
+const glyphTitle = (tokens: string[]) => tokens
+  .map(k => {
+    const e = cardIndex.get(CONCERN_ENTRY[k])
+    return e ? t(e.card.name) : k
+  })
+  .join(' · ')
 
 // Both prose cells truncate now. Every one of the 34 intuitions exceeds 180
 // characters (median 393, about seven lines), so leaving intuition whole was the
@@ -72,7 +95,10 @@ const rows = computed(() => SAMPLE.map(id => {
   const nc = truncateProse(note, CUT)
   return {
     id, kind: e.kind,
-    concerns: c.concerns ?? [],
+    // Ordered by the token vocabulary, NOT as authored: a fixed sequence means
+    // the glyphs sit in the same order on every row and can be compared down the
+    // page, which is the only way a two-glyph tag is scannable at all.
+    concerns: CONCERN_TOKENS.filter(k => (c.concerns ?? []).includes(k)),
     name: t(c.name),
     symbol: c.symbol, type: c.type,
     latex: c.latex, forall: c.forall, cond: c.cond,
@@ -87,8 +113,8 @@ const open = ref(new Set<string>())
 const toggle = (k: string) => (open.value.has(k) ? open.value.delete(k) : open.value.add(k))
 
 const L = computed(() => lang.value === 'de'
-  ? { forall: 'für alle', cond: 'sofern', more: 'mehr', less: 'weniger', for: 'für', rests: 'stützt sich auf' }
-  : { forall: 'for all', cond: 'provided', more: 'more', less: 'less', for: 'for', rests: 'rests on' })
+  ? { forall: 'für alle', cond: 'sofern', more: 'mehr', less: 'weniger', rests: 'stützt sich auf' }
+  : { forall: 'for all', cond: 'provided', more: 'more', less: 'less', rests: 'rests on' })
 </script>
 
 <template>
@@ -130,8 +156,11 @@ const L = computed(() => lang.value === 'de'
 
         <!-- RAIL: the name with the weight, and what the card is about, in words. -->
         <div class="rail">
-          <h3 class="name">{{ r.name }}</h3>
-          <p v-if="r.concerns.length" class="for">{{ L.for }} {{ r.concerns.join(', ') }}</p>
+          <h3 class="name">
+            {{ r.name }}<span
+              v-if="r.concerns.length" class="glyphs" :title="glyphTitle(r.concerns)"
+            ><MathExpr v-for="k in r.concerns" :key="k" :latex="glyphOf(k)" /></span>
+          </h3>
         </div>
 
         <div class="maths">
@@ -239,9 +268,14 @@ const L = computed(() => lang.value === 'de'
 /* --- rail ---------------------------------------------------------------- */
 .rail { min-width: 0; }
 .name { margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.3; text-wrap: balance; }
-/* Concerns as language, not pills: "for mul, add" reads as a fragment about the
-   card instead of a row of tags to decode. */
-.for { margin: .2rem 0 0; font-size: .72rem; color: var(--text-faint); font-style: italic; }
+/* The glyphs trail the name, subordinate to it but not whispering. The first pass
+   set them at .78rem in --text-faint and a lone `\cdot` — the commonest concern,
+   72 of 95 cards — was indistinguishable from a stray period. So: near the name's
+   own size, --text-muted, and enough letter-spacing that two glyphs read as two
+   symbols rather than as punctuation. Hovering names them. */
+.glyphs { margin-left: .55rem; white-space: nowrap; font-size: .95rem; color: var(--text-muted); font-weight: 400; cursor: help; }
+.glyphs :deep(.katex) { margin-right: .45rem; }
+.glyphs :deep(.katex:last-child) { margin-right: 0; }
 
 /* --- maths --------------------------------------------------------------- */
 .maths { min-width: 0; }
