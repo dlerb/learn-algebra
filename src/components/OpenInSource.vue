@@ -16,7 +16,10 @@ import { ref } from 'vue'
 
 const DEV = import.meta.env.DEV
 
-const props = defineProps<{ id: string }>()
+// `label` lets the trigger BE the thing it points at rather than a button beside
+// it — the row layout makes the card's id itself the source link, which is one
+// affordance instead of two and puts it where the eye already looks for the id.
+const props = withDefaults(defineProps<{ id: string; label?: string }>(), { label: 'source' })
 
 // null = idle. A string is the last outcome, shown next to the button: either a
 // failure reason or, when the editor could not be launched, the `file:line` the
@@ -54,7 +57,7 @@ async function open() {
       :disabled="busy"
       :title="`Open ${id} in the editor`"
       @click="open"
-    >source</button>
+    >{{ label }}</button>
     <code v-if="status" class="open-src-status" :title="status">{{ status }}</code>
   </span>
 </template>

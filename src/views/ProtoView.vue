@@ -1,18 +1,26 @@
 <script setup lang="ts">
-// THROWAWAY LAYOUT PROTOTYPE — /proto, 2026-07-26. Delete or promote; do not
-// build on it.
+// THROWAWAY LAYOUT PROTOTYPE — /proto. Delete or promote; do not build on it.
 //
-// One row anatomy, tried on the cards that stress it hardest rather than on the
-// tidy ones: a faint header strip for the unimportant and the outbound links,
-// the NAME in a left rail carrying the weight, then in the body the maths, then
-// the intuition, then the note truncated with an expander.
+// Revision 2 (2026-07-26), rebuilt from the STUDENT's priorities: they want the
+// name, the maths, the intuition, and to be able to skim the note. Kind,
+// `restsOn` and `concerns` are the teacher's interest, so they are present but
+// demoted — kind opens the header quietly, references fold away, and concerns
+// moves to the rail phrased as language ("for mul, add") rather than as a row of
+// jargon pills. The id doubles as the deep link into the source, so there is one
+// affordance where there were two.
 //
-// Real data, real KaTeX, real tokens — the point is to judge it, and a mockup
-// with lorem ipsum and fake formulas would answer a different question.
+// TWO VARIANTS of one instruction, because "two cells to the right of the maths"
+// has two readings and they differ in whether the prose stays readable:
+//   stacked — rail | maths | prose, three columns, intuition above note in the
+//             third. Fits the 900px measure the other row views already use.
+//   quad    — rail | maths | intuition | note, four real columns. Needs a wider
+//             page: at 900px each prose cell would be ~22 characters per line.
+// Switch at the top of the page and judge by looking.
 
 import { computed, ref } from 'vue'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
+import OpenInSource from '../components/OpenInSource.vue'
 import { cardIndex } from '../data/layers'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
@@ -20,23 +28,28 @@ import { lang } from '../lang'
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 // Chosen to break the layout if it is going to break: the longest note in the
-// tower, a card with intuition AND a long derivation, a signature card whose
-// formal object is a glyph rather than a statement, a prose-only preliminary
-// with no maths at all, and a short one that should not look empty.
+// tower, a theorem with a derivation and four references, a signature card whose
+// formal object is a glyph, a prose-only preliminary with no maths at all, and a
+// short one that should not look empty.
 const SAMPLE = [
-  'ax.distributivity',   // latex + forall + intuition + long note + basedOn
-  'th.inverse-of-product', // theorem: derivation, derivedFrom, 900-char note
-  'op.add',              // signature: symbol + type, no statement
-  'pre.compound',        // no latex at all — the note IS the card
-  'ax.zero-not-one',     // short, minimal
+  'ax.distributivity',
+  'th.inverse-of-product',
+  'th.root-of-quotient',
+  'op.add',
+  'pre.compound',
+  'ax.zero-not-one',
 ]
 
-const NOTE_CUT = 180
+const variant = ref<'stacked' | 'quad'>('stacked')
+
+// Both prose cells truncate now. Every one of the 34 intuitions exceeds 180
+// characters (median 393, about seven lines), so leaving intuition whole was the
+// main thing making row heights ragged.
+const CUT = 240
 
 /** Truncate on a word boundary WITHOUT splitting an inline `$…$` span — cutting
- *  inside one would hand KaTeX an unterminated expression and render an error box
- *  in the middle of the page. Walks the string, tracks whether it is inside math,
- *  and only ever cuts outside. */
+ *  inside one hands KaTeX an unterminated expression and prints an error box
+ *  mid-page. Tracks whether it is inside math and only ever cuts outside. */
 function truncateProse(s: string, max: number): { head: string; clipped: boolean } {
   if (s.length <= max) return { head: s, clipped: false }
   let inMath = false
@@ -53,81 +66,95 @@ function truncateProse(s: string, max: number): { head: string; clipped: boolean
 const rows = computed(() => SAMPLE.map(id => {
   const e = cardIndex.get(id)!
   const c = e.card
+  const intuition = c.intuition ? t(c.intuition) : ''
   const note = c.note ? t(c.note) : ''
-  const cut = truncateProse(note, NOTE_CUT)
+  const ic = truncateProse(intuition, CUT)
+  const nc = truncateProse(note, CUT)
   return {
-    id,
-    kind: e.kind,
+    id, kind: e.kind,
     concerns: c.concerns ?? [],
     name: t(c.name),
     symbol: c.symbol, type: c.type,
     latex: c.latex, forall: c.forall, cond: c.cond,
-    intuition: c.intuition ? t(c.intuition) : '',
-    note, noteHead: cut.head, clipped: cut.clipped,
+    intuition, intHead: ic.head, intClipped: ic.clipped,
+    note, noteHead: nc.head, noteClipped: nc.clipped,
     refs: [...(c.basedOn ?? []), ...(c.derivedFrom ?? [])]
       .map(r => ({ id: r, name: cardIndex.get(r) ? t(cardIndex.get(r)!.card.name) : r })),
-    derivation: c.derivation,
   }
 }))
 
-const openNote = ref(new Set<string>())
-const toggleNote = (id: string) => (openNote.value.has(id) ? openNote.value.delete(id) : openNote.value.add(id))
+const open = ref(new Set<string>())
+const toggle = (k: string) => (open.value.has(k) ? open.value.delete(k) : open.value.add(k))
 
 const L = computed(() => lang.value === 'de'
-  ? { forall: 'für alle', cond: 'sofern', more: 'weiterlesen', less: 'weniger', rests: 'stützt sich auf' }
-  : { forall: 'for all', cond: 'provided', more: 'read on', less: 'less', rests: 'rests on' })
+  ? { forall: 'für alle', cond: 'sofern', more: 'mehr', less: 'weniger', for: 'für', rests: 'stützt sich auf' }
+  : { forall: 'for all', cond: 'provided', more: 'more', less: 'less', for: 'for', rests: 'rests on' })
 </script>
 
 <template>
-  <div class="proto">
+  <div class="proto" :class="variant">
     <header class="intro">
-      <h2>Row layout prototype</h2>
+      <h2>Row layout prototype — rev 2</h2>
       <p class="lead">
-        Five cards chosen to stress the anatomy: the longest note in the tower, a theorem with
-        a derivation, a signature glyph, a prose-only preliminary, and a minimal one.
-        Language switch in the header applies. <code>/proto</code> — throwaway.
+        Student-first: name, maths, intuition, skimmable note. Kind opens the header, references
+        fold, concerns sits in the rail as language, the id is the source link.
       </p>
-      <p class="lead"><button class="langbtn" @click="lang = lang === 'de' ? 'en' : 'de'">lang: {{ lang }}</button></p>
+      <p class="controls">
+        <button class="ctl" :class="{ on: variant === 'stacked' }" @click="variant = 'stacked'">stacked · 3 col · 900px</button>
+        <button class="ctl" :class="{ on: variant === 'quad' }" @click="variant = 'quad'">quad · 4 col · 1240px</button>
+        <button class="ctl" @click="lang = lang === 'de' ? 'en' : 'de'">lang: {{ lang }}</button>
+      </p>
     </header>
 
     <div class="rows">
-      <article v-for="r in rows" :key="r.id" class="row">
-        <!-- HEADER STRIP: the unimportant and the outbound. Faint, small, one
-             line, and the first thing the eye is meant to skip. -->
+      <!-- Absent parts release their column rather than leaving a hole: only 34
+           of 101 cards carry an intuition and 13 carry no maths, so without this
+           two thirds of rows would strand the note in the last column with a gap
+           beside it. -->
+      <article
+        v-for="r in rows" :key="r.id" class="row"
+        :class="{ 'no-int': !r.intuition, 'no-note': !r.note, 'no-maths': !r.latex && !r.symbol }"
+      >
+        <!-- HEADER: kind first, the references folded away, and the id at the right
+             doubling as the deep link into the source. -->
         <div class="strip">
-          <span class="tag">{{ r.kind }}</span>
-          <span v-for="c in r.concerns" :key="c" class="tag faint">{{ c }}</span>
-          <span class="strip-refs" v-if="r.refs.length">
-            <span class="strip-label">{{ L.rests }}</span>
-            <a v-for="x in r.refs" :key="x.id" class="chip" :href="`#${x.id}`">{{ x.name }}</a>
-          </span>
-          <code class="strip-id">{{ r.id }}</code>
+          <span class="kind">{{ r.kind }}</span>
+          <details v-if="r.refs.length" class="fold">
+            <summary>{{ L.rests }} <span class="n">{{ r.refs.length }}</span></summary>
+            <span class="fold-body">
+              <a v-for="x in r.refs" :key="x.id" class="ref" :href="`#${x.id}`">{{ x.name }}</a>
+            </span>
+          </details>
+          <span class="strip-right"><OpenInSource :id="r.id" :label="r.id" /></span>
         </div>
 
-        <!-- RAIL: the name, carrying the weight. -->
-        <h3 class="name">{{ r.name }}</h3>
+        <!-- RAIL: the name with the weight, and what the card is about, in words. -->
+        <div class="rail">
+          <h3 class="name">{{ r.name }}</h3>
+          <p v-if="r.concerns.length" class="for">{{ L.for }} {{ r.concerns.join(', ') }}</p>
+        </div>
 
-        <!-- BODY: maths, then intuition, then the note. -->
-        <div class="body">
+        <div class="maths">
           <div v-if="r.symbol" class="sig">
             <span class="sig-sym"><MathExpr :latex="r.symbol" /></span>
             <span class="sig-type"><MathExpr :latex="r.type!" /></span>
           </div>
-          <div v-if="r.latex" class="maths"><MathExpr :latex="r.latex" display /></div>
+          <div v-if="r.latex" class="stmt"><MathExpr :latex="r.latex" display /></div>
           <div v-if="r.forall || r.cond" class="quant">
             <span v-if="r.forall">{{ L.forall }} <MathExpr :latex="r.forall" /></span>
             <span v-if="r.cond">{{ L.cond }} <MathExpr :latex="r.cond" /></span>
           </div>
+        </div>
 
-          <p v-if="r.intuition" class="intuition"><RichText :text="r.intuition" /></p>
-
-          <p v-if="r.note" class="note">
-            <RichText :text="openNote.has(r.id) || !r.clipped ? r.note : r.noteHead" /><template
-              v-if="r.clipped && !openNote.has(r.id)">… </template>
-            <button v-if="r.clipped" class="more" @click="toggleNote(r.id)">
-              {{ openNote.has(r.id) ? L.less : L.more }}
-            </button>
-          </p>
+        <div v-if="r.intuition" class="cell intuition">
+          <RichText :text="open.has(r.id + ':i') || !r.intClipped ? r.intuition : r.intHead" /><template
+            v-if="r.intClipped && !open.has(r.id + ':i')">… </template>
+          <button v-if="r.intClipped" class="more" @click="toggle(r.id + ':i')">{{ open.has(r.id + ':i') ? L.less : L.more }}</button>
+        </div>
+        <div v-if="r.note" class="cell note">
+          <RichText :text="open.has(r.id + ':n') || !r.noteClipped ? r.note : r.noteHead" /><template
+            v-if="r.noteClipped && !open.has(r.id + ':n')">… </template>
+          <button v-if="r.noteClipped" class="more" @click="toggle(r.id + ':n')">{{ open.has(r.id + ':n') ? L.less : L.more }}</button>
         </div>
       </article>
     </div>
@@ -135,89 +162,108 @@ const L = computed(() => lang.value === 'de'
 </template>
 
 <style scoped>
-.proto { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
+.proto { margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); max-width: 900px; }
+.proto.quad { max-width: 1240px; }
 .intro h2 { font-size: 1.15rem; font-weight: 700; margin: 0 0 .3rem; }
 .lead { margin: 0 0 .5rem; font-size: .8rem; line-height: 1.5; color: var(--text-muted); max-width: 62ch; }
-.langbtn { font-size: .7rem; padding: .1rem .5rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-muted); cursor: pointer; }
+.controls { display: flex; gap: .4rem; margin: 0; flex-wrap: wrap; }
+.ctl { font-size: .7rem; padding: .16rem .55rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-muted); cursor: pointer; }
+.ctl.on { background: var(--text); border-color: var(--text); color: #fff; }
 
 .rows { margin-top: 1.4rem; }
 
-/* One hairline per row, no boxes: 101 bordered cards would be 404 borders
-   competing, one rule per row is a rhythm. */
+/* One hairline per row, no boxes. Mobile is the base case: everything stacks in
+   DOM order, which is already the student's reading order — kind, name, maths,
+   intuition, note. */
 .row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: .1rem 2rem;
-  padding: 1.15rem 0 1.25rem;
-  border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr; gap: .1rem 1.6rem;
+  padding: 1.15rem 0 1.25rem; border-top: 1px solid var(--border);
   scroll-margin-top: 4.5rem;
 }
+/* THREE COLUMNS: prose stacked in the third. The rail STACKS below this width
+   rather than shrinking — a 13rem gutter beside body text on a phone is
+   unusable. */
 @media (min-width: 820px) {
-  /* Rail and body. The strip spans both so its hairline-adjacent line runs the
-     full measure; the rail STACKS below this width rather than shrinking, which
-     is the rule a 17rem gutter beside body text on a phone would break. */
-  .row { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); }
-  .strip { grid-area: 1 / 1 / 2 / -1; }
-  .name  { grid-area: 2 / 1; }
-  .body  { grid-area: 2 / 2; }
+  .stacked .row { grid-template-columns: minmax(0, 13rem) minmax(0, 15rem) minmax(0, 1fr); }
+  .stacked .strip { grid-area: 1 / 1 / 2 / -1; }
+  .stacked .rail  { grid-area: 2 / 1; }
+  .stacked .maths { grid-area: 2 / 2; }
+  .stacked .intuition { grid-area: 2 / 3; }
+  .stacked .note      { grid-area: 3 / 3; }
+}
+/* FOUR COLUMNS: the two prose cells side by side. Needs the wider page; each cell
+   lands near 46 characters, the floor of readable measure. */
+@media (min-width: 1100px) {
+  .quad .row { grid-template-columns: minmax(0, 11rem) minmax(0, 13rem) minmax(0, 1fr) minmax(0, 1fr); }
+  .quad .strip { grid-area: 1 / 1 / 2 / -1; }
+  .quad .rail  { grid-area: 2 / 1; }
+  .quad .maths { grid-area: 2 / 2; }
+  .quad .intuition { grid-area: 2 / 3; }
+  .quad .note      { grid-area: 2 / 4; }
+  /* EVERY CELL KEEPS ITS COLUMN, even when its neighbour is empty.
+     Two attempts at filling the hole left by a missing intuition were both
+     worse. Spanning columns 3–4 gave the note 126 characters per line, past
+     readable measure. Moving the note up to column 3 fixed that but put note
+     left edges at 900, 485, 485, 485, 252, 900 down the page — the note no
+     longer has a column, and the two unbroken vertical lines are the thing that
+     makes a reference list read as composed rather than assembled.
+     So the intuition column stays, and is simply empty on the 67 cards that
+     have no intuition. A gap in the same place on every row reads as structure;
+     a gap that moves reads as breakage. Only the prose-only cards (no maths AND
+     no intuition) span, and the max-width cap keeps them readable. */
+  .quad .row.no-maths.no-int .note { grid-column: 2 / -1; }
 }
 
-/* --- the header strip ---------------------------------------------------- */
+/* --- header -------------------------------------------------------------- */
 .strip {
-  display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem .45rem;
-  margin-bottom: .55rem;
-  font-size: .62rem; line-height: 1.4;
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .7rem;
+  margin-bottom: .5rem; font-size: .62rem; line-height: 1.4;
 }
-.tag {
+.kind {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: .03em; color: var(--text-muted);
 }
-.tag.faint { color: var(--text-faint); }
-.strip-refs { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: .3rem; min-width: 0; }
-.strip-label { color: var(--text-faint); font-style: italic; }
-/* NOT pills. As pills these were the loudest thing on the row — second only to
-   the name — which is the opposite of what a strip for "not so important" is for.
-   Plain text, separated by middots, at the strip's own faint size: still links,
-   no longer furniture. Truncation is gone too; a chip reading "Associativity of
-   multiplica…" looks broken rather than brief. */
-.chip { color: var(--text-muted); text-decoration: none; white-space: nowrap; }
-.chip:not(:last-child)::after { content: ' ·'; color: var(--text-faint); }
-.chip:hover { color: var(--accent); text-decoration: underline; }
-.strip-id {
-  margin-left: auto; padding-left: .6rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: var(--text-faint);
-}
+/* A native fold: no component state, keyboard-operable for free. */
+.fold { font-size: .62rem; }
+.fold summary { cursor: pointer; color: var(--text-faint); list-style: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::before { content: '▸ '; }
+.fold[open] summary::before { content: '▾ '; }
+.fold summary:hover { color: var(--text-muted); }
+.fold .n { opacity: .7; font-variant-numeric: tabular-nums; }
+.fold-body { display: inline-flex; flex-wrap: wrap; gap: .3rem .5rem; padding: .25rem 0 0 .8rem; }
+.ref { color: var(--text-muted); text-decoration: none; }
+.ref:hover { color: var(--accent); text-decoration: underline; }
+.strip-right { margin-left: auto; padding-left: .6rem; }
 
-/* --- the rail ------------------------------------------------------------ */
-.name {
-  margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.3;
-  color: var(--text); text-wrap: balance;
-}
+/* --- rail ---------------------------------------------------------------- */
+.rail { min-width: 0; }
+.name { margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.3; text-wrap: balance; }
+/* Concerns as language, not pills: "for mul, add" reads as a fragment about the
+   card instead of a row of tags to decode. */
+.for { margin: .2rem 0 0; font-size: .72rem; color: var(--text-faint); font-style: italic; }
 
-/* --- the body ----------------------------------------------------------- */
-.body { min-width: 0; }
-.sig { display: flex; align-items: baseline; gap: .8rem; }
+/* --- maths --------------------------------------------------------------- */
+.maths { min-width: 0; }
+.sig { display: flex; align-items: baseline; gap: .7rem; }
 .sig-sym { font-size: 1.4rem; }
 .sig-type { font-size: .82rem; color: var(--text-muted); }
+/* KaTeX centres display mode, which would float each formula in its cell and
+   break the vertical lines the columns make. Force left. */
+.stmt { overflow-x: auto; }
+.stmt :deep(.katex-display) { margin: 0; text-align: left; }
+.stmt :deep(.katex-display > .katex) { text-align: left; }
+.quant { display: flex; flex-wrap: wrap; gap: .1rem .9rem; font-size: .74rem; color: var(--text-muted); margin-top: .15rem; }
 
-/* The one high-contrast object on a quiet page: give it air, do not box it.
-   KaTeX centres display mode by default, which floats the formula in the middle
-   of the body and breaks the vertical line the rail and body edges make — the
-   thing that makes the page read as composed. Force it left. */
-.maths { margin: .1rem 0 .35rem; overflow-x: auto; }
-.maths :deep(.katex-display) { margin: 0; text-align: left; }
-.maths :deep(.katex-display > .katex) { text-align: left; }
-.quant { display: flex; flex-wrap: wrap; gap: .1rem 1.1rem; font-size: .76rem; color: var(--text-muted); margin-bottom: .2rem; }
-
-.intuition {
-  margin: .55rem 0 0; font-size: .84rem; line-height: 1.6;
-  color: var(--text); max-width: 66ch;
-}
-.note {
-  margin: .5rem 0 0; font-size: .8rem; line-height: 1.6;
-  color: var(--text-muted); max-width: 68ch;
-}
+/* --- prose cells --------------------------------------------------------- */
+/* The measure is capped in characters, not left to the column: a cell that ever
+   gets a wide grid area must still break its lines where prose is readable. */
+.cell { min-width: 0; max-width: 68ch; font-size: .8rem; line-height: 1.6; }
+.cell.intuition { color: var(--text); }
+.cell.note { color: var(--text-muted); }
+/* Stacked by the base grid below the breakpoints, so they need their own gap. */
+.cell + .cell { margin-top: .5rem; }
+@media (min-width: 1100px) { .quad .cell + .cell { margin-top: 0; } }
 .more {
   border: none; background: none; padding: 0; cursor: pointer;
   font: inherit; font-size: .76rem; color: var(--accent); white-space: nowrap;
