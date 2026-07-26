@@ -114,6 +114,70 @@ for (const m of readJSON('src/data/metapatterns.json').patterns)
   for (const id of m.summarizes || [])
     cite(m.id, id, 'summarizes', codes)
 
+// ---- audit: concerns vs citations ----------------------------------------
+// A REPORT, not a validator — it never fails the sweep, because a disagreement
+// can be perfectly correct authoring.
+//
+// `concerns` and `basedOn`/`derivedFrom` are two hand-authored graphs over the
+// same cards, and nothing else cross-checks them. They answer different
+// questions: citations say what a card USES, concerns say what it is ABOUT. So
+// `concerns` is NOT derivable from citations, and deriving it would be worse than
+// useless — union over a DAG is monotone, so tokens only accumulate upward and the
+// top of the tower would concern everything. (Measured 2026-07-26: deriving from
+// transitive ancestors matches the authored tags on 30 of 90 cards and inflates 36
+// cards to three or more tokens, where the author gave 4.)
+//
+// One direction is still informative. If a card claims concern T and NO ancestor
+// supplies T, then either the tag is wrong or a citation is missing — the card
+// leans on something it never says it leans on. The reverse (ancestors supply more
+// than the card claims) is normal and says nothing: `ax.mul-associative` rests on
+// the bracket conventions, which concern addition too, and is still only about
+// multiplication.
+//
+// Two exemptions, both derived from the data rather than listed:
+//   - a token's ENTRY POINT, the first non-remark card in page order carrying it,
+//     cannot inherit it from anywhere. That is where the token enters the tower
+//     (`completeness` at ax.completeness, the other four at their signatures).
+//   - `remark` cards, which are commentary on the whole structure: rk.existence
+//     and rk.uniqueness carry all five tokens deliberately.
+const kindOf = id => (codes.get(id) || '/').split('/')[1]
+const citesOf = id => {
+  const c = cardByCode.get(id)
+  return c ? [...(c.basedOn || []), ...(c.derivedFrom || [])] : []
+}
+// Memoized transitive ancestors. The set is registered BEFORE recursing, so a
+// cycle would terminate with a partial answer rather than hang — the tower is a
+// DAG (no forward citation, and cross-layer citations point down), but this script
+// should not be the thing that hangs if that ever breaks.
+const ancMemo = new Map()
+const ancestorsOf = id => {
+  if (ancMemo.has(id)) return ancMemo.get(id)
+  const out = new Set()
+  ancMemo.set(id, out)
+  for (const p of citesOf(id)) {
+    out.add(p)
+    for (const q of ancestorsOf(p)) out.add(q)
+  }
+  return out
+}
+const pageOrder = layerOrder.flatMap(([, ids]) => ids)
+const entryOf = new Map()
+for (const id of pageOrder) {
+  if (kindOf(id) === 'remark') continue
+  for (const t of cardByCode.get(id)?.concerns || []) if (!entryOf.has(t)) entryOf.set(t, id)
+}
+const unsupported = []
+for (const id of pageOrder) {
+  if (kindOf(id) === 'remark') continue
+  const supplied = new Set([...ancestorsOf(id)].flatMap(p => cardByCode.get(p)?.concerns || []))
+  const missing = (cardByCode.get(id)?.concerns || [])
+    .filter(t => !supplied.has(t) && entryOf.get(t) !== id)
+  if (missing.length) unsupported.push(`${id} claims [${missing.join(', ')}] but no card it cites concerns it`)
+}
+
 console.log(`cards: ${codes.size}   latex fragments checked: ${n}   refs: ${refs.length}`)
+console.log(`[audit] concerns entry points: ${[...entryOf].map(([t, id]) => `${t}→${id}`).join('  ')}`)
+if (unsupported.length) for (const line of unsupported) console.log(`[audit] ${line}`)
+else console.log('[audit] every concern is supplied by a cited card')
 console.log(`bridge: ${bridged} references from the skills side, all resolved into the tower`)
 console.log(errs.length ? 'PROBLEMS:\n' + errs.join('\n') : 'clean')
