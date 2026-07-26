@@ -358,7 +358,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .intro, .group-title, .section-note { padding-left: calc(1rem + 1px); padding-right: calc(1rem + 1px); }
 .intro { margin-bottom: 1.5rem; }
 .title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem .7rem; }
-.intro h2 { font-size: 1.25rem; font-weight: 700; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.2; }
+.intro h2 { font-size: 1.3rem; font-weight: 700; margin: 0; line-height: 1.2; letter-spacing: -.01em; }
 /* A small radius, not a pill. `border-radius: 999px` only reads as a pill on a
    single line; on two it becomes a huge ellipse, which is what "Term
    manipulations" did with three words in it. */
@@ -395,20 +395,17 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    knowing — but stops pretending to be a control. */
 .fchip:disabled { background: transparent; color: var(--text-faint); border-color: var(--border); cursor: default; }
 
-/* STRUCTURE IS MONO, CONTENT IS THE BODY FONT. Section and group headings named
-   the tree; card names name the mathematics; and at .95rem/700 against a card's
-   1rem/650 the two were near-indistinguishable, so a heading read as just another
-   card. Rather than push the weights further apart, they now differ in TYPEFACE —
-   the same distinction the layer title already made — which separates them at a
-   glance and lets the card name go lighter instead of louder. A rule under the
-   section heading does the rest of the work a size jump would have. */
+/* STRUCTURE IS THE PLAIN SANS; CONTENT IS THE SERIF. The headings were briefly set
+   in mono, to tell them apart from card names that were then also sans. Now that
+   card names and prose are Latin Modern, the serif/sans split does that work on
+   its own, so the headings can go back to the normal face — mono is left to what
+   it is actually for, ids and codes. */
 /* No rule under the heading: the panel's own top edge sits a few pixels below it,
    so a border here made two horizontal lines in a row — exactly the noise the
    card grid's 404 borders were removed to avoid. */
 .group-title { display: flex; align-items: center; gap: .4rem; margin: 1.9rem 0 .5rem; }
 .group-title h3 {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: .82rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  font-size: .98rem; font-weight: 700; letter-spacing: -.005em;
   color: var(--text); margin: 0;
 }
 .section-note { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: -.1rem 0 .6rem; }
@@ -436,8 +433,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 /* Flush in the panel's rounded corner when a group starts the section. */
 .rows > .subhead:first-child { border-radius: var(--radius) var(--radius) 0 0; }
 .subhead h4 {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  font-size: .82rem; font-weight: 600; letter-spacing: 0;
   color: var(--text-muted); margin: 0;
 }
 .info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
@@ -498,7 +494,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
   display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .7rem;
   margin-bottom: .45rem; font-size: .62rem; line-height: 1.4;
 }
-.kind { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .03em; color: var(--text-muted); }
+.kind { letter-spacing: .01em; font-weight: 600; color: var(--text-muted); }
 /* A native fold: no component state, keyboard-operable for free. */
 .fold { font-size: .62rem; min-width: 0; }
 .fold summary { cursor: pointer; color: var(--text-faint); list-style: none; }
@@ -520,7 +516,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    mono, chrome is sans, content is serif, and a card name is content.
    Lighter than it was (650 → 560): the name is the row's subject, but the section
    heading above it is the page's structure, and the two were competing. */
-.name { margin: 0; font-family: var(--font-content); font-size: 1.04rem; font-weight: 560; line-height: 1.32; color: var(--text); text-wrap: balance; }
+/* Weight 500, which resolves to Latin Modern's REGULAR face. 560 would have
+   matched the 700 face and rendered every card name in bold; the name is set
+   apart from its prose by size and colour, not by weight. */
+.name { margin: 0; font-family: var(--font-content); font-size: 1.06rem; font-weight: 500; line-height: 1.32; color: var(--text); text-wrap: balance; }
 /* `vertical-align: middle` is NOT the optical middle — it aligns to half the
    parent's x-height, while a title's visible centre is half its cap height, and
    KaTeX adds a strut below the glyph. Measured against the name's real font

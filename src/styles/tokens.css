@@ -24,6 +24,27 @@
  * backgrounds, step 3 is a UI-element background, 6–7 are borders, 11–12 are text.
  *   https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale
  */
+/* LATIN MODERN ROMAN — the content serif. The Unicode successor to Computer
+ * Modern, and the face LaTeX sets by default, so prose and the KaTeX formulas
+ * inside it are one typeface instead of two. Self-hosted (96 KB, three faces) so
+ * the app keeps working offline; see public/fonts/README.md for the licence and
+ * for why neither KaTeX's own fonts nor a system serif stack would do. */
+@font-face {
+  font-family: 'Latin Modern Roman';
+  src: url('/fonts/lmroman-regular.woff') format('woff');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Latin Modern Roman';
+  src: url('/fonts/lmroman-italic.woff') format('woff');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Latin Modern Roman';
+  src: url('/fonts/lmroman-bold.woff') format('woff');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
 :root {
   /* The band is Radix STEP 3 — "UI element background", the step meant for a
      subdivision inside a surface. The first pass put step 2 (#f9f9f9, a subtle
@@ -63,18 +84,14 @@
   --chip-bg: #dcdcdc;     /* a step below the page, so it reads on both planes */
   --code-bg: #f1f1f1;
 
-  /* THREE VOICES. Structure is mono (ids, kinds, section and group headings, the
-     layer title), UI chrome is the sans body font, and CARD CONTENT is a serif —
-     names and prose. The serif is not decoration: inline `$…$` fragments render in
-     KaTeX's Computer Modern, which IS a serif, so mathematical prose set in sans
-     changes typeface at every formula. In a serif the fragments blend into the
-     sentence instead of interrupting it.
-     Not KaTeX's own fonts, though the effect would be exact: KaTeX_Main has no
-     ä, ö or ü (measured), and half this content is German, so every umlaut would
-     silently substitute mid-word. A book-serif stack has full coverage and gets
-     close. For an exact Computer Modern match the answer is self-hosting Latin
-     Modern Roman, at the cost of a real font dependency. */
-  --font-content: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, 'Times New Roman', serif;
+  /* TWO VOICES. CARD CONTENT — names and prose — is Latin Modern; everything else
+     (structure, headings, ids, chrome) is the sans body font, with mono kept for
+     codes and ids only. The serif/sans split is what separates content from
+     structure, so the headings do not also need a third typeface to be told apart
+     from a card name.
+     The fallbacks matter only until the webfont loads, and are ordered to be the
+     least jarring substitutes for a high-contrast modern face. */
+  --font-content: 'Latin Modern Roman', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
 
   --radius: 10px;
 }
