@@ -47,15 +47,26 @@ const variant = ref<'stacked' | 'quad'>('quad')
 // sweep-layers' audit derives — so the tag is not a new vocabulary to learn: it
 // is the operator the card is about, written the way the tower writes it.
 //
-// `completeness` is the one that has no symbol, because it is an axiom rather
-// than an operation, so nothing carries a glyph for it. It does have exactly one
-// notation in the tower: ax.completeness states itself as `\sup S \in \mathbb{R}`
-// (the only other use is th.root-exists' derivation). So `\sup` is not invented
-// here — it is the form the student has already met on the card itself.
+// TWO DELIBERATE OVERRIDES, because a chip at .72rem is an ICON, not an
+// expression. The rule against notation students meet nowhere else governs
+// mathematical content — the statement, the derivation — not a badge on a title,
+// which nobody reads as a formula. Within a chip the only question is whether the
+// mark is legible and unambiguous at 11px.
+//   mul → `\bullet` rather than op.mul's `\cdot`. A lone \cdot at tag size is
+//     indistinguishable from a stray period, and mul is the commonest concern by
+//     far (72 of 95 cards), so the least legible glyph would have been the most
+//     seen one. A filled bullet reads as a mark at any size, and `a • b` is
+//     ordinary textbook multiplication anyway.
+//   completeness → `\mathbb{R}` rather than `\sup`. It has no signature card at
+//     all (it is an axiom, not an operation); ax.completeness states itself as
+//     `\sup S \in \mathbb{R}`, but "sup" is three letters where every other chip
+//     is one mark, and it sat wrong. Completeness is precisely the axiom that
+//     separates ℝ from ℚ, and the tower is told as `R` turning out to BE `ℝ` — so
+//     ℝ is the icon for "complete", in one familiar glyph.
 const CONCERN_ENTRY: Record<string, string> = {
   add: 'op.add', mul: 'op.mul', eq: 'op.eq', order: 'op.lt', completeness: 'ax.completeness',
 }
-const CONCERN_GLYPH: Record<string, string> = { completeness: '\\sup' }
+const CONCERN_GLYPH: Record<string, string> = { mul: '\\bullet', completeness: '\\mathbb{R}' }
 const glyphOf = (token: string) =>
   CONCERN_GLYPH[token] ?? cardIndex.get(CONCERN_ENTRY[token])?.card.symbol ?? token
 const glyphTitle = (tokens: string[]) => tokens
@@ -159,7 +170,7 @@ const L = computed(() => lang.value === 'de'
           <h3 class="name">
             {{ r.name }}<span
               v-if="r.concerns.length" class="glyphs" :title="glyphTitle(r.concerns)"
-            ><MathExpr v-for="k in r.concerns" :key="k" :latex="glyphOf(k)" /></span>
+            ><span v-for="k in r.concerns" :key="k" class="glyph"><MathExpr :latex="glyphOf(k)" /></span></span>
           </h3>
         </div>
 
@@ -268,14 +279,28 @@ const L = computed(() => lang.value === 'de'
 /* --- rail ---------------------------------------------------------------- */
 .rail { min-width: 0; }
 .name { margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.3; text-wrap: balance; }
-/* The glyphs trail the name, subordinate to it but not whispering. The first pass
-   set them at .78rem in --text-faint and a lone `\cdot` — the commonest concern,
-   72 of 95 cards — was indistinguishable from a stray period. So: near the name's
-   own size, --text-muted, and enough letter-spacing that two glyphs read as two
-   symbols rather than as punctuation. Hovering names them. */
-.glyphs { margin-left: .55rem; white-space: nowrap; font-size: .95rem; color: var(--text-muted); font-weight: 400; cursor: help; }
-.glyphs :deep(.katex) { margin-right: .45rem; }
-.glyphs :deep(.katex:last-child) { margin-right: 0; }
+/* Small chips ATTACHED to the title and raised against its cap height, like a
+   badge rather than a trailing word. Two earlier passes tried bare glyphs at
+   larger sizes and darker greys; the problem was never contrast, it was that an
+   unframed mark has no boundary, so a single dot could not read as a tag. A chip
+   gives it one, and then the glyph inside can go back to being small and quiet.
+   `align-items: baseline` on the row keeps the raise from shifting the name. */
+.glyphs {
+  display: inline-flex; gap: .18rem; margin-left: .4rem;
+  vertical-align: text-top; transform: translateY(-.12em);
+  white-space: nowrap; cursor: help;
+}
+.glyph {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 1.35em; height: 1.35em; padding: 0 .22em;
+  border-radius: 4px;
+  /* --chip-bg (#f3f4f6) alone against --surface (#ffffff) is a 3% step, which
+     did not read as a chip at all — the mark still had no boundary. The hairline
+     is what makes it one; the fill only keeps it from looking like an input. */
+  background: var(--chip-bg); border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font-size: .68rem; font-weight: 400; line-height: 1;
+}
 
 /* --- maths --------------------------------------------------------------- */
 .maths { min-width: 0; }
