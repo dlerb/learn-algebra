@@ -72,6 +72,11 @@ pnpm check-ids       # entity ids unique across every content file
 citation resolves, and that the prose rules hold. Structural validation also runs at
 load time in `src/data/layers.ts`, so a broken citation throws rather than rendering.
 
+It also prints an `[audit]` line cross-checking the two hand-authored graphs over the
+cards: if a card claims a `concerns` token that **no card it cites** concerns, either the
+tag is wrong or a citation is missing. A report, never a failure — the reverse direction
+(ancestors concerning more than the card claims) is normal and ignored.
+
 Stack: Vue 3 + TypeScript + Vite, naive-ui, UnoCSS, Pinia, vue-router, KaTeX, Zod,
 Compute Engine.
 
@@ -95,9 +100,8 @@ Content text is plain text with inline `$…$` KaTeX — deliberately **not** ma
 (`RichText.vue` has no parser). Fields like `latex`, `derivation`, `forall` and
 `cond` are pure LaTeX.
 
-The rules are checked by `scripts/content-prose.mjs`, shared by `pnpm sweep-layers` and the
-in-app editor's write path so the two cannot disagree, and they come in **two tiers**.
-*Correctness* applies everywhere: every `$…$` fragment must compile with no macros defined,
+The rules live in `scripts/content-prose.mjs`, applied by `pnpm sweep-layers`, and come in
+**two tiers**. *Correctness* applies everywhere: every `$…$` fragment must compile with no macros defined,
 and the delimiters must pair. *House style* applies to the **fundament tower only** — no em
 dashes (they render literally, and `—` reads as `−`), Swiss orthography in German (`ss`,
 never `ß`), and none of the retired word "sign"/"Vorzeichen". The curated layers are exempt
