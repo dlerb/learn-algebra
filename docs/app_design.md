@@ -85,6 +85,99 @@ an index).
 
 ---
 
+## The visual system — rows, planes, voices (2026-07-26)
+
+The reference pages are for LOOK-UP, not front-to-back reading, and that decides almost
+everything below. Built on `LayerView`, which serves all four fundament layers; the curated
+three are still on the older system (docs/TODO.md).
+
+### Rows, not a card grid
+
+`repeat(auto-fill, minmax(300px, 1fr))` was replaced by one landscape row per card. Three
+reasons, in order of weight. The tower is a **linear argument** — no card may cite anything
+later in its layer — and a multi-column grid renders an argument as a pinboard. A grid
+**stretches every card in a row to the tallest**, so with notes running 46–1336 characters
+one long note surrounded itself with columns of whitespace. And below 560px the grid was
+already a single column, so **the phone was always seeing rows**; the desktop now agrees with
+it rather than being a separate design.
+
+The row is four columns — `rail | maths | intuition | note` — with a header strip spanning
+them and full-width blocks below for the derivation and the details/json:
+
+- **strip**: `kind`, a `rests on` fold, a `details` toggle, and the id at the right, which IS
+  the source deep link (one affordance where there were two).
+- **rail**: the name, with `concerns` trailing it as the operator glyphs themselves — a
+  concern's glyph is the `symbol` of the card where that concern ENTERS the tower, the same
+  entry points sweep-layers' audit derives.
+- **maths**: statement, or signature glyph, or avoid/prefer; then the quantifiers.
+- **two prose cells**: intuition then note, each clipped at 240 characters with an expander.
+- **full width**: derivation and details — a derivation runs to 362 characters of LaTeX and
+  would scroll to uselessness in the 19rem maths column.
+
+**EVERY CELL KEEPS ITS COLUMN even when empty.** The intuition column is blank on the 67
+cards without one. Three attempts at filling those gaps were each worse: spanning gave the
+note 126 characters per line, and moving it put note left edges at 900/485/485/252/900 down
+the page. The rule that came out of it is worth keeping: *a gap in the same place on every
+row reads as structure; a gap that moves reads as breakage.*
+
+**Widths were measured, not chosen.** At a 13rem maths column, 20 of 92 maths cells
+overflowed, the widest being `th.minus-in-product` at 407px; fitting all of them would need a
+25rem column and a 100rem page. The compromise takes width from the prose rather than off the
+screen: maths 19rem clears half of them, prose 26rem still gives ~51 characters, page 91rem.
+Sizing the COLUMNS and letting the page fall out is what makes `.cell`'s `max-width` exact —
+a cell can never be wider than one column.
+
+### Three planes, ordered by elevation
+
+One panel per SECTION (26 across the tower), with group subheads as bands inside it. Per
+group it was 37 panels, several wrapping a single row, which read as a box around one card.
+
+    --bg      #e6e6e6  page, lowest    structure (headings) lives here
+    --band    #f1f1f1  middle          a subdivision inside a panel
+    --surface #fbfbfb  panel, highest  content lives here
+
+The ordering is the whole point: **a band painted near the page's colour reads as a HOLE
+punched through the panel to the page behind it**. A band clearly lighter than the page
+cannot, because nothing recessed is lighter than what it recedes toward. Radix's step
+semantics place the band at step 3 (UI-element background, for a subdivision inside a
+surface); putting step 2 there left it six values from white and its edges dissolved.
+
+Two further rules the iteration produced. **The neutrals are one pure family** — equal RGB on
+every step, from Radix `gray`; the earlier hand-rolled greys had drifted into a bad `slate`
+(blue seven points above red) and the temperature mismatch read as colours oscillating.
+And **no pure white**: `#ffffff` against a grey page is a 23-value jump that dominates as
+glare, so the ladder runs in even ~10-value steps and stops short.
+
+Colour stays reserved for signal. `--accent-bg` has exactly one structural use, the
+deep-link target, which also takes an inset accent bar rather than a spread shadow that bled
+outside the panel.
+
+### Two typographic voices
+
+**Card content is Latin Modern Roman; everything else is the sans body font**, with mono left
+for ids and codes. This is not decoration: inline `$…$` fragments are rendered by KaTeX in
+Computer Modern, so prose set in anything else changes typeface at every formula. Latin
+Modern is the Unicode successor to Computer Modern and what LaTeX sets by default, so prose
+and its formulas are now one face. Self-hosted, 96KB, licence and rejected alternatives in
+`public/fonts/README.md`.
+
+The serif/sans split is also what lets the headings be plain: they were briefly mono, only
+because card names were then also sans. Structure now carries its levels by size and weight
+alone — section .98rem/700, subhead .82rem/600, kind .62rem/600 muted, no small caps.
+
+⚠️ Card names take weight **500**, which resolves to Latin Modern's regular face. 560 matches
+the 700 face and sets every name in bold.
+
+⚠️ `overflow-x: auto` makes the computed `overflow-y` AUTO as well, so a formula whose ink
+exceeds its line box gets a surprise VERTICAL scrollbar — `th.root-of-quotient` ran 46px of
+content in a 41px box. Every display-math container needs vertical padding, not just
+`overflow-x`.
+
+Dark mode is prepared in `tokens.css` (same ladder inverted, wider steps because dark
+surfaces need more separation) but not surfaced; see docs/TODO.md.
+
+---
+
 ## App shell & views (as built — 2026-07-15, routing/nav updated 2026-07-24)
 
 **Shell** (`App.vue`): a naive-ui header — brand · page nav (`NMenu`) · settings

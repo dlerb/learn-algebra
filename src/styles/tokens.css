@@ -1,18 +1,77 @@
-/* Design tokens — one quiet, neutral-led palette. Color is reserved for signal
- * (alerts, the true/false accents), never for structure. Defined as custom
- * properties so a later `:root[data-theme="dark"]` block is the only thing dark
- * mode needs — the views already read these vars instead of hardcoded hex. */
-:root {
-  --bg: #fafafa;          /* page */
-  --surface: #ffffff;     /* card */
-  --border: #ededed;      /* hairline */
-  --border-strong: #e0e1e3;
+/* Design tokens — one quiet, neutral-led palette. Colour is reserved for signal
+ * (alerts, the true/false accents, a deep-link target), never for structure.
+ *
+ * THE NEUTRALS ARE ONE FAMILY, AND THEY ARE PURE. Every grey below has equal red,
+ * green and blue. That is the fix for a page that read as "a bit blueish" and for
+ * surfaces that seemed to oscillate: the old ramp mixed a cool grey page
+ * (#ebeef2 — blue 7 above red), a barely-tinted band and a pure-white panel, so
+ * the eye kept re-reading the temperature difference as a change in material.
+ * Values are Radix Colors' `gray` scale, which is engineered as a pure neutral;
+ * their `slate` is the blue-tinted one, and hand-rolling greys had produced a bad
+ * slate by accident.
+ *
+ * THREE PLANES, ORDERED BY ELEVATION. In a light UI higher elevation reads
+ * lighter, so:
+ *     --bg      page, lowest   — structure (headings, page furniture) lives here
+ *     --band    middle         — a subdivision INSIDE a panel
+ *     --surface panel, highest — content lives here
+ * The ordering is what stops a stripe inside a white panel reading as a HOLE
+ * punched through to the page behind it. A band painted near the page's own colour
+ * reads as the page showing through; a band clearly lighter than the page cannot,
+ * because nothing recessed is lighter than what it recedes toward.
+ *
+ * Radix's step semantics, which these follow: steps 1–2 are app and subtle
+ * backgrounds, step 3 is a UI-element background, 6–7 are borders, 11–12 are text.
+ *   https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale
+ */
+/* LATIN MODERN ROMAN — the content serif. The Unicode successor to Computer
+ * Modern, and the face LaTeX sets by default, so prose and the KaTeX formulas
+ * inside it are one typeface instead of two. Self-hosted (96 KB, three faces) so
+ * the app keeps working offline; see public/fonts/README.md for the licence and
+ * for why neither KaTeX's own fonts nor a system serif stack would do. */
+@font-face {
+  font-family: 'Latin Modern Roman';
+  src: url('/fonts/lmroman-regular.woff') format('woff');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Latin Modern Roman';
+  src: url('/fonts/lmroman-italic.woff') format('woff');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Latin Modern Roman';
+  src: url('/fonts/lmroman-bold.woff') format('woff');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
 
-  --text: #1f2328;        /* primary */
-  --text-muted: #8b8f96;  /* labels, secondary */
-  --text-faint: #b3b7bd;  /* ids, field names */
+:root {
+  /* The band is Radix STEP 3 — "UI element background", the step meant for a
+     subdivision inside a surface. The first pass put step 2 (#f9f9f9, a subtle
+     *page* background) here and pushed step 3 down to the page, which left the
+     band six values from white and nine from the page: far closer to the panel
+     than to anything else, so its edges dissolved into the white.
+     Note the constraint this forces. For the band to be clearly distinct from the
+     panel AND still lighter than the page, the page must sit below it — there is
+     no room between #f0f0f0 and #ffffff for a third step that reads as either. So
+     the page takes step 4. */
+  /* NO PURE WHITE. A #ffffff panel against a grey page is a 23-value jump, and a
+     large field of it dominates the screen and reads as glare rather than as
+     calm. The ladder instead runs in even ~10-value steps and stops short of
+     white, which keeps all three planes distinguishable while lowering the
+     overall contrast of the page. */
+  --bg: #e6e6e6;          /* page, lowest */
+  --band: #f1f1f1;        /* subdivision inside a panel */
+  --surface: #fbfbfb;     /* panel, highest */
+  --border: #e6e6e6;      /* hairline */
+  --border-strong: #d9d9d9; /* gray-6 */
+
+  --text: #202020;        /* primary — gray-12 */
+  --text-muted: #646464;  /* labels, secondary — gray-11 */
+  --text-faint: #8d8d8d;  /* ids, field names — gray-9 */
 
   --accent: #4f46e5;      /* interactive / active, used sparingly */
+  --accent-bg: #eef2ff;   /* the one structural use: a deep-link target */
   --good: #3f8f6b;        /* "true form" accent — thin, never a fill */
   --bad: #c0564b;         /* "wrong form" accent — thin, never a fill */
 
@@ -20,7 +79,52 @@
   --warn-fg: #b45309;
   --warn-border: #fcd34d;
 
-  --chip-bg: #f3f4f6;
-  --code-bg: #f6f7f8;
+  /* Darker than the page, so a chip reads as a pill on BOTH planes: a gentle fill
+     on a white panel, a definite one on the page in /errors and /metapatterns. */
+  --chip-bg: #dcdcdc;     /* a step below the page, so it reads on both planes */
+  --code-bg: #f1f1f1;
+
+  /* TWO VOICES. CARD CONTENT — names and prose — is Latin Modern; everything else
+     (structure, headings, ids, chrome) is the sans body font, with mono kept for
+     codes and ids only. The serif/sans split is what separates content from
+     structure, so the headings do not also need a third typeface to be told apart
+     from a card name.
+     The fallbacks matter only until the webfont loads, and are ordered to be the
+     least jarring substitutes for a high-contrast modern face. */
+  --font-content: 'Latin Modern Roman', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+
   --radius: 10px;
+}
+
+/* DARK MODE, prepared but not surfaced. App.vue has NConfigProvider in place and
+ * the views read these vars rather than hex, so turning it on is one prop plus a
+ * toggle that stamps data-theme — no view has to change.
+ *
+ * The elevation ladder INVERTS its values but not its meaning: higher is still
+ * lighter, so the page stays darkest and the panel lightest, and the band still
+ * sits between them. Dark surfaces need bigger steps than light ones to read as
+ * separate, which is why these are further apart than their light counterparts.
+ * Values are Radix `gray` dark. */
+:root[data-theme="dark"] {
+  --bg: #131313;          /* page, lowest */
+  --band: #1d1d1d;        /* subdivision inside a panel */
+  --surface: #272727;     /* panel, highest */
+  --border: #2a2a2a;      /* gray-4 */
+  --border-strong: #3a3a3a; /* gray-6 */
+
+  --text: #eeeeee;        /* gray-12 */
+  --text-muted: #b4b4b4;  /* gray-11 */
+  --text-faint: #7b7b7b;  /* gray-10 */
+
+  --accent: #a5b4fc;      /* lifted: #4f46e5 is unreadable on a dark ground */
+  --accent-bg: #1e1b4b;
+  --good: #6ee7b7;
+  --bad: #fca5a5;
+
+  --warn-bg: #2a2113;
+  --warn-fg: #fbbf24;
+  --warn-border: #78500a;
+
+  --chip-bg: #2a2a2a;     /* gray-4 */
+  --code-bg: #191919;
 }
