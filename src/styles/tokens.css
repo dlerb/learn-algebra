@@ -72,6 +72,9 @@
 
   --accent: #4f46e5;      /* interactive / active, used sparingly */
   --accent-bg: #eef2ff;   /* the one structural use: a deep-link target */
+  /* Text ON an accent fill. It cannot be a literal white: in dark mode the accent
+     lifts to a pale indigo, and white on pale indigo is unreadable. */
+  --on-accent: #ffffff;
   --good: #3f8f6b;        /* "true form" accent — thin, never a fill */
   --bad: #c0564b;         /* "wrong form" accent — thin, never a fill */
 
@@ -96,9 +99,11 @@
   --radius: 10px;
 }
 
-/* DARK MODE, prepared but not surfaced. App.vue has NConfigProvider in place and
- * the views read these vars rather than hex, so turning it on is one prop plus a
- * toggle that stamps data-theme — no view has to change.
+/* DARK MODE, live since 2026-07-26. src/theme.ts owns the switch: it stamps
+ * `data-theme` on the root, which selects this block, and App.vue separately hands
+ * naive-ui its own `darkTheme` — those are TWO halves and missing either gives a
+ * dark shell over light pages or the reverse. Defaults to the system preference
+ * until the user chooses in Settings, after which the choice wins.
  *
  * The elevation ladder INVERTS its values but not its meaning: higher is still
  * lighter, so the page stays darkest and the panel lightest, and the band still
@@ -118,6 +123,7 @@
 
   --accent: #a5b4fc;      /* lifted: #4f46e5 is unreadable on a dark ground */
   --accent-bg: #1e1b4b;
+  --on-accent: #16161a;   /* the accent is now PALE, so its text must be dark */
   --good: #6ee7b7;
   --bad: #fca5a5;
 
@@ -128,3 +134,8 @@
   --chip-bg: #2a2a2a;     /* gray-4 */
   --code-bg: #191919;
 }
+
+/* naive-ui's NGlobalStyle paints `body` with ITS palette, which is a hair off ours
+   (#101014 against our #131313 in dark). The difference shows in overscroll and
+   anywhere .app-body does not reach, so take the body back. */
+html, body { background: var(--bg); }

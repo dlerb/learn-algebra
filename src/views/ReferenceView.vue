@@ -197,7 +197,7 @@ const sections = computed(() => errorTree.sections.map(s => ({
 .info:hover { color: var(--accent); border-color: var(--accent); }
 .pop { max-width: 300px; font-size: .8rem; line-height: 1.45; color: var(--text); }
 .mode-toggle { font-size: .7rem; padding: .16rem .55rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-faint); cursor: pointer; }
-.mode-toggle.on { background: var(--text); border-color: var(--text); color: #fff; }
+.mode-toggle.on { background: var(--text); border-color: var(--text); color: var(--surface); }
 .unused-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
 
 .group-title { display: flex; align-items: center; gap: .4rem; margin: 2.2rem 0 .3rem; }

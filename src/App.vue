@@ -3,17 +3,21 @@ import { computed } from 'vue'
 import { useRoute, useRouter, RouterLink, RouterView } from 'vue-router'
 import {
   NConfigProvider, NGlobalStyle, NLayoutHeader, NMenu, NPopover,
-  NButton, NRadioGroup, NRadioButton, type MenuOption,
+  NButton, NRadioGroup, NRadioButton, darkTheme, type MenuOption,
 } from 'naive-ui'
 import { lang } from './lang'
+import { theme } from './theme'
 import { layersOf } from './data/layers'
 
 // Global app chrome: brand · page nav · settings. Page-specific controls stay
-// in the pages; only truly global state (language now, dark mode later) lives
-// in the settings popover. Dark mode is deliberately NOT surfaced yet — the
-// content views still use hardcoded colors, so flipping NConfigProvider's theme
-// would darken only this chrome, not the pages. Enabling it later is one prop
-// (`:theme="darkTheme"`) once the views move to color tokens.
+// in the pages; only truly global state — language and theme — lives in the
+// settings popover.
+//
+// DARK MODE IS TWO SEPARATE THINGS. src/theme.ts stamps `data-theme` on the root,
+// which switches the token block every view reads; naive-ui cannot see those
+// variables, so its own components need `darkTheme` handed to NConfigProvider
+// here. Miss either half and you get a dark shell over light pages, or the
+// reverse.
 const route = useRoute()
 const router = useRouter()
 
@@ -44,7 +48,7 @@ function go(key: string | number) {
 </script>
 
 <template>
-  <NConfigProvider>
+  <NConfigProvider :theme="theme === 'dark' ? darkTheme : null">
     <NGlobalStyle />
     <NLayoutHeader bordered class="app-header">
       <div class="header-inner">
@@ -77,6 +81,17 @@ function go(key: string | number) {
                 <NRadioButton value="en">EN</NRadioButton>
               </NRadioGroup>
             </div>
+            <div class="setting-row">
+              <span class="setting-label">Theme</span>
+              <NRadioGroup
+                size="small"
+                :value="theme"
+                @update:value="(v: string) => (theme = v as 'light' | 'dark')"
+              >
+                <NRadioButton value="light">Light</NRadioButton>
+                <NRadioButton value="dark">Dark</NRadioButton>
+              </NRadioGroup>
+            </div>
           </div>
         </NPopover>
       </div>
@@ -95,12 +110,12 @@ function go(key: string | number) {
   max-width: 1100px; margin: 0 auto; padding: 0 1rem;
   display: flex; align-items: center; gap: 1rem; height: 52px;
 }
-.brand { font-weight: 700; font-size: 1.05rem; color: #111827; text-decoration: none; flex-shrink: 0; }
+.brand { font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; flex-shrink: 0; }
 .nav { min-width: 0; }
 .spacer { flex: 1; }
 .gear { font-size: 1.1rem; line-height: 1; }
 .settings { min-width: 200px; padding: .25rem; }
-.settings-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; color: #9ca3af; margin-bottom: .6rem; }
+.settings-title { font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); margin-bottom: .6rem; }
 .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.setting-label { font-size: .85rem; color: #4b5563; }
+.setting-label { font-size: .85rem; color: var(--text-muted); }
 </style>

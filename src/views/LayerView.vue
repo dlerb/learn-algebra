@@ -384,7 +384,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .filters { margin-top: 1rem; display: grid; gap: .4rem; }
 .filter-row { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
 .filter-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; width: 4.5rem; }
-.fchip { font-size: .72rem; padding: .16rem .55rem; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.fchip { font-size: .72rem; padding: .16rem .55rem; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: var(--on-accent); cursor: pointer; }
 .fchip.concern { border-color: var(--border-strong); background: var(--text-muted); }
 .fchip.off { background: transparent; color: var(--text-muted); border-color: var(--border-strong); }
 .fchip:hover:not(:disabled) { filter: brightness(1.08); }
@@ -441,8 +441,8 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .pop { max-width: 280px; font-size: .8rem; line-height: 1.45; color: var(--text); }
 
 /* --- the panel and the row ------------------------------------------------ */
-/* ONE SURFACE PER GROUP, not per card. The page is --bg (#fafafa) and the panel is
-   --surface (#ffffff) — a distinction the tokens were written for, where --surface
+/* ONE SURFACE PER GROUP, not per card. The page is --bg and the panel is
+   --surface — a distinction the tokens were written for, where --surface
    is commented "card". Structure (the section and group headings) sits on the page
    OUTSIDE the panel; content sits on the raised surface INSIDE it, divided by
    hairlines.

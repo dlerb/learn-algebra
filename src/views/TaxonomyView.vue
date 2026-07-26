@@ -253,7 +253,7 @@ function hasErrors(c: CardVM): boolean {
 .role strong { font-weight: 600; color: var(--text); }
 .mode { display: flex; gap: .4rem; }
 .mode button { font-size: .78rem; padding: .25rem .7rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-muted); cursor: pointer; }
-.mode button.active { background: var(--text); border-color: var(--text); color: #fff; }
+.mode button.active { background: var(--text); border-color: var(--text); color: var(--surface); }
 
 .group-title { display: flex; align-items: center; gap: .4rem; margin: 1.5rem 0 .6rem; }
 .group-title h3 { font-size: .95rem; font-weight: 700; color: var(--text); margin: 0; }

@@ -18,9 +18,13 @@ import { NEmpty } from 'naive-ui'
 </template>
 
 <style scoped>
-.page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 4rem; color: #1f2937; }
+.page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 4rem; color: var(--text); }
 .page-head h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 .25rem; }
-.page-head p { color: #6b7280; max-width: 60ch; margin: 0; line-height: 1.5; }
-.page-head code { font-size: .85em; background: #f3f4f6; padding: .05rem .3rem; border-radius: 4px; }
+.page-head p { color: var(--text-muted); max-width: 60ch; margin: 0; line-height: 1.5; }
+/* Never styled, so they took the browser default #0000ee — 1.98:1 on a dark
+   page, and only passable on a light one by accident. */
+.page a { color: var(--accent); text-decoration: none; }
+.page a:hover { text-decoration: underline; }
+.page-head code { font-size: .85em; background: var(--chip-bg); padding: .05rem .3rem; border-radius: 4px; }
 .stub { margin-top: 4rem; }
 </style>
