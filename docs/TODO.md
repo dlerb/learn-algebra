@@ -20,6 +20,15 @@ them to `--text-muted` or accept them as decorative; it predates dark mode.
 **2. The curated views** — `/errors`, `/metapatterns`, `/skills` — onto the same shell. They
 are the only three left; the whole fundament tower is already on it, since `LayerView` serves
 all four layers.
+
+**THE REQUIREMENT IS THAT THEY LOOK LIKE THE TOWER**, not merely that they share a component.
+Someone moving from `/terms` to `/errors` should see one application, not two that happen to
+import the same file. Concretely that means the same page width (91rem, not the curated views'
+current 900px), the same three-plane elevation ladder with one panel per section, the same
+strip anatomy (kind · folds left, json + id-as-source-link right, all at .62rem
+`--text-faint`), the same rail-with-name, the same Latin Modern content voice against sans
+structure, and the same row rhythm and hairlines. Where a curated layer has no equivalent of a
+tower field, the cell stays empty rather than the layout changing — see the gap rule below.
 - `/errors` and `/metapatterns` are already landscape rows (rail · body) but on the OLD
   system: 900px page, 820px breakpoint, no panels, no elevation ladder, chip-bg highlights.
 - `/skills` is still a `repeat(auto-fill, minmax(300px, 1fr))` card grid — the last one.
