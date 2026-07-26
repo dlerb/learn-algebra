@@ -222,19 +222,25 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
       </div>
       <p v-if="s.note" class="section-note"><RichText :text="t(s.note)" /></p>
 
-      <template v-for="g in s.groups" :key="g.slug">
-        <div v-if="showGroupHeads(s)" class="subhead">
-          <h4>{{ g.title ? t(g.title) : g.slug }}</h4>
-          <NPopover v-if="g.blurb" trigger="click" placement="bottom-start">
-            <template #trigger><button class="info" aria-label="About this group">i</button></template>
-            <div class="pop"><RichText :text="t(g.blurb)" /></div>
-          </NPopover>
-        </div>
+      <!-- ONE PANEL PER SECTION, with the group subheads inside it. Per group it
+           was 37 panels across the tower, and a section like Axioms broke into six
+           — several of them wrapping a single row, which made the panel read as a
+           box around one card rather than as a surface holding a list. Merged, the
+           subheads become dividers WITHIN one continuous surface, which is what
+           they are: the section is the thing, the groups are its parts.
+           ONE template for every card, signatures included. The old signature tile
+           is gone: a `symbol` renders in the maths cell where a statement would,
+           which removed the last layout variant. -->
+      <div class="rows">
+        <template v-for="g in s.groups" :key="g.slug">
+          <div v-if="showGroupHeads(s)" class="subhead">
+            <h4>{{ g.title ? t(g.title) : g.slug }}</h4>
+            <NPopover v-if="g.blurb" trigger="click" placement="bottom-start">
+              <template #trigger><button class="info" aria-label="About this group">i</button></template>
+              <div class="pop"><RichText :text="t(g.blurb)" /></div>
+            </NPopover>
+          </div>
 
-        <!-- ONE template for every card, signatures included. The old signature
-             tile is gone: a `symbol` now simply renders in the maths cell where a
-             statement would, which removed the last layout variant. -->
-        <div class="rows">
           <article
             v-for="c in g.cards" :key="c.id" :id="c.id"
             class="row" :class="{ dimmed: !matched(c, s.kind), targeted: c.id === targetId }"
@@ -318,8 +324,8 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
               <pre v-if="jsonOpen.has(c.id)" class="json">{{ json(c) }}</pre>
             </div>
           </article>
-        </div>
-      </template>
+        </template>
+      </div>
     </section>
   </div>
 </template>
@@ -349,7 +355,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 /* `calc(1rem + 1px)`, not `1rem`: the panel's own 1px border sits inside its box,
    so row content starts a pixel further right than page content would. Without the
    pixel every heading on the page is off by one against every card name. */
-.intro, .group-title, .section-note, .subhead { padding-left: calc(1rem + 1px); padding-right: calc(1rem + 1px); }
+.intro, .group-title, .section-note { padding-left: calc(1rem + 1px); padding-right: calc(1rem + 1px); }
 .intro { margin-bottom: 1.5rem; }
 .title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem .7rem; }
 .intro h2 { font-size: 1.25rem; font-weight: 700; margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.2; }
@@ -403,7 +409,13 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
   color: var(--text); margin: 0;
 }
 .section-note { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: -.1rem 0 .6rem; }
-.subhead { display: flex; align-items: center; gap: .4rem; margin: 1.2rem 0 .35rem; }
+/* A divider inside the panel now, not a heading on the page: its own hairline
+   above, more air than a row gets so the group reads as starting here, and no
+   horizontal padding — the panel already supplies it. */
+.subhead {
+  display: flex; align-items: center; gap: .4rem;
+  margin: 0; padding: 1.15rem 0 .1rem; border-top: 1px solid var(--border);
+}
 .subhead h4 {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: .7rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
@@ -434,8 +446,9 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
   padding: 1.05rem 0 1.15rem; border-top: 1px solid var(--border);
   scroll-margin-top: 4.5rem;
 }
-/* The panel's own edge is the first row's divider. */
-.row:first-child { border-top: none; }
+/* The panel's own edge is the first divider, whatever comes first — a row in a
+   single-group section, a subhead in a multi-group one. */
+.rows > :first-child { border-top: none; }
 @media (min-width: 820px) {
   .row {
     grid-template-columns: minmax(0, 11rem) minmax(0, var(--maths)) minmax(0, var(--measure)) minmax(0, var(--measure));
