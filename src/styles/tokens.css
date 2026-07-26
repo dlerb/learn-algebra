@@ -1,18 +1,42 @@
-/* Design tokens — one quiet, neutral-led palette. Color is reserved for signal
- * (alerts, the true/false accents), never for structure. Defined as custom
- * properties so a later `:root[data-theme="dark"]` block is the only thing dark
- * mode needs — the views already read these vars instead of hardcoded hex. */
+/* Design tokens — one quiet, neutral-led palette. Colour is reserved for signal
+ * (alerts, the true/false accents, a deep-link target), never for structure.
+ *
+ * THE NEUTRALS ARE ONE FAMILY, AND THEY ARE PURE. Every grey below has equal red,
+ * green and blue. That is the fix for a page that read as "a bit blueish" and for
+ * surfaces that seemed to oscillate: the old ramp mixed a cool grey page
+ * (#ebeef2 — blue 7 above red), a barely-tinted band and a pure-white panel, so
+ * the eye kept re-reading the temperature difference as a change in material.
+ * Values are Radix Colors' `gray` scale, which is engineered as a pure neutral;
+ * their `slate` is the blue-tinted one, and hand-rolling greys had produced a bad
+ * slate by accident.
+ *
+ * THREE PLANES, ORDERED BY ELEVATION. In a light UI higher elevation reads
+ * lighter, so:
+ *     --bg      page, lowest   — structure (headings, page furniture) lives here
+ *     --band    middle         — a subdivision INSIDE a panel
+ *     --surface panel, highest — content lives here
+ * The ordering is what stops a stripe inside a white panel reading as a HOLE
+ * punched through to the page behind it. A band painted near the page's own colour
+ * reads as the page showing through; a band clearly lighter than the page cannot,
+ * because nothing recessed is lighter than what it recedes toward.
+ *
+ * Radix's step semantics, which these follow: steps 1–2 are app and subtle
+ * backgrounds, step 3 is a UI-element background, 6–7 are borders, 11–12 are text.
+ *   https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale
+ */
 :root {
-  --bg: #fafafa;          /* page */
-  --surface: #ffffff;     /* card */
-  --border: #ededed;      /* hairline */
-  --border-strong: #e0e1e3;
+  --bg: #f0f0f0;          /* page — gray-3 */
+  --band: #f9f9f9;        /* group stripe / inset block within a panel — gray-2 */
+  --surface: #ffffff;     /* card, the raised plane */
+  --border: #e6e6e6;      /* hairline */
+  --border-strong: #d9d9d9; /* gray-6 */
 
-  --text: #1f2328;        /* primary */
-  --text-muted: #8b8f96;  /* labels, secondary */
-  --text-faint: #b3b7bd;  /* ids, field names */
+  --text: #202020;        /* primary — gray-12 */
+  --text-muted: #646464;  /* labels, secondary — gray-11 */
+  --text-faint: #8d8d8d;  /* ids, field names — gray-9 */
 
   --accent: #4f46e5;      /* interactive / active, used sparingly */
+  --accent-bg: #eef2ff;   /* the one structural use: a deep-link target */
   --good: #3f8f6b;        /* "true form" accent — thin, never a fill */
   --bad: #c0564b;         /* "wrong form" accent — thin, never a fill */
 
@@ -20,7 +44,42 @@
   --warn-fg: #b45309;
   --warn-border: #fcd34d;
 
-  --chip-bg: #f3f4f6;
-  --code-bg: #f6f7f8;
+  /* Darker than the page, so a chip reads as a pill on BOTH planes: a gentle fill
+     on a white panel, a definite one on the page in /errors and /metapatterns. */
+  --chip-bg: #e8e8e8;     /* gray-4 */
+  --code-bg: #f9f9f9;
   --radius: 10px;
+}
+
+/* DARK MODE, prepared but not surfaced. App.vue has NConfigProvider in place and
+ * the views read these vars rather than hex, so turning it on is one prop plus a
+ * toggle that stamps data-theme — no view has to change.
+ *
+ * The elevation ladder INVERTS its values but not its meaning: higher is still
+ * lighter, so the page stays darkest and the panel lightest, and the band still
+ * sits between them. Dark surfaces need bigger steps than light ones to read as
+ * separate, which is why these are further apart than their light counterparts.
+ * Values are Radix `gray` dark. */
+:root[data-theme="dark"] {
+  --bg: #111111;          /* page — gray-1 */
+  --band: #191919;        /* gray-2 */
+  --surface: #202020;     /* panel, the raised plane */
+  --border: #2a2a2a;      /* gray-4 */
+  --border-strong: #3a3a3a; /* gray-6 */
+
+  --text: #eeeeee;        /* gray-12 */
+  --text-muted: #b4b4b4;  /* gray-11 */
+  --text-faint: #7b7b7b;  /* gray-10 */
+
+  --accent: #a5b4fc;      /* lifted: #4f46e5 is unreadable on a dark ground */
+  --accent-bg: #1e1b4b;
+  --good: #6ee7b7;
+  --bad: #fca5a5;
+
+  --warn-bg: #2a2113;
+  --warn-fg: #fbbf24;
+  --warn-border: #78500a;
+
+  --chip-bg: #2a2a2a;     /* gray-4 */
+  --code-bg: #191919;
 }

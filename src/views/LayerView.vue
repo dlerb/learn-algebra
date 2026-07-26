@@ -368,7 +368,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .tag {
   font-size: .68rem; letter-spacing: .01em; padding: .16rem .4rem;
   border-radius: 4px; line-height: 1.4;
-  background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe;
+  /* Tokens, not hex, so the tag follows the theme: the dark block redefines both
+     to a lifted accent on a deep ground. */
+  background: var(--accent-bg); color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
 }
 /* No max-width: the blurb runs the panel width, as asked. Note the consequence —
    at 91rem that is ~205 characters per line, well past the 45–75 that keeps the
@@ -409,17 +412,33 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
   color: var(--text); margin: 0;
 }
 .section-note { font-size: .82rem; line-height: 1.55; color: var(--text-muted); margin: -.1rem 0 .6rem; }
-/* A divider inside the panel now, not a heading on the page: its own hairline
-   above, more air than a row gets so the group reads as starting here, and no
-   horizontal padding — the panel already supplies it. */
+/* A TINTED BAND, and no rules at all. Hairlines already mean "next row", so
+   spending one on "next group" used the same signal for two levels and left the
+   label enclosed between its own rule and the following row's. Whitespace alone
+   was tried and read as an accident — you stop and ask what changed. A band is a
+   third device: its fill is the boundary, so nothing above it and nothing below.
+   Full-bleed across the panel via negative margins, with matching padding so the
+   label keeps the page's shared left edge. */
+/* --band: the MIDDLE rung of the elevation ladder in tokens.css, lighter than the
+   page and darker than the panel. The first attempt used a plain grey near the page
+   colour and read as a hole punched through to the page; the second used the
+   accent tint and competed with the page for attention. A neutral that is
+   unambiguously lighter than the page can be neither.
+   Full-bleed across the panel via negative margins, with matching padding so the
+   label keeps the page's shared left edge. */
 .subhead {
   display: flex; align-items: center; gap: .4rem;
-  margin: 0; padding: 1.15rem 0 .1rem; border-top: 1px solid var(--border);
+  margin: 0 -1rem; padding: .45rem 1rem;
+  background: var(--band);
 }
+/* The band's own edge separates it from what follows. */
+.subhead + .row { border-top: none; }
+/* Flush in the panel's rounded corner when a group starts the section. */
+.rows > .subhead:first-child { border-radius: var(--radius) var(--radius) 0 0; }
 .subhead h4 {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: .7rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--text-faint); margin: 0;
+  font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-muted); margin: 0;
 }
 .info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
 .info:hover { color: var(--accent); border-color: var(--accent); }
@@ -468,7 +487,11 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
    links a mistake to the exact card it breaks, so the ref has to LAND on that
    card. `targeted` says which one you arrived at; scroll-margin clears the app
    header. A tinted band rather than a border, since the row has no box to outline. */
-.row.targeted { background: var(--chip-bg); box-shadow: 0 0 0 .5rem var(--chip-bg); border-radius: 2px; }
+/* A hue, and an accent bar — not a grey fill. Inside a white panel a grey
+   highlight reads as a hole rather than as "you arrived here", and the old
+   .5rem spread shadow bled outside the panel's edge. The inset bar stays within
+   the row and cannot spill. */
+.row.targeted { background: var(--accent-bg); box-shadow: inset 3px 0 0 var(--accent); }
 
 /* --- header strip -------------------------------------------------------- */
 .strip {
@@ -541,7 +564,10 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 
 /* --- full-width blocks --------------------------------------------------- */
 .wide { margin-top: .6rem; }
-.derivation { padding: .5rem .65rem; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; overflow-x: auto; }
+/* --band, not --bg: this block sits INSIDE a white panel, so it takes the ladder's
+   middle rung like the group stripe. Painted the page colour it read as a hole
+   punched through to the page behind. */
+.derivation { padding: .5rem .65rem; background: var(--band); border: 1px solid var(--border); border-radius: 6px; overflow-x: auto; }
 .refs { display: flex; align-items: baseline; flex-wrap: wrap; gap: .35rem .5rem; margin-top: .45rem; }
 .refs-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .details { border-top: 1px solid var(--border); padding-top: .55rem; }
@@ -552,7 +578,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .field dd code { font-size: .74rem; color: var(--text-muted); }
 .json-toggle { margin-top: .55rem; font-size: .68rem; color: var(--text-muted); background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: .12rem .45rem; cursor: pointer; }
 .json-toggle:hover { color: var(--text); }
-.json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: #374151; }
+.json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: var(--text-muted); }
 
 /* Filter dimming */
 .dimmed { opacity: .2; transition: opacity .15s; }
