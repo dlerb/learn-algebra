@@ -821,7 +821,8 @@
               "derivedFrom": [
                 "ix.root",
                 "th.pow-of-quotient",
-                "def.pow-rat"
+                "def.pow-rat",
+                "th.root-exists"
               ],
               "note": {
                 "en": "The same move for the quotient: th.pow-of-quotient at the exponent $\\frac{1}{n}$, read back as a radical. The one caveat the product form does not have is $b > 0$, not merely $b \\ge 0$: the product tolerates a zero factor, but here $b$ sits under a division, and $\\sqrt[n]{a/0}$ names nothing.",
