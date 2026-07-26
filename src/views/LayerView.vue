@@ -174,7 +174,6 @@ const matched = (c: Card, kind: string) =>
 // Per-card disclosure. `expand` is keyed `id:i` / `id:n` because the two prose
 // cells clip independently.
 const expand = ref(new Set<string>())
-const open = ref(new Set<string>())
 const jsonOpen = ref(new Set<string>())
 const derivOpen = ref(new Set<string>())
 const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add(id))
@@ -260,8 +259,18 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
                   >{{ refName(r) }}</RouterLink>
                 </span>
               </details>
-              <button class="disclose" @click="toggle(open, c.id)">{{ open.has(c.id) ? 'less' : 'details' }}</button>
-              <span class="strip-right"><OpenInSource :id="c.id" :label="c.id" /></span>
+              <span class="strip-right">
+                <!-- The `details` block this replaces listed id, kind and concerns —
+                     every one of which the row now shows: the id IS this strip's
+                     source link, kind opens the strip, and concerns are the rail's
+                     glyphs. It had become a wrapper around a wrapper around the
+                     json, so the json is the fold now, one click instead of two.
+                     Styled as a fold like `rests on`, because that is what it is. -->
+                <button class="jfold" @click="toggle(jsonOpen, c.id)">
+                  {{ jsonOpen.has(c.id) ? '▾' : '▸' }} json
+                </button>
+                <OpenInSource :id="c.id" :label="c.id" />
+              </span>
             </div>
 
             <div class="rail">
@@ -314,15 +323,7 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
               </div>
             </div>
 
-            <div v-if="open.has(c.id)" class="wide details">
-              <dl class="fields">
-                <div class="field"><dt>id</dt><dd><code>{{ c.id }}</code></dd></div>
-                <div class="field"><dt>kind</dt><dd>{{ s.kind }}</dd></div>
-                <div v-if="c.concerns" class="field"><dt>concerns</dt><dd>{{ c.concerns.join(', ') }}</dd></div>
-              </dl>
-              <button class="json-toggle" @click="toggle(jsonOpen, c.id)">{{ jsonOpen.has(c.id) ? 'hide json' : 'json' }}</button>
-              <pre v-if="jsonOpen.has(c.id)" class="json">{{ json(c) }}</pre>
-            </div>
+            <pre v-if="jsonOpen.has(c.id)" class="wide json">{{ json(c) }}</pre>
           </article>
         </template>
       </div>
@@ -506,9 +507,12 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .fold-body { display: inline-flex; flex-wrap: wrap; gap: .3rem .5rem; padding: .25rem 0 0 .8rem; }
 .ref { color: var(--text-muted); text-decoration: none; }
 .ref:hover { color: var(--accent); text-decoration: underline; }
-.disclose { font-size: .62rem; color: var(--text-faint); background: none; border: none; cursor: pointer; padding: 0; }
-.disclose:hover { color: var(--text-muted); }
-.strip-right { margin-left: auto; padding-left: .6rem; }
+/* Matches `.fold summary` exactly — same size, colour, marker — so the two
+   affordances in the strip read as the same kind of thing, one opening references
+   and one opening the record. */
+.jfold { font-size: .62rem; color: var(--text-faint); background: none; border: none; cursor: pointer; padding: 0; font-family: inherit; }
+.jfold:hover { color: var(--text-muted); }
+.strip-right { margin-left: auto; padding-left: .6rem; display: inline-flex; align-items: baseline; gap: .6rem; }
 
 /* --- rail ---------------------------------------------------------------- */
 .rail { min-width: 0; }
@@ -574,14 +578,6 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
 .derivation { padding: .5rem .65rem; background: var(--band); border: 1px solid var(--border); border-radius: 6px; overflow-x: auto; }
 .refs { display: flex; align-items: baseline; flex-wrap: wrap; gap: .35rem .5rem; margin-top: .45rem; }
 .refs-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-.details { border-top: 1px solid var(--border); padding-top: .55rem; }
-.fields { margin: 0; display: grid; gap: .32rem; }
-.field { display: grid; grid-template-columns: 92px 1fr; gap: .5rem; align-items: baseline; }
-.field dt { font-size: .7rem; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-.field dd { margin: 0; font-size: .8rem; color: var(--text); }
-.field dd code { font-size: .74rem; color: var(--text-muted); }
-.json-toggle { margin-top: .55rem; font-size: .68rem; color: var(--text-muted); background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: .12rem .45rem; cursor: pointer; }
-.json-toggle:hover { color: var(--text); }
 .json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: var(--text-muted); }
 
 /* Filter dimming */

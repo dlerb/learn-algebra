@@ -67,7 +67,9 @@ async function open() {
 .open-src-btn {
   padding: 0 .3rem; border: 1px solid var(--border); border-radius: 4px;
   background: transparent; color: var(--text-faint);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .58rem;
+  /* .62rem to match the strip's other affordances (`rests on`, `json`), which are
+     the same size and colour — the three read as one row of controls. */
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .62rem;
   line-height: 1.5; cursor: pointer;
 }
 .open-src-btn:hover:not(:disabled) { color: var(--text-muted); border-color: var(--text-faint); }
