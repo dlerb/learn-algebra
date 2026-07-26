@@ -29,82 +29,59 @@ KaTeX is the critical dependency: all expressions must render as proper mathemat
 
 ---
 
-## Authoring tooling — the content pipeline and the in-app editor (2026-07-25)
+## Authoring tooling — the content pipeline (2026-07-25, editor removed 2026-07-26)
 
-The content is ~450 KB of JSON under `src/data`, and by now the bottleneck is not writing
-it but *improving* it: fixing a German sentence when you notice it, which happens while
-reading the page, not while sitting in a JSON file where the neighbouring cards are
-invisible. Everything below exists to make that edit cheap without giving up git, the
-load-time validators, or the ability to grep the content.
+The content is ~450 KB of JSON under `src/data`. Authoring happens **in VS Code**, and the
+app's job is to make that easy to aim rather than to replace it: a dev-only `source` button
+on every entity opens its exact line. An in-app prose editor was built on 2026-07-25 and
+**removed on 2026-07-26** — the deep link plus VS Code side by side on a desktop monitor
+turned out to be enough, and with one author for the foreseeable future the write path was
+machinery earning nothing. `docs/TODO.md` records the commit to restore it from.
 
-**Two processes, and the boundary between them is the whole design.** `vite.config.ts` runs
-in **Node** as the dev server and imports the `scripts/*.mjs` modules — which is why they
-may use `node:fs` and write to disk. The app in `src/` runs in the **browser** and imports
-none of them; `ProseEditor.vue` reaches the write path only over HTTP. **`src/` must never
-import from `scripts/`** — the build would try to bundle `node:fs` and fail. That boundary
-is also why the feature cannot exist in production: no dev server, no Node process, no
-endpoints. The built site renders no editor and answers 404 to `/__content/write`.
+**Two processes, and the boundary between them is the design.** `vite.config.ts` runs in
+**Node** as the dev server and imports the `scripts/*.mjs` modules — which is why they may
+use `node:fs` and read the repo. The app in `src/` runs in the **browser** and imports none
+of them; `OpenInSource.vue` reaches the resolver only over HTTP. **`src/` must never import
+from `scripts/`** — the build would try to bundle `node:fs` and fail. That boundary is also
+why the feature cannot exist in production: no dev server, no Node process, no endpoint. The
+built site renders no buttons and answers 404.
 
-**Three invariants, each enforced, each a precondition for the next.**
+**Three invariants, each enforced.** They were introduced for the editor, and all three keep
+paying for themselves without it:
 
 1. **One canonical form.** `serializeContent` (`scripts/content-format.mjs`) is the only
-   serializer: `JSON.stringify(v, null, 2)` plus a trailing newline. Every writer imports
-   it rather than calling `JSON.stringify` with its own options, because two writers that
-   merely *intend* the same style will drift, and a disagreement shows up as a one-word fix
-   arriving in `git diff` as sixteen hunks of re-indentation. `pnpm format-content`
-   normalizes, and the check runs first in `pnpm validate`. VS Code formats JSON on save to
-   match. **No Prettier**: its object expansion is input-sensitive, so it is not canonical
-   in the required sense and can ping-pong against `JSON.stringify`.
+   serializer: `JSON.stringify(v, null, 2)` plus a trailing newline. Any writer — the author
+   in VS Code, Claude Code, a script — produces the same bytes, so a one-word fix arrives in
+   `git diff` as one line rather than sixteen hunks of re-indentation. `pnpm format-content`
+   normalizes; the check runs first in `pnpm validate`; VS Code formats JSON on save to
+   match. **No Prettier**: its object expansion is input-sensitive, so it is not canonical in
+   the required sense and can ping-pong against `JSON.stringify`.
 2. **Globally unique entity ids.** Every addressable thing in all seven layers — a card, an
-   error, a meta-pattern, a skill, a layer head — is a JSON object with an `id`, 218 of
-   them, unique across all 23 files and guarded by `pnpm check-ids`. This is what lets a
+   error, a meta-pattern, a skill, a layer head — is a JSON object with an `id`, 218 of them,
+   unique across all 23 files and guarded by `pnpm check-ids`. That is what lets a
    *shape-blind* walk (`entityPaths` in `scripts/content-ids.mjs`) find any entity without
    knowing that the tower nests `sections→groups→cards` while skills nest
-   `kinds→groups→skills` across four files. Reshaping a layer does not touch the resolver:
-   it is coupled to the **identity** model, not the **containment** model.
-3. **One set of prose rules.** `scripts/content-prose.mjs`, shared by `pnpm sweep-layers`
-   and the write path, so the editor cannot accept text the sweep later rejects. Two tiers:
-   **KaTeX correctness** (every `$…$` compiles with no macros, delimiters pair) applies
-   everywhere; **house style** (no em dash, no `ß`, no retired "sign"/"Vorzeichen") applies
-   to the **tower only** — `errors.json` uses em dashes in its own head and is right to.
+   `kinds→groups→skills` across four files. The resolver is coupled to the **identity**
+   model, not the **containment** model, so reshaping a layer does not touch it.
+3. **One set of prose rules.** `scripts/content-prose.mjs`, used by `pnpm sweep-layers`. Two
+   tiers: **KaTeX correctness** (every `$…$` compiles with no macros, delimiters pair)
+   everywhere; **house style** (no em dash, no `ß`, no retired "sign"/"Vorzeichen") in the
+   **tower only** — `errors.json` uses em dashes in its own head and is right to.
 
-**The endpoints** (`scripts/vite-content-editor.mjs`, `apply: 'serve'`): `GET
-/__content/locate` → file and line, `GET /__content/fields` → the writable prose,
-`POST /__content/write` → one localized string. **The client never sends a path.** A path
+**The endpoint** (`scripts/vite-content-locator.mjs`, `apply: 'serve'`): `GET
+/__content/locate?id=…` → `{ file, line, path }`. **The client sends only an id.** A path
 computed in the browser can go stale the moment the file is edited elsewhere — a card
-inserted above in VS Code shifts every index below it — so every request carries a stable id
-and the path is derived server-side, per request, from the bytes about to be read or
-written. Nothing is cached between requests. There is no authentication because there is no
-server to authenticate against: this runs on the author's machine, bound to localhost.
+inserted above in VS Code shifts every index below it — so the path and line are derived
+server-side, per request, from the bytes on disk at that moment. Nothing is cached.
 
-**What may be written is decided server-side**, in `scripts/content-write.mjs`, not in the
-UI: the browser decides what to *offer*, that decides what is *allowed*. `WRITABLE_FIELDS`
-is `name · note · intuition · fix · rule · meta.characterizes · meta.note`. Three guards,
-each ruling out a different accident — the allowlist keeps `id`, `basedOn`, `corrupts` and
-the rest unreachable, so the editor **cannot** break the ~197 cross-references; a field must
-already exist, so a typo'd name fails loudly instead of quietly growing a key no view reads;
-and the prose rules run before the write lands. An editor that can only touch leaf strings
-is one you can use quickly and carelessly, which is the point.
+`OpenInSource.vue` hands `file:line` to Vite's own `/__open-in-editor`; `LAUNCH_EDITOR` is
+pinned to `code` because launch-editor guesses the editor from running processes and that
+fails under WSL, where VS Code is a Windows process invisible to a Linux `ps` and `code` on
+PATH is the interop shim.
 
-**Localization follows the data rather than forcing it.** Cards, errors and meta-patterns
-carry `{en, de}`; all 96 skills prose fields are bare English-only strings, which the schema
-reads as English. Editing `en` on a bare string leaves it bare; typing `de` promotes it to a
-pair — that is how a translation gets added without a source edit.
-
-**Two UI components, both dev-only, both generic over all seven layers** because they need
-nothing but an id: `OpenInSource.vue` (hands `file:line` to Vite's own `/__open-in-editor`;
-`LAUNCH_EDITOR` is pinned to `code` because launch-editor's process-guessing fails under WSL,
-where VS Code is a Windows process invisible to a Linux `ps`) and `ProseEditor.vue` (en/de
-textareas, with a live KaTeX preview under any field carrying `$…$` — the one thing the app
-does that an editor cannot, and the only real argument for editing here at all). Saving
-triggers a full HMR reload, so the panel closes; the hash is set *before* the write, so the
-page lands back on the card. One editor may be open at a time, so a reload cannot discard
-unsaved text elsewhere.
-
-**Known limits**, listed in `docs/TODO.md`: the panel inherits the card's width and is too
-narrow for two languages of a paragraph (layout thread open); sections and groups are not
-addressable, since they carry `slug` rather than `id`; and `instances[].hint` needs an index
-in the field path.
+**Not reachable by id**, should it ever matter again: sections and groups (they carry `slug`,
+not `id`) and `instances[].hint` on an error (nested in an array, so a field path would need
+an index).
 
 ---
 

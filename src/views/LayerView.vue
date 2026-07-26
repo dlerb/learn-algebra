@@ -6,7 +6,6 @@ import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import WrongRight from '../components/WrongRight.vue'
 import OpenInSource from '../components/OpenInSource.vue'
-import ProseEditor from '../components/ProseEditor.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
 import { layerById, cardIndex, CONCERN_TOKENS, type Card, type Group, type Section } from '../data/layers'
@@ -99,9 +98,6 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
         <span class="tag field">≙ {{ t(meta.characterizes) }}</span>
       </div>
       <p class="lead"><RichText :text="t(meta.note)" /></p>
-      <!-- The layer head is an entity like any other (its `id` is the layer id), so
-           its `meta.characterizes` and `meta.note` are writable by the same path. -->
-      <ProseEditor :id="layer.id" />
 
       <div class="filters">
         <div class="filter-row">
@@ -146,7 +142,6 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
               </div>
               <div class="op-name">{{ t(c.name) }}</div>
               <p v-if="c.note" class="op-note"><RichText :text="t(c.note)" /></p>
-              <ProseEditor :id="c.id" />
             </article>
 
             <!-- Every other card. Each part appears iff its field is present, so a
@@ -193,8 +188,6 @@ const json = (x: unknown) => JSON.stringify(x, null, 2)
                 <button class="json-toggle" @click="toggle(jsonOpen, c.id)">{{ jsonOpen.has(c.id) ? 'hide json' : 'json' }}</button>
                 <pre v-if="jsonOpen.has(c.id)" class="json">{{ json(c) }}</pre>
               </div>
-
-              <ProseEditor :id="c.id" />
             </article>
           </template>
         </div>

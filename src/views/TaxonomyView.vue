@@ -4,7 +4,6 @@ import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import OpenInSource from '../components/OpenInSource.vue'
-import ProseEditor from '../components/ProseEditor.vue'
 import { skills, drills, groups, skillKinds, metaPatterns, errorPatterns, rawById } from '../data'
 import { loc, type Skill, type Drill } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
@@ -238,8 +237,6 @@ function hasErrors(c: CardVM): boolean {
             <button class="json-toggle" @click="toggleJson(c.id)">{{ jsonOpen.has(c.id) ? 'hide json' : 'json' }}</button>
             <pre v-if="jsonOpen.has(c.id)" class="json">{{ c.json }}</pre>
           </div>
-
-          <ProseEditor :id="c.id" />
         </article>
       </div>
     </section>

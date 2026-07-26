@@ -75,23 +75,19 @@ load time in `src/data/layers.ts`, so a broken citation throws rather than rende
 Stack: Vue 3 + TypeScript + Vite, naive-ui, UnoCSS, Pinia, vue-router, KaTeX, Zod,
 Compute Engine.
 
-## Editing content in the app (dev only)
+## Authoring: jump from the page to the source (dev only)
 
-Under `pnpm dev`, every card, error, meta-pattern, skill and layer head grows two small
-author-only buttons: **`source`** opens that entity's line in VS Code, and **`edit prose`**
-opens `en`/`de` textareas for its prose, with a live KaTeX preview of any `$…$`. Saving
-writes the JSON file on disk, so the change lands as an ordinary `git diff` you review and
-commit; Vite reloads and the page returns to the card you were on.
+Content is edited in VS Code. Under `pnpm dev`, every card, error, meta-pattern, skill and
+layer head grows a small author-only **`source`** button that opens that entity's exact line
+in the editor — the page shows a card among its neighbours, the source shows it with no
+context at all, and this is the bridge. With the browser and VS Code side by side on one
+monitor that is the whole authoring loop.
 
-The editor is scoped to **prose only** — `name`, `note`, `intuition`, `fix`, `rule`,
-`meta.*`. It cannot touch ids, `basedOn`/`corrupts`/`restsOn`, card order, or the `latex`
-fields, and that is enforced on the server, not in the UI. An editor that only reaches leaf
-strings cannot break the ~197 cross-references, which is what makes it safe to use without
-care; everything else stays VS Code work, which is what the `source` button is for.
-
-None of this exists in a build: the endpoints live in a `apply: 'serve'` Vite plugin, so the
-deployed site renders no buttons and answers 404. See `docs/app_design.md` →
-"Authoring tooling" for the architecture and its invariants.
+Nothing writes: the resolver is a single read-only `GET /__content/locate?id=…` in an
+`apply: 'serve'` Vite plugin, so the deployed site has no button and no endpoint. An in-app
+prose editor existed briefly (2026-07-25 to 2026-07-26) and was removed as unnecessary; see
+`docs/app_design.md` → "Authoring tooling" for the architecture and the three content
+invariants it left behind, and `docs/TODO.md` for the commit to restore it from.
 
 ## Prose format
 

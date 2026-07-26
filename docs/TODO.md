@@ -4,7 +4,62 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — the editor's LAYOUT, and the fields it still cannot reach (2026-07-25)
+## NEXT SESSION — ONE ROW LAYOUT for all four content views (2026-07-26)
+
+**Decided:** rows everywhere, consistently. All of this content is for **look-up**, not
+front-to-back reading, and the card grid produces a restless ragged right edge — cards
+stacked vertically *and* horizontally, each drawing its own box. Rows are quieter.
+`/errors` and `/metapatterns` already are rows (rail · body, hairline separators); the tower
+and `/skills` are still `repeat(auto-fill, minmax(300px, 1fr))` grids. Unify on the row.
+
+**It must be aesthetically pleasing.** This is the actual requirement, not a finishing touch:
+nobody reads these cards unless the design draws them in. Judge every step against that.
+
+**Mobile is a first-class target, and rows make it simpler, not harder.** Below 560px the
+card grids already collapse to one column — a phone is *already* seeing rows, so the
+multi-column grid is the exception, not the mobile view a fallback. Note also that the four
+views currently use **two different breakpoints for the same job**: 560px in
+`LayerView`/`TaxonomyView`, 820px in `ReferenceView`/`MetapatternsView`. One shell, one
+number.
+
+Order of work: (1) inventory what each layer actually has to display; (2) design one row
+anatomy that fits all of them; (3) build it as a shared shell with the body as a slot —
+the bodies genuinely differ (latex statement · WrongRight pairs · pitfalls · a rule) and
+forcing them into one component would be prop soup.
+
+Constraints to carry: keep `overflow-x: auto` on every display-math container
+(`.statement`, `.derivation`, `.forms`, WrongRight's `.cand`) — unwrappable KaTeX is what
+breaks maths pages on phones, and it is already handled; the identity rail must **stack**
+below the breakpoint, never shrink; and `.ops` (signature cards: a glyph over a type) is the
+one place a tile grid genuinely earns its keep — those are short, homogeneous and meant to be
+compared at a glance.
+
+**The drill layer is a separate question** and stays frozen — see below.
+
+---
+
+## Removed 2026-07-26 — the in-app prose editor
+
+**Do not rebuild it without asking.** Built 2026-07-25, removed the next day: the `source`
+deep link plus VS Code side by side on a desktop monitor turned out to be enough, and with
+one author for the foreseeable future the write path was machinery earning nothing.
+
+Restore from **`62ea8d2`** (`merge: edit card prose in place`) if that judgement changes;
+`git show 62ea8d2` has the whole thing. What was deleted: `src/components/ProseEditor.vue`,
+`scripts/content-write.mjs`, and the `/__content/fields` + `/__content/write` routes.
+
+**Kept, because they pay for themselves independently:** canonical JSON
+(`pnpm format-content`), global id uniqueness (`pnpm check-ids`), the shared prose rules
+(`scripts/content-prose.mjs`), the id resolver and the `source` button. See
+`docs/app_design.md` → "Authoring tooling".
+
+If the editor ever comes back, the two gaps it never closed were: sections and groups are not
+addressable (they carry `slug`, not `id` — prefer giving them ids over teaching the resolver a
+second address form), and `instances[].hint` needs an index in the field path.
+
+---
+
+## Superseded — the editor's layout and unreachable fields (2026-07-25)
 
 The card editor is **built** (see "DONE — the card editor" below, and
 `docs/app_design.md` → "Authoring tooling" for the architecture). Two threads left, in

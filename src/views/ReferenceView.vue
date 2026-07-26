@@ -5,7 +5,6 @@ import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
 import WrongRight from '../components/WrongRight.vue'
 import OpenInSource from '../components/OpenInSource.vue'
-import ProseEditor from '../components/ProseEditor.vue'
 import { errorTree, skills, metaPatterns } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type ErrorDef, type LocalizedString } from '../data/skill.schema'
@@ -174,8 +173,6 @@ const sections = computed(() => errorTree.sections.map(s => ({
             <button class="json-toggle" @click="toggle(jsonOpen, e.id)">{{ jsonOpen.has(e.id) ? 'hide json' : 'json' }}</button>
             <pre v-if="jsonOpen.has(e.id)" class="json">{{ e.json }}</pre>
           </div>
-
-          <ProseEditor v-if="inspect" :id="e.id" />
         </article>
       </div>
     </section>
