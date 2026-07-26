@@ -25,9 +25,18 @@
  *   https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale
  */
 :root {
-  --bg: #f0f0f0;          /* page — gray-3 */
-  --band: #f9f9f9;        /* group stripe / inset block within a panel — gray-2 */
-  --surface: #ffffff;     /* card, the raised plane */
+  /* The band is Radix STEP 3 — "UI element background", the step meant for a
+     subdivision inside a surface. The first pass put step 2 (#f9f9f9, a subtle
+     *page* background) here and pushed step 3 down to the page, which left the
+     band six values from white and nine from the page: far closer to the panel
+     than to anything else, so its edges dissolved into the white.
+     Note the constraint this forces. For the band to be clearly distinct from the
+     panel AND still lighter than the page, the page must sit below it — there is
+     no room between #f0f0f0 and #ffffff for a third step that reads as either. So
+     the page takes step 4. */
+  --bg: #e8e8e8;          /* page, lowest — gray-4 */
+  --band: #f0f0f0;        /* subdivision inside a panel — gray-3 */
+  --surface: #ffffff;     /* panel, highest */
   --border: #e6e6e6;      /* hairline */
   --border-strong: #d9d9d9; /* gray-6 */
 
@@ -46,8 +55,8 @@
 
   /* Darker than the page, so a chip reads as a pill on BOTH planes: a gentle fill
      on a white panel, a definite one on the page in /errors and /metapatterns. */
-  --chip-bg: #e8e8e8;     /* gray-4 */
-  --code-bg: #f9f9f9;
+  --chip-bg: #e0e0e0;     /* gray-5 — a step below the page, so it reads on both planes */
+  --code-bg: #f0f0f0;
   --radius: 10px;
 }
 
@@ -61,9 +70,9 @@
  * separate, which is why these are further apart than their light counterparts.
  * Values are Radix `gray` dark. */
 :root[data-theme="dark"] {
-  --bg: #111111;          /* page — gray-1 */
-  --band: #191919;        /* gray-2 */
-  --surface: #202020;     /* panel, the raised plane */
+  --bg: #111111;          /* page, lowest — gray-1 */
+  --band: #191919;        /* subdivision inside a panel — gray-2 */
+  --surface: #222222;     /* panel, highest — gray-3 */
   --border: #2a2a2a;      /* gray-4 */
   --border-strong: #3a3a3a; /* gray-6 */
 
