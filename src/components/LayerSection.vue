@@ -14,7 +14,9 @@ import RichText from './RichText.vue'
 // around one card; per entry it is 101 boxes and a mosaic. Group subheads go in
 // the default slot as bands INSIDE the one surface.
 defineProps<{
-  title: string
+  /** Omitted by a FLAT layer — the rules registry is a list of sentences with no
+   *  structure to give it, so it renders one panel and no heading at all. */
+  title?: string
   /** Visible under the heading, on the page plane. */
   note?: string
   /** Behind the info dot — the level of detail a reader asks for. */
@@ -26,7 +28,7 @@ defineProps<{
   <section class="section">
     <!-- No rule under the heading: the panel's own top edge sits a few pixels
          below it, so a border here made two horizontal lines in a row. -->
-    <div class="section-title">
+    <div v-if="title" class="section-title">
       <h3>{{ title }}</h3>
       <NPopover v-if="about" trigger="click" placement="bottom-start">
         <template #trigger><button class="info" aria-label="About this section">i</button></template>

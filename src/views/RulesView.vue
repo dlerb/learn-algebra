@@ -1,183 +1,146 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
-import OpenInSource from '../components/OpenInSource.vue'
+import LayerPage from '../components/LayerPage.vue'
+import LayerSection from '../components/LayerSection.vue'
+import LayerRow from '../components/LayerRow.vue'
+import RefFold from '../components/RefFold.vue'
 import { ruleTree, rules, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type RuleDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
-import { inspect, inspectAvailable } from '../inspect'
+import { inspect } from '../inspect'
 
-// The DECODING lens, and the second curated page to get the presentation /
-// inspection split (src/inspect.ts). A rule is the POSITIVE twin of an
-// error: /errors says "here is the mistake, here is the fix", this page says
-// "here is the reading rule that stops it happening". Both halves of that pairing
-// are derived, never authored — rule → summarizes → card ← corrupts ←
-// error — which is why neither layer references the other directly.
+// THE DO/IS REGISTRY. A flat collection of student-facing sentences, each saying
+// what a written form IS or what to DO with it.
+//
+// The entries carry no context of their own — that is the design, not a gap
+// (src/data/skill.schema → Rules). So this page is built almost entirely out of
+// REVERSE INDEXES: the mistakes a sentence prevents and the skills that teach it
+// are found by asking who cites it, never by reading anything on the sentence.
+// Which is also why the page cannot go stale — it says exactly what the rest of
+// the data says about each sentence, or nothing.
+//
+// ON THE ROW SHELL since 2026-07-27 (Layer{Page,Section,Row}), and it is the FLAT
+// case: no sections, one panel, `LayerSection` with no title. A registry of
+// sentences has no structure to give it, and the container tolerating that was
+// half the point of building this layer before the manifest unification.
 const t = (ls: LocalizedString) => loc(ls, lang.value)
+
 const L = computed(() => lang.value === 'de'
-  ? { reads: 'liest', prevents: 'verhindert' }
-  : { reads: 'reads',  prevents: 'prevents' })
+  ? { reads: 'liest',  drills: 'geübt in',  prevents: 'verhindert' }
+  : { reads: 'reads',  drills: 'drilled by', prevents: 'prevents' })
 
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
 
-const citedRules = new Set(skills.flatMap(s => s.rules))
-const unused = computed(() => rules.filter(m => !citedRules.has(m.id)).length)
+// THE THREE INDEXES, two of them backwards.
+//   errors  — `error.rules`, authored 2026-07-27. This used to be derived
+//             through the cards (rule → summarizes → card ← corrupts ← error),
+//             which guessed and capped at four; now it is exactly what /errors
+//             shows, because it is the same edge read the other way.
+//   skills  — `skill.rules`.
+//   reads   — the one FORWARD edge, `summarizes`: the bridge claim that this
+//             sentence is the student-facing form of those formal statements.
+const preventedBy = (m: RuleDef) => errorPatterns
+  .filter(e => e.rules.includes(m.id))
+  .sort((a, b) => b.frequency - a.frequency)
+  .map(e => ({ id: e.id, name: t(e.name), frequency: e.frequency, to: `/errors#${e.id}` }))
 
-const open = ref(new Set<string>())
-const jsonOpen = ref(new Set<string>())
-const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add(id))
+const drilledBy = (m: RuleDef) => skills
+  .filter(s => s.rules.includes(m.id))
+  .map(s => ({ id: s.id, name: t(s.name), to: `/skills#${s.id}` }))
 
-function cardLink(id: string) {
-  const e = cardIndex.get(id)
-  return { id, name: e ? t(e.card.name) : id, layer: e?.layer.slug }
-}
+const readsOf = (m: RuleDef) => m.summarizes.map(id => {
+  const c = cardIndex.get(id)
+  return { id, name: c ? t(c.card.name) : id, to: `/${c?.layer.slug}#${id}` }
+})
 
-// The mirror of the /errors page's "read more" link, walked the other way: the
-// mistakes this rule heads off. Capped, because `rule.dominant-op-last` reaches
-// five and the error names are sentence-length.
-const PREVENTS_LIMIT = 4
-function preventedBy(m: RuleDef) {
-  const cards = new Set(m.summarizes)
-  return errorPatterns
-    .filter(e => e.corrupts.some(c => cards.has(c)))
-    .sort((a, b) => b.frequency - a.frequency)
-    .slice(0, PREVENTS_LIMIT)
-    .map(e => ({ id: e.id, name: t(e.name) }))
-}
+// A sentence nothing cites is dead weight: context is the only thing that gives
+// it meaning, and with no error and no skill behind it there is none to give.
+// REACH AS GARBAGE COLLECTION, not as an admission test — what belongs in the
+// registry is whatever turns out to be important, however narrowly it is used.
+const items = computed(() => rules.map(m => {
+  const errors = preventedBy(m), sk = drilledBy(m)
+  return {
+    id: m.id, kind: m.kind, rule: t(m.rule), note: t(m.note),
+    errors, skills: sk, reads: readsOf(m),
+    orphan: errors.length === 0 && sk.length === 0,
+    raw: m,
+  }
+}))
+const orphans = computed(() => items.value.filter(i => i.orphan).length)
 
-const items = computed(() => rules.map(m => ({
-  // `rule` is the SENTENCE (was `name`) and `note` its gloss (was `rule`) —
-  // renamed 2026-07-27, because the headline always was the rule.
-  id: m.id, kind: m.kind, rule: t(m.rule), note: t(m.note),
-  cards: m.summarizes.map(cardLink),
-  errors: preventedBy(m),
-  unused: !citedRules.has(m.id), json: JSON.stringify(m, null, 2),
-})))
+// THREE COLUMNS: the sentence | its gloss | the mistakes it prevents.
+// The rail is wider than the tower's 11rem because what sits in it is a
+// SENTENCE, not a name — up to 58 characters. The two prose columns keep the
+// shared 26rem measure. The skills that teach a rule fold into the strip
+// instead: rule.dominant-op-last is drilled by 13 of them, which is a list and
+// not a column, while nothing prevents more than three mistakes.
+const COLS = 'minmax(0, 24rem) minmax(0, var(--measure)) minmax(0, var(--measure))'
 </script>
 
 <template>
-  <div class="rulesv">
-    <div class="layer-bar">
-      <div class="bar-left">
-        <h2 class="rulesv-title">{{ t(ruleTree.meta.title) }}</h2>
-        <NPopover v-if="inspect" trigger="click" placement="bottom-start">
-          <template #trigger><button class="info" aria-label="About the rules">i</button></template>
-          <div class="pop"><RichText :text="t(ruleTree.meta.note)" /></div>
-        </NPopover>
-      </div>
-      <div class="bar-right">
-        <span v-if="inspect && unused" class="unused-chip" title="cited by no skill yet">{{ unused }} unused</span>
-        <button v-if="inspectAvailable" class="mode-toggle" :class="{ on: inspect }" @click="inspect = !inspect">
-          {{ inspect ? 'inspecting' : 'inspect' }}
-        </button>
-      </div>
-    </div>
-    <p class="role">{{ t(ruleTree.meta.blurb) }}</p>
+  <LayerPage
+    :title="t(ruleTree.meta.title)"
+    :lead="t(ruleTree.meta.blurb)"
+    :about="inspect ? t(ruleTree.meta.note) : undefined"
+    :cols="COLS"
+  >
+    <template #bar-right>
+      <span v-if="inspect && orphans" class="orphan-chip" title="cited by no error and no skill">{{ orphans }} orphaned</span>
+    </template>
 
-    <!-- Flat: eleven rules need no sections. Same landscape row as /errors so the
-         Curated group reads as one thing — name in the rail, the rule in the wide
-         column, derived cross-links underneath. -->
-    <div class="entries">
-      <article
-        v-for="m in items" :key="m.id" :id="m.id"
-        class="entry" :class="{ unused: inspect && m.unused, targeted: m.id === targetId }"
+    <!-- No title: the list is flat, so there is nothing to head it with. -->
+    <LayerSection>
+      <LayerRow
+        v-for="m in items" :key="m.id"
+        :id="m.id" :name="m.rule" :record="m.raw"
+        :kind="inspect ? m.kind : undefined"
+        :targeted="m.id === targetId"
       >
-        <div class="rail">
-          <div v-if="inspect" class="card-top">
-            <span class="eyebrow">{{ m.kind }} · {{ m.id }}</span>
-            <span class="top-right">
-              <span v-if="m.unused" class="badge unused">unused</span>
-              <OpenInSource :id="m.id" />
-              <button class="disclose" @click="toggle(open, m.id)">{{ open.has(m.id) ? 'less' : 'details' }}</button>
-            </span>
-          </div>
-          <h4 class="name">{{ m.rule }}</h4>
-        </div>
+        <template #folds>
+          <RefFold :label="L.reads" :links="m.reads" />
+          <RefFold :label="L.drills" :links="m.skills" derived />
+        </template>
 
-        <p class="rule"><RichText :text="m.note" /></p>
+        <div class="cell muted gloss"><RichText :text="m.note" /></div>
 
-        <div v-if="m.cards.length || m.errors.length" class="refs">
-          <p v-if="m.cards.length" class="ref-line">
-            <span class="ref-label">{{ L.reads }}</span>
-            <RouterLink v-for="c in m.cards" :key="c.id" class="chip card" :to="`/${c.layer}#${c.id}`">{{ c.name }}</RouterLink>
-          </p>
-          <p v-if="m.errors.length" class="ref-line">
-            <span class="ref-label">{{ L.prevents }}</span>
-            <RouterLink v-for="e in m.errors" :key="e.id" class="chip" :to="`/errors#${e.id}`">{{ e.name }}</RouterLink>
-          </p>
+        <!-- THE PITCH OF THE WHOLE LAYER: learn this one sentence and these
+             mistakes stop happening. Derived, hence the arrows — it is
+             `error.rules` read backwards, so it can never disagree with what
+             /errors shows. Uncapped, because nothing prevents more than three;
+             the old card-mediated version needed a cap of four. -->
+        <div v-if="m.errors.length" class="cell prevents">
+          <span class="label">{{ L.prevents }}</span>
+          <RouterLink v-for="e in m.errors" :key="e.id" class="prevent" :to="e.to">
+            <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '★'.repeat(e.frequency) }}</span>
+          </RouterLink>
         </div>
-
-        <div v-if="inspect && open.has(m.id)" class="details">
-          <dl class="fields">
-            <div class="field"><dt>id</dt><dd><code>{{ m.id }}</code></dd></div>
-            <div v-if="m.cards.length" class="field">
-              <dt>summarizes</dt>
-              <dd><span v-for="c in m.cards" :key="c.id" class="chip">{{ c.id }} · {{ c.name }}</span></dd>
-            </div>
-          </dl>
-          <button class="json-toggle" @click="toggle(jsonOpen, m.id)">{{ jsonOpen.has(m.id) ? 'hide json' : 'json' }}</button>
-          <pre v-if="jsonOpen.has(m.id)" class="json">{{ m.json }}</pre>
-        </div>
-      </article>
-    </div>
-  </div>
+      </LayerRow>
+    </LayerSection>
+  </LayerPage>
 </template>
 
 <style scoped>
-.rulesv { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
-
-.layer-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem; }
-.bar-left { display: flex; align-items: center; gap: .5rem; }
-.bar-right { display: flex; align-items: center; gap: .6rem; }
-.rulesv-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; }
-.role { margin: 0 0 .5rem; font-size: .8rem; line-height: 1.45; color: var(--text-muted); max-width: 62ch; }
-.info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
-.info:hover { color: var(--accent); border-color: var(--accent); }
-.pop { max-width: 300px; font-size: .8rem; line-height: 1.45; color: var(--text); }
-.mode-toggle { font-size: .7rem; padding: .16rem .55rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--surface); color: var(--text-faint); cursor: pointer; }
-.mode-toggle.on { background: var(--text); border-color: var(--text); color: var(--surface); }
-.unused-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
-
-.entries { display: grid; margin-top: 1rem; }
-.entry { display: grid; grid-template-columns: 1fr; gap: .45rem 2rem; padding: .95rem 0; border-top: 1px solid var(--border); scroll-margin-top: 4.5rem; }
 @media (min-width: 820px) {
-  .entry { grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); align-items: start; }
-  .rail { grid-area: 1 / 1; }
-  .rule { grid-area: 1 / 2; }
-  .refs { grid-area: 2 / 1 / 3 / -1; }
+  .gloss    { grid-area: 2 / 2; }
+  .prevents { grid-area: 2 / 3; }
 }
-.entry.targeted { background: var(--chip-bg); box-shadow: 0 0 0 .55rem var(--chip-bg); border-radius: 2px; }
-.entry.unused .rail { border-left: 2px dashed var(--warn-border); padding-left: .6rem; margin-left: -.8rem; }
 
-.rail { min-width: 0; }
-.card-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .2rem; }
-.eyebrow { flex: 1; min-width: 0; font-size: .6rem; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.top-right { display: flex; align-items: center; gap: .35rem; flex-shrink: 0; }
-.name { font-size: .92rem; font-weight: 600; margin: 0; color: var(--text); line-height: 1.4; }
-.disclose { flex-shrink: 0; font-size: .72rem; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: .1rem .25rem; }
-.disclose:hover { color: var(--accent); }
+/* A list of links that happens to sit in a prose column: it takes the measure
+   and the content serif from `.cell` and lays itself out as a list. */
+.prevents { display: flex; flex-direction: column; gap: .15rem; }
+.label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); margin-bottom: .1rem; }
+.prevent { color: var(--text-muted); text-decoration: none; text-indent: -.9rem; padding-left: .9rem; line-height: 1.45; }
+.prevent:hover { color: var(--accent); }
+.arrow { color: var(--text-faint); margin-right: .35rem; }
+.prevent:hover .arrow { color: var(--accent); }
+/* The mistake's own ★ carried across, so the list is weighted as well as
+   ordered: it says which of the mistakes this rule heads off is worth heading
+   off most. */
+.freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
 
-.rule { margin: 0; font-size: .85rem; line-height: 1.6; color: var(--text); }
-
-.refs { margin: .1rem 0 0; display: grid; gap: .3rem; }
-.ref-line { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem; }
-.ref-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-right: .1rem; }
-.chip { font-size: .7rem; padding: .12rem .5rem; max-width: 100%; background: var(--chip-bg); color: var(--text-muted); border: 1px solid transparent; border-radius: 999px; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-a.chip:hover { color: var(--accent); border-color: var(--accent); }
-a.chip.card { color: var(--text); }
-
-.details { grid-column: 1 / -1; margin-top: .3rem; border-top: 1px solid var(--border); padding-top: .55rem; }
-.fields { margin: 0; display: grid; gap: .32rem; }
-.field { display: grid; grid-template-columns: 92px 1fr; gap: .5rem; align-items: baseline; }
-.field dt { font-size: .7rem; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-.field dd { margin: 0; font-size: .8rem; color: var(--text); display: flex; flex-wrap: wrap; gap: .3rem; align-items: baseline; }
-.field dd code { font-size: .74rem; color: var(--text-muted); }
-.badge.unused { font-size: .62rem; padding: .1rem .4rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; }
-.json-toggle { margin-top: .55rem; font-size: .68rem; color: var(--text-muted); background: none; border: 1px solid var(--border-strong); border-radius: 6px; padding: .12rem .45rem; cursor: pointer; }
-.json-toggle:hover { color: var(--text); }
-.json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: var(--text-muted); }
+.orphan-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
 </style>

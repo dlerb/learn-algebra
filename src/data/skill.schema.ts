@@ -466,6 +466,17 @@ export function auditCoverage(
   // the two should account for each other. Neither direction is a validator: an
   // empty cell is a question, and the three usual answers are different repairs.
   //
+  // A rule nothing cites is dead weight: context is the only thing that gives a
+  // sentence meaning, so with no error and no skill behind it there is none to
+  // give. REACH AS GARBAGE COLLECTION — never as an admission test, since what
+  // belongs in the registry is whatever turns out to be important, however
+  // narrowly it is used.
+  const citedRules = new Set([...skills.flatMap(f => f.rules), ...errors.flatMap(e => e.rules)])
+  const orphaned = rules.filter(m => !citedRules.has(m.id))
+  if (orphaned.length > 0) {
+    lines.push(`Rules cited by no error and no skill (${orphaned.length}): ${orphaned.map(m => m.id).join(', ')}`)
+  }
+
   // Rules: two questions, both inherited from the derivation the authored
   // `error.rules` replaced (2026-07-27). That derivation was always better at
   // SUGGESTING than at deciding — it is what turned up the five missing reading

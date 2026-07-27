@@ -157,7 +157,7 @@ function hasErrors(c: CardVM): boolean {
       </div>
 
       <div class="cards">
-        <article v-for="c in g.cards" :key="c.id" class="card">
+        <article v-for="c in g.cards" :key="c.id" :id="c.id" class="card">
           <div class="card-top">
             <span class="eyebrow">{{ c.kind }} · {{ c.group }}</span>
             <OpenInSource :id="c.id" />
@@ -265,7 +265,7 @@ function hasErrors(c: CardVM): boolean {
 @media (min-width: 560px) { .cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
 
 /* Card: quiet at rest — title · forms · note */
-.card { position: relative; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem .9rem .8rem; background: var(--surface); }
+.card { position: relative; scroll-margin-top: 4.5rem; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem .9rem .8rem; background: var(--surface); }
 .card-top { position: absolute; top: .35rem; left: .9rem; right: .9rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
 .eyebrow { flex: 1; min-width: 0; font-size: .6rem; letter-spacing: .04em; color: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .card-head { display: flex; align-items: baseline; gap: .5rem; }
