@@ -15,7 +15,7 @@ defineProps<{
   /** DERIVED, not authored — swaps the triangle for an arrow. The distinction is
    *  real and worth seeing at a glance: `breaks` is in the JSON, while `reading
    *  rules` is computed by intersecting an error's `corrupts` with a
-   *  metapattern's `summarizes`, so it appears and disappears as the tower
+   *  rule's `summarizes`, so it appears and disappears as the tower
    *  changes underneath it and nobody maintains it. */
   derived?: boolean
 }>()

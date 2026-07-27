@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { errorTree, skills, metaPatterns } from '../data'
+import { errorTree, skills, rules } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type ErrorDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
@@ -34,7 +34,7 @@ const L = computed(() => lang.value === 'de'
   ? { breaks: 'verletzt' }
   : { breaks: 'breaks' })
 
-// Deep link from /metapatterns, where each rule lists the mistakes it prevents.
+// Deep link from /rules, where each rule lists the mistakes it prevents.
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
 
@@ -48,20 +48,23 @@ function cardLink(id: string) {
   return { id, name: e ? t(e.card.name) : id, to: `/${e?.layer.slug}#${id}` }
 }
 
-// Two hops, no authoring: error → `corrupts` (cards) → the meta-patterns that
-// summarize those cards. The error is the disease, the meta-pattern is the
-// positive rule that stops it firing — the most useful link on the page.
+// Two hops, no authoring: error → `corrupts` (cards) → the rules that summarize
+// those cards. The error is the disease, the rule is the positive form that stops
+// it firing — the most useful link on the page.
+// ⚠️ TO BE REPLACED by an authored `rule` ref on the error (docs/TODO): a derived
+// guess is fine for "related reading" and wrong for the sentence a student reads
+// first.
 //
 // Capped at two, and the cap is editorial as much as spatial: the hop is
 // generous (`mis.exponent-scope` reaches four), and two rules beside a mistake
 // are a pointer where five are a reading list.
-const META_LIMIT = 2
-function metasFor(e: ErrorDef) {
+const RULE_LIMIT = 2
+function rulesFor(e: ErrorDef) {
   const cards = new Set(e.corrupts)
-  return metaPatterns
+  return rules
     .filter(m => m.summarizes.some(c => cards.has(c)))
-    .slice(0, META_LIMIT)
-    .map(m => ({ id: m.id, name: t(m.name), to: `/metapatterns#${m.id}` }))
+    .slice(0, RULE_LIMIT)
+    .map(m => ({ id: m.id, text: t(m.rule), to: `/rules#${m.id}` }))
 }
 
 // Within a topic, the most-often-made mistake comes first (frequency = the ★
@@ -73,8 +76,8 @@ const sections = computed(() => errorTree.sections.map(s => ({
   items: [...s.errors].sort((a, b) => b.frequency - a.frequency).map(e => ({
     id: e.id, kind: e.kind, name: t(e.name), fix: t(e.fix), note: t(e.note),
     frequency: e.frequency, instances: e.instances,
-    rules: e.corrupts.map(cardLink),
-    metas: metasFor(e),
+    breaks: e.corrupts.map(cardLink),
+    rules: rulesFor(e),
     unused: !citedErrs.has(e.id),
     // Whether to paint the stub rule: four errors are pure BELIEFS (a `\neq`
     // claim with no `from`), and a divider with nothing to its left divides
@@ -96,7 +99,7 @@ const sections = computed(() => errorTree.sections.map(s => ({
 //
 // The fourth column carries THE READING RULE AS A ONE-LINER (2026-07-27). It
 // briefly held the author's `note` (invisible to a student, mostly a restatement
-// of the fix), then the metapattern's whole `rule` paragraph (noise beside a ✗/✓
+// of the fix), then the rule's whole gloss paragraph (noise beside a ✗/✓
 // and a worked fix). What survives is the rule itself in one line.
 // That is also what pays for the `fix`: with the rule column down from 18rem to
 // 14, the fix goes 18 → 22rem, about 46 characters, back inside the readable
@@ -134,7 +137,7 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 22rem) minmax(0,
              row after the fix, so folding it away was hiding the payload. The
              column keeps it open and carries the link. -->
         <template #folds>
-          <RefFold :label="L.breaks" :links="e.rules" />
+          <RefFold :label="L.breaks" :links="e.breaks" />
         </template>
 
         <template #strip-right>
@@ -170,25 +173,25 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 22rem) minmax(0,
         </div>
         <!-- THE READING RULE ITSELF, not a pointer to it (2026-07-27). The
              column held the author's `note`, which was invisible to a student
-             and duplicated the `fix` besides. Quoting the metapattern instead
+             and duplicated the `fix` besides. Quoting the rule instead
              puts the general rule beside the concrete correction, which is the
              division of labour the two layers are supposed to have — and it
              makes any remaining overlap between them visible on the page rather
              than one fold away. Derived, so the arrow marks it as such, and the
-             name still deep-links to /metapatterns.
+             sentence still deep-links to /rules.
              `note` is not lost: it is in the json fold, and its future is an
              open question. -->
         <!-- THE ONE-LINER, and only that. The column briefly quoted the whole
              `rule` paragraph, which read as noise next to a ✗/✓ pair and a
              worked fix — a fourth rendering of a claim the row had already made
-             three ways. Every metapattern `name` is a complete rule on its own
+             three ways. Every rule sentence stands on its own
              ("The fraction bar is a bracket"), so the name IS the content here
-             and the paragraph stays on /metapatterns, where a reader has come
+             and its gloss stays on /rules, where a reader has come
              for the rule itself. The arrow marks it as derived; the whole line
              is the link. -->
-        <div v-if="e.metas.length" class="cell meta-cell">
-          <RouterLink v-for="m in e.metas" :key="m.id" class="meta-rule" :to="m.to">
-            <span class="arrow">→</span>{{ m.name }}
+        <div v-if="e.rules.length" class="cell rule-cell">
+          <RouterLink v-for="m in e.rules" :key="m.id" class="rule-line" :to="m.to">
+            <span class="arrow">→</span>{{ m.text }}
           </RouterLink>
         </div>
       </LayerRow>
@@ -200,7 +203,7 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 22rem) minmax(0,
 @media (min-width: 820px) {
   .pairs     { grid-area: 2 / 2; }
   .fix-cell  { grid-area: 2 / 3; }
-  .meta-cell { grid-area: 2 / 4; }
+  .rule-cell { grid-area: 2 / 4; }
 }
 
 /* A star at the strip's .62rem reads as an asterisk, not a rating — one step up,
@@ -215,7 +218,7 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 22rem) minmax(0,
    `color-mix` against --surface, not `transparent`: over transparency the tint
    would darken with whatever it sits on, and in dark mode --good/--bad are pale,
    so mixing toward the panel keeps both themes at the same apparent strength. */
-.cell.fix-cell, .cell.meta-cell {
+.cell.fix-cell, .cell.rule-cell {
   padding: .35rem .55rem; border-radius: 6px;
   border-left: 2px solid;
 }
@@ -224,16 +227,16 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 22rem) minmax(0,
    quoted from another layer, so it takes the neutral band and a plain rule, the
    typographic convention for a quotation. Colour stays on the axis it already
    means: green for what to do, red for what went wrong. */
-.meta-cell { background: var(--band); border-left-color: var(--border-strong); color: var(--text-muted); }
+.rule-cell { background: var(--band); border-left-color: var(--border-strong); color: var(--text-muted); }
 /* A rule per line, the whole line clickable — it is one short sentence, so a
    separate link affordance under it would be chrome around nothing. */
-.meta-rule { display: block; color: var(--text-muted); text-decoration: none; text-indent: -.9rem; padding-left: .9rem; }
-.meta-rule + .meta-rule { margin-top: .4rem; }
-.meta-rule:hover { color: var(--accent); }
+.rule-line { display: block; color: var(--text-muted); text-decoration: none; text-indent: -.9rem; padding-left: .9rem; }
+.rule-line + .rule-line { margin-top: .4rem; }
+.rule-line:hover { color: var(--accent); }
 /* The same derived marker RefFold uses in the strip, hung in the margin so the
    rule's own first word starts the text column. */
 .arrow { color: var(--text-faint); margin-right: .35rem; }
-.meta-rule:hover .arrow { color: var(--accent); }
+.rule-line:hover .arrow { color: var(--accent); }
 
 /* The shared grid WrongRight fills: stem | ✗ wrong | ✓ right as real columns.
    `justify-content: start` keeps the tracks at content width — with an `fr`

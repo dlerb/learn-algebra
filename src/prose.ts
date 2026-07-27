@@ -3,7 +3,7 @@
 //
 // WHY EVERY PROSE CELL CLIPS: ragged row heights. On the tower all 34 intuitions
 // exceed 180 characters (median 393, about seven lines) and notes run to 1336; on
-// /errors a quoted metapattern rule runs to seven lines in an 18rem column, which
+// /errors a quoted rule gloss ran to seven lines in an 18rem column, which
 // strands the ✗/✓ pairs at the top of a row twice their height. A clipped cell
 // with an expander keeps the row scannable and the full text one click away.
 

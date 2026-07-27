@@ -12,7 +12,7 @@ import { allLayers } from './data/layers'
 // parameterized by `layerId`; each curated layer has its own.
 const viewOf: Record<string, () => Promise<unknown>> = {
   errors: () => import('./views/ReferenceView.vue'),
-  metapatterns: () => import('./views/MetapatternsView.vue'),
+  rules: () => import('./views/RulesView.vue'),
   skills: () => import('./views/TaxonomyView.vue'),
 }
 

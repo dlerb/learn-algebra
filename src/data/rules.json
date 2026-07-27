@@ -1,5 +1,5 @@
 {
-  "layer": "metapatterns",
+  "layer": "rules",
   "title": {
     "en": "Reading rules",
     "de": "Leseregeln"
@@ -9,17 +9,18 @@
     "de": "Eine Handvoll Regeln, um Algebra zu lesen. Sitzt eine davon, entsteht eine ganze Familie von Fehlern gar nicht erst."
   },
   "note": {
-    "en": "The DECODING lens: a metapattern is a reading heuristic, the positive twin of an error. Each `summarizes` the tower cards it digests (cards only since the 2026-07-24 cleanup — errors are the skills' concern), so the curated layers stay a clean downward stack. The errors a pattern prevents are DERIVED, not authored: metapattern → summarizes → card ← corrupts ← error.",
-    "de": "Die DEKODIER-Linse: ein Metapattern ist eine Leseheuristik, der positive Zwilling eines Fehlers. Jedes `summarizes` die Turmkarten, die es verdichtet (seit der Bereinigung vom 2026-07-24 nur Karten — Fehler sind Sache der Skills). Die verhinderten Fehler sind ABGELEITET, nicht von Hand gesetzt: Metapattern → summarizes → Karte ← corrupts ← Fehler."
+    "en": "The DO/IS registry: a flat collection of student-facing sentences, each one saying either what a written form IS or what to DO with it. The sentences carry no context of their own — errors and skills supply it by citing them alongside examples, which is also the only reason the list exists, since otherwise the same sentence would be written into twenty entries. `summarizes` names the tower cards a sentence digests: a bridge claim, not a link, and the only way to ask which cards have a plain-language form yet.",
+    "de": "Die DO/IS-Sammlung: eine flache Liste schülernaher Sätze, von denen jeder sagt, was eine Schreibweise IST oder was man mit ihr TUT. Die Sätze tragen keinen eigenen Kontext — Fehler und Skills liefern ihn, indem sie sie zusammen mit Beispielen zitieren; genau dafür gibt es die Liste, sonst stünde derselbe Satz in zwanzig Einträgen. `summarizes` nennt die Turmkarten, die ein Satz verdichtet: eine Brückenaussage, kein Link, und die einzige Möglichkeit zu fragen, welche Karten schon eine schülernahe Form haben."
   },
-  "patterns": [
+  "rules": [
     {
       "id": "meta.juxtaposition",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "Juxtaposition means multiplication",
         "de": "Nebeneinanderschreiben bedeutet Multiplikation"
       },
-      "rule": {
+      "note": {
         "en": "Anything written next to anything else, with no symbol between, means multiply: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ are all products.",
         "de": "Alles, was ohne Zeichen nebeneinander steht, wird multipliziert: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ sind alles Produkte."
       },
@@ -29,11 +30,12 @@
     },
     {
       "id": "meta.invisible-one",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "A missing coefficient is a 1",
         "de": "Ein fehlender Koeffizient ist eine 1"
       },
-      "rule": {
+      "note": {
         "en": "Where no number is written in front, the coefficient is $1$: $a$ is $1 \\cdot a$.",
         "de": "Wo vorne keine Zahl steht, ist der Koeffizient $1$: $a$ ist $1 \\cdot a$."
       },
@@ -43,11 +45,12 @@
     },
     {
       "id": "meta.order-is-habit",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "The number goes in front only by habit",
         "de": "Die Zahl steht nur aus Gewohnheit vorne"
       },
-      "rule": {
+      "note": {
         "en": "A product may be written in either order: $a \\cdot 3$, $3 \\cdot a$ and $3a$ are the same product.",
         "de": "Ein Produkt darf in beliebiger Reihenfolge stehen: $a \\cdot 3$, $3 \\cdot a$ und $3a$ sind dasselbe Produkt."
       },
@@ -57,11 +60,12 @@
     },
     {
       "id": "meta.three-minuses",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "A minus is one of two things",
         "de": "Ein Minus ist eines von zwei Dingen"
       },
-      "rule": {
+      "note": {
         "en": "A minus is either subtraction ($a - b$) or negation ($-a$) — two roles, no third. When one confuses you, ask which it is.",
         "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$) — zwei Rollen, keine dritte. Wenn dich eines verwirrt, frage dich, welches es ist."
       },
@@ -73,11 +77,12 @@
     },
     {
       "id": "meta.no-adjacent-operators",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "Two operators never touch",
         "de": "Zwei Operatoren stehen nie nebeneinander"
       },
-      "rule": {
+      "note": {
         "en": "An operation sign and a minus belonging to a number never stand side by side: write $a + (-b)$.",
         "de": "Ein Rechenzeichen und ein Minus, das zu einer Zahl gehört, stehen nie nebeneinander: schreibe $a + (-b)$."
       },
@@ -87,11 +92,12 @@
     },
     {
       "id": "meta.implicit-op-before-bracket",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "Brackets carry an implicit operation in front",
         "de": "Vor einer Klammer steht eine unsichtbare Operation"
       },
-      "rule": {
+      "note": {
         "en": "No explicit symbol before a bracket means multiplication (juxtaposition). A minus before a bracket means times $(-1)$.",
         "de": "Kein Zeichen vor der Klammer heisst Multiplikation (Nebeneinanderschreiben). Ein Minus vor der Klammer heisst mal $(-1)$."
       },
@@ -102,11 +108,12 @@
     },
     {
       "id": "meta.exponent-binds-tighter",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "Exponents bind tighter than coefficients and signs",
         "de": "Exponenten binden stärker als Koeffizienten und Vorzeichen"
       },
-      "rule": {
+      "note": {
         "en": "$-a^2$ means $-(a^2)$, not $(-a)^2$. The exponent applies first, the minus after.",
         "de": "$-a^2$ bedeutet $-(a^2)$, nicht $(-a)^2$. Zuerst wirkt der Exponent, dann das Minus."
       },
@@ -117,11 +124,12 @@
     },
     {
       "id": "meta.minus-in-exponent",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "A minus in the exponent stays in the exponent",
         "de": "Ein Minus im Exponenten bleibt im Exponenten"
       },
-      "rule": {
+      "note": {
         "en": "A minus in the exponent belongs to the exponent and does not make the value negative: $x^{-1} = \\frac{1}{x}$.",
         "de": "Ein Minus im Exponenten gehört zum Exponenten und macht den Wert nicht negativ: $x^{-1} = \\frac{1}{x}$."
       },
@@ -132,11 +140,12 @@
     },
     {
       "id": "meta.fraction-bar-brackets",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "The fraction bar is a bracket",
         "de": "Der Bruchstrich ist eine Klammer"
       },
-      "rule": {
+      "note": {
         "en": "Everything above the line is one grouped object, everything below another. $a + b/c$ and $(a+b)/c$ are different things.",
         "de": "Alles über dem Strich ist EIN Objekt, alles darunter ein anderes. $a + b/c$ und $(a+b)/c$ sind verschiedene Dinge."
       },
@@ -146,11 +155,12 @@
     },
     {
       "id": "meta.root-bar-brackets",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "The root bar is a bracket",
         "de": "Der Wurzelstrich ist eine Klammer"
       },
-      "rule": {
+      "note": {
         "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
         "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird."
       },
@@ -160,11 +170,12 @@
     },
     {
       "id": "meta.only-multiplication-distributes",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "Only multiplication distributes over a sum",
         "de": "Nur die Multiplikation verteilt sich über eine Summe"
       },
-      "rule": {
+      "note": {
         "en": "$a(b+c) = ab + ac$: multiplication distributes over a sum, and nothing else does.",
         "de": "$a(b+c) = ab + ac$: Die Multiplikation verteilt sich über eine Summe, sonst nichts."
       },
@@ -174,11 +185,12 @@
     },
     {
       "id": "meta.dominant-op-last",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "The dominant operation is the last one applied",
         "de": "Die dominante Operation ist die zuletzt ausgeführte"
       },
-      "rule": {
+      "note": {
         "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
         "de": "Würdest du den Term Schritt für Schritt ausrechnen, wäre die zuletzt ausgeführte Operation die dominante. Alles andere passiert innerhalb von Chunks."
       },
@@ -191,11 +203,12 @@
     },
     {
       "id": "meta.bracket-chunk",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "Brackets make a chunk",
         "de": "Klammern bilden einen Chunk"
       },
-      "rule": {
+      "note": {
         "en": "Whatever is inside brackets is a single object. The dominant operation is always outside all brackets.",
         "de": "Was in Klammern steht, ist EIN Objekt. Die dominante Operation steht immer ausserhalb aller Klammern."
       },
@@ -205,11 +218,12 @@
     },
     {
       "id": "meta.multiplication-binds-tighter",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "Multiplication binds tighter than addition and subtraction",
         "de": "Multiplikation bindet stärker als Plus und Minus"
       },
-      "rule": {
+      "note": {
         "en": "In $3x + 2y$ the multiplication is used up inside the terms; the dominant operation is the $+$. It is a sum, not a product.",
         "de": "In $3x + 2y$ ist die Multiplikation innerhalb der Terme verbraucht; die dominante Operation ist das $+$. Es ist eine Summe, kein Produkt."
       },
@@ -219,22 +233,24 @@
     },
     {
       "id": "meta.dominant-op-tools",
-      "name": {
+      "kind": "do",
+      "rule": {
         "en": "The dominant operation determines which tools apply",
         "de": "Die dominante Operation bestimmt die Werkzeuge"
       },
-      "rule": {
+      "note": {
         "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
         "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen."
       }
     },
     {
       "id": "meta.variable-is-a-fixed-number",
-      "name": {
+      "kind": "is",
+      "rule": {
         "en": "A letter is one fixed number",
         "de": "Ein Buchstabe ist eine feste Zahl"
       },
-      "rule": {
+      "note": {
         "en": "A letter stands for a number you do not yet know, and every occurrence of it in one expression is the same number.",
         "de": "Ein Buchstabe steht für eine noch unbekannte Zahl, und jedes Vorkommen davon in einem Ausdruck ist dieselbe Zahl."
       },

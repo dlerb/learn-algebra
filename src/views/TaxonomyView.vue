@@ -4,18 +4,18 @@ import { NPopover } from 'naive-ui'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import OpenInSource from '../components/OpenInSource.vue'
-import { skills, drills, groups, skillKinds, metaPatterns, errorPatterns, rawById } from '../data'
+import { skills, drills, groups, skillKinds, rules, errorPatterns, rawById } from '../data'
 import { loc, type Skill, type Drill } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 
 // The skills catalog. A card rests quiet — name · the forms the skill looks
 // like · the rationale note — and reveals its coordinates (restsOn
-// resolve into the fundament tower now, plus meta-patterns / errors),
+// resolve into the fundament tower now, plus rules / errors),
 // prerequisites, drill pitfalls and raw JSON behind a per-card `details` toggle.
-function metaLabel(id: string): string {
-  const m = metaPatterns.find(mp => mp.id === id)
-  return m ? `${m.id} · ${loc(m.name, lang.value)}` : id
+function ruleLabel(id: string): string {
+  const m = rules.find(mp => mp.id === id)
+  return m ? `${m.id} · ${loc(m.rule, lang.value)}` : id
 }
 // `restsOn` and error `explainedBy` are card ids or error ids.
 const errName = new Map(errorPatterns.map(e => [e.id, e] as const))
@@ -47,7 +47,7 @@ interface CardVM {
   note: string
   illustration?: string
   errors: string[]
-  metas: string[]
+  rules: string[]
   requires: string[]
   restsOn: string[]
   equivChain?: string
@@ -68,7 +68,7 @@ function toVM(f: Skill): CardVM {
     conditions: f.conditions, note: loc(f.note, lang.value),
     illustration: f.illustration, errors: f.errors.map(layerLabel),
     json: JSON.stringify(rawById.get(f.id), null, 2),
-    metas: f.metaPatterns.map(m => metaLabel(m)),
+    rules: f.rules.map(m => ruleLabel(m)),
     requires: f.requires.map(skillName),
     restsOn: f.restsOn.map(layerLabel),
   }
@@ -144,7 +144,7 @@ function hasErrors(c: CardVM): boolean {
           <button :class="{ active: groupBy === 'kind' }" @click="groupBy = 'kind'">by kind</button>
         </div>
       </div>
-      <p class="role">Strategies — resting on <strong>cards</strong>, guarding against <strong>errors</strong>, reading via <strong>metapatterns</strong>.</p>
+      <p class="role">Strategies — resting on <strong>cards</strong>, guarding against <strong>errors</strong>, reading via <strong>rules</strong>.</p>
     </div>
 
     <section v-for="g in sections" :key="g.slug" class="group">
@@ -201,8 +201,8 @@ function hasErrors(c: CardVM): boolean {
               <div v-if="c.restsOn.length" class="field">
                 <dt>restsOn</dt><dd><span v-for="(l, i) in c.restsOn" :key="i" class="chip">{{ l }}</span></dd>
               </div>
-              <div v-if="c.metas.length" class="field">
-                <dt>metaPatterns</dt><dd><span v-for="(m, i) in c.metas" :key="i" class="chip">{{ m }}</span></dd>
+              <div v-if="c.rules.length" class="field">
+                <dt>rules</dt><dd><span v-for="(m, i) in c.rules" :key="i" class="chip">{{ m }}</span></dd>
               </div>
               <div v-if="c.errors.length" class="field">
                 <dt>errors</dt><dd><span v-for="(er, i) in c.errors" :key="i" class="chip">{{ er }}</span></dd>

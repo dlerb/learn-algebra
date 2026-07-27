@@ -9,7 +9,7 @@ import terms from './fundament/terms/cards.json'
 // Four `fundament` layers (the tower: one cards.json each, a containment tree
 // `layer → sections[] → groups[] → cards[]`, page order = array order at every
 // level — docs/fundamentals.md, "Data structure") and three `curated` layers
-// (errors · metapatterns · skills). This module fixes the reading order, and
+// (errors · rules · skills). This module fixes the reading order, and
 // `router.ts` and `App.vue` generate every route and every nav entry from it, so
 // **adding a layer of either family is one entry below**. It also resolves
 // citations ACROSS tower layers — the reason it had to exist before the numbers
@@ -18,11 +18,11 @@ import terms from './fundament/terms/cards.json'
 //
 // ⚠️ THE MANIFEST CARRIES NO CURATED DATA, only routing/nav metadata. It cannot:
 // `src/data/index.ts` imports `cardIndex` from here, so importing errors.json or
-// metapatterns.json back into this module would close an import cycle. Each
+// rules.json back into this module would close an import cycle. Each
 // curated view imports its own data. The consequence is that a curated layer's
 // nav `title` here is a plain English label while its PAGE title is the localized
 // one in its data head — a small duplication, and the honest price of the acyclic
-// stack (cards ← errors/metapatterns ← skills).
+// stack (cards ← errors ← skills, and rules ← both).
 
 export interface Card {
   id: string
@@ -65,7 +65,7 @@ export interface LayerData {
   sections: Section[]
 }
 /** `fundament` = the reference tower, rendered by LayerView from `data`.
- *  `curated` = the pedagogy on top of it (errors · metapatterns · skills), each
+ *  `curated` = the pedagogy on top of it (errors · rules · skills), each
  *  with its own view and its own data file. The families are what App.vue groups
  *  the nav by, and what says which layers `cardIndex` is built from. */
 export type LayerFamily = 'fundament' | 'curated'
@@ -100,7 +100,7 @@ export const layers: Layer[] = [
  *  "Errors" while the page said "Common mistakes". */
 export const curatedLayers: LayerRef[] = [
   { id: 'errors', slug: 'errors', title: 'Common mistakes', family: 'curated' },
-  { id: 'metapatterns', slug: 'metapatterns', title: 'Reading rules', family: 'curated' },
+  { id: 'rules', slug: 'rules', title: 'Reading rules', family: 'curated' },
   { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated' },
 ]
 

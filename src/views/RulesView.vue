@@ -4,17 +4,17 @@ import { useRoute } from 'vue-router'
 import { NPopover } from 'naive-ui'
 import RichText from '../components/RichText.vue'
 import OpenInSource from '../components/OpenInSource.vue'
-import { metaTree, metaPatterns, errorPatterns, skills } from '../data'
+import { ruleTree, rules, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
-import { loc, type MetaPatternDef, type LocalizedString } from '../data/skill.schema'
+import { loc, type RuleDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
 import { inspect, inspectAvailable } from '../inspect'
 
 // The DECODING lens, and the second curated page to get the presentation /
-// inspection split (src/inspect.ts). A metapattern is the POSITIVE twin of an
+// inspection split (src/inspect.ts). A rule is the POSITIVE twin of an
 // error: /errors says "here is the mistake, here is the fix", this page says
 // "here is the reading rule that stops it happening". Both halves of that pairing
-// are derived, never authored — metapattern → summarizes → card ← corrupts ←
+// are derived, never authored — rule → summarizes → card ← corrupts ←
 // error — which is why neither layer references the other directly.
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 const L = computed(() => lang.value === 'de'
@@ -24,8 +24,8 @@ const L = computed(() => lang.value === 'de'
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
 
-const citedMetas = new Set(skills.flatMap(s => s.metaPatterns))
-const unused = computed(() => metaPatterns.filter(m => !citedMetas.has(m.id)).length)
+const citedRules = new Set(skills.flatMap(s => s.rules))
+const unused = computed(() => rules.filter(m => !citedRules.has(m.id)).length)
 
 const open = ref(new Set<string>())
 const jsonOpen = ref(new Set<string>())
@@ -40,7 +40,7 @@ function cardLink(id: string) {
 // mistakes this rule heads off. Capped, because `meta.dominant-op-last` reaches
 // five and the error names are sentence-length.
 const PREVENTS_LIMIT = 4
-function preventedBy(m: MetaPatternDef) {
+function preventedBy(m: RuleDef) {
   const cards = new Set(m.summarizes)
   return errorPatterns
     .filter(e => e.corrupts.some(c => cards.has(c)))
@@ -49,22 +49,24 @@ function preventedBy(m: MetaPatternDef) {
     .map(e => ({ id: e.id, name: t(e.name) }))
 }
 
-const items = computed(() => metaPatterns.map(m => ({
-  id: m.id, name: t(m.name), rule: t(m.rule),
+const items = computed(() => rules.map(m => ({
+  // `rule` is the SENTENCE (was `name`) and `note` its gloss (was `rule`) —
+  // renamed 2026-07-27, because the headline always was the rule.
+  id: m.id, kind: m.kind, rule: t(m.rule), note: t(m.note),
   cards: m.summarizes.map(cardLink),
   errors: preventedBy(m),
-  unused: !citedMetas.has(m.id), json: JSON.stringify(m, null, 2),
+  unused: !citedRules.has(m.id), json: JSON.stringify(m, null, 2),
 })))
 </script>
 
 <template>
-  <div class="metav">
+  <div class="rulesv">
     <div class="layer-bar">
       <div class="bar-left">
-        <h2 class="metav-title">{{ t(metaTree.meta.title) }}</h2>
+        <h2 class="rulesv-title">{{ t(ruleTree.meta.title) }}</h2>
         <NPopover v-if="inspect" trigger="click" placement="bottom-start">
-          <template #trigger><button class="info" aria-label="About metapatterns">i</button></template>
-          <div class="pop"><RichText :text="t(metaTree.meta.note)" /></div>
+          <template #trigger><button class="info" aria-label="About the rules">i</button></template>
+          <div class="pop"><RichText :text="t(ruleTree.meta.note)" /></div>
         </NPopover>
       </div>
       <div class="bar-right">
@@ -74,7 +76,7 @@ const items = computed(() => metaPatterns.map(m => ({
         </button>
       </div>
     </div>
-    <p class="role">{{ t(metaTree.meta.blurb) }}</p>
+    <p class="role">{{ t(ruleTree.meta.blurb) }}</p>
 
     <!-- Flat: eleven rules need no sections. Same landscape row as /errors so the
          Curated group reads as one thing — name in the rail, the rule in the wide
@@ -86,17 +88,17 @@ const items = computed(() => metaPatterns.map(m => ({
       >
         <div class="rail">
           <div v-if="inspect" class="card-top">
-            <span class="eyebrow">{{ m.id }}</span>
+            <span class="eyebrow">{{ m.kind }} · {{ m.id }}</span>
             <span class="top-right">
               <span v-if="m.unused" class="badge unused">unused</span>
               <OpenInSource :id="m.id" />
               <button class="disclose" @click="toggle(open, m.id)">{{ open.has(m.id) ? 'less' : 'details' }}</button>
             </span>
           </div>
-          <h4 class="name">{{ m.name }}</h4>
+          <h4 class="name">{{ m.rule }}</h4>
         </div>
 
-        <p class="rule"><RichText :text="m.rule" /></p>
+        <p class="rule"><RichText :text="m.note" /></p>
 
         <div v-if="m.cards.length || m.errors.length" class="refs">
           <p v-if="m.cards.length" class="ref-line">
@@ -126,12 +128,12 @@ const items = computed(() => metaPatterns.map(m => ({
 </template>
 
 <style scoped>
-.metav { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
+.rulesv { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; color: var(--text); }
 
 .layer-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem; }
 .bar-left { display: flex; align-items: center; gap: .5rem; }
 .bar-right { display: flex; align-items: center; gap: .6rem; }
-.metav-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; }
+.rulesv-title { font-size: 1.15rem; font-weight: 700; color: var(--text); margin: 0; }
 .role { margin: 0 0 .5rem; font-size: .8rem; line-height: 1.45; color: var(--text-muted); max-width: 62ch; }
 .info { width: 18px; height: 18px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); font-size: .7rem; font-style: italic; font-family: Georgia, serif; line-height: 1; cursor: pointer; padding: 0; }
 .info:hover { color: var(--accent); border-color: var(--accent); }

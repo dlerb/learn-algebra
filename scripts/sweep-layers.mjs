@@ -85,7 +85,7 @@ for (const [layer, ordered] of layerOrder) {
 // ---- the bridge -----------------------------------------------------------
 // The legacy laws.json / conventions.json were deleted on 2026-07-23; since the
 // 2026-07-24 cleanup every reference from the curated side (skills'
-// restsOn, errors' corrupts, meta-patterns' summarizes) lands on a
+// restsOn, errors' corrupts, rules' summarizes) lands on a
 // card id — the curated layers form a downward-only stack over the tower.
 // Anything else is a dangling reference. Build-time twin of validateLayerRefs.
 const readJSON = f => JSON.parse(fs.readFileSync(f, 'utf8'))
@@ -108,9 +108,10 @@ const allErrors = (errFile.sections || []).flatMap(s => (s.groups || []).flatMap
 for (const e of allErrors)
   for (const id of e.corrupts || [])
     cite(e.id, id, 'corrupts', codes)
-// Metapatterns gained a layer head (title/blurb/note) on 2026-07-25; the entries
-// live under `patterns`. The list itself stays flat — eleven need no sections.
-for (const m of readJSON('src/data/metapatterns.json').patterns)
+// The rules registry gained a layer head (title/blurb/note) on 2026-07-25 and was
+// renamed off "metapatterns" on 2026-07-27; the entries live under `rules`.
+// The list itself stays flat — a registry of sentences has no structure to give it.
+for (const m of readJSON('src/data/rules.json').rules)
   for (const id of m.summarizes || [])
     cite(m.id, id, 'summarizes', codes)
 

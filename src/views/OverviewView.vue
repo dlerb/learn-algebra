@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { skills, errorPatterns, metaPatterns } from '../data'
+import { skills, errorPatterns, rules } from '../data'
 import { layers, cardIndex } from '../data/layers'
 
 // The reference graph as a clickable stack. Everything points DOWN into the tower:
-// skills (top) cite cards + errors + metapatterns; errors and metapatterns are
+// skills (top) cite cards + errors + rules; errors and rules are
 // sibling lenses that cite cards only. Each box navigates to that section.
 const router = useRouter()
 const go = (path: string) => router.push(path)
@@ -13,7 +13,7 @@ const n = {
   cards: cardIndex.size,
   skills: skills.length,
   errors: errorPatterns.length,
-  metas: metaPatterns.length,
+  rules: rules.length,
 }
 // the four tower layers, laid out as the floor
 const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 166 }))
@@ -25,14 +25,14 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
       <h2>The model</h2>
       <p>
         Everything rests on <strong>the tower</strong> (the cards — axioms, definitions,
-        theorems, conventions). <strong>Errors</strong> and <strong>metapatterns</strong>
+        theorems, conventions). <strong>Errors</strong> and <strong>rules</strong>
         are two lenses over it; <strong>skills</strong> sit on top, drawing on all three.
         Every arrow points down — nothing points up, so there are no cycles. Click a box to open it.
       </p>
     </div>
 
     <svg class="diagram" viewBox="0 0 820 545" role="img"
-         aria-label="Reference graph: skills cite cards, errors and metapatterns; errors and metapatterns cite cards.">
+         aria-label="Reference graph: skills cite cards, errors and rules; errors and rules cite cards.">
       <defs>
         <marker id="ov-arrow" viewBox="0 0 10 10" refX="9" refY="5"
                 markerWidth="7" markerHeight="7" orient="auto">
@@ -49,7 +49,7 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
 
       <!-- edge labels (the actual field names) -->
       <text class="edge-label" x="262" y="150" text-anchor="middle">errors</text>
-      <text class="edge-label" x="560" y="150" text-anchor="middle">metaPatterns</text>
+      <text class="edge-label" x="560" y="150" text-anchor="middle">rules</text>
       <text class="edge-label" x="448" y="250" text-anchor="start">restsOn</text>
       <text class="edge-label" x="196" y="364" text-anchor="middle">corrupts</text>
       <text class="edge-label" x="626" y="364" text-anchor="middle">summarizes</text>
@@ -73,12 +73,12 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
       </g>
 
       <!-- METAPATTERNS -->
-      <g class="node" tabindex="0" role="link" aria-label="Metapatterns"
-         @click="go('/metapatterns')" @keyup.enter="go('/metapatterns')">
-        <title>Metapatterns — decoding rules</title>
+      <g class="node" tabindex="0" role="link" aria-label="Rules"
+         @click="go('/rules')" @keyup.enter="go('/rules')">
+        <title>Rules — the DO and IS sentences</title>
         <rect class="box" x="520" y="228" width="230" height="64" rx="10" />
-        <text class="box-title" x="635" y="256" text-anchor="middle" font-size="17">Metapatterns</text>
-        <text class="box-sub" x="635" y="276" text-anchor="middle" font-size="11">{{ n.metas }} · decoding rules</text>
+        <text class="box-title" x="635" y="256" text-anchor="middle" font-size="17">Rules</text>
+        <text class="box-sub" x="635" y="276" text-anchor="middle" font-size="11">{{ n.rules }} · DO and IS</text>
       </g>
 
       <!-- FUNDAMENT (the floor) -->

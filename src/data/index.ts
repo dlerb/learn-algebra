@@ -1,14 +1,14 @@
 // Loads and validates all taxonomy content at import time. A bad skill, a
-// duplicate id, a dangling group, or a dangling meta-pattern reference throws
+// duplicate id, a dangling group, or a dangling rule reference throws
 // here immediately with the offending id named.
 import {
-  parseSkillTree, parseDrills, parseErrorTree, parseMetaTree,
-  validateUniqueIds, validateSkillKinds, validateMetaPatternRefs, validateSkillLinks,
+  parseSkillTree, parseDrills, parseErrorTree, parseRuleTree,
+  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSkillLinks,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Drill, type GroupsFile, type MetaPatternsFile, type MetaTree, type ErrorDef, type ErrorTree,
+  type Drill, type GroupsFile, type RulesFile, type RuleTree, type ErrorDef, type ErrorTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
-import metasRaw from './metapatterns.json'
+import rulesRaw from './rules.json'
 import errorsRaw from './errors.json'
 // Skills: one file per kind (kind → groups[] → skills[]), mirroring the fundament
 // tower's one-file-per-layer tree. Add a kind = add a file + one line below.
@@ -57,8 +57,8 @@ export const skillKinds: GroupsFile = skillTree.skillKinds
 // blurb) was deleted 2026-07-25 — that metadata now lives at the head of the
 // errors tree itself, and its export here collided by name with the tower manifest
 // in src/data/layers.ts. `layers` means the tower, and only the tower.
-export const metaTree: MetaTree = parseMetaTree(metasRaw)
-export const metaPatterns: MetaPatternsFile = metaTree.patterns
+export const ruleTree: RuleTree = parseRuleTree(rulesRaw)
+export const rules: RulesFile = ruleTree.rules
 
 // The fundament's shadow: false laws and misreadings, each `corrupts` a card in
 // the tower (src/data/layers.ts). The laws/conventions files they used to point
@@ -69,7 +69,7 @@ export const errorTree: ErrorTree = parseErrorTree(errorsRaw)
 export const errorPatterns: ErrorDef[] = errorTree.errors
 
 // Every fundament-tower card id, the resolution target for the skill/error/
-// meta-pattern references validated below.
+// rule references validated below.
 const cardIds = new Set(cardIndex.keys())
 
 export const drills: Drill[] = parseDrills(drillFiles.flat())
@@ -83,15 +83,15 @@ export const rawById = new Map<string, unknown>(
 
 validateUniqueIds(skills)
 validateSkillKinds(skillKinds)
-validateMetaPatternRefs(skills, metaPatterns)
+validateRuleRefs(skills, rules)
 validateSkillLinks(skills)
 validateDrills(drills, skills)
 validateErrors(errorPatterns, cardIds)
-validateLayerRefs(skills, metaPatterns, cardIds, errorPatterns)
-validateLatexCompiles(skills, drills, metaPatterns, errorPatterns)
+validateLayerRefs(skills, rules, cardIds, errorPatterns)
+validateLatexCompiles(skills, drills, rules, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.
 const cardConds = new Map([...cardIndex].map(([id, e]) => [id, e.card.cond]))
-for (const line of auditCoverage(skills, metaPatterns, errorPatterns, cardConds, drills)) {
+for (const line of auditCoverage(skills, rules, errorPatterns, cardConds, drills)) {
   console.info(`[audit] ${line}`)
 }
