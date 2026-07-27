@@ -157,7 +157,7 @@ export function validateSkillKinds(registry: GroupDef[]): void {
 // which is the only way to ask which of the tower's cards have a plain-language
 // form yet. It points into another tower, so it cannot cycle.
 export const ruleDef = z.object({
-  id: z.string().regex(/^meta\.[a-z0-9-]+$/),   // ⚠️ still the `meta.` prefix; the id namespace is the half of the rename not yet done
+  id: z.string().regex(/^rule\.[a-z0-9-]+$/),   // a dotted slug like every other entity; the `meta.` prefix went with the rename
   kind: z.enum(['is', 'do']),             // IS = what a written form MEANS (decoding); DO = what to reach for. 15:1 today, which measures how unbuilt the DO side is
   rule: localizedString,                  // THE SENTENCE — "The fraction bar is a bracket". Was `name`, and it always was the rule
   note: localizedString,                  // its gloss, one sentence with an example. Was `rule`, and it always was the gloss

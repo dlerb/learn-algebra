@@ -14,7 +14,7 @@
   },
   "rules": [
     {
-      "id": "meta.juxtaposition",
+      "id": "rule.juxtaposition",
       "kind": "is",
       "rule": {
         "en": "Juxtaposition means multiplication",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": "meta.invisible-one",
+      "id": "rule.invisible-one",
       "kind": "is",
       "rule": {
         "en": "A missing coefficient is a 1",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "id": "meta.order-is-habit",
+      "id": "rule.order-is-habit",
       "kind": "is",
       "rule": {
         "en": "The number goes in front only by habit",
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "id": "meta.three-minuses",
+      "id": "rule.three-minuses",
       "kind": "is",
       "rule": {
         "en": "A minus is one of two things",
@@ -76,7 +76,7 @@
       ]
     },
     {
-      "id": "meta.no-adjacent-operators",
+      "id": "rule.no-adjacent-operators",
       "kind": "is",
       "rule": {
         "en": "Two operators never touch",
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "id": "meta.implicit-op-before-bracket",
+      "id": "rule.implicit-op-before-bracket",
       "kind": "is",
       "rule": {
         "en": "Brackets carry an implicit operation in front",
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "id": "meta.exponent-binds-tighter",
+      "id": "rule.exponent-binds-tighter",
       "kind": "is",
       "rule": {
         "en": "Exponents bind tighter than coefficients and signs",
@@ -123,7 +123,7 @@
       ]
     },
     {
-      "id": "meta.minus-in-exponent",
+      "id": "rule.minus-in-exponent",
       "kind": "is",
       "rule": {
         "en": "A minus in the exponent stays in the exponent",
@@ -139,7 +139,7 @@
       ]
     },
     {
-      "id": "meta.fraction-bar-brackets",
+      "id": "rule.fraction-bar-brackets",
       "kind": "is",
       "rule": {
         "en": "The fraction bar is a bracket",
@@ -154,7 +154,7 @@
       ]
     },
     {
-      "id": "meta.root-bar-brackets",
+      "id": "rule.root-bar-brackets",
       "kind": "is",
       "rule": {
         "en": "The root bar is a bracket",
@@ -169,7 +169,7 @@
       ]
     },
     {
-      "id": "meta.only-multiplication-distributes",
+      "id": "rule.only-multiplication-distributes",
       "kind": "is",
       "rule": {
         "en": "Only multiplication distributes over a sum",
@@ -184,7 +184,7 @@
       ]
     },
     {
-      "id": "meta.dominant-op-last",
+      "id": "rule.dominant-op-last",
       "kind": "is",
       "rule": {
         "en": "The dominant operation is the last one applied",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "id": "meta.bracket-chunk",
+      "id": "rule.bracket-chunk",
       "kind": "is",
       "rule": {
         "en": "Brackets make a chunk",
@@ -217,7 +217,7 @@
       ]
     },
     {
-      "id": "meta.multiplication-binds-tighter",
+      "id": "rule.multiplication-binds-tighter",
       "kind": "is",
       "rule": {
         "en": "Multiplication binds tighter than addition and subtraction",
@@ -232,7 +232,7 @@
       ]
     },
     {
-      "id": "meta.dominant-op-tools",
+      "id": "rule.dominant-op-tools",
       "kind": "do",
       "rule": {
         "en": "The dominant operation determines which tools apply",
@@ -244,7 +244,7 @@
       }
     },
     {
-      "id": "meta.variable-is-a-fixed-number",
+      "id": "rule.variable-is-a-fixed-number",
       "kind": "is",
       "rule": {
         "en": "A letter is one fixed number",

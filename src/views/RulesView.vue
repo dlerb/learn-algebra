@@ -37,7 +37,7 @@ function cardLink(id: string) {
 }
 
 // The mirror of the /errors page's "read more" link, walked the other way: the
-// mistakes this rule heads off. Capped, because `meta.dominant-op-last` reaches
+// mistakes this rule heads off. Capped, because `rule.dominant-op-last` reaches
 // five and the error names are sentence-length.
 const PREVENTS_LIMIT = 4
 function preventedBy(m: RuleDef) {

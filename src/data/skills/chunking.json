@@ -16,7 +16,7 @@
             "equivalence.explicit-vs-implicit-product"
           ],
           "rules": [
-            "meta.multiplication-binds-tighter"
+            "rule.multiplication-binds-tighter"
           ],
           "errors": [
             "sal.implicit-op-overlooked"
@@ -31,7 +31,7 @@
             "equivalence.product-with-brackets"
           ],
           "rules": [
-            "meta.bracket-chunk"
+            "rule.bracket-chunk"
           ]
         },
         {
@@ -43,7 +43,7 @@
             "equivalence.precedence-brackets"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "ax.add-associative",
@@ -63,7 +63,7 @@
             "equivalence.product-with-brackets"
           ],
           "rules": [
-            "meta.bracket-chunk"
+            "rule.bracket-chunk"
           ],
           "errors": [
             "mis.bracket-dissolved"

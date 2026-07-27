@@ -17,7 +17,7 @@
             "equivalence.explicit-vs-implicit-product"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "ax.add-associative",
@@ -34,7 +34,7 @@
             "equivalence.explicit-vs-implicit-product"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ]
         },
         {
@@ -47,7 +47,7 @@
             "equivalence.product-with-brackets"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "ax.mul-associative",
@@ -66,7 +66,7 @@
             "equivalence.division-variants"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ]
         },
         {
@@ -78,7 +78,7 @@
             "equivalence.exponent-as-repeated-product"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "def.pow",
@@ -103,7 +103,7 @@
             "equivalence.explicit-vs-implicit-product"
           ],
           "rules": [
-            "meta.multiplication-binds-tighter"
+            "rule.multiplication-binds-tighter"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -119,7 +119,7 @@
             "equivalence.product-with-brackets"
           ],
           "rules": [
-            "meta.bracket-chunk"
+            "rule.bracket-chunk"
           ],
           "restsOn": [
             "ix.brackets",
@@ -139,7 +139,7 @@
             "equivalence.power-of-a-product"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "ix.pow",
@@ -159,7 +159,7 @@
             "equivalence.coefficient-negative-one"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ],
           "errors": [
             "mis.minus-roles-confused"
@@ -176,7 +176,7 @@
             "equivalence.exponent-as-repeated-product"
           ],
           "rules": [
-            "meta.bracket-chunk"
+            "rule.bracket-chunk"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -192,7 +192,7 @@
             "equivalence.fraction-bar-grouping"
           ],
           "rules": [
-            "meta.bracket-chunk"
+            "rule.bracket-chunk"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -214,7 +214,7 @@
             "equivalence.power-of-a-product"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "th.difference-of-squares",
@@ -232,7 +232,7 @@
             "classification.sum-of-products"
           ],
           "rules": [
-            "meta.dominant-op-last"
+            "rule.dominant-op-last"
           ]
         },
         {
@@ -244,8 +244,8 @@
             "classification.sum-of-products"
           ],
           "rules": [
-            "meta.dominant-op-last",
-            "meta.dominant-op-tools"
+            "rule.dominant-op-last",
+            "rule.dominant-op-tools"
           ]
         },
         {
@@ -266,8 +266,8 @@
             "classification.linear-form"
           ],
           "rules": [
-            "meta.dominant-op-last",
-            "meta.dominant-op-tools"
+            "rule.dominant-op-last",
+            "rule.dominant-op-tools"
           ]
         }
       ]
