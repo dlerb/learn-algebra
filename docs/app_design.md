@@ -198,10 +198,11 @@ themes.
 
 **Shell** (`App.vue`): a naive-ui header — brand · page nav (`NMenu`) · settings
 popover (`NPopover`). The language switch lives in the settings popover (moved
-out of the per-view headers). **Dark mode is scaffolded but NOT surfaced**:
-`NConfigProvider` is in place, but the content views must first move fully to the
-color tokens, so enabling the toggle now would darken only the chrome. Turning it
-on later ≈ one prop + a `:root[data-theme="dark"]` block in `tokens.css`.
+out of the per-view headers), and so does the **dark-mode switch — live since
+2026-07-26**, `src/theme.ts` plus the second token block in `tokens.css`. See
+"The visual system → Dark mode" above for the two-halves trap (`NConfigProvider`
+takes `darkTheme` separately; our tokens are invisible to naive-ui's own
+components).
 
 **Router** (`router.ts`): `/` (`OverviewView` — the home/landing, an all-SVG clickable
 diagram of the reference stack, reached from the "Algebra" brand link), `/skills`

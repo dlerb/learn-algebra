@@ -65,7 +65,12 @@ const hintInline = () => Boolean(props.hint && !props.right)
 .cand.bad { grid-column: 2; }
 .cand.good { grid-column: 3; }
 .cand { font-size: .95rem; line-height: 1.6; min-width: 0; overflow-x: auto; white-space: nowrap; }
-.hint-row { grid-column: 2 / -1; margin-top: -.1rem; max-width: 34rem; font-size: .78rem; line-height: 1.5; color: var(--text-muted); font-style: italic; }
+/* CONTENT SERIF, like every other prose in the app: a hint carries inline `$…$`
+   fragments that KaTeX sets in Computer Modern, so a sans hint changed typeface
+   mid-sentence at every formula ("no rule — $\frac{b}{a}$ is the reciprocal").
+   This only surfaced when /errors moved onto the row shell — the tower uses
+   WrongRight for avoid/prefer only, which carries no hint. */
+.hint-row { grid-column: 2 / -1; margin-top: -.1rem; max-width: 34rem; font-family: var(--font-content); font-size: .82rem; line-height: 1.5; color: var(--text-muted); font-style: italic; }
 
 .mark { font-weight: 600; font-size: .85em; margin-right: .45rem; }
 .bad .mark { color: var(--bad); }
@@ -73,7 +78,13 @@ const hintInline = () => Boolean(props.hint && !props.right)
 /* Capped so a sentence-long correction WRAPS instead of stretching the ✓ track.
    Uncapped, one prose hint pushed that column to 670px on some entries and 250px
    on others, and the ✓ jumped horizontally as you scrolled down the page. */
-.hint { display: inline-block; max-width: 22rem; font-size: .82rem; color: var(--text-muted); font-style: italic; white-space: normal; vertical-align: top; }
+/* `min(22rem, 100%)`, not `22rem`. The cap stops a sentence-long correction
+   stretching the ✓ track — uncapped, one prose hint pushed that column to 670px
+   on some entries and 250px on others, and the ✓ jumped as you scrolled. But on a
+   phone the ✓ track is ~130px, and a flat 22rem made the hint wider than its own
+   cell, so `overflow-x: auto` clipped the correction — the one thing on the page
+   a student must be able to read. */
+.hint { display: inline-block; max-width: min(22rem, 100%); font-family: var(--font-content); font-size: .86rem; color: var(--text-muted); font-style: italic; white-space: normal; vertical-align: top; }
 
 .wr-style { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .55rem; margin: .5rem 0 0; }
 .wr-style .tail { display: inline-flex; align-items: baseline; gap: .55rem; min-width: 0; }
