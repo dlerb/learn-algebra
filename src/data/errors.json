@@ -108,8 +108,8 @@
                 "de": "Zwei Rechenzeichen nebeneinander"
               },
               "fix": {
-                "en": "Never write two operation signs side by side — bracket the negative number: $a + (-b)$, not $a + -b$.",
-                "de": "Nie zwei Rechenzeichen nebeneinander schreiben — die negative Zahl einklammern: $a + (-b)$, nicht $a + -b$."
+                "en": "In $a - -b$ the first $-$ is the subtraction and the second one belongs to $b$, so put $b$ in brackets: $a - (-b)$.",
+                "de": "In $a - -b$ ist das erste $-$ die Subtraktion und das zweite gehört zu $b$ — also $b$ einklammern: $a - (-b)$."
               },
               "note": {
                 "en": "Two operation signs written next to each other.",
@@ -590,8 +590,8 @@
                 "de": "Negativer Exponent als negativer Wert gelesen"
               },
               "fix": {
-                "en": "A minus in the exponent means a reciprocal, not a negative number: $x^{-1} = \\frac{1}{x}$ and $x^{-2} = \\frac{1}{x^2}$.",
-                "de": "Ein Minus im Exponenten bedeutet einen Kehrwert, keine negative Zahl: $x^{-1} = \\frac{1}{x}$ und $x^{-2} = \\frac{1}{x^2}$."
+                "en": "$x^{-1}$ is $\\frac{1}{x}$: the $-1$ is the exponent, and it turns $x$ upside down. Check with $x = 2$ — it is $\\frac{1}{2}$, not $-2$.",
+                "de": "$x^{-1}$ ist $\\frac{1}{x}$: Die $-1$ ist der Exponent und dreht $x$ um. Probe mit $x = 2$ — es ist $\\frac{1}{2}$ und nicht $-2$."
               },
               "note": {
                 "en": "The minus is taken to attach to the value instead of to the exponent, so $x^{-1}$ comes out as $-x$. Two identical glyphs doing different jobs — the same conflation as mis.minus-roles-confused, one floor up in the exponent. $a^{-n} := (a^n)^{-1}$ (def.pow-neg) is forced by permanence, and for positive $a$ it never yields a negative number at all.",
@@ -622,8 +622,8 @@
                 "de": "Die Wurzel hat nicht alles überdeckt"
               },
               "fix": {
-                "en": "The root covers everything under its bar — all of it, at once.",
-                "de": "Die Wurzel überdeckt alles unter ihrem Strich — alles auf einmal."
+                "en": "$\\sqrt{a+b}$ is the root of $a + b$ taken together. Check with $a = 9$, $b = 16$: $\\sqrt{25} = 5$, while $\\sqrt{9} + 16$ comes to $19$.",
+                "de": "$\\sqrt{a+b}$ ist die Wurzel aus $a + b$ als Ganzem. Probe mit $a = 9$, $b = 16$: $\\sqrt{25} = 5$, während $\\sqrt{9} + 16$ gleich $19$ ist."
               },
               "note": {
                 "en": "The vinculum's grouping lost, or index and exponent swapped.",
@@ -880,8 +880,8 @@
                 "de": "Die unsichtbare 1 vergessen"
               },
               "fix": {
-                "en": "A letter on its own carries an invisible $1$: $a + 3a = 1a + 3a = 4a$.",
-                "de": "Ein Buchstabe allein trägt eine unsichtbare $1$: $a + 3a = 1a + 3a = 4a$."
+                "en": "In $a + 3a$ the lone $a$ is $1a$, so $1a + 3a = 4a$. Check with $a = 2$: $2 + 6 = 8$, and $4 \\cdot 2 = 8$.",
+                "de": "In $a + 3a$ ist das einzelne $a$ gleich $1a$, also $1a + 3a = 4a$. Probe mit $a = 2$: $2 + 6 = 8$, und $4 \\cdot 2 = 8$."
               },
               "note": {
                 "en": "\"$a$ has no coefficient\"; $a + 3a$ collected as $3a$.",
@@ -973,8 +973,8 @@
                 "de": "Derselbe Term andersherum geschrieben"
               },
               "fix": {
-                "en": "$a \\cdot 3$ and $3a$ are the same product; the number is just written in front by habit.",
-                "de": "$a \\cdot 3$ und $3a$ sind dasselbe Produkt; die Zahl steht nur aus Gewohnheit vorne."
+                "en": "Check with $a = 5$: $a \\cdot 3$ is $15$ and $3a$ is $15$ — the same number, written the other way round.",
+                "de": "Probe mit $a = 5$: $a \\cdot 3$ ist $15$ und $3a$ ist $15$ — dieselbe Zahl, nur andersherum geschrieben."
               },
               "note": {
                 "en": "$x \\cdot 3$ not recognized as the same term as $3x$.",
