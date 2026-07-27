@@ -161,4 +161,4 @@ to make the *extension* visible, which is `th.multiple-is-product` plus the ℚ
 divergence. Still open for the errors layer: **"multiplication makes bigger" is not
 among M1–M10**, which are all notation/structure. It is a different kind of error, a
 property smuggled from the ℕ-model into ℝ, sibling to expecting $a^r$ to behave like
-$a^n$. Candidate new metapattern.
+$a^n$. Candidate new rule (rules.json).

@@ -57,7 +57,7 @@ paying for themselves without it:
    match. **No Prettier**: its object expansion is input-sensitive, so it is not canonical in
    the required sense and can ping-pong against `JSON.stringify`.
 2. **Globally unique entity ids.** Every addressable thing in all seven layers — a card, an
-   error, a meta-pattern, a skill, a layer head — is a JSON object with an `id`, 218 of them,
+   error, a rule, a skill, a layer head — is a JSON object with an `id`, 232 of them,
    unique across all 23 files and guarded by `pnpm check-ids`. That is what lets a
    *shape-blind* walk (`entityPaths` in `scripts/content-ids.mjs`) find any entity without
    knowing that the tower nests `sections→groups→cards` while skills nest
@@ -88,8 +88,46 @@ an index).
 ## The visual system — rows, planes, voices (2026-07-26)
 
 The reference pages are for LOOK-UP, not front-to-back reading, and that decides almost
-everything below. Built on `LayerView`, which serves all four fundament layers; the curated
-three are still on the older system (docs/TODO.md).
+everything below.
+
+### One shell, six pages (2026-07-27)
+
+The row system started inside `LayerView` and now lives in four components under
+`src/components/`, so `/errors` and `/rules` are the same application as the tower rather
+than three pages that happen to import the same file:
+
+- **`LayerPage`** — the measure vocabulary (`--rail` 11rem, `--maths` 19rem, `--measure`
+  26rem), the page's one left edge, the header, the inspect toggle. **`cols` is a prop**,
+  because the column budget is a per-layer decision and belongs in the consuming page's own
+  stylesheet beside the arithmetic justifying it: the tower runs four columns, `/errors`
+  four, `/rules` three.
+- **`LayerSection`** — heading and note on the page plane, one panel per section. `title` is
+  optional, for a FLAT layer: `/rules` is a registry of sentences with no structure to give
+  it, so it renders one panel and no heading.
+- **`LayerRow`** — strip · rail · body. The strip is `kind`, reference folds, the json fold
+  and the id (which IS the source deep link); the rail is the name plus trailing marks — the
+  tower's concern glyphs, an error's ★ frequency. **The body is a slot**: a statement, a ✗/✓
+  table and a sentence have nothing in common but their container. What makes the pages look
+  alike is the shared strip, rail, planes, hairline, measures and `:deep(.cell)` prose, not a
+  shared body.
+- **`RefFold`** — the one answer to "where do pointers to other entries go". Bare grey text
+  read as more prose; full-size pills were the loudest thing on a row. A closed fold is
+  neither. `derived` swaps ▸ for → to mark a link nobody authored.
+
+Prose clipping is shared in `src/prose.ts` — 240 characters at a 26rem column, less in a
+narrower one. **`/skills` is the last card grid** and the only page not on this system.
+
+⚠️ **Traps this cost, all cheap to hit again:**
+- **KaTeX emits its own `<span class="fix">`** — do not name a cell class `fix`.
+- A KaTeX span reports `scrollWidth` **exactly 2px over its box whatever the box is**, so an
+  overflow check reads as a permanent overrun and widening never clears it. Measure the
+  content with an `auto` track instead.
+- `align-content` on a grid defaults to **stretch**, so when a neighbouring cell is taller
+  the leftover height is dealt out BETWEEN rows — ✗/✓ pairs that belong together drift apart
+  by a different amount on every entry. `align-content: start`.
+- **Em dashes are banned in card prose** (`scripts/content-prose.mjs`, caught by `pnpm
+  sweep-layers`) — but the curated layers use them freely, because sweep-layers reads only
+  the tower.
 
 ### Rows, not a card grid
 
@@ -206,14 +244,14 @@ components).
 
 **Router** (`router.ts`): `/` (`OverviewView` — the home/landing, an all-SVG clickable
 diagram of the reference stack, reached from the "Algebra" brand link), `/skills`
-(`TaxonomyView`), `/errors` (`ReferenceView` — errors only), `/metapatterns`
-(`MetapatternsView`), `/tutorial`, `/drills`, **plus one route per layer of the
+(`TaxonomyView`), `/errors` (`ReferenceView` — errors only), `/rules`
+(`RulesView`), `/tutorial`, `/drills`, **plus one route per layer of the
 tower** — `/fundamentals`, `/numbers`, `/powers`, `/terms`. Those four are
 **generated from the manifest** (`src/data/layers.ts`) and all render the same
 component (`LayerView`, selected by a `layerId` prop), so adding a layer needs no
 route. The **nav groups them** (`App.vue`): a "Fundament" dropdown over the four
-layers, a "Curated" dropdown over Errors · Metapatterns · Skills (ordered bottom-up to
-echo the reference stack), then Tutorial and Drills. Group headers use `-menu` keys so
+layers, a "Curated" dropdown over Common mistakes · Reading rules · Skills (ordered
+bottom-up to echo the reference stack), then Tutorial and Drills. Group headers use `-menu` keys so
 they never collide with a route. Activity routes are lazy-loaded so their future weight
 (CE grading) code-splits off the reference pages. **Tutorial and Drills are empty stubs.**
 
@@ -225,15 +263,14 @@ in `docs/TODO.md`). `Tutorial` and `Drills` are the (unbuilt) **student** surfac
 Design rule for when they're built: **Tutorial *drives* Drills — one drill-runner,
 two drivers** (guided `requires`-traversal vs. free pick). Don't fork the runner.
 
-**Card system** (all catalogs, one system): a card rests quiet — an absolute
-coordinate *eyebrow* (`kind · group`, pinned under the top border), **`name`**, the
-primary content (a card's statement / a skill's forms), and the prose (`note`, or a
-metapattern's `rule`). Everything else — ids, coordinates, links, pitfalls, raw JSON —
-sits behind a per-card `details` disclosure, each row **labeled with its field name**.
-Group/kind/layer descriptions are tap-triggered **info-dot popovers** (mobile-friendly,
-not hover). `Errors` and `Metapatterns` are the curated-lens pages (each with a role
-header + a contextual "N unused" chip); `Skills` also switches `by group` / `by kind`.
-(The old Laws · Conventions · Errors segment switch is gone — laws/conventions became
+**Row system** (six of seven pages — see "One shell, six pages" above): an entry is a
+landscape row with a quiet strip, a name in the rail, and body cells that differ per layer.
+Author plumbing — ids, raw JSON, coverage warnings, the `kind` tag — is gated on
+`import.meta.env.DEV` via a single toggle in the page header (`src/inspect.ts`), and
+**presentation is the default**, so every visit shows the page a student sees. Group, section
+and layer descriptions are tap-triggered **info-dot popovers** (mobile-friendly, not hover).
+`Skills` is the one page still on the old card grid, and still switches `by group` / `by
+kind`. (The old Laws · Conventions · Errors segment switch is gone — laws/conventions became
 tower cards in the 2026-07-23 bridge.)
 
 **Design tokens** (`src/styles/tokens.css`): one quiet neutral-led palette, color
@@ -243,9 +280,10 @@ and `skillKinds` (slug-set validated == the kind enum). (The old `lawGroups`/
 `conventionGroups`/`lawKinds` registries went with laws.json/conventions.json in the
 bridge; the tower's own section/group titles live inline in each `cards.json`.)
 
-**Mobile:** cards are single-column by default, multi-column at ≥560px —
-mobile-*aware*, not a mobile-first pass (that's reserved for the greenfield drill
-screens).
+**Mobile:** a row stacks below 820px, in DOM order, which is already the reading order; the
+rail never shrinks into an unusable gutter. `/skills`, still a grid, is single-column by
+default and multi-column at ≥560px. Mobile-*aware*, not a mobile-first pass (that's reserved
+for the greenfield drill screens).
 
 ---
 
@@ -255,7 +293,7 @@ screens).
 One entry in the taxonomy (e.g. B4 — distributing a negative over a difference).
 Each skill has:
 - A set of parameterized templates for generating items
-- A meta-pattern link (shown in feedback)
+- A rule link (shown in feedback)
 - A mastery threshold (e.g. 8 correct in a row across sessions)
 
 ### Item
@@ -324,7 +362,7 @@ Triggered by: first encounter with a skill, OR same error made twice in a row.
 
 1. Show what the student answered and why it is wrong — specifically, not generically.
 2. Show the correct answer with a one-line explanation.
-3. Link to the relevant meta-pattern (tap to expand).
+3. Link to the relevant rule (tap to expand).
 4. Same item repeats before moving on.
 
 Example:
@@ -336,7 +374,7 @@ You answered: SAME
 The minus distributes and flips the sign of every term inside.
 -(a - b) = -a + b
 
-→ See meta-pattern `meta.implicit-op-before-bracket`: minus before a bracket means × (−1)
+→ See rule `rule.implicit-op-before-bracket`: minus before a bracket means × (−1)
 ```
 
 ### No gamification

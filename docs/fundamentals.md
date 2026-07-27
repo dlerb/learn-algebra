@@ -241,7 +241,7 @@ invites exactly the ± confusion that word was retired for.
 The per-card field schema (the 15 `Card` fields, the `forall`/`cond` split, field
 clusters, what is validated, and worked JSON examples) now lives with the other
 entity formats in **`docs/content_model.md` → "JSON format (current)" → "Card
-format"**, so all five formats (card · skill · error · meta-pattern · drill) sit in
+format"**, so all five formats (card · skill · error · rule · drill) sit in
 one place. This doc keeps the *tower-specific* structure above — the layer manifest,
 the section/group tree, and page order = dependency order.
 

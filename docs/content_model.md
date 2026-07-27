@@ -9,13 +9,25 @@
 > files as live, read them as history. The tower is documented in `docs/fundamentals.md`
 > (format spec), the migration in memory `bridge`.
 >
-> **2026-07-24 updates (current):** (1) metapatterns were NOT split — kept as a central
+> **2026-07-24 updates:** (1) metapatterns were NOT split — kept as a central
 > curated repository (see memory `metapatterns-split`). (2) **Every entity now has a
 > single `id` field; all short display codes (A1/M7/S1…) were removed.** (3) The
 > curated layers form a downward-only stack over the tower — errors and metapatterns
 > cite cards ONLY, skills cite all three. The **"JSON format (current)"** section below
 > is the current spec; the dated *Revision notes* at the bottom are left as history.
 > The skills/drills/errors rationale still holds.
+>
+> **2026-07-27 updates (current):** metapatterns became **`rules.json`, the DO/IS
+> registry** — a flat collection of student-facing one-liners, ids `rule.*`, route
+> `/rules`. Three changes of substance: (1) the entry's `name` was always the rule
+> ("The fraction bar is a bracket"), so `name` → `rule` and the gloss `rule` → `note`,
+> plus a new `kind: is | do`; (2) **errors now cite rules directly** (`error.rules`),
+> replacing a derivation through `corrupts` × `summarizes` that guessed and capped at
+> two — the derivation survives as an audit line, which is what it was always good at;
+> (3) `summarizes` is KEPT but demoted from mechanism to **bridge claim** — this
+> sentence is the student-facing form of those cards. The registry carries no context
+> of its own by design: errors and skills supply it, and the list exists only so one
+> sentence is not written into twenty entries.
 
 How the algebra content is structured. Everything lives under `src/data/` and is
 validated by `skill.schema.ts` on load. The layers:
@@ -26,17 +38,19 @@ validated by `skill.schema.ts` on load. The layers:
   `fundamentals · numbers · powers · terms`. See `docs/fundamentals.md`.
 - **~~laws + conventions~~** — **deleted 2026-07-23.** These were the original law
   tower; everything they held is a card in the fundament tower now, and every reference
-  from the skills side (`restsOn`, error `corrupts`, meta-pattern
+  from the skills side (`restsOn`, error `corrupts`, a rule's
   `summarizes`) resolves to a **card id**, checked at load by `validateLayerRefs` /
   `validateErrors` and at build by `sweep-layers`. The files, their display registries
   (`lawGroups`/`lawKinds`/`conventionGroups`), the Zod schemas and the reference view's
   law/convention segments all went with them; `ReferenceView` is now an errors page.
 - **errors** (`errors.json`) — the error patterns that shadow the tower; each
   `corrupts` a card. Browsed at `/errors` (`ReferenceView`, now errors-only).
-- **meta-patterns** (`metapatterns.json`) — student-facing decoding heuristics; each
-  `summarizes` the tower cards it reads. Kept as a central curated repository (the
-  2026-07-24 split proposal was **rejected** — see memory `metapatterns-split`), browsed
-  at `/metapatterns` (`MetapatternsView`).
+- **rules** (`rules.json`, renamed from `metapatterns.json` 2026-07-27) — the **DO/IS
+  registry**: student-facing one-liners, each either what a written form IS (decoding) or
+  what to DO with it. 25 sentences, 18 IS / 7 DO. Cited by errors (`error.rules`) and
+  skills (`skill.rules`); each `summarizes` the tower cards it is the plain-language form
+  of. Kept as a central curated repository (the 2026-07-24 split proposal was **rejected**
+  — see memory `metapatterns-split`), browsed at `/rules` (`RulesView`).
 
   *(Note on the word: "layer" means both a **file/role** here and a **floor** of the
   fundament tower, in the sense of mathematical dependency. The two remain separate
@@ -64,7 +78,7 @@ This doc records the *why*, not the content tables (they would drift).
 Ids are kind-prefixed slugs so a derivation chain reads like a proof:
 `ax.add-commutative`, `def.sub`, `th.collect-like-terms`, `ix.juxtaposition`,
 `anti.linearity`, `equivalence.juxtaposition-product`. **The `id` is the single
-identifier for every entity** — cards, errors, metapatterns and skills alike.
+identifier for every entity** — cards, errors, rules and skills alike.
 (The old short display codes — A1/D3/T11/N1/Ā1/M7 — were removed 2026-07-24; there
 is now nothing but the slug.)
 
@@ -98,7 +112,7 @@ the kinds are finer and open-ended, so nothing should freeze a fixed 3-way skill
 A **skill** is a curated *strategy*, not a problem set. It says what the skill
 is, why it matters, and links into the other layers — nothing format-specific:
 `note` (the rationale), one canonical `illustration`, `errors` (the misconception
-catalog → error-pattern ids), `restsOn` / `metaPatterns`
+catalog → error-pattern ids), `restsOn` / `rules`
 links, `requires` (prerequisite skills), plus `kind` + `group`.
 
 All the concrete material lives in the **drill** layer (`drills/<kind>-<group>
@@ -121,7 +135,7 @@ Laws + conventions are the **fundamentals**: what is true and how it is written.
 That layer is closed and derivable (the law DAG, the notation rules) — and, on
 its own, *inert*: it cannot say what is worth learning or where a student
 stumbles. Its shadow (errors — every error `corrupts` a law or convention) and
-its student-facing digest (meta-patterns) are part of the same fundament.
+its student-facing digest (the rules registry) are part of the same fundament.
 
 **Skills are the layer that makes the fundamentals learnable.** A skill is
 authored *curation*: it selects a coherent coordinate-region of the fundamentals
@@ -181,13 +195,13 @@ no display codes.**
 |---|---|---|---|---|
 | `fundament/<layer>/cards.json` | card (the tower) | section kinds: `preliminary`·`signature`·`convention`·`axiom`·`definition`·`theorem`·`remark` | structural (nested) | `pre.`/`op.`/`ix.`/`ax.`/`def.`/`th.`/`pl.`/`rk.` |
 | `errors.json` | error pattern | `anti-law`·`misreading`·`salience` | — (from `corrupts`) | `anti.`/`mis.`/`sal.` |
-| `metapatterns.json` | meta-pattern | — | — | `meta.` |
+| `rules.json` | rule (DO/IS sentence) | `is`·`do` | — | `rule.` |
 | `skills/<kind>.json` | skill (strategy) | `equivalence`·`classification`·`chunking`·`transformation` | structural (nested) | `<kind>.` |
 | `drills/<kind>-<group>.json` | drill (material) | mirrors its skill | — | keyed by `skill` id |
 
 **id prefix = `kind`** wherever a kind exists — the validator enforces prefix↔kind
-for errors (`anti`/`mis`/`sal`) and skills (`<kind>.`); metapatterns have no kind so
-take the fixed `meta.` prefix; card prefixes mark epistemic role but are not kind-validated.
+for errors (`anti`/`mis`/`sal`) and skills (`<kind>.`); a rule's `kind` is not in its id,
+so rules take the fixed `rule.` prefix; card prefixes mark epistemic role but are not kind-validated.
 Skills are now grouped **structurally**, like the tower: one file per kind holds a
 `kind → groups[] → skills[]` tree (2026-07-24), so a skill's `kind` and `group` are
 positional (the file, and the group node it sits in) and re-attached at load by
@@ -305,7 +319,8 @@ Four cards, verbatim:
 
 The three curated files are validated by `skill.schema.ts` on load (Zod → the TS
 types). Cross-layer reference fields all hold **card ids** except where noted, and the
-graph is a downward-only stack (cards ← errors, metapatterns ← skills). Prose fields are
+graph is a downward-only stack (cards ← errors ← skills, and rules ← both; errors must
+NOT cite skills, since skills cite errors and it would close a cycle). Prose fields are
 `LocalizedString` (a plain string = English, or `{ en, de }`); LaTeX fields are pure
 KaTeX; both are compile-checked at load.
 
@@ -325,7 +340,7 @@ the flat `groups` / `skillKinds` display registries from the tree.
 | `note` | LocalizedString | ✓ | the rationale — why the skill matters |
 | `illustration` | LaTeX | — | one canonical example that anchors the skill |
 | `requires` | string[] (skill ids) | — | direct prerequisite skills; the acyclic dependency graph |
-| `metaPatterns` | string[] (meta ids) | — | decoding heuristics the skill leans on |
+| `rules` | string[] (rule ids) | — | the DO/IS sentences this skill teaches |
 | `restsOn` | string[] (card ids) | — | the tower cards it rests on — laws/defs/theorems it is justified by **and** the notation conventions it obeys (law vs convention is read off the card prefix). Merged 2026-07-24 from the old `justifiedBy` + `governedBy` |
 | `errors` | string[] (error ids) | — | the misconception catalog it guards against |
 | `conditions` | LaTeX | — | domain caveat not inherited from a cited card |
@@ -341,13 +356,14 @@ the flat `groups` / `skillKinds` display registries from the tree.
 | `note` | LocalizedString | ✓ | what goes wrong, in prose (the counterpart to `instances`, as a card's `note` is to its `latex`) |
 | `instances` | string[] (LaTeX) | — | typical wrong forms |
 
-**meta-pattern** — `metapatterns.json`, a decoding heuristic:
+**rule** — `rules.json`, one student-facing sentence:
 
 | field | type | req | meaning |
 |---|---|---|---|
-| `id` | string `"meta.<slug>"` | ✓ | the identifier |
-| `name` | LocalizedString | ✓ | the display heading (like a card's `name`) |
-| `rule` | LocalizedString | ✓ | the decoding rule itself — the takeaway line a student reads in drill feedback |
+| `id` | string `"rule.<slug>"` | ✓ | the identifier |
+| `kind` | `is`\|`do` | ✓ | IS = what a written form MEANS (decoding); DO = what to reach for |
+| `rule` | LocalizedString | ✓ | **the sentence** — "The fraction bar is a bracket". Was `name` until 2026-07-27, and it always was the rule |
+| `note` | LocalizedString | ✓ | its gloss, one sentence with an example. Was `rule`, and it always was the gloss |
 | `summarizes` | string[] (card ids) | — | the tower cards this heuristic reads (cards only — errors are the skills' concern) |
 
 **drill** — `drills/<kind>-<group>.json`, the material for a skill (one entry per
@@ -377,7 +393,7 @@ naming which of the skill's `errors` it instantiates, validated ⊆ that set, + 
    wrong in a student's mind. Each has a kind naming what it `corrupts`:
    `anti-law` (algebra that isn't true — corrupts the law it distorts),
    `misreading` (parsing the notation wrong — corrupts a convention), or
-   `salience` (parsing by what is visually loudest — corrupts a meta-pattern). A
+   `salience` (parsing by what is visually loudest — corrupts a structure card). A
    skill lists the misconceptions its skill guards against in `errors`; a drill
    distractor names which one it instantiates via `explainedBy` (validated ⊆ the
    skill's `errors`). Per-error-pattern analytics thereby work from the first
@@ -405,17 +421,25 @@ naming which of the skill's `errors` it instantiates, validated ⊆ that set, + 
    lineage explicitly. A root form of the *same-base* law has no
    school-standard shape below fractional exponents and is deliberately
    absent.
-8. **Meta-patterns are the student-facing digest of the tower**, not a
-   third independent taxonomy. Each meta-pattern carries `summarizes` links to
-   the card ids it digests (cards only, since the 2026-07-24 cleanup), so the
-   classroom voice cannot drift from the cards it reads. They follow the same id
-   scheme as everything else (a `meta.…` slug, no display code) and are localized —
-   their `rule` is the takeaway line a student reads in drill feedback.
-   Assignment to skills stays **authored** (curation), never derived from
-   refs (coverage): tested empirically 2026-07-09, derivation recovers every
-   authored assignment but over-generates true-but-beside-the-point extras.
-   The audit checks the subset relation (an authored meta-pattern a tagged
-   skill's coordinates can't support = missing tag or misfit citation).
+8. **The rules registry is a collection of sentences, not a third taxonomy**
+   (reframed 2026-07-27; it was "meta-patterns, the student-facing digest of the
+   tower"). A rule is one student-facing one-liner, IS or DO, and it carries **no
+   context of its own** — no errors, no skills, no ordering. Context comes from
+   whoever cites it. The natural home of these sentences is the errors and skills
+   that show them with examples; the list exists ONLY so one sentence is not
+   written into twenty entries, and that is the whole justification for the layer.
+   `summarizes` survives as a **bridge claim** — this sentence is the plain-language
+   form of those cards — rather than as a mechanism, since errors and skills now
+   cite rules directly.
+   Assignment stays **authored** (curation), never derived from refs (coverage):
+   tested empirically 2026-07-09 for skills, and again in 2026-07-27 for errors,
+   where the card-mediated derivation guessed wrong on five of nineteen and could
+   not be overruled. The derivations survive as audit QUESTIONS — what a rule's
+   cards suggest that nobody cited, and what nothing cites at all — which is what
+   they were always good at: it is how five missing reading rules were found.
+   ⚠️ **Reach is garbage collection, never an admission test.** What belongs in the
+   registry is whatever turns out to be important, however narrowly it is used;
+   the audit only asks whether a sentence is left holding nothing.
 9. **Prose format contract.** Prose fields (notes, whys, texts) are plain
    text with inline `$…$` KaTeX — deliberately NOT markdown: the one feature
    prose needs is math, and the `$` contract avoids a parser, HTML injection,
@@ -488,6 +512,16 @@ familiar-shapes group (binomial square, difference of squares).
    skill-level `conditions` field only for caveats that aren't card-derived.
 
 ## Revision notes
+
+**2026-07-27 (rev. 10, the rules registry):** `metapatterns.json` → `rules.json`, ids
+`meta.*` → `rule.*`, `skill.metaPatterns` → `skill.rules`, route `/metapatterns` →
+`/rules`, `MetapatternsView` → `RulesView`. Fields `name`→`rule`, `rule`→`note`, new
+`kind: is|do`. **New `error.rules`**, authored, replacing the card-mediated derivation.
+16 → 25 sentences (18 IS / 7 DO) — the nine added are the positive form of the
+anti-laws, whose general statement was a LAW in the tower and had never been written in
+a student's words. Two new audit questions: errors citing no rule (now 0) and rules
+cited by nothing (0). The curated views moved onto the shared row shell in the same
+sequence; see `docs/app_design.md`.
 
 **2026-07-09 (rev. 2, after teacher markup):** KaTeX throughout; "device"
 renamed *convention*; error patterns elevated to first-class (false laws Ā +
