@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import RichText from '../components/RichText.vue'
 import WrongRight from '../components/WrongRight.vue'
@@ -10,6 +10,7 @@ import RefFold from '../components/RefFold.vue'
 import { errorTree, skills, metaPatterns } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type ErrorDef, type LocalizedString } from '../data/skill.schema'
+import { clipProse } from '../prose'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
 
@@ -32,8 +33,16 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 // `read` / `dazu`, which named neither the destination nor the same claim in the
 // two languages; a fold has to say what is behind it.
 const L = computed(() => lang.value === 'de'
-  ? { breaks: 'verletzt', reading: 'Leseregeln' }
-  : { breaks: 'breaks',   reading: 'reading rules' })
+  ? { breaks: 'verletzt', reading: 'Leseregeln',   more: 'mehr', less: 'weniger' }
+  : { breaks: 'breaks',   reading: 'reading rules', more: 'more', less: 'less' })
+
+// A quoted rule clips at 180, not the tower's 240: the column is 18rem rather
+// than 26. Keyed by rule+error, because one metapattern is quoted on several
+// errors (meta.three-minuses on two entries in the same panel) and expanding it
+// on one row must not expand it on the others.
+const RULE_CUT = 180
+const expanded = ref(new Set<string>())
+const toggle = (k: string) => (expanded.value.has(k) ? expanded.value.delete(k) : expanded.value.add(k))
 
 // Deep link from /metapatterns, where each rule lists the mistakes it prevents.
 const route = useRoute()
@@ -63,7 +72,7 @@ function metasFor(e: ErrorDef) {
   return metaPatterns
     .filter(m => m.summarizes.some(c => cards.has(c)))
     .slice(0, META_LIMIT)
-    .map(m => ({ id: m.id, name: t(m.name), to: `/metapatterns#${m.id}` }))
+    .map(m => ({ id: m.id, name: t(m.name), clip: clipProse(t(m.rule), RULE_CUT), to: `/metapatterns#${m.id}` }))
 }
 
 // Within a topic, the most-often-made mistake comes first (frequency = the ★
@@ -86,9 +95,9 @@ const sections = computed(() => errorTree.sections.map(s => ({
   })),
 })))
 
-// FOUR COLUMNS: rail | the ✗/✓ pairs | fix | note — the tower's own row, with
-// the pairs standing where a statement stands and the two prose cells where
-// intuition and note stand.
+// FOUR COLUMNS: rail | the ✗/✓ pairs | fix | the reading rule — the tower's own
+// row, with the pairs standing where a statement stands and the two prose cells
+// where intuition and note stand.
 //
 // A FIXED PAIRS TRACK, NOT `1fr`. With `1fr` the pairs kept their own geometry
 // (`justify-content: start` holds the ✗/✓ columns at content width) but the slack
@@ -96,14 +105,16 @@ const sections = computed(() => errorTree.sections.map(s => ({
 // middle of every row. Fixed, the slack moves to the outer edge, where it reads
 // as the margin it is.
 //
-// `fix` and `note` sit SIDE BY SIDE rather than stacked (2026-07-27), which is
-// what makes it visible that they overlap and which of the two is carrying the
-// entry. The budget is tight and the prose pays: the panel's inner width is
-// 89rem, three gaps take 4.8, the rail 11 and the pairs 36, leaving 18rem each.
-// That is ~38 characters, under the readable band, and is the honest price of the
-// fourth column at this page width. ⚠️ In presentation the `note` column is
-// empty on every row — 18rem of dead space in the student view, which is the
-// standing argument for going back to three.
+// The fourth column QUOTES THE READING RULE (2026-07-27) — it briefly held the
+// author's `note`, which was invisible to a student and duplicated the `fix`. The
+// concrete correction and the general rule now sit side by side, which is the
+// division of labour the two layers are supposed to have, and any remaining
+// overlap between them is on the page rather than one fold away.
+// The budget is tight and the prose pays: the panel's inner width is 89rem,
+// three gaps take 4.8, the rail 11 and the pairs 36, leaving 18rem each — ~38
+// characters, under the readable band, and the honest price of a fourth column
+// at this page width. 7 of 28 errors reach no rule at all, and their cell stays
+// empty rather than the layout changing.
 const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0, 18rem)'
 </script>
 
@@ -167,8 +178,25 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0,
         <div class="cell fix-cell">
           <RichText :text="e.fix" />
         </div>
-        <div v-if="inspect" class="cell note-cell">
-          <RichText :text="e.note" />
+        <!-- THE READING RULE ITSELF, not a pointer to it (2026-07-27). The
+             column held the author's `note`, which was invisible to a student
+             and duplicated the `fix` besides. Quoting the metapattern instead
+             puts the general rule beside the concrete correction, which is the
+             division of labour the two layers are supposed to have — and it
+             makes any remaining overlap between them visible on the page rather
+             than one fold away. Derived, so the arrow marks it as such, and the
+             name still deep-links to /metapatterns.
+             `note` is not lost: it is in the json fold, and its future is an
+             open question. -->
+        <div v-if="e.metas.length" class="cell meta-cell">
+          <p v-for="m in e.metas" :key="m.id" class="meta-rule">
+            <RouterLink class="meta-name" :to="m.to">→ {{ m.name }}</RouterLink>
+            <RichText :text="expanded.has(m.id + e.id) || !m.clip.clipped ? m.clip.full : m.clip.head" /><template
+              v-if="m.clip.clipped && !expanded.has(m.id + e.id)">… </template>
+            <button v-if="m.clip.clipped" class="more" @click="toggle(m.id + e.id)">
+              {{ expanded.has(m.id + e.id) ? L.less : L.more }}
+            </button>
+          </p>
         </div>
       </LayerRow>
     </LayerSection>
@@ -179,7 +207,7 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0,
 @media (min-width: 820px) {
   .pairs     { grid-area: 2 / 2; }
   .fix-cell  { grid-area: 2 / 3; }
-  .note-cell { grid-area: 2 / 4; }
+  .meta-cell { grid-area: 2 / 4; }
 }
 
 /* A star at the strip's .62rem reads as an asterisk, not a rating — one step up,
@@ -194,12 +222,21 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0,
    `color-mix` against --surface, not `transparent`: over transparency the tint
    would darken with whatever it sits on, and in dark mode --good/--bad are pale,
    so mixing toward the panel keeps both themes at the same apparent strength. */
-.cell.fix-cell, .cell.note-cell {
+.cell.fix-cell, .cell.meta-cell {
   padding: .35rem .55rem; border-radius: 6px;
   border-left: 2px solid;
 }
-.fix-cell  { background: color-mix(in srgb, var(--good) 10%, var(--surface)); border-left-color: color-mix(in srgb, var(--good) 55%, var(--surface)); }
-.note-cell { background: color-mix(in srgb, var(--bad) 10%, var(--surface)); border-left-color: color-mix(in srgb, var(--bad) 55%, var(--surface)); color: var(--text-muted); }
+.fix-cell { background: color-mix(in srgb, var(--good) 10%, var(--surface)); border-left-color: color-mix(in srgb, var(--good) 55%, var(--surface)); }
+/* NOT a third colour. The rule is neither the correction nor the mistake — it is
+   quoted from another layer, so it takes the neutral band and a plain rule, the
+   typographic convention for a quotation. Colour stays on the axis it already
+   means: green for what to do, red for what went wrong. */
+.meta-cell { background: var(--band); border-left-color: var(--border-strong); color: var(--text-muted); }
+.meta-rule { margin: 0; }
+.meta-rule + .meta-rule { margin-top: .5rem; }
+/* The arrow is the same derived marker RefFold uses in the strip. */
+.meta-name { display: block; font-family: var(--font-sans, inherit); font-size: .68rem; color: var(--text-faint); text-decoration: none; margin-bottom: .15rem; }
+.meta-name:hover { color: var(--accent); text-decoration: underline; }
 
 /* The shared grid WrongRight fills: stem | ✗ wrong | ✓ right as real columns.
    `justify-content: start` keeps the tracks at content width — with an `fr`
@@ -211,7 +248,12 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0,
    of the 358 available before the ✓ column gets any, which is what pushed the
    correction off the screen. Alignment across entries is a desktop concern —
    on a phone one entry is one screenful, so there is nothing to align with. */
-.pairs { display: grid; grid-template-columns: auto auto minmax(0, 1fr); justify-content: start; column-gap: .7rem; row-gap: .35rem; align-items: baseline; min-width: 0; }
+/* `align-content: start` is load-bearing, not tidiness. The pairs grid is
+   stretched to the height of the tallest cell in the row (a five-line quoted
+   rule), and with the default `stretch` the leftover height is dealt out BETWEEN
+   the instance rows — so two pairs that belong together drifted half a row
+   apart, and by a different amount on every entry. */
+.pairs { display: grid; grid-template-columns: auto auto minmax(0, 1fr); justify-content: start; align-content: start; column-gap: .7rem; row-gap: .35rem; align-items: baseline; min-width: 0; }
 @media (min-width: 820px) {
   /* A FIXED 7rem STUB. Measured: no stem on the page exceeds 6.2rem
      (anti.quadratic-pair-unchecked), so a constant track holds all 50 of them.

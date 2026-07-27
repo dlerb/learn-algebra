@@ -28,6 +28,34 @@
       ]
     },
     {
+      "id": "meta.invisible-one",
+      "name": {
+        "en": "A missing coefficient is a 1",
+        "de": "Ein fehlender Koeffizient ist eine 1"
+      },
+      "rule": {
+        "en": "Where no number is written in front, the coefficient is $1$: $a$ is $1 \\cdot a$. It is only left out to save writing, and it comes back the moment you collect — $a + 3a = 1a + 3a = 4a$.",
+        "de": "Wo vorne keine Zahl steht, ist der Koeffizient $1$: $a$ ist $1 \\cdot a$. Sie wird nur zur Schreibersparnis weggelassen und kommt zurück, sobald man zusammenfasst — $a + 3a = 1a + 3a = 4a$."
+      },
+      "summarizes": [
+        "ix.invisible-one"
+      ]
+    },
+    {
+      "id": "meta.order-is-habit",
+      "name": {
+        "en": "The number goes in front only by habit",
+        "de": "Die Zahl steht nur aus Gewohnheit vorne"
+      },
+      "rule": {
+        "en": "A product may be written in any order; putting the number first is convention, not arithmetic. $a \\cdot 3$, $3 \\cdot a$ and $3a$ are the same product, so recognise a term however it is ordered.",
+        "de": "Ein Produkt darf in beliebiger Reihenfolge geschrieben werden; dass die Zahl vorne steht, ist Konvention und nicht Rechnung. $a \\cdot 3$, $3 \\cdot a$ und $3a$ sind dasselbe Produkt — erkenne einen Term also unabhängig von der Reihenfolge."
+      },
+      "summarizes": [
+        "ix.coefficient-front"
+      ]
+    },
+    {
       "id": "meta.three-minuses",
       "name": {
         "en": "A minus is one of two things",
@@ -41,6 +69,20 @@
         "ax.additive-inverse",
         "def.sub",
         "th.negative-one-times"
+      ]
+    },
+    {
+      "id": "meta.no-adjacent-operators",
+      "name": {
+        "en": "Two operators never touch",
+        "de": "Zwei Operatoren stehen nie nebeneinander"
+      },
+      "rule": {
+        "en": "An operation sign and a minus belonging to a number never stand side by side. The negative number goes in brackets: $a + (-b)$, not $a + -b$ — the bracket shows the minus belongs to $b$, not to the $+$.",
+        "de": "Ein Rechenzeichen und ein Minus, das zu einer Zahl gehört, stehen nie nebeneinander. Die negative Zahl kommt in Klammern: $a + (-b)$, nicht $a + -b$ — die Klammer zeigt, dass das Minus zu $b$ gehört und nicht zum $+$."
+      },
+      "summarizes": [
+        "ix.no-adjacent-operator"
       ]
     },
     {
@@ -74,6 +116,21 @@
       ]
     },
     {
+      "id": "meta.minus-in-exponent",
+      "name": {
+        "en": "A minus in the exponent stays in the exponent",
+        "de": "Ein Minus im Exponenten bleibt im Exponenten"
+      },
+      "rule": {
+        "en": "Read a minus in the exponent as part of the exponent, never as something that makes the value negative: $x^{-1}$ is $\\frac{1}{x}$, a reciprocal, not $-x$. And $2^{-1} = \\frac{1}{2}$, which is positive.",
+        "de": "Lies ein Minus im Exponenten als Teil des Exponenten und nicht so, als würde es den Wert negativ machen: $x^{-1}$ ist $\\frac{1}{x}$, ein Kehrwert, nicht $-x$. Und $2^{-1} = \\frac{1}{2}$ ist positiv."
+      },
+      "summarizes": [
+        "def.pow-neg",
+        "th.inverse-is-power"
+      ]
+    },
+    {
       "id": "meta.fraction-bar-brackets",
       "name": {
         "en": "The fraction bar is a bracket",
@@ -85,6 +142,20 @@
       },
       "summarizes": [
         "ix.fraction-bar"
+      ]
+    },
+    {
+      "id": "meta.root-bar-brackets",
+      "name": {
+        "en": "The root bar is a bracket",
+        "de": "Der Wurzelstrich ist eine Klammer"
+      },
+      "rule": {
+        "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once. $\\sqrt{a+b}$ is the root of the whole sum, which is why it is not $\\sqrt{a} + \\sqrt{b}$.",
+        "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird. $\\sqrt{a+b}$ ist die Wurzel der ganzen Summe — deshalb ist es nicht $\\sqrt{a} + \\sqrt{b}$."
+      },
+      "summarizes": [
+        "ix.root"
       ]
     },
     {

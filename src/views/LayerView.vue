@@ -10,6 +10,7 @@ import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
 import { loc, type LocalizedString } from '../data/skill.schema'
+import { clipProse } from '../prose'
 import { lang } from '../lang'
 import { layerById, cardsOf, cardIndex, CONCERN_TOKENS, type Card, type Section } from '../data/layers'
 
@@ -111,32 +112,11 @@ const L = computed(() => lang.value === 'de'
   ? { forall: 'für alle', cond: 'sofern', more: 'mehr', less: 'weniger', rests: 'stützt sich auf', from: 'aus', deriv: 'Herleitung' }
   : { forall: 'for all', cond: 'provided', more: 'more', less: 'less', rests: 'rests on', from: 'from', deriv: 'derivation' })
 
-// PROSE TRUNCATION. Both cells clip, because leaving intuition whole was the main
-// source of ragged row heights: all 34 intuitions exceed 180 characters (median
-// 393, about seven lines), and notes run to 1336.
+// PROSE TRUNCATION (src/prose.ts, shared with the curated layers since
+// 2026-07-27). Both cells clip: 240 characters is what a 26rem column takes
+// before a row's height is set by its longest note rather than by its content.
 const CUT = 240
-
-/** Truncate on a word boundary WITHOUT splitting an inline `$…$` span — cutting
- *  inside one hands KaTeX an unterminated expression and prints an error box
- *  mid-page. Tracks whether it is inside math and only ever cuts outside. */
-function truncateProse(s: string, max: number): { head: string; clipped: boolean } {
-  if (s.length <= max) return { head: s, clipped: false }
-  let inMath = false
-  let lastSafe = 0
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === '$') inMath = !inMath
-    if (i > max && !inMath) break
-    if (!inMath && (s[i] === ' ' || s[i] === ',' || s[i] === '.')) lastSafe = i
-  }
-  if (lastSafe === 0) return { head: s, clipped: false }
-  return { head: s.slice(0, lastSafe).trimEnd(), clipped: true }
-}
-const clip = (ls: LocalizedString | undefined) => {
-  if (!ls) return null
-  const full = t(ls)
-  const { head, clipped } = truncateProse(full, CUT)
-  return { full, head, clipped }
-}
+const clip = (ls: LocalizedString | undefined) => (ls ? clipProse(t(ls), CUT) : null)
 
 // Filters. Both sets start full (nothing dimmed). Toggling narrows. The kind
 // row is per-layer (powers has no signature or axiom section), so it resets
@@ -368,8 +348,8 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, var(--maths)) minmax(0, var(--mea
 .fold-btn { margin-top: .3rem; font-size: .68rem; color: var(--text-faint); background: none; border: none; cursor: pointer; padding: 0; display: block; }
 .fold-btn:hover { color: var(--accent); }
 
-.more { border: none; background: none; padding: 0; cursor: pointer; font: inherit; font-size: .76rem; color: var(--accent); white-space: nowrap; }
-.more:hover { text-decoration: underline; }
+/* `.more` (the clipped-cell expander) is styled by LayerRow, shared with the
+   curated layers. */
 
 /* --- full-width blocks --------------------------------------------------- */
 .wide { margin-top: .6rem; }

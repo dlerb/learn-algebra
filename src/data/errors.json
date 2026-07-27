@@ -84,11 +84,7 @@
                 {
                   "from": "a - b",
                   "wrong": "b - a",
-                  "right": "-(b - a)",
-                  "hint": {
-                    "en": "reversing a subtraction flips the whole thing",
-                    "de": "eine Subtraktion umzudrehen kehrt das Ganze um"
-                  }
+                  "right": "-(b - a)"
                 },
                 {
                   "from": "\\frac{a}{b}",
@@ -954,11 +950,7 @@
                 {
                   "from": "3m",
                   "wrong": "3 \\text{ metres}",
-                  "right": "3 \\cdot m",
-                  "hint": {
-                    "en": "$m$ is a number here, not a unit and not a word",
-                    "de": "$m$ ist hier eine Zahl, keine Einheit und kein Wort"
-                  }
+                  "right": "3 \\cdot m"
                 },
                 {
                   "wrong": "a + a \\neq 2a",

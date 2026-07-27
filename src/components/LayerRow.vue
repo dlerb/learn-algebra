@@ -146,6 +146,10 @@ const json = () => JSON.stringify(props.record, null, 2)
 :deep(.cell.muted) { color: var(--text-muted); }
 :deep(.cell) + :deep(.cell) { margin-top: .5rem; }
 @media (min-width: 820px) { :deep(.cell) + :deep(.cell) { margin-top: 0; } }
+/* The expander every clipped cell gets (src/prose.ts). Shared here so `more`
+   reads the same on a tower intuition and on a quoted reading rule. */
+:deep(.more) { border: none; background: none; padding: 0; cursor: pointer; font: inherit; font-size: .76rem; color: var(--accent); white-space: nowrap; }
+:deep(.more):hover { text-decoration: underline; }
 
 .json { margin: .45rem 0 0; padding: .55rem .65rem; background: var(--code-bg); border-radius: 6px; font-size: .7rem; line-height: 1.45; overflow-x: auto; color: var(--text-muted); }
 </style>
