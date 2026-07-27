@@ -153,9 +153,9 @@ analogy above — are `(ab)ⁿ = aⁿbⁿ` and `√(ab) = √a·√b`.)*
 
 ## Cross-cutting root causes (what the research names)
 
-These are the *negative* form; each is the shadow of a **metapattern** (our positive
+These are the *negative* form; each is the shadow of a **rule** (our positive
 decoding rule). The cross-links below tie the research categories to our layer — a
-metapattern is what a student must internalise so the root cause never fires.
+rule is what a student must internalise so the root cause never fires.
 
 - **Illegal cancellation** — the single largest category (~48% in one grade-11 study).
   → `meta.only-multiplication-distributes` (its rule spells out "a single term of a
@@ -165,7 +165,7 @@ metapattern is what a student must internalise so the root cause never fires.
   → `meta.only-multiplication-distributes`.
 - **Weak grasp of "variable"** — F3, and treating letters as labels not numbers.
   → `meta.variable-is-a-fixed-number` (added 2026-07-24 to close this gap; before, the
-  only coverage was the error `mis.letters-differ` + card `pre.variables`, no metapattern).
+  only coverage was the error `mis.letters-differ` + card `pre.variables`; `rule.variable-is-a-fixed-number` covers it since 2026-07-27).
 - **Sign/procedural slips** — A- and B-families; slips more than misconceptions.
   → `meta.three-minuses`.
 

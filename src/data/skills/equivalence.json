@@ -12,8 +12,8 @@
           "name": "Explicit vs. implicit multiplication",
           "note": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product — not a two-digit number, and not $3 + x$.",
           "illustration": "3 \\times x = 3 \\cdot x = 3x = x \\cdot 3 = (3)(x)",
-          "metaPatterns": [
-            "meta.juxtaposition"
+          "rules": [
+            "rule.juxtaposition"
           ],
           "restsOn": [
             "ix.juxtaposition",
@@ -31,9 +31,9 @@
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition",
-            "meta.implicit-op-before-bracket"
+          "rules": [
+            "rule.juxtaposition",
+            "rule.implicit-op-before-bracket"
           ],
           "restsOn": [
             "ix.juxtaposition",
@@ -52,9 +52,9 @@
             "equivalence.explicit-vs-implicit-product",
             "equivalence.negative-numbers"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition",
-            "meta.three-minuses"
+          "rules": [
+            "rule.juxtaposition",
+            "rule.three-minuses"
           ],
           "restsOn": [
             "th.negative-one-times",
@@ -73,8 +73,8 @@
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition"
+          "rules": [
+            "rule.juxtaposition"
           ],
           "restsOn": [
             "th.zero-times",
@@ -92,8 +92,8 @@
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition"
+          "rules": [
+            "rule.juxtaposition"
           ],
           "restsOn": [
             "def.multiple",
@@ -118,8 +118,8 @@
           "requires": [
             "equivalence.repeated-addition"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition"
+          "rules": [
+            "rule.juxtaposition"
           ],
           "restsOn": [
             "th.collect-like-terms",
@@ -137,8 +137,8 @@
           "requires": [
             "equivalence.number-plus-term"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition"
+          "rules": [
+            "rule.juxtaposition"
           ],
           "restsOn": [
             "th.collect-like-terms",
@@ -176,8 +176,8 @@
           "name": "Negative numbers and the unary minus",
           "note": "A negative number and its parenthesised form are the same object: -3 and (-3) are identical, and both equal 0 - 3.",
           "illustration": "-3 = (-3) = 0 - 3",
-          "metaPatterns": [
-            "meta.three-minuses"
+          "rules": [
+            "rule.three-minuses"
           ],
           "restsOn": [
             "def.sub",
@@ -195,8 +195,8 @@
           "requires": [
             "equivalence.coefficient-negative-one"
           ],
-          "metaPatterns": [
-            "meta.three-minuses"
+          "rules": [
+            "rule.three-minuses"
           ],
           "restsOn": [
             "def.sub",
@@ -216,9 +216,9 @@
           "requires": [
             "equivalence.coefficient-negative-one"
           ],
-          "metaPatterns": [
-            "meta.three-minuses",
-            "meta.implicit-op-before-bracket"
+          "rules": [
+            "rule.three-minuses",
+            "rule.implicit-op-before-bracket"
           ],
           "restsOn": [
             "th.minus-over-sum",
@@ -239,9 +239,9 @@
           "requires": [
             "equivalence.coefficient-negative-one"
           ],
-          "metaPatterns": [
-            "meta.three-minuses",
-            "meta.implicit-op-before-bracket"
+          "rules": [
+            "rule.three-minuses",
+            "rule.implicit-op-before-bracket"
           ],
           "restsOn": [
             "th.minus-over-sum",
@@ -261,8 +261,8 @@
           "requires": [
             "equivalence.subtraction-as-adding-opposite"
           ],
-          "metaPatterns": [
-            "meta.three-minuses"
+          "rules": [
+            "rule.three-minuses"
           ],
           "restsOn": [
             "def.sub",
@@ -283,9 +283,9 @@
             "equivalence.negative-numbers",
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition",
-            "meta.three-minuses"
+          "rules": [
+            "rule.juxtaposition",
+            "rule.three-minuses"
           ],
           "restsOn": [
             "th.minus-in-product",
@@ -306,9 +306,9 @@
             "equivalence.negative-numbers",
             "equivalence.division-variants"
           ],
-          "metaPatterns": [
-            "meta.three-minuses",
-            "meta.fraction-bar-brackets"
+          "rules": [
+            "rule.three-minuses",
+            "rule.fraction-bar-brackets"
           ],
           "restsOn": [
             "th.fraction-minus-moves",
@@ -328,9 +328,9 @@
           "requires": [
             "equivalence.minus-over-sum"
           ],
-          "metaPatterns": [
-            "meta.three-minuses",
-            "meta.implicit-op-before-bracket"
+          "rules": [
+            "rule.three-minuses",
+            "rule.implicit-op-before-bracket"
           ],
           "restsOn": [
             "th.subtract-a-sum",
@@ -350,9 +350,9 @@
           "requires": [
             "equivalence.minus-over-difference"
           ],
-          "metaPatterns": [
-            "meta.three-minuses",
-            "meta.implicit-op-before-bracket"
+          "rules": [
+            "rule.three-minuses",
+            "rule.implicit-op-before-bracket"
           ],
           "restsOn": [
             "th.subtract-a-sum",
@@ -416,8 +416,8 @@
           "requires": [
             "equivalence.division-variants"
           ],
-          "metaPatterns": [
-            "meta.fraction-bar-brackets"
+          "rules": [
+            "rule.fraction-bar-brackets"
           ],
           "restsOn": [
             "ix.fraction-bar"
@@ -435,9 +435,9 @@
           "requires": [
             "equivalence.product-with-brackets"
           ],
-          "metaPatterns": [
-            "meta.implicit-op-before-bracket",
-            "meta.only-multiplication-distributes"
+          "rules": [
+            "rule.implicit-op-before-bracket",
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "ax.distributivity",
@@ -478,8 +478,8 @@
             "equivalence.repeated-addition",
             "equivalence.exponent-as-repeated-product"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition"
+          "rules": [
+            "rule.juxtaposition"
           ],
           "restsOn": [
             "def.multiple",
@@ -500,8 +500,8 @@
             "equivalence.coefficient-negative-one",
             "equivalence.exponent-as-repeated-product"
           ],
-          "metaPatterns": [
-            "meta.exponent-binds-tighter"
+          "rules": [
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "ix.pow",
@@ -522,8 +522,8 @@
             "equivalence.product-with-brackets",
             "equivalence.exponent-as-repeated-product"
           ],
-          "metaPatterns": [
-            "meta.exponent-binds-tighter"
+          "rules": [
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "pl.of-product",
@@ -560,8 +560,8 @@
             "equivalence.exponent-as-repeated-product",
             "equivalence.division-variants"
           ],
-          "metaPatterns": [
-            "meta.exponent-binds-tighter"
+          "rules": [
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "def.pow-zero",
@@ -581,8 +581,8 @@
           "requires": [
             "equivalence.exponent-as-repeated-product"
           ],
-          "metaPatterns": [
-            "meta.exponent-binds-tighter"
+          "rules": [
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "def.pow-rat",
@@ -602,8 +602,8 @@
             "equivalence.negative-exponent",
             "equivalence.fractional-exponent-root"
           ],
-          "metaPatterns": [
-            "meta.exponent-binds-tighter"
+          "rules": [
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "def.pow-zero",
@@ -626,8 +626,8 @@
             "equivalence.exponent-as-repeated-product",
             "equivalence.product-with-brackets"
           ],
-          "metaPatterns": [
-            "meta.only-multiplication-distributes"
+          "rules": [
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "def.pow",
@@ -647,8 +647,8 @@
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.only-multiplication-distributes"
+          "rules": [
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "th.root-of-product",
@@ -667,8 +667,8 @@
           "requires": [
             "equivalence.root-of-a-product"
           ],
-          "metaPatterns": [
-            "meta.only-multiplication-distributes"
+          "rules": [
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "ix.root"
@@ -736,9 +736,9 @@
           "requires": [
             "equivalence.fraction-bar-grouping"
           ],
-          "metaPatterns": [
-            "meta.fraction-bar-brackets",
-            "meta.only-multiplication-distributes"
+          "rules": [
+            "rule.fraction-bar-brackets",
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "th.split-numerator",
@@ -755,9 +755,9 @@
           "requires": [
             "equivalence.splitting-a-fraction"
           ],
-          "metaPatterns": [
-            "meta.fraction-bar-brackets",
-            "meta.only-multiplication-distributes"
+          "rules": [
+            "rule.fraction-bar-brackets",
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "th.split-numerator",
@@ -775,9 +775,9 @@
           "requires": [
             "equivalence.splitting-a-fraction"
           ],
-          "metaPatterns": [
-            "meta.fraction-bar-brackets",
-            "meta.only-multiplication-distributes"
+          "rules": [
+            "rule.fraction-bar-brackets",
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "th.split-numerator",
@@ -811,8 +811,8 @@
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.juxtaposition"
+          "rules": [
+            "rule.juxtaposition"
           ],
           "restsOn": [
             "ax.mul-commutative",
@@ -830,8 +830,8 @@
           "requires": [
             "equivalence.minus-over-difference"
           ],
-          "metaPatterns": [
-            "meta.three-minuses"
+          "rules": [
+            "rule.three-minuses"
           ],
           "restsOn": [
             "def.sub",
@@ -872,8 +872,8 @@
             "classification.difference",
             "classification.product"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ],
           "errors": [
             "anti.linearity"

@@ -1,0 +1,400 @@
+{
+  "layer": "rules",
+  "title": {
+    "en": "Reading rules",
+    "de": "Leseregeln"
+  },
+  "blurb": {
+    "en": "A handful of rules for reading algebra. Each one, once it is automatic, stops a whole family of mistakes from ever starting.",
+    "de": "Eine Handvoll Regeln, um Algebra zu lesen. Sitzt eine davon, entsteht eine ganze Familie von Fehlern gar nicht erst."
+  },
+  "note": {
+    "en": "The DO/IS registry: a flat collection of student-facing sentences, each one saying either what a written form IS or what to DO with it. The sentences carry no context of their own — errors and skills supply it by citing them alongside examples, which is also the only reason the list exists, since otherwise the same sentence would be written into twenty entries. `summarizes` names the tower cards a sentence digests: a bridge claim, not a link, and the only way to ask which cards have a plain-language form yet.",
+    "de": "Die DO/IS-Sammlung: eine flache Liste schülernaher Sätze, von denen jeder sagt, was eine Schreibweise IST oder was man mit ihr TUT. Die Sätze tragen keinen eigenen Kontext — Fehler und Skills liefern ihn, indem sie sie zusammen mit Beispielen zitieren; genau dafür gibt es die Liste, sonst stünde derselbe Satz in zwanzig Einträgen. `summarizes` nennt die Turmkarten, die ein Satz verdichtet: eine Brückenaussage, kein Link, und die einzige Möglichkeit zu fragen, welche Karten schon eine schülernahe Form haben."
+  },
+  "rules": [
+    {
+      "id": "rule.juxtaposition",
+      "kind": "is",
+      "rule": {
+        "en": "Juxtaposition means multiplication",
+        "de": "Nebeneinanderschreiben bedeutet Multiplikation"
+      },
+      "note": {
+        "en": "Anything written next to anything else, with no symbol between, means multiply: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ are all products.",
+        "de": "Alles, was ohne Zeichen nebeneinander steht, wird multipliziert: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ sind alles Produkte."
+      },
+      "summarizes": [
+        "ix.juxtaposition"
+      ]
+    },
+    {
+      "id": "rule.invisible-one",
+      "kind": "is",
+      "rule": {
+        "en": "A missing coefficient is a 1",
+        "de": "Ein fehlender Koeffizient ist eine 1"
+      },
+      "note": {
+        "en": "Where no number is written in front, the coefficient is $1$: $a$ is $1 \\cdot a$.",
+        "de": "Wo vorne keine Zahl steht, ist der Koeffizient $1$: $a$ ist $1 \\cdot a$."
+      },
+      "summarizes": [
+        "ix.invisible-one"
+      ]
+    },
+    {
+      "id": "rule.order-is-habit",
+      "kind": "is",
+      "rule": {
+        "en": "The number goes in front only by habit",
+        "de": "Die Zahl steht nur aus Gewohnheit vorne"
+      },
+      "note": {
+        "en": "A product may be written in either order: $a \\cdot 3$, $3 \\cdot a$ and $3a$ are the same product.",
+        "de": "Ein Produkt darf in beliebiger Reihenfolge stehen: $a \\cdot 3$, $3 \\cdot a$ und $3a$ sind dasselbe Produkt."
+      },
+      "summarizes": [
+        "ix.coefficient-front"
+      ]
+    },
+    {
+      "id": "rule.only-plus-and-times-commute",
+      "kind": "do",
+      "rule": {
+        "en": "Only plus and times may be swapped",
+        "de": "Nur Plus und Mal dürfen vertauscht werden"
+      },
+      "note": {
+        "en": "$a + b = b + a$ and $ab = ba$. Minus and divide have no such rule: $a - b$ and $b - a$ are opposites, $\\frac{a}{b}$ and $\\frac{b}{a}$ reciprocals.",
+        "de": "$a + b = b + a$ und $ab = ba$. Für Minus und Geteilt gibt es keine solche Regel: $a - b$ und $b - a$ sind Gegenzahlen, $\\frac{a}{b}$ und $\\frac{b}{a}$ Kehrwerte."
+      },
+      "summarizes": [
+        "ax.add-commutative",
+        "ax.mul-commutative"
+      ]
+    },
+    {
+      "id": "rule.three-minuses",
+      "kind": "is",
+      "rule": {
+        "en": "A minus is one of two things",
+        "de": "Ein Minus ist eines von zwei Dingen"
+      },
+      "note": {
+        "en": "A minus is either subtraction ($a - b$) or negation ($-a$) — two roles, no third. When one confuses you, ask which it is.",
+        "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$) — zwei Rollen, keine dritte. Wenn dich eines verwirrt, frage dich, welches es ist."
+      },
+      "summarizes": [
+        "ax.additive-inverse",
+        "def.sub",
+        "th.negative-one-times"
+      ]
+    },
+    {
+      "id": "rule.no-adjacent-operators",
+      "kind": "is",
+      "rule": {
+        "en": "Two operators never touch",
+        "de": "Zwei Operatoren stehen nie nebeneinander"
+      },
+      "note": {
+        "en": "An operation sign and a minus belonging to a number never stand side by side: write $a + (-b)$.",
+        "de": "Ein Rechenzeichen und ein Minus, das zu einer Zahl gehört, stehen nie nebeneinander: schreibe $a + (-b)$."
+      },
+      "summarizes": [
+        "ix.no-adjacent-operator"
+      ]
+    },
+    {
+      "id": "rule.implicit-op-before-bracket",
+      "kind": "is",
+      "rule": {
+        "en": "Brackets carry an implicit operation in front",
+        "de": "Vor einer Klammer steht eine unsichtbare Operation"
+      },
+      "note": {
+        "en": "No explicit symbol before a bracket means multiplication (juxtaposition). A minus before a bracket means times $(-1)$.",
+        "de": "Kein Zeichen vor der Klammer heisst Multiplikation (Nebeneinanderschreiben). Ein Minus vor der Klammer heisst mal $(-1)$."
+      },
+      "summarizes": [
+        "ix.brackets",
+        "ix.juxtaposition"
+      ]
+    },
+    {
+      "id": "rule.exponent-binds-tighter",
+      "kind": "is",
+      "rule": {
+        "en": "Exponents bind tighter than coefficients and signs",
+        "de": "Exponenten binden stärker als Koeffizienten und Vorzeichen"
+      },
+      "note": {
+        "en": "$-a^2$ means $-(a^2)$, not $(-a)^2$. The exponent applies first, the minus after.",
+        "de": "$-a^2$ bedeutet $-(a^2)$, nicht $(-a)^2$. Zuerst wirkt der Exponent, dann das Minus."
+      },
+      "summarizes": [
+        "ix.pow",
+        "th.negative-base"
+      ]
+    },
+    {
+      "id": "rule.minus-in-exponent",
+      "kind": "is",
+      "rule": {
+        "en": "A minus in the exponent stays in the exponent",
+        "de": "Ein Minus im Exponenten bleibt im Exponenten"
+      },
+      "note": {
+        "en": "A minus in the exponent belongs to the exponent and does not make the value negative: $x^{-1} = \\frac{1}{x}$.",
+        "de": "Ein Minus im Exponenten gehört zum Exponenten und macht den Wert nicht negativ: $x^{-1} = \\frac{1}{x}$."
+      },
+      "summarizes": [
+        "def.pow-neg",
+        "th.inverse-is-power"
+      ]
+    },
+    {
+      "id": "rule.exponent-arithmetic",
+      "kind": "do",
+      "rule": {
+        "en": "Multiplying powers adds the exponents; a power of a power multiplies them",
+        "de": "Potenzen multiplizieren addiert die Exponenten; eine Potenz einer Potenz multipliziert sie"
+      },
+      "note": {
+        "en": "$x^a \\cdot x^b = x^{a+b}$, and $(x^a)^b = x^{ab}$.",
+        "de": "$x^a \\cdot x^b = x^{a+b}$, und $(x^a)^b = x^{ab}$."
+      },
+      "summarizes": [
+        "pl.same-base",
+        "pl.of-power"
+      ]
+    },
+    {
+      "id": "rule.power-over-product",
+      "kind": "do",
+      "rule": {
+        "en": "A power over a product reaches every factor",
+        "de": "Eine Potenz über einem Produkt erreicht jeden Faktor"
+      },
+      "note": {
+        "en": "$(ab)^n = a^n b^n$, and a number in front is a factor like any other.",
+        "de": "$(ab)^n = a^n b^n$, und eine Zahl davor ist ein Faktor wie jeder andere."
+      },
+      "summarizes": [
+        "pl.of-product"
+      ]
+    },
+    {
+      "id": "rule.power-vs-coefficient",
+      "kind": "is",
+      "rule": {
+        "en": "A power repeats multiplication, a coefficient repeats addition",
+        "de": "Eine Potenz wiederholt die Multiplikation, ein Koeffizient die Addition"
+      },
+      "note": {
+        "en": "$a^2$ is $a \\cdot a$ and $2a$ is $a + a$. Adding never makes a power.",
+        "de": "$a^2$ ist $a \\cdot a$ und $2a$ ist $a + a$. Addieren ergibt nie eine Potenz."
+      },
+      "summarizes": [
+        "def.multiple",
+        "def.pow"
+      ]
+    },
+    {
+      "id": "rule.exponent-counts-factors",
+      "kind": "is",
+      "rule": {
+        "en": "The exponent counts the factors, and no factors leave $1$",
+        "de": "Der Exponent zählt die Faktoren, und kein Faktor lässt $1$ übrig"
+      },
+      "note": {
+        "en": "$x^1 = x$ is one factor and $x^0 = 1$ is none, for every $x$ except $0$.",
+        "de": "$x^1 = x$ ist ein Faktor und $x^0 = 1$ ist keiner, für jedes $x$ ausser $0$."
+      },
+      "summarizes": [
+        "def.pow-zero",
+        "def.pow"
+      ]
+    },
+    {
+      "id": "rule.fraction-bar-brackets",
+      "kind": "is",
+      "rule": {
+        "en": "The fraction bar is a bracket",
+        "de": "Der Bruchstrich ist eine Klammer"
+      },
+      "note": {
+        "en": "Everything above the line is one grouped object, everything below another. $a + b/c$ and $(a+b)/c$ are different things.",
+        "de": "Alles über dem Strich ist EIN Objekt, alles darunter ein anderes. $a + b/c$ und $(a+b)/c$ sind verschiedene Dinge."
+      },
+      "summarizes": [
+        "ix.fraction-bar"
+      ]
+    },
+    {
+      "id": "rule.fraction-common-denominator",
+      "kind": "do",
+      "rule": {
+        "en": "Fractions add only over a common denominator",
+        "de": "Brüche werden nur über einem gemeinsamen Nenner addiert"
+      },
+      "note": {
+        "en": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: bring them to the same denominator first, then add only the numerators.",
+        "de": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: zuerst auf denselben Nenner bringen, dann nur die Zähler addieren."
+      },
+      "summarizes": [
+        "th.fraction-add"
+      ]
+    },
+    {
+      "id": "rule.root-bar-brackets",
+      "kind": "is",
+      "rule": {
+        "en": "The root bar is a bracket",
+        "de": "Der Wurzelstrich ist eine Klammer"
+      },
+      "note": {
+        "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
+        "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird."
+      },
+      "summarizes": [
+        "ix.root"
+      ]
+    },
+    {
+      "id": "rule.only-multiplication-distributes",
+      "kind": "is",
+      "rule": {
+        "en": "Only multiplication distributes over a sum",
+        "de": "Nur die Multiplikation verteilt sich über eine Summe"
+      },
+      "note": {
+        "en": "$a(b+c) = ab + ac$: multiplication distributes over a sum, and nothing else does.",
+        "de": "$a(b+c) = ab + ac$: Die Multiplikation verteilt sich über eine Summe, sonst nichts."
+      },
+      "summarizes": [
+        "ax.distributivity"
+      ]
+    },
+    {
+      "id": "rule.dominant-op-last",
+      "kind": "is",
+      "rule": {
+        "en": "The dominant operation is the last one applied",
+        "de": "Die dominante Operation ist die zuletzt ausgeführte"
+      },
+      "note": {
+        "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
+        "de": "Würdest du den Term Schritt für Schritt ausrechnen, wäre die zuletzt ausgeführte Operation die dominante. Alles andere passiert innerhalb von Chunks."
+      },
+      "summarizes": [
+        "ix.precedence",
+        "ix.pow",
+        "th.negative-base",
+        "ix.brackets"
+      ]
+    },
+    {
+      "id": "rule.bracket-chunk",
+      "kind": "is",
+      "rule": {
+        "en": "Brackets make a chunk",
+        "de": "Klammern bilden einen Chunk"
+      },
+      "note": {
+        "en": "Whatever is inside brackets is a single object. The dominant operation is always outside all brackets.",
+        "de": "Was in Klammern steht, ist EIN Objekt. Die dominante Operation steht immer ausserhalb aller Klammern."
+      },
+      "summarizes": [
+        "ix.brackets"
+      ]
+    },
+    {
+      "id": "rule.brackets-that-matter",
+      "kind": "is",
+      "rule": {
+        "en": "Brackets matter only where they change the reading",
+        "de": "Klammern zählen nur dort, wo sie die Lesart ändern"
+      },
+      "note": {
+        "en": "$(ab)c$ and $abc$ are the same product, so those brackets may be dropped. $(a+b)c$ and $a + bc$ are not, so those may not.",
+        "de": "$(ab)c$ und $abc$ sind dasselbe Produkt, diese Klammern dürfen also weg. $(a+b)c$ und $a + bc$ sind es nicht, diese also nicht."
+      },
+      "summarizes": [
+        "ix.brackets"
+      ]
+    },
+    {
+      "id": "rule.multiplication-binds-tighter",
+      "kind": "is",
+      "rule": {
+        "en": "Multiplication binds tighter than addition and subtraction",
+        "de": "Multiplikation bindet stärker als Plus und Minus"
+      },
+      "note": {
+        "en": "In $3x + 2y$ the multiplication is used up inside the terms; the dominant operation is the $+$. It is a sum, not a product.",
+        "de": "In $3x + 2y$ ist die Multiplikation innerhalb der Terme verbraucht; die dominante Operation ist das $+$. Es ist eine Summe, kein Produkt."
+      },
+      "summarizes": [
+        "ix.precedence"
+      ]
+    },
+    {
+      "id": "rule.dominant-op-tools",
+      "kind": "do",
+      "rule": {
+        "en": "The dominant operation determines which tools apply",
+        "de": "Die dominante Operation bestimmt die Werkzeuge"
+      },
+      "note": {
+        "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
+        "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen."
+      }
+    },
+    {
+      "id": "rule.unlike-terms-stay",
+      "kind": "do",
+      "rule": {
+        "en": "Unlike terms do not combine, and an open sum is a finished answer",
+        "de": "Ungleiche Terme lassen sich nicht zusammenfassen, und eine offene Summe ist eine fertige Antwort"
+      },
+      "note": {
+        "en": "Only terms with the same letters to the same powers can be collected. Where they differ there is nothing left to do.",
+        "de": "Nur Terme mit denselben Buchstaben in denselben Potenzen lassen sich zusammenfassen. Unterscheiden sie sich, bleibt nichts zu tun."
+      },
+      "summarizes": []
+    },
+    {
+      "id": "rule.quadratic-pair",
+      "kind": "do",
+      "rule": {
+        "en": "The pair must multiply to the constant and add to the middle number",
+        "de": "Das Zahlenpaar muss multipliziert den konstanten Term und addiert die mittlere Zahl ergeben"
+      },
+      "note": {
+        "en": "Expanding $(x+m)(x+n)$ produces $x^2 + (m+n)x + mn$, so both conditions hold at once or the pair is wrong.",
+        "de": "Das Ausmultiplizieren von $(x+m)(x+n)$ ergibt $x^2 + (m+n)x + mn$; beide Bedingungen gelten also zugleich, sonst stimmt das Paar nicht."
+      },
+      "summarizes": [
+        "ax.distributivity",
+        "th.collect-like-terms"
+      ]
+    },
+    {
+      "id": "rule.variable-is-a-fixed-number",
+      "kind": "is",
+      "rule": {
+        "en": "A letter is one fixed number",
+        "de": "Ein Buchstabe ist eine feste Zahl"
+      },
+      "note": {
+        "en": "A letter stands for a number you do not yet know, and every occurrence of it in one expression is the same number.",
+        "de": "Ein Buchstabe steht für eine noch unbekannte Zahl, und jedes Vorkommen davon in einem Ausdruck ist dieselbe Zahl."
+      },
+      "summarizes": [
+        "pre.variables"
+      ]
+    }
+  ]
+}

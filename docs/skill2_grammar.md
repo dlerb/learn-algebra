@@ -1,6 +1,6 @@
 # Tier 2 — The Grammar (production rules)
 
-> ⚠️ **EXPLORATORY — not built, may never be.** A design sketch (2026-07-12)
+> ⚠️ **EXPLORATORY — not built, may never be.** Its "metapattern" vocabulary also predates the 2026-07-27 rename to the `rules.json` DO/IS registry. A design sketch (2026-07-12)
 > for a possible Tier-2 backbone. It is under active question and *partly
 > superseded*: precedence turned out to be a *convention*, not "the grammar
 > itself," which undercuts the structural-vs-surface split below. Do not treat

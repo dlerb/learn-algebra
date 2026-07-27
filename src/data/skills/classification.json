@@ -16,8 +16,8 @@
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "ax.add-associative",
@@ -33,8 +33,8 @@
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ]
         },
         {
@@ -46,8 +46,8 @@
             "equivalence.explicit-vs-implicit-product",
             "equivalence.product-with-brackets"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "ax.mul-associative",
@@ -65,8 +65,8 @@
           "requires": [
             "equivalence.division-variants"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ]
         },
         {
@@ -77,8 +77,8 @@
           "requires": [
             "equivalence.exponent-as-repeated-product"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "def.pow",
@@ -102,8 +102,8 @@
             "classification.sum",
             "equivalence.explicit-vs-implicit-product"
           ],
-          "metaPatterns": [
-            "meta.multiplication-binds-tighter"
+          "rules": [
+            "rule.multiplication-binds-tighter"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -118,8 +118,8 @@
             "classification.product",
             "equivalence.product-with-brackets"
           ],
-          "metaPatterns": [
-            "meta.bracket-chunk"
+          "rules": [
+            "rule.bracket-chunk"
           ],
           "restsOn": [
             "ix.brackets",
@@ -138,8 +138,8 @@
             "classification.product",
             "equivalence.power-of-a-product"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "ix.pow",
@@ -158,8 +158,8 @@
             "classification.sum-of-products",
             "equivalence.coefficient-negative-one"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ],
           "errors": [
             "mis.minus-roles-confused"
@@ -175,8 +175,8 @@
             "classification.product-with-inner-sum",
             "equivalence.exponent-as-repeated-product"
           ],
-          "metaPatterns": [
-            "meta.bracket-chunk"
+          "rules": [
+            "rule.bracket-chunk"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -191,8 +191,8 @@
             "classification.quotient",
             "equivalence.fraction-bar-grouping"
           ],
-          "metaPatterns": [
-            "meta.bracket-chunk"
+          "rules": [
+            "rule.bracket-chunk"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -213,8 +213,8 @@
             "classification.difference",
             "equivalence.power-of-a-product"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ],
           "restsOn": [
             "th.difference-of-squares",
@@ -231,8 +231,8 @@
           "requires": [
             "classification.sum-of-products"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last"
+          "rules": [
+            "rule.dominant-op-last"
           ]
         },
         {
@@ -243,9 +243,9 @@
           "requires": [
             "classification.sum-of-products"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last",
-            "meta.dominant-op-tools"
+          "rules": [
+            "rule.dominant-op-last",
+            "rule.dominant-op-tools"
           ]
         },
         {
@@ -265,9 +265,9 @@
           "requires": [
             "classification.linear-form"
           ],
-          "metaPatterns": [
-            "meta.dominant-op-last",
-            "meta.dominant-op-tools"
+          "rules": [
+            "rule.dominant-op-last",
+            "rule.dominant-op-tools"
           ]
         }
       ]

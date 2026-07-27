@@ -39,7 +39,7 @@ export function loc(ls: LocalizedString, lang: Lang): string {
 // A skill is a curated STRATEGY/SKILL — NOT drill material. It says what the
 // skill is, why it matters (`note`), one canonical `illustration`, the
 // misconceptions it guards against (`errors` → error-pattern ids), and its links
-// into the tower (`restsOn` → card ids) and the meta-pattern layer. All the
+// into the tower (`restsOn` → card ids) and the rules registry. All the
 // drill-specific material — instances, answers, distractors — lives in the drill
 // layer (drills/*.json), keyed by skill id. Uniform shape across kinds: `kind` is
 // a plain category label (= id prefix), not a data-shape discriminant.
@@ -55,7 +55,7 @@ export const skill = z.object({
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
-  metaPatterns: z.array(z.string()).default([]), // meta-pattern ids (metapatterns.json)
+  rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
   errors: z.array(z.string()).default([]),       // error-pattern ids — the skill's misconception catalog
   conditions: z.string().optional(),    // domain caveat, pure LaTeX
@@ -140,54 +140,66 @@ export function validateSkillKinds(registry: GroupDef[]): void {
   validateGroupRegistry(registry, skillKind.options, 'the skill kind files')
 }
 
-// ── Meta-patterns ────────────────────────────────────────────────────────────
-// The generative decoding rules. A flat list in metapatterns.json; skills
-// reference them by id ("meta.…").
-
-export const metaPatternDef = z.object({
-  id: z.string().regex(/^meta\.[a-z0-9-]+$/),  // the single identifier — a dotted slug, like every other entity
-  name: localizedString,                  // the metapattern's display heading (like a card's `name`)
-  rule: localizedString,                  // the decoding rule itself — the student-facing takeaway line in drill feedback
-  summarizes: z.array(z.string()).default([]),  // card ids this pattern digests — keeps the classroom voice linked to the tower cards it reads (cards only; errors are the skills' concern)
+// ── Rules ────────────────────────────────────────────────────────────────────
+// THE DO/IS REGISTRY (renamed from "meta-patterns" 2026-07-27). A flat list of
+// student-facing one-liners in rules.json, cited by skills and — from step 2 —
+// by errors.
+//
+// The registry is a COLLECTION OF SENTENCES and nothing more. Their natural home
+// is the errors and skills that show them with examples; the list exists only so
+// the same sentence is not written into twenty entries. Context therefore comes
+// from the citing entity, never from the sentence itself, which is why an entry
+// carries no errors, no skills and no ordering of its own.
+//
+// `summarizes` is KEPT and points at cards only. It is no longer a mechanism —
+// the error→rule link is authored now, not derived through it — but a BRIDGE
+// CLAIM: this sentence is the student-facing form of those formal statements,
+// which is the only way to ask which of the tower's cards have a plain-language
+// form yet. It points into another tower, so it cannot cycle.
+export const ruleDef = z.object({
+  id: z.string().regex(/^rule\.[a-z0-9-]+$/),   // a dotted slug like every other entity; the `meta.` prefix went with the rename
+  kind: z.enum(['is', 'do']),             // IS = what a written form MEANS (decoding); DO = what to reach for. 15:1 today, which measures how unbuilt the DO side is
+  rule: localizedString,                  // THE SENTENCE — "The fraction bar is a bracket". Was `name`, and it always was the rule
+  note: localizedString,                  // its gloss, one sentence with an example. Was `rule`, and it always was the gloss
+  summarizes: z.array(z.string()).default([]),  // card ids this sentence digests — a bridge claim, not a link (see above)
 })
-export type MetaPatternDef = z.infer<typeof metaPatternDef>
+export type RuleDef = z.infer<typeof ruleDef>
 
-export const metaPatternsFile = z.array(metaPatternDef)
-export type MetaPatternsFile = z.infer<typeof metaPatternsFile>
+export const rulesFile = z.array(ruleDef)
+export type RulesFile = z.infer<typeof rulesFile>
 
-// Authored since 2026-07-25 with a layer head, like errors.json — title, the
-// student-facing `blurb` (the page lede) and the authoring `note`, then the
-// entries. The list stays FLAT: eleven patterns need no sections, and proving the
-// container tolerates a flat layer is half the point of doing metapatterns before
-// the manifest unification. `metaPatterns` downstream is still the plain array.
-export const metaPatternsTree = z.object({
-  layer: z.literal('metapatterns'),
+// A layer head like errors.json — title, the student-facing `blurb` (the page
+// lede) and the authoring `note` — then the entries. The list stays FLAT: a
+// registry of sentences has no structure to give it, and proving the container
+// tolerates a flat layer is half of why this one went first.
+export const rulesTree = z.object({
+  layer: z.literal('rules'),
   title: localizedString,
   blurb: localizedString,
   note: localizedString,
-  patterns: z.array(metaPatternDef).min(1),
+  rules: z.array(ruleDef).min(1),
 })
-export interface MetaTree {
+export interface RuleTree {
   meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
-  patterns: MetaPatternsFile
+  rules: RulesFile
 }
-export function parseMetaTree(raw: unknown): MetaTree {
-  const r = metaPatternsTree.safeParse(raw)
-  if (!r.success) throw new Error(`Invalid metapatterns file:\n${z.prettifyError(r.error)}`)
-  const { title, blurb, note, patterns } = r.data
-  return { meta: { title, blurb, note }, patterns }
+export function parseRuleTree(raw: unknown): RuleTree {
+  const r = rulesTree.safeParse(raw)
+  if (!r.success) throw new Error(`Invalid rules file:\n${z.prettifyError(r.error)}`)
+  const { title, blurb, note, rules } = r.data
+  return { meta: { title, blurb, note }, rules }
 }
 
-// Cross-check: every metaPattern a skill references must exist; ids are globally unique.
-export function validateMetaPatternRefs(skills: Skill[], metas: MetaPatternsFile): void {
-  const dupId = metas.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)
-  if (dupId) throw new Error(`Duplicate meta-pattern id "${dupId}".`)
+// Cross-check: every rule a skill references must exist; ids are globally unique.
+export function validateRuleRefs(skills: Skill[], rules: RulesFile): void {
+  const dupId = rules.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)
+  if (dupId) throw new Error(`Duplicate rule id "${dupId}".`)
 
-  const ids = new Set(metas.map(m => m.id))
+  const ids = new Set(rules.map(m => m.id))
   for (const f of skills) {
-    for (const m of f.metaPatterns) {
+    for (const m of f.rules) {
       if (!ids.has(m)) {
-        throw new Error(`Skill "${f.id}" references unknown meta-pattern "${m}".`)
+        throw new Error(`Skill "${f.id}" references unknown rule "${m}".`)
       }
     }
   }
@@ -225,6 +237,15 @@ export const errorDef = z.object({
   topic: z.string(),               // POSITIONAL — the section slug, re-attached by parseErrorTree
   frequency: z.number().int().min(1).max(3).default(1),  // ★–★★★, from docs/common_mistakes.md
   corrupts: z.array(z.string()).default([]),
+  // THE RULE THIS MISTAKE IS THE COUNTEREXAMPLE TO (authored 2026-07-27,
+  // rules.json). It replaced a derivation — `corrupts` ∩ a rule's `summarizes`,
+  // first two — which is fine for "related reading" and wrong for the sentence a
+  // student reads first: it guessed, it capped, and it could not be overruled.
+  // Ordered, most useful first. Empty is legitimate and visible: 9 of 28 have no
+  // sentence yet, and all but two of those are anti-laws, whose general form is a
+  // LAW in the tower (reachable via `corrupts`) that nobody has written as a
+  // student-facing one-liner.
+  rules: z.array(z.string()).default([]),
   name: localizedString,
   // TWO PROSE FIELDS, two readers (2026-07-25). `name` says WHICH mistake this is;
   // `fix` says HOW TO GET IT RIGHT, in a 15-year-old's language, and is the entry's
@@ -234,10 +255,10 @@ export const errorDef = z.object({
   // have deleted the better material ("$3x$ read as $3+x$ — the mixed-number
   // carryover" names a cause no student needs and no teacher should lose).
   //
-  // `fix` vs the meta-pattern chip: the meta-pattern is the general decoding rule
+  // `fix` vs the rule: the rule is the general decoding sentence
   // shared across many errors, `fix` is the concrete one for THIS mistake. Where
   // they would coincide, keep `fix` concrete ("two minuses make a plus") and let
-  // the chip carry the general form. 8 of the 25 errors reach no meta-pattern at all.
+  // the rule carry the general form. 7 of the 28 errors reach no rule at all.
   fix: localizedString,
   note: localizedString,
   instances: z.array(errorInstance).min(1),     // see above; at least one, enforced so a
@@ -252,7 +273,7 @@ const errorPrefixOfKind: Record<ErrorKind, string> =
 // `corrupts` target is a card there — an anti-law corrupts a law card, a misreading
 // a convention card, and (since 2026-07-24) a salience error a structure card. Every
 // error kind now points straight into the tower: the curated layers form a clean
-// downward stack (cards ← errors, metapatterns ← skills) with no upward edges.
+// downward stack (cards ← errors ← skills, and rules ← both) with no upward edges.
 export function validateErrors(
   errors: ErrorDef[], cardIds: Set<string>,
 ): void {
@@ -350,16 +371,16 @@ export function parseErrorTree(raw: unknown): ErrorTree {
   }
 }
 
-// ── Cross-layer references from skills and meta-patterns ──────────────────
+// ── Cross-layer references from skills and rules ──────────────────────────
 // The bridge into the fundament tower: `restsOn` is now card ids (was the two
 // arrays justifiedBy/governedBy, merged 2026-07-24 — law vs convention is read off
-// the card prefix), `errors` → error patterns, and a meta-pattern `summarizes` card
-// ids. Every curated cross-edge points down into the tower — errors and metapatterns
+// the card prefix), `errors` → error patterns, and a rule `summarizes` card
+// ids. Every curated cross-edge points down into the tower — errors and rules
 // cite only cards, skills cite all three — so the graph is a clean stack with no
 // cycles. `cardIds` comes from src/data/layers.ts. This is the runtime twin of
 // scripts/sweep-layers.mjs.
 export function validateLayerRefs(
-  skills: Skill[], metas: MetaPatternsFile,
+  skills: Skill[], rules: RulesFile,
   cardIds: Set<string>, errors: ErrorDef[],
 ): void {
   const errIds = new Set(errors.map(e => e.id))
@@ -372,11 +393,17 @@ export function validateLayerRefs(
       if (!errIds.has(r)) throw new Error(`Skill "${f.id}" lists unknown error pattern "${r}".`)
     }
   }
-  for (const m of metas) {
+  for (const m of rules) {
     for (const r of m.summarizes) {
       if (!cardIds.has(r)) {
-        throw new Error(`Meta-pattern ${m.id} summarizes unknown card "${r}".`)
+        throw new Error(`Rule ${m.id} summarizes unknown card "${r}".`)
       }
+    }
+  }
+  const ruleIds = new Set(rules.map(m => m.id))
+  for (const e of errors) {
+    for (const r of e.rules) {
+      if (!ruleIds.has(r)) throw new Error(`Error "${e.id}" cites unknown rule "${r}".`)
     }
   }
 }
@@ -388,7 +415,7 @@ export function validateLayerRefs(
 // error — so this warns, it does not throw.
 
 export function auditCoverage(
-  skills: Skill[], metas: MetaPatternsFile, errors: ErrorDef[],
+  skills: Skill[], rules: RulesFile, errors: ErrorDef[],
   cardConds: Map<string, string | undefined> = new Map(),
   drills: Drill[] = [],
 ): string[] {
@@ -412,11 +439,11 @@ export function auditCoverage(
     if (dup) lines.push(`"${f.id}" restates a condition already on card "${dup}" — inherit via restsOn instead.`)
   }
 
-  // Authored ⊆ derived: on a tagged skill, every authored meta-pattern should
+  // Authored ⊆ derived: on a tagged skill, every authored rule should
   // be reachable from the skill's coordinates via the pattern's summarizes.
   // (Authored stays curation — this only catches a missing tag or a
-  // meta-pattern citation that doesn't fit the skill.) Since 2026-07-24 a
-  // metapattern summarizes CARDS only, so the skill's coordinates are its card
+  // rule citation that doesn't fit the skill.) Since 2026-07-24 a
+  // a rule summarizes CARDS only, so the skill's coordinates are its card
   // ids: `restsOn`, plus the cards its errors corrupt (the two lenses meet at the
   // tower — skill → error → card mirrors skill → meta → card).
   const corruptsOf = new Map(errors.map(e => [e.id, e.corrupts]))
@@ -426,12 +453,12 @@ export function auditCoverage(
       ...f.restsOn,
       ...f.errors.flatMap(eid => corruptsOf.get(eid) ?? []),
     ])
-    const unsupported = f.metaPatterns.filter(mid => {
-      const mp = metas.find(m => m.id === mid)
+    const unsupported = f.rules.filter(mid => {
+      const mp = rules.find(m => m.id === mid)
       return mp !== undefined && !mp.summarizes.some(r => coords.has(r))
     })
     if (unsupported.length > 0) {
-      lines.push(`"${f.id}" declares meta-patterns its coordinates don't support: ${unsupported.join(', ')}`)
+      lines.push(`"${f.id}" declares rules its coordinates don't support: ${unsupported.join(', ')}`)
     }
   }
   // ── Coverage, both directions ──────────────────────────────────────────────
@@ -439,6 +466,40 @@ export function auditCoverage(
   // the two should account for each other. Neither direction is a validator: an
   // empty cell is a question, and the three usual answers are different repairs.
   //
+  // A rule nothing cites is dead weight: context is the only thing that gives a
+  // sentence meaning, so with no error and no skill behind it there is none to
+  // give. REACH AS GARBAGE COLLECTION — never as an admission test, since what
+  // belongs in the registry is whatever turns out to be important, however
+  // narrowly it is used.
+  const citedRules = new Set([...skills.flatMap(f => f.rules), ...errors.flatMap(e => e.rules)])
+  const orphaned = rules.filter(m => !citedRules.has(m.id))
+  if (orphaned.length > 0) {
+    lines.push(`Rules cited by no error and no skill (${orphaned.length}): ${orphaned.map(m => m.id).join(', ')}`)
+  }
+
+  // Rules: two questions, both inherited from the derivation the authored
+  // `error.rules` replaced (2026-07-27). That derivation was always better at
+  // SUGGESTING than at deciding — it is what turned up the five missing reading
+  // rules — so it survives here rather than in the page.
+  //   a. errors with no sentence at all, frequency-ranked;
+  //   b. errors whose corrupted cards ARE summarized by a rule they do not cite,
+  //      which is either a missed reference or a deliberate rejection.
+  const ruled = errors.filter(e => e.rules.length === 0).sort((a, b) => b.frequency - a.frequency)
+  if (ruled.length > 0) {
+    lines.push(`Errors citing no rule (${ruled.length}): ` +
+      ruled.map(e => `${'\u2605'.repeat(e.frequency)} ${e.id}`).join(', '))
+  }
+  const suggested = errors
+    .map(e => {
+      const cards = new Set(e.corrupts)
+      const hit = rules.filter(m => m.summarizes.some(c => cards.has(c)) && !e.rules.includes(m.id))
+      return hit.length ? `${e.id} → ${hit.map(m => m.id).join(', ')}` : null
+    })
+    .filter((x): x is string => x !== null)
+  if (suggested.length > 0) {
+    lines.push(`Rules an error's cards reach but it does not cite (${suggested.length}): ${suggested.join(' | ')}`)
+  }
+
   // Direction 1 — errors nothing drills. Frequency-ranked, because a ★★★ mistake
   // with no skill is a curriculum hole and a ★ one may just be rare.
   const citedErrs = new Set(skills.flatMap(f => f.errors))
@@ -487,7 +548,7 @@ export function auditCoverage(
   const dirty = {
     'skill notes': countDirty(skills.map(f => locVals(f.note))),
     'error notes': countDirty(errors.map(e => locVals(e.note))),
-    'meta-pattern rules': countDirty(metas.map(m => locVals(m.rule))),
+    'rule sentences': countDirty(rules.map(m => locVals(m.rule))),
   }
   const parts = Object.entries(dirty).filter(([, n]) => n > 0).map(([k, n]) => `${k}: ${n}`)
   if (parts.length > 0) lines.push(`Prose fields with unmigrated unicode math (→ inline $…$): ${parts.join(', ')}`)
@@ -537,7 +598,7 @@ function proseMath(ls?: LocalizedString): string[] {
 }
 
 export function validateLatexCompiles(
-  skills: Skill[], drills: Drill[], metas: MetaPatternsFile, errors: ErrorDef[],
+  skills: Skill[], drills: Drill[], rules: RulesFile, errors: ErrorDef[],
 ): void {
   const failures: string[] = []
   function check(owner: string, field: string, latex: string): void {
@@ -582,7 +643,10 @@ export function validateLatexCompiles(
     proseMath(e.fix).forEach(m => check(e.id, 'fix', m))
     proseMath(e.note).forEach(m => check(e.id, 'note', m))
   }
-  for (const m of metas) proseMath(m.rule).forEach(s => check(m.id, 'rule', s))
+  for (const m of rules) {
+    proseMath(m.rule).forEach(s => check(m.id, 'rule', s))
+    proseMath(m.note).forEach(s => check(m.id, 'note', s))
+  }
 
   if (failures.length > 0) {
     throw new Error(`LaTeX compile failures:\n${failures.join('\n')}`)

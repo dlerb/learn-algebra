@@ -42,8 +42,8 @@
                 "de": "Variablen & Konstanten"
               },
               "note": {
-                "en": "Letters $a, b, c, \\dots$ are variables: each stands for an arbitrary element. Named elements like $0, 1, 2, \\dots$ are constants. Variables are set in italic and constants upright, the usual convention, so the two never blur. Within one expression a letter keeps its value: every occurrence of $a$ denotes the same element, which is what makes collecting $a + a$ into $2a$ legitimate. Different letters may still denote the same element, nothing says $a \\ne b$.",
-                "de": "Buchstaben $a, b, c, \\dots$ sind Variablen: jede steht für ein beliebiges Element. Benannte Elemente wie $0, 1, 2, \\dots$ sind Konstanten. Variablen werden kursiv gesetzt, Konstanten aufrecht, wie üblich, damit die beiden nie verschwimmen. Innerhalb eines Ausdrucks behält ein Buchstabe seinen Wert: jedes Vorkommen von $a$ bezeichnet dasselbe Element, und genau das macht das Zusammenfassen von $a + a$ zu $2a$ zulässig. Verschiedene Buchstaben dürfen trotzdem dasselbe Element bezeichnen, nichts sagt $a \\ne b$."
+                "en": "Letters $a, b, c, \\dots$ are variables: each stands for an arbitrary element. Named elements like $0, 1, 2, \\dots$ are constants. Variables are set in italic and constants upright, the usual convention, so the two never blur. Within one expression a letter keeps its value: every occurrence of $a$ denotes the same element, which is what makes collecting $a + a$ into $2a$ legitimate. Different letters may still denote the same element, nothing says $a \\ne b$. A letter is not a label and not a box: it denotes a number, not a name for one and not a container holding one.",
+                "de": "Buchstaben $a, b, c, \\dots$ sind Variablen: jede steht für ein beliebiges Element. Benannte Elemente wie $0, 1, 2, \\dots$ sind Konstanten. Variablen werden kursiv gesetzt, Konstanten aufrecht, wie üblich, damit die beiden nie verschwimmen. Innerhalb eines Ausdrucks behält ein Buchstabe seinen Wert: jedes Vorkommen von $a$ bezeichnet dasselbe Element, und genau das macht das Zusammenfassen von $a + a$ zu $2a$ zulässig. Verschiedene Buchstaben dürfen trotzdem dasselbe Element bezeichnen, nichts sagt $a \\ne b$. Ein Buchstabe ist kein Etikett und keine Schachtel: Er bezeichnet eine Zahl, nicht einen Namen dafür und nicht ein Behältnis, das eine enthält."
               }
             }
           ]
@@ -553,8 +553,8 @@
               "latex": "a \\cdot (b + c) = a \\cdot b + a \\cdot c",
               "forall": "a, b, c \\in \\mathbb{R}",
               "note": {
-                "en": "The only axiom linking $+$ and $\\cdot$. Every expand and factor is this law, forwards or backwards.",
-                "de": "Das einzige Axiom, das $+$ und $\\cdot$ verbindet. Jedes Ausmultiplizieren und Faktorisieren ist dieses Gesetz, vorwärts oder rückwärts."
+                "en": "The only axiom linking $+$ and $\\cdot$. Every expand and factor is this law, forwards or backwards. Dividing by $c$ distributes too, since it is multiplication by $1/c$. Nothing else does: $(a+b)^2$ is not $a^2 + b^2$, the root of a sum is not the sum of the roots, and a single term of a sum cannot be cancelled.",
+                "de": "Das einzige Axiom, das $+$ und $\\cdot$ verbindet. Jedes Ausmultiplizieren und Faktorisieren ist dieses Gesetz, vorwärts oder rückwärts. Auch das Teilen durch $c$ verteilt sich, denn es ist Multiplikation mit $1/c$. Sonst verteilt sich nichts: $(a+b)^2$ ist nicht $a^2 + b^2$, die Wurzel einer Summe ist nicht die Summe der Wurzeln, und ein einzelner Summand lässt sich nicht kürzen."
               },
               "intuition": {
                 "en": "The area picture: a rectangle $a$ wide and $b + c$ tall splits into two, of areas $a \\cdot b$ and $a \\cdot c$. Multiplying a sum means multiplying each part and adding. Where the picture stops: the rectangle needs $a$, $b$ and $c$ to be lengths. Distributivity holds for negative elements too, where there is no rectangle to split.",
@@ -1042,8 +1042,8 @@
                 "ax.eq-symmetric"
               ],
               "note": {
-                "en": "So $-a$ is the inverse of $a$, and the unary minus is nothing but multiplication by the constant $-1$. It therefore needs no rules of its own: wherever a unary minus stands, an ordinary product is at work, and it follows the rules products already follow. The brackets in $(-1)$ are what let it stand as a single factor.",
-                "de": "$-a$ ist also das Inverse von $a$, und das unäre Minus ist nichts anderes als die Multiplikation mit der Konstanten $-1$. Es braucht daher keine eigenen Regeln: wo ein unäres Minus steht, wirkt ein gewöhnliches Produkt, und es folgt den Regeln, denen Produkte ohnehin folgen. Die Klammern in $(-1)$ lassen es als einzelnen Faktor stehen."
+                "en": "So $-a$ is the inverse of $a$, and the unary minus is nothing but multiplication by the constant $-1$. It therefore needs no rules of its own: wherever a unary minus stands, an ordinary product is at work, and it follows the rules products already follow. The brackets in $(-1)$ are what let it stand as a single factor. Two roles, then, and only two: binary subtraction ($a - b$) and negation ($-a$). A minus in front of a bracket is negation, and reading $-(\\ldots)$ as multiplication by $(-1)$ is licensed by this theorem, not by a third kind of minus.",
+                "de": "$-a$ ist also das Inverse von $a$, und das unäre Minus ist nichts anderes als die Multiplikation mit der Konstanten $-1$. Es braucht daher keine eigenen Regeln: wo ein unäres Minus steht, wirkt ein gewöhnliches Produkt, und es folgt den Regeln, denen Produkte ohnehin folgen. Die Klammern in $(-1)$ lassen es als einzelnen Faktor stehen. Also zwei Rollen und nur zwei: binäre Subtraktion ($a - b$) und Negation ($-a$). Ein Minus vor einer Klammer ist Negation, und $-(\\ldots)$ als Multiplikation mit $(-1)$ zu lesen, erlaubt dieser Satz; ein drittes Minus gibt es nicht."
               }
             },
             {

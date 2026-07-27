@@ -4,73 +4,118 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — the curated views onto the row shell (2026-07-26)
+## NEXT SESSION — /skills onto the shell, and finishing the curated content (2026-07-27)
 
-**1. ~~Dark mode~~ — DONE 2026-07-26.** `src/theme.ts` owns the switch (stamps
-`data-theme`, defaults to `prefers-color-scheme`, stored choice wins); App.vue hands naive-ui
-its `darkTheme` separately — those are two halves and missing either gives a dark shell over
-light pages. Nothing outside `tokens.css` hardcodes a hex any more. Audited for WCAG contrast
-on 8 routes in both themes.
+**The curated port is 2 of 3 done.** `/errors` and `/rules` are on the shared row shell;
+**`/skills` is the last card grid** and the only page that no longer looks like the rest of
+the app. The shell itself is documented in `docs/app_design.md` → "One shell, six pages",
+including the four traps it cost (KaTeX's own `.fix` class, KaTeX's permanent 2px
+`scrollWidth` overrun, `align-content` defaulting to stretch, em dashes banned in card
+prose but not curated prose).
 
-⚠️ **Left open**: light mode has 5 distinct nodes at 2.66:1 — `filter-label`, `ref-label`,
-the `freq` stars, filter-chip counts — all ~10px labels using `--text-faint` against the PAGE
-plane, where the darker background costs contrast that the panel plane does not. Either move
-them to `--text-muted` or accept them as decorative; it predates dark mode.
+### 1. `/skills` onto the shell
+Not blocked. `TaxonomyView` already got `:id` + `scroll-margin-top` on its cards so
+`/rules` can deep-link into it. Note what is NOT in scope: **presentation mode for skills
+is still frozen** behind the drill layer (a skill stripped to student view is a *progress*
+surface). ⚠️ That premise is worth re-examining first — a *how-to* surface needs no drill
+runtime at all, and the freeze may be over-broad.
 
-**2. The curated views** — `/errors`, `/metapatterns`, `/skills` — onto the same shell. They
-are the only three left; the whole fundament tower is already on it, since `LayerView` serves
-all four layers.
+### 2. The rules page and nav still say "Reading rules" (USER FLAGGED 2026-07-27)
+The registry is now DO/IS — 18 IS, 7 DO — so "Reading rules" undersells it. Three places:
+the authored `title` in `rules.json`, the nav label in `src/data/layers.ts`
+(`curatedLayers`), and the layer `blurb` beneath it, which also talks only about reading.
+`/errors` is titled "Common mistakes" and that one is right.
 
-**THE REQUIREMENT IS THAT THEY LOOK LIKE THE TOWER**, not merely that they share a component.
-Someone moving from `/terms` to `/errors` should see one application, not two that happen to
-import the same file. Concretely that means the same page width (91rem, not the curated views'
-current 900px), the same three-plane elevation ladder with one panel per section, the same
-strip anatomy (kind · folds left, json + id-as-source-link right, all at .62rem
-`--text-faint`), the same rail-with-name, the same Latin Modern content voice against sans
-structure, and the same row rhythm and hairlines. Where a curated layer has no equivalent of a
-tower field, the cell stays empty rather than the layout changing — see the gap rule below.
-- `/errors` and `/metapatterns` are already landscape rows (rail · body) but on the OLD
-  system: 900px page, 820px breakpoint, no panels, no elevation ladder, chip-bg highlights.
-- `/skills` is still a `repeat(auto-fill, minmax(300px, 1fr))` card grid — the last one.
-- Extract the shell rather than copying `LayerView` three times. The chrome is shared (panel,
-  strip with fold + id-as-source-link, rail with name, the prose cells, the full-width folds);
-  the BODIES genuinely differ — a latex statement, WrongRight pairs, pitfalls, a rule — so the
-  body wants to be a slot, not a prop soup.
-- Note the two breakpoints doing the same job today (820px in the curated views, 820px now in
-  LayerView too — these agree, but the 900px vs 91rem page widths do not).
+### 3. The curated content is not finished
+- **`note` on an error is an open question.** It is the author's diagnosis, was demoted to
+  inspection, then displaced from the fourth column by the rule. It survives in the json
+  fold only. Decide whether it earns a field at all — several were pure restatements of
+  their own `fix`, which is what the colour experiment exposed.
+- **Two errors reject their derived rule on purpose** (`mis.bracket-dissolved` picks
+  different ones; `anti.quadratic-pair-unchecked` rejects a true-but-useless suggestion).
+  The audit line "rules an error's cards reach but it does not cite" reports these forever
+  and will get noisier as the registry grows. It is a QUESTION, never a check — do not
+  promote it to a validator, and do not add a "rejected" field to silence it without
+  deciding it is worth the schema.
+- **German prose** across the 9 new rules, the 14 rewritten fixes and the rules registry is
+  authored but unreviewed by a native reader.
 
-**DECIDED 2026-07-26: the gate is DEV vs PRODUCTION, not `inspect`.** The `source` deep link
-must be stripped from a build anyway (its endpoint does not exist there), and production needs
-no `json` either. So the author plumbing — `source`, `json`, coverage warnings — keys off
-`import.meta.env.DEV`, and `src/inspect.ts`'s presentation/inspection switch is a separate
-question that may not survive. Settle this while extracting the shell; today the tower shows
-`json` to everyone while `/errors` and `/metapatterns` hide theirs behind `inspect`.
+### 4. Procedural rules — where "how to factor" lives
+Open question the DO/IS split raised and did not settle. `rule.dominant-op-tools` is the
+one entry that is a *procedure* rather than a reading, and it is also the only one with no
+`summarizes` — because no card says "collect like terms when you see a sum". Rules like
+"find a common denominator first" now exist as DO sentences, but rules like "when you see a
+common factor, pull it out" belong to Tier-3 skills that already exist
+(`transformation.factor-common`, `transformation.combine-fractions`). The unresolved part:
+a doing-rule cannot anchor to a card, so if the registry is to carry them it needs to
+anchor to SKILLS as well. Would also make the error page reach them, by the same reverse
+index — error → skills citing it → rules those skills teach.
 
-**It must be aesthetically pleasing.** This is the actual requirement, not a finishing touch:
-nobody reads these cards unless the design draws them in. Judge every step against that.
+**It must be aesthetically pleasing.** This is the actual requirement, not a finishing
+touch: nobody reads these pages unless the design draws them in.
 
-**TASTE CALIBRATION — do not re-run these experiments.** Each was tried on the tower and
-rejected by the author, and the reasons generalise:
-- **Pills/chips for reference links are too loud.** They became the second-loudest thing on a
-  row after the name. Plain middot-separated text at the strip's own size instead.
+**TASTE CALIBRATION — do not re-run these experiments.** Each was tried and rejected:
+- **Pills/chips for reference links are too loud.** They became the second-loudest thing on
+  a row. Plain middot-separated text inside a fold instead (`RefFold`).
 - **Small caps on headings** read as shouting; size and weight carry the levels.
-- **Whitespace alone as a group separator** reads as an accident — "wait, what changed here?".
-  A tinted band works; a rule does not, because hairlines already mean "next row".
-- **Bordered chips around the concern glyphs** drew more attention than the name they qualify.
-  Bare glyphs, optically centred (`vertical-align: middle` is NOT the optical middle — it aligns
-  to half the x-height while a title's centre is half its CAP height; correct by ~.22em).
-- **Anything grey inside a panel** risks reading as a hole punched through to the page. Check
-  it against `--band`, which exists for exactly this.
+- **Whitespace alone as a group separator** reads as an accident. A tinted band works; a
+  rule does not, because hairlines already mean "next row".
+- **Anything grey inside a panel** risks reading as a hole punched through to the page.
+  Check it against `--band`, which exists for exactly this.
+- **A general rule restated in a `fix`** is noise beside the ✗/✓ that already shows it. A
+  fix WORKS A CASE; the rule lives in the registry one column over. Where the rule itself
+  quotes a case, the fix works a *different* one.
 - The author reads a lot of LaTeX and will notice a serif that is not Computer Modern.
   `--font-content` is Latin Modern; do not substitute a system stack.
 
 Constraints to carry: keep `overflow-x: auto` plus vertical padding on every display-math
-container — `overflow-x: auto` makes the computed `overflow-y` auto too, so tall formulas get
-a surprise vertical scrollbar; the identity rail must **stack** below the breakpoint, never
-shrink; and every cell keeps its column even when empty, because a gap in the same place on
-every row reads as structure while a gap that moves reads as breakage.
+container; the identity rail must **stack** below the breakpoint, never shrink; and every
+cell keeps its column even when empty, because a gap in the same place on every row reads
+as structure while a gap that moves reads as breakage.
 
 **The drill layer is a separate question** and stays frozen — see below.
+
+---
+
+## ✅ DONE 2026-07-27 — the row shell, and the rules registry
+
+Eleven commits on `feat/curated-row-shell`. Two threads that turned out to be one.
+
+**The shell** (`src/components/Layer{Page,Section,Row}.vue` + `RefFold.vue`, extracted from
+`LayerView`): measures and header on the page, one panel per section, and a row whose BODY
+IS A SLOT — a statement, a ✗/✓ table and a sentence have nothing in common but their
+container. `cols` is a prop, so each layer's column arithmetic lives in its own stylesheet.
+`LayerSection.title` is optional, for the flat case. Prose clipping moved to `src/prose.ts`.
+**The gate is DEV**: `?inspect` is gone, one toggle in the page header serves all layers,
+and presentation is the default so the student view cannot rot unseen.
+
+**`/errors`** took the tower's 91rem, panels, strip, rail and prose cell. The ✗/✓ stem is
+now a table STUB — a fixed 7rem track with a continuous rule painted as a gradient on the
+grid (a per-cell border breaks at every row-gap and reads as dashed) — which also aligns
+the ✗ column page-wide, including on the four entries that have no stem.
+
+**The rules registry** (`rules.json`, was `metapatterns.json`). The finding that started it:
+every entry's `name` was already a complete rule, so `name`→`rule`, gloss `rule`→`note`,
+new `kind: is|do`, ids `meta.*`→`rule.*`, route `/rules`. The model is the user's: **a flat
+collection of sentences whose natural home is the errors and skills that show them with
+examples; the list exists only so one sentence is not written into twenty entries.** It
+carries no context of its own, so `/rules` is built almost entirely out of reverse indexes.
+- **`error.rules` is authored** (28/28), replacing a derivation through `corrupts` ×
+  `summarizes` that guessed on five of nineteen and capped at two. The derivation survives
+  as an audit question.
+- **`summarizes` is kept and demoted** to a bridge claim: this sentence is the plain-language
+  form of those cards. It points into another tower, so it cannot cycle.
+- **16 → 25 sentences, 15:1 → 18:7 IS/DO.** The nine added are the positive form of the
+  anti-laws, whose general statement was a LAW in the tower and had never been said in a
+  student's words. That the DO side looked empty was a measurement, not an accident.
+- **14 fixes rewritten as worked cases**, usually a numeric check the student can run —
+  except where the two forms are equal in value (`mis.adjacent-signs`), where substituting
+  proves nothing and the mistake is the notation itself.
+- **The DAG is settled**: `skills → {errors, rules, cards}`, `errors → {rules, cards}`,
+  `rules → cards`. **Errors must NOT cite skills** — skills cite errors, so it would close a
+  cycle, and error→skill navigation is a free reverse index of `skill.errors`.
+- Three fat rule paragraphs gave their argument back to the tower
+  (`th.negative-one-times`, `pre.variables`, `ax.distributivity`).
 
 ---
 
@@ -884,8 +929,8 @@ and distractor items below are done. Only incremental threads remain.
 - [x] Distractors for empty-pitfall notation skills → cited where a tempting wrong form fits; remaining empties (basic identities: `divide-by-one`, `bracket-types`, `redundant-brackets`, commutativity pair, `fraction-as-reciprocal-product`, `splitting-a-fraction`) are distractor-free by decision.
 - [ ] German translations of skill notes/whys (incremental & cross-skill — better as one bilingual pass over notation + structure; layer files and meta-patterns already bilingual).
 - [ ] Cite the 4 uncited exponent-extension distractors (`zero-and-one-exponent`, `negative-exponent`, `fractional-exponent-root`, `negative-fractional-exponent`) — blocked on an error pattern that fits, not on authoring.
-- [ ] **Candidate metapattern: "multiplication makes bigger"** (2026-07-22). Not among
-  the ten existing metapatterns, which are all notation/structure. This one is a different kind: a property
+- [ ] **Candidate rule: "multiplication makes bigger"** (2026-07-22). Not among
+  the 25 in `rules.json`, which are all notation/structure/law. This one is a different kind: a property
   smuggled from the ℕ-model into ℝ (sibling: expecting `a^r` to behave like `aⁿ`).
   Errors-layer work; rationale in `docs/powers-nat-act.md`.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).
