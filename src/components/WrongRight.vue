@@ -61,7 +61,15 @@ const hintInline = () => Boolean(props.hint && !props.right)
 </template>
 
 <style scoped>
-.stem { grid-column: 1; font-size: .95rem; line-height: 1.6; color: var(--text); white-space: nowrap; }
+/* THE STEM IS THE GIVEN, not the first of three equal candidates. Read left to
+   right the row used to say "a−b, b−a, −(b−a)" in one voice, and you had to work
+   out which one you were being shown. It is now a table's STUB column: right
+   aligned against a fixed track so every stem ends on the same vertical line, and
+   the page paints a continuous rule there (see `.pairs` in ReferenceView). The
+   two candidates then read as two claims ABOUT the thing to the left of the rule.
+   Right, not left: the stem's job is to abut the rule, and ragged-right stems
+   left a gap that varied with the formula's width. */
+.stem { grid-column: 1; text-align: right; font-size: .95rem; line-height: 1.6; color: var(--text); white-space: nowrap; }
 .cand.bad { grid-column: 2; }
 .cand.good { grid-column: 3; }
 .cand { font-size: .95rem; line-height: 1.6; min-width: 0; overflow-x: auto; white-space: nowrap; }
@@ -84,7 +92,10 @@ const hintInline = () => Boolean(props.hint && !props.right)
    phone the ✓ track is ~130px, and a flat 22rem made the hint wider than its own
    cell, so `overflow-x: auto` clipped the correction — the one thing on the page
    a student must be able to read. */
-.hint { display: inline-block; max-width: min(22rem, 100%); font-family: var(--font-content); font-size: .86rem; color: var(--text-muted); font-style: italic; white-space: normal; vertical-align: top; }
+/* `100%` is the whole cell, but the ✓ mark and its margin sit BEFORE the hint on
+   the same line, so a hint capped at 100% overran its own cell by exactly the
+   mark's width and `overflow-x: auto` clipped the tail. */
+.hint { display: inline-block; max-width: min(22rem, calc(100% - 1.7rem)); font-family: var(--font-content); font-size: .86rem; color: var(--text-muted); font-style: italic; white-space: normal; vertical-align: top; }
 
 .wr-style { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .55rem; margin: .5rem 0 0; }
 .wr-style .tail { display: inline-flex; align-items: baseline; gap: .55rem; min-width: 0; }

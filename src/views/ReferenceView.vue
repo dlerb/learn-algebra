@@ -78,29 +78,33 @@ const sections = computed(() => errorTree.sections.map(s => ({
     rules: e.corrupts.map(cardLink),
     metas: metasFor(e),
     unused: !citedErrs.has(e.id),
+    // Whether to paint the stub rule: four errors are pure BELIEFS (a `\neq`
+    // claim with no `from`), and a divider with nothing to its left divides
+    // nothing.
+    hasStem: e.instances.some(x => x.from),
     raw: e,
   })),
 })))
 
-// THREE COLUMNS: rail | the ✗/✓ pairs | the fix.
+// FOUR COLUMNS: rail | the ✗/✓ pairs | fix | note — the tower's own row, with
+// the pairs standing where a statement stands and the two prose cells where
+// intuition and note stand.
 //
-// The mapping onto the tower's four is exact where it can be — the rail is the
-// rail, `fix` is a prose cell at the same measure — and honest where it cannot:
-// the pairs stand where a statement stands, but need about twice the 19rem a
-// single formula does. MEASURED: the widest pair block on the page is 589px
-// (mis.root-scope and five others), so the track is 38rem and every one of them
-// fits without scrolling.
-//
-// A FIXED TRACK, NOT `1fr`. With `1fr` the pairs kept their own geometry
+// A FIXED PAIRS TRACK, NOT `1fr`. With `1fr` the pairs kept their own geometry
 // (`justify-content: start` holds the ✗/✓ columns at content width) but the slack
 // piled up BETWEEN the ✓ and the fix — 190px of it at 1600px, a hole in the
 // middle of every row. Fixed, the slack moves to the outer edge, where it reads
 // as the margin it is.
 //
-// The author's `note` does NOT get the tower's fourth column: three prose tracks
-// plus the pairs is 106rem, past the 91rem page. It is the diagnosis anyway —
-// invisible to a student — so it stacks under the `fix`.
-const COLS = 'minmax(0, var(--rail)) minmax(0, 38rem) minmax(0, var(--measure))'
+// `fix` and `note` sit SIDE BY SIDE rather than stacked (2026-07-27), which is
+// what makes it visible that they overlap and which of the two is carrying the
+// entry. The budget is tight and the prose pays: the panel's inner width is
+// 89rem, three gaps take 4.8, the rail 11 and the pairs 36, leaving 18rem each.
+// That is ~38 characters, under the readable band, and is the honest price of the
+// fourth column at this page width. ⚠️ In presentation the `note` column is
+// empty on every row — 18rem of dead space in the student view, which is the
+// standing argument for going back to three.
+const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0, 18rem)'
 </script>
 
 <template>
@@ -128,7 +132,11 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 38rem) minmax(0, var(--measure))'
 
         <template #folds>
           <RefFold :label="L.breaks" :links="e.rules" />
-          <RefFold :label="L.reading" :links="e.metas" />
+          <!-- Derived, hence the arrow: nobody authored this edge — see metasFor. -->
+          <RefFold :label="L.reading" :links="e.metas" derived />
+        </template>
+
+        <template #strip-right>
           <span v-if="inspect && e.unused" class="badge">unused</span>
         </template>
 
@@ -138,7 +146,7 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 38rem) minmax(0, var(--measure))'
              put the marks at a different x for each stem width and the block read
              as scattered, and the invariant background is the whole point of the
              contrast. -->
-        <div class="pairs">
+        <div class="pairs" :class="{ 'has-stem': e.hasStem }">
           <WrongRight
             v-for="(x, i) in e.instances" :key="i"
             :from="x.from" :wrong="x.wrong" :right="x.right"
@@ -148,13 +156,19 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 38rem) minmax(0, var(--measure))'
 
         <!-- `fix` is the entry's prose for a student: how to get it right.
              `note` is the diagnosis, written for a teacher — author mode only. -->
-        <!-- ⚠️ NOT `class="fix"`: KaTeX emits its own `<span class="fix">` inside
-             rendered math, so the name is taken. Scoping saves us today (those
-             spans are built at runtime by MathExpr and carry no scope id), but a
-             cell class that collides with the math renderer is a trap. -->
+        <!-- THREE KINDS OF PROSE, TOLD APART BY COLOUR (2026-07-27, provisional).
+             `fix`, `note` and an instance's `hint` were written at different
+             times for different readers and they overlap: the fix prescribes,
+             the note diagnoses, the hint glosses one pair. Until the text itself
+             is sorted out, the tint says which is which — green for what to DO,
+             red for what went WRONG, and the hints left untinted so the
+             three-way overlap is visible rather than hidden.
+             ⚠️ NOT `class="fix"`: KaTeX emits its own `<span class="fix">`. -->
         <div class="cell fix-cell">
           <RichText :text="e.fix" />
-          <p v-if="inspect" class="diagnosis"><RichText :text="e.note" /></p>
+        </div>
+        <div v-if="inspect" class="cell note-cell">
+          <RichText :text="e.note" />
         </div>
       </LayerRow>
     </LayerSection>
@@ -163,13 +177,29 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 38rem) minmax(0, var(--measure))'
 
 <style scoped>
 @media (min-width: 820px) {
-  .pairs    { grid-area: 2 / 2; }
-  .fix-cell { grid-area: 2 / 3; }
+  .pairs     { grid-area: 2 / 2; }
+  .fix-cell  { grid-area: 2 / 3; }
+  .note-cell { grid-area: 2 / 4; }
 }
 
 /* A star at the strip's .62rem reads as an asterisk, not a rating — one step up,
    with the letters spaced so three of them stay countable at a glance. */
 .freq { font-size: .74rem; letter-spacing: .06em; }
+
+/* PROVISIONAL COLOUR (2026-07-27) — a diagnostic, not a decided design. The tint
+   is a pale wash of the same --good / --bad the ✓ and ✗ already use, so the row
+   has one colour vocabulary: what to do is green, what went wrong is red. Both
+   are ~10% mixes, well below the marks' full-strength accents, so a cell reads as
+   tinted paper rather than as a highlight competing with the pairs.
+   `color-mix` against --surface, not `transparent`: over transparency the tint
+   would darken with whatever it sits on, and in dark mode --good/--bad are pale,
+   so mixing toward the panel keeps both themes at the same apparent strength. */
+.cell.fix-cell, .cell.note-cell {
+  padding: .35rem .55rem; border-radius: 6px;
+  border-left: 2px solid;
+}
+.fix-cell  { background: color-mix(in srgb, var(--good) 10%, var(--surface)); border-left-color: color-mix(in srgb, var(--good) 55%, var(--surface)); }
+.note-cell { background: color-mix(in srgb, var(--bad) 10%, var(--surface)); border-left-color: color-mix(in srgb, var(--bad) 55%, var(--surface)); color: var(--text-muted); }
 
 /* The shared grid WrongRight fills: stem | ✗ wrong | ✓ right as real columns.
    `justify-content: start` keeps the tracks at content width — with an `fr`
@@ -183,8 +213,27 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 38rem) minmax(0, var(--measure))'
    on a phone one entry is one screenful, so there is nothing to align with. */
 .pairs { display: grid; grid-template-columns: auto auto minmax(0, 1fr); justify-content: start; column-gap: .7rem; row-gap: .35rem; align-items: baseline; min-width: 0; }
 @media (min-width: 820px) {
-  .pairs { grid-template-columns: minmax(4.5rem, auto) minmax(7rem, auto) auto; column-gap: 1.1rem; }
+  /* A FIXED 7rem STUB. Measured: no stem on the page exceeds 6.2rem
+     (anti.quadratic-pair-unchecked), so a constant track holds all 50 of them.
+     A constant track is what lets the rule below land at the same x on every
+     entry — with `auto` it moved with the widest stem in each entry, the same
+     drift the ✗/✓ minimums were introduced to stop. It also aligns the ✗ column
+     page-wide, including on the four entries with no stem at all.
+     ⚠️ Do not size this off `scrollWidth`: a KaTeX span reports exactly 2px more
+     than its box whatever the box is (114>112 at 7rem, 122>120 at 7.5rem), so an
+     overflow check reads as a permanent 2px overrun and widening never clears
+     it. Measure the rendered content with an `auto` track instead. */
+  .pairs { grid-template-columns: 7rem minmax(7rem, auto) auto; column-gap: 1.1rem; }
 }
+
+/* THE STUB RULE, painted by the container rather than bordered per cell. A
+   `border-right` on `.stem` would be one stub per instance with a gap at every
+   row-gap — a dashed line by accident. As a gradient on the grid it is one
+   continuous rule the height of the whole block, which is what says "everything
+   right of here is a claim about what is left of here".
+   At 7rem + half the 1.1rem gap, so it sits midway between the columns. */
+.pairs.has-stem { background: linear-gradient(to right, transparent 7.55rem, var(--border-strong) 7.55rem, var(--border-strong) calc(7.55rem + 1px), transparent calc(7.55rem + 1px)); }
+@media (max-width: 819px) { .pairs.has-stem { background: none; } }
 
 /* Not a second cell: the diagnosis is a footnote to the fix, in the same column
    and a step quieter. */

@@ -51,6 +51,10 @@ const json = () => JSON.stringify(props.record, null, 2)
       <span v-if="kind" class="kind">{{ kind }}</span>
       <slot name="folds" />
       <span class="strip-right">
+        <!-- Gated markers (a coverage warning, a badge) belong HERE, with the
+             other author plumbing, not beside the name: what appears and
+             disappears with the mode should be in one place on the row. -->
+        <slot name="strip-right" />
         <button v-if="record !== undefined && inspect" class="jfold" @click="jsonOpen = !jsonOpen">
           {{ jsonOpen ? '▾' : '▸' }} json
         </button>
