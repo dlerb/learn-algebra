@@ -71,13 +71,16 @@
                 "ax.add-commutative",
                 "ax.mul-commutative"
               ],
+              "rules": [
+                "rule.only-plus-and-times-commute"
+              ],
               "name": {
                 "en": "Swapping what may not be swapped",
                 "de": "Vertauscht, was man nicht vertauschen darf"
               },
               "fix": {
-                "en": "Plus and times may be swapped, minus and divide may not: $a - b$ and $b - a$ are opposites, not equals.",
-                "de": "Plus und Mal darf man vertauschen, Minus und Geteilt nicht: $a - b$ und $b - a$ sind Gegenzahlen, nicht gleich."
+                "en": "Check with $a = 7$, $b = 3$: $a - b$ is $4$ and $b - a$ is $-4$. The same two numbers, and not the same answer.",
+                "de": "Probe mit $a = 7$, $b = 3$: $a - b$ ist $4$ und $b - a$ ist $-4$. Dieselben zwei Zahlen und nicht dasselbe Ergebnis."
               },
               "note": {
                 "en": "Commutativity over-generalized to subtraction and division.",
@@ -341,13 +344,16 @@
               "corrupts": [
                 "ix.brackets"
               ],
+              "rules": [
+                "rule.brackets-that-matter"
+              ],
               "name": {
                 "en": "Keeping brackets that do nothing",
                 "de": "Klammern behalten, die nichts bewirken"
               },
               "fix": {
-                "en": "Brackets that change nothing may be dropped: $(ab)c$ is simply $abc$.",
-                "de": "Klammern, die nichts ändern, darf man weglassen: $(ab)c$ ist einfach $abc$."
+                "en": "$(ab)c$ is $abc$: whichever pair you multiply first, the product is the same, so the brackets say nothing.",
+                "de": "$(ab)c$ ist $abc$: Welches Paar man zuerst multipliziert, ändert das Produkt nicht, die Klammern sagen also nichts."
               },
               "note": {
                 "en": "The term stays needlessly complicated. Not a wrong-answer error: a fluency deficit, visible as slowness and clutter.",
@@ -466,13 +472,16 @@
               "corrupts": [
                 "pl.of-product"
               ],
+              "rules": [
+                "rule.power-over-product"
+              ],
               "name": {
                 "en": "The power missed a factor",
                 "de": "Die Potenz hat einen Faktor ausgelassen"
               },
               "fix": {
-                "en": "A power over a product hits every factor, the number too: $(4x)^2 = 16x^2$.",
-                "de": "Eine Potenz über einem Produkt trifft jeden Faktor, auch die Zahl: $(4x)^2 = 16x^2$."
+                "en": "$(4x)^2$ is $4x \\cdot 4x = 16x^2$. Check with $x = 1$: the term is $4^2 = 16$, not $4$.",
+                "de": "$(4x)^2$ ist $4x \\cdot 4x = 16x^2$. Probe mit $x = 1$: Der Term ist $4^2 = 16$, nicht $4$."
               },
               "note": {
                 "en": "A power over a product must reach every factor, the coefficient included; here it lands on one factor only.",
@@ -517,13 +526,16 @@
                 "pl.same-base",
                 "pl.of-power"
               ],
+              "rules": [
+                "rule.exponent-arithmetic"
+              ],
               "name": {
                 "en": "The wrong operation on the exponents",
                 "de": "Die falsche Rechenart bei den Exponenten"
               },
               "fix": {
-                "en": "Multiplying powers ADDS the exponents, a power of a power MULTIPLIES them: $x^a \\cdot x^b = x^{a+b}$, $(x^a)^b = x^{ab}$.",
-                "de": "Potenzen multiplizieren ADDIERT die Exponenten, eine Potenz einer Potenz MULTIPLIZIERT sie: $x^a \\cdot x^b = x^{a+b}$, $(x^a)^b = x^{ab}$."
+                "en": "In $x^2 \\cdot x^3$ there are $2 + 3 = 5$ factors of $x$, so it is $x^5$. Check with $x = 2$: $4 \\cdot 8 = 32 = 2^5$.",
+                "de": "In $x^2 \\cdot x^3$ stehen $2 + 3 = 5$ Faktoren $x$, also ist es $x^5$. Probe mit $x = 2$: $4 \\cdot 8 = 32 = 2^5$."
               },
               "note": {
                 "en": "Powers combined by the wrong operation on the exponents: $x^a \\cdot x^b$ read as $x^{ab}$ (the exponents add), or $(x^a)^b$ as $x^{a+b}$ (they multiply).",
@@ -550,13 +562,16 @@
                 "def.multiple",
                 "def.pow"
               ],
+              "rules": [
+                "rule.power-vs-coefficient"
+              ],
               "name": {
                 "en": "Squaring and doubling mixed up",
                 "de": "Quadrieren und Verdoppeln verwechselt"
               },
               "fix": {
-                "en": "$a^2$ means $a \\cdot a$, and $2a$ means $a + a$. Adding never makes a power.",
-                "de": "$a^2$ heisst $a \\cdot a$, und $2a$ heisst $a + a$. Addieren ergibt nie eine Potenz."
+                "en": "Check with $a = 3$: $a^2$ is $9$ and $2a$ is $6$. Only at $a = 2$ do they agree, which is what makes the two easy to confuse.",
+                "de": "Probe mit $a = 3$: $a^2$ ist $9$ und $2a$ ist $6$. Nur bei $a = 2$ stimmen sie überein, was die Verwechslung so leicht macht."
               },
               "note": {
                 "en": "Repeated addition (multiple) and repeated multiplication (power) mixed up.",
@@ -583,13 +598,16 @@
                 "def.pow-zero",
                 "def.pow"
               ],
+              "rules": [
+                "rule.exponent-counts-factors"
+              ],
               "name": {
                 "en": "Zero exponent read as zero",
                 "de": "Exponent Null als Null gelesen"
               },
               "fix": {
-                "en": "Anything except $0$ raised to the power $0$ is $1$, not $0$ — and $x^1$ is just $x$.",
-                "de": "Alles ausser $0$ hoch $0$ ist $1$, nicht $0$ — und $x^1$ ist einfach $x$."
+                "en": "$2^3 = 8$, $2^2 = 4$, $2^1 = 2$: each step down halves, so $2^0 = 1$.",
+                "de": "$2^3 = 8$, $2^2 = 4$, $2^1 = 2$: Jeder Schritt abwärts halbiert, also ist $2^0 = 1$."
               },
               "note": {
                 "en": "The exponent is read off as the value: $x^0$ answered $0$, $x^1$ answered $1$. $a^0 = 1$ is not a decree — it is forced by $a^m \\cdot a^n = a^{m+n}$, which is why def.pow-zero derives it. What unsettles students is the genuine exception: $0^0$ really is undefined, and a rule with a hole in it feels less like a rule.",
@@ -707,13 +725,16 @@
               "corrupts": [
                 "th.fraction-add"
               ],
+              "rules": [
+                "rule.fraction-common-denominator"
+              ],
               "name": {
                 "en": "Adding fractions top and bottom",
                 "de": "Brüche oben und unten addiert"
               },
               "fix": {
-                "en": "Same denominator first, then add only the numerators: $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$.",
-                "de": "Zuerst gleicher Nenner, dann nur die Zähler addieren: $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$."
+                "en": "$\\frac{1}{2} + \\frac{1}{3}$ over the denominator $6$ is $\\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}$. And $\\frac{2}{5}$ is smaller than $\\frac{1}{2}$ alone, so it cannot be the sum.",
+                "de": "$\\frac{1}{2} + \\frac{1}{3}$ über dem Nenner $6$ ist $\\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}$. Und $\\frac{2}{5}$ ist kleiner als $\\frac{1}{2}$ allein, kann also nicht die Summe sein."
               },
               "note": {
                 "en": "Fractions with unlike denominators added numerator-over-numerator and denominator-over-denominator, skipping the common denominator: $\\frac{a}{b}+\\frac{c}{d}$ is $\\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$.",
@@ -848,13 +869,16 @@
               "kind": "anti-law",
               "frequency": 3,
               "corrupts": [],
+              "rules": [
+                "rule.unlike-terms-stay"
+              ],
               "name": {
                 "en": "Forcing unlike terms together",
                 "de": "Ungleichartige Glieder zusammengezwungen"
               },
               "fix": {
-                "en": "If the terms are not alike, you are already done: $2 + 3x$ is a finished answer.",
-                "de": "Wenn die Glieder nicht gleichartig sind, ist man schon fertig: $2 + 3x$ ist ein fertiges Resultat."
+                "en": "$2 + 3x$ goes no further: with $x = 4$ it is $14$, while $5x$ would be $20$. The open sum is the answer.",
+                "de": "$2 + 3x$ geht nicht weiter: Für $x = 4$ ergibt es $14$, $5x$ dagegen $20$. Die offene Summe ist die Antwort."
               },
               "note": {
                 "en": "Conjoining, or closure compulsion: an unfinished sum must collapse to one term. Links to no true law — the drive is psychological: an open sum does not feel like an answer.",
@@ -1077,13 +1101,16 @@
                 "ax.distributivity",
                 "th.collect-like-terms"
               ],
+              "rules": [
+                "rule.quadratic-pair"
+              ],
               "name": {
                 "en": "The wrong pair of numbers in the brackets",
                 "de": "Das falsche Zahlenpaar in den Klammern"
               },
               "fix": {
-                "en": "The two numbers must do BOTH jobs: multiplied they give the constant, added they give the middle number. For $x^2 + 5x + 6$ that is $2$ and $3$, because $2 \\cdot 3 = 6$ and $2 + 3 = 5$.",
-                "de": "Die zwei Zahlen müssen BEIDES erfüllen: multipliziert ergeben sie die Konstante, addiert die mittlere Zahl. Bei $x^2 + 5x + 6$ sind das $2$ und $3$, denn $2 \\cdot 3 = 6$ und $2 + 3 = 5$."
+                "en": "For $x^2 + 5x + 6$ try $2$ and $3$: $2 \\cdot 3 = 6$ and $2 + 3 = 5$, so it is $(x+2)(x+3)$. The pair $5$ and $6$ fails the second test, since $5 + 6 = 11$.",
+                "de": "Für $x^2 + 5x + 6$ probiere $2$ und $3$: $2 \\cdot 3 = 6$ und $2 + 3 = 5$, also $(x+2)(x+3)$. Das Paar $5$ und $6$ scheitert an der zweiten Bedingung, denn $5 + 6 = 11$."
               },
               "note": {
                 "en": "Either the numbers are copied straight out of the expression ($5$ and $6$ from $x^2 + 5x + 6$), or a pair is found that satisfies one condition and never checked against the other. Both are the same missing step. The two conditions are not a recipe to memorize: expanding $(x+m)(x+n)$ gives $x^2 + (m+n)x + mn$ (ax.distributivity, then th.collect-like-terms), so the middle coefficient IS a collected sum and the constant IS a product. A student who has never multiplied a pair of brackets out has no reason to believe either condition, which is why the check-by-expanding step is the teaching, not an afterthought.",

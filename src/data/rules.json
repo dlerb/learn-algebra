@@ -59,6 +59,22 @@
       ]
     },
     {
+      "id": "rule.only-plus-and-times-commute",
+      "kind": "do",
+      "rule": {
+        "en": "Only plus and times may be swapped",
+        "de": "Nur Plus und Mal dürfen vertauscht werden"
+      },
+      "note": {
+        "en": "$a + b = b + a$ and $ab = ba$. Minus and divide have no such rule: $a - b$ and $b - a$ are opposites, $\\frac{a}{b}$ and $\\frac{b}{a}$ reciprocals.",
+        "de": "$a + b = b + a$ und $ab = ba$. Für Minus und Geteilt gibt es keine solche Regel: $a - b$ und $b - a$ sind Gegenzahlen, $\\frac{a}{b}$ und $\\frac{b}{a}$ Kehrwerte."
+      },
+      "summarizes": [
+        "ax.add-commutative",
+        "ax.mul-commutative"
+      ]
+    },
+    {
       "id": "rule.three-minuses",
       "kind": "is",
       "rule": {
@@ -139,6 +155,69 @@
       ]
     },
     {
+      "id": "rule.exponent-arithmetic",
+      "kind": "do",
+      "rule": {
+        "en": "Multiplying powers adds the exponents; a power of a power multiplies them",
+        "de": "Potenzen multiplizieren addiert die Exponenten; eine Potenz einer Potenz multipliziert sie"
+      },
+      "note": {
+        "en": "$x^a \\cdot x^b = x^{a+b}$, and $(x^a)^b = x^{ab}$.",
+        "de": "$x^a \\cdot x^b = x^{a+b}$, und $(x^a)^b = x^{ab}$."
+      },
+      "summarizes": [
+        "pl.same-base",
+        "pl.of-power"
+      ]
+    },
+    {
+      "id": "rule.power-over-product",
+      "kind": "do",
+      "rule": {
+        "en": "A power over a product reaches every factor",
+        "de": "Eine Potenz über einem Produkt erreicht jeden Faktor"
+      },
+      "note": {
+        "en": "$(ab)^n = a^n b^n$, and a number in front is a factor like any other.",
+        "de": "$(ab)^n = a^n b^n$, und eine Zahl davor ist ein Faktor wie jeder andere."
+      },
+      "summarizes": [
+        "pl.of-product"
+      ]
+    },
+    {
+      "id": "rule.power-vs-coefficient",
+      "kind": "is",
+      "rule": {
+        "en": "A power repeats multiplication, a coefficient repeats addition",
+        "de": "Eine Potenz wiederholt die Multiplikation, ein Koeffizient die Addition"
+      },
+      "note": {
+        "en": "$a^2$ is $a \\cdot a$ and $2a$ is $a + a$. Adding never makes a power.",
+        "de": "$a^2$ ist $a \\cdot a$ und $2a$ ist $a + a$. Addieren ergibt nie eine Potenz."
+      },
+      "summarizes": [
+        "def.multiple",
+        "def.pow"
+      ]
+    },
+    {
+      "id": "rule.exponent-counts-factors",
+      "kind": "is",
+      "rule": {
+        "en": "The exponent counts the factors, and no factors leave $1$",
+        "de": "Der Exponent zählt die Faktoren, und kein Faktor lässt $1$ übrig"
+      },
+      "note": {
+        "en": "$x^1 = x$ is one factor and $x^0 = 1$ is none, for every $x$ except $0$.",
+        "de": "$x^1 = x$ ist ein Faktor und $x^0 = 1$ ist keiner, für jedes $x$ ausser $0$."
+      },
+      "summarizes": [
+        "def.pow-zero",
+        "def.pow"
+      ]
+    },
+    {
       "id": "rule.fraction-bar-brackets",
       "kind": "is",
       "rule": {
@@ -151,6 +230,21 @@
       },
       "summarizes": [
         "ix.fraction-bar"
+      ]
+    },
+    {
+      "id": "rule.fraction-common-denominator",
+      "kind": "do",
+      "rule": {
+        "en": "Fractions add only over a common denominator",
+        "de": "Brüche werden nur über einem gemeinsamen Nenner addiert"
+      },
+      "note": {
+        "en": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: bring them to the same denominator first, then add only the numerators.",
+        "de": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: zuerst auf denselben Nenner bringen, dann nur die Zähler addieren."
+      },
+      "summarizes": [
+        "th.fraction-add"
       ]
     },
     {
@@ -217,6 +311,21 @@
       ]
     },
     {
+      "id": "rule.brackets-that-matter",
+      "kind": "is",
+      "rule": {
+        "en": "Brackets matter only where they change the reading",
+        "de": "Klammern zählen nur dort, wo sie die Lesart ändern"
+      },
+      "note": {
+        "en": "$(ab)c$ and $abc$ are the same product, so those brackets may be dropped. $(a+b)c$ and $a + bc$ are not, so those may not.",
+        "de": "$(ab)c$ und $abc$ sind dasselbe Produkt, diese Klammern dürfen also weg. $(a+b)c$ und $a + bc$ sind es nicht, diese also nicht."
+      },
+      "summarizes": [
+        "ix.brackets"
+      ]
+    },
+    {
       "id": "rule.multiplication-binds-tighter",
       "kind": "is",
       "rule": {
@@ -242,6 +351,35 @@
         "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
         "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen."
       }
+    },
+    {
+      "id": "rule.unlike-terms-stay",
+      "kind": "do",
+      "rule": {
+        "en": "Unlike terms do not combine, and an open sum is a finished answer",
+        "de": "Ungleiche Terme lassen sich nicht zusammenfassen, und eine offene Summe ist eine fertige Antwort"
+      },
+      "note": {
+        "en": "Only terms with the same letters to the same powers can be collected. Where they differ there is nothing left to do.",
+        "de": "Nur Terme mit denselben Buchstaben in denselben Potenzen lassen sich zusammenfassen. Unterscheiden sie sich, bleibt nichts zu tun."
+      },
+      "summarizes": []
+    },
+    {
+      "id": "rule.quadratic-pair",
+      "kind": "do",
+      "rule": {
+        "en": "The pair must multiply to the constant and add to the middle number",
+        "de": "Das Zahlenpaar muss multipliziert den konstanten Term und addiert die mittlere Zahl ergeben"
+      },
+      "note": {
+        "en": "Expanding $(x+m)(x+n)$ produces $x^2 + (m+n)x + mn$, so both conditions hold at once or the pair is wrong.",
+        "de": "Das Ausmultiplizieren von $(x+m)(x+n)$ ergibt $x^2 + (m+n)x + mn$; beide Bedingungen gelten also zugleich, sonst stimmt das Paar nicht."
+      },
+      "summarizes": [
+        "ax.distributivity",
+        "th.collect-like-terms"
+      ]
     },
     {
       "id": "rule.variable-is-a-fixed-number",
