@@ -62,8 +62,8 @@
         "de": "Ein Minus ist eines von zwei Dingen"
       },
       "rule": {
-        "en": "A minus is either binary subtraction ($a - b$) or negation ($-a$), the opposite of an element. That is all — two roles. A minus in front of a bracket, $-(\\ldots)$, is negation; and since $-1 \\cdot x = -x$ you may read it as multiplying the bracket by $(-1)$, but that is a theorem, not a third minus. When a minus confuses you, ask which of the two it is.",
-        "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$), das Gegenteil eines Elements. Mehr nicht, zwei Rollen. Ein Minus vor einer Klammer, $-(\\ldots)$, ist Negation; und weil $-1 \\cdot x = -x$ gilt, darfst du es als Multiplikation der Klammer mit $(-1)$ lesen, aber das ist ein Satz, kein drittes Minus. Wenn dich ein Minus verwirrt, frage dich, welches der zwei es ist."
+        "en": "A minus is either subtraction ($a - b$) or negation ($-a$) — two roles, no third. When one confuses you, ask which it is.",
+        "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$) — zwei Rollen, keine dritte. Wenn dich eines verwirrt, frage dich, welches es ist."
       },
       "summarizes": [
         "ax.additive-inverse",
@@ -165,8 +165,8 @@
         "de": "Nur die Multiplikation verteilt sich über eine Summe"
       },
       "rule": {
-        "en": "$a(b+c) = ab + ac$, and dividing by $c$ works too (it is multiplying by $1/c$). Nothing else distributes: $(a+b)^2$ is not $a^2 + b^2$, the root of $a+b$ is not the sum of the roots, and a single term of a sum cannot be cancelled.",
-        "de": "$a(b+c) = ab + ac$, und Teilen durch $c$ geht auch (es ist Multiplizieren mit $1/c$). Sonst verteilt sich nichts: $(a+b)^2$ ist nicht $a^2 + b^2$, die Wurzel aus $a+b$ ist nicht die Summe der Wurzeln, und ein einzelner Summand lässt sich nicht kürzen."
+        "en": "$a(b+c) = ab + ac$: multiplication distributes over a sum, and nothing else does.",
+        "de": "$a(b+c) = ab + ac$: Die Multiplikation verteilt sich über eine Summe, sonst nichts."
       },
       "summarizes": [
         "ax.distributivity"
@@ -235,8 +235,8 @@
         "de": "Ein Buchstabe ist eine feste Zahl"
       },
       "rule": {
-        "en": "A letter stands for a number you do not yet know — not a label, not a box. Within one expression every occurrence of the same letter is the same number: both $a$'s in $a + a$ are equal, so $a + a = 2a$. Different letters may differ; the same letter may not.",
-        "de": "Ein Buchstabe steht für eine noch unbekannte Zahl — kein Etikett, keine Schachtel. Innerhalb eines Ausdrucks ist jedes Vorkommen desselben Buchstabens dieselbe Zahl: die beiden $a$ in $a + a$ sind gleich, also $a + a = 2a$. Verschiedene Buchstaben dürfen sich unterscheiden, derselbe Buchstabe nicht."
+        "en": "A letter stands for a number you do not yet know, and every occurrence of it in one expression is the same number.",
+        "de": "Ein Buchstabe steht für eine noch unbekannte Zahl, und jedes Vorkommen davon in einem Ausdruck ist dieselbe Zahl."
       },
       "summarizes": [
         "pre.variables"
