@@ -48,23 +48,21 @@ function cardLink(id: string) {
   return { id, name: e ? t(e.card.name) : id, to: `/${e?.layer.slug}#${id}` }
 }
 
-// Two hops, no authoring: error → `corrupts` (cards) → the rules that summarize
-// those cards. The error is the disease, the rule is the positive form that stops
-// it firing — the most useful link on the page.
-// ⚠️ TO BE REPLACED by an authored `rule` ref on the error (docs/TODO): a derived
-// guess is fine for "related reading" and wrong for the sentence a student reads
-// first.
+// THE RULE THIS MISTAKE BREAKS, authored on the error (2026-07-27). It used to
+// be derived — error → `corrupts` → the rules summarizing those cards, first two
+// — which was fine while the rules sat in a fold as related reading, and wrong
+// once the sentence became the first thing a student reads beside the fix: a
+// derivation guesses, caps, and cannot be overruled. Three of the errors here
+// name a rule the derivation would not have offered, and two reject one it does.
 //
-// Capped at two, and the cap is editorial as much as spatial: the hop is
-// generous (`mis.exponent-scope` reaches four), and two rules beside a mistake
-// are a pointer where five are a reading list.
-const RULE_LIMIT = 2
+// The derivation survives as an audit line in auditCoverage, which is what it was
+// always good at: it is how the five missing reading rules were found.
+const ruleById = new Map(rules.map(r => [r.id, r]))
 function rulesFor(e: ErrorDef) {
-  const cards = new Set(e.corrupts)
-  return rules
-    .filter(m => m.summarizes.some(c => cards.has(c)))
-    .slice(0, RULE_LIMIT)
-    .map(m => ({ id: m.id, text: t(m.rule), to: `/rules#${m.id}` }))
+  return e.rules.map(id => {
+    const r = ruleById.get(id)!
+    return { id, text: t(r.rule), to: `/rules#${id}` }
+  })
 }
 
 // Within a topic, the most-often-made mistake comes first (frequency = the ★

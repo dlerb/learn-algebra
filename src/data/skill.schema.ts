@@ -237,6 +237,15 @@ export const errorDef = z.object({
   topic: z.string(),               // POSITIONAL — the section slug, re-attached by parseErrorTree
   frequency: z.number().int().min(1).max(3).default(1),  // ★–★★★, from docs/common_mistakes.md
   corrupts: z.array(z.string()).default([]),
+  // THE RULE THIS MISTAKE IS THE COUNTEREXAMPLE TO (authored 2026-07-27,
+  // rules.json). It replaced a derivation — `corrupts` ∩ a rule's `summarizes`,
+  // first two — which is fine for "related reading" and wrong for the sentence a
+  // student reads first: it guessed, it capped, and it could not be overruled.
+  // Ordered, most useful first. Empty is legitimate and visible: 9 of 28 have no
+  // sentence yet, and all but two of those are anti-laws, whose general form is a
+  // LAW in the tower (reachable via `corrupts`) that nobody has written as a
+  // student-facing one-liner.
+  rules: z.array(z.string()).default([]),
   name: localizedString,
   // TWO PROSE FIELDS, two readers (2026-07-25). `name` says WHICH mistake this is;
   // `fix` says HOW TO GET IT RIGHT, in a 15-year-old's language, and is the entry's
@@ -391,6 +400,12 @@ export function validateLayerRefs(
       }
     }
   }
+  const ruleIds = new Set(rules.map(m => m.id))
+  for (const e of errors) {
+    for (const r of e.rules) {
+      if (!ruleIds.has(r)) throw new Error(`Error "${e.id}" cites unknown rule "${r}".`)
+    }
+  }
 }
 
 // ── Matrix audit ─────────────────────────────────────────────────────────────
@@ -451,6 +466,29 @@ export function auditCoverage(
   // the two should account for each other. Neither direction is a validator: an
   // empty cell is a question, and the three usual answers are different repairs.
   //
+  // Rules: two questions, both inherited from the derivation the authored
+  // `error.rules` replaced (2026-07-27). That derivation was always better at
+  // SUGGESTING than at deciding — it is what turned up the five missing reading
+  // rules — so it survives here rather than in the page.
+  //   a. errors with no sentence at all, frequency-ranked;
+  //   b. errors whose corrupted cards ARE summarized by a rule they do not cite,
+  //      which is either a missed reference or a deliberate rejection.
+  const ruled = errors.filter(e => e.rules.length === 0).sort((a, b) => b.frequency - a.frequency)
+  if (ruled.length > 0) {
+    lines.push(`Errors citing no rule (${ruled.length}): ` +
+      ruled.map(e => `${'\u2605'.repeat(e.frequency)} ${e.id}`).join(', '))
+  }
+  const suggested = errors
+    .map(e => {
+      const cards = new Set(e.corrupts)
+      const hit = rules.filter(m => m.summarizes.some(c => cards.has(c)) && !e.rules.includes(m.id))
+      return hit.length ? `${e.id} → ${hit.map(m => m.id).join(', ')}` : null
+    })
+    .filter((x): x is string => x !== null)
+  if (suggested.length > 0) {
+    lines.push(`Rules an error's cards reach but it does not cite (${suggested.length}): ${suggested.join(' | ')}`)
+  }
+
   // Direction 1 — errors nothing drills. Frequency-ranked, because a ★★★ mistake
   // with no skill is a curriculum hole and a ★ one may just be rare.
   const citedErrs = new Set(skills.flatMap(f => f.errors))

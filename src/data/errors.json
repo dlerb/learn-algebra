@@ -35,6 +35,9 @@
                 "th.negative-one-times",
                 "def.sub"
               ],
+              "rules": [
+                "rule.three-minuses"
+              ],
               "name": {
                 "en": "Losing one of two minuses",
                 "de": "Eines von zwei Minus verloren"
@@ -103,6 +106,9 @@
               "corrupts": [
                 "ix.no-adjacent-operator"
               ],
+              "rules": [
+                "rule.no-adjacent-operators"
+              ],
               "name": {
                 "en": "Two signs written side by side",
                 "de": "Zwei Rechenzeichen nebeneinander"
@@ -133,6 +139,9 @@
               "corrupts": [
                 "th.negative-one-times",
                 "def.sub"
+              ],
+              "rules": [
+                "rule.three-minuses"
               ],
               "name": {
                 "en": "Minus read as multiplying",
@@ -179,6 +188,10 @@
               "corrupts": [
                 "ix.precedence"
               ],
+              "rules": [
+                "rule.multiplication-binds-tighter",
+                "rule.dominant-op-last"
+              ],
               "name": {
                 "en": "Calculated left to right",
                 "de": "Von links nach rechts gerechnet"
@@ -212,6 +225,10 @@
                 "ix.power-precedence",
                 "th.negative-base"
               ],
+              "rules": [
+                "rule.exponent-binds-tighter",
+                "rule.dominant-op-last"
+              ],
               "name": {
                 "en": "The power grabbed too much",
                 "de": "Die Potenz erfasst zu viel"
@@ -244,6 +261,10 @@
               "corrupts": [
                 "ix.brackets"
               ],
+              "rules": [
+                "rule.bracket-chunk",
+                "rule.only-multiplication-distributes"
+              ],
               "name": {
                 "en": "Bracket dropped without multiplying out",
                 "de": "Klammer weggelassen statt ausmultipliziert"
@@ -275,6 +296,10 @@
               "frequency": 2,
               "corrupts": [
                 "ix.precedence"
+              ],
+              "rules": [
+                "rule.dominant-op-last",
+                "rule.multiplication-binds-tighter"
               ],
               "name": {
                 "en": "The wrong operation called the main one",
@@ -363,6 +388,9 @@
               "corrupts": [
                 "ax.distributivity"
               ],
+              "rules": [
+                "rule.only-multiplication-distributes"
+              ],
               "name": {
                 "en": "Spreading an operation over a plus",
                 "de": "Eine Operation über ein Plus verteilt"
@@ -402,6 +430,9 @@
               "frequency": 3,
               "corrupts": [
                 "ax.distributivity"
+              ],
+              "rules": [
+                "rule.only-multiplication-distributes"
               ],
               "name": {
                 "en": "Multiplying into only the first term",
@@ -585,6 +616,9 @@
                 "def.pow-neg",
                 "th.inverse-is-power"
               ],
+              "rules": [
+                "rule.minus-in-exponent"
+              ],
               "name": {
                 "en": "A negative exponent read as a negative value",
                 "de": "Negativer Exponent als negativer Wert gelesen"
@@ -616,6 +650,9 @@
               "frequency": 2,
               "corrupts": [
                 "ix.root"
+              ],
+              "rules": [
+                "rule.root-bar-brackets"
               ],
               "name": {
                 "en": "The root did not cover everything",
@@ -702,6 +739,9 @@
               "corrupts": [
                 "ix.fraction-bar"
               ],
+              "rules": [
+                "rule.fraction-bar-brackets"
+              ],
               "name": {
                 "en": "Only part of the numerator divided",
                 "de": "Nur ein Teil des Zählers geteilt"
@@ -728,6 +768,9 @@
               "frequency": 1,
               "corrupts": [
                 "ix.fraction-bar"
+              ],
+              "rules": [
+                "rule.fraction-bar-brackets"
               ],
               "name": {
                 "en": "Too much put over the fraction bar",
@@ -756,6 +799,9 @@
               "corrupts": [
                 "ix.fraction-bar",
                 "ix.division-symbols"
+              ],
+              "rules": [
+                "rule.fraction-bar-brackets"
               ],
               "name": {
                 "en": "A fraction not seen as a division",
@@ -848,6 +894,9 @@
               "corrupts": [
                 "ix.juxtaposition"
               ],
+              "rules": [
+                "rule.juxtaposition"
+              ],
               "name": {
                 "en": "Side by side read as plus",
                 "de": "Nebeneinander als Plus gelesen"
@@ -875,6 +924,9 @@
               "corrupts": [
                 "ix.invisible-one"
               ],
+              "rules": [
+                "rule.invisible-one"
+              ],
               "name": {
                 "en": "The invisible 1 forgotten",
                 "de": "Die unsichtbare 1 vergessen"
@@ -901,6 +953,9 @@
               "frequency": 2,
               "corrupts": [
                 "ix.juxtaposition"
+              ],
+              "rules": [
+                "rule.juxtaposition"
               ],
               "name": {
                 "en": "The missing times sign overlooked",
@@ -933,6 +988,9 @@
               "frequency": 1,
               "corrupts": [
                 "pre.variables"
+              ],
+              "rules": [
+                "rule.variable-is-a-fixed-number"
               ],
               "name": {
                 "en": "The letter treated as a word",
@@ -967,6 +1025,9 @@
               "frequency": 1,
               "corrupts": [
                 "ix.coefficient-front"
+              ],
+              "rules": [
+                "rule.order-is-habit"
               ],
               "name": {
                 "en": "The same term written the other way round",
