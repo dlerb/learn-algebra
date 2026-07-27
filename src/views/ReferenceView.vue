@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import RichText from '../components/RichText.vue'
 import WrongRight from '../components/WrongRight.vue'
@@ -10,7 +10,6 @@ import RefFold from '../components/RefFold.vue'
 import { errorTree, skills, metaPatterns } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type ErrorDef, type LocalizedString } from '../data/skill.schema'
-import { clipProse } from '../prose'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
 
@@ -28,21 +27,12 @@ import { inspect } from '../inspect'
 // name, the shared prose cell.
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
-// The only prose this view owns, so it localizes like everything else.
-// `reading rules` is the nav's own name for /metapatterns. It used to read
-// `read` / `dazu`, which named neither the destination nor the same claim in the
-// two languages; a fold has to say what is behind it.
+// The only prose this view owns, so it localizes like everything else. It is
+// down to one label: the `reading rules` fold became the fourth column, and the
+// rules name themselves there.
 const L = computed(() => lang.value === 'de'
-  ? { breaks: 'verletzt', reading: 'Leseregeln',   more: 'mehr', less: 'weniger' }
-  : { breaks: 'breaks',   reading: 'reading rules', more: 'more', less: 'less' })
-
-// A quoted rule clips at 180, not the tower's 240: the column is 18rem rather
-// than 26. Keyed by rule+error, because one metapattern is quoted on several
-// errors (meta.three-minuses on two entries in the same panel) and expanding it
-// on one row must not expand it on the others.
-const RULE_CUT = 180
-const expanded = ref(new Set<string>())
-const toggle = (k: string) => (expanded.value.has(k) ? expanded.value.delete(k) : expanded.value.add(k))
+  ? { breaks: 'verletzt' }
+  : { breaks: 'breaks' })
 
 // Deep link from /metapatterns, where each rule lists the mistakes it prevents.
 const route = useRoute()
@@ -62,17 +52,16 @@ function cardLink(id: string) {
 // summarize those cards. The error is the disease, the meta-pattern is the
 // positive rule that stops it firing — the most useful link on the page.
 //
-// Capped at two. The hop is generous (`mis.exponent-scope` reaches four), and the
-// names are sentence-length, so an uncapped list ran three grey lines. Inside a
-// fold that matters less than it did, but the cap is also editorial: two rules
-// are a pointer, five are a reading list.
+// Capped at two, and the cap is editorial as much as spatial: the hop is
+// generous (`mis.exponent-scope` reaches four), and two rules beside a mistake
+// are a pointer where five are a reading list.
 const META_LIMIT = 2
 function metasFor(e: ErrorDef) {
   const cards = new Set(e.corrupts)
   return metaPatterns
     .filter(m => m.summarizes.some(c => cards.has(c)))
     .slice(0, META_LIMIT)
-    .map(m => ({ id: m.id, name: t(m.name), clip: clipProse(t(m.rule), RULE_CUT), to: `/metapatterns#${m.id}` }))
+    .map(m => ({ id: m.id, name: t(m.name), to: `/metapatterns#${m.id}` }))
 }
 
 // Within a topic, the most-often-made mistake comes first (frequency = the ★
@@ -105,17 +94,15 @@ const sections = computed(() => errorTree.sections.map(s => ({
 // middle of every row. Fixed, the slack moves to the outer edge, where it reads
 // as the margin it is.
 //
-// The fourth column QUOTES THE READING RULE (2026-07-27) — it briefly held the
-// author's `note`, which was invisible to a student and duplicated the `fix`. The
-// concrete correction and the general rule now sit side by side, which is the
-// division of labour the two layers are supposed to have, and any remaining
-// overlap between them is on the page rather than one fold away.
-// The budget is tight and the prose pays: the panel's inner width is 89rem,
-// three gaps take 4.8, the rail 11 and the pairs 36, leaving 18rem each — ~38
-// characters, under the readable band, and the honest price of a fourth column
-// at this page width. 7 of 28 errors reach no rule at all, and their cell stays
-// empty rather than the layout changing.
-const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0, 18rem)'
+// The fourth column carries THE READING RULE AS A ONE-LINER (2026-07-27). It
+// briefly held the author's `note` (invisible to a student, mostly a restatement
+// of the fix), then the metapattern's whole `rule` paragraph (noise beside a ✗/✓
+// and a worked fix). What survives is the rule itself in one line.
+// That is also what pays for the `fix`: with the rule column down from 18rem to
+// 14, the fix goes 18 → 22rem, about 46 characters, back inside the readable
+// band it had been pushed out of. 7 of 28 errors reach no rule at all, and their
+// cell stays empty rather than the layout changing.
+const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 22rem) minmax(0, 14rem)'
 </script>
 
 <template>
@@ -141,10 +128,13 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0,
              name, optically centred by the shared rule. -->
         <template #marks><span class="freq">{{ '★'.repeat(e.frequency) }}</span></template>
 
+        <!-- The `reading rules` fold is GONE (2026-07-27). Once the column
+             carries the one-liner rather than the paragraph, fold and column are
+             the same words — and the one-liner is the most useful thing on the
+             row after the fix, so folding it away was hiding the payload. The
+             column keeps it open and carries the link. -->
         <template #folds>
           <RefFold :label="L.breaks" :links="e.rules" />
-          <!-- Derived, hence the arrow: nobody authored this edge — see metasFor. -->
-          <RefFold :label="L.reading" :links="e.metas" derived />
         </template>
 
         <template #strip-right>
@@ -188,15 +178,18 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0,
              name still deep-links to /metapatterns.
              `note` is not lost: it is in the json fold, and its future is an
              open question. -->
+        <!-- THE ONE-LINER, and only that. The column briefly quoted the whole
+             `rule` paragraph, which read as noise next to a ✗/✓ pair and a
+             worked fix — a fourth rendering of a claim the row had already made
+             three ways. Every metapattern `name` is a complete rule on its own
+             ("The fraction bar is a bracket"), so the name IS the content here
+             and the paragraph stays on /metapatterns, where a reader has come
+             for the rule itself. The arrow marks it as derived; the whole line
+             is the link. -->
         <div v-if="e.metas.length" class="cell meta-cell">
-          <p v-for="m in e.metas" :key="m.id" class="meta-rule">
-            <RouterLink class="meta-name" :to="m.to">→ {{ m.name }}</RouterLink>
-            <RichText :text="expanded.has(m.id + e.id) || !m.clip.clipped ? m.clip.full : m.clip.head" /><template
-              v-if="m.clip.clipped && !expanded.has(m.id + e.id)">… </template>
-            <button v-if="m.clip.clipped" class="more" @click="toggle(m.id + e.id)">
-              {{ expanded.has(m.id + e.id) ? L.less : L.more }}
-            </button>
-          </p>
+          <RouterLink v-for="m in e.metas" :key="m.id" class="meta-rule" :to="m.to">
+            <span class="arrow">→</span>{{ m.name }}
+          </RouterLink>
         </div>
       </LayerRow>
     </LayerSection>
@@ -232,11 +225,15 @@ const COLS = 'minmax(0, var(--rail)) minmax(0, 36rem) minmax(0, 18rem) minmax(0,
    typographic convention for a quotation. Colour stays on the axis it already
    means: green for what to do, red for what went wrong. */
 .meta-cell { background: var(--band); border-left-color: var(--border-strong); color: var(--text-muted); }
-.meta-rule { margin: 0; }
-.meta-rule + .meta-rule { margin-top: .5rem; }
-/* The arrow is the same derived marker RefFold uses in the strip. */
-.meta-name { display: block; font-family: var(--font-sans, inherit); font-size: .68rem; color: var(--text-faint); text-decoration: none; margin-bottom: .15rem; }
-.meta-name:hover { color: var(--accent); text-decoration: underline; }
+/* A rule per line, the whole line clickable — it is one short sentence, so a
+   separate link affordance under it would be chrome around nothing. */
+.meta-rule { display: block; color: var(--text-muted); text-decoration: none; text-indent: -.9rem; padding-left: .9rem; }
+.meta-rule + .meta-rule { margin-top: .4rem; }
+.meta-rule:hover { color: var(--accent); }
+/* The same derived marker RefFold uses in the strip, hung in the margin so the
+   rule's own first word starts the text column. */
+.arrow { color: var(--text-faint); margin-right: .35rem; }
+.meta-rule:hover .arrow { color: var(--accent); }
 
 /* The shared grid WrongRight fills: stem | ✗ wrong | ✓ right as real columns.
    `justify-content: start` keeps the tracks at content width — with an `fr`
