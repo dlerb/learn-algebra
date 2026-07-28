@@ -17,6 +17,9 @@ import equivalenceSkills from './skills/equivalence.json'
 import classificationSkills from './skills/classification.json'
 import chunkingSkills from './skills/chunking.json'
 import transformationSkills from './skills/transformation.json'
+// …and the layer head beside them: a layer split across four files has nowhere
+// else to keep its title, blurb and note (skill.schema → skillsHead).
+import skillsLayerHead from './skills/layer.json'
 import dEquivalenceMultiplication from './drills/equivalence-multiplication.json'
 import dEquivalenceLikeTerms from './drills/equivalence-like-terms.json'
 import dEquivalenceMinusSign from './drills/equivalence-minus-sign.json'
@@ -50,8 +53,9 @@ const drillFiles: unknown[][] = [
 // kind/group from tree position so downstream sees the same flat shape as before.
 const skillTree = parseSkillTree([
   equivalenceSkills, classificationSkills, chunkingSkills, transformationSkills,
-])
+], skillsLayerHead)
 export const skills = skillTree.skills
+export { skillTree }
 export const groups: GroupsFile = skillTree.groups
 export const skillKinds: GroupsFile = skillTree.skillKinds
 // NOTE: `layers.json` (a one-entry GroupsFile holding the errors page's title and
