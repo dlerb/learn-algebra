@@ -137,6 +137,28 @@ the **only** place the skill→error edge is visible, since errors must not cite
 `illustration`, which is what makes the maths column uniform, and the drill's own material
 sits inspection-only behind a `drill material` fold where it can be reshaped freely.
 
+### `/mistakes` — the anti-registry (2026-07-28, ON A BRANCH)
+
+`feat/skill-wrong-forms`, **unmerged and undecided** — a parallel build that exists so the
+pool treatment and `/errors` can be compared on screen before anything is migrated. The model
+is in `content_model.md` rev. 12; what matters for the app:
+
+- It is **`/rules` with the sign flipped**: same four columns at the same widths, so the two
+  measure identically read side by side. Two divergences — the formula column carries FALSE
+  claims and so sits under a ✗ (reusing `/skills`' reserved mark track), and the page
+  **sections by `topic`** where `/rules` is flat, because a student arrives at a mistake by
+  topic in a way nobody arrives at a rule.
+- **A second sectioning, `by rule broken`**, in `LayerPage`'s `filters` slot. No new data:
+  `breaks` is the family, so the heading is the LAW plus its gloss and the rows beneath are
+  the ways it gets broken. Six families and fifteen loners.
+- **Ids are unchanged from `errors.json`**, so every reverse index resolves off `skill.errors`
+  without a single skill being touched. That is what makes the whole thing revertible.
+- ⚠️ **Known rough edge**: a mistake in two families renders twice, and both rows carry the
+  real id — invalid HTML, though every resolver involved takes the first, which is the primary
+  by construction. If the sectioning is kept, `LayerRow` needs a separate `anchor` prop so the
+  id stops doing two jobs (entity address *and* page position). The shared shell was
+  deliberately not touched for a branch build.
+
 **`/sheets` uses the shell differently, and that is the point.** A cheat sheet is not a row —
 a row is four columns of prose with one formula; a sheet is formulas under headings. So it
 takes `LayerPage` + `LayerSection` and fills the panel with a formula grid instead of rows.

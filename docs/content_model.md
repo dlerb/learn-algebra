@@ -533,6 +533,52 @@ familiar-shapes group (binomial square, difference of squares).
 
 ## Revision notes
 
+**2026-07-28 (rev. 12, `skill.wrong` + the mistakes pool — BOTH ON A BRANCH, UNDECIDED):**
+two changes on `feat/skill-wrong-forms`, neither merged. See `docs/TODO.md` for the argument;
+this records only the model.
+
+**`wrong: string[]` on a skill** — the tempting form as a COMPLETE FALSE CLAIM (`3x = 3 + x`,
+never a bare `3 + x`), so it stands alone under a ✗ and needs no stem column. Authored per
+skill and never fetched from the cited errors: 70 (skill → error) citations point at 27
+distinct errors, `anti.linearity` alone at 10, and two skills citing one error are tempted by
+different forms ($-a+b$ vs $-a-b$), so the pair cannot be derived even in principle. Same
+ruling as `rule.latex` vs `card.latex`. **Empty is meaningful** — the two contrast skills have
+no tempting form, which is why they exist. 34 of 44 equivalence skills authored; the other
+three kinds are untouched, and classification (2/16 notes carrying a negation) and chunking
+(0/4) probably never get it, because their wrong answer is a NAME or a DECOMPOSITION rather
+than a false equation.
+
+**`mistakes.json` — the anti-registry**, a flat pool beside `rules.json` and the same kind of
+object: general sentences carrying no context of their own. The insight is that
+`anti.linearity` is not an example but a SENTENCE, and modelling it as an entry with instances
+bolted on is what made its ten citing skills look like duplication — a pool entry cited ten
+times is ordinary. It differs from `ruleDef` in five ways, in order of weight:
+
+    breaks[]     THE STRUCTURAL ONE. A rule points only DOWN into the tower; a mistake
+                 points down (corrupts) AND SIDEWAYS into the rules pool. The only
+                 pool-to-pool edge in the design — so "same level as rules" is not quite
+                 right, mistakes sit half a level above. Still a DAG.
+    frequency    Can live nowhere else: a rule is not more or less true, a mistake is more
+                 or less MADE. Evidence per misconception, from docs/common_mistakes.md.
+    kind         Three values and a different question — anti-law/misreading/salience is a
+                 CAUSAL taxonomy, where a rule's is|do is a REGISTER.
+    topic        Kept from the errors tree; the file is flat and the VIEW sections on it.
+    latex        Same field, INVERTED CONTRACT: every line is a FALSE claim, under a ✗.
+
+⚠️ **`mistake` is the belief stated from the INSIDE** — "Every minus is a subtraction", not
+the error layer's outside naming ("Losing one of two minuses") — so it reads as a claim that
+can be marked ✗ exactly as a rule reads as one that can be marked ✓. That rewrite was the only
+authoring; everything else is derived, which is why the file is GENERATED
+(`scripts/gen-mistakes.py`) while `errors.json` still exists beside it.
+
+**No `group` field, and none is wanted: `breaks` IS the family.** Six rules are broken by 2–3
+mistakes each and 15 mistakes break a rule nobody else breaks. The grouping is causal rather
+than editorial, gives a family weight its members lack (the fraction-bar cluster is ★2/★1/★1
+apart and the biggest fraction problem together), and allows DUAL MEMBERSHIP —
+`mis.precedence-ignored` breaks two rules and belongs to both families, which `group: string`
+could not say. There is deliberately **no sheets analogue**: you do not hand a student a
+formulary of falsehoods.
+
 **2026-07-28 (rev. 11, cheat sheets):** a THIRD consumer of the rules pool, beside errors
 and skills. `cheatsheets.json` groups and orders rules and **owns nothing** — a sheet names
 ids, and every formula on the page is looked up from the rule it names, so there is no
