@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import { useRoute, useRouter, RouterLink, RouterView } from 'vue-router'
 import {
   NConfigProvider, NGlobalStyle, NLayoutHeader, NMenu, NPopover,
@@ -28,13 +28,19 @@ const router = useRouter()
 // leaf keys are route names, and a parent with children just expands (never
 // navigates), so `go` only ever sees a leaf. `route.name` matching a leaf key
 // auto-highlights that leaf and its parent.
+// INDENTED BY `level`, so the dropdown shows the curated stack rather than a
+// flat list: the pool, then what sits on it, then skills on top. Display only —
+// the real dependency is the refs between the layers.
 const layerMenu = (family: 'fundament' | 'curated') =>
-  layersOf(family).map(l => ({ label: l.title, key: l.slug }))
+  layersOf(family).map(l => ({
+    label: l.level ? () => h('span', { style: { paddingLeft: `${l.level! * 14}px` } }, l.title) : l.title,
+    key: l.slug,
+  }))
 
 const menuOptions: MenuOption[] = [
   { label: 'Fundament', key: 'tower-menu', children: layerMenu('fundament') },
-  // Curated is ordered in the manifest to echo the reference stack bottom-up:
-  // the two lenses that cite only cards, then Skills, which cites all three.
+  // Curated is ordered and levelled in the manifest to echo its own stack:
+  // rules at the base, sheets and errors on it, skills over everything.
   { label: 'Curated', key: 'curated-menu', children: layerMenu('curated') },
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },

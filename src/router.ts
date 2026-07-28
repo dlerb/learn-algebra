@@ -13,6 +13,7 @@ import { allLayers } from './data/layers'
 const viewOf: Record<string, () => Promise<unknown>> = {
   errors: () => import('./views/ReferenceView.vue'),
   rules: () => import('./views/RulesView.vue'),
+  cheatsheets: () => import('./views/SheetsView.vue'),
   skills: () => import('./views/TaxonomyView.vue'),
 }
 

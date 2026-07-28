@@ -79,6 +79,11 @@ export interface LayerRef {
    *  its own data head (see the import-cycle note above). */
   title: string
   family: LayerFamily
+  /** Depth in the curated stack, for the nav to indent by (2026-07-28). The
+   *  curated side is no longer a flat list of three: rules is the pool, sheets
+   *  and errors both sit on it, and skills sits on everything. Display only —
+   *  nothing validates against it, and the real dependency is the refs. */
+  level?: number
 }
 
 /** A tower layer, which additionally carries its cards tree. */
@@ -94,14 +99,22 @@ export const layers: Layer[] = [
   { id: 'terms', slug: 'terms', title: 'Term manipulations', family: 'fundament', data: terms as unknown as LayerData },
 ]
 
-/** The curated layers. Ordered to echo the reference stack bottom-up: the two
- *  lenses that cite only cards, then Skills on top, which cites all three.
+/** The curated layers, ordered bottom-up and levelled by what they consume:
+ *
+ *      rules            the pool of student-facing sentences
+ *      ├── sheets       presentation over the pool: which rules, grouped how
+ *      └── errors       the mistakes, each citing the rule it breaks
+ *          └── skills   the interventions, citing errors, rules and cards
+ *
  *  Titles are the student-facing page names (2026-07-25) — the nav used to say
- *  "Errors" while the page said "Common mistakes". */
+ *  "Errors" while the page said "Common mistakes".
+ *  ⚠️ "Reading rules" is now wrong: the pool is DO and IS sentences, not reading
+ *  rules only. Renaming it is open (docs/TODO.md). */
 export const curatedLayers: LayerRef[] = [
-  { id: 'errors', slug: 'errors', title: 'Common mistakes', family: 'curated' },
-  { id: 'rules', slug: 'rules', title: 'Reading rules', family: 'curated' },
-  { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated' },
+  { id: 'rules', slug: 'rules', title: 'Reading rules', family: 'curated', level: 0 },
+  { id: 'cheatsheets', slug: 'sheets', title: 'Cheat sheets', family: 'curated', level: 1 },
+  { id: 'errors', slug: 'errors', title: 'Common mistakes', family: 'curated', level: 1 },
+  { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated', level: 2 },
 ]
 
 /** Every layer, tower first. Routes and nav are generated from this. */
