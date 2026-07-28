@@ -608,6 +608,92 @@
       ]
     },
     {
+      "id": "rule.binomial-formulas",
+      "kind": "do",
+      "rule": {
+        "en": "The binomial formulas: know these cold",
+        "de": "Die binomischen Formeln: diese sitzen auswendig"
+      },
+      "note": {
+        "en": "Three identities, and every one of them is read in both directions: left to right you multiply out, right to left you factorise. The middle term is what gets lost.",
+        "de": "Drei Identitäten, und jede wird in beide Richtungen gelesen: von links nach rechts ausmultiplizieren, von rechts nach links faktorisieren. Verloren geht der mittlere Term."
+      }
+    },
+    {
+      "id": "rule.binomial-square",
+      "kind": "do",
+      "rule": {
+        "en": "A squared sum has a middle term",
+        "de": "Eine quadrierte Summe hat einen mittleren Term"
+      },
+      "latex": [
+        "(a+b)^2 = a^2 + 2ab + b^2"
+      ],
+      "note": {
+        "en": "The $2ab$ counts the two mixed products, $ab$ and $ba$, which are the same number. Dropping it is the commonest mistake in algebra.",
+        "de": "Das $2ab$ zählt die beiden gemischten Produkte $ab$ und $ba$, die dieselbe Zahl sind. Es wegzulassen ist der häufigste Fehler der Algebra."
+      },
+      "summarizes": [
+        "th.binomial-square"
+      ]
+    },
+    {
+      "id": "rule.square-of-difference",
+      "kind": "do",
+      "rule": {
+        "en": "A squared difference is the same, with the middle term negative",
+        "de": "Eine quadrierte Differenz ist dasselbe, mit negativem mittlerem Term"
+      },
+      "latex": [
+        "(a-b)^2 = a^2 - 2ab + b^2"
+      ],
+      "note": {
+        "en": "Not a second formula to learn: it is the first one with $-b$ in place of $b$, and $(-b)^2 = b^2$ is why the last term stays positive.",
+        "de": "Keine zweite Formel: Es ist die erste mit $-b$ statt $b$, und $(-b)^2 = b^2$ ist der Grund, weshalb der letzte Term positiv bleibt."
+      },
+      "summarizes": [
+        "th.square-of-difference"
+      ]
+    },
+    {
+      "id": "rule.difference-of-squares",
+      "kind": "do",
+      "rule": {
+        "en": "A sum times a difference leaves no middle term",
+        "de": "Summe mal Differenz lässt keinen mittleren Term übrig"
+      },
+      "latex": [
+        "(a+b)(a-b) = a^2 - b^2"
+      ],
+      "note": {
+        "en": "The two mixed products are $+ab$ and $-ab$, so they cancel. It is the only one of the three where the middle term disappears.",
+        "de": "Die beiden gemischten Produkte sind $+ab$ und $-ab$ und heben sich auf. Als einzige der drei verliert diese Formel den mittleren Term."
+      },
+      "summarizes": [
+        "th.difference-of-squares"
+      ]
+    },
+    {
+      "id": "rule.binomials-read-backwards",
+      "kind": "do",
+      "rule": {
+        "en": "Read right to left, each one factorises",
+        "de": "Von rechts nach links gelesen faktorisiert jede"
+      },
+      "latex": [
+        "a^2 - b^2 = (a+b)(a-b)",
+        "a^2 + 2ab + b^2 = (a+b)^2"
+      ],
+      "note": {
+        "en": "Spotting the shape is the hard half: a difference of two squares, or a trinomial whose outer terms are squares and whose middle term is twice their roots multiplied.",
+        "de": "Die Form zu erkennen ist die schwierigere Hälfte: eine Differenz zweier Quadrate, oder ein Trinom, dessen äussere Terme Quadrate sind und dessen mittlerer Term das doppelte Produkt ihrer Wurzeln ist."
+      },
+      "summarizes": [
+        "th.difference-of-squares",
+        "th.binomial-square"
+      ]
+    },
+    {
       "id": "rule.root-bar-brackets",
       "kind": "is",
       "rule": {

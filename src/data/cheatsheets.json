@@ -134,6 +134,54 @@
           ]
         }
       ]
+    },
+    {
+      "id": "sheet.binomial-formulas",
+      "rule": "rule.binomial-formulas",
+      "groups": [
+        {
+          "title": {
+            "en": "Multiplying out",
+            "de": "Ausmultiplizieren"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.binomial-square",
+            "rule.square-of-difference",
+            "rule.difference-of-squares"
+          ]
+        },
+        {
+          "title": {
+            "en": "Factorising",
+            "de": "Faktorisieren"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.binomials-read-backwards"
+          ]
+        },
+        {
+          "title": {
+            "en": "Any two brackets",
+            "de": "Zwei beliebige Klammern"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.quadratic-pair"
+          ]
+        },
+        {
+          "title": {
+            "en": "What is not a formula",
+            "de": "Was keine Formel ist"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.no-power-law-for-sums"
+          ]
+        }
+      ]
     }
   ]
 }
