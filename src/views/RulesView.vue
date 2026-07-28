@@ -74,7 +74,7 @@ const sheetFor = (id: string) => {
   const s = sheetByRule.get(id)
   if (!s) return undefined
   return s.groups.map(g => ({
-    title: g.title ? t(g.title) : t(ruleById.get(g.rule!)!.rule),
+    title: t(g.title),
     layout: g.layout,
     // One column per `latex` index in a table, so an algebraic form and its root
     // form sit under each other. Members of a table group are authored with the

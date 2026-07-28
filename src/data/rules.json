@@ -256,18 +256,6 @@
       ]
     },
     {
-      "id": "rule.same-base-laws",
-      "kind": "do",
-      "rule": {
-        "en": "Same base: the exponents do the arithmetic",
-        "de": "Gleiche Basis: die Exponenten rechnen"
-      },
-      "note": {
-        "en": "Both are the same observation: multiplying puts factors side by side, dividing takes them away, and the exponent counts them.",
-        "de": "Beides ist dieselbe Beobachtung: Multiplizieren stellt Faktoren nebeneinander, Dividieren nimmt sie weg, und der Exponent zählt sie."
-      }
-    },
-    {
       "id": "rule.same-base",
       "kind": "do",
       "rule": {
@@ -302,18 +290,6 @@
       "summarizes": [
         "th.pow-quotient-same-base"
       ]
-    },
-    {
-      "id": "rule.same-exponent-laws",
-      "kind": "do",
-      "rule": {
-        "en": "Same exponent: the power reaches through",
-        "de": "Gleicher Exponent: die Potenz greift durch"
-      },
-      "note": {
-        "en": "A power reaches through a product and through a quotient, and stops at a plus. Each law has a root form, which is the same law written the other way.",
-        "de": "Eine Potenz greift durch ein Produkt und durch einen Quotienten und hört beim Plus auf. Jedes Gesetz hat eine Wurzelform; das ist dasselbe Gesetz, anders geschrieben."
-      }
     },
     {
       "id": "rule.power-over-product",

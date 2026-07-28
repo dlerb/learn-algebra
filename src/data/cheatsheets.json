@@ -31,7 +31,10 @@
           ]
         },
         {
-          "rule": "rule.same-base-laws",
+          "title": {
+            "en": "Same base: the exponents do the arithmetic",
+            "de": "Gleiche Basis: die Exponenten rechnen"
+          },
           "layout": "table",
           "rules": [
             "rule.same-base",
@@ -39,7 +42,10 @@
           ]
         },
         {
-          "rule": "rule.same-exponent-laws",
+          "title": {
+            "en": "Same exponent: the power reaches through",
+            "de": "Gleicher Exponent: die Potenz greift durch"
+          },
           "layout": "table",
           "rules": [
             "rule.power-over-product",

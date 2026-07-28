@@ -211,19 +211,20 @@ export function parseRuleTree(raw: unknown): RuleTree {
 // A rule therefore never refers to another rule. Nothing in rules.json knows a
 // sheet exists.
 const sheetGroup = z.object({
-  // Exactly one of these. A heading you would CITE from an error is a rule
-  // ("Same base: the exponents do the arithmetic"); a heading that is only a
-  // label is a title ("What the exponent can be").
-  title: localizedString.optional(),
-  rule: z.string().optional(),
+  // A PLAIN TITLE, always. A heading is the teacher's arrangement of the sheet,
+  // and a sheet may group loosely related rules by preference — so a heading is
+  // presentation and never a pool entry. Only the SHEET's own family name is a
+  // rule, because that is what a mistake cites ("use the power laws"). Group
+  // headings were briefly allowed to be rules too; `rule.same-base-laws` then
+  // sat in the pool one word from `rule.same-base` and read as a duplicate.
+  title: localizedString,
   // TWO VALUES ON PURPOSE. `flow` fills columns left to right; `table` puts one
   // row per rule and one column per `latex` index, which is what makes an
   // algebraic form and its root form line up. A third value would be the start
   // of a layout language, which was considered and rejected.
   layout: z.enum(['flow', 'table']).default('flow'),
   rules: z.array(z.string()).min(1),
-}).refine(g => (g.title ? 1 : 0) + (g.rule ? 1 : 0) === 1,
-  { message: 'a sheet group needs exactly one of `title` or `rule`' })
+})
 
 export const sheetDef = z.object({
   id: z.string().regex(/^sheet\.[a-z0-9-]+$/),
@@ -259,7 +260,6 @@ export function validateSheetRefs(sheets: SheetDef[], rules: RulesFile): void {
   for (const s of sheets) {
     if (!ids.has(s.rule)) throw new Error(`Sheet "${s.id}" is headed by unknown rule "${s.rule}".`)
     for (const g of s.groups) {
-      if (g.rule && !ids.has(g.rule)) throw new Error(`Sheet "${s.id}" has a group headed by unknown rule "${g.rule}".`)
       for (const r of g.rules) {
         if (!ids.has(r)) throw new Error(`Sheet "${s.id}" lists unknown rule "${r}".`)
       }
