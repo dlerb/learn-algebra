@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { ruleTree, rules, errorPatterns, skills } from '../data'
+import { ruleTree, rules, sheets, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type RuleDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
@@ -58,6 +58,32 @@ const readsOf = (m: RuleDef) => m.summarizes.map(id => {
   return { id, name: c ? t(c.card.name) : id, to: `/${c?.layer.slug}#${id}` }
 })
 
+// THE SHEET, on the row of the rule that heads it. A sheet is presentation over
+// the pool (src/data/cheatsheets.json): it names sentences that already exist
+// here and owns none of them, so everything below is a lookup.
+//
+// It renders as a `.wide` block — the full-width slot the tower uses for a
+// derivation — because a cheat sheet is NOT a row. A row is four columns of
+// prose with one formula; a sheet is formulas only, in a grid, under headings.
+// Same data, different rendering: the headings come from a group's `title` or
+// its heading rule's sentence, the formulas from each member's `latex`, and
+// everything else on a rule — gloss, prevents, folds — is dropped.
+const ruleById = new Map(rules.map(r => [r.id, r]))
+const sheetByRule = new Map(sheets.map(s => [s.rule, s]))
+const sheetFor = (id: string) => {
+  const s = sheetByRule.get(id)
+  if (!s) return undefined
+  return s.groups.map(g => ({
+    title: g.title ? t(g.title) : t(ruleById.get(g.rule!)!.rule),
+    layout: g.layout,
+    // One column per `latex` index in a table, so an algebraic form and its root
+    // form sit under each other. Members of a table group are authored with the
+    // same number of lines; a ragged one would just leave a hole.
+    columns: Math.max(...g.rules.map(r => ruleById.get(r)!.latex.length), 1),
+    cells: g.rules.flatMap(r => ruleById.get(r)!.latex.map(latex => ({ id: r, latex }))),
+  }))
+}
+
 // A sentence nothing cites is dead weight: context is the only thing that gives
 // it meaning, and with no error and no skill behind it there is none to give.
 // REACH AS GARBAGE COLLECTION, not as an admission test — what belongs in the
@@ -67,6 +93,7 @@ const items = computed(() => rules.map(m => {
   return {
     id: m.id, kind: m.kind, rule: t(m.rule), latex: m.latex, note: t(m.note),
     errors, skills: sk, reads: readsOf(m),
+    sheet: sheetFor(m.id),
     orphan: errors.length === 0 && sk.length === 0,
     raw: m,
   }
@@ -131,6 +158,19 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
             <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '★'.repeat(e.frequency) }}</span>
           </RouterLink>
         </div>
+        <div v-if="m.sheet" class="wide sheet">
+          <section v-for="(g, i) in m.sheet" :key="i" class="sheet-group">
+            <h5 class="sheet-head">{{ g.title }}</h5>
+            <div
+              class="sheet-body" :class="g.layout"
+              :style="g.layout === 'table' ? { gridTemplateColumns: `repeat(${g.columns}, max-content)` } : undefined"
+            >
+              <RouterLink v-for="(c, j) in g.cells" :key="j" class="formula" :to="`/rules#${c.id}`">
+                <MathExpr :latex="c.latex" />
+              </RouterLink>
+            </div>
+          </section>
+        </div>
       </LayerRow>
     </LayerSection>
   </LayerPage>
@@ -163,6 +203,33 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
    ordered: it says which of the mistakes this rule heads off is worth heading
    off most. */
 .freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
+
+/* --- the cheat sheet ----------------------------------------------------- */
+/* --band, not --bg: it sits INSIDE the panel, so it takes the ladder's middle
+   rung like the tower's derivation block. Painted the page colour it would read
+   as a hole punched through to the page behind. */
+.sheet { padding: .8rem 1rem 1rem; background: var(--band); border: 1px solid var(--border); border-radius: 6px; }
+/* MULTI-COLUMN, or it is a banner rather than a sheet. Each group laid out as a
+   full-width row left the page 80% empty and put "same base" and "same exponent"
+   a screen apart, when the whole value of a formulary is seeing them at once.
+   Flowing the groups into columns is what a printed one does.
+   `break-inside: avoid` keeps a heading with its formulas. */
+.sheet { columns: 23rem; column-gap: 2.5rem; }
+.sheet-group { break-inside: avoid; }
+.sheet-group + .sheet-group { margin-top: .9rem; }
+/* Sans, small, muted — the headings are structure, and the formulas are the
+   content. On a sheet the formulas must be the loudest thing by a distance. */
+.sheet-head { margin: 0 0 .35rem; font-size: .68rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.sheet-body { display: grid; gap: .3rem 1.6rem; align-items: baseline; justify-content: start; }
+/* `flow` is FLEX, not grid: a grid track squeezes a formula to the track width
+   and KaTeX then breaks it mid-expression — $(a+b)^n \neq a^n + b^n$ came apart
+   after the $+$. Flex wraps BETWEEN items and never inside one, which is the
+   whole requirement for a ragged group. */
+.sheet-body.flow { display: flex; flex-wrap: wrap; gap: .3rem 1.6rem; }
+.formula { display: block; padding: .2rem .1rem; color: var(--text); text-decoration: none; border-radius: 4px; white-space: nowrap; }
+/* Every formula is a link back to its own row, so the sheet doubles as the
+   table of contents for the rules below it. */
+.formula:hover { background: var(--surface); color: var(--accent); }
 
 .orphan-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
 </style>

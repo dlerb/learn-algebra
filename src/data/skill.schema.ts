@@ -197,6 +197,76 @@ export function parseRuleTree(raw: unknown): RuleTree {
   return { meta: { title, blurb, note }, rules }
 }
 
+// ── Cheat sheets ─────────────────────────────────────────────────────────────
+// PRESENTATION OVER THE RULES POOL (2026-07-28), owning nothing. A sheet groups
+// and orders sentences that already exist in rules.json.
+//
+// The split is the design: whether a sentence belongs in the pool is editorial
+// ("should a student know this?"), while which sheet it lands on and where is a
+// later question, answerable more than once for the same sentence. Putting the
+// grouping inside a rule — a `contains` field — was drafted and rejected: it
+// mixes layout into the content pool and lets a sentence belong to only one
+// parent.
+//
+// A rule therefore never refers to another rule. Nothing in rules.json knows a
+// sheet exists.
+const sheetGroup = z.object({
+  // Exactly one of these. A heading you would CITE from an error is a rule
+  // ("Same base: the exponents do the arithmetic"); a heading that is only a
+  // label is a title ("What the exponent can be").
+  title: localizedString.optional(),
+  rule: z.string().optional(),
+  // TWO VALUES ON PURPOSE. `flow` fills columns left to right; `table` puts one
+  // row per rule and one column per `latex` index, which is what makes an
+  // algebraic form and its root form line up. A third value would be the start
+  // of a layout language, which was considered and rejected.
+  layout: z.enum(['flow', 'table']).default('flow'),
+  rules: z.array(z.string()).min(1),
+}).refine(g => (g.title ? 1 : 0) + (g.rule ? 1 : 0) === 1,
+  { message: 'a sheet group needs exactly one of `title` or `rule`' })
+
+export const sheetDef = z.object({
+  id: z.string().regex(/^sheet\.[a-z0-9-]+$/),
+  /** The pool sentence that heads it — and the sheet's citable identity, since
+   *  an error naming "the power laws" cites the rule, not the sheet. */
+  rule: z.string(),
+  groups: z.array(sheetGroup).min(1),
+})
+export type SheetDef = z.infer<typeof sheetDef>
+
+const sheetsTree = z.object({
+  layer: z.literal('cheatsheets'),
+  title: localizedString,
+  blurb: localizedString,
+  note: localizedString,
+  sheets: z.array(sheetDef).min(1),
+})
+export interface SheetTree {
+  meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
+  sheets: SheetDef[]
+}
+export function parseSheetTree(raw: unknown): SheetTree {
+  const r = sheetsTree.safeParse(raw)
+  if (!r.success) throw new Error(`Invalid cheatsheets file:\n${z.prettifyError(r.error)}`)
+  const { title, blurb, note, sheets } = r.data
+  return { meta: { title, blurb, note }, sheets }
+}
+
+/** Every rule a sheet names must exist — a sheet owns nothing, so a dangling
+ *  reference is the only way it can be wrong. */
+export function validateSheetRefs(sheets: SheetDef[], rules: RulesFile): void {
+  const ids = new Set(rules.map(r => r.id))
+  for (const s of sheets) {
+    if (!ids.has(s.rule)) throw new Error(`Sheet "${s.id}" is headed by unknown rule "${s.rule}".`)
+    for (const g of s.groups) {
+      if (g.rule && !ids.has(g.rule)) throw new Error(`Sheet "${s.id}" has a group headed by unknown rule "${g.rule}".`)
+      for (const r of g.rules) {
+        if (!ids.has(r)) throw new Error(`Sheet "${s.id}" lists unknown rule "${r}".`)
+      }
+    }
+  }
+}
+
 // Cross-check: every rule a skill references must exist; ids are globally unique.
 export function validateRuleRefs(skills: Skill[], rules: RulesFile): void {
   const dupId = rules.map(m => m.id).find((id, i, a) => a.indexOf(id) !== i)

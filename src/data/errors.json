@@ -527,6 +527,7 @@
                 "pl.of-power"
               ],
               "rules": [
+                "rule.power-laws",
                 "rule.same-base",
                 "rule.power-of-power"
               ],

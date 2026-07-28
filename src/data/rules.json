@@ -165,6 +165,57 @@
       ]
     },
     {
+      "id": "rule.power-laws",
+      "kind": "do",
+      "rule": {
+        "en": "The power laws: know these cold",
+        "de": "Die Potenzgesetze: diese sitzen auswendig"
+      },
+      "note": {
+        "en": "Every one of them acts on the exponents; the base never changes. If a term has powers in it and you are stuck, you are looking for one of these.",
+        "de": "Alle wirken auf die Exponenten; die Basis bleibt. Steckst du bei einem Term mit Potenzen fest, suchst du eines davon."
+      }
+    },
+    {
+      "id": "rule.power-is-repeated-product",
+      "kind": "is",
+      "rule": {
+        "en": "A power is repeated multiplication",
+        "de": "Eine Potenz ist wiederholte Multiplikation"
+      },
+      "latex": [
+        "a^n = \\underbrace{a \\cdot a \\cdots a}_{n}"
+      ],
+      "note": {
+        "en": "The exponent is a count: $a^5$ is five factors of $a$, no more and no less.",
+        "de": "Der Exponent ist eine Anzahl: $a^5$ sind fünf Faktoren $a$, nicht mehr und nicht weniger."
+      },
+      "summarizes": [
+        "def.pow",
+        "ix.pow"
+      ]
+    },
+    {
+      "id": "rule.exponent-counts-factors",
+      "kind": "is",
+      "rule": {
+        "en": "One factor is $a$, no factors is $1$",
+        "de": "Ein Faktor ist $a$, kein Faktor ist $1$"
+      },
+      "latex": [
+        "a^1 = a",
+        "a^0 = 1"
+      ],
+      "note": {
+        "en": "The second one is forced, not chosen: $a^0$ has to be $1$ for the same-base law to keep working at $m = n$.",
+        "de": "Das zweite ist erzwungen, nicht gewählt: $a^0$ muss $1$ sein, damit das Gesetz für gleiche Basis bei $m = n$ weiter gilt."
+      },
+      "summarizes": [
+        "def.pow-zero",
+        "def.pow"
+      ]
+    },
+    {
       "id": "rule.minus-in-exponent",
       "kind": "is",
       "rule": {
@@ -172,7 +223,7 @@
         "de": "Ein Minus im Exponenten bleibt im Exponenten"
       },
       "latex": [
-        "x^{-n} = \\frac{1}{x^n}"
+        "a^{-n} = \\frac{1}{a^n}"
       ],
       "note": {
         "en": "A minus in the exponent belongs to the exponent and does not make the value negative: $x^{-1} = \\frac{1}{x}$.",
@@ -184,6 +235,39 @@
       ]
     },
     {
+      "id": "rule.fractional-exponent-root",
+      "kind": "is",
+      "rule": {
+        "en": "A fraction in the exponent is a root",
+        "de": "Ein Bruch im Exponenten ist eine Wurzel"
+      },
+      "latex": [
+        "a^{1/n} = \\sqrt[n]{a}",
+        "a^{m/n} = \\sqrt[n]{a^m}"
+      ],
+      "note": {
+        "en": "The denominator says which root, the numerator which power: $a^{3/2}$ is the square root of $a^3$.",
+        "de": "Der Nenner sagt, welche Wurzel, der Zähler, welche Potenz: $a^{3/2}$ ist die Quadratwurzel von $a^3$."
+      },
+      "summarizes": [
+        "def.root",
+        "def.pow-rat",
+        "ix.root"
+      ]
+    },
+    {
+      "id": "rule.same-base-laws",
+      "kind": "do",
+      "rule": {
+        "en": "Same base: the exponents do the arithmetic",
+        "de": "Gleiche Basis: die Exponenten rechnen"
+      },
+      "note": {
+        "en": "Both are the same observation: multiplying puts factors side by side, dividing takes them away, and the exponent counts them.",
+        "de": "Beides ist dieselbe Beobachtung: Multiplizieren stellt Faktoren nebeneinander, Dividieren nimmt sie weg, und der Exponent zählt sie."
+      }
+    },
+    {
       "id": "rule.same-base",
       "kind": "do",
       "rule": {
@@ -191,7 +275,7 @@
         "de": "Potenzen mit gleicher Basis multiplizieren addiert die Exponenten"
       },
       "latex": [
-        "x^a \\cdot x^b = x^{a+b}"
+        "a^m \\cdot a^n = a^{m+n}"
       ],
       "note": {
         "en": "The exponents do the arithmetic and the base never changes, because $x^a \\cdot x^b$ is just $a$ factors of $x$ followed by $b$ more.",
@@ -202,22 +286,34 @@
       ]
     },
     {
-      "id": "rule.power-of-power",
+      "id": "rule.same-base-divide",
       "kind": "do",
       "rule": {
-        "en": "A power of a power multiplies the exponents",
-        "de": "Eine Potenz einer Potenz multipliziert die Exponenten"
+        "en": "Dividing powers of the same base subtracts the exponents",
+        "de": "Potenzen mit gleicher Basis dividieren subtrahiert die Exponenten"
       },
       "latex": [
-        "(x^a)^b = x^{ab}"
+        "\\frac{a^m}{a^n} = a^{m-n}"
       ],
       "note": {
-        "en": "$(x^a)^b$ is $b$ copies of $x^a$, so the $a$ factors are taken $b$ times over.",
-        "de": "$(x^a)^b$ sind $b$ Kopien von $x^a$, die $a$ Faktoren werden also $b$-mal genommen."
+        "en": "Not a fourth law: dividing is multiplying by $a^{-n}$, so this is the same-base rule again.",
+        "de": "Kein viertes Gesetz: Dividieren ist Multiplizieren mit $a^{-n}$, also wieder die Regel für gleiche Basis."
       },
       "summarizes": [
-        "pl.of-power"
+        "th.pow-quotient-same-base"
       ]
+    },
+    {
+      "id": "rule.same-exponent-laws",
+      "kind": "do",
+      "rule": {
+        "en": "Same exponent: the power reaches through",
+        "de": "Gleicher Exponent: die Potenz greift durch"
+      },
+      "note": {
+        "en": "A power reaches through a product and through a quotient, and stops at a plus. Each law has a root form, which is the same law written the other way.",
+        "de": "Eine Potenz greift durch ein Produkt und durch einen Quotienten und hört beim Plus auf. Jedes Gesetz hat eine Wurzelform; das ist dasselbe Gesetz, anders geschrieben."
+      }
     },
     {
       "id": "rule.power-over-product",
@@ -227,14 +323,76 @@
         "de": "Eine Potenz über einem Produkt erreicht jeden Faktor"
       },
       "latex": [
-        "(ab)^n = a^n b^n"
+        "(ab)^n = a^n b^n",
+        "\\sqrt[n]{ab} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b}"
       ],
       "note": {
         "en": "$(ab)^n = a^n b^n$, and a number in front is a factor like any other.",
         "de": "$(ab)^n = a^n b^n$, und eine Zahl davor ist ein Faktor wie jeder andere."
       },
       "summarizes": [
-        "pl.of-product"
+        "pl.of-product",
+        "th.root-of-product"
+      ]
+    },
+    {
+      "id": "rule.power-over-quotient",
+      "kind": "do",
+      "rule": {
+        "en": "A power over a quotient reaches top and bottom",
+        "de": "Eine Potenz über einem Quotienten erreicht Zähler und Nenner"
+      },
+      "latex": [
+        "\\left( \\frac{a}{b} \\right)^n = \\frac{a^n}{b^n}",
+        "\\sqrt[n]{\\frac{a}{b}} = \\frac{\\sqrt[n]{a}}{\\sqrt[n]{b}}"
+      ],
+      "note": {
+        "en": "Both parts get the exponent, never just one of them.",
+        "de": "Beide Teile bekommen den Exponenten, nie nur einer davon."
+      },
+      "summarizes": [
+        "th.pow-of-quotient",
+        "th.root-of-quotient"
+      ]
+    },
+    {
+      "id": "rule.power-of-power",
+      "kind": "do",
+      "rule": {
+        "en": "A power of a power multiplies the exponents",
+        "de": "Eine Potenz einer Potenz multipliziert die Exponenten"
+      },
+      "latex": [
+        "(a^m)^n = a^{mn}",
+        "\\left( \\sqrt[n]{a} \\right)^m = \\sqrt[n]{a^m}"
+      ],
+      "note": {
+        "en": "$(x^a)^b$ is $b$ copies of $x^a$, so the $a$ factors are taken $b$ times over.",
+        "de": "$(x^a)^b$ sind $b$ Kopien von $x^a$, die $a$ Faktoren werden also $b$-mal genommen."
+      },
+      "summarizes": [
+        "pl.of-power",
+        "th.root-power-order"
+      ]
+    },
+    {
+      "id": "rule.no-power-law-for-sums",
+      "kind": "is",
+      "rule": {
+        "en": "There is no law for a power of a sum",
+        "de": "Für eine Potenz einer Summe gibt es kein Gesetz"
+      },
+      "latex": [
+        "(a+b)^n \\neq a^n + b^n",
+        "(a+b)^2 = a^2 + 2ab + b^2"
+      ],
+      "note": {
+        "en": "The power laws reach through products and quotients and stop at a plus. A sum squared has to be multiplied out.",
+        "de": "Die Potenzgesetze greifen durch Produkte und Quotienten und hören beim Plus auf. Eine Summe im Quadrat muss ausmultipliziert werden."
+      },
+      "summarizes": [
+        "pl.no-sum-law",
+        "th.binomial-square"
       ]
     },
     {
@@ -254,26 +412,6 @@
       },
       "summarizes": [
         "def.multiple",
-        "def.pow"
-      ]
-    },
-    {
-      "id": "rule.exponent-counts-factors",
-      "kind": "is",
-      "rule": {
-        "en": "The exponent counts the factors, and no factors leave $1$",
-        "de": "Der Exponent zählt die Faktoren, und kein Faktor lässt $1$ übrig"
-      },
-      "latex": [
-        "x^1 = x",
-        "x^0 = 1"
-      ],
-      "note": {
-        "en": "$x^1 = x$ is one factor and $x^0 = 1$ is none, for every $x$ except $0$.",
-        "de": "$x^1 = x$ ist ein Faktor und $x^0 = 1$ ist keiner, für jedes $x$ ausser $0$."
-      },
-      "summarizes": [
-        "def.pow-zero",
         "def.pow"
       ]
     },

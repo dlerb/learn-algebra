@@ -1,0 +1,72 @@
+{
+  "layer": "cheatsheets",
+  "title": {
+    "en": "Cheat sheets",
+    "de": "Merkblätter"
+  },
+  "blurb": {
+    "en": "The formulas worth knowing by heart, grouped the way they are taught.",
+    "de": "Die Formeln, die man auswendig können sollte, gruppiert wie im Unterricht."
+  },
+  "note": {
+    "en": "A sheet is PRESENTATION over rules.json and owns nothing: it groups and orders sentences that already exist there. That split is the point — whether a sentence belongs in the pool is an editorial question (\"should a student know this?\"), while which sheet it lands on and where is a later one, answerable more than once for the same sentence. A group heading is either a plain `title` or a `rule` that is itself a claim: if you would cite it from an error, it is a rule; if it is only a label, it is a title. `layout` has exactly two values on purpose — `flow` fills columns, `table` puts one row per rule and one column per `latex` index, so an algebraic form and its root form line up. A third value would mean we had started building a layout language, which was considered and rejected.",
+    "de": "Ein Merkblatt ist DARSTELLUNG über rules.json und besitzt nichts: Es gruppiert und ordnet Sätze, die dort bereits stehen. Genau diese Trennung ist der Punkt — ob ein Satz in die Sammlung gehört, ist eine redaktionelle Frage (\"soll das ein Schüler wissen?\"), auf welchem Merkblatt und an welcher Stelle er landet, eine spätere, die für denselben Satz mehrfach beantwortet werden darf. Eine Gruppenüberschrift ist entweder ein einfacher `title` oder eine `rule`, die selbst eine Aussage ist: Würdest du sie aus einem Fehler heraus zitieren, ist es eine Regel; ist sie nur eine Beschriftung, ein Titel. `layout` hat bewusst genau zwei Werte — `flow` füllt Spalten, `table` setzt eine Zeile pro Regel und eine Spalte pro `latex`-Eintrag, damit algebraische Form und Wurzelform untereinander stehen. Ein dritter Wert hiesse, wir bauten eine Layout-Sprache, was verworfen wurde."
+  },
+  "sheets": [
+    {
+      "id": "sheet.power-laws",
+      "rule": "rule.power-laws",
+      "groups": [
+        {
+          "title": {
+            "en": "What the exponent can be",
+            "de": "Was im Exponenten stehen kann"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.power-is-repeated-product",
+            "rule.exponent-counts-factors",
+            "rule.minus-in-exponent",
+            "rule.fractional-exponent-root"
+          ]
+        },
+        {
+          "rule": "rule.same-base-laws",
+          "layout": "table",
+          "rules": [
+            "rule.same-base",
+            "rule.same-base-divide"
+          ]
+        },
+        {
+          "rule": "rule.same-exponent-laws",
+          "layout": "table",
+          "rules": [
+            "rule.power-over-product",
+            "rule.power-over-quotient"
+          ]
+        },
+        {
+          "title": {
+            "en": "Power of a power",
+            "de": "Potenz einer Potenz"
+          },
+          "layout": "table",
+          "rules": [
+            "rule.power-of-power"
+          ]
+        },
+        {
+          "title": {
+            "en": "No law for sums",
+            "de": "Kein Gesetz für Summen"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.no-power-law-for-sums"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -2,13 +2,14 @@
 // duplicate id, a dangling group, or a dangling rule reference throws
 // here immediately with the offending id named.
 import {
-  parseSkillTree, parseDrills, parseErrorTree, parseRuleTree,
-  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSkillLinks,
+  parseSkillTree, parseDrills, parseErrorTree, parseRuleTree, parseSheetTree,
+  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateSkillLinks,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
-  type Drill, type GroupsFile, type RulesFile, type RuleTree, type ErrorDef, type ErrorTree,
+  type Drill, type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
 import rulesRaw from './rules.json'
+import sheetsRaw from './cheatsheets.json'
 import errorsRaw from './errors.json'
 // Skills: one file per kind (kind → groups[] → skills[]), mirroring the fundament
 // tower's one-file-per-layer tree. Add a kind = add a file + one line below.
@@ -60,6 +61,10 @@ export const skillKinds: GroupsFile = skillTree.skillKinds
 export const ruleTree: RuleTree = parseRuleTree(rulesRaw)
 export const rules: RulesFile = ruleTree.rules
 
+// Presentation over the pool: sheets group and order rules and own nothing.
+export const sheetTree: SheetTree = parseSheetTree(sheetsRaw)
+export const sheets: SheetDef[] = sheetTree.sheets
+
 // The fundament's shadow: false laws and misreadings, each `corrupts` a card in
 // the tower (src/data/layers.ts). The laws/conventions files they used to point
 // at were folded into the tower and deleted; see docs/content_model.md.
@@ -84,6 +89,7 @@ export const rawById = new Map<string, unknown>(
 validateUniqueIds(skills)
 validateSkillKinds(skillKinds)
 validateRuleRefs(skills, rules)
+validateSheetRefs(sheets, rules)
 validateSkillLinks(skills)
 validateDrills(drills, skills)
 validateErrors(errorPatterns, cardIds)
