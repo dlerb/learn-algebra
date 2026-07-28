@@ -60,11 +60,44 @@ applied to its prose and its derivations rather than to its notation.
 ## NEXT SESSION — /skills onto the shell (2026-07-28)
 
 **`/skills` is the last card grid** and the only page that no longer looks like the rest of
-the app. The shell is documented in `docs/app_design.md` → "One shell, seven pages". Not
-blocked: `TaxonomyView` already carries `:id` + `scroll-margin-top` so `/rules` can deep-link
-into it. ⚠️ What is NOT in scope: presentation mode for skills is frozen behind the drill
-layer — though that premise is worth re-examining, since a *how-to* surface needs no drill
-runtime at all.
+the app. The shell is documented in `docs/app_design.md` → "One shell, seven pages"; the
+traps it cost are listed there too and are all cheap to hit again.
+
+### The row, mapped from the tower's
+The shell's anatomy is `strip · rail · body cells`, and a skill maps onto it like this
+(`TaxonomyView.vue` has the current view-model; a skill is `id · name · note · illustration ·
+rules · restsOn · errors`, with `kind` and `group` positional from the file tree):
+
+| slot | tower | skill |
+|---|---|---|
+| strip left | `kind` | `kind · group` |
+| strip folds | `rests on` | `requires` · `restsOn` · `rules` · `errors` — four is a lot; consider which earn a fold and which belong in a cell |
+| strip right | json · id | same, unchanged |
+| rail | name + concern glyphs | name (no marks yet — `frequency` has no equivalent here) |
+| maths | the statement | the **forms**: `illustration`, or a drill's equivalents chain / examples+answer / chunk decomposition |
+| prose 1 | intuition | `note` (the rationale) |
+| prose 2 | note | the **pitfalls**, if they stay — see the freeze below |
+
+⚠️ **Two things a fresh session will not guess:**
+1. **Skills has no layer head.** Every other layer's page title, blurb and note come from its
+   data (`errors.json`, `rules.json`, `cheatsheets.json` all have one); `skills/*.json` has
+   `kind · title · blurb · groups` per FILE and nothing for the layer. `TaxonomyView`
+   hardcodes "Skills" and its role line. Either author a head (a 5th file, or a
+   `skillKinds`-style registry entry) or keep hardcoding and say so.
+2. **The `by group` / `by kind` switch** is real functionality with no equivalent on any other
+   page — the tower's filter chips are the closest thing. Decide whether it survives the port
+   and where it sits (LayerPage's `filters` slot is the natural home).
+
+### What the drill freeze does and does not block
+**Blocked:** presentation mode for skills — a skill stripped to student view is a *progress*
+surface and needs the drill runtime. ⚠️ That premise is worth re-examining first: a *how-to*
+surface needs no runtime at all, and the freeze may be over-broad.
+**Not blocked:** the port itself. But note the pitfalls in the row above come from
+`drills/*.json`, so a layout that leans on them is building on frozen data. Safest port shows
+`illustration` + `note` and leaves pitfalls in the json fold until the drill layer settles.
+
+**Not blocked and already done:** `TaxonomyView` cards carry `:id` + `scroll-margin-top`, so
+`/rules`' `practised in` fold already deep-links into the page.
 
 ### The curated side is now four layers, not three
 `docs/content_model.md` rev. 11 has the model; `/` draws it. The short version:
