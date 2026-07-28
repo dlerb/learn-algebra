@@ -20,6 +20,9 @@
         "en": "Juxtaposition means multiplication",
         "de": "Nebeneinanderschreiben bedeutet Multiplikation"
       },
+      "latex": [
+        "ab = a \\cdot b"
+      ],
       "note": {
         "en": "Anything written next to anything else, with no symbol between, means multiply: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ are all products.",
         "de": "Alles, was ohne Zeichen nebeneinander steht, wird multipliziert: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ sind alles Produkte."
@@ -35,6 +38,9 @@
         "en": "A missing coefficient is a 1",
         "de": "Ein fehlender Koeffizient ist eine 1"
       },
+      "latex": [
+        "a = 1 \\cdot a"
+      ],
       "note": {
         "en": "Where no number is written in front, the coefficient is $1$: $a$ is $1 \\cdot a$.",
         "de": "Wo vorne keine Zahl steht, ist der Koeffizient $1$: $a$ ist $1 \\cdot a$."
@@ -50,6 +56,9 @@
         "en": "The number goes in front only by habit",
         "de": "Die Zahl steht nur aus Gewohnheit vorne"
       },
+      "latex": [
+        "a \\cdot 3 = 3 \\cdot a = 3a"
+      ],
       "note": {
         "en": "A product may be written in either order: $a \\cdot 3$, $3 \\cdot a$ and $3a$ are the same product.",
         "de": "Ein Produkt darf in beliebiger Reihenfolge stehen: $a \\cdot 3$, $3 \\cdot a$ und $3a$ sind dasselbe Produkt."
@@ -65,6 +74,10 @@
         "en": "Only plus and times may be swapped",
         "de": "Nur Plus und Mal dürfen vertauscht werden"
       },
+      "latex": [
+        "a + b = b + a",
+        "ab = ba"
+      ],
       "note": {
         "en": "$a + b = b + a$ and $ab = ba$. Minus and divide have no such rule: $a - b$ and $b - a$ are opposites, $\\frac{a}{b}$ and $\\frac{b}{a}$ reciprocals.",
         "de": "$a + b = b + a$ und $ab = ba$. Für Minus und Geteilt gibt es keine solche Regel: $a - b$ und $b - a$ sind Gegenzahlen, $\\frac{a}{b}$ und $\\frac{b}{a}$ Kehrwerte."
@@ -81,6 +94,9 @@
         "en": "A minus is one of two things",
         "de": "Ein Minus ist eines von zwei Dingen"
       },
+      "latex": [
+        "a - b = a + (-b)"
+      ],
       "note": {
         "en": "A minus is either subtraction ($a - b$) or negation ($-a$) — two roles, no third. When one confuses you, ask which it is.",
         "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$) — zwei Rollen, keine dritte. Wenn dich eines verwirrt, frage dich, welches es ist."
@@ -98,6 +114,9 @@
         "en": "Two operators never touch",
         "de": "Zwei Operatoren stehen nie nebeneinander"
       },
+      "latex": [
+        "a + (-b)"
+      ],
       "note": {
         "en": "An operation sign and a minus belonging to a number never stand side by side: write $a + (-b)$.",
         "de": "Ein Rechenzeichen und ein Minus, das zu einer Zahl gehört, stehen nie nebeneinander: schreibe $a + (-b)$."
@@ -113,6 +132,10 @@
         "en": "Brackets carry an implicit operation in front",
         "de": "Vor einer Klammer steht eine unsichtbare Operation"
       },
+      "latex": [
+        "a(b+c) = a \\cdot (b+c)",
+        "-(b+c) = (-1) \\cdot (b+c)"
+      ],
       "note": {
         "en": "No explicit symbol before a bracket means multiplication (juxtaposition). A minus before a bracket means times $(-1)$.",
         "de": "Kein Zeichen vor der Klammer heisst Multiplikation (Nebeneinanderschreiben). Ein Minus vor der Klammer heisst mal $(-1)$."
@@ -129,6 +152,9 @@
         "en": "Exponents bind tighter than coefficients and signs",
         "de": "Exponenten binden stärker als Koeffizienten und Vorzeichen"
       },
+      "latex": [
+        "-a^2 = -(a^2)"
+      ],
       "note": {
         "en": "$-a^2$ means $-(a^2)$, not $(-a)^2$. The exponent applies first, the minus after.",
         "de": "$-a^2$ bedeutet $-(a^2)$, nicht $(-a)^2$. Zuerst wirkt der Exponent, dann das Minus."
@@ -145,6 +171,9 @@
         "en": "A minus in the exponent stays in the exponent",
         "de": "Ein Minus im Exponenten bleibt im Exponenten"
       },
+      "latex": [
+        "x^{-n} = \\frac{1}{x^n}"
+      ],
       "note": {
         "en": "A minus in the exponent belongs to the exponent and does not make the value negative: $x^{-1} = \\frac{1}{x}$.",
         "de": "Ein Minus im Exponenten gehört zum Exponenten und macht den Wert nicht negativ: $x^{-1} = \\frac{1}{x}$."
@@ -155,18 +184,38 @@
       ]
     },
     {
-      "id": "rule.exponent-arithmetic",
+      "id": "rule.same-base",
       "kind": "do",
       "rule": {
-        "en": "Multiplying powers adds the exponents; a power of a power multiplies them",
-        "de": "Potenzen multiplizieren addiert die Exponenten; eine Potenz einer Potenz multipliziert sie"
+        "en": "Multiplying powers of the same base adds the exponents",
+        "de": "Potenzen mit gleicher Basis multiplizieren addiert die Exponenten"
       },
+      "latex": [
+        "x^a \\cdot x^b = x^{a+b}"
+      ],
       "note": {
-        "en": "$x^a \\cdot x^b = x^{a+b}$, and $(x^a)^b = x^{ab}$.",
-        "de": "$x^a \\cdot x^b = x^{a+b}$, und $(x^a)^b = x^{ab}$."
+        "en": "The exponents do the arithmetic and the base never changes, because $x^a \\cdot x^b$ is just $a$ factors of $x$ followed by $b$ more.",
+        "de": "Die Exponenten rechnen, die Basis bleibt, denn $x^a \\cdot x^b$ sind einfach $a$ Faktoren $x$ und dann $b$ weitere."
       },
       "summarizes": [
-        "pl.same-base",
+        "pl.same-base"
+      ]
+    },
+    {
+      "id": "rule.power-of-power",
+      "kind": "do",
+      "rule": {
+        "en": "A power of a power multiplies the exponents",
+        "de": "Eine Potenz einer Potenz multipliziert die Exponenten"
+      },
+      "latex": [
+        "(x^a)^b = x^{ab}"
+      ],
+      "note": {
+        "en": "$(x^a)^b$ is $b$ copies of $x^a$, so the $a$ factors are taken $b$ times over.",
+        "de": "$(x^a)^b$ sind $b$ Kopien von $x^a$, die $a$ Faktoren werden also $b$-mal genommen."
+      },
+      "summarizes": [
         "pl.of-power"
       ]
     },
@@ -177,6 +226,9 @@
         "en": "A power over a product reaches every factor",
         "de": "Eine Potenz über einem Produkt erreicht jeden Faktor"
       },
+      "latex": [
+        "(ab)^n = a^n b^n"
+      ],
       "note": {
         "en": "$(ab)^n = a^n b^n$, and a number in front is a factor like any other.",
         "de": "$(ab)^n = a^n b^n$, und eine Zahl davor ist ein Faktor wie jeder andere."
@@ -192,6 +244,10 @@
         "en": "A power repeats multiplication, a coefficient repeats addition",
         "de": "Eine Potenz wiederholt die Multiplikation, ein Koeffizient die Addition"
       },
+      "latex": [
+        "a^2 = a \\cdot a",
+        "2a = a + a"
+      ],
       "note": {
         "en": "$a^2$ is $a \\cdot a$ and $2a$ is $a + a$. Adding never makes a power.",
         "de": "$a^2$ ist $a \\cdot a$ und $2a$ ist $a + a$. Addieren ergibt nie eine Potenz."
@@ -208,6 +264,10 @@
         "en": "The exponent counts the factors, and no factors leave $1$",
         "de": "Der Exponent zählt die Faktoren, und kein Faktor lässt $1$ übrig"
       },
+      "latex": [
+        "x^1 = x",
+        "x^0 = 1"
+      ],
       "note": {
         "en": "$x^1 = x$ is one factor and $x^0 = 1$ is none, for every $x$ except $0$.",
         "de": "$x^1 = x$ ist ein Faktor und $x^0 = 1$ ist keiner, für jedes $x$ ausser $0$."
@@ -224,6 +284,9 @@
         "en": "The fraction bar is a bracket",
         "de": "Der Bruchstrich ist eine Klammer"
       },
+      "latex": [
+        "\\frac{a+b}{c} \\neq a + \\frac{b}{c}"
+      ],
       "note": {
         "en": "Everything above the line is one grouped object, everything below another. $a + b/c$ and $(a+b)/c$ are different things.",
         "de": "Alles über dem Strich ist EIN Objekt, alles darunter ein anderes. $a + b/c$ und $(a+b)/c$ sind verschiedene Dinge."
@@ -239,6 +302,9 @@
         "en": "Fractions add only over a common denominator",
         "de": "Brüche werden nur über einem gemeinsamen Nenner addiert"
       },
+      "latex": [
+        "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}"
+      ],
       "note": {
         "en": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: bring them to the same denominator first, then add only the numerators.",
         "de": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: zuerst auf denselben Nenner bringen, dann nur die Zähler addieren."
@@ -254,6 +320,9 @@
         "en": "The root bar is a bracket",
         "de": "Der Wurzelstrich ist eine Klammer"
       },
+      "latex": [
+        "\\sqrt{a+b} \\neq \\sqrt{a} + \\sqrt{b}"
+      ],
       "note": {
         "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
         "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird."
@@ -269,6 +338,9 @@
         "en": "Only multiplication distributes over a sum",
         "de": "Nur die Multiplikation verteilt sich über eine Summe"
       },
+      "latex": [
+        "a(b+c) = ab + ac"
+      ],
       "note": {
         "en": "$a(b+c) = ab + ac$: multiplication distributes over a sum, and nothing else does.",
         "de": "$a(b+c) = ab + ac$: Die Multiplikation verteilt sich über eine Summe, sonst nichts."
@@ -317,6 +389,10 @@
         "en": "Brackets matter only where they change the reading",
         "de": "Klammern zählen nur dort, wo sie die Lesart ändern"
       },
+      "latex": [
+        "(ab)c = abc",
+        "(a+b)c \\neq a + bc"
+      ],
       "note": {
         "en": "$(ab)c$ and $abc$ are the same product, so those brackets may be dropped. $(a+b)c$ and $a + bc$ are not, so those may not.",
         "de": "$(ab)c$ und $abc$ sind dasselbe Produkt, diese Klammern dürfen also weg. $(a+b)c$ und $a + bc$ sind es nicht, diese also nicht."
@@ -332,6 +408,9 @@
         "en": "Multiplication binds tighter than addition and subtraction",
         "de": "Multiplikation bindet stärker als Plus und Minus"
       },
+      "latex": [
+        "3x + 2y = (3x) + (2y)"
+      ],
       "note": {
         "en": "In $3x + 2y$ the multiplication is used up inside the terms; the dominant operation is the $+$. It is a sum, not a product.",
         "de": "In $3x + 2y$ ist die Multiplikation innerhalb der Terme verbraucht; die dominante Operation ist das $+$. Es ist eine Summe, kein Produkt."
@@ -359,6 +438,9 @@
         "en": "Unlike terms do not combine, and an open sum is a finished answer",
         "de": "Ungleiche Terme lassen sich nicht zusammenfassen, und eine offene Summe ist eine fertige Antwort"
       },
+      "latex": [
+        "ax + bx = (a+b)x"
+      ],
       "note": {
         "en": "Only terms with the same letters to the same powers can be collected. Where they differ there is nothing left to do.",
         "de": "Nur Terme mit denselben Buchstaben in denselben Potenzen lassen sich zusammenfassen. Unterscheiden sie sich, bleibt nichts zu tun."
@@ -372,6 +454,9 @@
         "en": "The pair must multiply to the constant and add to the middle number",
         "de": "Das Zahlenpaar muss multipliziert den konstanten Term und addiert die mittlere Zahl ergeben"
       },
+      "latex": [
+        "(x+m)(x+n) = x^2 + (m+n)x + mn"
+      ],
       "note": {
         "en": "Expanding $(x+m)(x+n)$ produces $x^2 + (m+n)x + mn$, so both conditions hold at once or the pair is wrong.",
         "de": "Das Ausmultiplizieren von $(x+m)(x+n)$ ergibt $x^2 + (m+n)x + mn$; beide Bedingungen gelten also zugleich, sonst stimmt das Paar nicht."

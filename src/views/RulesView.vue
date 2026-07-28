@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
 import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
@@ -29,8 +30,8 @@ import { inspect } from '../inspect'
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 const L = computed(() => lang.value === 'de'
-  ? { reads: 'liest',  drills: 'geübt in',  prevents: 'verhindert' }
-  : { reads: 'reads',  drills: 'drilled by', prevents: 'prevents' })
+  ? { reads: 'fasst zusammen', drills: 'geübt in',  prevents: 'verhindert' }
+  : { reads: 'summarises',      drills: 'drilled by', prevents: 'prevents' })
 
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
@@ -64,7 +65,7 @@ const readsOf = (m: RuleDef) => m.summarizes.map(id => {
 const items = computed(() => rules.map(m => {
   const errors = preventedBy(m), sk = drilledBy(m)
   return {
-    id: m.id, kind: m.kind, rule: t(m.rule), note: t(m.note),
+    id: m.id, kind: m.kind, rule: t(m.rule), latex: m.latex, note: t(m.note),
     errors, skills: sk, reads: readsOf(m),
     orphan: errors.length === 0 && sk.length === 0,
     raw: m,
@@ -72,13 +73,17 @@ const items = computed(() => rules.map(m => {
 }))
 const orphans = computed(() => items.value.filter(i => i.orphan).length)
 
-// THREE COLUMNS: the sentence | its gloss | the mistakes it prevents.
+// FOUR COLUMNS: the sentence | its formula | its gloss | the mistakes it prevents.
+// The maths column arrived with `latex` (2026-07-28) and changes what the page
+// is for: a student hunting "the one about exponents" scans formulas, not 26
+// sentences, and the page reads as a formulary rather than a list of prose.
 // The rail is wider than the tower's 11rem because what sits in it is a
-// SENTENCE, not a name — up to 58 characters. The two prose columns keep the
-// shared 26rem measure. The skills that teach a rule fold into the strip
-// instead: rule.dominant-op-last is drilled by 13 of them, which is a list and
-// not a column, while nothing prevents more than three mistakes.
-const COLS = 'minmax(0, 24rem) minmax(0, var(--measure)) minmax(0, var(--measure))'
+// SENTENCE, not a name. Four columns inside 89rem is tight — 22 + 18 + 22 + 22
+// plus three 1.6rem gaps is 88.8 — so the prose columns run under the shared
+// 26rem measure. The skills that teach a rule fold into the strip instead:
+// rule.dominant-op-last is cited by 13, which is a list and not a column, while
+// nothing prevents more than three mistakes.
+const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem)'
 </script>
 
 <template>
@@ -105,6 +110,14 @@ const COLS = 'minmax(0, 24rem) minmax(0, var(--measure)) minmax(0, var(--measure
           <RefFold :label="L.drills" :links="m.skills" derived />
         </template>
 
+        <!-- One line per formula: a sentence can carry several, and a formulary
+             wants a row each. Left-aligned like the tower's statements — KaTeX
+             centres display mode, which would float each formula in its cell and
+             break the vertical line the column makes. -->
+        <div v-if="m.latex.length" class="maths">
+          <div v-for="(l, i) in m.latex" :key="i" class="stmt"><MathExpr :latex="l" display /></div>
+        </div>
+
         <div class="cell muted gloss"><RichText :text="m.note" /></div>
 
         <!-- THE PITCH OF THE WHOLE LAYER: learn this one sentence and these
@@ -125,9 +138,18 @@ const COLS = 'minmax(0, 24rem) minmax(0, var(--measure)) minmax(0, var(--measure
 
 <style scoped>
 @media (min-width: 820px) {
-  .gloss    { grid-area: 2 / 2; }
-  .prevents { grid-area: 2 / 3; }
+  .maths    { grid-area: 2 / 2; }
+  .gloss    { grid-area: 2 / 3; }
+  .prevents { grid-area: 2 / 4; }
 }
+
+.maths { min-width: 0; }
+/* `overflow-x: auto` makes the computed `overflow-y` AUTO as well, so a formula
+   whose ink exceeds its line box gets a surprise vertical scrollbar. The padding
+   absorbs it, and gives radicals and exponents room at the top. */
+.stmt { overflow-x: auto; padding: .3rem 0; }
+.stmt :deep(.katex-display) { margin: 0; text-align: left; }
+.stmt :deep(.katex-display > .katex) { text-align: left; }
 
 /* A list of links that happens to sit in a prose column: it takes the measure
    and the content serif from `.cell` and lays itself out as a list. */

@@ -160,6 +160,13 @@ export const ruleDef = z.object({
   id: z.string().regex(/^rule\.[a-z0-9-]+$/),   // a dotted slug like every other entity; the `meta.` prefix went with the rename
   kind: z.enum(['is', 'do']),             // IS = what a written form MEANS (decoding); DO = what to reach for. 15:1 today, which measures how unbuilt the DO side is
   rule: localizedString,                  // THE SENTENCE — "The fraction bar is a bracket". Was `name`, and it always was the rule
+  // THE FORMULA AS DATA (2026-07-28), not buried in the prose. A formulary cannot
+  // be typeset out of sentences with maths embedded in them, and a student hunts
+  // by formula ("the one about exponents") long before they read 25 sentences.
+  // An ARRAY because one sentence can carry several lines worth showing, and a
+  // table wants one row each. Empty is legitimate: "A letter is one fixed number"
+  // has no formula, and its cell stays empty like any other.
+  latex: z.array(z.string()).default([]),
   note: localizedString,                  // its gloss, one sentence with an example. Was `rule`, and it always was the gloss
   summarizes: z.array(z.string()).default([]),  // card ids this sentence digests — a bridge claim, not a link (see above)
 })
@@ -646,6 +653,7 @@ export function validateLatexCompiles(
   for (const m of rules) {
     proseMath(m.rule).forEach(s => check(m.id, 'rule', s))
     proseMath(m.note).forEach(s => check(m.id, 'note', s))
+    m.latex.forEach((l, i) => check(m.id, `latex[${i}]`, l))
   }
 
   if (failures.length > 0) {

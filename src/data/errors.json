@@ -527,7 +527,8 @@
                 "pl.of-power"
               ],
               "rules": [
-                "rule.exponent-arithmetic"
+                "rule.same-base",
+                "rule.power-of-power"
               ],
               "name": {
                 "en": "The wrong operation on the exponents",
