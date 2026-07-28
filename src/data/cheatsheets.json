@@ -14,67 +14,6 @@
   },
   "sheets": [
     {
-      "id": "sheet.power-laws",
-      "rule": "rule.power-laws",
-      "groups": [
-        {
-          "title": {
-            "en": "What the exponent can be",
-            "de": "Was im Exponenten stehen kann"
-          },
-          "layout": "flow",
-          "rules": [
-            "rule.power-is-repeated-product",
-            "rule.exponent-counts-factors",
-            "rule.minus-in-exponent",
-            "rule.fractional-exponent-root"
-          ]
-        },
-        {
-          "title": {
-            "en": "Same base: the exponents do the arithmetic",
-            "de": "Gleiche Basis: die Exponenten rechnen"
-          },
-          "layout": "table",
-          "rules": [
-            "rule.same-base",
-            "rule.same-base-divide"
-          ]
-        },
-        {
-          "title": {
-            "en": "Same exponent: the power reaches through",
-            "de": "Gleicher Exponent: die Potenz greift durch"
-          },
-          "layout": "table",
-          "rules": [
-            "rule.power-over-product",
-            "rule.power-over-quotient"
-          ]
-        },
-        {
-          "title": {
-            "en": "Power of a power",
-            "de": "Potenz einer Potenz"
-          },
-          "layout": "table",
-          "rules": [
-            "rule.power-of-power"
-          ]
-        },
-        {
-          "title": {
-            "en": "No law for sums",
-            "de": "Kein Gesetz für Summen"
-          },
-          "layout": "flow",
-          "rules": [
-            "rule.no-power-law-for-sums"
-          ]
-        }
-      ]
-    },
-    {
       "id": "sheet.fraction-laws",
       "rule": "rule.fraction-laws",
       "groups": [
@@ -131,6 +70,67 @@
           "layout": "flow",
           "rules": [
             "rule.fraction-minus-moves"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sheet.power-laws",
+      "rule": "rule.power-laws",
+      "groups": [
+        {
+          "title": {
+            "en": "What the exponent can be",
+            "de": "Was im Exponenten stehen kann"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.power-is-repeated-product",
+            "rule.exponent-counts-factors",
+            "rule.minus-in-exponent",
+            "rule.fractional-exponent-root"
+          ]
+        },
+        {
+          "title": {
+            "en": "Same base: the exponents do the arithmetic",
+            "de": "Gleiche Basis: die Exponenten rechnen"
+          },
+          "layout": "table",
+          "rules": [
+            "rule.same-base",
+            "rule.same-base-divide"
+          ]
+        },
+        {
+          "title": {
+            "en": "Same exponent: the power reaches through",
+            "de": "Gleicher Exponent: die Potenz greift durch"
+          },
+          "layout": "table",
+          "rules": [
+            "rule.power-over-product",
+            "rule.power-over-quotient"
+          ]
+        },
+        {
+          "title": {
+            "en": "Power of a power",
+            "de": "Potenz einer Potenz"
+          },
+          "layout": "table",
+          "rules": [
+            "rule.power-of-power"
+          ]
+        },
+        {
+          "title": {
+            "en": "No law for sums",
+            "de": "Kein Gesetz für Summen"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.no-power-law-for-sums"
           ]
         }
       ]
