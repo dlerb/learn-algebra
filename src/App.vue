@@ -28,12 +28,17 @@ const router = useRouter()
 // leaf keys are route names, and a parent with children just expands (never
 // navigates), so `go` only ever sees a leaf. `route.name` matching a leaf key
 // auto-highlights that leaf and its parent.
-// INDENTED BY `level`, so the dropdown shows the curated stack rather than a
-// flat list: the pool, then what sits on it, then skills on top. Display only —
-// the real dependency is the refs between the layers.
+// THE CURATED STACK, drawn rather than merely indented: a `└` in the margin says
+// "this one sits on the one above", where whitespace alone only said "these are
+// not the same". Display only — the real dependency is the refs between layers.
 const layerMenu = (family: 'fundament' | 'curated') =>
   layersOf(family).map(l => ({
-    label: l.level ? () => h('span', { style: { paddingLeft: `${l.level! * 14}px` } }, l.title) : l.title,
+    label: l.level
+      ? () => h('span', { style: { paddingLeft: `${(l.level! - 1) * 14}px` } }, [
+          h('span', { style: { color: 'var(--text-faint)', marginRight: '.35rem' } }, '\u2514'),
+          l.title,
+        ])
+      : l.title,
     key: l.slug,
   }))
 

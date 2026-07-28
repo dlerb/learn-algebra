@@ -107,11 +107,12 @@ export const layers: Layer[] = [
  *          └── skills   the interventions, citing errors, rules and cards
  *
  *  Titles are the student-facing page names (2026-07-25) — the nav used to say
- *  "Errors" while the page said "Common mistakes".
- *  ⚠️ "Reading rules" is now wrong: the pool is DO and IS sentences, not reading
- *  rules only. Renaming it is open (docs/TODO.md). */
+ *  "Errors" while the page said "Common mistakes". "Reading rules" became "All
+ *  rules" on 2026-07-28: the pool is every DO and IS sentence, reading rules are
+ *  a minority of it, and "all" is what distinguishes the list from a sheet,
+ *  which is a selection. */
 export const curatedLayers: LayerRef[] = [
-  { id: 'rules', slug: 'rules', title: 'Reading rules', family: 'curated', level: 0 },
+  { id: 'rules', slug: 'rules', title: 'All rules', family: 'curated', level: 0 },
   { id: 'cheatsheets', slug: 'sheets', title: 'Cheat sheets', family: 'curated', level: 1 },
   { id: 'errors', slug: 'errors', title: 'Common mistakes', family: 'curated', level: 1 },
   { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated', level: 2 },

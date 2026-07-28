@@ -72,7 +72,7 @@ const items = computed(() => sheets.map(s => {
             <!-- Every formula links back to its rule in the pool, so the sheet
                  doubles as the table of contents for /rules. -->
             <RouterLink v-for="(c, j) in g.cells" :key="j" class="formula" :to="`/rules#${c.id}`">
-              <MathExpr :latex="c.latex" />
+              <MathExpr :latex="c.latex" display />
             </RouterLink>
           </div>
         </section>
@@ -100,6 +100,12 @@ const items = computed(() => sheets.map(s => {
    and KaTeX then breaks it mid-expression — $(a+b)^n \neq a^n + b^n$ came apart
    after the plus. Flex wraps BETWEEN items and never inside one. */
 .sheet-body.flow { display: flex; flex-wrap: wrap; gap: .35rem 1.6rem; }
-.formula { display: block; padding: .2rem .1rem; color: var(--text); text-decoration: none; border-radius: 4px; white-space: nowrap; }
+/* DISPLAY MODE, not inline. Inline KaTeX shrinks a `\frac` to a stacked pair of
+   superscript-sized letters, which on a sheet of fraction laws is the one thing
+   that must not happen. Display mode sets them full size — at the cost of
+   KaTeX's own centring and margins, both overridden below. */
+.formula { display: block; padding: .1rem .1rem; color: var(--text); text-decoration: none; border-radius: 4px; white-space: nowrap; }
+.formula :deep(.katex-display) { margin: 0; text-align: left; }
+.formula :deep(.katex-display > .katex) { text-align: left; }
 .formula:hover { background: var(--band); color: var(--accent); }
 </style>

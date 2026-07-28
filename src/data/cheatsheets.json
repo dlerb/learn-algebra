@@ -73,6 +73,67 @@
           ]
         }
       ]
+    },
+    {
+      "id": "sheet.fraction-laws",
+      "rule": "rule.fraction-laws",
+      "groups": [
+        {
+          "title": {
+            "en": "What a fraction is",
+            "de": "Was ein Bruch ist"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.fraction-is-division",
+            "rule.divide-by-one-and-self"
+          ]
+        },
+        {
+          "title": {
+            "en": "Multiplying and dividing",
+            "de": "Multiplizieren und Dividieren"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.fraction-multiply",
+            "rule.fraction-divide",
+            "rule.double-fraction"
+          ]
+        },
+        {
+          "title": {
+            "en": "Adding",
+            "de": "Addieren"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.fraction-common-denominator",
+            "rule.fraction-plus-whole"
+          ]
+        },
+        {
+          "title": {
+            "en": "Cancelling and splitting",
+            "de": "Kürzen und Aufteilen"
+          },
+          "layout": "table",
+          "rules": [
+            "rule.fraction-cancel",
+            "rule.split-numerator"
+          ]
+        },
+        {
+          "title": {
+            "en": "The minus",
+            "de": "Das Minus"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.fraction-minus-moves"
+          ]
+        }
+      ]
     }
   ]
 }

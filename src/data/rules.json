@@ -1,12 +1,12 @@
 {
   "layer": "rules",
   "title": {
-    "en": "Reading rules",
-    "de": "Leseregeln"
+    "en": "All rules",
+    "de": "Alle Regeln"
   },
   "blurb": {
-    "en": "A handful of rules for reading algebra. Each one, once it is automatic, stops a whole family of mistakes from ever starting.",
-    "de": "Eine Handvoll Regeln, um Algebra zu lesen. Sitzt eine davon, entsteht eine ganze Familie von Fehlern gar nicht erst."
+    "en": "Every rule worth knowing, one sentence and one formula each.",
+    "de": "Jede Regel, die man kennen sollte, je ein Satz und eine Formel."
   },
   "note": {
     "en": "The DO/IS registry: a flat collection of student-facing sentences, each one saying either what a written form IS or what to DO with it. The sentences carry no context of their own — errors and skills supply it by citing them alongside examples, which is also the only reason the list exists, since otherwise the same sentence would be written into twenty entries. `summarizes` names the tower cards a sentence digests: a bridge claim, not a link, and the only way to ask which cards have a plain-language form yet.",
@@ -392,6 +392,56 @@
       ]
     },
     {
+      "id": "rule.fraction-laws",
+      "kind": "do",
+      "rule": {
+        "en": "The fraction laws: know these cold",
+        "de": "Die Bruchgesetze: diese sitzen auswendig"
+      },
+      "note": {
+        "en": "Multiplying and dividing are the easy half — every fraction rule that goes wrong is an adding rule or a cancelling rule.",
+        "de": "Multiplizieren und Dividieren sind die einfache Hälfte — schiefgehen tun die Regeln fürs Addieren und fürs Kürzen."
+      }
+    },
+    {
+      "id": "rule.fraction-is-division",
+      "kind": "is",
+      "rule": {
+        "en": "A fraction is a division",
+        "de": "Ein Bruch ist eine Division"
+      },
+      "latex": [
+        "\\frac{a}{b} = a : b"
+      ],
+      "note": {
+        "en": "The bar is one of four spellings of the same operation, not a different kind of object.",
+        "de": "Der Bruchstrich ist eine von vier Schreibweisen derselben Operation, kein anderes Objekt."
+      },
+      "summarizes": [
+        "def.div",
+        "ix.division-symbols"
+      ]
+    },
+    {
+      "id": "rule.divide-by-one-and-self",
+      "kind": "is",
+      "rule": {
+        "en": "Over $1$ it is itself, over itself it is $1$",
+        "de": "Durch $1$ ist es sich selbst, durch sich selbst ist es $1$"
+      },
+      "latex": [
+        "\\frac{a}{1} = a",
+        "\\frac{a}{a} = 1"
+      ],
+      "note": {
+        "en": "The second needs $a \\neq 0$, because $\\frac{0}{0}$ is not a number.",
+        "de": "Das zweite verlangt $a \\neq 0$, denn $\\frac{0}{0}$ ist keine Zahl."
+      },
+      "summarizes": [
+        "th.divide-by-one"
+      ]
+    },
+    {
       "id": "rule.fraction-bar-brackets",
       "kind": "is",
       "rule": {
@@ -410,6 +460,61 @@
       ]
     },
     {
+      "id": "rule.fraction-multiply",
+      "kind": "do",
+      "rule": {
+        "en": "Multiply straight across",
+        "de": "Zähler mal Zähler, Nenner mal Nenner"
+      },
+      "latex": [
+        "\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{a c}{b d}"
+      ],
+      "note": {
+        "en": "No common denominator is needed. Multiplying is the one fraction operation that asks nothing first.",
+        "de": "Kein gemeinsamer Nenner nötig. Multiplizieren ist die eine Bruchoperation, die vorher nichts verlangt."
+      },
+      "summarizes": [
+        "th.fraction-multiply"
+      ]
+    },
+    {
+      "id": "rule.fraction-divide",
+      "kind": "do",
+      "rule": {
+        "en": "Dividing by a fraction is multiplying by its reciprocal",
+        "de": "Durch einen Bruch dividieren heisst mit dem Kehrwert multiplizieren"
+      },
+      "latex": [
+        "\\frac{a}{b} : \\frac{c}{d} = \\frac{a}{b} \\cdot \\frac{d}{c}"
+      ],
+      "note": {
+        "en": "Flip the one you are dividing BY, never the one you start with.",
+        "de": "Umgedreht wird der Bruch, durch den man teilt, nie der, mit dem man beginnt."
+      },
+      "summarizes": [
+        "th.fraction-divide"
+      ]
+    },
+    {
+      "id": "rule.double-fraction",
+      "kind": "is",
+      "rule": {
+        "en": "In a stacked fraction the longer bar is the main one",
+        "de": "Im Doppelbruch ist der längere Strich der Hauptstrich"
+      },
+      "latex": [
+        "\\dfrac{\\frac{a}{b}}{\\frac{c}{d}} = \\frac{a}{b} \\cdot \\frac{d}{c}"
+      ],
+      "note": {
+        "en": "Read which bar divides which before doing anything: the main bar separates the whole numerator from the whole denominator.",
+        "de": "Lies zuerst, welcher Strich was teilt: Der Hauptstrich trennt den ganzen Zähler vom ganzen Nenner."
+      },
+      "summarizes": [
+        "th.fraction-divide",
+        "ix.fraction-bar"
+      ]
+    },
+    {
       "id": "rule.fraction-common-denominator",
       "kind": "do",
       "rule": {
@@ -417,6 +522,7 @@
         "de": "Brüche werden nur über einem gemeinsamen Nenner addiert"
       },
       "latex": [
+        "\\frac{a}{b} + \\frac{c}{b} = \\frac{a + c}{b}",
         "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}"
       ],
       "note": {
@@ -425,6 +531,80 @@
       },
       "summarizes": [
         "th.fraction-add"
+      ]
+    },
+    {
+      "id": "rule.fraction-plus-whole",
+      "kind": "do",
+      "rule": {
+        "en": "A whole number joins a fraction over its denominator",
+        "de": "Eine ganze Zahl kommt über den Nenner des Bruchs dazu"
+      },
+      "latex": [
+        "c + \\frac{a}{b} = \\frac{cb + a}{b}"
+      ],
+      "note": {
+        "en": "It is the common-denominator rule with $c$ written as $\\frac{c}{1}$.",
+        "de": "Es ist die Regel vom gemeinsamen Nenner, mit $c$ geschrieben als $\\frac{c}{1}$."
+      },
+      "summarizes": [
+        "th.fraction-add"
+      ]
+    },
+    {
+      "id": "rule.fraction-cancel",
+      "kind": "do",
+      "rule": {
+        "en": "Cancel a whole factor, never one term of a sum",
+        "de": "Kürze einen ganzen Faktor, nie einen Summanden"
+      },
+      "latex": [
+        "\\frac{a \\cdot c}{b \\cdot c} = \\frac{a}{b}",
+        "\\frac{a + c}{b + c} \\neq \\frac{a}{b}"
+      ],
+      "note": {
+        "en": "Cancelling divides top and bottom by the same number, and that only works if the number is a factor of the whole of each.",
+        "de": "Kürzen teilt oben und unten durch dieselbe Zahl, und das geht nur, wenn diese Zahl Faktor des Ganzen ist."
+      },
+      "summarizes": [
+        "th.cancel-common-factor"
+      ]
+    },
+    {
+      "id": "rule.split-numerator",
+      "kind": "do",
+      "rule": {
+        "en": "A sum splits over the bar; a sum under it does not",
+        "de": "Eine Summe im Zähler lässt sich aufteilen, eine im Nenner nicht"
+      },
+      "latex": [
+        "\\frac{a + b}{c} = \\frac{a}{c} + \\frac{b}{c}",
+        "\\frac{a}{b + c} \\neq \\frac{a}{b} + \\frac{a}{c}"
+      ],
+      "note": {
+        "en": "Dividing distributes over the numerator because it is multiplying by $\\frac{1}{c}$. Nothing distributes over a denominator.",
+        "de": "Teilen verteilt sich über den Zähler, weil es Multiplizieren mit $\\frac{1}{c}$ ist. Über den Nenner verteilt sich nichts."
+      },
+      "summarizes": [
+        "th.split-numerator"
+      ]
+    },
+    {
+      "id": "rule.fraction-minus-moves",
+      "kind": "is",
+      "rule": {
+        "en": "The minus of a fraction may sit in any of three places",
+        "de": "Das Minus eines Bruchs darf an drei Stellen stehen"
+      },
+      "latex": [
+        "-\\frac{a}{b} = \\frac{-a}{b} = \\frac{a}{-b}"
+      ],
+      "note": {
+        "en": "All three are the same number. Two minuses, one on top and one below, cancel.",
+        "de": "Alle drei sind dieselbe Zahl. Zwei Minus, eines oben und eines unten, heben sich auf."
+      },
+      "summarizes": [
+        "th.fraction-minus-moves"
       ]
     },
     {
