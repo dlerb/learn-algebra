@@ -1,0 +1,674 @@
+{
+  "layer": "mistakes",
+  "title": {
+    "en": "All mistakes",
+    "de": "Alle Fehler"
+  },
+  "blurb": {
+    "en": "Every misconception worth naming, one false sentence each — and the rule it breaks.",
+    "de": "Jede Fehlvorstellung, die einen Namen verdient, je ein falscher Satz — und die Regel, die sie verletzt."
+  },
+  "note": {
+    "en": "The anti-registry, and the negative face of `rules.json`: a flat collection of the false sentences students actually believe, each one saying what a written form is wrongly taken to mean or what may wrongly be done to it. Like the rules it carries no context of its own — the skills supply that by citing it alongside worked examples — but unlike a rule it is *defined against* something: `breaks` names the rule it violates, which is the one place in this design where one pool cites another. `frequency` is evidence from docs/common_mistakes.md and is the field that can live nowhere else: a rule is not more or less true, a mistake is more or less made.",
+    "de": "Das Anti-Register und die negative Seite von `rules.json`: eine flache Sammlung der falschen Sätze, die Schülerinnen und Schüler tatsächlich glauben — was eine Schreibweise fälschlich bedeuten soll oder was man fälschlich mit ihr tun darf. Wie die Regeln trägt ein Eintrag keinen eigenen Kontext; den liefern die Fertigkeiten, die ihn mit Beispielen zitieren. Anders als eine Regel ist er aber *gegen etwas* definiert: `breaks` nennt die verletzte Regel — die einzige Stelle in diesem Entwurf, an der ein Pool einen anderen zitiert. `frequency` stammt aus docs/common_mistakes.md und kann nirgends sonst leben: eine Regel ist nicht mehr oder weniger wahr, ein Fehler wird mehr oder weniger oft gemacht."
+  },
+  "mistakes": [
+    {
+      "id": "mis.minus-roles-confused",
+      "kind": "misreading",
+      "topic": "minus",
+      "frequency": 3,
+      "mistake": {
+        "en": "Every minus is a subtraction",
+        "de": "Jedes Minus ist eine Subtraktion"
+      },
+      "latex": [
+        "-(-a) \\neq a"
+      ],
+      "note": {
+        "en": "Every minus treated as binary subtraction; a unary minus dropped.",
+        "de": "Jedes Minus als Subtraktion behandelt; ein unäres Minus geht verloren."
+      },
+      "breaks": [
+        "rule.three-minuses"
+      ],
+      "corrupts": [
+        "th.negative-one-times",
+        "def.sub"
+      ]
+    },
+    {
+      "id": "anti.commute-everything",
+      "kind": "anti-law",
+      "topic": "minus",
+      "frequency": 2,
+      "mistake": {
+        "en": "Anything either side of an operator may be swapped",
+        "de": "Was links und rechts von einem Operator steht, darf vertauscht werden"
+      },
+      "latex": [
+        "a - b = b - a",
+        "\\frac{a}{b} = \\frac{b}{a}"
+      ],
+      "note": {
+        "en": "Commutativity over-generalized to subtraction and division.",
+        "de": "Kommutativität fälschlich auf Subtraktion und Division übertragen."
+      },
+      "breaks": [
+        "rule.only-plus-and-times-commute"
+      ],
+      "corrupts": [
+        "ax.add-commutative",
+        "ax.mul-commutative"
+      ]
+    },
+    {
+      "id": "mis.adjacent-signs",
+      "kind": "misreading",
+      "topic": "minus",
+      "frequency": 2,
+      "mistake": {
+        "en": "Two operators may stand next to each other",
+        "de": "Zwei Operatoren dürfen nebeneinander stehen"
+      },
+      "latex": [],
+      "note": {
+        "en": "Two operation signs written next to each other.",
+        "de": "Zwei Rechenzeichen werden direkt nebeneinander geschrieben."
+      },
+      "breaks": [
+        "rule.no-adjacent-operators"
+      ],
+      "corrupts": [
+        "ix.no-adjacent-operator"
+      ]
+    },
+    {
+      "id": "mis.subtraction-as-times-negative",
+      "kind": "misreading",
+      "topic": "minus",
+      "frequency": 1,
+      "mistake": {
+        "en": "Subtracting is multiplying by the negative",
+        "de": "Subtrahieren heisst mit dem Negativen multiplizieren"
+      },
+      "latex": [
+        "a - b = a \\cdot (-b)"
+      ],
+      "note": {
+        "en": "$a - b$ read as $a \\cdot (-b)$ — the $\\cdot(-1)$ reading over-applied to subtraction.",
+        "de": "$a - b$ als $a \\cdot (-b)$ gelesen — die $\\cdot(-1)$-Lesart fälschlich auf die Subtraktion übertragen."
+      },
+      "breaks": [
+        "rule.three-minuses"
+      ],
+      "corrupts": [
+        "th.negative-one-times",
+        "def.sub"
+      ]
+    },
+    {
+      "id": "mis.precedence-ignored",
+      "kind": "misreading",
+      "topic": "reading",
+      "frequency": 3,
+      "mistake": {
+        "en": "A term is worked out from left to right",
+        "de": "Ein Term wird von links nach rechts abgearbeitet"
+      },
+      "latex": [
+        "2 + 3 \\cdot 4 = 20"
+      ],
+      "note": {
+        "en": "Evaluated left to right: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$.",
+        "de": "Von links nach rechts gerechnet: $a + b \\cdot c$, $a + b^3$, $a \\cdot b^3$."
+      },
+      "breaks": [
+        "rule.multiplication-binds-tighter",
+        "rule.dominant-op-last"
+      ],
+      "corrupts": [
+        "ix.precedence"
+      ]
+    },
+    {
+      "id": "mis.exponent-scope",
+      "kind": "misreading",
+      "topic": "reading",
+      "frequency": 3,
+      "mistake": {
+        "en": "A power applies to everything written before it",
+        "de": "Eine Potenz gilt für alles, was davor steht"
+      },
+      "latex": [
+        "-a^2 = (-a)^2",
+        "ab^2 = (ab)^2"
+      ],
+      "note": {
+        "en": "The exponent applied to more than the immediately preceding atom.",
+        "de": "Der Exponent wird auf mehr als das unmittelbar davorstehende Zeichen angewendet."
+      },
+      "breaks": [
+        "rule.exponent-binds-tighter",
+        "rule.dominant-op-last"
+      ],
+      "corrupts": [
+        "ix.power-precedence",
+        "th.negative-base"
+      ]
+    },
+    {
+      "id": "mis.bracket-dissolved",
+      "kind": "misreading",
+      "topic": "reading",
+      "frequency": 2,
+      "mistake": {
+        "en": "A bracket may be dropped without multiplying out",
+        "de": "Eine Klammer darf man weglassen, ohne auszumultiplizieren"
+      },
+      "latex": [
+        "(a+b)c = a + bc"
+      ],
+      "note": {
+        "en": "The bracket is dropped as if it did nothing.",
+        "de": "Die Klammer wird weggelassen, als hätte sie keine Wirkung."
+      },
+      "breaks": [
+        "rule.bracket-chunk",
+        "rule.only-multiplication-distributes"
+      ],
+      "corrupts": [
+        "ix.brackets"
+      ]
+    },
+    {
+      "id": "sal.loudest-op-wins",
+      "kind": "salience",
+      "topic": "reading",
+      "frequency": 2,
+      "mistake": {
+        "en": "The operation that catches the eye is the main one",
+        "de": "Die Operation, die ins Auge springt, ist die Hauptoperation"
+      },
+      "latex": [],
+      "note": {
+        "en": "The most visually prominent operation is named as the structure, instead of the dominant (last-applied) one: the $\\cdot$ in $3x + 2y$, or the $+$ trapped inside a bracket in $3(x+1)$.",
+        "de": "Die optisch auffälligste Operation wird als Struktur benannt statt der dominanten (zuletzt ausgeführten): das $\\cdot$ in $3x + 2y$ oder das $+$ in der Klammer von $3(x+1)$."
+      },
+      "breaks": [
+        "rule.dominant-op-last",
+        "rule.multiplication-binds-tighter"
+      ],
+      "corrupts": [
+        "ix.precedence"
+      ]
+    },
+    {
+      "id": "mis.redundant-brackets-kept",
+      "kind": "misreading",
+      "topic": "reading",
+      "frequency": 1,
+      "mistake": {
+        "en": "Every bracket changes the reading",
+        "de": "Jede Klammer ändert die Lesart"
+      },
+      "latex": [
+        "(ab)c \\neq abc"
+      ],
+      "note": {
+        "en": "The term stays needlessly complicated. Not a wrong-answer error: a fluency deficit, visible as slowness and clutter.",
+        "de": "Der Term bleibt unnötig kompliziert. Kein Fehler mit falschem Resultat: ein Geläufigkeitsdefizit, sichtbar als Langsamkeit und Unordnung."
+      },
+      "breaks": [
+        "rule.brackets-that-matter"
+      ],
+      "corrupts": [
+        "ix.brackets"
+      ]
+    },
+    {
+      "id": "anti.linearity",
+      "kind": "anti-law",
+      "topic": "distributing",
+      "frequency": 3,
+      "mistake": {
+        "en": "Every operation spreads over a plus",
+        "de": "Jede Operation verteilt sich über ein Plus"
+      },
+      "latex": [
+        "(a+b)^2 = a^2 + b^2",
+        "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}"
+      ],
+      "note": {
+        "en": "Every operation distributes over $+$. In truth only multiplication (and division by the numerator side) does.",
+        "de": "Jede Operation verteile sich über $+$. In Wahrheit tut das nur die Multiplikation (und die Division über den Zähler)."
+      },
+      "breaks": [
+        "rule.only-multiplication-distributes"
+      ],
+      "corrupts": [
+        "ax.distributivity"
+      ]
+    },
+    {
+      "id": "anti.partial-distribution",
+      "kind": "anti-law",
+      "topic": "distributing",
+      "frequency": 3,
+      "mistake": {
+        "en": "The factor in front reaches only the first term",
+        "de": "Der Faktor davor erreicht nur den ersten Term"
+      },
+      "latex": [
+        "a(b+c) = ab + c"
+      ],
+      "note": {
+        "en": "Distributing onto the first term only.",
+        "de": "Nur auf den ersten Summanden verteilt."
+      },
+      "breaks": [
+        "rule.only-multiplication-distributes"
+      ],
+      "corrupts": [
+        "ax.distributivity"
+      ]
+    },
+    {
+      "id": "anti.power-of-product-partial",
+      "kind": "anti-law",
+      "topic": "distributing",
+      "frequency": 2,
+      "mistake": {
+        "en": "A power on a bracket reaches only one factor",
+        "de": "Eine Potenz auf einer Klammer erreicht nur einen Faktor"
+      },
+      "latex": [
+        "(ab)^n = ab^n"
+      ],
+      "note": {
+        "en": "A power over a product must reach every factor, the coefficient included; here it lands on one factor only.",
+        "de": "Eine Potenz über einem Produkt muss jeden Faktor erreichen, auch den Koeffizienten; hier trifft sie nur einen Faktor."
+      },
+      "breaks": [
+        "rule.power-over-product"
+      ],
+      "corrupts": [
+        "pl.of-product"
+      ]
+    },
+    {
+      "id": "anti.exponent-arithmetic",
+      "kind": "anti-law",
+      "topic": "powers",
+      "frequency": 3,
+      "mistake": {
+        "en": "The operation on the powers is the operation on the exponents",
+        "de": "Die Operation auf den Potenzen ist die Operation auf den Exponenten"
+      },
+      "latex": [
+        "x^a \\cdot x^b = x^{ab}",
+        "(x^a)^b = x^{a+b}"
+      ],
+      "note": {
+        "en": "Powers combined by the wrong operation on the exponents: $x^a \\cdot x^b$ read as $x^{ab}$ (the exponents add), or $(x^a)^b$ as $x^{a+b}$ (they multiply).",
+        "de": "Potenzen mit der falschen Operation auf den Exponenten verbunden: $x^a \\cdot x^b$ als $x^{ab}$ gelesen (die Exponenten addieren sich), oder $(x^a)^b$ als $x^{a+b}$ (sie multiplizieren sich)."
+      },
+      "breaks": [
+        "rule.power-laws",
+        "rule.same-base",
+        "rule.power-of-power"
+      ],
+      "corrupts": [
+        "pl.same-base",
+        "pl.of-power"
+      ]
+    },
+    {
+      "id": "anti.repetition-confusion",
+      "kind": "anti-law",
+      "topic": "powers",
+      "frequency": 2,
+      "mistake": {
+        "en": "A power and a coefficient repeat the same operation",
+        "de": "Potenz und Koeffizient wiederholen dieselbe Operation"
+      },
+      "latex": [
+        "a^2 = 2a"
+      ],
+      "note": {
+        "en": "Repeated addition (multiple) and repeated multiplication (power) mixed up.",
+        "de": "Wiederholte Addition (Vielfaches) und wiederholte Multiplikation (Potenz) verwechselt."
+      },
+      "breaks": [
+        "rule.power-vs-coefficient"
+      ],
+      "corrupts": [
+        "def.multiple",
+        "def.pow"
+      ]
+    },
+    {
+      "id": "anti.zero-exponent",
+      "kind": "anti-law",
+      "topic": "powers",
+      "frequency": 1,
+      "mistake": {
+        "en": "An exponent of zero makes the whole power zero",
+        "de": "Ein Exponent null macht die ganze Potenz null"
+      },
+      "latex": [
+        "a^0 = 0"
+      ],
+      "note": {
+        "en": "The exponent is read off as the value: $x^0$ answered $0$, $x^1$ answered $1$. $a^0 = 1$ is not a decree — it is forced by $a^m \\cdot a^n = a^{m+n}$, which is why def.pow-zero derives it. What unsettles students is the genuine exception: $0^0$ really is undefined, and a rule with a hole in it feels less like a rule.",
+        "de": "Der Exponent wird als Wert gelesen: $x^0$ ergibt angeblich $0$, $x^1$ angeblich $1$. $a^0 = 1$ ist keine Setzung — es wird durch $a^m \\cdot a^n = a^{m+n}$ erzwungen, weshalb def.pow-zero es herleitet. Verunsichernd ist die echte Ausnahme: $0^0$ ist tatsächlich undefiniert, und eine Regel mit einem Loch wirkt weniger wie eine Regel."
+      },
+      "breaks": [
+        "rule.exponent-counts-factors"
+      ],
+      "corrupts": [
+        "def.pow-zero",
+        "def.pow"
+      ]
+    },
+    {
+      "id": "mis.negative-exponent-negates",
+      "kind": "misreading",
+      "topic": "powers",
+      "frequency": 2,
+      "mistake": {
+        "en": "A minus in the exponent makes the value negative",
+        "de": "Ein Minus im Exponenten macht den Wert negativ"
+      },
+      "latex": [
+        "x^{-1} = -x"
+      ],
+      "note": {
+        "en": "The minus is taken to attach to the value instead of to the exponent, so $x^{-1}$ comes out as $-x$. Two identical glyphs doing different jobs — the same conflation as mis.minus-roles-confused, one floor up in the exponent. $a^{-n} := (a^n)^{-1}$ (def.pow-neg) is forced by permanence, and for positive $a$ it never yields a negative number at all.",
+        "de": "Das Minus wird auf den Wert bezogen statt auf den Exponenten, sodass $x^{-1}$ als $-x$ herauskommt. Zwei gleiche Zeichen mit verschiedenen Aufgaben — dieselbe Verwechslung wie bei mis.minus-roles-confused, eine Etage höher im Exponenten. $a^{-n} := (a^n)^{-1}$ (def.pow-neg) wird durch die Permanenz erzwungen und ergibt für positives $a$ nie eine negative Zahl."
+      },
+      "breaks": [
+        "rule.minus-in-exponent"
+      ],
+      "corrupts": [
+        "def.pow-neg",
+        "th.inverse-is-power"
+      ]
+    },
+    {
+      "id": "mis.root-scope",
+      "kind": "misreading",
+      "topic": "powers",
+      "frequency": 2,
+      "mistake": {
+        "en": "The root bar covers only the first term",
+        "de": "Der Wurzelstrich deckt nur den ersten Term"
+      },
+      "latex": [
+        "\\sqrt{a+b} = \\sqrt{a} + b"
+      ],
+      "note": {
+        "en": "The vinculum's grouping lost, or index and exponent swapped.",
+        "de": "Die Klammerwirkung des Wurzelstrichs geht verloren, oder Wurzelexponent und Potenz werden vertauscht."
+      },
+      "breaks": [
+        "rule.root-bar-brackets"
+      ],
+      "corrupts": [
+        "ix.root"
+      ]
+    },
+    {
+      "id": "anti.fraction-addition",
+      "kind": "anti-law",
+      "topic": "fractions",
+      "frequency": 3,
+      "mistake": {
+        "en": "Fractions add numerator to numerator and denominator to denominator",
+        "de": "Brüche addiert man Zähler zu Zähler und Nenner zu Nenner"
+      },
+      "latex": [
+        "\\frac{a}{b} + \\frac{c}{d} = \\frac{a+c}{b+d}"
+      ],
+      "note": {
+        "en": "Fractions with unlike denominators added numerator-over-numerator and denominator-over-denominator, skipping the common denominator: $\\frac{a}{b}+\\frac{c}{d}$ is $\\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$.",
+        "de": "Brüche mit ungleichen Nennern Zähler über Zähler und Nenner über Nenner addiert, ohne den gemeinsamen Nenner: $\\frac{a}{b}+\\frac{c}{d}$ ist $\\frac{ad+bc}{bd}$, nie $\\frac{a+c}{b+d}$."
+      },
+      "breaks": [
+        "rule.fraction-common-denominator"
+      ],
+      "corrupts": [
+        "th.fraction-add"
+      ]
+    },
+    {
+      "id": "mis.fraction-bar-grouping-lost",
+      "kind": "misreading",
+      "topic": "fractions",
+      "frequency": 2,
+      "mistake": {
+        "en": "Only the first term of the numerator is divided",
+        "de": "Nur der erste Term des Zählers wird geteilt"
+      },
+      "latex": [
+        "\\frac{a+b}{c} = a + \\frac{b}{c}"
+      ],
+      "note": {
+        "en": "The invisible brackets of the bar are dropped.",
+        "de": "Die unsichtbaren Klammern des Bruchstrichs werden fallengelassen."
+      },
+      "breaks": [
+        "rule.fraction-bar-brackets"
+      ],
+      "corrupts": [
+        "ix.fraction-bar"
+      ]
+    },
+    {
+      "id": "mis.linear-slash-overgrouped",
+      "kind": "misreading",
+      "topic": "fractions",
+      "frequency": 1,
+      "mistake": {
+        "en": "Everything written before a slash is divided by what follows",
+        "de": "Alles vor dem Schrägstrich wird durch das Folgende geteilt"
+      },
+      "latex": [
+        "a + b/c = \\frac{a+b}{c}"
+      ],
+      "note": {
+        "en": "Linear $a + b/c$ transcribed as if the whole left side were the numerator.",
+        "de": "Linear geschriebenes $a + b/c$ wird übertragen, als wäre die ganze linke Seite der Zähler."
+      },
+      "breaks": [
+        "rule.fraction-bar-brackets"
+      ],
+      "corrupts": [
+        "ix.fraction-bar"
+      ]
+    },
+    {
+      "id": "mis.bar-not-division",
+      "kind": "misreading",
+      "topic": "fractions",
+      "frequency": 1,
+      "mistake": {
+        "en": "A fraction is a different kind of object from a division",
+        "de": "Ein Bruch ist etwas anderes als eine Division"
+      },
+      "latex": [
+        "\\frac{3}{4} \\neq 3 : 4"
+      ],
+      "note": {
+        "en": "The bar is seen as a picture of a fraction, not as the operation $a \\div b$.",
+        "de": "Der Strich wird als Bild eines Bruchs gesehen, nicht als die Operation $a \\div b$."
+      },
+      "breaks": [
+        "rule.fraction-bar-brackets"
+      ],
+      "corrupts": [
+        "ix.fraction-bar",
+        "ix.division-symbols"
+      ]
+    },
+    {
+      "id": "anti.conjoining",
+      "kind": "anti-law",
+      "topic": "terms",
+      "frequency": 3,
+      "mistake": {
+        "en": "Every sum can be collapsed into a single term",
+        "de": "Jede Summe lässt sich zu einem einzigen Term zusammenfassen"
+      },
+      "latex": [
+        "2 + 3x = 5x",
+        "3x + 2y = 5xy"
+      ],
+      "note": {
+        "en": "Conjoining, or closure compulsion: an unfinished sum must collapse to one term. Links to no true law — the drive is psychological: an open sum does not feel like an answer.",
+        "de": "Zusammenziehen, Abschlusszwang: eine offene Summe müsse sich zu EINEM Term zusammenziehen lassen. Verzerrt kein wahres Gesetz — der Drang ist psychologisch: eine offene Summe fühlt sich nicht wie ein Resultat an."
+      },
+      "breaks": [
+        "rule.unlike-terms-stay"
+      ],
+      "corrupts": []
+    },
+    {
+      "id": "mis.juxtaposition-as-plus",
+      "kind": "misreading",
+      "topic": "terms",
+      "frequency": 2,
+      "mistake": {
+        "en": "Two things written side by side are added",
+        "de": "Zwei Dinge nebeneinander werden addiert"
+      },
+      "latex": [
+        "3x = 3 + x"
+      ],
+      "note": {
+        "en": "$3x$ read as $3 + x$ — the mixed-number carryover ($2\\tfrac{1}{2} = 2 + \\tfrac{1}{2}$).",
+        "de": "$3x$ als $3 + x$ gelesen — der Übertrag von den gemischten Zahlen ($2\\tfrac{1}{2} = 2 + \\tfrac{1}{2}$)."
+      },
+      "breaks": [
+        "rule.juxtaposition"
+      ],
+      "corrupts": [
+        "ix.juxtaposition"
+      ]
+    },
+    {
+      "id": "mis.invisible-one-lost",
+      "kind": "misreading",
+      "topic": "terms",
+      "frequency": 2,
+      "mistake": {
+        "en": "A term with no coefficient written has none to count",
+        "de": "Ein Term ohne geschriebenen Koeffizienten zählt nicht mit"
+      },
+      "latex": [
+        "a + 3a = 3a"
+      ],
+      "note": {
+        "en": "\"$a$ has no coefficient\"; $a + 3a$ collected as $3a$.",
+        "de": "«$a$ hat keinen Koeffizienten»; $a + 3a$ wird zu $3a$ zusammengefasst."
+      },
+      "breaks": [
+        "rule.invisible-one"
+      ],
+      "corrupts": [
+        "ix.invisible-one"
+      ]
+    },
+    {
+      "id": "sal.implicit-op-overlooked",
+      "kind": "salience",
+      "topic": "terms",
+      "frequency": 2,
+      "mistake": {
+        "en": "Where no sign is written there is no operation",
+        "de": "Wo kein Zeichen steht, ist keine Operation"
+      },
+      "latex": [],
+      "note": {
+        "en": "An operation with no visible symbol (juxtaposition) is not seen, so a term is split wrong: $3x$ read as the two chunks $3$ and $x$.",
+        "de": "Eine Operation ohne sichtbares Zeichen (Nebeneinanderschreiben) wird übersehen, sodass ein Term falsch zerlegt wird: $3x$ als die zwei Chunks $3$ und $x$ gelesen."
+      },
+      "breaks": [
+        "rule.juxtaposition"
+      ],
+      "corrupts": [
+        "ix.juxtaposition"
+      ]
+    },
+    {
+      "id": "mis.letters-differ",
+      "kind": "misreading",
+      "topic": "terms",
+      "frequency": 1,
+      "mistake": {
+        "en": "A letter is a word or a unit, not a number",
+        "de": "Ein Buchstabe ist ein Wort oder eine Einheit, keine Zahl"
+      },
+      "latex": [
+        "a + a \\neq 2a"
+      ],
+      "note": {
+        "en": "A letter is taken for a thing, a unit or a word rather than for a number — and then the two $a$'s in $a + a$ are treated as free to differ.",
+        "de": "Ein Buchstabe wird für ein Ding, eine Einheit oder ein Wort gehalten statt für eine Zahl — und dann werden die beiden $a$ in $a + a$ behandelt, als dürften sie verschieden sein."
+      },
+      "breaks": [
+        "rule.variable-is-a-fixed-number"
+      ],
+      "corrupts": [
+        "pre.variables"
+      ]
+    },
+    {
+      "id": "mis.order-blindness",
+      "kind": "misreading",
+      "topic": "terms",
+      "frequency": 1,
+      "mistake": {
+        "en": "Writing the factors the other way round changes the term",
+        "de": "Die Faktoren anders herum zu schreiben ändert den Term"
+      },
+      "latex": [
+        "a \\cdot 3 \\neq 3a"
+      ],
+      "note": {
+        "en": "$x \\cdot 3$ not recognized as the same term as $3x$.",
+        "de": "$x \\cdot 3$ wird nicht als derselbe Term wie $3x$ erkannt."
+      },
+      "breaks": [
+        "rule.order-is-habit"
+      ],
+      "corrupts": [
+        "ix.coefficient-front"
+      ]
+    },
+    {
+      "id": "anti.quadratic-pair-unchecked",
+      "kind": "anti-law",
+      "topic": "factoring",
+      "frequency": 2,
+      "mistake": {
+        "en": "The numbers in the brackets can be read off the term",
+        "de": "Die Zahlen in den Klammern kann man am Term ablesen"
+      },
+      "latex": [
+        "x^2 + 5x + 6 = (x+5)(x+6)"
+      ],
+      "note": {
+        "en": "Either the numbers are copied straight out of the expression ($5$ and $6$ from $x^2 + 5x + 6$), or a pair is found that satisfies one condition and never checked against the other. Both are the same missing step. The two conditions are not a recipe to memorize: expanding $(x+m)(x+n)$ gives $x^2 + (m+n)x + mn$ (ax.distributivity, then th.collect-like-terms), so the middle coefficient IS a collected sum and the constant IS a product. A student who has never multiplied a pair of brackets out has no reason to believe either condition, which is why the check-by-expanding step is the teaching, not an afterthought.",
+        "de": "Entweder werden die Zahlen direkt aus dem Term übernommen ($5$ und $6$ aus $x^2 + 5x + 6$), oder es wird ein Paar gefunden, das eine Bedingung erfüllt und nie an der anderen geprüft wird. Beides ist derselbe fehlende Schritt. Die zwei Bedingungen sind kein Rezept zum Auswendiglernen: $(x+m)(x+n)$ ausmultipliziert ergibt $x^2 + (m+n)x + mn$ (ax.distributivity, dann th.collect-like-terms), also IST die mittlere Zahl eine zusammengefasste Summe und die Konstante ein Produkt. Wer noch nie ein Klammerpaar ausmultipliziert hat, hat keinen Grund, eine der Bedingungen zu glauben — darum ist die Probe durch Ausmultiplizieren die Lehre selbst und kein Anhängsel."
+      },
+      "breaks": [
+        "rule.quadratic-pair"
+      ],
+      "corrupts": [
+        "ax.distributivity",
+        "th.collect-like-terms"
+      ]
+    }
+  ]
+}

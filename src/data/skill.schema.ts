@@ -225,6 +225,101 @@ export function parseRuleTree(raw: unknown): RuleTree {
   return { meta: { title, blurb, note }, rules }
 }
 
+// ── Mistakes ─────────────────────────────────────────────────────────────────
+// THE ANTI-REGISTRY (2026-07-28) — the negative face of the rules pool, and the
+// same kind of object: a flat collection of general sentences that carry no
+// context of their own, given meaning only by what cites them.
+//
+// WHY IT IS A POOL AND NOT A LAYER. `anti.linearity` is not an example, it is a
+// SENTENCE: "every operation spreads over a plus". Modelling it as an entry with
+// instances bolted on is what made its 10 citing skills look like duplication —
+// a pool entry cited ten times is ordinary (`rule.dominant-op-last` is cited by
+// 13 and nobody calls that a defect). The instances are examples and belong to
+// the skills; the sentence belongs here.
+//
+// WHY IT IS NOT A `not:` FIELD ON A RULE. Measured: six rules are broken by two
+// or three DISTINCT misconceptions each — `rule.only-multiplication-distributes`
+// by `mis.bracket-dissolved` (bracket erased), `anti.linearity` (wrong operation
+// spreads) and `anti.partial-distribution` (right operation, stops early). Each
+// has its own frequency, its own cards and its own examples. A field on the rule
+// could name one of them.
+//
+// HOW IT DIFFERS FROM ruleDef, in order of weight:
+//   `breaks`     THE STRUCTURAL DIFFERENCE. A rule points only DOWN into the
+//                tower (`summarizes`); a mistake points down (`corrupts`) AND
+//                SIDEWAYS into the rules pool. It is the one place in this design
+//                where one pool cites another, which is why "same level as rules"
+//                is not quite right — mistakes sit half a level above. Still a
+//                DAG: mistakes → rules → cards.
+//   `frequency`  Can live nowhere else. A rule is not more or less true; a
+//                mistake is more or less MADE, and the number is evidence from
+//                docs/common_mistakes.md, gathered per misconception.
+//   `kind`       Three values and a different question. A rule's `is|do` is a
+//                REGISTER (decoding vs doing); a mistake's anti-law/misreading/
+//                salience is a CAUSAL taxonomy (wrong rule applied / glyph
+//                misparsed / wrong thing looked at). Not parallel.
+//   `topic`      Kept from the errors tree. A student arrives at a mistake by
+//                topic ("I keep messing up fractions") in a way nobody arrives at
+//                a rule, so the file stays flat like rules.json and the VIEW
+//                sections by this field — the same trick /skills plays with
+//                `group`. (errors.json's tree was section → exactly one group →
+//                errors in all seven sections, so the group level was vestigial
+//                and nothing is lost by flattening.)
+//   `latex`      Same field, INVERTED CONTRACT: on a rule it is the true formula,
+//                here every entry is a FALSE CLAIM, rendered under a ✗. Which is
+//                also where the six `\neq` lines currently squatting in
+//                `rule.latex` belong.
+//
+// WHAT IT DELIBERATELY DOES NOT TAKE from errors.json: `instances` and `fix`.
+// Both work a CASE, and a case belongs to the skill that teaches it.
+export const mistakeDef = z.object({
+  id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so `skill.errors` resolves here without touching a single skill
+  kind: z.enum(['anti-law', 'misreading', 'salience']),
+  topic: z.string(),
+  frequency: z.number().int().min(1).max(3).default(1),
+  mistake: localizedString,               // THE FALSE SENTENCE, stated as the student holds it — "Every minus is a subtraction", not "Losing one of two minuses". The error layer names the mistake from outside; a pool entry states it from inside, so it reads as a claim that can be marked ✗ exactly as a rule reads as one that can be marked ✓
+  latex: z.array(z.string()).default([]), // the false claim(s). Empty is legitimate: the two salience mistakes and the adjacent-signs notation mistake have no expressible schema
+  note: localizedString,                  // the diagnosis — mechanism and cause, which was always a statement about the misconception rather than about one case of it
+  breaks: z.array(z.string()).default([]),    // rule ids
+  corrupts: z.array(z.string()).default([]),  // card ids
+})
+export type MistakeDef = z.infer<typeof mistakeDef>
+
+const mistakesTree = z.object({
+  layer: z.literal('mistakes'),
+  title: localizedString,
+  blurb: localizedString,
+  note: localizedString,
+  mistakes: z.array(mistakeDef).min(1),
+})
+export interface MistakeTree {
+  meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
+  mistakes: MistakeDef[]
+}
+export function parseMistakeTree(raw: unknown): MistakeTree {
+  const r = mistakesTree.safeParse(raw)
+  if (!r.success) throw new Error(`Invalid mistakes file:\n${z.prettifyError(r.error)}`)
+  const { title, blurb, note, mistakes } = r.data
+  return { meta: { title, blurb, note }, mistakes }
+}
+
+/** Every edge a mistake claims must land: the rule it breaks, and the cards it
+ *  corrupts. A pool entry owns nothing else, so a dangling reference is the only
+ *  way it can be wrong. */
+export function validateMistakeRefs(
+  mistakes: MistakeDef[], rules: RulesFile, cardIds: Set<string>,
+): void {
+  const ruleIds = new Set(rules.map(r => r.id))
+  for (const m of mistakes) {
+    for (const r of m.breaks) {
+      if (!ruleIds.has(r)) throw new Error(`Mistake "${m.id}" breaks unknown rule "${r}".`)
+    }
+    for (const c of m.corrupts) {
+      if (!cardIds.has(c)) throw new Error(`Mistake "${m.id}" corrupts unknown card "${c}".`)
+    }
+  }
+}
+
 // ── Cheat sheets ─────────────────────────────────────────────────────────────
 // PRESENTATION OVER THE RULES POOL (2026-07-28), owning nothing. A sheet groups
 // and orders sentences that already exist in rules.json.

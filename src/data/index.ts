@@ -3,14 +3,17 @@
 // here immediately with the offending id named.
 import {
   parseSkillTree, parseDrills, parseErrorTree, parseRuleTree, parseSheetTree,
+  parseMistakeTree,
   validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateSkillLinks,
-  validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
+  validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
   type Drill, type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
+  type MistakeDef, type MistakeTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
 import rulesRaw from './rules.json'
 import sheetsRaw from './cheatsheets.json'
 import errorsRaw from './errors.json'
+import mistakesRaw from './mistakes.json'
 // Skills: one file per kind (kind → groups[] → skills[]), mirroring the fundament
 // tower's one-file-per-layer tree. Add a kind = add a file + one line below.
 import equivalenceSkills from './skills/equivalence.json'
@@ -77,6 +80,16 @@ export const sheets: SheetDef[] = sheetTree.sheets
 export const errorTree: ErrorTree = parseErrorTree(errorsRaw)
 export const errorPatterns: ErrorDef[] = errorTree.errors
 
+// THE MISTAKE POOL, the negative face of the rules registry (skill.schema →
+// mistakeDef). Built ALONGSIDE errors.json on purpose, not in place of it: this
+// is the parallel build that lets /mistakes and /errors be compared on screen
+// before anything is migrated. ⚠️ While both exist they share ids and derive
+// frequency/kind/topic/corrupts/breaks from the same source, so mistakes.json
+// must be REGENERATED rather than hand-edited when errors.json changes — the
+// generator is scripts/gen-mistakes.py.
+export const mistakeTree: MistakeTree = parseMistakeTree(mistakesRaw)
+export const mistakes: MistakeDef[] = mistakeTree.mistakes
+
 // Every fundament-tower card id, the resolution target for the skill/error/
 // rule references validated below.
 const cardIds = new Set(cardIndex.keys())
@@ -97,6 +110,7 @@ validateSheetRefs(sheets, rules)
 validateSkillLinks(skills)
 validateDrills(drills, skills)
 validateErrors(errorPatterns, cardIds)
+validateMistakeRefs(mistakes, rules, cardIds)
 validateLayerRefs(skills, rules, cardIds, errorPatterns)
 validateLatexCompiles(skills, drills, rules, errorPatterns)
 
