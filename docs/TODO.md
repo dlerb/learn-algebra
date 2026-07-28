@@ -57,47 +57,60 @@ applied to its prose and its derivations rather than to its notation.
 
 ---
 
-## NEXT SESSION — /skills onto the shell (2026-07-28)
+## ✅ DONE 2026-07-28 — /skills onto the shell, and the last hardcoded page prose
 
-**`/skills` is the last card grid** and the only page that no longer looks like the rest of
-the app. The shell is documented in `docs/app_design.md` → "One shell, seven pages"; the
-traps it cost are listed there too and are all cheap to hit again.
+**Every reference page is now one application.** `/skills` was the last card grid; the four
+cells are `name | illustration | rationale | the mistakes it heads off`, and the fourth is
+the mirror of `/rules`' `prevents` — this page is the ONLY place the skill→error edge is
+visible, since errors must not cite skills.
 
-### The row, mapped from the tower's
-The shell's anatomy is `strip · rail · body cells`, and a skill maps onto it like this
-(`TaxonomyView.vue` has the current view-model; a skill is `id · name · note · illustration ·
-rules · restsOn · errors`, with `kind` and `group` positional from the file tree):
+**The two things the handover flagged, both settled:**
 
-| slot | tower | skill |
-|---|---|---|
-| strip left | `kind` | `kind · group` |
-| strip folds | `rests on` | `requires` · `restsOn` · `rules` · `errors` — four is a lot; consider which earn a fold and which belong in a cell |
-| strip right | json · id | same, unchanged |
-| rail | name + concern glyphs | name (no marks yet — `frequency` has no equivalent here) |
-| maths | the statement | the **forms**: `illustration`, or a drill's equivalents chain / examples+answer / chunk decomposition |
-| prose 1 | intuition | `note` (the rationale) |
-| prose 2 | note | the **pitfalls**, if they stay — see the freeze below |
+1. **Skills now has a layer head** — `src/data/skills/layer.json`, joined by
+   `parseSkillTree(files, head)`. A layer split across four kind files has nowhere else to
+   keep its title, blurb and note, and until this existed `/skills` was the one page whose
+   lede was hardcoded view prose, and so **the one page that could not be read in German**.
+2. **The `by group` / `by kind` switch survives**, as filter chips in `LayerPage`'s `filters`
+   slot — the same place and the same control as the tower's. What makes it cheap is that
+   **the strip carries the COMPLEMENTARY coordinate**: under a topic heading it says which
+   strategy, under a strategy heading which topic. The row never repeats its own heading and
+   never loses the other half. (Labels are `topic` / `kind`, since "group" is a data word.)
 
-⚠️ **Two things a fresh session will not guess:**
-1. **Skills has no layer head.** Every other layer's page title, blurb and note come from its
-   data (`errors.json`, `rules.json`, `cheatsheets.json` all have one); `skills/*.json` has
-   `kind · title · blurb · groups` per FILE and nothing for the layer. `TaxonomyView`
-   hardcodes "Skills" and its role line. Either author a head (a 5th file, or a
-   `skillKinds`-style registry entry) or keep hardcoding and say so.
-2. **The `by group` / `by kind` switch** is real functionality with no equivalent on any other
-   page — the tower's filter chips are the closest thing. Decide whether it survives the port
-   and where it sits (LayerPage's `filters` slot is the natural home).
+**The drill freeze was respected without losing anything.** All 74 skills carry an
+`illustration`, so the maths column is uniform without reading `drills/*.json` at all; the
+drill's own material — equivalents chain, classification examples, chunk decompositions,
+pitfalls — sits behind an inspection-only `drill material` fold as a full-width block, where
+it can be reshaped freely. **The row's geometry depends on none of it.**
 
-### What the drill freeze does and does not block
-**Blocked:** presentation mode for skills — a skill stripped to student view is a *progress*
-surface and needs the drill runtime. ⚠️ That premise is worth re-examining first: a *how-to*
-surface needs no runtime at all, and the freeze may be over-broad.
-**Not blocked:** the port itself. But note the pitfalls in the row above come from
-`drills/*.json`, so a layout that leans on them is building on frozen data. Safest port shows
-`illustration` + `note` and leaves pitfalls in the json fold until the drill layer settles.
+**Four folds, not three**, and the fourth is derived: `rests on` · `teaches` · `requires` ·
+`required by`. The last is `requires` read backwards and is the ONLY justification a
+recognition skill has — failing to recognise a shape produces no wrong answer, only inaction.
 
-**Not blocked and already done:** `TaxonomyView` cards carry `:id` + `scroll-margin-top`, so
-`/rules`' `practised in` fold already deep-links into the page.
+**The audit's two red skills are labelled, not fixed.** `contrast = no errors AND nothing
+requires it` resolves to exactly the two `auditCoverage` names
+(`equivalence.bracket-types`, `equivalence.addition-commutative`), so the page and the load
+log read the same thing — but the chip says **`2 pure contrast`** in the neutral band, not a
+warn-coloured count of work outstanding, because those two exist so a Same-or-Different
+session has items whose answer is *same*.
+
+**Measured, not guessed:** exactly ONE of the 74 illustrations exceeds 352px rendered
+(`equivalence.product-with-brackets`, 363) and the next is 258, so the maths column is 23rem
+and 24 would buy nothing. The rail is 14rem rather than the shared 11 — a skill's name is a
+phrase with a clause in it ("Sum of products — multiplication is inside the terms"), and at
+11rem the longest took five lines beside a two-line illustration.
+
+⚠️ Measure a KaTeX column with a `max-content` range over `.katex-html`, never `scrollWidth`
+— see the trap list in `docs/app_design.md`.
+
+### Still open on this page
+- **Skill `name` and `note` are English-only** in all four kind files (`localizedString`
+  accepts a bare string, so they load as `{en}` and German falls back). The head, the fold
+  labels and the cell labels are bilingual; the content is not. Same debt as the 57 rules.
+- **Section titles come from the group/kind nodes and are plain `string`, not localized** —
+  a data-shape change across four files, deliberately not bundled into the port.
+- **Presentation mode for skills** is still not a separate thing: the page is the same in
+  both modes bar the plumbing. Whether a student-facing skills page is a *progress* surface
+  (drill-blocked) or just a how-to (not blocked) is still the open question below.
 
 ### The curated side is now four layers, not three
 `docs/content_model.md` rev. 11 has the model; `/` draws it. The short version:
@@ -364,6 +377,10 @@ the undefined `chunking` drill format, Compute-Engine drill checks in `pnpm vali
 
 Also frozen by dependency: **presentation mode for the skills page** — a skill stripped
 to student view is really a *progress* surface, and that needs the drill runtime.
+⚠️ **Narrowed 2026-07-28.** The shell port went ahead and reads no drill data at all: the
+maths column is the skill's own `illustration` (all 74 carry one), and the drill material
+sits behind an inspection-only fold. What is still frozen is a *progress* surface; a
+*how-to* surface needed no runtime, which is what `/skills` now is.
 
 **Not affected**, since they touch only the tower / errors / skills / metapattern layers:
 the manifest unification, the metapatterns presentation pass, the school-facing
@@ -674,8 +691,9 @@ each with its cards tree), `curatedLayers` (3), `allLayers`, and `layersOf(famil
 - Still true and still fine: metapatterns is a flat layer (11, no sections), and skills is
   one layer split across four files by section. The manifest blesses both rather than
   forcing a filesystem change.
-- [ ] **Skills is the one curated layer with no layer head** (no `title`/`blurb`/`note` in
-  data, no presentation/inspection split). Blocked by the drill freeze — see the banner.
+- [x] ~~**Skills is the one curated layer with no layer head**~~ **DONE 2026-07-28**:
+  `src/data/skills/layer.json`, joined by `parseSkillTree(files, head)`. It gained the
+  presentation/inspection split with the shell port at the same time.
 
 - [x] ~~**Metapatterns presentation pass.**~~ **DONE 2026-07-25.** `/metapatterns` now has
   the presentation/inspection split, the landscape row layout and the chip vocabulary of

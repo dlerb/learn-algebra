@@ -774,7 +774,22 @@ export const skillKindFile = z.object({
 })
 export type SkillKindFile = z.infer<typeof skillKindFile>
 
+// A LAYER HEAD FOR A LAYER THAT HAS NO ONE FILE (2026-07-28). Every other layer
+// keeps its title, its student-facing `blurb` and its authoring `note` at the top
+// of its single tree; skills are four kind files and the head belongs to none of
+// them, so it is authored on its own in `skills/layer.json` and joined here.
+// Until this existed /skills was the one page whose title and lede were hardcoded
+// view prose rather than content — which is also why it was the one page that
+// could not be read in German.
+const skillsHead = z.object({
+  layer: z.literal('skills'),
+  title: localizedString,
+  blurb: localizedString,
+  note: localizedString,
+})
+
 export interface SkillTree {
+  meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
   skills: Skill[]
   groups: GroupDef[]      // flattened across kinds, in display (array) order
   skillKinds: GroupDef[]  // one entry per kind file, in file order
@@ -784,7 +799,9 @@ export interface SkillTree {
 // Parse the per-kind tree files into the flat runtime shape the app has always
 // consumed: a flat Skill[] (kind/group re-attached from tree position), plus the
 // derived group and kind registries. The offending id is named on any failure.
-export function parseSkillTree(files: unknown[]): SkillTree {
+export function parseSkillTree(files: unknown[], head: unknown): SkillTree {
+  const h = skillsHead.safeParse(head)
+  if (!h.success) throw new Error(`Invalid skills layer head:\n${z.prettifyError(h.error)}`)
   const groups: GroupDef[] = []
   const skillKinds: GroupDef[] = []
   const rawEntries: unknown[] = []
@@ -801,7 +818,8 @@ export function parseSkillTree(files: unknown[]): SkillTree {
       for (const s of g.skills) rawEntries.push({ ...s, kind: kf.kind, group: g.slug })
     }
   })
-  return { skills: parseSkills(rawEntries), groups, skillKinds, rawEntries }
+  const { title, blurb, note } = h.data
+  return { meta: { title, blurb, note }, skills: parseSkills(rawEntries), groups, skillKinds, rawEntries }
 }
 
 // ── Drill validation ─────────────────────────────────────────────────────────

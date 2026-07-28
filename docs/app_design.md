@@ -90,17 +90,17 @@ an index).
 The reference pages are for LOOK-UP, not front-to-back reading, and that decides almost
 everything below.
 
-### One shell, seven pages (2026-07-27)
+### One shell, seven pages (2026-07-27, completed 2026-07-28)
 
 The row system started inside `LayerView` and now lives in four components under
-`src/components/`, so `/errors` and `/rules` are the same application as the tower rather
-than three pages that happen to import the same file:
+`src/components/`, so `/errors`, `/rules` and `/skills` are the same application as the tower
+rather than four pages that happen to import the same file:
 
 - **`LayerPage`** — the measure vocabulary (`--rail` 11rem, `--maths` 19rem, `--measure`
   26rem), the page's one left edge, the header, the inspect toggle. **`cols` is a prop**,
   because the column budget is a per-layer decision and belongs in the consuming page's own
-  stylesheet beside the arithmetic justifying it: the tower runs four columns, `/errors`
-  four, `/rules` three.
+  stylesheet beside the arithmetic justifying it: the tower, `/errors`, `/rules` and
+  `/skills` all run four, and no two of them the same four widths.
 - **`LayerSection`** — heading and note on the page plane, one panel per section. `title` is
   optional, for a FLAT layer: `/rules` is a registry of sentences with no structure to give
   it, so it renders one panel and no heading.
@@ -115,7 +115,27 @@ than three pages that happen to import the same file:
   neither. `derived` swaps ▸ for → to mark a link nobody authored.
 
 Prose clipping is shared in `src/prose.ts` — 240 characters at a 26rem column, less in a
-narrower one. **`/skills` is the last card grid** and the only page not on this system.
+narrower one. Every reference page is now on this system.
+
+**`/skills` came last (2026-07-28)**, and brought two things no other layer had:
+
+- **A layer head for a layer with no one file.** Every other layer keeps its title, blurb and
+  note at the top of its single tree; skills are four kind files and the head belongs to none
+  of them, so it is authored on its own in `src/data/skills/layer.json` and joined by
+  `parseSkillTree(files, head)`. Until then `/skills` was the one page whose title and lede
+  were hardcoded view prose — and so the one page that could not be read in German.
+- **Two sectionings of one list**, in `LayerPage`'s `filters` slot beside where the tower's
+  chips sit: `group` is the classroom topic, `kind` the strategy type, they cross-cut, and
+  both are real ways in. What makes the switch cheap is that **the strip carries the
+  COMPLEMENTARY coordinate** — under a topic heading it says which strategy, under a strategy
+  heading which topic — so the row never repeats the heading and never loses the other half.
+
+Its four cells are `name | illustration | rationale | the mistakes it heads off`. The last is
+the mirror of `/rules`' `prevents` column and the pitch of the whole layer, and this page is
+the **only** place the skill→error edge is visible, since errors must not cite skills.
+⚠️ The row deliberately does **not** touch the frozen drill layer: all 74 skills carry an
+`illustration`, which is what makes the maths column uniform, and the drill's own material
+sits inspection-only behind a `drill material` fold where it can be reshaped freely.
 
 **`/sheets` uses the shell differently, and that is the point.** A cheat sheet is not a row —
 a row is four columns of prose with one formula; a sheet is formulas under headings. So it
@@ -274,27 +294,28 @@ in `docs/TODO.md`). `Tutorial` and `Drills` are the (unbuilt) **student** surfac
 Design rule for when they're built: **Tutorial *drives* Drills — one drill-runner,
 two drivers** (guided `requires`-traversal vs. free pick). Don't fork the runner.
 
-**Row system** (six of seven pages — see "One shell, six pages" above): an entry is a
+**Row system** (every reference page — see "One shell, seven pages" above): an entry is a
 landscape row with a quiet strip, a name in the rail, and body cells that differ per layer.
-Author plumbing — ids, raw JSON, coverage warnings, the `kind` tag — is gated on
-`import.meta.env.DEV` via a single toggle in the page header (`src/inspect.ts`), and
+Author plumbing — ids, raw JSON, coverage warnings, `Skills`' `drill material` fold — is gated
+on `import.meta.env.DEV` via a single toggle in the page header (`src/inspect.ts`), and
 **presentation is the default**, so every visit shows the page a student sees. Group, section
 and layer descriptions are tap-triggered **info-dot popovers** (mobile-friendly, not hover).
-`Skills` is the one page still on the old card grid, and still switches `by group` / `by
-kind`. (The old Laws · Conventions · Errors segment switch is gone — laws/conventions became
+`Skills` keeps its `by topic` / `by kind` switch, now as filter chips in the page header.
+(The old Laws · Conventions · Errors segment switch is gone — laws/conventions became
 tower cards in the 2026-07-23 bridge.)
 
 **Design tokens** (`src/styles/tokens.css`): one quiet neutral-led palette, color
 reserved for signal. This *is* the dark-mode groundwork. **Display prose for the
 curated side lives in data registries**, never hardcoded in components: `skillGroups`
-and `skillKinds` (slug-set validated == the kind enum). (The old `lawGroups`/
+and `skillKinds` (slug-set validated == the kind enum), and since 2026-07-28 the skills
+**layer head** too (`src/data/skills/layer.json` — title, blurb, note, bilingual), which
+was the last page prose still living in a component. (The old `lawGroups`/
 `conventionGroups`/`lawKinds` registries went with laws.json/conventions.json in the
 bridge; the tower's own section/group titles live inline in each `cards.json`.)
 
 **Mobile:** a row stacks below 820px, in DOM order, which is already the reading order; the
-rail never shrinks into an unusable gutter. `/skills`, still a grid, is single-column by
-default and multi-column at ≥560px. Mobile-*aware*, not a mobile-first pass (that's reserved
-for the greenfield drill screens).
+rail never shrinks into an unusable gutter. Mobile-*aware*, not a mobile-first pass (that's
+reserved for the greenfield drill screens).
 
 ---
 

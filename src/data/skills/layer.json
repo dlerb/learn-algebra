@@ -1,0 +1,15 @@
+{
+  "layer": "skills",
+  "title": {
+    "en": "Skills",
+    "de": "Fertigkeiten"
+  },
+  "blurb": {
+    "en": "What to get automatic — each skill one thing to practise, with the mistakes it heads off.",
+    "de": "Was sitzen muss — jede Fertigkeit eine Sache zum Üben, mit den Fehlern, die sie verhindert."
+  },
+  "note": {
+    "en": "The top of the curated stack, and the only layer that cites all three below it: a skill rests on the tower's cards, teaches the pool's rules, and guards against the errors. `kind` (equivalence · classification · chunking · transformation) is the strategy type, `group` the classroom topic; both are POSITIONAL — the kind is the file, the group the node inside it — which is what lets the page section by either. `requires` is a dependency graph and never a sequence: what to drill in what order is the drill layer's question, not this one's.",
+    "de": "Die oberste Schicht des kuratierten Stapels und die einzige, die alle drei darunter zitiert: eine Fertigkeit stützt sich auf die Karten des Turms, lehrt die Regeln des Pools und schützt vor den Fehlern. `kind` (equivalence · classification · chunking · transformation) ist der Strategietyp, `group` das Unterrichtsthema; beide sind POSITIONELL — die Art ist die Datei, die Gruppe der Knoten darin — und genau deshalb kann die Seite nach beidem gliedern. `requires` ist ein Abhängigkeitsgraph und nie eine Reihenfolge: was in welcher Reihenfolge geübt wird, entscheidet die Drill-Schicht, nicht diese."
+  }
+}
