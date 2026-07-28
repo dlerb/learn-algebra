@@ -4,76 +4,97 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — /skills onto the shell, and finishing the curated content (2026-07-27)
+## NEXT SESSION — /skills onto the shell (2026-07-28)
 
-**The curated port is 2 of 3 done.** `/errors` and `/rules` are on the shared row shell;
 **`/skills` is the last card grid** and the only page that no longer looks like the rest of
-the app. The shell itself is documented in `docs/app_design.md` → "One shell, six pages",
-including the four traps it cost (KaTeX's own `.fix` class, KaTeX's permanent 2px
-`scrollWidth` overrun, `align-content` defaulting to stretch, em dashes banned in card
-prose but not curated prose).
+the app. The shell is documented in `docs/app_design.md` → "One shell, seven pages". Not
+blocked: `TaxonomyView` already carries `:id` + `scroll-margin-top` so `/rules` can deep-link
+into it. ⚠️ What is NOT in scope: presentation mode for skills is frozen behind the drill
+layer — though that premise is worth re-examining, since a *how-to* surface needs no drill
+runtime at all.
 
-### 1. `/skills` onto the shell
-Not blocked. `TaxonomyView` already got `:id` + `scroll-margin-top` on its cards so
-`/rules` can deep-link into it. Note what is NOT in scope: **presentation mode for skills
-is still frozen** behind the drill layer (a skill stripped to student view is a *progress*
-surface). ⚠️ That premise is worth re-examining first — a *how-to* surface needs no drill
-runtime at all, and the freeze may be over-broad.
+### The curated side is now four layers, not three
+`docs/content_model.md` rev. 11 has the model; `/` draws it. The short version:
 
-### 2. The rules page and nav still say "Reading rules" (USER FLAGGED 2026-07-27)
-The registry is now DO/IS — 18 IS, 7 DO — so "Reading rules" undersells it. Three places:
-the authored `title` in `rules.json`, the nav label in `src/data/layers.ts`
-(`curatedLayers`), and the layer `blurb` beneath it, which also talks only about reading.
-`/errors` is titled "Common mistakes" and that one is right.
+    rules            the pool of student-facing DO/IS sentences (57)
+    ├── sheets       presentation over the pool: which rules, grouped how (6)
+    └── errors       the mistakes, each citing the rule it breaks (28)
+        └── skills   the interventions, citing errors, rules and cards (74)
 
-### 3. The curated content is not finished
-- **`note` on an error is an open question.** It is the author's diagnosis, was demoted to
-  inspection, then displaced from the fourth column by the rule. It survives in the json
-  fold only. Decide whether it earns a field at all — several were pure restatements of
-  their own `fix`, which is what the colour experiment exposed.
-- **Two errors reject their derived rule on purpose** (`mis.bracket-dissolved` picks
-  different ones; `anti.quadratic-pair-unchecked` rejects a true-but-useless suggestion).
-  The audit line "rules an error's cards reach but it does not cite" reports these forever
-  and will get noisier as the registry grows. It is a QUESTION, never a check — do not
-  promote it to a validator, and do not add a "rejected" field to silence it without
-  deciding it is worth the schema.
-- **German prose** across the 9 new rules, the 14 rewritten fixes and the rules registry is
-  authored but unreviewed by a native reader.
+### Open, in rough order
+1. **A seventh sheet, or not.** The coverage question (`summarizes`) says what is left:
+   `fundamentals` 33 of 48 uncovered and `numbers` 10 of 12, but those are the equality and
+   order axioms, completeness and the construction of ℕ — the tower's ARGUMENT, not a
+   student's toolkit. ⚠️ Those numbers **should stay high**. A rules layer that covered them
+   would be the parallel tower this design exists to avoid.
+2. **German prose** across 57 rules, 6 sheets and the rewritten fixes is authored and
+   unreviewed by a native reader. The largest single debt in the content.
+3. **`note` on an error** is still an open question — the author's diagnosis, displaced from
+   the fourth column by the rule, alive only in the json fold. Several were pure restatements
+   of their own `fix`. Decide whether it earns a field.
+4. **Two errors reject their derived rule on purpose**, so the audit line "rules an error's
+   cards reach but it does not cite" reports them forever and gets noisier as the pool grows.
+   It is a QUESTION, never a check. Do not promote it to a validator.
+5. **The tutorial will collide with `/sheets`** if it is built to hold content. It was
+   conceived as a drill DRIVER; the sheets are the reference it should walk, not duplicate.
 
-### 4. Procedural rules — where "how to factor" lives
-Open question the DO/IS split raised and did not settle. `rule.dominant-op-tools` is the
-one entry that is a *procedure* rather than a reading, and it is also the only one with no
-`summarizes` — because no card says "collect like terms when you see a sum". Rules like
-"find a common denominator first" now exist as DO sentences, but rules like "when you see a
-common factor, pull it out" belong to Tier-3 skills that already exist
-(`transformation.factor-common`, `transformation.combine-fractions`). The unresolved part:
-a doing-rule cannot anchor to a card, so if the registry is to carry them it needs to
-anchor to SKILLS as well. Would also make the error page reach them, by the same reverse
-index — error → skills citing it → rules those skills teach.
+### Authoring rules earned the hard way
+- **A fix WORKS A CASE**; the rule states the law, one column over. Where the rule itself
+  quotes a case, the fix works a different one.
+- **A numeric check is the best fix** for a misreading — except where the two forms are equal
+  in value (`mis.adjacent-signs`), where substituting proves nothing.
+- **No words inside `latex`** — it is not localized.
+- **Membership of a sheet is teaching experience, not a derivable test.** The pool carries the
+  family names a teacher names ("the power laws"); everything else about grouping is
+  presentation and lives on the sheet.
+- ⚠️ **`\;` in a JavaScript single-quoted string loses its backslash.** An authoring script
+  shipped `ab = 0 ;\Longrightarrow;` and KaTeX compiled it happily, because semicolons are
+  valid LaTeX. Use raw strings; the compile check cannot catch this class.
 
-**It must be aesthetically pleasing.** This is the actual requirement, not a finishing
-touch: nobody reads these pages unless the design draws them in.
+**It must be aesthetically pleasing.** This is the actual requirement, not a finishing touch:
+nobody reads these pages unless the design draws them in.
 
 **TASTE CALIBRATION — do not re-run these experiments.** Each was tried and rejected:
-- **Pills/chips for reference links are too loud.** They became the second-loudest thing on
-  a row. Plain middot-separated text inside a fold instead (`RefFold`).
+- **Pills/chips for reference links are too loud.** Plain middot-separated text inside a fold
+  instead (`RefFold`).
 - **Small caps on headings** read as shouting; size and weight carry the levels.
-- **Whitespace alone as a group separator** reads as an accident. A tinted band works; a
-  rule does not, because hairlines already mean "next row".
-- **Anything grey inside a panel** risks reading as a hole punched through to the page.
-  Check it against `--band`, which exists for exactly this.
-- **A general rule restated in a `fix`** is noise beside the ✗/✓ that already shows it. A
-  fix WORKS A CASE; the rule lives in the registry one column over. Where the rule itself
-  quotes a case, the fix works a *different* one.
+- **Whitespace alone as a group separator** reads as an accident. A tinted band works; a rule
+  does not, because hairlines already mean "next row".
+- **Anything grey inside a panel** risks reading as a hole punched through to the page. Check
+  it against `--band`.
+- **A general rule restated in a `fix`** is noise beside the ✗/✓ that already shows it.
+- **A cheat sheet is not a row**, and one group per full-width row is a banner. Groups flow
+  into columns, as a printed formulary does.
 - The author reads a lot of LaTeX and will notice a serif that is not Computer Modern.
   `--font-content` is Latin Modern; do not substitute a system stack.
 
 Constraints to carry: keep `overflow-x: auto` plus vertical padding on every display-math
-container; the identity rail must **stack** below the breakpoint, never shrink; and every
-cell keeps its column even when empty, because a gap in the same place on every row reads
-as structure while a gap that moves reads as breakage.
+container; the identity rail must **stack** below the breakpoint, never shrink; every cell
+keeps its column even when empty; and a rule with no formula falls back to its SENTENCE on a
+sheet, because contributing zero cells makes it vanish silently.
 
 **The drill layer is a separate question** and stays frozen — see below.
+
+---
+
+## ✅ DONE 2026-07-28 — the rules pool, the sheets, and the DAG
+
+**The rename is done**: "Reading rules" → **All rules**, ids `meta.` → `rule.`, and the nav
+shows the stack by `level` with a `└` rather than a flat list.
+
+**`latex` on a rule** turned `/rules` into a formulary: the formulas had been trapped inside
+prose, and a student hunting "the one about exponents" scans formulas, not 57 sentences. 53
+of 57 carry one. It also found the sentences that were two claims wearing one coat —
+`rule.exponent-arithmetic` split into `same-base` and `power-of-power`.
+
+**Six cheat sheets** (`cheatsheets.json`, `/sheets`): zero and one · reading a term · the
+minus · fractions · powers · binomials. Built from the coverage question, which turned up
+real gaps — `th.minus-times-minus` had NO RULE, the most-recited rule in school algebra, and
+neither had `th.zero-product`, the entire basis of solving by factoring. *Reading a term*
+cost one entry and no new content: all fifteen rules already existed, scattered.
+
+**The overview diagram was redrawn** for the four-level stack; the old one had errors and
+rules as siblings, which stopped being true when an error first cited a rule.
 
 ---
 

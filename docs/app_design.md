@@ -90,7 +90,7 @@ an index).
 The reference pages are for LOOK-UP, not front-to-back reading, and that decides almost
 everything below.
 
-### One shell, six pages (2026-07-27)
+### One shell, seven pages (2026-07-27)
 
 The row system started inside `LayerView` and now lives in four components under
 `src/components/`, so `/errors` and `/rules` are the same application as the tower rather
@@ -116,6 +116,16 @@ than three pages that happen to import the same file:
 
 Prose clipping is shared in `src/prose.ts` — 240 characters at a 26rem column, less in a
 narrower one. **`/skills` is the last card grid** and the only page not on this system.
+
+**`/sheets` uses the shell differently, and that is the point.** A cheat sheet is not a row —
+a row is four columns of prose with one formula; a sheet is formulas under headings. So it
+takes `LayerPage` + `LayerSection` and fills the panel with a formula grid instead of rows.
+Two facts found by looking at it: laid out one group per full-width row it was a banner with
+the page 80% empty, so groups flow into `columns: 23rem` the way a printed formulary does;
+and a flow group is FLEX, not grid, because a grid track squeezes a formula to the track
+width and KaTeX then breaks it mid-expression. Sizing comes from a `\displaystyle` prefix on
+the latex, NOT KaTeX's display mode — display mode fixes the size but wraps every formula in
+a centred block with margins that then has to be overridden back.
 
 ⚠️ **Traps this cost, all cheap to hit again:**
 - **KaTeX emits its own `<span class="fix">`** — do not name a cell class `fix`.
@@ -245,13 +255,14 @@ components).
 **Router** (`router.ts`): `/` (`OverviewView` — the home/landing, an all-SVG clickable
 diagram of the reference stack, reached from the "Algebra" brand link), `/skills`
 (`TaxonomyView`), `/errors` (`ReferenceView` — errors only), `/rules`
-(`RulesView`), `/tutorial`, `/drills`, **plus one route per layer of the
+(`RulesView`), `/sheets` (`SheetsView`), `/tutorial`, `/drills`, **plus one route per layer of the
 tower** — `/fundamentals`, `/numbers`, `/powers`, `/terms`. Those four are
 **generated from the manifest** (`src/data/layers.ts`) and all render the same
 component (`LayerView`, selected by a `layerId` prop), so adding a layer needs no
 route. The **nav groups them** (`App.vue`): a "Fundament" dropdown over the four
-layers, a "Curated" dropdown over Common mistakes · Reading rules · Skills (ordered
-bottom-up to echo the reference stack), then Tutorial and Drills. Group headers use `-menu` keys so
+layers, a "Curated" dropdown over the curated stack, **indented by a `level` on the manifest
+entry and drawn with a `└`** so the dropdown shows what sits on what: All rules (the pool) →
+Cheat sheets and Common mistakes on it → Skills over everything. Then Tutorial and Drills. Group headers use `-menu` keys so
 they never collide with a route. Activity routes are lazy-loaded so their future weight
 (CE grading) code-splits off the reference pages. **Tutorial and Drills are empty stubs.**
 

@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { skills, errorPatterns, rules } from '../data'
+import { skills, errorPatterns, rules, sheets } from '../data'
 import { layers, cardIndex } from '../data/layers'
 
-// The reference graph as a clickable stack. Everything points DOWN into the tower:
-// skills (top) cite cards + errors + rules; errors and rules are
-// sibling lenses that cite cards only. Each box navigates to that section.
+// THE REFERENCE GRAPH as a clickable stack, and every arrow points DOWN.
+//
+// Redrawn 2026-07-28, when the curated side stopped being three flat lenses:
+// rules is the POOL at the base of it, sheets and errors both sit on the pool,
+// and skills sits on everything. The old picture had errors and rules as
+// siblings, which stopped being true the moment an error cited a rule.
 const router = useRouter()
 const go = (path: string) => router.push(path)
 
@@ -14,6 +17,7 @@ const n = {
   skills: skills.length,
   errors: errorPatterns.length,
   rules: rules.length,
+  sheets: sheets.length,
 }
 // the four tower layers, laid out as the floor
 const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 166 }))
@@ -25,14 +29,15 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
       <h2>The model</h2>
       <p>
         Everything rests on <strong>the tower</strong> (the cards — axioms, definitions,
-        theorems, conventions). <strong>Errors</strong> and <strong>rules</strong>
-        are two lenses over it; <strong>skills</strong> sit on top, drawing on all three.
+        theorems, conventions). <strong>Rules</strong> are the student-facing sentences
+        drawn from it; <strong>cheat sheets</strong> arrange them and <strong>mistakes</strong>
+        cite the one each breaks; <strong>skills</strong> sit on top, drawing on all of it.
         Every arrow points down — nothing points up, so there are no cycles. Click a box to open it.
       </p>
     </div>
 
-    <svg class="diagram" viewBox="0 0 820 545" role="img"
-         aria-label="Reference graph: skills cite cards, errors and rules; errors and rules cite cards.">
+    <svg class="diagram" viewBox="0 0 820 560" role="img"
+         aria-label="Reference graph: skills cite errors, rules and cards; errors cite rules and cards; cheat sheets cite rules; rules cite cards.">
       <defs>
         <marker id="ov-arrow" viewBox="0 0 10 10" refX="9" refY="5"
                 markerWidth="7" markerHeight="7" orient="auto">
@@ -40,57 +45,72 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
         </marker>
       </defs>
 
-      <!-- edges (all point down into the tower) -->
-      <line class="edge" x1="352" y1="88"  x2="228" y2="224" marker-end="url(#ov-arrow)" />
-      <line class="edge" x1="468" y1="88"  x2="592" y2="224" marker-end="url(#ov-arrow)" />
-      <line class="edge" x1="410" y1="88"  x2="410" y2="420" marker-end="url(#ov-arrow)" />
-      <line class="edge" x1="190" y1="292" x2="266" y2="420" marker-end="url(#ov-arrow)" />
-      <line class="edge" x1="630" y1="292" x2="554" y2="420" marker-end="url(#ov-arrow)" />
+      <!-- edges, all pointing down the stack -->
+      <line class="edge" x1="355" y1="80"  x2="255" y2="150" marker-end="url(#ov-arrow)" />
+      <line class="edge" x1="410" y1="80"  x2="410" y2="280" marker-end="url(#ov-arrow)" />
+      <line class="edge" x1="260" y1="210" x2="345" y2="280" marker-end="url(#ov-arrow)" />
+      <line class="edge" x1="555" y1="210" x2="480" y2="280" marker-end="url(#ov-arrow)" />
+      <line class="edge" x1="160" y1="210" x2="160" y2="400" marker-end="url(#ov-arrow)" />
+      <line class="edge" x1="410" y1="340" x2="410" y2="400" marker-end="url(#ov-arrow)" />
+      <!-- skills → cards is the one edge that cannot be drawn straight: it would
+           run through the sheets box. Curved out past it on the right. -->
+      <path class="edge" d="M 530 52 C 792 70, 792 330, 706 398" marker-end="url(#ov-arrow)" />
 
-      <!-- edge labels (the actual field names) -->
-      <text class="edge-label" x="262" y="150" text-anchor="middle">errors</text>
-      <text class="edge-label" x="560" y="150" text-anchor="middle">rules</text>
-      <text class="edge-label" x="448" y="250" text-anchor="start">restsOn</text>
-      <text class="edge-label" x="196" y="364" text-anchor="middle">corrupts</text>
-      <text class="edge-label" x="626" y="364" text-anchor="middle">summarizes</text>
+      <!-- edge labels: the actual field names -->
+      <text class="edge-label" x="288" y="112" text-anchor="middle">errors</text>
+      <text class="edge-label" x="420" y="196" text-anchor="start">rules</text>
+      <text class="edge-label" x="292" y="262" text-anchor="middle">rules</text>
+      <text class="edge-label" x="536" y="262" text-anchor="middle">rules</text>
+      <text class="edge-label" x="150" y="312" text-anchor="end">corrupts</text>
+      <text class="edge-label" x="420" y="374" text-anchor="start">summarizes</text>
+      <text class="edge-label" x="786" y="214" text-anchor="end">restsOn</text>
 
       <!-- SKILLS -->
       <g class="node" tabindex="0" role="link" aria-label="Skills"
          @click="go('/skills')" @keyup.enter="go('/skills')">
         <title>Skills — curated strategies</title>
-        <rect class="box" x="290" y="24" width="240" height="64" rx="10" />
-        <text class="box-title" x="410" y="52" text-anchor="middle" font-size="18">Skills</text>
-        <text class="box-sub" x="410" y="72" text-anchor="middle" font-size="11">{{ n.skills }} · strategies</text>
+        <rect class="box" x="290" y="20" width="240" height="60" rx="10" />
+        <text class="box-title" x="410" y="46" text-anchor="middle" font-size="18">Skills</text>
+        <text class="box-sub" x="410" y="66" text-anchor="middle" font-size="11">{{ n.skills }} · strategies</text>
       </g>
 
       <!-- ERRORS -->
-      <g class="node" tabindex="0" role="link" aria-label="Errors"
+      <g class="node" tabindex="0" role="link" aria-label="Common mistakes"
          @click="go('/errors')" @keyup.enter="go('/errors')">
-        <title>Errors — the tower's shadow</title>
-        <rect class="box" x="70" y="228" width="230" height="64" rx="10" />
-        <text class="box-title" x="185" y="256" text-anchor="middle" font-size="17">Errors</text>
-        <text class="box-sub" x="185" y="276" text-anchor="middle" font-size="11">{{ n.errors }} · the shadow</text>
+        <title>Common mistakes — the tower's shadow</title>
+        <rect class="box" x="110" y="150" width="200" height="60" rx="10" />
+        <text class="box-title" x="210" y="176" text-anchor="middle" font-size="17">Mistakes</text>
+        <text class="box-sub" x="210" y="196" text-anchor="middle" font-size="11">{{ n.errors }} · the shadow</text>
       </g>
 
-      <!-- METAPATTERNS -->
-      <g class="node" tabindex="0" role="link" aria-label="Rules"
+      <!-- CHEAT SHEETS -->
+      <g class="node" tabindex="0" role="link" aria-label="Cheat sheets"
+         @click="go('/sheets')" @keyup.enter="go('/sheets')">
+        <title>Cheat sheets — the rules, arranged for learning by heart</title>
+        <rect class="box" x="480" y="150" width="200" height="60" rx="10" />
+        <text class="box-title" x="580" y="176" text-anchor="middle" font-size="17">Cheat sheets</text>
+        <text class="box-sub" x="580" y="196" text-anchor="middle" font-size="11">{{ n.sheets }} · arrangements</text>
+      </g>
+
+      <!-- RULES (the pool) -->
+      <g class="node" tabindex="0" role="link" aria-label="All rules"
          @click="go('/rules')" @keyup.enter="go('/rules')">
-        <title>Rules — the DO and IS sentences</title>
-        <rect class="box" x="520" y="228" width="230" height="64" rx="10" />
-        <text class="box-title" x="635" y="256" text-anchor="middle" font-size="17">Rules</text>
-        <text class="box-sub" x="635" y="276" text-anchor="middle" font-size="11">{{ n.rules }} · DO and IS</text>
+        <title>All rules — the pool of DO and IS sentences</title>
+        <rect class="box" x="290" y="280" width="240" height="60" rx="10" />
+        <text class="box-title" x="410" y="306" text-anchor="middle" font-size="17">Rules</text>
+        <text class="box-sub" x="410" y="326" text-anchor="middle" font-size="11">{{ n.rules }} · DO and IS</text>
       </g>
 
       <!-- FUNDAMENT (the floor) -->
       <g class="floor">
-        <rect class="box floor-box" x="60" y="420" width="700" height="102" rx="12" />
-        <text class="box-title" x="410" y="446" text-anchor="middle" font-size="15">
+        <rect class="box floor-box" x="60" y="400" width="700" height="102" rx="12" />
+        <text class="box-title" x="410" y="426" text-anchor="middle" font-size="15">
           Fundament — the tower · {{ n.cards }} cards
         </text>
         <g v-for="c in chips" :key="c.slug" class="chip-g" tabindex="0" role="link"
            :aria-label="c.title" @click="go('/' + c.slug)" @keyup.enter="go('/' + c.slug)">
-          <rect class="chip" :x="c.x" y="466" width="150" height="42" rx="8" />
-          <text class="chip-label" :x="c.x + 75" y="492" text-anchor="middle" font-size="12">{{ c.title }}</text>
+          <rect class="chip" :x="c.x" y="446" width="150" height="42" rx="8" />
+          <text class="chip-label" :x="c.x + 75" y="472" text-anchor="middle" font-size="12">{{ c.title }}</text>
         </g>
       </g>
     </svg>

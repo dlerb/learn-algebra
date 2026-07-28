@@ -17,7 +17,7 @@
 > is the current spec; the dated *Revision notes* at the bottom are left as history.
 > The skills/drills/errors rationale still holds.
 >
-> **2026-07-27 updates (current):** metapatterns became **`rules.json`, the DO/IS
+> **2026-07-27 updates:** metapatterns became **`rules.json`, the DO/IS
 > registry** — a flat collection of student-facing one-liners, ids `rule.*`, route
 > `/rules`. Three changes of substance: (1) the entry's `name` was always the rule
 > ("The fraction bar is a bracket"), so `name` → `rule` and the gloss `rule` → `note`,
@@ -196,6 +196,7 @@ no display codes.**
 | `fundament/<layer>/cards.json` | card (the tower) | section kinds: `preliminary`·`signature`·`convention`·`axiom`·`definition`·`theorem`·`remark` | structural (nested) | `pre.`/`op.`/`ix.`/`ax.`/`def.`/`th.`/`pl.`/`rk.` |
 | `errors.json` | error pattern | `anti-law`·`misreading`·`salience` | — (from `corrupts`) | `anti.`/`mis.`/`sal.` |
 | `rules.json` | rule (DO/IS sentence) | `is`·`do` | — | `rule.` |
+| `cheatsheets.json` | sheet (presentation) | — | — | `sheet.` |
 | `skills/<kind>.json` | skill (strategy) | `equivalence`·`classification`·`chunking`·`transformation` | structural (nested) | `<kind>.` |
 | `drills/<kind>-<group>.json` | drill (material) | mirrors its skill | — | keyed by `skill` id |
 
@@ -363,6 +364,7 @@ the flat `groups` / `skillKinds` display registries from the tree.
 | `id` | string `"rule.<slug>"` | ✓ | the identifier |
 | `kind` | `is`\|`do` | ✓ | IS = what a written form MEANS (decoding); DO = what to reach for |
 | `rule` | LocalizedString | ✓ | **the sentence** — "The fraction bar is a bracket". Was `name` until 2026-07-27, and it always was the rule |
+| `latex` | string[] | — | **the formula as data** (2026-07-28), not buried in the prose: a formulary cannot be typeset out of sentences with maths embedded in them. An ARRAY because one sentence can carry several lines worth showing and a table wants a row each. Empty is legitimate — 4 of 57 rules state something no equation states. ⚠️ **No words inside it**: `latex` is not localized, so `(n \text{ factors})` would ship English onto the German page |
 | `note` | LocalizedString | ✓ | its gloss, one sentence with an example. Was `rule`, and it always was the gloss |
 | `summarizes` | string[] (card ids) | — | the tower cards this heuristic reads (cards only — errors are the skills' concern) |
 
@@ -512,6 +514,33 @@ familiar-shapes group (binomial square, difference of squares).
    skill-level `conditions` field only for caveats that aren't card-derived.
 
 ## Revision notes
+
+**2026-07-28 (rev. 11, cheat sheets):** a THIRD consumer of the rules pool, beside errors
+and skills. `cheatsheets.json` groups and orders rules and **owns nothing** — a sheet names
+ids, and every formula on the page is looked up from the rule it names, so there is no
+second copy to drift. The split is the design: whether a sentence belongs in the pool is
+editorial ("should a student know this?"), while which sheet it lands on and where is a
+later question, answerable more than once for the same sentence — `rule.no-power-law-for-sums`
+is on the powers sheet and the binomial sheet both.
+
+⚠️ **`contains` on a rule was drafted and rejected.** It mixed layout into the content pool
+and let a sentence belong to one parent only. What kept citability — an error naming "the
+power laws" — is that a family name the teacher names is itself a pool entry
+(`rule.power-laws`, atomic, no latex, no summarizes), which the sheet points at. Group
+headings are plain titles: a heading is the teacher's arrangement, and arrangement is
+presentation.
+
+    sheet: id · rule (its citable identity) · groups[]
+    group: title (localized) · layout `flow`|`table` · rules[] (pool ids)
+
+`layout` has two values on purpose — `flow` wraps between formulas, `table` puts one row per
+rule and one column per `latex` index so an algebraic form lines up under its root form. A
+third value would be the start of a layout language, which was considered and rejected.
+
+Also in this revision: `latex` on a rule (see the format table), the `meta.` → `rule.` id
+rename, `error.rules` authored in place of the card-mediated derivation, and 6 sheets over
+57 rules. Membership of a sheet is teaching experience, not a derivable test — the pool
+carries the family names a teacher names, and nothing else about grouping is data.
 
 **2026-07-27 (rev. 10, the rules registry):** `metapatterns.json` → `rules.json`, ids
 `meta.*` → `rule.*`, `skill.metaPatterns` → `skill.rules`, route `/metapatterns` →
