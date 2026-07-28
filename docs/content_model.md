@@ -442,7 +442,25 @@ naming which of the skill's `errors` it instantiates, validated ⊆ that set, + 
    ⚠️ **Reach is garbage collection, never an admission test.** What belongs in the
    registry is whatever turns out to be important, however narrowly it is used;
    the audit only asks whether a sentence is left holding nothing.
-9. **Prose format contract.** Prose fields (notes, whys, texts) are plain
+9. **The two layers keep their own formulas** (2026-07-28). The fundament makes
+   NO COMPROMISES IN NOTATION — it is the mathematics for the advanced reader, so
+   `\cdot` stays explicit, `:=` stays, and `a \cdot b^{-1}` stays wherever the
+   inverse is the subject. The curated side is the pedagogical derivative, and
+   restating a formula at student level there is translation, not duplication.
+   Measured before deciding: of 66 formulas in `rules.json`, 15 exactly match a
+   card they summarize, 7 overlap and 44 differ — by register (`\cdot` against
+   juxtaposition), by role (`:=` against `=`), by formulation (a definition
+   against a usable form), and because a sheet needs `\neq` warning lines the
+   tower has almost none of.
+   Rejected with it: a `latex` reference from a rule to a card (it could address
+   only a whole card, never one formula; "use the card's when possible" is a
+   judgement made 66 times; and a tower edit could then reshape a sheet
+   silently), and a drift audit over the pairs that match today — if the layers
+   are independent by design, divergence is the translation improving.
+   `summarizes` stays the link, and its job is COVERAGE (which cards have a
+   student-facing form), not string comparison.
+
+10. **Prose format contract.** Prose fields (notes, whys, texts) are plain
    text with inline `$…$` KaTeX — deliberately NOT markdown: the one feature
    prose needs is math, and the `$` contract avoids a parser, HTML injection,
    and sanitization (rendered by `RichText.vue`, ~20 lines, no dependency).
@@ -453,7 +471,7 @@ naming which of the skill's `errors` it instantiates, validated ⊆ that set, + 
    A load-time compile check runs every latex field and every `$…$` segment
    through KaTeX with `throwOnError: true` — a typo'd escape fails at startup
    with its id and field named, instead of rendering as red mush in a card.
-10. **Localization.** Prose fields (names, notes, metapattern rules,
+11. **Localization.** Prose fields (names, notes, rule sentences,
    pitfall explanations) are `LocalizedString`: a plain string (= English) or
    `{ en, de }`, with English fallback so nothing renders blank; `de` means
    Schweizer Hochdeutsch. LaTeX math is language-neutral and never

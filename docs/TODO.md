@@ -4,54 +4,56 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## NEXT SESSION — should `rule.latex` and `card.latex` be shared? (2026-07-28)
+## ✅ DECIDED 2026-07-28 — the two layers keep their own formulas
 
-**The question the user asked, and the measurement that answers most of it.** The rules pool
-carries 66 formulas, all typed by hand; the tower carries its own. How much is duplication,
-and should DRY apply?
+**The question:** the rules pool carries 66 hand-typed formulas and the tower carries its own.
+How much is duplication, and should DRY apply?
 
-**Measured** (compare each `rule.latex` line against the `latex` of the cards that rule
-`summarizes`, normalising spacing and `\;`/`\quad`/`\left`):
+**Measured** (each `rule.latex` line against the `latex` of the cards it `summarizes`,
+normalised for spacing): **15 EXACT · 7 contained · 44 differ.** The 44 break down as:
 
-    66 formulas on rules
-    15  EXACT match to a card they summarize
-     7  CONTAINED / overlapping (one side states several forms in one field)
-    44  no match at all  ← 67%
+| kind | n | example |
+|---|---|---|
+| register — `\cdot` vs juxtaposition, sides swapped | ~11 | `a^m \cdot a^n = a^{m+n}` vs `a^{m+n} = a^m \cdot a^n` |
+| role — a definition against a usable form | ~10 | `\frac{a}{b} = a : b` vs `\frac{a}{b} := a \cdot b^{-1}` |
+| formulation — the card states it another way | ~14 | `a^{1/n} = \sqrt[n]{a}` vs `:= \text{the unique } b>0 \text{ with}\dots` |
+| warning lines the tower does not carry | 5 | `\sqrt{a+b} \neq \sqrt{a} + \sqrt{b}` |
+| worked instances no card states | ~3 | `3x + 2y = (3x) + (2y)` |
+| the card has no `latex` at all | 3 | `pre.variables`, `ix.coefficient-front` |
 
-**So two thirds could not be shared even in principle**, and the reasons are not accidents.
-Five kinds, all worth keeping apart:
+### The decision (the user's, and it settles three questions at once)
 
-1. **Warning lines.** `\frac{a+c}{b+c} \neq \frac{a}{b}`, `\sqrt{a+b} \neq \sqrt{a} +
-   \sqrt{b}`, `(a+b)c \neq a + bc`. The tower states what IS true and has exactly one `\neq`
-   card (`pl.no-sum-law`); a cheat sheet must also state what is not.
-2. **Direction.** `rule.same-base` reads `a^m \cdot a^n = a^{m+n}`; `pl.same-base` reads
-   `a^{m+n} = a^m \cdot a^n`. Same content, sides swapped — the tower states a theorem in the
-   direction it was DERIVED, the sheet in the direction it is USED.
-3. **School notation vs formal.** `rule.fraction-is-division` is `\frac{a}{b} = a : b`;
-   `def.div` is `\frac{a}{b} := a \cdot b^{-1}`. The second is the definition and would be
-   wrong on a sheet.
-4. **Worked instances.** `3x + 2y = (3x) + (2y)`, `(-1)(-1) = 1`. No card states a case.
-5. **Granularity.** `th.divide-by-one` states `\frac{a}{1} = a` and `\frac{a}{a} = 1` in one
-   field; the sheet wants one row per formula, so the rule splits them.
+**THE FUNDAMENT MAKES NO COMPROMISES IN NOTATION.** It is the mathematics, written for the
+advanced reader: `\cdot` stays explicit, `:=` stays, `a \cdot b^{-1}` stays where the inverse
+is the subject. **The curated side is the pedagogical derivative**, and rewriting a formula at
+student level there is not duplication — it is translation.
 
-**Recommendation: do NOT share the strings — audit them instead.** Sharing would force one
-form on both, and there is no form that is right for both: the tower's is derived-direction
-and formal, the sheet's is used-direction and school. What DRY is actually protecting against
-is silent DRIFT — a typo fixed on one side and not the other — and that is better bought with
-a question than with coupling:
+Three consequences, all settled:
 
-- [ ] **New audit line: `rule.latex` that used to match its card and no longer does.** For the
-      22 pairs that match today (exact or contained), record the match and report when it
-      breaks. A question, never a validator — a rule is *allowed* to diverge, and item 2 above
-      is a case where it already has, deliberately.
-- [ ] Decide whether the 15 EXACT pairs should be normalised toward one another anyway, or
-      whether their identity today is a coincidence that will erode. Look at
-      `rule.binomial-square` vs `th.binomial-square` first — identical strings, different jobs.
+1. **`:=` stays in the tower, never appears in `rules.json`.** The tower's job is to separate
+   stipulation from claim — $a^0 := 1$ was chosen, $a^m a^n = a^{m+n}$ was proved, and the
+   three-species-of-convention story is unreadable without the mark. In the pool the same
+   statement is being USED, not established, so `=` is right there.
+2. **No smoothing of the tower toward school notation.** An earlier proposal to adopt
+   juxtaposition wherever `ix.juxtaposition` licenses it is REJECTED: it would make notation
+   position-dependent with nothing validating it, and it trades away exactly what makes the
+   tower worth diving into.
+3. **No reference mechanism in `rules.json`** (`latex` stays a string array, never a card id).
+   Three objections stand: it could only address a whole card, not one formula, so it would
+   first need `latex: string[]` on all 101 cards; "use the card's when possible" is a
+   judgement made 66 times and would be made inconsistently; and it would let a tower edit
+   silently reshape a sheet a class is looking at.
 
-⚠️ Do not let this become an argument for generating one layer from the other. That is the
-parallel-tower failure this design exists to avoid: the tower proves in dependency order, the
-sheet lists in recall order, and `summarizes` is the link that keeps them honest without
-making either the source of the other.
+⚠️ **And it kills the drift audit** that was proposed alongside it. If the layers are
+independent BY DESIGN, a pair that matches today and stops matching tomorrow is the
+translation improving, not a defect. Do not add a line reporting it — it would be noise.
+`summarizes` remains the link between them, and its job is the coverage question (which cards
+have a student-facing form), not string comparison.
+
+**The incentive that was the strongest argument for coupling survives without it.** Coupling
+would have forced the tower's notation to stay good because a sheet depended on it. But the
+fundament is open to the students who want to dive deeper, and they are the same pressure —
+applied to its prose and its derivations rather than to its notation.
 
 ---
 
