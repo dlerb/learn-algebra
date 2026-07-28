@@ -4,6 +4,57 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## NEXT SESSION — should `rule.latex` and `card.latex` be shared? (2026-07-28)
+
+**The question the user asked, and the measurement that answers most of it.** The rules pool
+carries 66 formulas, all typed by hand; the tower carries its own. How much is duplication,
+and should DRY apply?
+
+**Measured** (compare each `rule.latex` line against the `latex` of the cards that rule
+`summarizes`, normalising spacing and `\;`/`\quad`/`\left`):
+
+    66 formulas on rules
+    15  EXACT match to a card they summarize
+     7  CONTAINED / overlapping (one side states several forms in one field)
+    44  no match at all  ← 67%
+
+**So two thirds could not be shared even in principle**, and the reasons are not accidents.
+Five kinds, all worth keeping apart:
+
+1. **Warning lines.** `\frac{a+c}{b+c} \neq \frac{a}{b}`, `\sqrt{a+b} \neq \sqrt{a} +
+   \sqrt{b}`, `(a+b)c \neq a + bc`. The tower states what IS true and has exactly one `\neq`
+   card (`pl.no-sum-law`); a cheat sheet must also state what is not.
+2. **Direction.** `rule.same-base` reads `a^m \cdot a^n = a^{m+n}`; `pl.same-base` reads
+   `a^{m+n} = a^m \cdot a^n`. Same content, sides swapped — the tower states a theorem in the
+   direction it was DERIVED, the sheet in the direction it is USED.
+3. **School notation vs formal.** `rule.fraction-is-division` is `\frac{a}{b} = a : b`;
+   `def.div` is `\frac{a}{b} := a \cdot b^{-1}`. The second is the definition and would be
+   wrong on a sheet.
+4. **Worked instances.** `3x + 2y = (3x) + (2y)`, `(-1)(-1) = 1`. No card states a case.
+5. **Granularity.** `th.divide-by-one` states `\frac{a}{1} = a` and `\frac{a}{a} = 1` in one
+   field; the sheet wants one row per formula, so the rule splits them.
+
+**Recommendation: do NOT share the strings — audit them instead.** Sharing would force one
+form on both, and there is no form that is right for both: the tower's is derived-direction
+and formal, the sheet's is used-direction and school. What DRY is actually protecting against
+is silent DRIFT — a typo fixed on one side and not the other — and that is better bought with
+a question than with coupling:
+
+- [ ] **New audit line: `rule.latex` that used to match its card and no longer does.** For the
+      22 pairs that match today (exact or contained), record the match and report when it
+      breaks. A question, never a validator — a rule is *allowed* to diverge, and item 2 above
+      is a case where it already has, deliberately.
+- [ ] Decide whether the 15 EXACT pairs should be normalised toward one another anyway, or
+      whether their identity today is a coincidence that will erode. Look at
+      `rule.binomial-square` vs `th.binomial-square` first — identical strings, different jobs.
+
+⚠️ Do not let this become an argument for generating one layer from the other. That is the
+parallel-tower failure this design exists to avoid: the tower proves in dependency order, the
+sheet lists in recall order, and `summarizes` is the link that keeps them honest without
+making either the source of the other.
+
+---
+
 ## NEXT SESSION — /skills onto the shell (2026-07-28)
 
 **`/skills` is the last card grid** and the only page that no longer looks like the rest of
