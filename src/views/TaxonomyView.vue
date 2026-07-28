@@ -105,7 +105,7 @@ const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
 
 interface Row {
   id: string; kind: string; group: string; name: string; note: string
-  illustration?: string; conditions?: string
+  illustration?: string; wrong: string[]; conditions?: string
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
@@ -121,7 +121,7 @@ function toRow(s: Skill): Row {
   const rby = skillLinks(requiredBy.get(s.id) ?? [])
   return {
     id: s.id, kind: s.kind, group: s.group, name: t(s.name), note: t(s.note),
-    illustration: s.illustration, conditions: s.conditions,
+    illustration: s.illustration, wrong: s.wrong, conditions: s.conditions,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
     drill: drillBySkill.get(s.id),
@@ -189,8 +189,12 @@ const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add
 // `scrollWidth`: a KaTeX span reports exactly 2px over its box whatever the box
 // is, so an overflow check reads as a permanent overrun and widening never
 // clears it.
-// 14 + 23 + 26 + 20 plus three 1.6rem gaps is 87.8rem, inside the page's 91.
-const COLS = 'minmax(0, 14rem) minmax(0, 23rem) minmax(0, var(--measure)) minmax(0, 20rem)'
+// ⚠️ Then 23 → 24rem when the ✗/✓ marks arrived (2026-07-28): the mark track is
+// a reserved 1.1rem on every statement, marked or not, so the widest illustration
+// needs 363 + 18 = 381px and 23rem (368) would have put the one that already
+// fitted back into a scrollbar.
+// 14 + 24 + 26 + 20 plus three 1.6rem gaps is 88.8rem, inside the page's 91.
+const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax(0, 20rem)'
 </script>
 
 <template>
@@ -247,9 +251,31 @@ const COLS = 'minmax(0, 14rem) minmax(0, 23rem) minmax(0, var(--measure)) minmax
         <!-- THE CANONICAL FORM, one per skill and all 74 carry one. Left-aligned
              like the tower's statements: KaTeX centres display mode, which would
              float each illustration in its cell and break the vertical line the
-             column makes. -->
-        <div class="maths">
-          <div v-if="r.illustration" class="stmt"><MathExpr :latex="r.illustration" display /></div>
+             column makes.
+             RIGHT THEN WRONG — the reverse of /errors, and the reason is the
+             arrival direction. You reach /errors CARRYING a mistake, so
+             recognition is the entry point and ✗ leads; you reach /skills to
+             learn a capability, so the correct form leads and the tempting one
+             hangs off it as the warning. Same marks, same colours, opposite
+             order, and the order falls out of the layout rather than a prop.
+             THE MARKS COME AS A PAIR OR NOT AT ALL. A ✗ without its ✓ is already
+             forbidden on /errors; a ✓ with no ✗ says nothing, and 74 green ticks
+             down the page would be the loudest thing on it. So the ten
+             equivalence skills with no tempting form show a bare formula — which
+             is not an omission but the point: two of them are the contrast set. -->
+        <div class="maths" :class="{ marked: r.wrong.length }">
+          <div v-if="r.illustration" class="stmt">
+            <span class="mark good">{{ r.wrong.length ? '✓' : '' }}</span>
+            <span class="f"><MathExpr :latex="r.illustration" display /></span>
+          </div>
+          <!-- A COMPLETE FALSE CLAIM, not a bare form: `3x = 3 + x` stands on its
+               own under the ✗ exactly as an error's `wrong` does, so this needs
+               none of /errors' stem column — which is what keeps the whole page
+               inside the measured 23rem instead of the 36 the pairs there cost. -->
+          <div v-for="(w, i) in r.wrong" :key="i" class="stmt">
+            <span class="mark bad">✗</span>
+            <span class="f"><MathExpr :latex="w" display /></span>
+          </div>
           <!-- The tower's own quantifier line, for the four skills that carry a
                domain caveat. It qualifies the formula, so it belongs under it
                and not in the prose. -->
@@ -322,13 +348,29 @@ const COLS = 'minmax(0, 14rem) minmax(0, 23rem) minmax(0, var(--measure)) minmax
 }
 
 .maths { min-width: 0; }
+/* A FIXED MARK TRACK, RESERVED EVEN WHEN EMPTY — the shell's own rule, because a
+   gap in the same place on every row reads as structure while a gap that moves
+   reads as breakage. Without it the ten unmarked illustrations would start 1.1rem
+   left of the 34 marked ones and the column's left edge would flicker as you
+   scroll. It is what the maths column went 23rem → 24 to pay for. */
+.stmt { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); align-items: baseline; }
 /* `overflow-x: auto` makes the computed `overflow-y` AUTO as well, so a formula
    whose ink exceeds its line box gets a surprise vertical scrollbar. The padding
-   absorbs it, and gives exponents and radicals room at the top. */
-.stmt { overflow-x: auto; padding: .3rem 0; }
+   absorbs it, and gives exponents and radicals room at the top. It sits on the
+   FORMULA cell, not the row: a scrollbar under the mark would scroll the mark. */
+.f { overflow-x: auto; padding: .3rem 0; min-width: 0; }
 .stmt :deep(.katex-display) { margin: 0; text-align: left; }
 .stmt :deep(.katex-display > .katex) { text-align: left; }
-.quant { margin-top: .15rem; font-size: .78rem; color: var(--text-muted); }
+
+/* The ✗/✓ vocabulary of /errors, at the size WrongRight uses. Not bold and not
+   boxed: the mark qualifies the formula, it is not a heading for it. The ✓ is
+   an empty span on an unmarked row so the track still holds its width. */
+.mark { font-size: .82rem; line-height: 1; font-weight: 600; }
+.mark.good { color: var(--good); }
+.mark.bad { color: var(--bad); }
+/* Indented onto the formula column, not the mark's: the caveat qualifies the
+   statement, so it lines up under it rather than under the ✓. */
+.quant { margin-top: .15rem; padding-left: 1.1rem; font-size: .78rem; color: var(--text-muted); }
 
 /* A list of links that happens to sit in a prose column — it takes the measure
    and the content serif from `.cell` and lays itself out as a list. Same

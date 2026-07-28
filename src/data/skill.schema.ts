@@ -54,6 +54,34 @@ export const skill = z.object({
   name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
+  // THE TEMPTING FORM, AS A FALSE CLAIM (2026-07-28). Each entry is a complete
+  // false equation in LaTeX — `3x = 3 + x`, not a bare `3 + x` — so it stands on
+  // its own under a ✗ exactly as an error's `instances[].wrong` does, and needs no
+  // stem column to be read.
+  //
+  // AUTHORED PER SKILL, never fetched from the cited errors, and the measurement
+  // that decided it: 70 (skill → error) citations point at only 27 distinct
+  // errors, `anti.linearity` alone is cited by 10 skills, and 16 of those
+  // collisions fall inside a single topic panel. The errors are GENERAL and the
+  // skills are SPECIFIC — `minus-over-sum` and `minus-over-difference` both cite
+  // `anti.partial-distribution` but are tempted by different forms ($-a+b$ vs
+  // $-a-b$) — so the pair a skill needs cannot be derived from the error even in
+  // principle. Same ruling as rule.latex vs card.latex: each layer keeps its own
+  // formulas, and restating one at student level is translation, not duplication.
+  //
+  // AN ARRAY, because a note can carry two ($2a$ is not $a^2$, AND $a^2$ is not
+  // $2a$), and EMPTY IS MEANINGFUL: `equivalence.bracket-types` and
+  // `-addition-commutative` have no tempting wrong form at all, which is exactly
+  // why they exist — a Same-or-Different session needs items whose answer is
+  // `same`. Never invent one to fill the field.
+  //
+  // ⚠️ ONLY A FALSE CLAIM belongs here. `a + -b` is not false, it is badly
+  // written; that is the tower's avoid/prefer relation, where the two sides are
+  // EQUAL and WrongRight joins them with `=` and mutes the marks. Putting a
+  // clumsy-but-correct form under the same red ✗ would teach ✗ = wrong and then
+  // contradict it. A belief the student holds is fine and is written as the
+  // claim itself — `a \cdot 3 \neq 3a` under a ✗ says that belief is false.
+  wrong: z.array(z.string()).default([]),
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
@@ -689,6 +717,7 @@ export function validateLatexCompiles(
   for (const f of skills) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
     if (f.illustration) check(f.id, 'illustration', f.illustration)
+    f.wrong.forEach((w, i) => check(f.id, `wrong[${i}]`, w))
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
   }
   for (const d of drills) {

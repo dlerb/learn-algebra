@@ -102,6 +102,70 @@ phrase with a clause in it ("Sum of products — multiplication is inside the te
 ⚠️ Measure a KaTeX column with a `max-content` range over `.katex-html`, never `scrollWidth`
 — see the trap list in `docs/app_design.md`.
 
+### 🔎 IN REVIEW 2026-07-28 — `wrong` on a skill, equivalence group done
+
+Branch `feat/skill-wrong-forms`, **unmerged, awaiting a look before the other three kinds.**
+
+**The finding that started it:** 37 of 74 skill notes already carried the ✗ in prose — "not
+$3+x$", "it is not $x^3$", "not $-a-b$" — the same shape of discovery as `latex` on a rule.
+The contrast was trapped in the last clause of a paragraph, in the column the eye reaches
+last, while the maths column showed a chain of equal forms with no sign of the danger the
+skill exists to prevent.
+
+**`wrong: string[]`** on the skill, each entry a COMPLETE FALSE CLAIM (`3x = 3 + x`, not a
+bare `3 + x`), so it stands alone under a ✗ and needs none of /errors' stem column — which is
+what keeps the maths column at 24rem instead of the 36 the pairs there cost.
+
+⚠️ **Authored per skill, never fetched from the cited errors**, and the measurement is the
+argument: **70 (skill → error) citations point at only 27 distinct errors**, `anti.linearity`
+alone is cited by 10 skills, and **16 of those collisions fall inside a single topic panel**.
+The errors are general and the skills specific — `minus-over-sum` and `minus-over-difference`
+both cite `anti.partial-distribution` but are tempted by different forms ($-a+b$ vs $-a-b$) —
+so the pair a skill needs cannot be derived from the error even in principle. Same ruling as
+`rule.latex` vs `card.latex`, one section down.
+
+**RIGHT THEN WRONG here, wrong then right on /errors**, and it is not inconsistency: you
+reach /errors *carrying* a mistake, so recognition is the entry point; you reach /skills to
+learn a capability, so the correct form leads. Same marks, same colours (measured identical:
+12.9px vs 13.1px, weight 600, same tokens), opposite order, and the order falls out of the
+layout rather than a prop.
+
+**The marks come as a pair or not at all.** A ✗ without its ✓ is already forbidden on
+/errors; a ✓ with no ✗ says nothing, and 74 green ticks would be the loudest thing on the
+page. So 10 of the 44 equivalence skills show a bare formula — **which is the point**:
+`bracket-types` and `addition-commutative` are the contrast set, and their emptiness is now
+visible in the STUDENT view, not just as an inspect chip.
+
+**34 of 44 authored, 35 claims** (`coefficient-vs-exponent` carries two, which is why it is
+an array). Every one extracted from prose already written — nothing invented. Where a note's
+"not X" moved out, the note got shorter; **numeric checks stayed in prose**
+(`12/(2+4) = 2` but `12/2 + 12/4 = 9`), because TODO records those as the best kind of fix
+and they are not a ✗ form.
+
+⚠️ **ONLY A FALSE CLAIM belongs in `wrong`.** `a + -b` is not false, it is badly written —
+that is the tower's avoid/prefer relation, where the two sides are EQUAL and WrongRight joins
+them with `=` and mutes the marks. A *belief* is fine and is written as the claim itself
+(`a \cdot 3 \neq 3a` under a ✗ says that belief is false), which is exactly how errors.json
+writes its four belief instances.
+
+**Deliberately left empty**, so the restraint is on record: `splitting-a-fraction` (the
+denominator pair belongs to `no-splitting-the-denominator`, one row down, and repeating it
+inside a panel is what this field exists to avoid); `exponent-as-repeated-product` (its
+confusion is `coefficient-vs-exponent`'s); `fractional-exponent-root`,
+`negative-fractional-exponent`, `root-of-a-product`, `division-variants`,
+`fraction-as-reciprocal-product`, `negative-numbers` (their notes name no tempting form).
+
+**The three kinds not yet done, and the data says two of them may never be:** notes carrying
+a negation run equivalence 28/44 and transformation 7/10, but **classification 2/16 and
+chunking 0/4** — those two kinds' content is a NAME or a DECOMPOSITION, and their wrong
+answer is prose ("read as a sum; it is a product"), not a false equation. Do not force it.
+
+**The one open design smell**, and it is the user's call: the row now carries three
+renderings of "what goes wrong" — the ✗, the `guards against` column, and the drill pitfalls
+in inspect. Defensible as three grains (this skill's tempting form / the general mistake
+class / practice material), the same division of labour /errors settled between `fix` and
+the rule — but it is the thing most likely to read as repetition.
+
 ### Still open on this page
 - **Skill `name` and `note` are English-only** in all four kind files (`localizedString`
   accepts a bare string, so they load as `{en}` and German falls back). The head, the fold
