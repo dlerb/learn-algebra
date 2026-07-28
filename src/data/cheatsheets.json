@@ -182,6 +182,131 @@
           ]
         }
       ]
+    },
+    {
+      "id": "sheet.minus-rules",
+      "rule": "rule.minus-rules",
+      "groups": [
+        {
+          "title": {
+            "en": "What a minus is",
+            "de": "Was ein Minus ist"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.three-minuses",
+            "rule.no-adjacent-operators"
+          ]
+        },
+        {
+          "title": {
+            "en": "Minus and multiplication",
+            "de": "Minus und Multiplikation"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.minus-times-minus",
+            "rule.minus-in-product",
+            "rule.only-plus-and-times-commute"
+          ]
+        },
+        {
+          "title": {
+            "en": "Minus and brackets",
+            "de": "Minus und Klammern"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.minus-over-bracket",
+            "rule.subtract-a-bracket"
+          ]
+        },
+        {
+          "title": {
+            "en": "Minus and fractions",
+            "de": "Minus und Brüche"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.fraction-minus-moves"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sheet.zero-and-one",
+      "rule": "rule.zero-and-one",
+      "groups": [
+        {
+          "title": {
+            "en": "They change nothing",
+            "de": "Sie ändern nichts"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.neutral-elements",
+            "rule.divide-by-one-and-self",
+            "rule.exponent-counts-factors"
+          ]
+        },
+        {
+          "title": {
+            "en": "Zero in a product",
+            "de": "Null in einem Produkt"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.zero-times",
+            "rule.zero-product"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sheet.reading-a-term",
+      "rule": "rule.read-the-term-first",
+      "groups": [
+        {
+          "title": {
+            "en": "What the symbols mean",
+            "de": "Was die Zeichen bedeuten"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.juxtaposition",
+            "rule.invisible-one",
+            "rule.order-is-habit",
+            "rule.variable-is-a-fixed-number",
+            "rule.power-vs-coefficient"
+          ]
+        },
+        {
+          "title": {
+            "en": "What binds first",
+            "de": "Was zuerst bindet"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.exponent-binds-tighter",
+            "rule.multiplication-binds-tighter",
+            "rule.dominant-op-last"
+          ]
+        },
+        {
+          "title": {
+            "en": "What groups",
+            "de": "Was gruppiert"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.bracket-chunk",
+            "rule.brackets-that-matter",
+            "rule.implicit-op-before-bracket",
+            "rule.fraction-bar-brackets",
+            "rule.root-bar-brackets"
+          ]
+        }
+      ]
     }
   ]
 }

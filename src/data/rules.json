@@ -88,6 +88,74 @@
       ]
     },
     {
+      "id": "rule.zero-and-one",
+      "kind": "is",
+      "rule": {
+        "en": "Zero and one are not ordinary numbers",
+        "de": "Null und Eins sind keine gewöhnlichen Zahlen"
+      },
+      "note": {
+        "en": "Each does something no other number does, and each has a rule attached that gets used constantly.",
+        "de": "Jede tut etwas, was keine andere Zahl tut, und zu jeder gehört eine Regel, die dauernd gebraucht wird."
+      }
+    },
+    {
+      "id": "rule.neutral-elements",
+      "kind": "is",
+      "rule": {
+        "en": "Adding zero and multiplying by one change nothing",
+        "de": "Null addieren und mit Eins multiplizieren ändert nichts"
+      },
+      "latex": [
+        "a + 0 = a",
+        "a \\cdot 1 = a"
+      ],
+      "note": {
+        "en": "Which is why both may be inserted whenever they help: $a$ is $1 \\cdot a$, and that is how the invisible one comes back.",
+        "de": "Deshalb dürfen beide eingefügt werden, wann immer es hilft: $a$ ist $1 \\cdot a$, und so kommt die unsichtbare Eins zurück."
+      },
+      "summarizes": [
+        "ax.zero-neutral",
+        "ax.one-neutral"
+      ]
+    },
+    {
+      "id": "rule.zero-times",
+      "kind": "is",
+      "rule": {
+        "en": "Anything times zero is zero",
+        "de": "Alles mal null ist null"
+      },
+      "latex": [
+        "a \\cdot 0 = 0"
+      ],
+      "note": {
+        "en": "One zero factor decides the whole product, however long it is.",
+        "de": "Ein einziger Faktor null entscheidet das ganze Produkt, wie lang es auch ist."
+      },
+      "summarizes": [
+        "th.zero-times"
+      ]
+    },
+    {
+      "id": "rule.zero-product",
+      "kind": "do",
+      "rule": {
+        "en": "If a product is zero, one of its factors is zero",
+        "de": "Ist ein Produkt null, ist einer seiner Faktoren null"
+      },
+      "latex": [
+        "ab = 0 \\;\\Longrightarrow\\; a = 0 \\;\\lor\\; b = 0"
+      ],
+      "note": {
+        "en": "This is what lets an equation be solved by factoring: bring everything to one side, factorise, and set each factor to zero in turn.",
+        "de": "Das erlaubt es, eine Gleichung durch Faktorisieren zu lösen: alles auf eine Seite bringen, faktorisieren, und jeden Faktor der Reihe nach null setzen."
+      },
+      "summarizes": [
+        "th.zero-product"
+      ]
+    },
+    {
       "id": "rule.three-minuses",
       "kind": "is",
       "rule": {
@@ -105,6 +173,92 @@
         "ax.additive-inverse",
         "def.sub",
         "th.negative-one-times"
+      ]
+    },
+    {
+      "id": "rule.minus-rules",
+      "kind": "do",
+      "rule": {
+        "en": "The minus rules: know these cold",
+        "de": "Die Minusregeln: diese sitzen auswendig"
+      },
+      "note": {
+        "en": "More mistakes come from the minus than from anything else in algebra, and every one of them is a question about which of these applies.",
+        "de": "Kein Zeichen der Algebra verursacht mehr Fehler als das Minus, und jeder davon ist die Frage, welche dieser Regeln gilt."
+      }
+    },
+    {
+      "id": "rule.minus-times-minus",
+      "kind": "do",
+      "rule": {
+        "en": "Minus times minus is plus",
+        "de": "Minus mal Minus gibt Plus"
+      },
+      "latex": [
+        "(-a)(-b) = ab",
+        "(-1)(-1) = 1"
+      ],
+      "note": {
+        "en": "It is a theorem, not a decree: it is forced by wanting $(-1)(1 + (-1)) = 0$ to hold both ways round.",
+        "de": "Das ist ein Satz, keine Setzung: Er wird erzwungen, wenn $(-1)(1 + (-1)) = 0$ auf beide Arten stimmen soll."
+      },
+      "summarizes": [
+        "th.minus-times-minus"
+      ]
+    },
+    {
+      "id": "rule.minus-in-product",
+      "kind": "do",
+      "rule": {
+        "en": "One minus in a product moves to the front",
+        "de": "Ein Minus in einem Produkt wandert nach vorn"
+      },
+      "latex": [
+        "a \\cdot (-b) = -(ab)"
+      ],
+      "note": {
+        "en": "So a product with one minus in it is negative, with two is positive, and you can count them instead of tracking them.",
+        "de": "Ein Produkt mit einem Minus ist also negativ, mit zwei positiv — man kann sie zählen statt sie zu verfolgen."
+      },
+      "summarizes": [
+        "th.minus-in-product"
+      ]
+    },
+    {
+      "id": "rule.minus-over-bracket",
+      "kind": "do",
+      "rule": {
+        "en": "A minus in front of a bracket flips every term inside",
+        "de": "Ein Minus vor einer Klammer kehrt jeden Term darin um"
+      },
+      "latex": [
+        "-(a+b) = -a - b"
+      ],
+      "note": {
+        "en": "The minus is a factor $(-1)$, so it distributes like any other factor. Flipping only the first term is the commonest version of this mistake.",
+        "de": "Das Minus ist ein Faktor $(-1)$ und verteilt sich wie jeder andere. Nur den ersten Term umzukehren ist die häufigste Form dieses Fehlers."
+      },
+      "summarizes": [
+        "th.minus-over-sum"
+      ]
+    },
+    {
+      "id": "rule.subtract-a-bracket",
+      "kind": "do",
+      "rule": {
+        "en": "Subtracting a bracket flips every sign in it",
+        "de": "Eine Klammer subtrahieren kehrt jedes Zeichen darin um"
+      },
+      "latex": [
+        "a - (b+c) = a - b - c",
+        "a - (b-c) = a - b + c"
+      ],
+      "note": {
+        "en": "The second line is where the marks go: subtracting a difference ADDS the last term.",
+        "de": "In der zweiten Zeile passieren die Fehler: Eine Differenz zu subtrahieren ADDIERT den letzten Term."
+      },
+      "summarizes": [
+        "th.subtract-a-sum"
       ]
     },
     {
@@ -859,7 +1013,22 @@
       },
       "summarizes": [
         "pre.variables"
+      ],
+      "latex": [
+        "a + a = 2a"
       ]
+    },
+    {
+      "id": "rule.read-the-term-first",
+      "kind": "do",
+      "rule": {
+        "en": "Read the term before you change it",
+        "de": "Lies den Term, bevor du ihn veränderst"
+      },
+      "note": {
+        "en": "Most mistakes are made before any rule is applied: the term was read wrong. What is written next to what, what binds first, what a bracket covers.",
+        "de": "Die meisten Fehler passieren, bevor eine Regel angewendet wird: Der Term wurde falsch gelesen. Was steht neben was, was bindet zuerst, was umfasst eine Klammer."
+      }
     }
   ]
 }

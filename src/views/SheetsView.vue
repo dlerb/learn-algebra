@@ -45,7 +45,16 @@ const items = computed(() => sheets.map(s => {
       // root form sit under each other. Members of a table group are authored
       // with the same number of lines; a ragged one just leaves a hole.
       columns: Math.max(...g.rules.map(r => ruleById.get(r)!.latex.length), 1),
-      cells: g.rules.flatMap(r => ruleById.get(r)!.latex.map(latex => ({ id: r, latex }))),
+      // A rule with no formula still belongs on the sheet — "the dominant
+      // operation is the last one applied" has no equation and is one of the
+      // most useful lines on it. Without a fallback such a rule contributes zero
+      // cells and vanishes silently, which is worse than an empty one.
+      cells: g.rules.flatMap(r => {
+        const rule = ruleById.get(r)!
+        return rule.latex.length
+          ? rule.latex.map(latex => ({ id: r, latex, text: '' }))
+          : [{ id: r, latex: '', text: t(rule.rule) }]
+      }),
     })),
   }
 }))
@@ -71,8 +80,12 @@ const items = computed(() => sheets.map(s => {
           >
             <!-- Every formula links back to its rule in the pool, so the sheet
                  doubles as the table of contents for /rules. -->
-            <RouterLink v-for="(c, j) in g.cells" :key="j" class="formula" :to="`/rules#${c.id}`">
-              <MathExpr :latex="`\\displaystyle ${c.latex}`" />
+            <RouterLink
+              v-for="(c, j) in g.cells" :key="j"
+              class="formula" :class="{ prose: !c.latex }" :to="`/rules#${c.id}`"
+            >
+              <MathExpr v-if="c.latex" :latex="`\\displaystyle ${c.latex}`" />
+              <template v-else>{{ c.text }}</template>
             </RouterLink>
           </div>
         </section>
@@ -108,6 +121,9 @@ const items = computed(() => sheets.map(s => {
    overridden back. `\displaystyle` gives the size and nothing else. Authoring
    `\dfrac` per fraction would work too, and costs discipline on every formula
    written from here on. */
+/* A line with no formula: the content serif, a step smaller, so it reads as a
+   sentence among the maths rather than as a failed formula. */
+.formula.prose { font-family: var(--font-content); font-size: .92rem; white-space: normal; max-width: 20rem; color: var(--text-muted); }
 .formula { display: block; padding: .1rem .1rem; color: var(--text); text-decoration: none; border-radius: 4px; white-space: nowrap; }
 .formula:hover { background: var(--band); color: var(--accent); }
 </style>
