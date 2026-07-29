@@ -4,113 +4,79 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## ✅ RESOLVED 2026-07-29 — cheatsheets is NOT a missing layer
+## 🔵 NEXT SESSION — BRAINSTORM THE DRILL LAYER (handover 2026-07-29)
 
-**The question was**: `/skills` read from both `rules.json` and `cheatsheets.json`, so is there
-a missing rung `rules → cheatsheets → skills`? **No.** The user's picture was right — a sheet
-is one REPRESENTATION of the rules pool — and the smell had a smaller cause.
+**Design first, in prose, before any schema.** The reference side is done and coherent; the
+drill is the actual product — a daily trainer that cannot yet drill anything. ⚠️ **Expect
+ripple**: drills consume skills, so designing them will expose what the skill layer lacks, and
+changes underneath are expected rather than a failure.
 
-**`family` was the axis this pool was missing.** Every other curated layer has two classifiers,
-a register/causal one and a subject one (mistakes `kind` + `topic`, skills `kind` + `group`);
-rules had only `kind: is|do`. With nowhere to live, the subject axis got approximated by SHEET
-MEMBERSHIP — which is why a page had to import from cheatsheets to answer a question about a
-rule.
+### What the skill layer already offers a drill
 
-⚠️ **And the approximation was wrong, not just misplaced.** Four rules came back with two
-families — `rule.divide-by-one-and-self` → "Zero and one + Fraction laws". Read it again: that
-is *appears on two sheets*, not *belongs to two families*. **FAMILY IS ONE, SHEETS ARE MANY**:
-`a/1 = a` is a fact about ONE, and it is *useful to print* on the fraction sheet as well.
+Every skill answers a question, and the shape of the answer is per kind. **This is the material
+a drill needs, and it now exists** — it was authored onto the skills this session precisely
+because the rebuilt drills will read from them.
 
-**What changed**: `rule.family` — 48 rules, holding the id of the family head. `sheet.name` is
-**deleted** and rev. 11's *"a sheet owns nothing"* is restored. `ruleFamilies` is gone from
-`index.ts`; both views read `rule.family` directly and **`/skills` imports nothing from
-cheatsheets**. `validateRuleFamilies` enforces one level, no chains.
+| kind | n | the ✓ | the ✗ | drill shape it suggests |
+|---|---|---|---|---|
+| equivalence | 44 | `illustration` (a chain) 44 | `wrong` 35 | **same or different?** — the chain gives true items, `wrong` gives false ones |
+| classification | 16 | `answer` 16 | `misreads` 6 | **name the main operation** — 5 options, one right |
+| chunking | 4 | `chunks` 4 | `misChunks` 2 | **split it** — pick or mark the pieces |
+| transformation | 10 | `illustration` (an identity) 10 | `wrong` 10 | **produce the form** — free input, needs grading |
 
-**THE HEADING IS THE LABEL; THE NOTE SAYS WHY (2026-07-29).** A `short` field was tried and
-deleted the same day: once a head's `rule` is a bare name — *Power laws*, *Reading a term*,
-*Distributing* — it already IS the label, and a second field was saying the same thing twice.
-The reason a family coheres moved into the `note`, where a reader who wants it goes:
-*"Know these cold. Every one of them acts on the exponents; the base never changes."*
-⚠️ There is now **no "is a head" flag**: a head is simply a rule somebody names as their
-`family`. That is what keeps the model one field instead of two.
-`rule.read-the-term-first` also moved `do` → `is`, because all 13 of its members are decoding
-rules and a head's `kind` should characterise what it heads.
+⚠️ **The contrast set matters here**: `equivalence.bracket-types` and `-addition-commutative`
+have no ✗ *by design*, because a Same-or-Different session needs items whose answer is *same*
+or students answer "different" by reflex. Do not read those two as gaps.
 
-⚠️ **Four teaching calls, easy to overrule** — the rules that had sat on two sheets:
-`divide-by-one-and-self` → Zero and one · `exponent-counts-factors` → Power laws ·
-`fraction-minus-moves` → Minus rules · `no-power-law-for-sums` → Power laws.
+### Decisions already made that the brainstorm must not re-litigate
 
-**A SEVENTH SHEET AND A SEVENTH FAMILY, `distributing` (2026-07-29).** `a(b+c) = ab + ac` was
-the most-cited rule in the pool — 9 skills, 3 mistakes, bridging `ax.distributivity` — with no
-family and, until this session, no sheet. Now `rule.distributing` heads
-`sheet.distributing`: *"Multiplying out and collecting are one law read both ways"*, which is
-the insight the family exists to carry (left to right you expand, right to left you factor, and
-checking a factorisation means multiplying it back).
+- **The drill reads the skill, never the reverse.** `src/data/drills/*.json` is DISPOSABLE —
+  ignore it entirely, it is not evidence of anything.
+- **`requires` is the only ordering a skill carries** — a dependency partial order, never a
+  sequence. 68 of 74 skills have one.
+- **Ordering vs emphasis are different questions**: `requires` says what must be automatic
+  first; **mistake `frequency` says what to weight**. The parked `drills/_parked-priority.json`
+  holds a teacher's hand-ranked drilling order (1–29) from before the split — a design input,
+  not data to reload.
+- **An error is not drillable.** You drill a capability and *detect* an error.
+- **Tutorial DRIVES drills — one runner, two drivers** (guided `requires`-traversal vs free
+  pick). Do not fork the runner.
+- ⚠️ **The tutorial will collide with `/sheets`** if it is built to hold content. The sheets are
+  the reference it should walk, not duplicate.
+- **Display the authored LaTeX, never Compute Engine output** — CE canonicalises and loses
+  surface form. CE answers only semantic questions ("are these equal?"). See `app_design.md`.
 
-⚠️ **This is the first sheet that is BROADER THAN ITS FAMILY, and that is the point.**
-Distributing cuts across the other families — `minus-over-bracket` is a minus rule,
-`binomial-square` a binomial formula, `split-numerator` a fraction law — but every one of them
-IS distribution. They appear on this sheet and keep their own family. **Family is one, sheets
-are many**, and this is the first place the split does visible work. Only the two rules whose
-SUBJECT is the law itself changed family: `only-multiplication-distributes` and
-`unlike-terms-stay`.
+### Questions the brainstorm should settle
 
-The sheet's fourth group, **"Where it does not reach"** (`no-power-law-for-sums`,
-`split-numerator`, `fraction-cancel`), is half of why the law deserves a sheet: students
-over-generalise it, and the places it does *not* reach are the commonest mistakes in the layer.
+1. **What is a session?** Length, mix across kinds, and whether it is generated or authored.
+2. **Where does progress live?** The first runtime state in the app — everything so far is
+   static content. Pinia + localStorage is the obvious floor; anything more is a real decision.
+3. **How is a transformation graded?** Free input needs equivalence checking (CE) and probably
+   MathLive for entry. The other three kinds need no grading at all — they are selections.
+4. **Does the skill layer need per-item material**, or can items be generated from
+   `illustration` + `wrong` + `requires`? Generating keeps one source of truth; authoring gives
+   control. This is the ripple question.
+5. **What does a wrong answer show?** The row on `/skills` already pairs ✓ with ✗ and names the
+   mistake — the drill should probably reuse that, not invent a second explanation surface.
+6. **Sheet coverage as a curriculum question**: 31 of 50 sheet rules have no skill. If students
+   drill what is on the cheat sheet, that gap is the syllabus talking.
 
-⚠️ Unrelated to the older "a seventh sheet, or not" item further down, which was about covering
-the TOWER's uncovered cards. This sheet adds no rules — it arranges ones that already existed.
+### Not blocking, but decide early
+- The inspection-only `drill material` fold on `/skills` renders discardable content, and
+  `validateDrills`' `explainedBy ⊆ skill.errors` check guards nothing. Both can go.
+- `equivalence.minus-on-fraction` still carries `mis.minus-roles-confused` only because a
+  disposable drill's `explainedBy` names it. Repoint at `anti.minus-on-both-parts`.
 
-**`rule.dominant-op-tools` is now the only rule with no family and on no sheet**, correctly: it
-is a strategy rule with **no formula**, and a formulary has nothing to print.
+---
 
-**Still open, and it was never a layering question — now an AUDIT LINE (2026-07-29)**:
+## ✍️ ONGOING — prose fine-tuning, English and German
 
-    Sheet rules no skill teaches (31 of 50):
-      zero-and-one 5/5 · power-laws 9/10 · minus-rules 6/8 · fraction-laws 7/10
-      distributing 5/11 · reading-a-term 5/13 · binomial-formulas 2/6
-
-Reported **per sheet**, ordered by the fraction untaught, because a single number hid which
-sheet is hollow — and the answer is stark: **`zero-and-one` has NO skill behind any of its five
-rules**, and `power-laws` has one for ten. `reading-a-term` (8 of 13 taught) and
-`binomial-formulas` (4 of 6) are the covered ones. The headline counts DISTINCT rules; four sit
-on two sheets and summing the per-sheet figures would double-count them.
-
-⚠️ **A QUESTION, NEVER A CHECK, and it should stay non-zero.** A sheet is legitimately broader
-than a drill curriculum — a formulary may carry a rule for reference that nothing drills.
-Promoting this to a validator would force skills into existence to satisfy an arithmetic
-rather than a student.
-
-## ✅ DONE 2026-07-29 — `rule.mnemonic`, and why mistakes get no `family`
-
-The question was whether MISTAKES should have a `family` — *"the freshman's dream"* — because
-students need reference points. **No**, on three grounds, and the third is decisive:
-
-1. Mistakes already carry **three** classifiers (`kind`, `topic`, and `breaks`, which clusters
-   them); rules had one, which is why `family` filled a hole there and would not here.
-2. The famous names identify a **single** mistake, not a group — *the freshman's dream* is
-   `anti.linearity`, *closure compulsion* is `anti.conjoining`. The names that DO group
-   (*sign errors*, *order-of-operations errors*) are already `topic`.
-3. ~~⚠️ *The freshman's dream* has no standing German name, and the students are not
-   freshmen.~~ **OVERTURNED by the user 2026-07-29**, correctly: a Swiss Gymnasium first-year
-   IS the newcomer the name describes, so *freshman* reads as *fresh*. It is now the mnemonic
-   on `rule.no-power-law-for-sums` — the one entry that is a NAME rather than a rhyme, and the
-   only one carried into German untranslated. **The reasoning against a mistake `family` stands
-   on the other two grounds**; what was wanted was a name for one thing, and it has one.
-
-⚠️ **And there are no student-facing classes of mistakes independent of the rules.** `topic` is
-subject area, `breaks` IS the rule, and the only rule-independent grouping is `kind`
-(mechanism), which no student would say. The user reached this before I did.
-
-**What they were actually after** — *"nur die Dummen kürzen über Summen"* — is not a name for
-an error class. It is a **mnemonic for `rule.fraction-cancel`**, and mnemonics belong on rules.
-9 of 58 now carry one; see `content_model.md` rev. 15 for why it is not a `localizedString`
-and why the view must not fall back between languages.
-
-⚠️ **The best evidence for the whole design came out of the research**: *kürzen nur die Dummen*
-and *radizieren nur die Dummen* are the SAME rhyme on two different rules — the classroom
-tradition independently found the `distributing` family we had built the same afternoon.
+**Gradual and in response to use, not a pass.** All German is unreviewed by a native reader;
+the English has had three passes this session and is settled in shape but not in wording.
+⚠️ **Fixed terminology is recorded in `content_model.md` rev. 16** — correct a term there and
+it is a replacement rather than 74 judgement calls. And ⚠️ **check a replacement against the
+rest of the German**: `Blöcke` → `Bausteine` collided with a blurb using the same word for
+something else. `Term`, `Gestalt` and `Einheit` carry the most load.
 
 ---
 
