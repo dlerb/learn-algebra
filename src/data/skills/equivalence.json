@@ -354,6 +354,7 @@
           ],
           "rules": [
             "rule.three-minuses",
+            "rule.fraction-minus-moves",
             "rule.fraction-bar-brackets"
           ],
           "restsOn": [
@@ -363,6 +364,7 @@
             "ix.fraction-bar"
           ],
           "errors": [
+            "anti.minus-on-both-parts",
             "mis.minus-roles-confused"
           ]
         },

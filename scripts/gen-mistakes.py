@@ -103,6 +103,10 @@ M = {
    'Don’t add fractions straight across',
    'Brüche nicht einfach quer addieren',
    [r'\frac{a}{b} + \frac{c}{d} = \frac{a+c}{b+d}']),
+ 'anti.minus-on-both-parts': (
+   'Don’t put one minus in two places',
+   'Ein Minus nicht an zwei Stellen setzen',
+   [r'-\frac{a}{b} = \frac{-a}{-b}']),
  'mis.fraction-bar-grouping-lost': (
    'The first term alone is not the numerator',
    'Der erste Term allein ist nicht der Zähler',

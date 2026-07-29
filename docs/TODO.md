@@ -265,10 +265,21 @@ a rule with no `summarizes` can be neither supported nor unsupported, and 8 of 5
 #### Still open on the skills page
 - **20 classification/chunking skills have no ✗**, and their wrong answer is a NAME or a
   DECOMPOSITION rather than a false equation — the frozen drill layer's shape. Left undecided.
-- **`equivalence.minus-on-fraction`** cites `mis.minus-roles-confused` against
-  ✗ $-\frac{a}{b} = \frac{-a}{-b}$. Defensible (a minus gained rather than lost) but the real
-  misconception — *putting the minus on both parts cancels it* — has **no pool entry**. The one
-  genuine gap the audit turned up.
+- [x] ~~**`equivalence.minus-on-fraction`** has no pool entry for the real misconception.~~
+  **CLOSED 2026-07-29** — `anti.minus-on-both-parts`, *"Don't put one minus in two places"*,
+  ✗ $-\frac{a}{b} = \frac{-a}{-b}$. It breaks `rule.fraction-minus-moves` ("the minus may sit
+  in any of THREE places" — the mistake puts it in two at once), which was cited by nothing
+  until now, so the pool's unreferenced count went 26 → 25. Mistakes 28 → 29.
+  ⚠️ **`frequency` is ★ by teacher judgement, not a source count** — the second entry for which
+  that is true (after `anti.quadratic-pair-unchecked`). The catalog behind
+  `docs/common_mistakes.md` was collected for reading and judging expressions, so it records
+  nothing about tidying a fraction's minus.
+  ⚠️ **`mis.minus-roles-confused` stays on the skill**, because the frozen drill's pitfall
+  `\frac{-a}{-b}` names it in `explainedBy`, which is validated ⊆ the skill's `errors`.
+  **Repoint that at `anti.minus-on-both-parts` when the drill freeze lifts** — the drill had
+  already found this distractor and attributed it to the best mistake available at the time.
+  Wiring the skill also exposed that it never cited `rule.fraction-minus-moves`, which IS its
+  subject; added.
 - 14/74 skills still have no `restsOn`.
 
 **SUPERSEDED — the transformation ✗ + the wiring audit, one pass.** All 10 transformation skills are

@@ -512,6 +512,29 @@
       ]
     },
     {
+      "id": "anti.minus-on-both-parts",
+      "kind": "anti-law",
+      "topic": "fractions",
+      "frequency": 1,
+      "mistake": {
+        "en": "Don’t put one minus in two places",
+        "de": "Ein Minus nicht an zwei Stellen setzen"
+      },
+      "latex": [
+        "-\\frac{a}{b} = \\frac{-a}{-b}"
+      ],
+      "note": {
+        "en": "The legal move — multiplying top and bottom by $-1$ — is confused with moving the single minus. Negating both parts changes nothing, so the fraction silently comes out positive.",
+        "de": "Der erlaubte Schritt — Zähler und Nenner mit $-1$ multiplizieren — wird mit dem Verschieben des einen Minus verwechselt. Beide Teile zu negieren ändert nichts, also wird der Bruch unbemerkt positiv."
+      },
+      "breaks": [
+        "rule.fraction-minus-moves"
+      ],
+      "corrupts": [
+        "th.fraction-minus-moves"
+      ]
+    },
+    {
       "id": "anti.conjoining",
       "kind": "anti-law",
       "topic": "terms",
