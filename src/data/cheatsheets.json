@@ -135,6 +135,7 @@
           "layout": "flow",
           "rules": [
             "rule.no-power-law-for-sums",
+            "rule.no-root-law-for-sums",
             "rule.split-numerator",
             "rule.fraction-cancel"
           ]
@@ -308,7 +309,8 @@
           },
           "layout": "flow",
           "rules": [
-            "rule.no-power-law-for-sums"
+            "rule.no-power-law-for-sums",
+            "rule.no-root-law-for-sums"
           ]
         }
       ]

@@ -245,7 +245,8 @@
       },
       "breaks": [
         "rule.only-multiplication-distributes",
-        "rule.no-power-law-for-sums"
+        "rule.no-power-law-for-sums",
+        "rule.no-root-law-for-sums"
       ],
       "corrupts": [
         "ax.distributivity"

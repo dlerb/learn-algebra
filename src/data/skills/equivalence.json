@@ -733,7 +733,8 @@
             "equivalence.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.only-multiplication-distributes"
+            "rule.only-multiplication-distributes",
+            "rule.power-over-product"
           ],
           "restsOn": [
             "th.root-of-product",
@@ -756,7 +757,8 @@
             "equivalence.root-of-a-product"
           ],
           "rules": [
-            "rule.only-multiplication-distributes"
+            "rule.only-multiplication-distributes",
+            "rule.no-root-law-for-sums"
           ],
           "restsOn": [
             "ix.root"

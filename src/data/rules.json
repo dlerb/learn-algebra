@@ -561,6 +561,26 @@
       ]
     },
     {
+      "id": "rule.no-root-law-for-sums",
+      "kind": "is",
+      "family": "rule.power-laws",
+      "rule": {
+        "en": "There is no law for a root of a sum",
+        "de": "Für eine Wurzel einer Summe gibt es kein Gesetz"
+      },
+      "mnemonic": {
+        "de": "Potenzen und Summen radizieren nur die Dummen"
+      },
+      "latex": [
+        "\\sqrt{a+b} \\neq \\sqrt{a} + \\sqrt{b}"
+      ],
+      "note": {
+        "en": "The root reaches through products and quotients and stops at a plus — the same wall the power laws hit, because a root is a power with a fractional exponent. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, while $3 + 4 = 7$.",
+        "de": "Die Wurzel greift durch Produkte und Quotienten und hört beim Plus auf — dieselbe Wand wie bei den Potenzgesetzen, denn eine Wurzel ist eine Potenz mit gebrochenem Exponenten. Probier $a = 9$, $b = 16$: $\\sqrt{25} = 5$, aber $3 + 4 = 7$."
+      },
+      "summarizes": []
+    },
+    {
       "id": "rule.power-vs-coefficient",
       "kind": "is",
       "rule": {
@@ -917,14 +937,11 @@
         "de": "Der Wurzelstrich ist eine Klammer"
       },
       "latex": [
-        "\\sqrt{a+b} \\neq \\sqrt{a} + \\sqrt{b}"
+        "\\sqrt{a+b} \\neq \\sqrt{a} + b"
       ],
       "note": {
         "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
         "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird."
-      },
-      "mnemonic": {
-        "de": "Potenzen und Summen radizieren nur die Dummen"
       },
       "family": "rule.read-the-term-first",
       "summarizes": [
