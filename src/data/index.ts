@@ -4,7 +4,7 @@
 import {
   parseSkillTree, parseDrills, parseErrorTree, parseRuleTree, parseSheetTree,
   parseMistakeTree,
-  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateSkillLinks, validateReadings,
+  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateSkillLinks, validateReadings,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
   type Drill, type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
   type MistakeDef, type MistakeTree,
@@ -72,25 +72,6 @@ export const rules: RulesFile = ruleTree.rules
 export const sheetTree: SheetTree = parseSheetTree(sheetsRaw)
 export const sheets: SheetDef[] = sheetTree.sheets
 
-// THE FAMILY A RULE BELONGS TO — "the power laws", "the minus rules" — derived
-// through the sheets and authored nowhere (2026-07-29).
-//
-// This is the one piece of grouping the pool DOES carry, and only because a
-// teacher names it out loud and a mistake can cite it. Everything else about
-// grouping is presentation and lives on the sheet, which is exactly why the
-// membership has to be read backwards from there: a sheet names its rules, its
-// own `rule` is the family name, so sheet-membership IS family-membership.
-// 48 of 57 rules sit on a sheet; the other 9 have no family and show none.
-// Four rules sit on two sheets, so the value is a list, not a single id.
-export const ruleFamilies = new Map<string, SheetDef[]>()
-for (const s of sheets) {
-  for (const g of s.groups) {
-    for (const id of g.rules) {
-      if (id === s.rule) continue          // a family does not belong to itself
-      ruleFamilies.set(id, [...(ruleFamilies.get(id) ?? []), s])
-    }
-  }
-}
 
 // The fundament's shadow: false laws and misreadings, each `corrupts` a card in
 // the tower (src/data/layers.ts). The laws/conventions files they used to point
@@ -127,6 +108,7 @@ validateUniqueIds(skills)
 validateSkillKinds(skillKinds)
 validateRuleRefs(skills, rules)
 validateSheetRefs(sheets, rules)
+validateRuleFamilies(rules)
 validateSkillLinks(skills)
 validateReadings(skills)
 validateDrills(drills, skills)

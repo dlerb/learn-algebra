@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { ruleTree, rules, sheets, ruleFamilies, errorPatterns, skills } from '../data'
+import { ruleTree, rules, sheets, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type RuleDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
@@ -64,18 +64,19 @@ const readsOf = (m: RuleDef) => m.summarizes.map(id => {
 // columns of prose with one formula, a sheet is formulas under headings.
 const sheetByRule = new Map(sheets.map(s => [s.rule, s]))
 
-// THE FAMILY THIS RULE BELONGS TO, derived through the sheets (2026-07-29) — the
-// mirror of the `Cheat sheet` link below, which points the other way for the six
-// rules that ARE families. What it buys is the thing a teacher says out loud:
-// nobody cites "multiplying powers of the same base adds the exponents", they say
-// "the power laws". Showing the pool a sentence sits in makes the registry read
-// as a set of named families rather than 57 loose lines.
-const familyOf = (id: string) => (ruleFamilies.get(id) ?? []).map(sh => t(sh.name))
+const ruleById = new Map(rules.map(r => [r.id, r]))
 
-// A sentence nothing cites is dead weight: context is the only thing that gives
-// it meaning, and with no error and no skill behind it there is none to give.
-// REACH AS GARBAGE COLLECTION, not as an admission test — what belongs in the
-// registry is whatever turns out to be important, however narrowly it is used.
+// THE FAMILY THIS RULE BELONGS TO — "Power laws", "Minus rules". Read straight
+// off `rule.family` since 2026-07-29; it used to be derived through sheet
+// membership, which made /rules import from cheatsheets to answer a question
+// about a RULE, and conflated "belongs to one family" with "is printed on two
+// sheets". Family is one, sheets are many.
+const familyOf = (id: string) => {
+  const f = ruleById.get(id)?.family
+  const head = f ? ruleById.get(f) : undefined
+  return head?.short ? [t(head.short)] : []
+}
+
 const items = computed(() => rules.map(m => {
   const errors = preventedBy(m), sk = drilledBy(m)
   return {

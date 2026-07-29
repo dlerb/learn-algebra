@@ -4,76 +4,41 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🔴 NEXT SESSION — is `cheatsheets` a missing LAYER? (handover 2026-07-29)
+## ✅ RESOLVED 2026-07-29 — cheatsheets is NOT a missing layer
 
-**The observation that started it (the user's).** `/skills` now reads from **two** curated
-sources: `rules.json` for the sentence, and `cheatsheets.json` for the family label in front of
-it ("**Power laws** · Add the exponents when the base is the same"). A skill reaching past one
-layer into another is a smell, and it may be pointing at a missing rung:
+**The question was**: `/skills` read from both `rules.json` and `cheatsheets.json`, so is there
+a missing rung `rules → cheatsheets → skills`? **No.** The user's picture was right — a sheet
+is one REPRESENTATION of the rules pool — and the smell had a smaller cause.
 
-    rules  →  cheatsheets  →  skills
+**`family` was the axis this pool was missing.** Every other curated layer has two classifiers,
+a register/causal one and a subject one (mistakes `kind` + `topic`, skills `kind` + `group`);
+rules had only `kind: is|do`. With nowhere to live, the subject axis got approximated by SHEET
+MEMBERSHIP — which is why a page had to import from cheatsheets to answer a question about a
+rule.
 
-**The pedagogical claim underneath it, which is the load-bearing part.** Students will
-primarily use the **cheat sheet** for orientation; they should primarily **drill what is on the
-cheat sheet**; and the rules a skill shows should **name the sheet pool** so a student can find
-their way back to it. That makes the sheet the SPINE of the student experience rather than a
-derived view of the pool — which is a real inversion of the current model, where
-`content_model.md` rev. 11 says a sheet **owns nothing**.
+⚠️ **And the approximation was wrong, not just misplaced.** Four rules came back with two
+families — `rule.divide-by-one-and-self` → "Zero and one + Fraction laws". Read it again: that
+is *appears on two sheets*, not *belongs to two families*. **FAMILY IS ONE, SHEETS ARE MANY**:
+`a/1 = a` is a fact about ONE, and it is *useful to print* on the fraction sheet as well.
 
-### What the data already says — measure before designing
+**What changed**: `rule.family` (48 rules, the id of the family head) and `rule.short` (the six
+heads' label — its own field because two heads are REAL RULES whose sentence must survive:
+"Read the term before you change it" is a usable instruction and a useless prefix).
+`sheet.name` is **deleted** and rev. 11's *"a sheet owns nothing"* is restored. `ruleFamilies`
+is gone from `index.ts`; both views read `rule.family` directly and **`/skills` imports nothing
+from cheatsheets**. `validateRuleFamilies` enforces one level, no chains.
 
-| | |
-|---|---|
-| rules on a sheet | **48 of 57** |
-| sheet heads (the family names) | 6 |
-| rules on no sheet and not a head | **3** — `only-multiplication-distributes`, `dominant-op-tools`, `unlike-terms-stay` |
-| **rules ON a sheet that no skill cites** | **31 of 48** |
-| rules a skill cites that are on no sheet | 3 of 20 |
+⚠️ **Four teaching calls, easy to overrule** — the rules that had sat on two sheets:
+`divide-by-one-and-self` → Zero and one · `exponent-counts-factors` → Power laws ·
+`fraction-minus-moves` → Minus rules · `no-power-law-for-sums` → Power laws.
 
-⚠️ **That 31 is the finding.** If students should drill what is on the cheat sheet, then **two
-thirds of the cheat-sheet content has no skill behind it** — the whole minus sheet bar one
-entry, most of the fraction and power sheets. The gap runs the OPPOSITE way from the smell that
-prompted the question: skills already drill almost only sheet content (17 of 20), but the
-sheets are far from covered. Whatever is decided about layering, **that coverage question is
-the actionable one**, and it is a new audit line waiting to be written.
+**Three rules have no family**: `only-multiplication-distributes`, `dominant-op-tools`,
+`unlike-terms-stay`. The first is on no sheet either despite being broken by three mistakes —
+either a sheet is missing or it belongs on *reading a term*.
 
-⚠️ **`rule.only-multiplication-distributes` is on no sheet at all** — the rule broken by three
-separate mistakes, including `anti.linearity`. Either a sheet is missing or that rule belongs
-on the *reading a term* sheet.
-
-### The "ill-sitting pools" — move the six family names to the sheets?
-
-`rule.power-laws`, `-minus-rules`, `-fraction-laws`, `-binomial-formulas`, `-zero-and-one`,
-`-read-the-term-first` are **names of families, not rules**: all six carry **no `latex`**, and
-four of them have **no `summarizes`** either, so they bridge to nothing in the tower. Their
-entire job is to head a sheet. Moving them there is defensible and half-done already — the
-short display `name` I added on 2026-07-29 lives on the sheet, so "a sheet owns nothing" has
-already bent.
-
-⚠️ **But check this before moving anything: `anti.exponent-arithmetic` CITES
-`rule.power-laws`** (alongside `-same-base` and `-power-of-power`). That is exactly the
-citability the rev. 11 decision was designed to protect — *"an error naming 'the power laws'
-cites the rule, not the sheet"*. It is one citation out of six family names, so the question is
-whether to keep the pool entry for that one case, teach `error.rules` to accept a sheet id, or
-repoint that error at its two specific rules. **Do not assume nothing cites them.**
-
-### Questions to settle, in order
-1. **Does a sheet become a citable entity?** If yes, `error.rules` and `skill.rules` need to
-   accept sheet ids, and the DAG gains `skills → sheets → rules`. If no, the family names stay
-   in the pool and only the *label* lives on the sheet — which is today's state, and the
-   "mismatch" is then just a derived index, like every other reverse index in this app.
-2. **What is `/sheets` FOR, if it is the spine?** Today it is a formulary. If students orient
-   by it, it probably needs to show which entries they have drilled — which is progress, and
-   therefore drill-blocked.
-3. **The 31 uncovered sheet rules**: author skills, or accept that a cheat sheet is broader
-   than a drill curriculum? Both are defensible; the answer decides whether the number is a
-   backlog or a measurement.
-
-⚠️ **Do not start by moving data.** The whole question is answerable from the coverage numbers
-plus one decision about citability, and moving six entries between files is the last step, not
-the first.
-
----
+**Still open, and it was never a layering question**: **31 of 48 sheet rules are cited by no
+skill.** If students should drill what is on the cheat sheet, two thirds of the sheets have
+nothing behind them. That wants a new audit line.
 
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
 

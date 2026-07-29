@@ -217,6 +217,31 @@ export const ruleDef = z.object({
   latex: z.array(z.string()).default([]),
   note: localizedString,                  // its gloss, one sentence with an example. Was `rule`, and it always was the gloss
   summarizes: z.array(z.string()).default([]),  // card ids this sentence digests — a bridge claim, not a link (see above)
+  // ── THE SUBJECT AXIS (2026-07-29) ────────────────────────────────────────
+  // `family` names the pool this sentence belongs to — "the power laws", "the
+  // minus rules" — as the id of the rule that IS that family.
+  //
+  // WHY IT IS A FIELD AND NOT DERIVED. It used to be read off sheet membership,
+  // which conflated two different things: `rule.divide-by-one-and-self` came back
+  // as "Zero and one + Fraction laws", but that is *appears on two sheets*, not
+  // *belongs to two families*. FAMILY IS ONE, SHEETS ARE MANY — a rule is one
+  // kind of thing and may usefully be printed in several places. Deriving it also
+  // forced /skills to import from cheatsheets to answer a question about a rule.
+  //
+  // It is also the axis this pool was missing. Every other curated layer has two
+  // classifiers — a register/causal one and a subject one (mistakes: kind +
+  // topic; skills: kind + group) — and rules had only `kind: is|do`. That hole is
+  // why the family had nowhere to live.
+  //
+  // ⚠️ ONE LEVEL, NO CHAINS: a family head has no `family` of its own, and
+  // validateRuleFamilies enforces it.
+  family: z.string().optional(),
+  // The family's LABEL, on the family head only: "Power laws", two or three
+  // words, because it is printed in front of a member's sentence on /skills and
+  // /rules. It needs its own field because two of the six heads are REAL RULES
+  // whose sentence must survive — "Read the term before you change it" is a
+  // usable instruction and a useless prefix.
+  short: localizedString.optional(),
 })
 export type RuleDef = z.infer<typeof ruleDef>
 
@@ -383,14 +408,6 @@ export const sheetDef = z.object({
   /** The pool sentence that heads it — and the sheet's citable identity, since
    *  an error naming "the power laws" cites the rule, not the sheet. */
   rule: z.string(),
-  /** THE FAMILY'S SHORT NAME (2026-07-29) — "Power laws", "Minus rules". Two or
-   *  three words, because it is used as a LABEL in front of a rule on /rules and
-   *  /skills, where the heading sentence does not fit: four of the six head rules
-   *  end in an exhortation ("The power laws: know these cold") and two are not
-   *  family names at all but ordinary rules that happen to head a sheet ("Read
-   *  the term before you change it"). Presentation, so it lives on the sheet;
-   *  the RULE remains the citable identity. */
-  name: localizedString,
   groups: z.array(sheetGroup).min(1),
 })
 export type SheetDef = z.infer<typeof sheetDef>
@@ -411,6 +428,21 @@ export function parseSheetTree(raw: unknown): SheetTree {
   if (!r.success) throw new Error(`Invalid cheatsheets file:\n${z.prettifyError(r.error)}`)
   const { title, blurb, note, sheets } = r.data
   return { meta: { title, blurb, note }, sheets }
+}
+
+/** A family must resolve, must be a family HEAD (it carries the `short` label),
+ *  must not be the rule itself, and must not itself have a family — one level,
+ *  no chains, so "which family is this in" is always one lookup. */
+export function validateRuleFamilies(rules: RulesFile): void {
+  const byId = new Map(rules.map(r => [r.id, r]))
+  for (const r of rules) {
+    if (!r.family) continue
+    const head = byId.get(r.family)
+    if (!head) throw new Error(`Rule "${r.id}" has unknown family "${r.family}".`)
+    if (r.family === r.id) throw new Error(`Rule "${r.id}" is its own family.`)
+    if (!head.short) throw new Error(`Rule "${r.id}" names family "${r.family}", which carries no "short" label.`)
+    if (head.family) throw new Error(`Family "${r.family}" itself has a family — families are one level deep.`)
+  }
 }
 
 /** Every rule a sheet names must exist — a sheet owns nothing, so a dangling

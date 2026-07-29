@@ -16,10 +16,6 @@
     {
       "id": "sheet.zero-and-one",
       "rule": "rule.zero-and-one",
-      "name": {
-        "en": "Zero and one",
-        "de": "Null und Eins"
-      },
       "groups": [
         {
           "title": {
@@ -49,10 +45,6 @@
     {
       "id": "sheet.reading-a-term",
       "rule": "rule.read-the-term-first",
-      "name": {
-        "en": "Reading a term",
-        "de": "Einen Term lesen"
-      },
       "groups": [
         {
           "title": {
@@ -99,10 +91,6 @@
     {
       "id": "sheet.minus-rules",
       "rule": "rule.minus-rules",
-      "name": {
-        "en": "Minus rules",
-        "de": "Minusregeln"
-      },
       "groups": [
         {
           "title": {
@@ -153,10 +141,6 @@
     {
       "id": "sheet.fraction-laws",
       "rule": "rule.fraction-laws",
-      "name": {
-        "en": "Fraction laws",
-        "de": "Bruchregeln"
-      },
       "groups": [
         {
           "title": {
@@ -218,10 +202,6 @@
     {
       "id": "sheet.power-laws",
       "rule": "rule.power-laws",
-      "name": {
-        "en": "Power laws",
-        "de": "Potenzgesetze"
-      },
       "groups": [
         {
           "title": {
@@ -283,10 +263,6 @@
     {
       "id": "sheet.binomial-formulas",
       "rule": "rule.binomial-formulas",
-      "name": {
-        "en": "Binomial formulas",
-        "de": "Binomische Formeln"
-      },
       "groups": [
         {
           "title": {

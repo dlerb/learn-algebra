@@ -27,6 +27,7 @@
         "en": "Anything written next to anything else, with no symbol between, means multiply: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ are all products.",
         "de": "Alles, was ohne Zeichen nebeneinander steht, wird multipliziert: $3x$, $2(x+1)$, $(a+1)(a-1)$, $xy$ sind alles Produkte."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.juxtaposition"
       ]
@@ -45,6 +46,7 @@
         "en": "Where no number is written in front, the coefficient is $1$: $a$ is $1 \\cdot a$.",
         "de": "Wo vorne keine Zahl steht, ist der Koeffizient $1$: $a$ ist $1 \\cdot a$."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.invisible-one"
       ]
@@ -63,6 +65,7 @@
         "en": "A product may be written in either order: $a \\cdot 3$, $3 \\cdot a$ and $3a$ are the same product.",
         "de": "Ein Produkt darf in beliebiger Reihenfolge stehen: $a \\cdot 3$, $3 \\cdot a$ und $3a$ sind dasselbe Produkt."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.coefficient-front"
       ]
@@ -82,6 +85,7 @@
         "en": "$a + b = b + a$ and $ab = ba$. Minus and divide have no such rule: $a - b$ and $b - a$ are opposites, $\\frac{a}{b}$ and $\\frac{b}{a}$ reciprocals.",
         "de": "$a + b = b + a$ und $ab = ba$. Für Minus und Geteilt gibt es keine solche Regel: $a - b$ und $b - a$ sind Gegenzahlen, $\\frac{a}{b}$ und $\\frac{b}{a}$ Kehrwerte."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "ax.add-commutative",
         "ax.mul-commutative"
@@ -97,6 +101,10 @@
       "note": {
         "en": "Each does something no other number does, and each has a rule attached that gets used constantly.",
         "de": "Jede tut etwas, was keine andere Zahl tut, und zu jeder gehört eine Regel, die dauernd gebraucht wird."
+      },
+      "short": {
+        "en": "Zero and one",
+        "de": "Null und Eins"
       }
     },
     {
@@ -114,6 +122,7 @@
         "en": "Which is why both may be inserted whenever they help: $a$ is $1 \\cdot a$, and that is how the invisible one comes back.",
         "de": "Deshalb dürfen beide eingefügt werden, wann immer es hilft: $a$ ist $1 \\cdot a$, und so kommt die unsichtbare Eins zurück."
       },
+      "family": "rule.zero-and-one",
       "summarizes": [
         "ax.zero-neutral",
         "ax.one-neutral"
@@ -133,6 +142,7 @@
         "en": "One zero factor decides the whole product, however long it is.",
         "de": "Ein einziger Faktor null entscheidet das ganze Produkt, wie lang es auch ist."
       },
+      "family": "rule.zero-and-one",
       "summarizes": [
         "th.zero-times"
       ]
@@ -151,6 +161,7 @@
         "en": "This is what lets an equation be solved by factoring: bring everything to one side, factorise, and set each factor to zero in turn.",
         "de": "Das erlaubt es, eine Gleichung durch Faktorisieren zu lösen: alles auf eine Seite bringen, faktorisieren, und jeden Faktor der Reihe nach null setzen."
       },
+      "family": "rule.zero-and-one",
       "summarizes": [
         "th.zero-product"
       ]
@@ -169,6 +180,7 @@
         "en": "A minus is either subtraction ($a - b$) or negation ($-a$) — two roles, no third. When one confuses you, ask which it is.",
         "de": "Ein Minus ist entweder Subtraktion ($a - b$) oder Negation ($-a$) — zwei Rollen, keine dritte. Wenn dich eines verwirrt, frage dich, welches es ist."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "ax.additive-inverse",
         "def.sub",
@@ -185,6 +197,10 @@
       "note": {
         "en": "More mistakes come from the minus than from anything else in algebra, and every one of them is a question about which of these applies.",
         "de": "Kein Zeichen der Algebra verursacht mehr Fehler als das Minus, und jeder davon ist die Frage, welche dieser Regeln gilt."
+      },
+      "short": {
+        "en": "Minus rules",
+        "de": "Minusregeln"
       }
     },
     {
@@ -202,6 +218,7 @@
         "en": "It is a theorem, not a decree: it is forced by wanting $(-1)(1 + (-1)) = 0$ to hold both ways round.",
         "de": "Das ist ein Satz, keine Setzung: Er wird erzwungen, wenn $(-1)(1 + (-1)) = 0$ auf beide Arten stimmen soll."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "th.minus-times-minus"
       ]
@@ -220,6 +237,7 @@
         "en": "So a product with one minus in it is negative, with two is positive, and you can count them instead of tracking them.",
         "de": "Ein Produkt mit einem Minus ist also negativ, mit zwei positiv — man kann sie zählen statt sie zu verfolgen."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "th.minus-in-product"
       ]
@@ -238,6 +256,7 @@
         "en": "The minus is a factor $(-1)$, so it distributes like any other factor. Flipping only the first term is the commonest version of this mistake.",
         "de": "Das Minus ist ein Faktor $(-1)$ und verteilt sich wie jeder andere. Nur den ersten Term umzukehren ist die häufigste Form dieses Fehlers."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "th.minus-over-sum"
       ]
@@ -257,6 +276,7 @@
         "en": "The second line is where the marks go: subtracting a difference ADDS the last term.",
         "de": "In der zweiten Zeile passieren die Fehler: Eine Differenz zu subtrahieren ADDIERT den letzten Term."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "th.subtract-a-sum"
       ]
@@ -275,6 +295,7 @@
         "en": "An operation sign and a minus belonging to a number never stand side by side: write $a + (-b)$.",
         "de": "Ein Rechenzeichen und ein Minus, das zu einer Zahl gehört, stehen nie nebeneinander: schreibe $a + (-b)$."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "ix.no-adjacent-operator"
       ]
@@ -294,6 +315,7 @@
         "en": "No explicit symbol before a bracket means multiplication (juxtaposition). A minus before a bracket means times $(-1)$.",
         "de": "Kein Zeichen vor der Klammer heisst Multiplikation (Nebeneinanderschreiben). Ein Minus vor der Klammer heisst mal $(-1)$."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.brackets",
         "ix.juxtaposition"
@@ -313,6 +335,7 @@
         "en": "$-a^2$ means $-(a^2)$, not $(-a)^2$. The exponent applies first, the minus after.",
         "de": "$-a^2$ bedeutet $-(a^2)$, nicht $(-a)^2$. Zuerst wirkt der Exponent, dann das Minus."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.pow",
         "th.negative-base"
@@ -328,6 +351,10 @@
       "note": {
         "en": "Every one of them acts on the exponents; the base never changes. If a term has powers in it and you are stuck, you are looking for one of these.",
         "de": "Alle wirken auf die Exponenten; die Basis bleibt. Steckst du bei einem Term mit Potenzen fest, suchst du eines davon."
+      },
+      "short": {
+        "en": "Power laws",
+        "de": "Potenzgesetze"
       }
     },
     {
@@ -344,6 +371,7 @@
         "en": "The exponent is a count: $a^5$ is five factors of $a$, no more and no less.",
         "de": "Der Exponent ist eine Anzahl: $a^5$ sind fünf Faktoren $a$, nicht mehr und nicht weniger."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "def.pow",
         "ix.pow"
@@ -364,6 +392,7 @@
         "en": "The second one is forced, not chosen: $a^0$ has to be $1$ for the same-base law to keep working at $m = n$.",
         "de": "Das zweite ist erzwungen, nicht gewählt: $a^0$ muss $1$ sein, damit das Gesetz für gleiche Basis bei $m = n$ weiter gilt."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "def.pow-zero",
         "def.pow"
@@ -383,6 +412,7 @@
         "en": "A minus in the exponent belongs to the exponent and does not make the value negative: $x^{-1} = \\frac{1}{x}$.",
         "de": "Ein Minus im Exponenten gehört zum Exponenten und macht den Wert nicht negativ: $x^{-1} = \\frac{1}{x}$."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "def.pow-neg",
         "th.inverse-is-power"
@@ -403,6 +433,7 @@
         "en": "The denominator says which root, the numerator which power: $a^{3/2}$ is the square root of $a^3$.",
         "de": "Der Nenner sagt, welche Wurzel, der Zähler, welche Potenz: $a^{3/2}$ ist die Quadratwurzel von $a^3$."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "def.root",
         "def.pow-rat",
@@ -423,6 +454,7 @@
         "en": "The exponents do the arithmetic and the base never changes, because $x^a \\cdot x^b$ is just $a$ factors of $x$ followed by $b$ more.",
         "de": "Die Exponenten rechnen, die Basis bleibt, denn $x^a \\cdot x^b$ sind einfach $a$ Faktoren $x$ und dann $b$ weitere."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "pl.same-base"
       ]
@@ -441,6 +473,7 @@
         "en": "Not a fourth law: dividing is multiplying by $a^{-n}$, so this is the same-base rule again.",
         "de": "Kein viertes Gesetz: Dividieren ist Multiplizieren mit $a^{-n}$, also wieder die Regel für gleiche Basis."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "th.pow-quotient-same-base"
       ]
@@ -460,6 +493,7 @@
         "en": "$(ab)^n = a^n b^n$, and a number in front is a factor like any other.",
         "de": "$(ab)^n = a^n b^n$, und eine Zahl davor ist ein Faktor wie jeder andere."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "pl.of-product",
         "th.root-of-product"
@@ -480,6 +514,7 @@
         "en": "Both parts get the exponent, never just one of them.",
         "de": "Beide Teile bekommen den Exponenten, nie nur einer davon."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "th.pow-of-quotient",
         "th.root-of-quotient"
@@ -500,6 +535,7 @@
         "en": "$(x^a)^b$ is $b$ copies of $x^a$, so the $a$ factors are taken $b$ times over.",
         "de": "$(x^a)^b$ sind $b$ Kopien von $x^a$, die $a$ Faktoren werden also $b$-mal genommen."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "pl.of-power",
         "th.root-power-order"
@@ -520,6 +556,7 @@
         "en": "The power laws reach through products and quotients and stop at a plus. A sum squared has to be multiplied out.",
         "de": "Die Potenzgesetze greifen durch Produkte und Quotienten und hören beim Plus auf. Eine Summe im Quadrat muss ausmultipliziert werden."
       },
+      "family": "rule.power-laws",
       "summarizes": [
         "pl.no-sum-law",
         "th.binomial-square"
@@ -540,6 +577,7 @@
         "en": "$a^2$ is $a \\cdot a$ and $2a$ is $a + a$. Adding never makes a power.",
         "de": "$a^2$ ist $a \\cdot a$ und $2a$ ist $a + a$. Addieren ergibt nie eine Potenz."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "def.multiple",
         "def.pow"
@@ -555,6 +593,10 @@
       "note": {
         "en": "Multiplying and dividing are the easy half — every fraction rule that goes wrong is an adding rule or a cancelling rule.",
         "de": "Multiplizieren und Dividieren sind die einfache Hälfte — schiefgehen tun die Regeln fürs Addieren und fürs Kürzen."
+      },
+      "short": {
+        "en": "Fraction laws",
+        "de": "Bruchregeln"
       }
     },
     {
@@ -571,6 +613,7 @@
         "en": "The bar is one of four spellings of the same operation, not a different kind of object.",
         "de": "Der Bruchstrich ist eine von vier Schreibweisen derselben Operation, kein anderes Objekt."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "def.div",
         "ix.division-symbols"
@@ -591,6 +634,7 @@
         "en": "The second needs $a \\neq 0$, because $\\frac{0}{0}$ is not a number.",
         "de": "Das zweite verlangt $a \\neq 0$, denn $\\frac{0}{0}$ ist keine Zahl."
       },
+      "family": "rule.zero-and-one",
       "summarizes": [
         "th.divide-by-one"
       ]
@@ -609,6 +653,7 @@
         "en": "Everything above the line is one grouped object, everything below another. $a + b/c$ and $(a+b)/c$ are different things.",
         "de": "Alles über dem Strich ist EIN Objekt, alles darunter ein anderes. $a + b/c$ und $(a+b)/c$ sind verschiedene Dinge."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.fraction-bar"
       ]
@@ -627,6 +672,7 @@
         "en": "No common denominator is needed. Multiplying is the one fraction operation that asks nothing first.",
         "de": "Kein gemeinsamer Nenner nötig. Multiplizieren ist die eine Bruchoperation, die vorher nichts verlangt."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-multiply"
       ]
@@ -645,6 +691,7 @@
         "en": "Flip the one you are dividing BY, never the one you start with.",
         "de": "Umgedreht wird der Bruch, durch den man teilt, nie der, mit dem man beginnt."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-divide"
       ]
@@ -663,6 +710,7 @@
         "en": "Read which bar divides which before doing anything: the main bar separates the whole numerator from the whole denominator.",
         "de": "Lies zuerst, welcher Strich was teilt: Der Hauptstrich trennt den ganzen Zähler vom ganzen Nenner."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-divide",
         "ix.fraction-bar"
@@ -683,6 +731,7 @@
         "en": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: bring them to the same denominator first, then add only the numerators.",
         "de": "$\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$: zuerst auf denselben Nenner bringen, dann nur die Zähler addieren."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-add"
       ]
@@ -701,6 +750,7 @@
         "en": "It is the common-denominator rule with $c$ written as $\\frac{c}{1}$.",
         "de": "Es ist die Regel vom gemeinsamen Nenner, mit $c$ geschrieben als $\\frac{c}{1}$."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-add"
       ]
@@ -720,6 +770,7 @@
         "en": "Cancelling divides top and bottom by the same number, and that only works if the number is a factor of the whole of each.",
         "de": "Kürzen teilt oben und unten durch dieselbe Zahl, und das geht nur, wenn diese Zahl Faktor des Ganzen ist."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "th.cancel-common-factor"
       ]
@@ -739,6 +790,7 @@
         "en": "Dividing distributes over the numerator because it is multiplying by $\\frac{1}{c}$. Nothing distributes over a denominator.",
         "de": "Teilen verteilt sich über den Zähler, weil es Multiplizieren mit $\\frac{1}{c}$ ist. Über den Nenner verteilt sich nichts."
       },
+      "family": "rule.fraction-laws",
       "summarizes": [
         "th.split-numerator"
       ]
@@ -757,6 +809,7 @@
         "en": "All three are the same number. Two minuses, one on top and one below, cancel.",
         "de": "Alle drei sind dieselbe Zahl. Zwei Minus, eines oben und eines unten, heben sich auf."
       },
+      "family": "rule.minus-rules",
       "summarizes": [
         "th.fraction-minus-moves"
       ]
@@ -771,6 +824,10 @@
       "note": {
         "en": "Three identities, and every one of them is read in both directions: left to right you multiply out, right to left you factorise. The middle term is what gets lost.",
         "de": "Drei Identitäten, und jede wird in beide Richtungen gelesen: von links nach rechts ausmultiplizieren, von rechts nach links faktorisieren. Verloren geht der mittlere Term."
+      },
+      "short": {
+        "en": "Binomial formulas",
+        "de": "Binomische Formeln"
       }
     },
     {
@@ -787,6 +844,7 @@
         "en": "The $2ab$ counts the two mixed products, $ab$ and $ba$, which are the same number. Dropping it is the commonest mistake in algebra.",
         "de": "Das $2ab$ zählt die beiden gemischten Produkte $ab$ und $ba$, die dieselbe Zahl sind. Es wegzulassen ist der häufigste Fehler der Algebra."
       },
+      "family": "rule.binomial-formulas",
       "summarizes": [
         "th.binomial-square"
       ]
@@ -805,6 +863,7 @@
         "en": "Not a second formula to learn: it is the first one with $-b$ in place of $b$, and $(-b)^2 = b^2$ is why the last term stays positive.",
         "de": "Keine zweite Formel: Es ist die erste mit $-b$ statt $b$, und $(-b)^2 = b^2$ ist der Grund, weshalb der letzte Term positiv bleibt."
       },
+      "family": "rule.binomial-formulas",
       "summarizes": [
         "th.square-of-difference"
       ]
@@ -823,6 +882,7 @@
         "en": "The two mixed products are $+ab$ and $-ab$, so they cancel. It is the only one of the three where the middle term disappears.",
         "de": "Die beiden gemischten Produkte sind $+ab$ und $-ab$ und heben sich auf. Als einzige der drei verliert diese Formel den mittleren Term."
       },
+      "family": "rule.binomial-formulas",
       "summarizes": [
         "th.difference-of-squares"
       ]
@@ -842,6 +902,7 @@
         "en": "Spotting the shape is the hard half: a difference of two squares, or a trinomial whose outer terms are squares and whose middle term is twice their roots multiplied.",
         "de": "Die Form zu erkennen ist die schwierigere Hälfte: eine Differenz zweier Quadrate, oder ein Trinom, dessen äussere Terme Quadrate sind und dessen mittlerer Term das doppelte Produkt ihrer Wurzeln ist."
       },
+      "family": "rule.binomial-formulas",
       "summarizes": [
         "th.difference-of-squares",
         "th.binomial-square"
@@ -861,6 +922,7 @@
         "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
         "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.root"
       ]
@@ -894,6 +956,7 @@
         "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
         "de": "Würdest du den Term Schritt für Schritt ausrechnen, wäre die zuletzt ausgeführte Operation die dominante. Alles andere passiert innerhalb von Chunks."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.precedence",
         "ix.pow",
@@ -912,6 +975,7 @@
         "en": "Whatever is inside brackets is a single object. The dominant operation is always outside all brackets.",
         "de": "Was in Klammern steht, ist EIN Objekt. Die dominante Operation steht immer ausserhalb aller Klammern."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.brackets"
       ]
@@ -931,6 +995,7 @@
         "en": "$(ab)c$ and $abc$ are the same product, so those brackets may be dropped. $(a+b)c$ and $a + bc$ are not, so those may not.",
         "de": "$(ab)c$ und $abc$ sind dasselbe Produkt, diese Klammern dürfen also weg. $(a+b)c$ und $a + bc$ sind es nicht, diese also nicht."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.brackets"
       ]
@@ -949,6 +1014,7 @@
         "en": "In $3x + 2y$ the multiplication is used up inside the terms; the dominant operation is the $+$. It is a sum, not a product.",
         "de": "In $3x + 2y$ ist die Multiplikation innerhalb der Terme verbraucht; die dominante Operation ist das $+$. Es ist eine Summe, kein Produkt."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.precedence"
       ]
@@ -995,6 +1061,7 @@
         "en": "Expanding $(x+m)(x+n)$ produces $x^2 + (m+n)x + mn$, so both conditions hold at once or the pair is wrong.",
         "de": "Das Ausmultiplizieren von $(x+m)(x+n)$ ergibt $x^2 + (m+n)x + mn$; beide Bedingungen gelten also zugleich, sonst stimmt das Paar nicht."
       },
+      "family": "rule.binomial-formulas",
       "summarizes": [
         "ax.distributivity",
         "th.collect-like-terms"
@@ -1011,6 +1078,7 @@
         "en": "A letter stands for a number you do not yet know, and every occurrence of it in one expression is the same number.",
         "de": "Ein Buchstabe steht für eine noch unbekannte Zahl, und jedes Vorkommen davon in einem Ausdruck ist dieselbe Zahl."
       },
+      "family": "rule.read-the-term-first",
       "summarizes": [
         "pre.variables"
       ],
@@ -1028,6 +1096,10 @@
       "note": {
         "en": "Most mistakes are made before any rule is applied: the term was read wrong. What is written next to what, what binds first, what a bracket covers.",
         "de": "Die meisten Fehler passieren, bevor eine Regel angewendet wird: Der Term wurde falsch gelesen. Was steht neben was, was bindet zuerst, was umfasst eine Klammer."
+      },
+      "short": {
+        "en": "Reading a term",
+        "de": "Einen Term lesen"
       }
     }
   ]

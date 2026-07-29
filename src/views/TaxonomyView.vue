@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { skills, drills, groups, skillKinds, rules, mistakes, ruleFamilies, rawById, skillTree } from '../data'
+import { skills, drills, groups, skillKinds, rules, mistakes, rawById, skillTree } from '../data'
 import { loc, type Skill, type Drill, type LocalizedString } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
@@ -100,11 +100,16 @@ const cardLinks = (ids: string[]) => ids.map(id => {
 })
 
 const ruleById = new Map(rules.map(r => [r.id, r]))
-// THE POOL IN FRONT OF THE RULE — "Power laws · Multiplying powers of the same
-// base adds the exponents". Derived through the sheets (src/data/index.ts), so
-// it costs no authoring, and it is what a teacher actually says in class: you
-// cite the family, not the sentence. 48 of 57 rules have one.
-const familyOf = (id: string) => (ruleFamilies.get(id) ?? []).map(sh => t(sh.name))
+// THE FAMILY THIS RULE BELONGS TO — "Power laws", "Minus rules". Read straight
+// off `rule.family` since 2026-07-29; it used to be derived through sheet
+// membership, which made this page import from cheatsheets to answer a question
+// about a RULE, and conflated "belongs to one family" with "is printed on two
+// sheets". Family is one, sheets are many.
+const familyOf = (id: string) => {
+  const f = ruleById.get(id)?.family
+  const head = f ? ruleById.get(f) : undefined
+  return head?.short ? [t(head.short)] : []
+}
 const ruleLinks = (ids: string[]) => {
   const out = ids.map(id => {
     const r = ruleById.get(id)
