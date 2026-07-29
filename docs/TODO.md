@@ -4,6 +4,106 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## 🔴 NEXT SESSION — is `cheatsheets` a missing LAYER? (handover 2026-07-29)
+
+**The observation that started it (the user's).** `/skills` now reads from **two** curated
+sources: `rules.json` for the sentence, and `cheatsheets.json` for the family label in front of
+it ("**Power laws** · Add the exponents when the base is the same"). A skill reaching past one
+layer into another is a smell, and it may be pointing at a missing rung:
+
+    rules  →  cheatsheets  →  skills
+
+**The pedagogical claim underneath it, which is the load-bearing part.** Students will
+primarily use the **cheat sheet** for orientation; they should primarily **drill what is on the
+cheat sheet**; and the rules a skill shows should **name the sheet pool** so a student can find
+their way back to it. That makes the sheet the SPINE of the student experience rather than a
+derived view of the pool — which is a real inversion of the current model, where
+`content_model.md` rev. 11 says a sheet **owns nothing**.
+
+### What the data already says — measure before designing
+
+| | |
+|---|---|
+| rules on a sheet | **48 of 57** |
+| sheet heads (the family names) | 6 |
+| rules on no sheet and not a head | **3** — `only-multiplication-distributes`, `dominant-op-tools`, `unlike-terms-stay` |
+| **rules ON a sheet that no skill cites** | **31 of 48** |
+| rules a skill cites that are on no sheet | 3 of 20 |
+
+⚠️ **That 31 is the finding.** If students should drill what is on the cheat sheet, then **two
+thirds of the cheat-sheet content has no skill behind it** — the whole minus sheet bar one
+entry, most of the fraction and power sheets. The gap runs the OPPOSITE way from the smell that
+prompted the question: skills already drill almost only sheet content (17 of 20), but the
+sheets are far from covered. Whatever is decided about layering, **that coverage question is
+the actionable one**, and it is a new audit line waiting to be written.
+
+⚠️ **`rule.only-multiplication-distributes` is on no sheet at all** — the rule broken by three
+separate mistakes, including `anti.linearity`. Either a sheet is missing or that rule belongs
+on the *reading a term* sheet.
+
+### The "ill-sitting pools" — move the six family names to the sheets?
+
+`rule.power-laws`, `-minus-rules`, `-fraction-laws`, `-binomial-formulas`, `-zero-and-one`,
+`-read-the-term-first` are **names of families, not rules**: all six carry **no `latex`**, and
+four of them have **no `summarizes`** either, so they bridge to nothing in the tower. Their
+entire job is to head a sheet. Moving them there is defensible and half-done already — the
+short display `name` I added on 2026-07-29 lives on the sheet, so "a sheet owns nothing" has
+already bent.
+
+⚠️ **But check this before moving anything: `anti.exponent-arithmetic` CITES
+`rule.power-laws`** (alongside `-same-base` and `-power-of-power`). That is exactly the
+citability the rev. 11 decision was designed to protect — *"an error naming 'the power laws'
+cites the rule, not the sheet"*. It is one citation out of six family names, so the question is
+whether to keep the pool entry for that one case, teach `error.rules` to accept a sheet id, or
+repoint that error at its two specific rules. **Do not assume nothing cites them.**
+
+### Questions to settle, in order
+1. **Does a sheet become a citable entity?** If yes, `error.rules` and `skill.rules` need to
+   accept sheet ids, and the DAG gains `skills → sheets → rules`. If no, the family names stay
+   in the pool and only the *label* lives on the sheet — which is today's state, and the
+   "mismatch" is then just a derived index, like every other reverse index in this app.
+2. **What is `/sheets` FOR, if it is the spine?** Today it is a formulary. If students orient
+   by it, it probably needs to show which entries they have drilled — which is progress, and
+   therefore drill-blocked.
+3. **The 31 uncovered sheet rules**: author skills, or accept that a cheat sheet is broader
+   than a drill curriculum? Both are defensible; the answer decides whether the number is a
+   backlog or a measurement.
+
+⚠️ **Do not start by moving data.** The whole question is answerable from the coverage numbers
+plus one decision about citability, and moving six entries between files is the last step, not
+the first.
+
+---
+
+## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
+
+- [ ] **`errors.json` STAYS FOR NOW (decided 2026-07-29)** and is the only home of **50
+  instances, 28 `fix` strings and 14 hints**. `mistakes.json` took only the general half.
+  ⚠️ **`mistakes.json` is a GENERATED MIRROR** — `pnpm gen-mistakes` rebuilds it, `pnpm
+  validate` fails with a diff on drift, and `scripts/content-ids.mjs` excludes it from the
+  global id-uniqueness walk because it reuses errors.json's ids on purpose. **If the pool ever
+  stops being generated, delete that exclusion and give it its own ids.**
+- [ ] **Dissolving `errors.json`** means moving the 50 instances onto skills (18 already have a
+  twin in `skill.wrong`) and splitting the 28 fixes — of three measured, one worked a case and
+  two restated the rule. Not urgent while drift is guarded.
+- [ ] **Repoint one frozen drill when the freeze lifts**: `equivalence.minus-on-fraction`'s
+  pitfall `\frac{-a}{-b}` names `mis.minus-roles-confused` in `explainedBy`; the precise
+  mistake `anti.minus-on-both-parts` now exists. The old citation must stay on the skill until
+  then, because `explainedBy` is validated ⊆ the skill's `errors`.
+- [ ] **4 skill notes still write maths as unicode** instead of inline `$…$` (audit line). Fold
+  into the German pass, since those notes get rewritten anyway.
+- [ ] **German for `/skills`** — the only monolingual page: **0 of 74** names and notes carry
+  `de`, against 100% on rules, errors and sheets. The 15 group titles and 4 kind titles are
+  plain `string` and need a shape change to `localizedString` first. ⚠️ It ADDS to an
+  unreviewed-German pile rather than clearing it; only a native reader can clear that.
+- [ ] **`mis.letters-differ` still has no skill** (audit line, ★). Needs a variables/fluency
+  skill or a decision.
+- [ ] **20 classification/chunking skills have no ✗**, and cannot get one without inventing
+  `answer`/`wrongAnswer` fields that duplicate the FROZEN drill layer's shape. Blocked by
+  decision, not by work.
+
+---
+
 ## ✅ DECIDED 2026-07-28 — the two layers keep their own formulas
 
 **The question:** the rules pool carries 66 hand-typed formulas and the tower carries its own.

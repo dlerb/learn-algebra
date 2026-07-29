@@ -533,6 +533,45 @@ familiar-shapes group (binomial square, difference of squares).
 
 ## Revision notes
 
+**2026-07-29 (rev. 13, the pool sentences, `omission`, and a short name on a sheet):**
+
+**Every sentence now matches its `kind`.** A mistake's sentence is the CORRECTION and its mood
+is picked by kind — `anti-law`/`omission` take *"Don't …"*, `misreading`/`salience` take
+*"A is not B"*. It had briefly been the belief stated from inside ("Every minus is a
+subtraction"), which is wrong on the page: under a ✗ the reader must negate a false sentence
+before it means anything. ⚠️ **The rule that keeps the two pools apart**: 14 of 29 mistakes are
+1:1 with a rule, so a mistake phrased as a GENERAL prohibition just IS that rule negated. Name
+the SPECIFIC tempting move.
+
+**A fourth mistake kind, `omission`** (prefix `omi.`), found twice independently — by a
+mechanism analysis and by which sentences refused the "A is not B" mood. Two entries, and what
+makes them a species is that **they write nothing false**: `a + -b` equals `a + (-b)`, `(ab)c`
+equals `abc`. The answer is right and only the writing is poor, which is why both refuse the
+✗/✓ format and cost fluency rather than correctness. Kinds: misreading 13 · anti-law 12 ·
+omission 2 · salience 2.
+
+**`kind: is|do` on a rule was assigned correctly all along; the prose never honoured it.** Only
+4 of 57 were real instructions. 22 rewritten to lead with the move (24 of 28 `do` rules now
+do; the four that do not are the family names, which are labels). ⚠️ **When the mood fights the
+content, change the kind, not the sentence** — `rule.minus-times-minus` moved to `is` with its
+prose untouched. The three binomials became one recipe (`First squared, plus twice the product,
+plus last squared` / `minus twice` / `minus last squared`), which is the standard English
+phrasing and matches the German school form; the old third one described an ABSENCE and only
+parsed if you had just read the other two.
+
+**`sheet.name`** — a short display label ("Power laws"), two or three words, because the
+heading sentence does not work as a label. **This is the first thing a sheet owns**, and it
+bends rev. 11's "a sheet owns nothing" a little: the RULE is still the citable identity, the
+sheet just carries what to call it. The family a rule belongs to is derived through sheet
+membership and shown on `/rules` and `/skills`. ⚠️ That derived read is what raised the open
+question in `docs/TODO.md` about whether `cheatsheets` is a missing LAYER.
+
+**`skill.restsOn` is 74/74** (bridge 252 → 294). Thirteen of the last fourteen were
+classification/chunking, which is the right shape: those skills decode rather than transform,
+so they rest on the `ix.` notation conventions plus the one operation card the illustration is
+about. The floor came from `auditCoverage` itself, which asks that a skill's `restsOn` cover a
+card its cited rules `summarize`.
+
 **2026-07-28 (rev. 12, `skill.wrong` + the mistakes pool — BOTH ON A BRANCH, UNDECIDED):**
 two changes on `feat/skill-wrong-forms`, neither merged. See `docs/TODO.md` for the argument;
 this records only the model.

@@ -173,11 +173,12 @@ cite skills.
 `illustration`, which is what makes the maths column uniform, and the drill's own material
 sits inspection-only behind a `drill material` fold where it can be reshaped freely.
 
-### `/mistakes` — the anti-registry (2026-07-28, ON A BRANCH)
+### `/mistakes` — the anti-registry (2026-07-28, MERGED 2026-07-29)
 
-`feat/skill-wrong-forms`, **unmerged and undecided** — a parallel build that exists so the
-pool treatment and `/errors` can be compared on screen before anything is migrated. The model
-is in `content_model.md` rev. 12; what matters for the app:
+**Load-bearing**: `/skills` reads it for the sentence under every ✗, so it is no longer the
+parallel experiment it was built as. `/errors` still exists and still holds the 50 instances,
+28 fixes and 14 hints — see the housekeeping list in `docs/TODO.md`. The model is in
+`content_model.md` rev. 12–13; what matters for the app:
 
 - It is **`/rules` with the sign flipped**: same four columns at the same widths, so the two
   measure identically read side by side. Two divergences — the formula column carries FALSE
@@ -191,9 +192,11 @@ is in `content_model.md` rev. 12; what matters for the app:
   without a single skill being touched. That is what makes the whole thing revertible.
 - ⚠️ **Known rough edge**: a mistake in two families renders twice, and both rows carry the
   real id — invalid HTML, though every resolver involved takes the first, which is the primary
-  by construction. If the sectioning is kept, `LayerRow` needs a separate `anchor` prop so the
-  id stops doing two jobs (entity address *and* page position). The shared shell was
-  deliberately not touched for a branch build.
+  by construction. `LayerRow` needs a separate `anchor` prop so the id stops doing two jobs
+  (entity address *and* page position).
+- ⚠️ **`mistakes.json` is a GENERATED MIRROR of `errors.json`** — `pnpm gen-mistakes` rebuilds,
+  `pnpm validate` fails with a diff on drift, and `scripts/content-ids.mjs` excludes it from
+  the global id-uniqueness walk because it reuses errors.json's ids on purpose.
 
 **`/sheets` uses the shell differently, and that is the point.** A cheat sheet is not a row —
 a row is four columns of prose with one formula; a sheet is formulas under headings. So it
