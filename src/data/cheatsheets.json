@@ -85,6 +85,17 @@
             "rule.fraction-bar-brackets",
             "rule.root-bar-brackets"
           ]
+        },
+        {
+          "title": {
+            "en": "What may be combined",
+            "de": "Was zusammengefasst werden darf"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.only-multiplication-distributes",
+            "rule.unlike-terms-stay"
+          ]
         }
       ]
     },

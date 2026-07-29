@@ -33,8 +33,19 @@ from cheatsheets**. `validateRuleFamilies` enforces one level, no chains.
 `fraction-minus-moves` → Minus rules · `no-power-law-for-sums` → Power laws.
 
 **Three rules have no family**: `only-multiplication-distributes`, `dominant-op-tools`,
-`unlike-terms-stay`. The first is on no sheet either despite being broken by three mistakes —
-either a sheet is missing or it belongs on *reading a term*.
+`unlike-terms-stay`.
+- [x] ~~The first two are on no sheet either.~~ **2026-07-29**: `only-multiplication-distributes`
+  and `unlike-terms-stay` joined `sheet.reading-a-term` under a new fourth group, **"What may
+  be combined"** — the beat after symbols / binding / grouping: once the term is read, what may
+  be taken apart or put together. The first was broken by three mistakes and invisible to a
+  student orienting by the sheets.
+- [ ] ⚠️ **They are on the sheet but still carry no `family`**, so they are the only 2 of the
+  sheet's 15 members with no label. That is legal under the new model — family is one, sheets
+  are many, and a rule may be printed somewhere it does not belong — but it is a **teaching
+  call left open**: give them `family: rule.read-the-term-first` for consistency, or accept
+  that a distributing/collecting family does not exist yet.
+- `dominant-op-tools` stays off every sheet, correctly: it is a strategy rule with **no
+  formula**, and a formulary has nothing to print.
 
 **Still open, and it was never a layering question**: **31 of 48 sheet rules are cited by no
 skill.** If students should drill what is on the cheat sheet, two thirds of the sheets have
