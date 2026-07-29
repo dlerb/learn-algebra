@@ -194,6 +194,12 @@ parallel experiment it was built as. `/errors` still exists and still holds the 
 28 fixes and 14 hints — see the housekeeping list in `docs/TODO.md`. The model is in
 `content_model.md` rev. 12–13; what matters for the app:
 
+**`/rules` carries the mnemonic in its RAIL**, under the name, small and italic — it is another
+wording of the same sentence, so it belongs with the name rather than in the gloss column,
+where it first sat and read as the opening line of an explanation. ⚠️ **No cross-language
+fallback**: a mnemonic is not prose, and a German reader shown an English acronym nobody in
+their classroom says is worse off than one shown nothing.
+
 - It is **`/rules` with the sign flipped**: same four columns at the same widths, so the two
   measure identically read side by side. Two divergences — the formula column carries FALSE
   claims and so sits under a ✗ (reusing `/skills`' reserved mark track), and the page

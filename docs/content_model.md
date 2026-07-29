@@ -327,7 +327,11 @@ KaTeX; both are compile-checked at load.
 
 **skill** — a leaf in `skills/<kind>.json`, which is a tree
 `{ kind, title, blurb?, groups: [ { slug, title, blurb?, skills: [ …leaf… ] } ] }`
-(one file per kind, mirroring `<layer>/cards.json`). A leaf holds the fields below;
+(one file per kind, mirroring `<layer>/cards.json`). ⚠️ **Three answer shapes, one per kind
+family**: a form (`illustration` + `wrong`), a NAME (`answer` + `misreads`), or a SPLIT
+(`chunks` + `misChunks`). `wrong` holds a FALSE EQUATION and so fits neither of the other two —
+a wrong name is a word and a wrong split is a grouping. The view picks on PRESENCE, never on
+`kind`. A leaf holds the fields below;
 `kind` and `group` are **positional** (the file, and the group node it sits in) — not
 written on the leaf — and re-attached at load by `parseSkillTree`, which also derives
 the flat `groups` / `skillKinds` display registries from the tree.
@@ -340,6 +344,11 @@ the flat `groups` / `skillKinds` display registries from the tree.
 | `name` | LocalizedString | ✓ | the display heading (like a card's `name`) |
 | `note` | LocalizedString | ✓ | the rationale — why the skill matters |
 | `illustration` | LaTeX | — | one canonical example that anchors the skill |
+| `wrong` | LaTeX[] | — | **the tempting form as a COMPLETE FALSE CLAIM** (`3x = 3 + x`, never a bare `3 + x`), so it stands alone under a ✗. Authored per skill, never fetched from the cited mistakes: the errors are general and the skills specific. Empty is meaningful — the contrast skills have no tempting form (rev. 12) |
+| `answer` | dominantOp | — | *classification only*: the operation the skill asks you to NAME. Without it a row rendered `3x + 2y` and never said it was a sum (rev. 14) |
+| `misreads` | dominantOp | — | …and the tempting wrong name. **Evidenced, never invented**: only on the 6 that cite a mistake |
+| `chunks` | LaTeX[] | — | *chunking only*: the decomposition, one piece per chunk |
+| `misChunks` | LaTeX[] | — | …and the tempting wrong split, on the same evidence rule |
 | `requires` | string[] (skill ids) | — | direct prerequisite skills; the acyclic dependency graph |
 | `rules` | string[] (rule ids) | — | the DO/IS sentences this skill teaches |
 | `restsOn` | string[] (card ids) | — | the tower cards it rests on — laws/defs/theorems it is justified by **and** the notation conventions it obeys (law vs convention is read off the card prefix). Merged 2026-07-24 from the old `justifiedBy` + `governedBy` |
@@ -350,8 +359,8 @@ the flat `groups` / `skillKinds` display registries from the tree.
 
 | field | type | req | meaning |
 |---|---|---|---|
-| `id` | string `"(anti\|mis\|sal).<slug>"` | ✓ | the identifier; prefix must equal `kind` |
-| `kind` | `anti-law`\|`misreading`\|`salience` | ✓ | anti-law = false algebra; misreading = mis-parsed notation; salience = parsing by what is loudest |
+| `id` | string `"(anti\|mis\|sal\|omi).<slug>"` | ✓ | the identifier; prefix must equal `kind` |
+| `kind` | `anti-law`\|`misreading`\|`salience`\|`omission` | ✓ | anti-law = false algebra; misreading = mis-parsed notation; salience = parsing by what is loudest; **omission** = a step not taken, and the only kind that writes NOTHING FALSE (rev. 13) |
 | `corrupts` | string[] (card ids) | — | the card(s) this error distorts (all kinds → cards, since the 2026-07-24 cleanup) |
 | `name` | LocalizedString | ✓ | |
 | `note` | LocalizedString | ✓ | what goes wrong, in prose (the counterpart to `instances`, as a card's `note` is to its `latex`) |
@@ -366,6 +375,8 @@ the flat `groups` / `skillKinds` display registries from the tree.
 | `rule` | LocalizedString | ✓ | **the sentence** — "The fraction bar is a bracket". Was `name` until 2026-07-27, and it always was the rule |
 | `latex` | string[] | — | **the formula as data** (2026-07-28), not buried in the prose: a formulary cannot be typeset out of sentences with maths embedded in them. An ARRAY because one sentence can carry several lines worth showing and a table wants a row each. Empty is legitimate — 4 of 57 rules state something no equation states. ⚠️ **No words inside it**: `latex` is not localized, so `(n \text{ factors})` would ship English onto the German page |
 | `note` | LocalizedString | ✓ | its gloss, one sentence with an example. Was `rule`, and it always was the gloss |
+| `family` | string (rule id) | — | **the pool it belongs to**, as the id of the rule that IS that family (rev. 14). One level, no chains; a head is simply a rule somebody names, and its `rule` sentence is the label while its `note` says why the family coheres. ⚠️ **Family is one, sheets are many** — a rule may be printed wherever it is useful |
+| `mnemonic` | `{ en?, de? }` | — | **the classroom phrasing** — *Punkt vor Strich*, *keep, change, flip* (rev. 15). ⚠️ NOT a LocalizedString: a mnemonic does not translate, so each language has its own device or none, and the view must **not** fall back. Never invented — every entry is in documented use. Rendered in the RAIL of `/rules`, under the name |
 | `summarizes` | string[] (card ids) | — | the tower cards this heuristic reads (cards only — errors are the skills' concern) |
 
 **drill** — `drills/<kind>-<group>.json`, the material for a skill (one entry per
@@ -552,6 +563,15 @@ nothing. `rule.fraction-cancel` therefore renders a mnemonic in German and none 
 phrase we made up — the same rule that governs notation. Every entry is in documented classroom
 use. **German is the richer side (9 vs 4), making this the first field where the German column
 leads.**
+
+**A rule that was two claims in one coat, found BY the mnemonics.**
+`rule.root-bar-brackets` said *"the root bar is a bracket"* in its sentence and note — a SCOPE
+claim — while its `latex` was `√(a+b) ≠ √a + √b`, a SPLITTING claim. The rhyme *"Potenzen und
+Summen radizieren nur die Dummen"* is about splitting, so attaching it exposed the conflation.
+Split into `root-bar-brackets` (scope: `√(a+b) ≠ √a + b`) and the new
+`rule.no-root-law-for-sums` (splitting), which completes the set of three walls the
+distribution law hits — powers, roots, the fraction bar. Same pattern as the July split of
+`rule.exponent-arithmetic`.
 
 ⚠️ **One entry is a NAME rather than a rhyme, and the only one carried into German
 untranslated**: *the freshman's dream* on `rule.no-power-law-for-sums`. It earns that here —
