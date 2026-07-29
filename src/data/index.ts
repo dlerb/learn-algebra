@@ -3,14 +3,17 @@
 // here immediately with the offending id named.
 import {
   parseSkillTree, parseDrills, parseErrorTree, parseRuleTree, parseSheetTree,
+  parseMistakeTree,
   validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateSkillLinks,
-  validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, auditCoverage,
+  validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
   type Drill, type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
+  type MistakeDef, type MistakeTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
 import rulesRaw from './rules.json'
 import sheetsRaw from './cheatsheets.json'
 import errorsRaw from './errors.json'
+import mistakesRaw from './mistakes.json'
 // Skills: one file per kind (kind → groups[] → skills[]), mirroring the fundament
 // tower's one-file-per-layer tree. Add a kind = add a file + one line below.
 import equivalenceSkills from './skills/equivalence.json'
@@ -69,6 +72,26 @@ export const rules: RulesFile = ruleTree.rules
 export const sheetTree: SheetTree = parseSheetTree(sheetsRaw)
 export const sheets: SheetDef[] = sheetTree.sheets
 
+// THE FAMILY A RULE BELONGS TO — "the power laws", "the minus rules" — derived
+// through the sheets and authored nowhere (2026-07-29).
+//
+// This is the one piece of grouping the pool DOES carry, and only because a
+// teacher names it out loud and a mistake can cite it. Everything else about
+// grouping is presentation and lives on the sheet, which is exactly why the
+// membership has to be read backwards from there: a sheet names its rules, its
+// own `rule` is the family name, so sheet-membership IS family-membership.
+// 48 of 57 rules sit on a sheet; the other 9 have no family and show none.
+// Four rules sit on two sheets, so the value is a list, not a single id.
+export const ruleFamilies = new Map<string, SheetDef[]>()
+for (const s of sheets) {
+  for (const g of s.groups) {
+    for (const id of g.rules) {
+      if (id === s.rule) continue          // a family does not belong to itself
+      ruleFamilies.set(id, [...(ruleFamilies.get(id) ?? []), s])
+    }
+  }
+}
+
 // The fundament's shadow: false laws and misreadings, each `corrupts` a card in
 // the tower (src/data/layers.ts). The laws/conventions files they used to point
 // at were folded into the tower and deleted; see docs/content_model.md.
@@ -76,6 +99,16 @@ export const sheets: SheetDef[] = sheetTree.sheets
 // fundament layer; `errorPatterns` stays the flat list every consumer already had.
 export const errorTree: ErrorTree = parseErrorTree(errorsRaw)
 export const errorPatterns: ErrorDef[] = errorTree.errors
+
+// THE MISTAKE POOL, the negative face of the rules registry (skill.schema →
+// mistakeDef). Built ALONGSIDE errors.json on purpose, not in place of it: this
+// is the parallel build that lets /mistakes and /errors be compared on screen
+// before anything is migrated. ⚠️ While both exist they share ids and derive
+// frequency/kind/topic/corrupts/breaks from the same source, so mistakes.json
+// must be REGENERATED rather than hand-edited when errors.json changes — the
+// generator is scripts/gen-mistakes.py.
+export const mistakeTree: MistakeTree = parseMistakeTree(mistakesRaw)
+export const mistakes: MistakeDef[] = mistakeTree.mistakes
 
 // Every fundament-tower card id, the resolution target for the skill/error/
 // rule references validated below.
@@ -97,6 +130,7 @@ validateSheetRefs(sheets, rules)
 validateSkillLinks(skills)
 validateDrills(drills, skills)
 validateErrors(errorPatterns, cardIds)
+validateMistakeRefs(mistakes, rules, cardIds)
 validateLayerRefs(skills, rules, cardIds, errorPatterns)
 validateLatexCompiles(skills, drills, rules, errorPatterns)
 

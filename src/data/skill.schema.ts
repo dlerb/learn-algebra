@@ -54,6 +54,34 @@ export const skill = z.object({
   name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
+  // THE TEMPTING FORM, AS A FALSE CLAIM (2026-07-28). Each entry is a complete
+  // false equation in LaTeX — `3x = 3 + x`, not a bare `3 + x` — so it stands on
+  // its own under a ✗ exactly as an error's `instances[].wrong` does, and needs no
+  // stem column to be read.
+  //
+  // AUTHORED PER SKILL, never fetched from the cited errors, and the measurement
+  // that decided it: 70 (skill → error) citations point at only 27 distinct
+  // errors, `anti.linearity` alone is cited by 10 skills, and 16 of those
+  // collisions fall inside a single topic panel. The errors are GENERAL and the
+  // skills are SPECIFIC — `minus-over-sum` and `minus-over-difference` both cite
+  // `anti.partial-distribution` but are tempted by different forms ($-a+b$ vs
+  // $-a-b$) — so the pair a skill needs cannot be derived from the error even in
+  // principle. Same ruling as rule.latex vs card.latex: each layer keeps its own
+  // formulas, and restating one at student level is translation, not duplication.
+  //
+  // AN ARRAY, because a note can carry two ($2a$ is not $a^2$, AND $a^2$ is not
+  // $2a$), and EMPTY IS MEANINGFUL: `equivalence.bracket-types` and
+  // `-addition-commutative` have no tempting wrong form at all, which is exactly
+  // why they exist — a Same-or-Different session needs items whose answer is
+  // `same`. Never invent one to fill the field.
+  //
+  // ⚠️ ONLY A FALSE CLAIM belongs here. `a + -b` is not false, it is badly
+  // written; that is the tower's avoid/prefer relation, where the two sides are
+  // EQUAL and WrongRight joins them with `=` and mutes the marks. Putting a
+  // clumsy-but-correct form under the same red ✗ would teach ✗ = wrong and then
+  // contradict it. A belief the student holds is fine and is written as the
+  // claim itself — `a \cdot 3 \neq 3a` under a ✗ says that belief is false.
+  wrong: z.array(z.string()).default([]),
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
@@ -197,6 +225,110 @@ export function parseRuleTree(raw: unknown): RuleTree {
   return { meta: { title, blurb, note }, rules }
 }
 
+// ── Mistakes ─────────────────────────────────────────────────────────────────
+// THE ANTI-REGISTRY (2026-07-28) — the negative face of the rules pool, and the
+// same kind of object: a flat collection of general sentences that carry no
+// context of their own, given meaning only by what cites them.
+//
+// WHY IT IS A POOL AND NOT A LAYER. `anti.linearity` is not an example, it is a
+// SENTENCE: "every operation spreads over a plus". Modelling it as an entry with
+// instances bolted on is what made its 10 citing skills look like duplication —
+// a pool entry cited ten times is ordinary (`rule.dominant-op-last` is cited by
+// 13 and nobody calls that a defect). The instances are examples and belong to
+// the skills; the sentence belongs here.
+//
+// WHY IT IS NOT A `not:` FIELD ON A RULE. Measured: six rules are broken by two
+// or three DISTINCT misconceptions each — `rule.only-multiplication-distributes`
+// by `mis.bracket-dissolved` (bracket erased), `anti.linearity` (wrong operation
+// spreads) and `anti.partial-distribution` (right operation, stops early). Each
+// has its own frequency, its own cards and its own examples. A field on the rule
+// could name one of them.
+//
+// HOW IT DIFFERS FROM ruleDef, in order of weight:
+//   `breaks`     THE STRUCTURAL DIFFERENCE. A rule points only DOWN into the
+//                tower (`summarizes`); a mistake points down (`corrupts`) AND
+//                SIDEWAYS into the rules pool. It is the one place in this design
+//                where one pool cites another, which is why "same level as rules"
+//                is not quite right — mistakes sit half a level above. Still a
+//                DAG: mistakes → rules → cards.
+//   `frequency`  Can live nowhere else. A rule is not more or less true; a
+//                mistake is more or less MADE, and the number is evidence from
+//                docs/common_mistakes.md, gathered per misconception.
+//   `kind`       Four values and a different question. A rule's `is|do` is a
+//                REGISTER (decoding vs doing); a mistake's kind is a CAUSAL
+//                taxonomy — a wrong rule applied (anti-law), a glyph misparsed
+//                (misreading), the wrong thing looked at (salience), or a step
+//                simply not taken (omission). Not parallel to is|do.
+//                ⚠️ `omission` (2026-07-29) is the one kind that writes NOTHING
+//                FALSE: `a + -b` equals `a + (-b)` and `(ab)c` equals `abc`, so
+//                the answer is right and only the writing is poor. That is why
+//                both entries refuse the ✗/✓ format and why their sentence only
+//                works as "Don't …" — the failure is inaction, and it costs
+//                fluency rather than correctness. It was found twice
+//                independently: by the a/b/c mechanism analysis and by which
+//                sentences refused the "A is not B" mood.
+//   `topic`      Kept from the errors tree. A student arrives at a mistake by
+//                topic ("I keep messing up fractions") in a way nobody arrives at
+//                a rule, so the file stays flat like rules.json and the VIEW
+//                sections by this field — the same trick /skills plays with
+//                `group`. (errors.json's tree was section → exactly one group →
+//                errors in all seven sections, so the group level was vestigial
+//                and nothing is lost by flattening.)
+//   `latex`      Same field, INVERTED CONTRACT: on a rule it is the true formula,
+//                here every entry is a FALSE CLAIM, rendered under a ✗. Which is
+//                also where the six `\neq` lines currently squatting in
+//                `rule.latex` belong.
+//
+// WHAT IT DELIBERATELY DOES NOT TAKE from errors.json: `instances` and `fix`.
+// Both work a CASE, and a case belongs to the skill that teaches it.
+export const mistakeDef = z.object({
+  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so `skill.errors` resolves here without touching a single skill
+  kind: z.enum(['anti-law', 'misreading', 'salience', 'omission']),
+  topic: z.string(),
+  frequency: z.number().int().min(1).max(3).default(1),
+  mistake: localizedString,               // THE FALSE SENTENCE, stated as the student holds it — "Every minus is a subtraction", not "Losing one of two minuses". The error layer names the mistake from outside; a pool entry states it from inside, so it reads as a claim that can be marked ✗ exactly as a rule reads as one that can be marked ✓
+  latex: z.array(z.string()).default([]), // the false claim(s). Empty is legitimate: the two salience mistakes and the adjacent-signs omission have no expressible schema
+  note: localizedString,                  // the diagnosis — mechanism and cause, which was always a statement about the misconception rather than about one case of it
+  breaks: z.array(z.string()).default([]),    // rule ids
+  corrupts: z.array(z.string()).default([]),  // card ids
+})
+export type MistakeDef = z.infer<typeof mistakeDef>
+
+const mistakesTree = z.object({
+  layer: z.literal('mistakes'),
+  title: localizedString,
+  blurb: localizedString,
+  note: localizedString,
+  mistakes: z.array(mistakeDef).min(1),
+})
+export interface MistakeTree {
+  meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
+  mistakes: MistakeDef[]
+}
+export function parseMistakeTree(raw: unknown): MistakeTree {
+  const r = mistakesTree.safeParse(raw)
+  if (!r.success) throw new Error(`Invalid mistakes file:\n${z.prettifyError(r.error)}`)
+  const { title, blurb, note, mistakes } = r.data
+  return { meta: { title, blurb, note }, mistakes }
+}
+
+/** Every edge a mistake claims must land: the rule it breaks, and the cards it
+ *  corrupts. A pool entry owns nothing else, so a dangling reference is the only
+ *  way it can be wrong. */
+export function validateMistakeRefs(
+  mistakes: MistakeDef[], rules: RulesFile, cardIds: Set<string>,
+): void {
+  const ruleIds = new Set(rules.map(r => r.id))
+  for (const m of mistakes) {
+    for (const r of m.breaks) {
+      if (!ruleIds.has(r)) throw new Error(`Mistake "${m.id}" breaks unknown rule "${r}".`)
+    }
+    for (const c of m.corrupts) {
+      if (!cardIds.has(c)) throw new Error(`Mistake "${m.id}" corrupts unknown card "${c}".`)
+    }
+  }
+}
+
 // ── Cheat sheets ─────────────────────────────────────────────────────────────
 // PRESENTATION OVER THE RULES POOL (2026-07-28), owning nothing. A sheet groups
 // and orders sentences that already exist in rules.json.
@@ -231,6 +363,14 @@ export const sheetDef = z.object({
   /** The pool sentence that heads it — and the sheet's citable identity, since
    *  an error naming "the power laws" cites the rule, not the sheet. */
   rule: z.string(),
+  /** THE FAMILY'S SHORT NAME (2026-07-29) — "Power laws", "Minus rules". Two or
+   *  three words, because it is used as a LABEL in front of a rule on /rules and
+   *  /skills, where the heading sentence does not fit: four of the six head rules
+   *  end in an exhortation ("The power laws: know these cold") and two are not
+   *  family names at all but ordinary rules that happen to head a sheet ("Read
+   *  the term before you change it"). Presentation, so it lives on the sheet;
+   *  the RULE remains the citable identity. */
+  name: localizedString,
   groups: z.array(sheetGroup).min(1),
 })
 export type SheetDef = z.infer<typeof sheetDef>
@@ -282,7 +422,7 @@ export function validateRuleRefs(skills: Skill[], rules: RulesFile): void {
   }
 }
 
-export const errorKind = z.enum(['anti-law', 'misreading', 'salience'])
+export const errorKind = z.enum(['anti-law', 'misreading', 'salience', 'omission'])
 export type ErrorKind = z.infer<typeof errorKind>
 
 // An INSTANCE is one concrete wrong→right pair — the unit the /errors page shows a
@@ -309,7 +449,7 @@ export const errorInstance = z.object({
 export type ErrorInstance = z.output<typeof errorInstance>
 
 export const errorDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),  // the single identifier — a dotted slug
+  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // the single identifier — a dotted slug
   kind: errorKind,                 // cross-cuts `topic`, so it stays a field, not a tree level
   topic: z.string(),               // POSITIONAL — the section slug, re-attached by parseErrorTree
   frequency: z.number().int().min(1).max(3).default(1),  // ★–★★★, from docs/common_mistakes.md
@@ -343,7 +483,7 @@ export const errorDef = z.object({
 export type ErrorDef = z.output<typeof errorDef>
 
 const errorPrefixOfKind: Record<ErrorKind, string> =
-  { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
+  { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.', omission: 'omi.' }
 
 // `cardIds` is the set of fundament-tower card ids (src/data/layers.ts). Since
 // 2026-07-23 the legacy laws.json / conventions.json are gone and every error's
@@ -358,6 +498,7 @@ export function validateErrors(
     'anti-law': { ids: cardIds, name: 'law card' },
     misreading: { ids: cardIds, name: 'convention card' },
     salience: { ids: cardIds, name: 'structure card' },
+    omission: { ids: cardIds, name: 'convention card' },
   }
   const seen = new Set<string>()
   for (const e of errors) {
@@ -532,7 +673,14 @@ export function auditCoverage(
     ])
     const unsupported = f.rules.filter(mid => {
       const mp = rules.find(m => m.id === mid)
-      return mp !== undefined && !mp.summarizes.some(r => coords.has(r))
+      // A rule with NO `summarizes` can be neither supported nor unsupported —
+      // it has no tower bridge to check against, so asking the question of it is
+      // meaningless and the answer was a permanent false positive. Eight of the
+      // 57 are like that: the six family names, plus `dominant-op-tools` and
+      // `unlike-terms-stay`, which are strategy sentences rather than digests of
+      // a card. Their lack of a bridge is the COVERAGE question's business, one
+      // audit line down; this line asks something else.
+      return mp !== undefined && mp.summarizes.length > 0 && !mp.summarizes.some(r => coords.has(r))
     })
     if (unsupported.length > 0) {
       lines.push(`"${f.id}" declares rules its coordinates don't support: ${unsupported.join(', ')}`)
@@ -689,6 +837,7 @@ export function validateLatexCompiles(
   for (const f of skills) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
     if (f.illustration) check(f.id, 'illustration', f.illustration)
+    f.wrong.forEach((w, i) => check(f.id, `wrong[${i}]`, w))
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
   }
   for (const d of drills) {

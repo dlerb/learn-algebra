@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { ruleTree, rules, sheets, errorPatterns, skills } from '../data'
+import { ruleTree, rules, sheets, ruleFamilies, errorPatterns, skills } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type RuleDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
@@ -64,6 +64,14 @@ const readsOf = (m: RuleDef) => m.summarizes.map(id => {
 // columns of prose with one formula, a sheet is formulas under headings.
 const sheetByRule = new Map(sheets.map(s => [s.rule, s]))
 
+// THE FAMILY THIS RULE BELONGS TO, derived through the sheets (2026-07-29) — the
+// mirror of the `Cheat sheet` link below, which points the other way for the six
+// rules that ARE families. What it buys is the thing a teacher says out loud:
+// nobody cites "multiplying powers of the same base adds the exponents", they say
+// "the power laws". Showing the pool a sentence sits in makes the registry read
+// as a set of named families rather than 57 loose lines.
+const familyOf = (id: string) => (ruleFamilies.get(id) ?? []).map(sh => t(sh.name))
+
 // A sentence nothing cites is dead weight: context is the only thing that gives
 // it meaning, and with no error and no skill behind it there is none to give.
 // REACH AS GARBAGE COLLECTION, not as an admission test — what belongs in the
@@ -72,6 +80,7 @@ const items = computed(() => rules.map(m => {
   const errors = preventedBy(m), sk = drilledBy(m)
   return {
     id: m.id, kind: m.kind, rule: t(m.rule), latex: m.latex, note: t(m.note),
+    family: familyOf(m.id),
     errors, skills: sk, reads: readsOf(m),
     sheet: sheetByRule.get(m.id),
     orphan: errors.length === 0 && sk.length === 0,
@@ -113,6 +122,9 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
         :targeted="m.id === targetId"
       >
         <template #folds>
+          <!-- The pool it belongs to, ahead of the reference folds: it is what
+               the sentence is CALLED, not somewhere else to go. -->
+          <span v-if="m.family.length" class="fam">{{ m.family.join(' · ') }}</span>
           <RefFold :label="L.reads" :links="m.reads" />
           <RefFold :label="L.drills" :links="m.skills" derived />
         </template>
@@ -180,6 +192,8 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
 
 .sheet-link { display: block; margin-top: .45rem; color: var(--text-muted); text-decoration: none; }
 .sheet-link:hover, .sheet-link:hover .arrow { color: var(--accent); }
+
+.fam { font-size: .62rem; font-weight: 600; color: var(--text-muted); letter-spacing: .01em; }
 
 .orphan-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
 </style>

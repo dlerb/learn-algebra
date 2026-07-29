@@ -10,8 +10,11 @@
         {
           "id": "equivalence.explicit-vs-implicit-product",
           "name": "Explicit vs. implicit multiplication",
-          "note": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product — not a two-digit number, and not $3 + x$.",
+          "note": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product, not a two-digit number.",
           "illustration": "3 \\times x = 3 \\cdot x = 3x = x \\cdot 3 = (3)(x)",
+          "wrong": [
+            "3x = 3 + x"
+          ],
           "rules": [
             "rule.juxtaposition"
           ],
@@ -26,8 +29,11 @@
         {
           "id": "equivalence.product-with-brackets",
           "name": "Multiplication with brackets",
-          "note": "A number against a bracket means multiply: 2(x+1) is 2 times (x+1), not 2 + (x+1).",
+          "note": "A number against a bracket means multiply: $2(x+1)$ is 2 times $(x+1)$.",
           "illustration": "2 \\times (x+1) = 2 \\cdot (x+1) = 2(x+1) = (x+1) \\cdot 2",
+          "wrong": [
+            "2(x+1) = 2 + (x+1)"
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
@@ -48,6 +54,9 @@
           "name": "Coefficient of −1",
           "note": "An invisible coefficient of -1 means negate: (-1)a, -1a and -a are the same object. (Similarly a coefficient of 1 is invisible: 1x = x.)",
           "illustration": "(-1) \\cdot a = (-1)a = -1a = -a",
+          "wrong": [
+            "(-1)a = -1 + a"
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product",
             "equivalence.negative-numbers"
@@ -68,8 +77,11 @@
         {
           "id": "equivalence.coefficient-zero",
           "name": "Coefficient of 0",
-          "note": "Zero times anything is zero: 0x = 0, regardless of x. It is not x.",
+          "note": "Zero times anything is zero: $0x = 0$, regardless of $x$.",
           "illustration": "0 \\cdot x = 0x = 0",
+          "wrong": [
+            "0x = x"
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
@@ -87,8 +99,11 @@
         {
           "id": "equivalence.repeated-addition",
           "name": "Repeated addition vs. multiplication",
-          "note": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Do not confuse with $x \\cdot x = x^2$.",
+          "note": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Multiplying is what makes a power: $x \\cdot x = x^2$.",
           "illustration": "x + x = 2x",
+          "wrong": [
+            "x + x = x^2"
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
@@ -113,8 +128,11 @@
         {
           "id": "equivalence.number-plus-term",
           "name": "A number plus a term stays open",
-          "note": "$2 + 3x$ is a finished object — it does not collapse to $5x$. Only like terms combine ($x + x = 2x$); $2$ and $3x$ are not like.",
+          "note": "$2 + 3x$ is a finished object. Only like terms combine ($x + x = 2x$); $2$ and $3x$ are not like.",
           "illustration": "2 + 3x = 3x + 2",
+          "wrong": [
+            "2 + 3x = 5x"
+          ],
           "requires": [
             "equivalence.repeated-addition"
           ],
@@ -132,8 +150,11 @@
         {
           "id": "equivalence.unlike-variable-terms",
           "name": "Terms with different variables stay open",
-          "note": "3x + 2y cannot combine into one term — x and y are different objects. 5xy would be a product, something else entirely.",
+          "note": "$3x + 2y$ cannot combine into one term — $x$ and $y$ are different objects. $5xy$ would be a product, something else entirely.",
           "illustration": "3x + 2y = 2y + 3x",
+          "wrong": [
+            "3x + 2y = 5xy"
+          ],
           "requires": [
             "equivalence.number-plus-term"
           ],
@@ -151,8 +172,11 @@
         {
           "id": "equivalence.adding-powers",
           "name": "A power plus a term stays open",
-          "note": "$x^2 + x$ has two unlike terms — it is not $x^3$. Exponents grow when powers are multiplied ($x^2 \\cdot x = x^3$), never when they are added.",
+          "note": "$x^2 + x$ has two unlike terms. Exponents grow when powers are multiplied ($x^2 \\cdot x = x^3$), never when they are added.",
           "illustration": "x^2 + x = x + x^2",
+          "wrong": [
+            "x^2 + x = x^3"
+          ],
           "requires": [
             "equivalence.exponent-as-repeated-product",
             "equivalence.number-plus-term"
@@ -176,6 +200,9 @@
           "name": "Negative numbers and the unary minus",
           "note": "A negative number and its parenthesised form are the same object: -3 and (-3) are identical, and both equal 0 - 3.",
           "illustration": "-3 = (-3) = 0 - 3",
+          "wrong": [
+            "0 - 3 = 3 - 0"
+          ],
           "rules": [
             "rule.three-minuses"
           ],
@@ -184,6 +211,7 @@
             "th.negative-one-times"
           ],
           "errors": [
+            "mis.minus-roles-confused",
             "anti.commute-everything"
           ]
         },
@@ -192,6 +220,9 @@
           "name": "Subtracting vs. adding a negative",
           "note": "Subtracting is the same as adding the opposite: a - b = a + (-b). The minus and the number belong together.",
           "illustration": "a - b = a + (-b) = a + (-1) \\cdot b",
+          "wrong": [
+            "a - b = a \\cdot (-b)"
+          ],
           "requires": [
             "equivalence.coefficient-negative-one"
           ],
@@ -204,15 +235,18 @@
           ],
           "errors": [
             "mis.minus-roles-confused",
-            "mis.adjacent-signs",
+            "omi.adjacent-signs",
             "mis.subtraction-as-times-negative"
           ]
         },
         {
           "id": "equivalence.minus-over-sum",
           "name": "Distributing a negative over a sum",
-          "note": "A minus in front of a bracket means multiply the whole bracket by $-1$, so it hits every term inside: $-(a+b) = (-1)(a+b) = -a - b$, not $-a + b$.",
+          "note": "A minus in front of a bracket means multiply the whole bracket by $-1$, so it hits every term inside: $-(a+b) = (-1)(a+b) = -a - b$.",
           "illustration": "-(a + b) = (-1)(a + b) = -a - b",
+          "wrong": [
+            "-(a + b) = -a + b"
+          ],
           "requires": [
             "equivalence.coefficient-negative-one"
           ],
@@ -234,8 +268,11 @@
         {
           "id": "equivalence.minus-over-difference",
           "name": "Distributing a negative over a difference",
-          "note": "The minus flips the sign of every term inside the bracket: $-(a-b) = -a+b$, not $-a-b$.",
+          "note": "The minus flips the sign of every term inside the bracket: $-(a-b) = -a+b$.",
           "illustration": "-(a - b) = -a + b = b - a",
+          "wrong": [
+            "-(a - b) = -a - b"
+          ],
           "requires": [
             "equivalence.coefficient-negative-one"
           ],
@@ -256,8 +293,11 @@
         {
           "id": "equivalence.double-negative",
           "name": "Double negative",
-          "note": "Two minuses make a plus: subtracting a negative adds. a-(-b) = a+b, not a-b. (Likewise -(-a) = a.)",
+          "note": "Two minuses make a plus: subtracting a negative adds. (Likewise $-(-a) = a$.)",
           "illustration": "a - (-b) = a + b",
+          "wrong": [
+            "a - (-b) = a - b"
+          ],
           "requires": [
             "equivalence.subtraction-as-adding-opposite"
           ],
@@ -271,14 +311,17 @@
           ],
           "errors": [
             "mis.minus-roles-confused",
-            "mis.adjacent-signs"
+            "omi.adjacent-signs"
           ]
         },
         {
           "id": "equivalence.negative-times-negative",
           "name": "Negative times negative",
-          "note": "A negative times a negative is positive: (-a)(-b) = ab, not -ab. (One negative factor gives a negative: (-a)(b) = -ab.)",
+          "note": "A negative times a negative is positive. (One negative factor gives a negative: $(-a)(b) = -ab$.)",
           "illustration": "(-a)(-b) = ab",
+          "wrong": [
+            "(-a)(-b) = -ab"
+          ],
           "requires": [
             "equivalence.negative-numbers",
             "equivalence.explicit-vs-implicit-product"
@@ -300,14 +343,18 @@
         {
           "id": "equivalence.minus-on-fraction",
           "name": "Minus in front of a fraction",
-          "note": "A single minus on a fraction can sit out front, on the numerator, or on the denominator — all equal. But -a/b is not (-a)/(-b).",
+          "note": "A single minus on a fraction can sit out front, on the numerator, or on the denominator — all equal. Moving it to both at once cancels it.",
           "illustration": "-\\frac{a}{b} = \\frac{-a}{b} = \\frac{a}{-b}",
+          "wrong": [
+            "-\\frac{a}{b} = \\frac{-a}{-b}"
+          ],
           "requires": [
             "equivalence.negative-numbers",
             "equivalence.division-variants"
           ],
           "rules": [
             "rule.three-minuses",
+            "rule.fraction-minus-moves",
             "rule.fraction-bar-brackets"
           ],
           "restsOn": [
@@ -317,14 +364,18 @@
             "ix.fraction-bar"
           ],
           "errors": [
+            "anti.minus-on-both-parts",
             "mis.minus-roles-confused"
           ]
         },
         {
           "id": "equivalence.subtracting-a-sum",
           "name": "Subtracting a bracketed sum",
-          "note": "The minus hits every term inside, not just the first: $a - (b+c) = a - b - c$. Same rule as $-(b+c)$, now with a term in front — recognising that the leading term does not shield the rest is the discrimination here.",
+          "note": "The minus hits every term inside, not just the first. Same rule as $-(b+c)$, now with a term in front — recognising that the leading term does not shield the rest is the discrimination here.",
           "illustration": "a - (b + c) = a - b - c",
+          "wrong": [
+            "a - (b + c) = a - b + c"
+          ],
           "requires": [
             "equivalence.minus-over-sum"
           ],
@@ -345,8 +396,11 @@
         {
           "id": "equivalence.subtracting-a-difference",
           "name": "Subtracting a bracketed difference",
-          "note": "The minus flips every sign inside: $a - (b-c) = a - b + c$, not $a - b - c$. The leading term makes the missed sign-flip on the second term especially easy to overlook.",
+          "note": "The minus flips every sign inside: $a - (b-c) = a - b + c$. The leading term makes the missed sign-flip on the second term especially easy to overlook.",
           "illustration": "a - (b - c) = a - b + c",
+          "wrong": [
+            "a - (b - c) = a - b - c"
+          ],
           "requires": [
             "equivalence.minus-over-difference"
           ],
@@ -384,11 +438,14 @@
           "name": "Redundant brackets",
           "note": "Brackets around something already whole can be dropped: ((a+b)) = (a+b) = a+b, and (x) = x.",
           "illustration": "((a + b)) = (a + b) = a + b",
+          "wrong": [
+            "((a + b)) \\neq (a + b)"
+          ],
           "restsOn": [
             "ix.brackets"
           ],
           "errors": [
-            "mis.redundant-brackets-kept"
+            "omi.redundant-brackets-kept"
           ]
         },
         {
@@ -396,6 +453,9 @@
           "name": "Brackets and order of operations",
           "note": "Multiplication happens before addition: $a + b \\cdot c$ means $a + (b \\cdot c)$. A bracket changes the meaning: $(a+b) \\cdot c$ is different.",
           "illustration": "a + b \\cdot c = a + bc",
+          "wrong": [
+            "a + b \\cdot c = (a + b) \\cdot c"
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
@@ -410,8 +470,11 @@
         {
           "id": "equivalence.fraction-bar-grouping",
           "name": "Implicit brackets in the fraction bar",
-          "note": "The fraction bar groups the whole numerator: $(a+b)/c$ is all of $a+b$ over $c$. It is not $a + b/c$.",
+          "note": "The fraction bar groups the whole numerator: $(a+b)/c$ is all of $a+b$ over $c$.",
           "illustration": "\\frac{a+b}{c} = (a+b) \\div c",
+          "wrong": [
+            "\\frac{a+b}{c} = a + \\frac{b}{c}"
+          ],
           "conditions": "c \\ne 0",
           "requires": [
             "equivalence.division-variants"
@@ -430,8 +493,11 @@
         {
           "id": "equivalence.multiplying-into-a-bracket",
           "name": "Multiplying into a bracket",
-          "note": "Multiplication distributes to every term inside: 2(x+1) = 2x + 2, not 2x + 1. The 2 hits both the x and the 1.",
+          "note": "Multiplication distributes to every term inside: the 2 hits both the $x$ and the 1.",
           "illustration": "2(x + 1) = 2x + 2",
+          "wrong": [
+            "2(x + 1) = 2x + 1"
+          ],
           "requires": [
             "equivalence.product-with-brackets"
           ],
@@ -472,8 +538,12 @@
         {
           "id": "equivalence.coefficient-vs-exponent",
           "name": "Coefficient vs. exponent",
-          "note": "$2a$ means $a+a$; it is not $a^2$. (And $a^2 = a \\cdot a$ is not $2a$.) The two forms that look most alike mean the most different things.",
+          "note": "$2a$ means $a+a$ and $a^2$ means $a \\cdot a$. The two forms that look most alike mean the most different things.",
           "illustration": "2a = a + a",
+          "wrong": [
+            "2a = a^2",
+            "a^2 = 2a"
+          ],
           "requires": [
             "equivalence.repeated-addition",
             "equivalence.exponent-as-repeated-product"
@@ -494,8 +564,11 @@
         {
           "id": "equivalence.negated-square-vs-negative-base",
           "name": "Negative base vs. negated square",
-          "note": "The exponent binds before the minus: $-a^2 = -(a^2)$, which is negative. That differs from $(-a)^2 = a^2$, which is positive. E.g. $-3^2 = -9$ but $(-3)^2 = 9$.",
+          "note": "The exponent binds before the minus, so $-a^2 = -(a^2)$ is negative while $(-a)^2 = a^2$ is positive. E.g. $-3^2 = -9$ but $(-3)^2 = 9$.",
           "illustration": "-a^2 = -(a^2)",
+          "wrong": [
+            "-a^2 = (-a)^2"
+          ],
           "requires": [
             "equivalence.coefficient-negative-one",
             "equivalence.exponent-as-repeated-product"
@@ -516,8 +589,11 @@
         {
           "id": "equivalence.power-of-a-product",
           "name": "Exponent on a product",
-          "note": "A power on a bracket applies to every factor: $(ab)^2 = a^2 b^2$, and $(2x)^2 = 4x^2$. Without the bracket, $ab^2$ means $a \\cdot b^2$ — the exponent hits $b$ only.",
+          "note": "A power on a bracket applies to every factor: $(ab)^2 = a^2 b^2$, and $(2x)^2 = 4x^2$. Without the bracket the exponent hits $b$ only.",
           "illustration": "(ab)^2 = a^2 b^2",
+          "wrong": [
+            "(ab)^2 = ab^2"
+          ],
           "requires": [
             "equivalence.product-with-brackets",
             "equivalence.exponent-as-repeated-product"
@@ -538,8 +614,11 @@
         {
           "id": "equivalence.zero-and-one-exponent",
           "name": "Zero and one as exponents",
-          "note": "Any nonzero base to the power 0 is 1: $a^0 = 1$, not $0$. And $a^1 = a$.",
+          "note": "Any nonzero base to the power 0 is 1. And $a^1 = a$.",
           "illustration": "a^0 = 1",
+          "wrong": [
+            "a^0 = 0"
+          ],
           "requires": [
             "equivalence.exponent-as-repeated-product"
           ],
@@ -554,8 +633,11 @@
         {
           "id": "equivalence.negative-exponent",
           "name": "Negative exponent as a reciprocal",
-          "note": "A negative exponent means reciprocal, not a negative number: $a^{-n} = 1/a^n$. So $a^{-1} = 1/a$, and $1/a^{-n} = a^n$.",
+          "note": "A negative exponent means reciprocal, not a negative number. So $a^{-1} = 1/a$, and $1/a^{-n} = a^n$.",
           "illustration": "a^{-n} = \\frac{1}{a^n}",
+          "wrong": [
+            "a^{-n} = -a^n"
+          ],
           "requires": [
             "equivalence.exponent-as-repeated-product",
             "equivalence.division-variants"
@@ -620,8 +702,11 @@
         {
           "id": "equivalence.power-of-a-sum",
           "name": "Exponent on a sum",
-          "note": "A power does not distribute over $+$: $(a+b)^2$ means $(a+b)(a+b)$, which is not $a^2 + b^2$. Contrast $(ab)^2 = a^2b^2$ — over $\\times$ it works, over $+$ it never does.",
+          "note": "A power does not distribute over $+$: $(a+b)^2$ means $(a+b)(a+b)$. Contrast $(ab)^2 = a^2b^2$ — over $\\times$ it works, over $+$ it never does.",
           "illustration": "(a+b)^2 = (a+b)(a+b)",
+          "wrong": [
+            "(a+b)^2 = a^2 + b^2"
+          ],
           "requires": [
             "equivalence.exponent-as-repeated-product",
             "equivalence.product-with-brackets"
@@ -661,8 +746,11 @@
         {
           "id": "equivalence.root-of-a-sum",
           "name": "Root of a sum",
-          "note": "A root does NOT split over $+$: $\\sqrt{a+b}$ is not $\\sqrt{a} + \\sqrt{b}$. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, but $3 + 4 = 7$.",
+          "note": "A root does NOT split over $+$. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, but $3 + 4 = 7$.",
           "illustration": "\\sqrt{a+b} = \\sqrt{b+a}",
+          "wrong": [
+            "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}"
+          ],
           "conditions": "a \\ge 0, b \\ge 0",
           "requires": [
             "equivalence.root-of-a-product"
@@ -718,6 +806,9 @@
           "name": "Dividing by 1",
           "note": "Dividing by 1 changes nothing: a/1 = a.",
           "illustration": "\\frac{a}{1} = a",
+          "wrong": [
+            "\\frac{a}{1} = \\frac{1}{a}"
+          ],
           "requires": [
             "equivalence.division-variants"
           ],
@@ -749,8 +840,11 @@
         {
           "id": "equivalence.no-splitting-the-denominator",
           "name": "A sum in the denominator does not split",
-          "note": "Splitting works over the numerator only. $c/(a+b)$ is $c$ divided by the whole chunk $a+b$ — it is not $c/a + c/b$. (Check with numbers: $12/(2+4) = 2$, but $12/2 + 12/4 = 9$.)",
+          "note": "Splitting works over the numerator only: $c/(a+b)$ is $c$ divided by the whole chunk $a+b$. (Check with numbers: $12/(2+4) = 2$, but $12/2 + 12/4 = 9$.)",
           "illustration": "\\frac{c}{a+b} = c \\div (a+b)",
+          "wrong": [
+            "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}"
+          ],
           "conditions": "a+b \\ne 0",
           "requires": [
             "equivalence.splitting-a-fraction"
@@ -770,8 +864,11 @@
         {
           "id": "equivalence.no-cancelling-in-a-sum",
           "name": "No cancelling inside a sum",
-          "note": "You cannot cancel the 3 against one term of the numerator: $(3x+2)/3 = x + 2/3$, not $x + 2$. Cancelling needs a common factor of the WHOLE numerator.",
+          "note": "Cancelling needs a common factor of the WHOLE numerator, so the 3 cannot go against one term of it.",
           "illustration": "\\frac{3x+2}{3} = x + \\frac{2}{3}",
+          "wrong": [
+            "\\frac{3x+2}{3} = x + 2"
+          ],
           "requires": [
             "equivalence.splitting-a-fraction"
           ],
@@ -808,6 +905,9 @@
           "name": "Multiplication is commutative",
           "note": "Order does not matter for multiplication: ab = ba.",
           "illustration": "ab = ba",
+          "wrong": [
+            "a \\cdot 3 \\neq 3a"
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
@@ -825,8 +925,11 @@
         {
           "id": "equivalence.subtraction-not-commutative",
           "name": "Subtraction is not commutative",
-          "note": "Subtraction does not commute: a - b is not b - a. But flipping the order flips the sign: a - b = -(b - a).",
+          "note": "Subtraction does not commute. But flipping the order flips the sign: $a - b = -(b - a)$.",
           "illustration": "a - b = -(b - a)",
+          "wrong": [
+            "a - b = b - a"
+          ],
           "requires": [
             "equivalence.minus-over-difference"
           ],
@@ -844,8 +947,11 @@
         {
           "id": "equivalence.division-not-commutative",
           "name": "Division is not commutative",
-          "note": "Division does not commute: a/b is not b/a. Swapping numerator and denominator gives the reciprocal, not the same value.",
+          "note": "Division does not commute: swapping numerator and denominator gives the reciprocal, not the same value.",
           "illustration": "a \\div b = \\frac{a}{b}",
+          "wrong": [
+            "\\frac{a}{b} = \\frac{b}{a}"
+          ],
           "requires": [
             "equivalence.division-variants"
           ],
@@ -868,6 +974,9 @@
           "name": "Same value, different dominant operation",
           "note": "These are equal in value but have different dominant operations: x²−1 is a difference, (x+1)(x−1) is a product. Rewriting changes the dominant operation — the heart of Skill 3.",
           "illustration": "x^2 - 1 = (x+1)(x-1)",
+          "wrong": [
+            "x^2 - 1 = (x-1)^2"
+          ],
           "requires": [
             "classification.difference",
             "classification.product"

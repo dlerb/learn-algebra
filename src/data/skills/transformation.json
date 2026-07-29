@@ -13,8 +13,14 @@
           "name": "Expand: multiply into a bracket",
           "note": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$. This is the active twin of recognising $2(x+1) = 2x+2$ — there you check equality, here you generate it — and the commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
           "illustration": "a(b + c) = ab + ac",
+          "wrong": [
+            "a(b + c) = ab + c"
+          ],
           "requires": [
             "equivalence.multiplying-into-a-bracket"
+          ],
+          "rules": [
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "ax.distributivity"
@@ -28,8 +34,14 @@
           "name": "Expand a squared binomial",
           "note": "$(a+b)^2$ is $(a+b)(a+b)$, not $a^2 + b^2$. Expanding gives the cross term twice: $(a+b)^2 = a^2 + 2ab + b^2$. Dropping the $2ab$ is the single most common error in school algebra — a power does not distribute over a sum, because it is built from multiplication, not addition.",
           "illustration": "(a + b)^2 = a^2 + 2ab + b^2",
+          "wrong": [
+            "(a + b)^2 = a^2 + b^2"
+          ],
           "requires": [
             "transformation.expand-distribute"
+          ],
+          "rules": [
+            "rule.binomial-square"
           ],
           "restsOn": [
             "th.binomial-square"
@@ -50,10 +62,16 @@
           "name": "Factor out a common factor",
           "note": "The reverse of expanding: pull the factor shared by every term out in front. $ab + ac = a(b+c)$. It only works when the factor is in every term — $ab + c$ has no common factor to pull. Check by multiplying back: $a(b+c) = ab + ac$.",
           "illustration": "ab + ac = a(b + c)",
+          "wrong": [
+            "ab + c = a(b + c)"
+          ],
           "requires": [
             "classification.common-factor",
             "transformation.expand-distribute",
             "chunking.chunks-in-product"
+          ],
+          "rules": [
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "ax.distributivity"
@@ -67,9 +85,17 @@
           "name": "Factor a difference of squares",
           "note": "Two squares with a minus between them factor into the two matching brackets: $a^2 - b^2 = (a+b)(a-b)$. It works because the mixed products cancel — expanding gives $a^2 - ab + ab - b^2$, and $-ab + ab$ is $0$ (th.difference-of-squares). Two things to hold on to: the SUM of squares does not factor this way at all, and the answer is not $(a-b)^2$ — squaring a difference leaves a middle term ($-2ab$), which the true factorisation has none of. Check by multiplying back.",
           "illustration": "a^2 - b^2 = (a + b)(a - b)",
+          "wrong": [
+            "a^2 - b^2 = (a - b)^2",
+            "a^2 + b^2 = (a + b)(a - b)"
+          ],
           "requires": [
             "classification.difference-of-squares",
             "transformation.expand-distribute"
+          ],
+          "rules": [
+            "rule.difference-of-squares",
+            "rule.binomials-read-backwards"
           ],
           "restsOn": [
             "th.difference-of-squares"
@@ -83,9 +109,16 @@
           "name": "Factor a perfect square trinomial",
           "note": "Three terms in the shape $a^2 + 2ab + b^2$ collapse into one square: $(a+b)^2$ (th.binomial-square, read right to left). The middle term is what identifies it — it must be exactly twice the product of the two roots, which is the term students drop when they expand and the term they must find when they factor. With a minus in the middle the same identity gives $(a-b)^2$ (th.square-of-difference). Check by expanding.",
           "illustration": "a^2 + 2ab + b^2 = (a + b)^2",
+          "wrong": [
+            "a^2 + b^2 = (a + b)^2"
+          ],
           "requires": [
             "classification.perfect-square-trinomial",
             "transformation.expand-binomial-square"
+          ],
+          "rules": [
+            "rule.binomial-square",
+            "rule.binomials-read-backwards"
           ],
           "restsOn": [
             "th.binomial-square",
@@ -100,10 +133,16 @@
           "name": "Factor a quadratic",
           "note": "For $x^2 + px + q$, find two numbers that MULTIPLY to $q$ and ADD to $p$; they are the numbers in the brackets. $x^2 + 5x + 6 = (x+2)(x+3)$ because $2 \\cdot 3 = 6$ and $2 + 3 = 5$. The two conditions come straight from expanding: $(x+m)(x+n) = x^2 + (m+n)x + mn$ (ax.distributivity, then th.collect-like-terms), so the middle coefficient is a collected sum and the constant a product. Both conditions must hold — a pair that gives the right constant but the wrong middle term is not a factorisation. Not every quadratic factors over the rationals; check by multiplying back.",
           "illustration": "x^2 + 5x + 6 = (x + 2)(x + 3)",
+          "wrong": [
+            "x^2 + 5x + 6 = (x + 5)(x + 6)"
+          ],
           "requires": [
             "classification.quadratic-form",
             "transformation.expand-distribute",
             "transformation.collect-like-terms"
+          ],
+          "rules": [
+            "rule.quadratic-pair"
           ],
           "restsOn": [
             "ax.distributivity",
@@ -125,8 +164,16 @@
           "name": "Collect like terms",
           "note": "Add the coefficients of like terms; unlike terms stay apart. $3x + 2x = 5x$, but $3x + 2$ stays open — a term and a constant are not alike. This is the active twin of recognising that $2 + 3x$ does not collapse: there you judge which terms are alike, here you perform the merge.",
           "illustration": "3x + 2x = 5x",
+          "wrong": [
+            "3x + 2 = 5x",
+            "a + 3a = 3a"
+          ],
           "requires": [
             "equivalence.number-plus-term"
+          ],
+          "rules": [
+            "rule.unlike-terms-stay",
+            "rule.invisible-one"
           ],
           "restsOn": [
             "th.collect-like-terms"
@@ -141,8 +188,14 @@
           "name": "Simplify a product of powers",
           "note": "Same base, so add the exponents: $x^a \\cdot x^b = x^{a+b}$, not $x^{ab}$. A power counts factors, and multiplying two powers stacks their factors, so the counts add. The mirror slip — multiplying the exponents — is what $(x^a)^b = x^{ab}$ actually does, one step away.",
           "illustration": "x^a \\cdot x^b = x^{a+b}",
+          "wrong": [
+            "x^a \\cdot x^b = x^{ab}"
+          ],
           "requires": [
             "equivalence.exponent-as-repeated-product"
+          ],
+          "rules": [
+            "rule.same-base"
           ],
           "restsOn": [
             "pl.same-base"
@@ -156,11 +209,17 @@
           "name": "Cancel a common factor",
           "note": "A factor shared by the whole numerator and the whole denominator cancels: $\\frac{ak}{bk} = \\frac{a}{b}$. What you cannot do is cancel against one term of a sum — $\\frac{3x+2}{3} \\ne x + 2$. Cancelling needs a factor of everything above and below, which is why you often factor first.",
           "illustration": "\\frac{ak}{bk} = \\frac{a}{b}",
+          "wrong": [
+            "\\frac{a + k}{b + k} = \\frac{a}{b}"
+          ],
           "conditions": "b \\ne 0,\\ k \\ne 0",
           "requires": [
             "transformation.factor-common",
             "equivalence.no-cancelling-in-a-sum",
             "chunking.chunks-in-product"
+          ],
+          "rules": [
+            "rule.fraction-cancel"
           ],
           "restsOn": [
             "th.cancel-common-factor"
@@ -174,9 +233,15 @@
           "name": "Combine fractions into one",
           "note": "Write a sum, difference, or quotient of fractions as a single fraction. Multiplying and dividing go straight across ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$, and dividing flips the divisor: $\\frac{a/b}{c/d} = \\frac{ad}{bc}$); adding and subtracting do not — they need a common denominator first, so $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$. The straight-across reflex is the whole trap: right for a product, wrong for a sum, because the fraction bar is built from multiplication and not from addition.",
           "illustration": "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}",
+          "wrong": [
+            "\\frac{a}{b} + \\frac{c}{d} = \\frac{a + c}{b + d}"
+          ],
           "requires": [
             "equivalence.fraction-as-reciprocal-product",
             "equivalence.no-splitting-the-denominator"
+          ],
+          "rules": [
+            "rule.fraction-common-denominator"
           ],
           "restsOn": [
             "th.fraction-multiply",

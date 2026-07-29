@@ -103,8 +103,8 @@
               ]
             },
             {
-              "id": "mis.adjacent-signs",
-              "kind": "misreading",
+              "id": "omi.adjacent-signs",
+              "kind": "omission",
               "frequency": 2,
               "corrupts": [
                 "ix.no-adjacent-operator"
@@ -258,8 +258,8 @@
               ]
             },
             {
-              "id": "mis.bracket-dissolved",
-              "kind": "misreading",
+              "id": "anti.bracket-dissolved",
+              "kind": "anti-law",
               "frequency": 2,
               "corrupts": [
                 "ix.brackets"
@@ -338,8 +338,8 @@
               ]
             },
             {
-              "id": "mis.redundant-brackets-kept",
-              "kind": "misreading",
+              "id": "omi.redundant-brackets-kept",
+              "kind": "omission",
               "frequency": 1,
               "corrupts": [
                 "ix.brackets"
@@ -845,6 +845,41 @@
                     "en": "the bar IS division — a fraction is a quotient, not a different kind of object",
                     "de": "der Strich IST die Division — ein Bruch ist ein Quotient, keine andere Art von Objekt"
                   }
+                }
+              ]
+            },
+            {
+              "id": "anti.minus-on-both-parts",
+              "kind": "anti-law",
+              "frequency": 1,
+              "corrupts": [
+                "th.fraction-minus-moves"
+              ],
+              "rules": [
+                "rule.fraction-minus-moves"
+              ],
+              "name": {
+                "en": "One minus written in two places",
+                "de": "Ein Minus an zwei Stellen geschrieben"
+              },
+              "fix": {
+                "en": "One minus, one place: $-\\frac{3}{4}$, $\\frac{-3}{4}$ and $\\frac{3}{-4}$ are the same number. Put it on both and it cancels: $\\frac{-3}{-4} = \\frac{3}{4}$.",
+                "de": "Ein Minus, eine Stelle: $-\\frac{3}{4}$, $\\frac{-3}{4}$ und $\\frac{3}{-4}$ sind dieselbe Zahl. An beiden Stellen hebt es sich auf: $\\frac{-3}{-4} = \\frac{3}{4}$."
+              },
+              "note": {
+                "en": "The legal move — multiplying top and bottom by $-1$ — is confused with moving the single minus. Negating both parts changes nothing, so the fraction silently comes out positive.",
+                "de": "Der erlaubte Schritt — Zähler und Nenner mit $-1$ multiplizieren — wird mit dem Verschieben des einen Minus verwechselt. Beide Teile zu negieren ändert nichts, also wird der Bruch unbemerkt positiv."
+              },
+              "instances": [
+                {
+                  "from": "-\\frac{a}{b}",
+                  "wrong": "\\frac{-a}{-b}",
+                  "right": "\\frac{-a}{b}"
+                },
+                {
+                  "from": "-\\frac{3}{4}",
+                  "wrong": "\\frac{-3}{-4}",
+                  "right": "\\frac{-3}{4}"
                 }
               ]
             }
