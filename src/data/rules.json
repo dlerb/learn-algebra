@@ -17,8 +17,8 @@
       "id": "rule.juxtaposition",
       "kind": "is",
       "rule": {
-        "en": "Juxtaposition means multiplication",
-        "de": "Nebeneinanderschreiben bedeutet Multiplikation"
+        "en": "Side by side means times",
+        "de": "Nebeneinander heisst mal"
       },
       "latex": [
         "ab = a \\cdot b"
@@ -71,8 +71,8 @@
       "id": "rule.only-plus-and-times-commute",
       "kind": "do",
       "rule": {
-        "en": "Only plus and times may be swapped",
-        "de": "Nur Plus und Mal dürfen vertauscht werden"
+        "en": "Swap only across a plus or a times",
+        "de": "Nur über ein Plus oder ein Mal vertauschen"
       },
       "latex": [
         "a + b = b + a",
@@ -141,8 +141,8 @@
       "id": "rule.zero-product",
       "kind": "do",
       "rule": {
-        "en": "If a product is zero, one of its factors is zero",
-        "de": "Ist ein Produkt null, ist einer seiner Faktoren null"
+        "en": "Set each factor to zero",
+        "de": "Jeden Faktor null setzen"
       },
       "latex": [
         "ab = 0 \\;\\Longrightarrow\\; a = 0 \\;\\lor\\; b = 0"
@@ -189,7 +189,7 @@
     },
     {
       "id": "rule.minus-times-minus",
-      "kind": "do",
+      "kind": "is",
       "rule": {
         "en": "Minus times minus is plus",
         "de": "Minus mal Minus gibt Plus"
@@ -210,8 +210,8 @@
       "id": "rule.minus-in-product",
       "kind": "do",
       "rule": {
-        "en": "One minus in a product moves to the front",
-        "de": "Ein Minus in einem Produkt wandert nach vorn"
+        "en": "Move a lone minus to the front",
+        "de": "Ein einzelnes Minus nach vorne ziehen"
       },
       "latex": [
         "a \\cdot (-b) = -(ab)"
@@ -228,8 +228,8 @@
       "id": "rule.minus-over-bracket",
       "kind": "do",
       "rule": {
-        "en": "A minus in front of a bracket flips every term inside",
-        "de": "Ein Minus vor einer Klammer kehrt jeden Term darin um"
+        "en": "Flip every sign inside the bracket",
+        "de": "Alle Vorzeichen in der Klammer wechseln"
       },
       "latex": [
         "-(a+b) = -a - b"
@@ -246,8 +246,8 @@
       "id": "rule.subtract-a-bracket",
       "kind": "do",
       "rule": {
-        "en": "Subtracting a bracket flips every sign in it",
-        "de": "Eine Klammer subtrahieren kehrt jedes Zeichen darin um"
+        "en": "Flip every sign in the bracket you subtract",
+        "de": "Beim Subtrahieren einer Klammer alle Vorzeichen darin wechseln"
       },
       "latex": [
         "a - (b+c) = a - b - c",
@@ -413,8 +413,8 @@
       "id": "rule.same-base",
       "kind": "do",
       "rule": {
-        "en": "Multiplying powers of the same base adds the exponents",
-        "de": "Potenzen mit gleicher Basis multiplizieren addiert die Exponenten"
+        "en": "Add the exponents when the base is the same",
+        "de": "Bei gleicher Basis die Exponenten addieren"
       },
       "latex": [
         "a^m \\cdot a^n = a^{m+n}"
@@ -431,8 +431,8 @@
       "id": "rule.same-base-divide",
       "kind": "do",
       "rule": {
-        "en": "Dividing powers of the same base subtracts the exponents",
-        "de": "Potenzen mit gleicher Basis dividieren subtrahiert die Exponenten"
+        "en": "Subtract the exponents when you divide",
+        "de": "Beim Dividieren die Exponenten subtrahieren"
       },
       "latex": [
         "\\frac{a^m}{a^n} = a^{m-n}"
@@ -449,8 +449,8 @@
       "id": "rule.power-over-product",
       "kind": "do",
       "rule": {
-        "en": "A power over a product reaches every factor",
-        "de": "Eine Potenz über einem Produkt erreicht jeden Faktor"
+        "en": "Give the power to every factor",
+        "de": "Die Potenz auf jeden Faktor geben"
       },
       "latex": [
         "(ab)^n = a^n b^n",
@@ -469,8 +469,8 @@
       "id": "rule.power-over-quotient",
       "kind": "do",
       "rule": {
-        "en": "A power over a quotient reaches top and bottom",
-        "de": "Eine Potenz über einem Quotienten erreicht Zähler und Nenner"
+        "en": "Give the power to top and bottom",
+        "de": "Die Potenz auf Zähler und Nenner geben"
       },
       "latex": [
         "\\left( \\frac{a}{b} \\right)^n = \\frac{a^n}{b^n}",
@@ -489,8 +489,8 @@
       "id": "rule.power-of-power",
       "kind": "do",
       "rule": {
-        "en": "A power of a power multiplies the exponents",
-        "de": "Eine Potenz einer Potenz multipliziert die Exponenten"
+        "en": "Multiply the exponents for a power of a power",
+        "de": "Bei einer Potenz einer Potenz die Exponenten multiplizieren"
       },
       "latex": [
         "(a^m)^n = a^{mn}",
@@ -635,8 +635,8 @@
       "id": "rule.fraction-divide",
       "kind": "do",
       "rule": {
-        "en": "Dividing by a fraction is multiplying by its reciprocal",
-        "de": "Durch einen Bruch dividieren heisst mit dem Kehrwert multiplizieren"
+        "en": "To divide by a fraction, flip it and multiply",
+        "de": "Durch einen Bruch teilen heisst: umkehren und multiplizieren"
       },
       "latex": [
         "\\frac{a}{b} : \\frac{c}{d} = \\frac{a}{b} \\cdot \\frac{d}{c}"
@@ -672,8 +672,8 @@
       "id": "rule.fraction-common-denominator",
       "kind": "do",
       "rule": {
-        "en": "Fractions add only over a common denominator",
-        "de": "Brüche werden nur über einem gemeinsamen Nenner addiert"
+        "en": "Bring fractions to one denominator before adding",
+        "de": "Brüche vor dem Addieren auf einen Nenner bringen"
       },
       "latex": [
         "\\frac{a}{b} + \\frac{c}{b} = \\frac{a + c}{b}",
@@ -691,8 +691,8 @@
       "id": "rule.fraction-plus-whole",
       "kind": "do",
       "rule": {
-        "en": "A whole number joins a fraction over its denominator",
-        "de": "Eine ganze Zahl kommt über den Nenner des Bruchs dazu"
+        "en": "Put the whole number over the same denominator",
+        "de": "Die ganze Zahl über denselben Nenner schreiben"
       },
       "latex": [
         "c + \\frac{a}{b} = \\frac{cb + a}{b}"
@@ -728,8 +728,8 @@
       "id": "rule.split-numerator",
       "kind": "do",
       "rule": {
-        "en": "A sum splits over the bar; a sum under it does not",
-        "de": "Eine Summe im Zähler lässt sich aufteilen, eine im Nenner nicht"
+        "en": "Split a sum over the bar, never under it",
+        "de": "Eine Summe über dem Strich aufteilen, nie darunter"
       },
       "latex": [
         "\\frac{a + b}{c} = \\frac{a}{c} + \\frac{b}{c}",
@@ -777,8 +777,8 @@
       "id": "rule.binomial-square",
       "kind": "do",
       "rule": {
-        "en": "A squared sum has a middle term",
-        "de": "Eine quadrierte Summe hat einen mittleren Term"
+        "en": "First squared, plus twice the product, plus last squared",
+        "de": "Erstes zum Quadrat, plus zweimal Erstes mal Zweites, plus Zweites zum Quadrat"
       },
       "latex": [
         "(a+b)^2 = a^2 + 2ab + b^2"
@@ -795,8 +795,8 @@
       "id": "rule.square-of-difference",
       "kind": "do",
       "rule": {
-        "en": "A squared difference is the same, with the middle term negative",
-        "de": "Eine quadrierte Differenz ist dasselbe, mit negativem mittlerem Term"
+        "en": "First squared, minus twice the product, plus last squared",
+        "de": "Erstes zum Quadrat, minus zweimal Erstes mal Zweites, plus Zweites zum Quadrat"
       },
       "latex": [
         "(a-b)^2 = a^2 - 2ab + b^2"
@@ -813,8 +813,8 @@
       "id": "rule.difference-of-squares",
       "kind": "do",
       "rule": {
-        "en": "A sum times a difference leaves no middle term",
-        "de": "Summe mal Differenz lässt keinen mittleren Term übrig"
+        "en": "First squared, minus last squared",
+        "de": "Erstes zum Quadrat, minus Zweites zum Quadrat"
       },
       "latex": [
         "(a+b)(a-b) = a^2 - b^2"
@@ -887,8 +887,8 @@
       "id": "rule.dominant-op-last",
       "kind": "is",
       "rule": {
-        "en": "The dominant operation is the last one applied",
-        "de": "Die dominante Operation ist die zuletzt ausgeführte"
+        "en": "The main operation is the one you would do last",
+        "de": "Die Hauptoperation ist die, die man zuletzt ausführt"
       },
       "note": {
         "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
@@ -957,8 +957,8 @@
       "id": "rule.dominant-op-tools",
       "kind": "do",
       "rule": {
-        "en": "The dominant operation determines which tools apply",
-        "de": "Die dominante Operation bestimmt die Werkzeuge"
+        "en": "Choose the tool by the main operation",
+        "de": "Das Werkzeug nach der Hauptoperation wählen"
       },
       "note": {
         "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
@@ -969,8 +969,8 @@
       "id": "rule.unlike-terms-stay",
       "kind": "do",
       "rule": {
-        "en": "Unlike terms do not combine, and an open sum is a finished answer",
-        "de": "Ungleiche Terme lassen sich nicht zusammenfassen, und eine offene Summe ist eine fertige Antwort"
+        "en": "Leave unlike terms alone",
+        "de": "Ungleiche Terme stehen lassen"
       },
       "latex": [
         "ax + bx = (a+b)x"
@@ -985,8 +985,8 @@
       "id": "rule.quadratic-pair",
       "kind": "do",
       "rule": {
-        "en": "The pair must multiply to the constant and add to the middle number",
-        "de": "Das Zahlenpaar muss multipliziert den konstanten Term und addiert die mittlere Zahl ergeben"
+        "en": "Find the pair that multiplies to the constant and adds to the middle",
+        "de": "Das Paar finden, das die Konstante ergibt und die mittlere Zahl summiert"
       },
       "latex": [
         "(x+m)(x+n) = x^2 + (m+n)x + mn"

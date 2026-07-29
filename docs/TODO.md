@@ -162,6 +162,40 @@ skills stands either way, and is the part you have already seen and liked.
 6. **Named families** — "the freshman's dream" — are worth pool entries only once something
    cites them, and the thing that would (a post-session diagnosis) is behind the drill freeze.
 
+### ✅ DONE 2026-07-29 — the rule sentences lead with the move
+
+**The finding that shrank the job: `kind: do` was assigned correctly, the prose just never
+honoured it.** Only **4 of 57** rules were real instructions (an earlier count of 7 was wrong —
+it read `Multiplying`, `Subtracting` and `Only` as imperatives). No `is` rule was mis-phrased
+as a `do`, so the drift ran one way only. The field's recorded intent — **IS = how to read a
+form, DO = what to do with it** — was already right; 22 sentences described behaviour instead
+of naming a move.
+
+**Now 24 of 28 `do` rules lead with the move.** The four that do not are the family names
+("The power laws: know these cold"), which are labels and correctly stay as they are.
+
+⚠️ **`rule.minus-times-minus` moved to `is`, prose untouched.** "Minus times minus is plus" is
+the classroom phrase and literally an IS; every imperative version was worse. **When the mood
+fights the content, change the kind, not the sentence** — the same rule that governed the
+mistakes pass.
+
+**THE THREE BINOMIALS ARE NOW ONE RECIPE**, and this was the user's catch: *"a sum times a
+difference leaves no middle term"* says what is ABSENT, so standalone it never says what the
+answer IS and only parses if you have just read the other two.
+
+    (a+b)^2      First squared, plus twice the product, plus last squared
+    (a-b)^2      First squared, minus twice the product, plus last squared
+    (a+b)(a-b)   First squared, minus last squared
+
+In one shape they read as a family and the middle term is the visible difference: `+2ab` /
+`-2ab` / gone. Checked against the literature — this is the standard English phrasing
+("first squared, plus twice the product, plus last squared") and matches the German school
+form one for one, which is where the user's instinct came from.
+
+**Vocabulary, separately and small: only 2 sentences used words a 15-year-old lacks.**
+`juxtaposition` → "Side by side means times", `dominant operation` → "the main operation". Kept
+`distributes` and `reciprocal`: both are curriculum words here.
+
 ### ✅ DONE 2026-07-29 — the mistake sentences, and a fourth `kind`
 
 **The sentences are now the CORRECTION, and the mood is picked by `kind`.** They were briefly
@@ -194,6 +228,11 @@ Kinds now: misreading 13 · anti-law 11 · omission 2 · salience 2.
 **Also**: the family name in front of every rule (`Power laws · Multiplying powers…`), derived
 through the sheets on /rules and /skills, plus a short `name` on each of the six sheets
 because the heading sentence does not work as a label.
+
+**NEXT: the transformation ✗ + the wiring audit, one pass.** All 10 transformation skills are
+half-empty on BOTH sides — no `wrong` and, for the expanding/factoring ones, no `rules` either,
+so the good block shows a bare formula and the bad block a bare belief. Author both while
+auditing the citations below.
 
 **A finding the rewrite exposed**: specific sentences make bad `skill.errors` wiring visible.
 `equivalence.minus-on-fraction` shows ✗ $-\frac{a}{b} = \frac{-a}{-b}$ under *"Not every minus
