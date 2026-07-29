@@ -65,9 +65,22 @@ the TOWER's uncovered cards. This sheet adds no rules — it arranges ones that 
 **`rule.dominant-op-tools` is now the only rule with no family and on no sheet**, correctly: it
 is a strategy rule with **no formula**, and a formulary has nothing to print.
 
-**Still open, and it was never a layering question**: **31 of 48 sheet rules are cited by no
-skill.** If students should drill what is on the cheat sheet, two thirds of the sheets have
-nothing behind them. That wants a new audit line.
+**Still open, and it was never a layering question — now an AUDIT LINE (2026-07-29)**:
+
+    Sheet rules no skill teaches (31 of 50):
+      zero-and-one 5/5 · power-laws 9/10 · minus-rules 6/8 · fraction-laws 7/10
+      distributing 5/11 · reading-a-term 5/13 · binomial-formulas 2/6
+
+Reported **per sheet**, ordered by the fraction untaught, because a single number hid which
+sheet is hollow — and the answer is stark: **`zero-and-one` has NO skill behind any of its five
+rules**, and `power-laws` has one for ten. `reading-a-term` (8 of 13 taught) and
+`binomial-formulas` (4 of 6) are the covered ones. The headline counts DISTINCT rules; four sit
+on two sheets and summing the per-sheet figures would double-count them.
+
+⚠️ **A QUESTION, NEVER A CHECK, and it should stay non-zero.** A sheet is legitimately broader
+than a drill curriculum — a formulary may carry a rule for reference that nothing drills.
+Promoting this to a validator would force skills into existence to satisfy an arithmetic
+rather than a student.
 
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
 

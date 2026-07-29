@@ -683,6 +683,7 @@ export function auditCoverage(
   skills: Skill[], rules: RulesFile, errors: ErrorDef[],
   cardConds: Map<string, string | undefined> = new Map(),
   drills: Drill[] = [],
+  sheets: SheetDef[] = [],
 ): string[] {
   const lines: string[] = []
   const untagged = skills.filter(f => f.restsOn.length === 0)
@@ -747,6 +748,32 @@ export function auditCoverage(
   const orphaned = rules.filter(m => !citedRules.has(m.id))
   if (orphaned.length > 0) {
     lines.push(`Rules cited by no error and no skill (${orphaned.length}): ${orphaned.map(m => m.id).join(', ')}`)
+  }
+
+  // ── THE SHEET COVERAGE QUESTION (2026-07-29) ──────────────────────────────
+  // A cheat sheet is what a student orients by, so a rule PRINTED on one that no
+  // skill teaches is something they are told to know and never get to practise.
+  // Reported per sheet, not in one lump: the answer differs sharply by sheet and
+  // a single number hides which sheet is hollow.
+  //
+  // ⚠️ A QUESTION, NEVER A CHECK, and it should STAY non-zero. A sheet is
+  // legitimately broader than a drill curriculum — a formulary may carry a rule
+  // for reference that nothing drills — so this weighs a gap, it does not
+  // condemn one. Promoting it to a validator would force skills into existence
+  // to satisfy an arithmetic rather than a student.
+  const taughtRules = new Set(skills.flatMap(f => f.rules))
+  const perSheet = sheets.map(sh => {
+    const printed = [...new Set(sh.groups.flatMap(g => g.rules))]
+    return { id: sh.id.replace('sheet.', ''), miss: printed.filter(r => !taughtRules.has(r)).length, n: printed.length }
+  })
+  const hollow = perSheet.filter(x => x.miss > 0)
+  if (hollow.length > 0) {
+    // The headline counts DISTINCT rules: four sit on two sheets each, and
+    // summing the per-sheet figures would count those twice and overstate it.
+    const allPrinted = [...new Set(sheets.flatMap(sh => sh.groups.flatMap(g => g.rules)))]
+    const miss = allPrinted.filter(r => !taughtRules.has(r)).length
+    lines.push(`Sheet rules no skill teaches (${miss} of ${allPrinted.length}): `
+      + hollow.sort((a, b) => b.miss / b.n - a.miss / a.n).map(x => `${x.id} ${x.miss}/${x.n}`).join(' · '))
   }
 
   // Rules: two questions, both inherited from the derivation the authored
