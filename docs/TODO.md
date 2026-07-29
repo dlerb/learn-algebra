@@ -280,7 +280,15 @@ a rule with no `summarizes` can be neither supported nor unsupported, and 8 of 5
   already found this distractor and attributed it to the best mistake available at the time.
   Wiring the skill also exposed that it never cited `rule.fraction-minus-moves`, which IS its
   subject; added.
-- 14/74 skills still have no `restsOn`.
+- [x] ~~14/74 skills still have no `restsOn`.~~ **DONE 2026-07-29 — 74/74.** Thirteen of the
+  fourteen were classification/chunking, which is the right shape: those skills do not
+  transform anything, they DECODE a written form, so what they rest on is the `ix.` notation
+  conventions that make the form mean what it means, plus the one operation card the
+  illustration is about. The floor was set by the audit itself — a skill's `restsOn` must
+  cover at least one card its cited rules `summarize` — so `ix.precedence` and `ix.brackets`
+  follow wherever `rule.dominant-op-last`, `-multiplication-binds-tighter` or `-bracket-chunk`
+  is cited. Bridge references from the skills side: **252 → 294**, all resolving into the
+  tower. The `no layer coordinates yet` audit line is gone.
 
 **SUPERSEDED — the transformation ✗ + the wiring audit, one pass.** All 10 transformation skills are
 half-empty on BOTH sides — no `wrong` and, for the expanding/factoring ones, no `rules` either,

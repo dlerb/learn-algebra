@@ -35,6 +35,10 @@
           ],
           "rules": [
             "rule.dominant-op-last"
+          ],
+          "restsOn": [
+            "def.sub",
+            "ix.precedence"
           ]
         },
         {
@@ -67,6 +71,11 @@
           ],
           "rules": [
             "rule.dominant-op-last"
+          ],
+          "restsOn": [
+            "def.div",
+            "ix.fraction-bar",
+            "ix.precedence"
           ]
         },
         {
@@ -104,6 +113,11 @@
           ],
           "rules": [
             "rule.multiplication-binds-tighter"
+          ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.juxtaposition",
+            "op.add"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -161,6 +175,11 @@
           "rules": [
             "rule.dominant-op-last"
           ],
+          "restsOn": [
+            "ix.precedence",
+            "def.sub",
+            "ix.coefficient-front"
+          ],
           "errors": [
             "mis.minus-roles-confused"
           ]
@@ -178,6 +197,11 @@
           "rules": [
             "rule.bracket-chunk"
           ],
+          "restsOn": [
+            "ix.brackets",
+            "ix.pow",
+            "ix.power-precedence"
+          ],
           "errors": [
             "sal.loudest-op-wins"
           ]
@@ -193,6 +217,11 @@
           ],
           "rules": [
             "rule.bracket-chunk"
+          ],
+          "restsOn": [
+            "ix.fraction-bar",
+            "ix.brackets",
+            "def.div"
           ],
           "errors": [
             "sal.loudest-op-wins"
@@ -233,6 +262,11 @@
           ],
           "rules": [
             "rule.dominant-op-last"
+          ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.pow",
+            "op.add"
           ]
         },
         {
@@ -246,6 +280,11 @@
           "rules": [
             "rule.dominant-op-last",
             "rule.dominant-op-tools"
+          ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.juxtaposition",
+            "op.add"
           ]
         },
         {
@@ -255,6 +294,11 @@
           "illustration": "3x + 2",
           "requires": [
             "classification.sum-of-products"
+          ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.juxtaposition",
+            "op.add"
           ]
         },
         {
@@ -268,6 +312,11 @@
           "rules": [
             "rule.dominant-op-last",
             "rule.dominant-op-tools"
+          ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.pow",
+            "op.add"
           ]
         }
       ]

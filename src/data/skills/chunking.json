@@ -18,6 +18,11 @@
           "rules": [
             "rule.multiplication-binds-tighter"
           ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.juxtaposition",
+            "def.sub"
+          ],
           "errors": [
             "sal.implicit-op-overlooked"
           ]
@@ -32,6 +37,11 @@
           ],
           "rules": [
             "rule.bracket-chunk"
+          ],
+          "restsOn": [
+            "ix.brackets",
+            "ix.precedence",
+            "op.mul"
           ]
         },
         {
@@ -64,6 +74,11 @@
           ],
           "rules": [
             "rule.bracket-chunk"
+          ],
+          "restsOn": [
+            "ix.brackets",
+            "ix.juxtaposition",
+            "def.sub"
           ],
           "errors": [
             "anti.bracket-dissolved"

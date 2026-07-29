@@ -984,6 +984,11 @@
           "rules": [
             "rule.dominant-op-last"
           ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.brackets",
+            "th.difference-of-squares"
+          ],
           "errors": [
             "anti.linearity"
           ]
