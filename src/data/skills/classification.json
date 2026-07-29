@@ -1,17 +1,35 @@
 {
   "kind": "classification",
-  "title": "Classification",
-  "blurb": "Recognising the dominant operation before acting.",
+  "title": {
+    "en": "Classification",
+    "de": "Einordnung"
+  },
+  "blurb": {
+    "en": "Recognising the dominant operation before acting.",
+    "de": "Die Hauptoperation erkennen, bevor man rechnet."
+  },
   "groups": [
     {
       "slug": "basic-forms",
-      "title": "The Five Basic Forms",
-      "blurb": "Recognition in unambiguous cases. Foundation before the misleading forms.",
+      "title": {
+        "en": "The Five Basic Forms",
+        "de": "Die fünf Grundformen"
+      },
+      "blurb": {
+        "en": "Recognition in unambiguous cases. Foundation before the misleading forms.",
+        "de": "Erkennen in eindeutigen Fällen. Das Fundament vor den irreführenden Formen."
+      },
       "skills": [
         {
           "id": "classification.sum",
-          "name": "Sum",
-          "note": "Dominant op = the outermost $+$; its terms are the chunks.",
+          "name": {
+            "en": "Sum",
+            "de": "Summe"
+          },
+          "note": {
+            "en": "Dominant op = the outermost $+$; its terms are the chunks.",
+            "de": "Hauptoperation = das äusserste $+$; seine Summanden sind die Blöcke."
+          },
           "illustration": "a + b",
           "answer": "sum",
           "requires": [
@@ -28,8 +46,14 @@
         },
         {
           "id": "classification.difference",
-          "name": "Difference",
-          "note": "The last operation applied is subtraction. The chunks are the two terms.",
+          "name": {
+            "en": "Difference",
+            "de": "Differenz"
+          },
+          "note": {
+            "en": "The last operation applied is subtraction. The chunks are the two terms.",
+            "de": "Die zuletzt ausgeführte Operation ist die Subtraktion. Die Blöcke sind die beiden Terme."
+          },
           "illustration": "a - b",
           "answer": "difference",
           "requires": [
@@ -45,8 +69,14 @@
         },
         {
           "id": "classification.product",
-          "name": "Product",
-          "note": "Dominant op = the outermost $\\cdot$; its factors are the chunks.",
+          "name": {
+            "en": "Product",
+            "de": "Produkt"
+          },
+          "note": {
+            "en": "Dominant op = the outermost $\\cdot$; its factors are the chunks.",
+            "de": "Hauptoperation = das äusserste $\\cdot$; seine Faktoren sind die Blöcke."
+          },
           "illustration": "ab",
           "answer": "product",
           "requires": [
@@ -66,8 +96,14 @@
         },
         {
           "id": "classification.quotient",
-          "name": "Quotient",
-          "note": "The last operation applied is division. The chunks are numerator and denominator.",
+          "name": {
+            "en": "Quotient",
+            "de": "Quotient"
+          },
+          "note": {
+            "en": "The last operation applied is division. The chunks are numerator and denominator.",
+            "de": "Die zuletzt ausgeführte Operation ist die Division. Die Blöcke sind Zähler und Nenner."
+          },
           "illustration": "\\frac{a}{b}",
           "answer": "quotient",
           "requires": [
@@ -84,8 +120,14 @@
         },
         {
           "id": "classification.power",
-          "name": "Power",
-          "note": "Dominant op = the power; base and exponent are the chunks.",
+          "name": {
+            "en": "Power",
+            "de": "Potenz"
+          },
+          "note": {
+            "en": "Dominant op = the power; base and exponent are the chunks.",
+            "de": "Hauptoperation = die Potenz; Basis und Exponent sind die Blöcke."
+          },
           "illustration": "a^2",
           "answer": "power",
           "requires": [
@@ -104,13 +146,25 @@
     },
     {
       "slug": "misleading-forms",
-      "title": "Misleading Surface Forms",
-      "blurb": "Where a visible operation distracts from the dominant one. The core of Skill 2.",
+      "title": {
+        "en": "Misleading Surface Forms",
+        "de": "Irreführende Oberflächenformen"
+      },
+      "blurb": {
+        "en": "Where a visible operation distracts from the dominant one. The core of Skill 2.",
+        "de": "Wo eine sichtbare Operation von der Hauptoperation ablenkt. Der Kern von Stufe 2."
+      },
       "skills": [
         {
           "id": "classification.sum-of-products",
-          "name": "Sum of products — multiplication is inside the terms",
-          "note": "The multiplications are inside the terms, already done. The last operation applied to the whole expression is addition — a sum.",
+          "name": {
+            "en": "Sum of products — multiplication is inside the terms",
+            "de": "Summe von Produkten — die Multiplikation steckt in den Termen"
+          },
+          "note": {
+            "en": "The multiplications are inside the terms, already done. The last operation applied to the whole expression is addition — a sum.",
+            "de": "Die Multiplikationen stecken in den Termen und sind schon erledigt. Die zuletzt auf den ganzen Ausdruck angewandte Operation ist die Addition — also eine Summe."
+          },
           "illustration": "3x + 2y",
           "answer": "sum",
           "misreads": "product",
@@ -132,8 +186,14 @@
         },
         {
           "id": "classification.product-with-inner-sum",
-          "name": "Product containing a sum — looks like a sum",
-          "note": "The $+$ is trapped inside a chunk (the bracket). The dominant operation is the multiplication outside — a product.",
+          "name": {
+            "en": "Product containing a sum — looks like a sum",
+            "de": "Produkt mit einer Summe darin — sieht aus wie eine Summe"
+          },
+          "note": {
+            "en": "The $+$ is trapped inside a chunk (the bracket). The dominant operation is the multiplication outside — a product.",
+            "de": "Das $+$ steckt in einem Block (der Klammer) fest. Die Hauptoperation ist die Multiplikation aussen — also ein Produkt."
+          },
           "illustration": "3(x+1)",
           "answer": "product",
           "misreads": "sum",
@@ -154,8 +214,14 @@
         },
         {
           "id": "classification.coefficient-times-power",
-          "name": "Coefficient in front of a power",
-          "note": "$2x^2$ is $2 \\cdot (x^2)$, not $(2x)^2$. The exponent grabs only the $x$; the dominant operation is the product of $2$ and $x^2$.",
+          "name": {
+            "en": "Coefficient in front of a power",
+            "de": "Koeffizient vor einer Potenz"
+          },
+          "note": {
+            "en": "$2x^2$ is $2 \\cdot (x^2)$, not $(2x)^2$. The exponent grabs only the $x$; the dominant operation is the product of $2$ and $x^2$.",
+            "de": "$2x^2$ ist $2 \\cdot (x^2)$, nicht $(2x)^2$. Der Exponent packt nur das $x$; die Hauptoperation ist das Produkt aus $2$ und $x^2$."
+          },
           "illustration": "2x^2",
           "answer": "product",
           "misreads": "power",
@@ -176,8 +242,14 @@
         },
         {
           "id": "classification.leading-minus",
-          "name": "Expression with a leading minus",
-          "note": "A leading minus is just the sign of the first term — it does not make the whole thing a subtraction. -3x + 2y is a sum. (A leading minus can also sit on a power, e.g. -(x+1)², which is a power then negated.)",
+          "name": {
+            "en": "Expression with a leading minus",
+            "de": "Ausdruck mit führendem Minus"
+          },
+          "note": {
+            "en": "A leading minus is just the sign of the first term — it does not make the whole thing a subtraction. $-3x + 2y$ is a sum. (A leading minus can also sit on a power, e.g. $-(x+1)^2$, which is a power then negated.)",
+            "de": "Ein führendes Minus ist nur das Vorzeichen des ersten Terms — es macht das Ganze nicht zu einer Subtraktion. $-3x + 2y$ ist eine Summe. (Ein führendes Minus kann auch an einer Potenz stehen, etwa $-(x+1)^2$, das ist eine Potenz und dann negiert.)"
+          },
           "illustration": "-3x + 2y",
           "answer": "sum",
           "misreads": "difference",
@@ -199,8 +271,14 @@
         },
         {
           "id": "classification.power-with-inner-sum",
-          "name": "Power containing a sum",
-          "note": "The base is the whole chunk (x+1). The dominant operation is the power.",
+          "name": {
+            "en": "Power containing a sum",
+            "de": "Potenz mit einer Summe darin"
+          },
+          "note": {
+            "en": "The base is the whole chunk (x+1). The dominant operation is the power.",
+            "de": "Die Basis ist der ganze Block $(x+1)$. Die Hauptoperation ist die Potenz."
+          },
           "illustration": "(x+1)^2",
           "answer": "power",
           "misreads": "sum",
@@ -223,8 +301,14 @@
         },
         {
           "id": "classification.complex-quotient",
-          "name": "Quotient with a complex numerator or denominator",
-          "note": "The sums are inside the chunks (numerator and denominator). The whole thing is a division — a quotient.",
+          "name": {
+            "en": "Quotient with a complex numerator or denominator",
+            "de": "Quotient mit zusammengesetztem Zähler oder Nenner"
+          },
+          "note": {
+            "en": "The sums are inside the chunks (numerator and denominator). The whole thing is a division — a quotient.",
+            "de": "Die Summen stecken in den Blöcken (Zähler und Nenner). Das Ganze ist eine Division — also ein Quotient."
+          },
           "illustration": "\\frac{3x+2}{x-1}",
           "answer": "quotient",
           "misreads": "sum",
@@ -248,12 +332,21 @@
     },
     {
       "slug": "familiar-shapes",
-      "title": "Familiar Shapes",
+      "title": {
+        "en": "Familiar Shapes",
+        "de": "Bekannte Gestalten"
+      },
       "skills": [
         {
           "id": "classification.difference-of-squares",
-          "name": "Difference of two squares",
-          "note": "Dominant operation: a difference. The shape is special — both chunks are perfect squares ($9 = 3^2$, $4x^2 = (2x)^2$). Recognising it unlocks factoring as $(a+b)(a-b)$.",
+          "name": {
+            "en": "Difference of two squares",
+            "de": "Differenz zweier Quadrate"
+          },
+          "note": {
+            "en": "Dominant operation: a difference. The shape is special — both chunks are perfect squares ($9 = 3^2$, $4x^2 = (2x)^2$). Recognising it unlocks factoring as $(a+b)(a-b)$.",
+            "de": "Hauptoperation: eine Differenz. Die Gestalt ist besonders — beide Blöcke sind Quadratzahlen ($9 = 3^2$, $4x^2 = (2x)^2$). Sie zu erkennen eröffnet die Faktorisierung als $(a+b)(a-b)$."
+          },
           "illustration": "a^2 - b^2",
           "answer": "difference",
           "requires": [
@@ -272,8 +365,14 @@
         },
         {
           "id": "classification.perfect-square-trinomial",
-          "name": "Perfect square trinomial",
-          "note": "Dominant operation: a sum of three terms. The shape is special: the middle term is twice the product of the roots of the outer terms. Recognising it unlocks writing as (a±b)².",
+          "name": {
+            "en": "Perfect square trinomial",
+            "de": "Vollständiges Quadrat"
+          },
+          "note": {
+            "en": "Dominant operation: a sum of three terms. The shape is special: the middle term is twice the product of the roots of the outer terms. Recognising it unlocks writing as $(a \\pm b)^2$.",
+            "de": "Hauptoperation: eine Summe aus drei Termen. Die Gestalt ist besonders: der mittlere Term ist genau das Doppelte des Produkts der Wurzeln der äusseren Terme. Sie zu erkennen eröffnet das Schreiben als $(a \\pm b)^2$."
+          },
           "illustration": "a^2 + 2ab + b^2",
           "answer": "sum",
           "requires": [
@@ -290,8 +389,14 @@
         },
         {
           "id": "classification.common-factor",
-          "name": "Common factor",
-          "note": "Dominant operation: a sum. The shape is special: all chunks share a factor (3, a, 2x, (x+1)). Recognising it unlocks factoring it out.",
+          "name": {
+            "en": "Common factor",
+            "de": "Gemeinsamer Faktor"
+          },
+          "note": {
+            "en": "Dominant operation: a sum. The shape is special: all chunks share a factor (3, a, 2x, (x+1)). Recognising it unlocks factoring it out.",
+            "de": "Hauptoperation: eine Summe. Die Gestalt ist besonders: alle Blöcke haben einen Faktor gemeinsam ($3$, $a$, $2x$, $(x+1)$). Sie zu erkennen eröffnet das Ausklammern."
+          },
           "illustration": "3x + 6",
           "answer": "sum",
           "requires": [
@@ -309,8 +414,14 @@
         },
         {
           "id": "classification.linear-form",
-          "name": "Linear form",
-          "note": "Dominant operation: a sum. Highest power is 1 — one variable term and one constant. The linear shape.",
+          "name": {
+            "en": "Linear form",
+            "de": "Lineare Form"
+          },
+          "note": {
+            "en": "Dominant operation: a sum. Highest power is 1 — one variable term and one constant. The linear shape.",
+            "de": "Hauptoperation: eine Summe. Höchste Potenz ist 1 — ein Term mit Variable und eine Konstante. Die lineare Gestalt."
+          },
           "illustration": "3x + 2",
           "answer": "sum",
           "requires": [
@@ -324,8 +435,14 @@
         },
         {
           "id": "classification.quadratic-form",
-          "name": "Quadratic form",
-          "note": "Dominant operation: a sum. Highest power is 2 — the quadratic shape. Recognising it gates all of quadratic algebra.",
+          "name": {
+            "en": "Quadratic form",
+            "de": "Quadratische Form"
+          },
+          "note": {
+            "en": "Dominant operation: a sum. Highest power is 2 — the quadratic shape. Recognising it gates all of quadratic algebra.",
+            "de": "Hauptoperation: eine Summe. Höchste Potenz ist 2 — die quadratische Gestalt. Sie zu erkennen ist das Tor zur ganzen quadratischen Algebra."
+          },
           "illustration": "x^2 + 3x + 2",
           "answer": "sum",
           "requires": [

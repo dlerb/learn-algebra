@@ -162,10 +162,14 @@ export type Drill = z.infer<typeof drill>
 // parseSkillTree derives from them (array order = display order). GroupDef is the
 // shared { slug, title, blurb? } shape both derived registries use.
 
+// LOCALIZED SINCE 2026-07-29. These titles are section headings on /skills — the
+// last page prose that was English-only, and the only reason it was is that the
+// registries predate the localization contract. `validateGroupRegistry` compares
+// slugs, not titles, so it is unaffected.
 export const groupDef = z.object({
   slug: z.string(),
-  title: z.string(),
-  blurb: z.string().optional(),
+  title: localizedString,
+  blurb: localizedString.optional(),
 })
 export type GroupDef = z.infer<typeof groupDef>
 
@@ -1024,8 +1028,8 @@ const skillGroupNode = groupDef.extend({
 })
 export const skillKindFile = z.object({
   kind: skillKind,
-  title: z.string(),
-  blurb: z.string().optional(),
+  title: localizedString,
+  blurb: localizedString.optional(),
   groups: z.array(skillGroupNode).min(1),
 })
 export type SkillKindFile = z.infer<typeof skillKindFile>

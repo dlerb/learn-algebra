@@ -1,16 +1,31 @@
 {
   "kind": "chunking",
-  "title": "Chunking",
-  "blurb": "Breaking a term into its top-level operands.",
+  "title": {
+    "en": "Chunking",
+    "de": "Zerlegen"
+  },
+  "blurb": {
+    "en": "Breaking a term into its top-level operands.",
+    "de": "Einen Term in seine obersten Bestandteile zerlegen."
+  },
   "groups": [
     {
       "slug": "chunking",
-      "title": "Chunking",
+      "title": {
+        "en": "Chunking",
+        "de": "Zerlegen"
+      },
       "skills": [
         {
           "id": "chunking.chunks-in-sum",
-          "name": "Chunks in a sum or difference",
-          "note": "Break at the + and − signs, keeping each sign with its term. Each product like 3x stays whole.",
+          "name": {
+            "en": "Chunks in a sum or difference",
+            "de": "Blöcke in einer Summe oder Differenz"
+          },
+          "note": {
+            "en": "Break at the $+$ and $-$ signs, keeping each sign with its term. Each product like $3x$ stays whole.",
+            "de": "Bei den $+$ und $-$ trennen und jedes Zeichen bei seinem Term lassen. Jedes Produkt wie $3x$ bleibt ganz."
+          },
           "illustration": "3x + 2y - z",
           "chunks": [
             "3x",
@@ -41,8 +56,14 @@
         },
         {
           "id": "chunking.chunks-in-product",
-          "name": "Chunks in a product",
-          "note": "Break at the multiplication points. Each bracket is one factor.",
+          "name": {
+            "en": "Chunks in a product",
+            "de": "Blöcke in einem Produkt"
+          },
+          "note": {
+            "en": "Break at the multiplication points. Each bracket is one factor.",
+            "de": "An den Malpunkten trennen. Jede Klammer ist ein Faktor."
+          },
           "illustration": "3 \\cdot x \\cdot (x+1)",
           "chunks": [
             "3",
@@ -63,8 +84,14 @@
         },
         {
           "id": "chunking.implicit-chunking",
-          "name": "Implicit chunking — multiplication precedence",
-          "note": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
+          "name": {
+            "en": "Implicit chunking — multiplication precedence",
+            "de": "Unsichtbare Blöcke — Vorrang der Multiplikation"
+          },
+          "note": {
+            "en": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
+            "de": "Keine Klammern, und doch sind die Blöcke $3x$ und $2y$: das $\\cdot$ ist innerhalb jedes Terms schon aufgebraucht."
+          },
           "illustration": "3x + 2y",
           "chunks": [
             "3x",
@@ -91,8 +118,14 @@
         },
         {
           "id": "chunking.bracket-as-chunk",
-          "name": "Bracket as a single chunk",
-          "note": "Resist expanding — treat the whole bracket as one object.",
+          "name": {
+            "en": "Bracket as a single chunk",
+            "de": "Klammer als ein einziger Block"
+          },
+          "note": {
+            "en": "Resist expanding — treat the whole bracket as one object.",
+            "de": "Nicht ausmultiplizieren — die ganze Klammer als ein Objekt behandeln."
+          },
           "illustration": "3(x+1) - 2(x-1)",
           "chunks": [
             "3(x+1)",

@@ -8,7 +8,7 @@ import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
 import { skills, drills, groups, skillKinds, rules, mistakes, rawById, skillTree } from '../data'
-import { loc, type Skill, type Drill, type LocalizedString } from '../data/skill.schema'
+import { loc, type Skill, type Drill, type LocalizedString, type GroupDef } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
@@ -141,8 +141,8 @@ const mistakeLinks = (ids: string[]) => ids
 const requiredBy = new Map<string, string[]>()
 for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requiredBy.get(r) ?? []), s.id])
 
-const groupTitle = new Map(groups.map(g => [g.slug, g.title]))
-const kindTitle = new Map(skillKinds.map(k => [k.slug, k.title]))
+const groupTitle = new Map(groups.map(g => [g.slug, t(g.title)]))
+const kindTitle = new Map(skillKinds.map(k => [k.slug, t(k.title)]))
 
 // The drill joined by skill id. Read-only and inspection-only; see the banner.
 const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
@@ -202,9 +202,9 @@ const byName = (a: Skill, b: Skill) => t(a.name).localeCompare(t(b.name))
 const sectionBy = ref<'group' | 'kind'>('group')
 
 interface Sec { slug: string; title: string; blurb?: string; items: Row[] }
-const sectionsOf = (reg: { slug: string; title: string; blurb?: string }[], key: 'group' | 'kind') =>
+const sectionsOf = (reg: GroupDef[], key: 'group' | 'kind') =>
   reg
-    .map(g => ({ slug: g.slug, title: g.title, blurb: g.blurb, items: skills.filter(s => s[key] === g.slug).sort(byName).map(toRow) }))
+    .map(g => ({ slug: g.slug, title: t(g.title), blurb: g.blurb ? t(g.blurb) : undefined, items: skills.filter(s => s[key] === g.slug).sort(byName).map(toRow) }))
     .filter(s => s.items.length > 0)
 
 const sections = computed<Sec[]>(() =>

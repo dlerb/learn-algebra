@@ -128,12 +128,20 @@ tradition independently found the `distributing` family we had built the same af
 - [ ] **Repoint `equivalence.minus-on-fraction`** at `anti.minus-on-both-parts` and drop
   `mis.minus-roles-confused`. It was kept only because a drill's `explainedBy` named it, and
   **drill data is now disposable** — fix or delete that drill entry alongside.
-- [ ] **4 skill notes still write maths as unicode** instead of inline `$…$` (audit line). Fold
-  into the German pass, since those notes get rewritten anyway.
-- [ ] **German for `/skills`** — the only monolingual page: **0 of 74** names and notes carry
-  `de`, against 100% on rules, errors and sheets. The 15 group titles and 4 kind titles are
-  plain `string` and need a shape change to `localizedString` first. ⚠️ It ADDS to an
-  unreviewed-German pile rather than clearing it; only a native reader can clear that.
+- [x] ~~4 skill notes still write maths as unicode~~ **DONE 2026-07-29** with the German pass —
+  all four were on the English side, and the audit line is gone.
+- [x] ~~German for `/skills`~~ **DONE 2026-07-29 — 74/74 names and notes**, plus 15 group
+  titles and 4 kind heads, which needed `groupDef.title`/`blurb` to move from plain `string` to
+  `localizedString` first (they predated the localization contract). `/skills` was the last
+  monolingual page; every layer is now bilingual.
+  ⚠️ **UNREVIEWED BY A NATIVE READER**, like the rest of the German. This does not clear that
+  debt, it enlarges it — only the author can clear it. Terminology was held constant across all
+  74: Term · Summe · Differenz · Produkt · Quotient · Potenz · Klammer · Faktor · Koeffizient ·
+  Exponent · Basis · Zähler · Nenner · Bruch · Wurzel · gleichartige Terme · ausmultiplizieren ·
+  ausklammern · zusammenfassen · kürzen. No `ß` anywhere (Swiss).
+  ⚠️ **A `name` renders as PLAIN TEXT in the rail**, so it must carry no inline `$…$` — the same
+  trap two rule sentences hit the same day, and one of the new German names hit it too. Checked
+  in the browser: no `$` leaks into any name or heading.
 - [ ] **`mis.letters-differ` still has no skill** (audit line, ★). Needs a variables/fluency
   skill or a decision.
 - [ ] **20 classification/chunking skills have no ✗** — **UNBLOCKED 2026-07-29.** Their wrong
