@@ -32,20 +32,30 @@ from cheatsheets**. `validateRuleFamilies` enforces one level, no chains.
 `divide-by-one-and-self` → Zero and one · `exponent-counts-factors` → Power laws ·
 `fraction-minus-moves` → Minus rules · `no-power-law-for-sums` → Power laws.
 
-**Three rules have no family**: `only-multiplication-distributes`, `dominant-op-tools`,
+**A SEVENTH SHEET AND A SEVENTH FAMILY, `distributing` (2026-07-29).** `a(b+c) = ab + ac` was
+the most-cited rule in the pool — 9 skills, 3 mistakes, bridging `ax.distributivity` — with no
+family and, until this session, no sheet. Now `rule.distributing` heads
+`sheet.distributing`: *"Multiplying out and collecting are one law read both ways"*, which is
+the insight the family exists to carry (left to right you expand, right to left you factor, and
+checking a factorisation means multiplying it back).
+
+⚠️ **This is the first sheet that is BROADER THAN ITS FAMILY, and that is the point.**
+Distributing cuts across the other families — `minus-over-bracket` is a minus rule,
+`binomial-square` a binomial formula, `split-numerator` a fraction law — but every one of them
+IS distribution. They appear on this sheet and keep their own family. **Family is one, sheets
+are many**, and this is the first place the split does visible work. Only the two rules whose
+SUBJECT is the law itself changed family: `only-multiplication-distributes` and
 `unlike-terms-stay`.
-- [x] ~~The first two are on no sheet either.~~ **2026-07-29**: `only-multiplication-distributes`
-  and `unlike-terms-stay` joined `sheet.reading-a-term` under a new fourth group, **"What may
-  be combined"** — the beat after symbols / binding / grouping: once the term is read, what may
-  be taken apart or put together. The first was broken by three mistakes and invisible to a
-  student orienting by the sheets.
-- [ ] ⚠️ **They are on the sheet but still carry no `family`**, so they are the only 2 of the
-  sheet's 15 members with no label. That is legal under the new model — family is one, sheets
-  are many, and a rule may be printed somewhere it does not belong — but it is a **teaching
-  call left open**: give them `family: rule.read-the-term-first` for consistency, or accept
-  that a distributing/collecting family does not exist yet.
-- `dominant-op-tools` stays off every sheet, correctly: it is a strategy rule with **no
-  formula**, and a formulary has nothing to print.
+
+The sheet's fourth group, **"Where it does not reach"** (`no-power-law-for-sums`,
+`split-numerator`, `fraction-cancel`), is half of why the law deserves a sheet: students
+over-generalise it, and the places it does *not* reach are the commonest mistakes in the layer.
+
+⚠️ Unrelated to the older "a seventh sheet, or not" item further down, which was about covering
+the TOWER's uncovered cards. This sheet adds no rules — it arranges ones that already existed.
+
+**`rule.dominant-op-tools` is now the only rule with no family and on no sheet**, correctly: it
+is a strategy rule with **no formula**, and a formulary has nothing to print.
 
 **Still open, and it was never a layering question**: **31 of 48 sheet rules are cited by no
 skill.** If students should drill what is on the cheat sheet, two thirds of the sheets have

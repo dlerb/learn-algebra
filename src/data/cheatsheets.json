@@ -85,16 +85,58 @@
             "rule.fraction-bar-brackets",
             "rule.root-bar-brackets"
           ]
-        },
+        }
+      ]
+    },
+    {
+      "id": "sheet.distributing",
+      "rule": "rule.distributing",
+      "groups": [
         {
           "title": {
-            "en": "What may be combined",
-            "de": "Was zusammengefasst werden darf"
+            "en": "The one law",
+            "de": "Das eine Gesetz"
           },
           "layout": "flow",
           "rules": [
-            "rule.only-multiplication-distributes",
-            "rule.unlike-terms-stay"
+            "rule.only-multiplication-distributes"
+          ]
+        },
+        {
+          "title": {
+            "en": "Multiplying out",
+            "de": "Ausmultiplizieren"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.minus-over-bracket",
+            "rule.subtract-a-bracket",
+            "rule.binomial-square",
+            "rule.square-of-difference",
+            "rule.difference-of-squares"
+          ]
+        },
+        {
+          "title": {
+            "en": "Collecting back",
+            "de": "Zusammenfassen"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.unlike-terms-stay",
+            "rule.invisible-one"
+          ]
+        },
+        {
+          "title": {
+            "en": "Where it does not reach",
+            "de": "Wo es nicht gilt"
+          },
+          "layout": "flow",
+          "rules": [
+            "rule.no-power-law-for-sums",
+            "rule.split-numerator",
+            "rule.fraction-cancel"
           ]
         }
       ]

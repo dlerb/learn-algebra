@@ -928,6 +928,22 @@
       ]
     },
     {
+      "id": "rule.distributing",
+      "kind": "do",
+      "rule": {
+        "en": "Multiplying out and collecting are one law read both ways",
+        "de": "Ausmultiplizieren und Zusammenfassen sind ein Gesetz, in beide Richtungen gelesen"
+      },
+      "note": {
+        "en": "Left to right you multiply out, right to left you collect or factor out — both are $a(b+c) = ab + ac$. That is why the same slip shows up expanding and factoring, and why checking a factorisation means multiplying it back.",
+        "de": "Von links nach rechts multipliziert man aus, von rechts nach links fasst man zusammen oder klammert aus — beides ist $a(b+c) = ab + ac$. Darum taucht derselbe Fehler beim Ausmultiplizieren wie beim Faktorisieren auf, und darum prüft man eine Faktorisierung durch Zurückmultiplizieren."
+      },
+      "short": {
+        "en": "Distributing",
+        "de": "Ausmultiplizieren"
+      }
+    },
+    {
       "id": "rule.only-multiplication-distributes",
       "kind": "is",
       "rule": {
@@ -941,6 +957,7 @@
         "en": "$a(b+c) = ab + ac$: multiplication distributes over a sum, and nothing else does.",
         "de": "$a(b+c) = ab + ac$: Die Multiplikation verteilt sich über eine Summe, sonst nichts."
       },
+      "family": "rule.distributing",
       "summarizes": [
         "ax.distributivity"
       ]
@@ -1045,6 +1062,7 @@
         "en": "Only terms with the same letters to the same powers can be collected. Where they differ there is nothing left to do.",
         "de": "Nur Terme mit denselben Buchstaben in denselben Potenzen lassen sich zusammenfassen. Unterscheiden sie sich, bleibt nichts zu tun."
       },
+      "family": "rule.distributing",
       "summarizes": []
     },
     {
