@@ -28,7 +28,7 @@
           },
           "note": {
             "en": "Dominant op = the outermost $+$; its terms are the chunks.",
-            "de": "Hauptoperation = das äusserste $+$; seine Summanden sind die Blöcke."
+            "de": "Hauptoperation = das äusserste $+$; seine Summanden sind die Bausteine."
           },
           "illustration": "a + b",
           "answer": "sum",
@@ -52,7 +52,7 @@
           },
           "note": {
             "en": "The last operation applied is subtraction. The chunks are the two terms.",
-            "de": "Die zuletzt ausgeführte Operation ist die Subtraktion. Die Blöcke sind die beiden Terme."
+            "de": "Die zuletzt ausgeführte Operation ist die Subtraktion. Die Bausteine sind die beiden Terme."
           },
           "illustration": "a - b",
           "answer": "difference",
@@ -75,7 +75,7 @@
           },
           "note": {
             "en": "Dominant op = the outermost $\\cdot$; its factors are the chunks.",
-            "de": "Hauptoperation = das äusserste $\\cdot$; seine Faktoren sind die Blöcke."
+            "de": "Hauptoperation = das äusserste $\\cdot$; seine Faktoren sind die Bausteine."
           },
           "illustration": "ab",
           "answer": "product",
@@ -102,7 +102,7 @@
           },
           "note": {
             "en": "The last operation applied is division. The chunks are numerator and denominator.",
-            "de": "Die zuletzt ausgeführte Operation ist die Division. Die Blöcke sind Zähler und Nenner."
+            "de": "Die zuletzt ausgeführte Operation ist die Division. Die Bausteine sind Zähler und Nenner."
           },
           "illustration": "\\frac{a}{b}",
           "answer": "quotient",
@@ -126,7 +126,7 @@
           },
           "note": {
             "en": "Dominant op = the power; base and exponent are the chunks.",
-            "de": "Hauptoperation = die Potenz; Basis und Exponent sind die Blöcke."
+            "de": "Hauptoperation = die Potenz; Basis und Exponent sind die Bausteine."
           },
           "illustration": "a^2",
           "answer": "power",
@@ -192,7 +192,7 @@
           },
           "note": {
             "en": "The $+$ is trapped inside a chunk (the bracket). The dominant operation is the multiplication outside — a product.",
-            "de": "Das $+$ steckt in einem Block (der Klammer) fest. Die Hauptoperation ist die Multiplikation aussen — also ein Produkt."
+            "de": "Das $+$ steckt in einem Baustein (der Klammer) fest. Die Hauptoperation ist die Multiplikation aussen — also ein Produkt."
           },
           "illustration": "3(x+1)",
           "answer": "product",
@@ -277,7 +277,7 @@
           },
           "note": {
             "en": "The base is the whole chunk (x+1). The dominant operation is the power.",
-            "de": "Die Basis ist der ganze Block $(x+1)$. Die Hauptoperation ist die Potenz."
+            "de": "Die Basis ist der ganze Baustein $(x+1)$. Die Hauptoperation ist die Potenz."
           },
           "illustration": "(x+1)^2",
           "answer": "power",
@@ -307,7 +307,7 @@
           },
           "note": {
             "en": "The sums are inside the chunks (numerator and denominator). The whole thing is a division — a quotient.",
-            "de": "Die Summen stecken in den Blöcken (Zähler und Nenner). Das Ganze ist eine Division — also ein Quotient."
+            "de": "Die Summen stecken in den Bausteinen (Zähler und Nenner). Das Ganze ist eine Division — also ein Quotient."
           },
           "illustration": "\\frac{3x+2}{x-1}",
           "answer": "quotient",
@@ -345,7 +345,7 @@
           },
           "note": {
             "en": "Dominant operation: a difference. The shape is special — both chunks are perfect squares ($9 = 3^2$, $4x^2 = (2x)^2$). Recognising it unlocks factoring as $(a+b)(a-b)$.",
-            "de": "Hauptoperation: eine Differenz. Die Gestalt ist besonders — beide Blöcke sind Quadratzahlen ($9 = 3^2$, $4x^2 = (2x)^2$). Sie zu erkennen eröffnet die Faktorisierung als $(a+b)(a-b)$."
+            "de": "Hauptoperation: eine Differenz. Die Gestalt ist besonders — beide Bausteine sind Quadratzahlen ($9 = 3^2$, $4x^2 = (2x)^2$). Sie zu erkennen eröffnet die Faktorisierung als $(a+b)(a-b)$."
           },
           "illustration": "a^2 - b^2",
           "answer": "difference",
@@ -395,7 +395,7 @@
           },
           "note": {
             "en": "Dominant operation: a sum. The shape is special: all chunks share a factor (3, a, 2x, (x+1)). Recognising it unlocks factoring it out.",
-            "de": "Hauptoperation: eine Summe. Die Gestalt ist besonders: alle Blöcke haben einen Faktor gemeinsam ($3$, $a$, $2x$, $(x+1)$). Sie zu erkennen eröffnet das Ausklammern."
+            "de": "Hauptoperation: eine Summe. Die Gestalt ist besonders: alle Bausteine haben einen Faktor gemeinsam ($3$, $a$, $2x$, $(x+1)$). Sie zu erkennen eröffnet das Ausklammern."
           },
           "illustration": "3x + 6",
           "answer": "sum",

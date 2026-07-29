@@ -6,7 +6,7 @@
   },
   "blurb": {
     "en": "Same thing written differently — the fluency atoms.",
-    "de": "Dasselbe, anders geschrieben — die Bausteine der Sicherheit."
+    "de": "Dasselbe, anders geschrieben — die kleinsten Einheiten der Sicherheit."
   },
   "groups": [
     {
@@ -1099,7 +1099,7 @@
           },
           "note": {
             "en": "Splitting works over the numerator only: $c/(a+b)$ is $c$ divided by the whole chunk $a+b$. (Check with numbers: $12/(2+4) = 2$, but $12/2 + 12/4 = 9$.)",
-            "de": "Aufteilen geht nur über den Zähler: $c/(a+b)$ ist $c$ geteilt durch den ganzen Block $a+b$. (Mit Zahlen prüfen: $12/(2+4) = 2$, aber $12/2 + 12/4 = 9$.)"
+            "de": "Aufteilen geht nur über den Zähler: $c/(a+b)$ ist $c$ geteilt durch den ganzen Baustein $a+b$. (Mit Zahlen prüfen: $12/(2+4) = 2$, aber $12/2 + 12/4 = 9$.)"
           },
           "illustration": "\\frac{c}{a+b} = c \\div (a+b)",
           "wrong": [

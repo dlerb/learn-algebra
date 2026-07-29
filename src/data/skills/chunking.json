@@ -6,7 +6,7 @@
   },
   "blurb": {
     "en": "Breaking a term into its top-level operands.",
-    "de": "Einen Term in seine obersten Bestandteile zerlegen."
+    "de": "Einen Term in seine obersten Bausteine zerlegen."
   },
   "groups": [
     {
@@ -20,7 +20,7 @@
           "id": "chunking.chunks-in-sum",
           "name": {
             "en": "Chunks in a sum or difference",
-            "de": "Blöcke in einer Summe oder Differenz"
+            "de": "Bausteine in einer Summe oder Differenz"
           },
           "note": {
             "en": "Break at the $+$ and $-$ signs, keeping each sign with its term. Each product like $3x$ stays whole.",
@@ -58,7 +58,7 @@
           "id": "chunking.chunks-in-product",
           "name": {
             "en": "Chunks in a product",
-            "de": "Blöcke in einem Produkt"
+            "de": "Bausteine in einem Produkt"
           },
           "note": {
             "en": "Break at the multiplication points. Each bracket is one factor.",
@@ -86,11 +86,11 @@
           "id": "chunking.implicit-chunking",
           "name": {
             "en": "Implicit chunking — multiplication precedence",
-            "de": "Unsichtbare Blöcke — Vorrang der Multiplikation"
+            "de": "Unsichtbare Bausteine — Vorrang der Multiplikation"
           },
           "note": {
             "en": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
-            "de": "Keine Klammern, und doch sind die Blöcke $3x$ und $2y$: das $\\cdot$ ist innerhalb jedes Terms schon aufgebraucht."
+            "de": "Keine Klammern, und doch sind die Bausteine $3x$ und $2y$: das $\\cdot$ ist innerhalb jedes Terms schon aufgebraucht."
           },
           "illustration": "3x + 2y",
           "chunks": [
@@ -120,7 +120,7 @@
           "id": "chunking.bracket-as-chunk",
           "name": {
             "en": "Bracket as a single chunk",
-            "de": "Klammer als ein einziger Block"
+            "de": "Klammer als ein einziger Baustein"
           },
           "note": {
             "en": "Resist expanding — treat the whole bracket as one object.",

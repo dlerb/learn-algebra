@@ -138,7 +138,11 @@ tradition independently found the `distributing` family we had built the same af
   debt, it enlarges it — only the author can clear it. Terminology was held constant across all
   74: Term · Summe · Differenz · Produkt · Quotient · Potenz · Klammer · Faktor · Koeffizient ·
   Exponent · Basis · Zähler · Nenner · Bruch · Wurzel · gleichartige Terme · ausmultiplizieren ·
-  ausklammern · zusammenfassen · kürzen. No `ß` anywhere (Swiss).
+  ausklammern · zusammenfassen · kürzen · **Bausteine** (chunks). No `ß` anywhere (Swiss).
+  ⚠️ *Bausteine* was the author's correction from *Blöcke*, and it forced a second edit: the
+  equivalence blurb had used *Bausteine* for the English "fluency atoms", so the word would
+  have named two different things. The blurb now says *die kleinsten Einheiten*; **chunking
+  owns the term**, because that is where it has to be exact.
   ⚠️ **A `name` renders as PLAIN TEXT in the rail**, so it must carry no inline `$…$` — the same
   trap two rule sentences hit the same day, and one of the new German names hit it too. Checked
   in the browser: no `$` leaks into any name or heading.
