@@ -74,7 +74,7 @@ const ruleById = new Map(rules.map(r => [r.id, r]))
 const familyOf = (id: string) => {
   const f = ruleById.get(id)?.family
   const head = f ? ruleById.get(f) : undefined
-  return head?.short ? [t(head.short)] : []
+  return head ? [t(head.rule)] : []
 }
 
 const items = computed(() => rules.map(m => {

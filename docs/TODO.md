@@ -21,12 +21,20 @@ families — `rule.divide-by-one-and-self` → "Zero and one + Fraction laws". R
 is *appears on two sheets*, not *belongs to two families*. **FAMILY IS ONE, SHEETS ARE MANY**:
 `a/1 = a` is a fact about ONE, and it is *useful to print* on the fraction sheet as well.
 
-**What changed**: `rule.family` (48 rules, the id of the family head) and `rule.short` (the six
-heads' label — its own field because two heads are REAL RULES whose sentence must survive:
-"Read the term before you change it" is a usable instruction and a useless prefix).
-`sheet.name` is **deleted** and rev. 11's *"a sheet owns nothing"* is restored. `ruleFamilies`
-is gone from `index.ts`; both views read `rule.family` directly and **`/skills` imports nothing
-from cheatsheets**. `validateRuleFamilies` enforces one level, no chains.
+**What changed**: `rule.family` — 48 rules, holding the id of the family head. `sheet.name` is
+**deleted** and rev. 11's *"a sheet owns nothing"* is restored. `ruleFamilies` is gone from
+`index.ts`; both views read `rule.family` directly and **`/skills` imports nothing from
+cheatsheets**. `validateRuleFamilies` enforces one level, no chains.
+
+**THE HEADING IS THE LABEL; THE NOTE SAYS WHY (2026-07-29).** A `short` field was tried and
+deleted the same day: once a head's `rule` is a bare name — *Power laws*, *Reading a term*,
+*Distributing* — it already IS the label, and a second field was saying the same thing twice.
+The reason a family coheres moved into the `note`, where a reader who wants it goes:
+*"Know these cold. Every one of them acts on the exponents; the base never changes."*
+⚠️ There is now **no "is a head" flag**: a head is simply a rule somebody names as their
+`family`. That is what keeps the model one field instead of two.
+`rule.read-the-term-first` also moved `do` → `is`, because all 13 of its members are decoding
+rules and a head's `kind` should characterise what it heads.
 
 ⚠️ **Four teaching calls, easy to overrule** — the rules that had sat on two sheets:
 `divide-by-one-and-self` → Zero and one · `exponent-counts-factors` → Power laws ·

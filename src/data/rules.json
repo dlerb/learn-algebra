@@ -95,16 +95,12 @@
       "id": "rule.zero-and-one",
       "kind": "is",
       "rule": {
-        "en": "Zero and one are not ordinary numbers",
-        "de": "Null und Eins sind keine gewöhnlichen Zahlen"
-      },
-      "note": {
-        "en": "Each does something no other number does, and each has a rule attached that gets used constantly.",
-        "de": "Jede tut etwas, was keine andere Zahl tut, und zu jeder gehört eine Regel, die dauernd gebraucht wird."
-      },
-      "short": {
         "en": "Zero and one",
         "de": "Null und Eins"
+      },
+      "note": {
+        "en": "Zero and one are not ordinary numbers: each does something no other number does, and each has a rule attached that gets used constantly.",
+        "de": "Null und Eins sind keine gewöhnlichen Zahlen: Jede tut etwas, was keine andere Zahl tut, und zu jeder gehört eine Regel, die dauernd gebraucht wird."
       }
     },
     {
@@ -191,16 +187,12 @@
       "id": "rule.minus-rules",
       "kind": "do",
       "rule": {
-        "en": "The minus rules: know these cold",
-        "de": "Die Minusregeln: diese sitzen auswendig"
-      },
-      "note": {
-        "en": "More mistakes come from the minus than from anything else in algebra, and every one of them is a question about which of these applies.",
-        "de": "Kein Zeichen der Algebra verursacht mehr Fehler als das Minus, und jeder davon ist die Frage, welche dieser Regeln gilt."
-      },
-      "short": {
         "en": "Minus rules",
         "de": "Minusregeln"
+      },
+      "note": {
+        "en": "Know these cold. More mistakes come from the minus than from anything else in algebra, and every one of them is a question about which of these applies.",
+        "de": "Auswendig können. Kein Zeichen der Algebra verursacht mehr Fehler als das Minus, und jeder davon ist die Frage, welche dieser Regeln gilt."
       }
     },
     {
@@ -345,16 +337,12 @@
       "id": "rule.power-laws",
       "kind": "do",
       "rule": {
-        "en": "The power laws: know these cold",
-        "de": "Die Potenzgesetze: diese sitzen auswendig"
-      },
-      "note": {
-        "en": "Every one of them acts on the exponents; the base never changes. If a term has powers in it and you are stuck, you are looking for one of these.",
-        "de": "Alle wirken auf die Exponenten; die Basis bleibt. Steckst du bei einem Term mit Potenzen fest, suchst du eines davon."
-      },
-      "short": {
         "en": "Power laws",
         "de": "Potenzgesetze"
+      },
+      "note": {
+        "en": "Know these cold. Every one of them acts on the exponents; the base never changes. If a term has powers in it and you are stuck, you are looking for one of these.",
+        "de": "Auswendig können. Alle wirken auf die Exponenten; die Basis bleibt. Steckst du bei einem Term mit Potenzen fest, suchst du eines davon."
       }
     },
     {
@@ -587,16 +575,12 @@
       "id": "rule.fraction-laws",
       "kind": "do",
       "rule": {
-        "en": "The fraction laws: know these cold",
-        "de": "Die Bruchgesetze: diese sitzen auswendig"
-      },
-      "note": {
-        "en": "Multiplying and dividing are the easy half — every fraction rule that goes wrong is an adding rule or a cancelling rule.",
-        "de": "Multiplizieren und Dividieren sind die einfache Hälfte — schiefgehen tun die Regeln fürs Addieren und fürs Kürzen."
-      },
-      "short": {
         "en": "Fraction laws",
         "de": "Bruchregeln"
+      },
+      "note": {
+        "en": "Know these cold. Multiplying and dividing are the easy half — every fraction rule that goes wrong is an adding rule or a cancelling rule.",
+        "de": "Auswendig können. Multiplizieren und Dividieren sind die einfache Hälfte — schief gehen die Regeln fürs Addieren und fürs Kürzen."
       }
     },
     {
@@ -818,16 +802,12 @@
       "id": "rule.binomial-formulas",
       "kind": "do",
       "rule": {
-        "en": "The binomial formulas: know these cold",
-        "de": "Die binomischen Formeln: diese sitzen auswendig"
-      },
-      "note": {
-        "en": "Three identities, and every one of them is read in both directions: left to right you multiply out, right to left you factorise. The middle term is what gets lost.",
-        "de": "Drei Identitäten, und jede wird in beide Richtungen gelesen: von links nach rechts ausmultiplizieren, von rechts nach links faktorisieren. Verloren geht der mittlere Term."
-      },
-      "short": {
         "en": "Binomial formulas",
         "de": "Binomische Formeln"
+      },
+      "note": {
+        "en": "Know these cold. Three identities, and every one of them is read in both directions: left to right you multiply out, right to left you factorise. The middle term is what gets lost.",
+        "de": "Auswendig können. Drei Identitäten, und jede wird in beide Richtungen gelesen: von links nach rechts ausmultiplizieren, von rechts nach links faktorisieren. Verloren geht der mittlere Term."
       }
     },
     {
@@ -931,16 +911,12 @@
       "id": "rule.distributing",
       "kind": "do",
       "rule": {
-        "en": "Multiplying out and collecting are one law read both ways",
-        "de": "Ausmultiplizieren und Zusammenfassen sind ein Gesetz, in beide Richtungen gelesen"
-      },
-      "note": {
-        "en": "Left to right you multiply out, right to left you collect or factor out — both are $a(b+c) = ab + ac$. That is why the same slip shows up expanding and factoring, and why checking a factorisation means multiplying it back.",
-        "de": "Von links nach rechts multipliziert man aus, von rechts nach links fasst man zusammen oder klammert aus — beides ist $a(b+c) = ab + ac$. Darum taucht derselbe Fehler beim Ausmultiplizieren wie beim Faktorisieren auf, und darum prüft man eine Faktorisierung durch Zurückmultiplizieren."
-      },
-      "short": {
         "en": "Distributing",
         "de": "Ausmultiplizieren"
+      },
+      "note": {
+        "en": "Multiplying out and collecting are one law read both ways. Left to right you multiply out, right to left you collect or factor out — both are $a(b+c) = ab + ac$. That is why the same slip shows up expanding and factoring, and why checking a factorisation means multiplying it back.",
+        "de": "Ausmultiplizieren und Zusammenfassen sind ein Gesetz, in beide Richtungen gelesen. Von links nach rechts multipliziert man aus, von rechts nach links fasst man zusammen oder klammert aus — beides ist $a(b+c) = ab + ac$. Darum taucht derselbe Fehler beim Ausmultiplizieren wie beim Faktorisieren auf, und darum prüft man eine Faktorisierung durch Zurückmultiplizieren."
       }
     },
     {
@@ -1106,18 +1082,14 @@
     },
     {
       "id": "rule.read-the-term-first",
-      "kind": "do",
+      "kind": "is",
       "rule": {
-        "en": "Read the term before you change it",
-        "de": "Lies den Term, bevor du ihn veränderst"
-      },
-      "note": {
-        "en": "Most mistakes are made before any rule is applied: the term was read wrong. What is written next to what, what binds first, what a bracket covers.",
-        "de": "Die meisten Fehler passieren, bevor eine Regel angewendet wird: Der Term wurde falsch gelesen. Was steht neben was, was bindet zuerst, was umfasst eine Klammer."
-      },
-      "short": {
         "en": "Reading a term",
         "de": "Einen Term lesen"
+      },
+      "note": {
+        "en": "Read the term before you change it. Most mistakes are made before any rule is applied: the term was read wrong — what is written next to what, what binds first, what a bracket covers.",
+        "de": "Lies den Term, bevor du ihn veränderst. Die meisten Fehler passieren, bevor eine Regel angewendet wird: Der Term wurde falsch gelesen — was steht neben was, was bindet zuerst, was umfasst eine Klammer."
       }
     }
   ]

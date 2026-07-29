@@ -236,12 +236,6 @@ export const ruleDef = z.object({
   // ⚠️ ONE LEVEL, NO CHAINS: a family head has no `family` of its own, and
   // validateRuleFamilies enforces it.
   family: z.string().optional(),
-  // The family's LABEL, on the family head only: "Power laws", two or three
-  // words, because it is printed in front of a member's sentence on /skills and
-  // /rules. It needs its own field because two of the six heads are REAL RULES
-  // whose sentence must survive — "Read the term before you change it" is a
-  // usable instruction and a useless prefix.
-  short: localizedString.optional(),
 })
 export type RuleDef = z.infer<typeof ruleDef>
 
@@ -430,9 +424,11 @@ export function parseSheetTree(raw: unknown): SheetTree {
   return { meta: { title, blurb, note }, sheets }
 }
 
-/** A family must resolve, must be a family HEAD (it carries the `short` label),
- *  must not be the rule itself, and must not itself have a family — one level,
- *  no chains, so "which family is this in" is always one lookup. */
+/** A family must resolve, must not be the rule itself, and must not itself have
+ *  a family — one level, no chains, so "which family is this in" is always one
+ *  lookup. There is no separate "is a head" flag: a head is simply a rule
+ *  somebody names, and its `rule` sentence IS the label, which is why it is a
+ *  bare name ("Power laws") while its `note` carries why the family coheres. */
 export function validateRuleFamilies(rules: RulesFile): void {
   const byId = new Map(rules.map(r => [r.id, r]))
   for (const r of rules) {
@@ -440,7 +436,6 @@ export function validateRuleFamilies(rules: RulesFile): void {
     const head = byId.get(r.family)
     if (!head) throw new Error(`Rule "${r.id}" has unknown family "${r.family}".`)
     if (r.family === r.id) throw new Error(`Rule "${r.id}" is its own family.`)
-    if (!head.short) throw new Error(`Rule "${r.id}" names family "${r.family}", which carries no "short" label.`)
     if (head.family) throw new Error(`Family "${r.family}" itself has a family — families are one level deep.`)
   }
 }
