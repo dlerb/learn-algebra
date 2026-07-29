@@ -162,6 +162,44 @@ skills stands either way, and is the part you have already seen and liked.
 6. **Named families** — "the freshman's dream" — are worth pool entries only once something
    cites them, and the thing that would (a post-session diagnosis) is behind the drill freeze.
 
+### ✅ DONE 2026-07-29 — the mistake sentences, and a fourth `kind`
+
+**The sentences are now the CORRECTION, and the mood is picked by `kind`.** They were briefly
+the belief stated from inside ("Every minus is a subtraction"), which is wrong on the page:
+under a ✗ the reader has to negate a false sentence before it means anything.
+
+    anti-law   "Don't …"      a prohibition on a specific generative move
+    omission   "Don't …"      the same, for a step simply not taken
+    misreading "A is not B"   a decoding correction
+    salience   "A is not B"   the same, for what was looked at
+
+⚠️ **The authoring rule that keeps the two pools apart**: 14 of 28 mistakes are 1:1 with a
+rule, so a mistake phrased as a GENERAL prohibition just IS that rule in the negative. Name
+the SPECIFIC tempting move — *"Don't stop at the first term in the bracket"*, never *"Only
+multiplication distributes"*.
+
+**A FOURTH KIND, `omission`** (prefix `omi.`), and it was found twice independently: by the
+a/b/c mechanism analysis, and by which sentences refused the "A is not B" mood. Two entries —
+`omi.adjacent-signs`, `omi.redundant-brackets-kept` — and what makes them a species is that
+**they write NOTHING FALSE**: `a + -b` equals `a + (-b)`, `(ab)c` equals `abc`. The answer is
+right and only the writing is poor, which is why both refuse the ✗/✓ format and cost fluency
+rather than correctness.
+
+⚠️ **`mis.bracket-dissolved` → `anti.bracket-dissolved`**, NOT omission. It writes
+`(a+b)c = a + bc`, which is false, and its sentence is a prohibition on a generative move —
+that is the anti-law mood. The user proposed all three as omissions; only two are.
+
+Kinds now: misreading 13 · anti-law 11 · omission 2 · salience 2.
+
+**Also**: the family name in front of every rule (`Power laws · Multiplying powers…`), derived
+through the sheets on /rules and /skills, plus a short `name` on each of the six sheets
+because the heading sentence does not work as a label.
+
+**A finding the rewrite exposed**: specific sentences make bad `skill.errors` wiring visible.
+`equivalence.minus-on-fraction` shows ✗ $-\frac{a}{b} = \frac{-a}{-b}$ under *"Not every minus
+is a subtraction"*, and `equivalence.negative-numbers` cites *"Don't swap across a minus"* with
+no ✗ at all. Vague sentences hid these; sharp ones do not. Worth an audit pass.
+
 ### ✅ DONE 2026-07-29 — the /skills row as two blocks
 
 **A skill is one problem, solved right and solved wrong** (the user's model). Row rebuilt from
@@ -284,7 +322,7 @@ the rule — but it is the thing most likely to read as repetition.
 - **A fix WORKS A CASE**; the rule states the law, one column over. Where the rule itself
   quotes a case, the fix works a different one.
 - **A numeric check is the best fix** for a misreading — except where the two forms are equal
-  in value (`mis.adjacent-signs`), where substituting proves nothing.
+  in value (`omi.adjacent-signs`), where substituting proves nothing.
 - **No words inside `latex`** — it is not localized.
 - **Membership of a sheet is teaching experience, not a derivable test.** The pool carries the
   family names a teacher names ("the power laws"); everything else about grouping is
@@ -372,7 +410,7 @@ carries no context of its own, so `/rules` is built almost entirely out of rever
   anti-laws, whose general statement was a LAW in the tower and had never been said in a
   student's words. That the DO side looked empty was a measurement, not an accident.
 - **14 fixes rewritten as worked cases**, usually a numeric check the student can run —
-  except where the two forms are equal in value (`mis.adjacent-signs`), where substituting
+  except where the two forms are equal in value (`omi.adjacent-signs`), where substituting
   proves nothing and the mistake is the notation itself.
 - **The DAG is settled**: `skills → {errors, rules, cards}`, `errors → {rules, cards}`,
   `rules → cards`. **Errors must NOT cite skills** — skills cite errors, so it would close a
@@ -681,11 +719,11 @@ Empirically grounded, and it only became available once errors carried frequency
    2026-07-25**, and it was most of the gap: **undrilled errors 9 → 1, unreached skills
    16 → 13**, purely by adding `errors` refs to skills whose content already covered them.
    No new data, no new fields. The ten edges:
-   `mis.adjacent-signs` → `subtraction-as-adding-opposite` + `double-negative` ·
+   `omi.adjacent-signs` → `subtraction-as-adding-opposite` + `double-negative` ·
    `mis.root-scope` → `root-of-a-sum` + `fractional-exponent-root` ·
    `mis.invisible-one-lost` → `transformation.collect-like-terms` ·
    `mis.subtraction-as-times-negative` → `subtraction-as-adding-opposite` ·
-   `mis.redundant-brackets-kept` → `redundant-brackets` ·
+   `omi.redundant-brackets-kept` → `redundant-brackets` ·
    `mis.linear-slash-overgrouped` → `fraction-bar-grouping` (the twin of
    `-grouping-lost`) · `mis.bar-not-division` → `division-variants` +
    `fraction-as-reciprocal-product` · `mis.order-blindness` →

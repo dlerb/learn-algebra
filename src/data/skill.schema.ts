@@ -254,10 +254,19 @@ export function parseRuleTree(raw: unknown): RuleTree {
 //   `frequency`  Can live nowhere else. A rule is not more or less true; a
 //                mistake is more or less MADE, and the number is evidence from
 //                docs/common_mistakes.md, gathered per misconception.
-//   `kind`       Three values and a different question. A rule's `is|do` is a
-//                REGISTER (decoding vs doing); a mistake's anti-law/misreading/
-//                salience is a CAUSAL taxonomy (wrong rule applied / glyph
-//                misparsed / wrong thing looked at). Not parallel.
+//   `kind`       Four values and a different question. A rule's `is|do` is a
+//                REGISTER (decoding vs doing); a mistake's kind is a CAUSAL
+//                taxonomy — a wrong rule applied (anti-law), a glyph misparsed
+//                (misreading), the wrong thing looked at (salience), or a step
+//                simply not taken (omission). Not parallel to is|do.
+//                ⚠️ `omission` (2026-07-29) is the one kind that writes NOTHING
+//                FALSE: `a + -b` equals `a + (-b)` and `(ab)c` equals `abc`, so
+//                the answer is right and only the writing is poor. That is why
+//                both entries refuse the ✗/✓ format and why their sentence only
+//                works as "Don't …" — the failure is inaction, and it costs
+//                fluency rather than correctness. It was found twice
+//                independently: by the a/b/c mechanism analysis and by which
+//                sentences refused the "A is not B" mood.
 //   `topic`      Kept from the errors tree. A student arrives at a mistake by
 //                topic ("I keep messing up fractions") in a way nobody arrives at
 //                a rule, so the file stays flat like rules.json and the VIEW
@@ -273,12 +282,12 @@ export function parseRuleTree(raw: unknown): RuleTree {
 // WHAT IT DELIBERATELY DOES NOT TAKE from errors.json: `instances` and `fix`.
 // Both work a CASE, and a case belongs to the skill that teaches it.
 export const mistakeDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so `skill.errors` resolves here without touching a single skill
-  kind: z.enum(['anti-law', 'misreading', 'salience']),
+  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so `skill.errors` resolves here without touching a single skill
+  kind: z.enum(['anti-law', 'misreading', 'salience', 'omission']),
   topic: z.string(),
   frequency: z.number().int().min(1).max(3).default(1),
   mistake: localizedString,               // THE FALSE SENTENCE, stated as the student holds it — "Every minus is a subtraction", not "Losing one of two minuses". The error layer names the mistake from outside; a pool entry states it from inside, so it reads as a claim that can be marked ✗ exactly as a rule reads as one that can be marked ✓
-  latex: z.array(z.string()).default([]), // the false claim(s). Empty is legitimate: the two salience mistakes and the adjacent-signs notation mistake have no expressible schema
+  latex: z.array(z.string()).default([]), // the false claim(s). Empty is legitimate: the two salience mistakes and the adjacent-signs omission have no expressible schema
   note: localizedString,                  // the diagnosis — mechanism and cause, which was always a statement about the misconception rather than about one case of it
   breaks: z.array(z.string()).default([]),    // rule ids
   corrupts: z.array(z.string()).default([]),  // card ids
@@ -413,7 +422,7 @@ export function validateRuleRefs(skills: Skill[], rules: RulesFile): void {
   }
 }
 
-export const errorKind = z.enum(['anti-law', 'misreading', 'salience'])
+export const errorKind = z.enum(['anti-law', 'misreading', 'salience', 'omission'])
 export type ErrorKind = z.infer<typeof errorKind>
 
 // An INSTANCE is one concrete wrong→right pair — the unit the /errors page shows a
@@ -440,7 +449,7 @@ export const errorInstance = z.object({
 export type ErrorInstance = z.output<typeof errorInstance>
 
 export const errorDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal)\.[a-z0-9-]+$/),  // the single identifier — a dotted slug
+  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // the single identifier — a dotted slug
   kind: errorKind,                 // cross-cuts `topic`, so it stays a field, not a tree level
   topic: z.string(),               // POSITIONAL — the section slug, re-attached by parseErrorTree
   frequency: z.number().int().min(1).max(3).default(1),  // ★–★★★, from docs/common_mistakes.md
@@ -474,7 +483,7 @@ export const errorDef = z.object({
 export type ErrorDef = z.output<typeof errorDef>
 
 const errorPrefixOfKind: Record<ErrorKind, string> =
-  { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.' }
+  { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.', omission: 'omi.' }
 
 // `cardIds` is the set of fundament-tower card ids (src/data/layers.ts). Since
 // 2026-07-23 the legacy laws.json / conventions.json are gone and every error's
@@ -489,6 +498,7 @@ export function validateErrors(
     'anti-law': { ids: cardIds, name: 'law card' },
     misreading: { ids: cardIds, name: 'convention card' },
     salience: { ids: cardIds, name: 'structure card' },
+    omission: { ids: cardIds, name: 'convention card' },
   }
   const seen = new Set<string>()
   for (const e of errors) {

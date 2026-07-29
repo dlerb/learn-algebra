@@ -15,122 +15,133 @@ result happily, because semicolons are valid LaTeX.
 import json, collections, sys
 
 # id -> (en sentence, de sentence, [false claims as LaTeX])
-# THE SENTENCE IS THE BELIEF, STATED AS THE STUDENT HOLDS IT — so it reads as a
-# claim that can be marked ✗, exactly as `rule.rule` reads as one that can be
-# marked ✓. The error layer's `name` names the mistake from outside ("Losing one
-# of two minuses"); this states it from inside ("Every minus is a subtraction").
+# THE SENTENCE IS THE CORRECTION, AND ITS MOOD IS PICKED BY `kind` (2026-07-29).
+# It was briefly the belief stated from inside ("Every minus is a subtraction"),
+# which was wrong on the page: under a ✗ the reader has to negate a false sentence
+# themselves before it means anything. Stated as a correction it needs no
+# unpacking, and the kind decides the mood:
+#
+#   anti-law   "Don't …"      a prohibition on a specific generative move
+#   omission   "Don't …"      the same, for a step simply not taken
+#   misreading "A is not B"   a decoding correction
+#   salience   "A is not B"   the same, for what was looked at
+#
+# ⚠️ THE ONE AUTHORING RULE THAT KEEPS THE TWO POOLS APART. 14 of the 28 are 1:1
+# with a rule, so a mistake phrased as a GENERAL prohibition just is that rule in
+# the negative. Name the SPECIFIC tempting move — "Don't stop at the first term in
+# the bracket", never "Only multiplication distributes".
 M = {
  'mis.minus-roles-confused': (
-   'Every minus is a subtraction',
-   'Jedes Minus ist eine Subtraktion',
+   'Not every minus is a subtraction',
+   'Nicht jedes Minus ist eine Subtraktion',
    [r'-(-a) \neq a']),
  'anti.commute-everything': (
-   'Anything either side of an operator may be swapped',
-   'Was links und rechts von einem Operator steht, darf vertauscht werden',
+   'Don’t swap across a minus or a fraction bar',
+   'Nicht über ein Minus oder einen Bruchstrich hinweg vertauschen',
    [r'a - b = b - a', r'\frac{a}{b} = \frac{b}{a}']),
- 'mis.adjacent-signs': (
-   'Two operators may stand next to each other',
-   'Zwei Operatoren dürfen nebeneinander stehen',
+ 'omi.adjacent-signs': (
+   'Don’t leave a negative unbracketed after an operator',
+   'Eine negative Zahl nach einem Operator nicht ohne Klammer lassen',
    []),
  'mis.subtraction-as-times-negative': (
-   'Subtracting is multiplying by the negative',
-   'Subtrahieren heisst mit dem Negativen multiplizieren',
+   'Subtracting is not multiplying by the negative',
+   'Subtrahieren ist nicht Multiplizieren mit dem Negativen',
    [r'a - b = a \cdot (-b)']),
  'mis.precedence-ignored': (
-   'A term is worked out from left to right',
-   'Ein Term wird von links nach rechts abgearbeitet',
+   'Left to right is not the order',
+   'Von links nach rechts ist nicht die Reihenfolge',
    [r'2 + 3 \cdot 4 = 20']),
  'mis.exponent-scope': (
-   'A power applies to everything written before it',
-   'Eine Potenz gilt für alles, was davor steht',
+   'A power does not reach back past one symbol',
+   'Eine Potenz greift nicht weiter zurück als ein Zeichen',
    [r'-a^2 = (-a)^2', r'ab^2 = (ab)^2']),
- 'mis.bracket-dissolved': (
-   'A bracket may be dropped without multiplying out',
-   'Eine Klammer darf man weglassen, ohne auszumultiplizieren',
+ 'anti.bracket-dissolved': (
+   'Don’t drop a bracket without multiplying it out',
+   'Eine Klammer nicht weglassen, ohne auszumultiplizieren',
    [r'(a+b)c = a + bc']),
  'sal.loudest-op-wins': (
-   'The operation that catches the eye is the main one',
-   'Die Operation, die ins Auge springt, ist die Hauptoperation',
+   'The loudest operation is not the main one',
+   'Die auffälligste Operation ist nicht die Hauptoperation',
    []),
- 'mis.redundant-brackets-kept': (
-   'Every bracket changes the reading',
-   'Jede Klammer ändert die Lesart',
+ 'omi.redundant-brackets-kept': (
+   'Don’t keep a bracket that changes nothing',
+   'Eine Klammer, die nichts ändert, nicht stehen lassen',
    [r'(ab)c \neq abc']),
  'anti.linearity': (
-   'Every operation spreads over a plus',
-   'Jede Operation verteilt sich über ein Plus',
+   'Don’t spread a power or a root over a plus',
+   'Eine Potenz oder Wurzel nicht über ein Plus verteilen',
    [r'(a+b)^2 = a^2 + b^2', r'\sqrt{a+b} = \sqrt{a} + \sqrt{b}']),
  'anti.partial-distribution': (
-   'The factor in front reaches only the first term',
-   'Der Faktor davor erreicht nur den ersten Term',
+   'Don’t stop at the first term in the bracket',
+   'Nicht beim ersten Term in der Klammer aufhören',
    [r'a(b+c) = ab + c']),
  'anti.power-of-product-partial': (
-   'A power on a bracket reaches only one factor',
-   'Eine Potenz auf einer Klammer erreicht nur einen Faktor',
+   'Don’t let the power skip a factor',
+   'Die Potenz keinen Faktor überspringen lassen',
    [r'(ab)^n = ab^n']),
  'anti.exponent-arithmetic': (
-   'The operation on the powers is the operation on the exponents',
-   'Die Operation auf den Potenzen ist die Operation auf den Exponenten',
+   'Don’t copy the operation down into the exponents',
+   'Die Operation nicht in die Exponenten übernehmen',
    [r'x^a \cdot x^b = x^{ab}', r'(x^a)^b = x^{a+b}']),
  'anti.repetition-confusion': (
-   'A power and a coefficient repeat the same operation',
-   'Potenz und Koeffizient wiederholen dieselbe Operation',
+   'Don’t read a square as a double',
+   'Ein Quadrat nicht als das Doppelte lesen',
    [r'a^2 = 2a']),
  'anti.zero-exponent': (
-   'An exponent of zero makes the whole power zero',
-   'Ein Exponent null macht die ganze Potenz null',
+   'Don’t read a zero exponent as a zero answer',
+   'Einen Exponenten null nicht als Ergebnis null lesen',
    [r'a^0 = 0']),
  'mis.negative-exponent-negates': (
-   'A minus in the exponent makes the value negative',
-   'Ein Minus im Exponenten macht den Wert negativ',
+   'A minus in the exponent is not a minus on the value',
+   'Ein Minus im Exponenten ist kein Minus am Wert',
    [r'x^{-1} = -x']),
  'mis.root-scope': (
-   'The root bar covers only the first term',
-   'Der Wurzelstrich deckt nur den ersten Term',
+   'The root bar does not stop after the first term',
+   'Der Wurzelstrich hört nicht nach dem ersten Term auf',
    [r'\sqrt{a+b} = \sqrt{a} + b']),
  'anti.fraction-addition': (
-   'Fractions add numerator to numerator and denominator to denominator',
-   'Brüche addiert man Zähler zu Zähler und Nenner zu Nenner',
+   'Don’t add fractions straight across',
+   'Brüche nicht einfach quer addieren',
    [r'\frac{a}{b} + \frac{c}{d} = \frac{a+c}{b+d}']),
  'mis.fraction-bar-grouping-lost': (
-   'Only the first term of the numerator is divided',
-   'Nur der erste Term des Zählers wird geteilt',
+   'The first term alone is not the numerator',
+   'Der erste Term allein ist nicht der Zähler',
    [r'\frac{a+b}{c} = a + \frac{b}{c}']),
  'mis.linear-slash-overgrouped': (
-   'Everything written before a slash is divided by what follows',
-   'Alles vor dem Schrägstrich wird durch das Folgende geteilt',
+   'Everything before the slash is not the numerator',
+   'Alles vor dem Schrägstrich ist nicht der Zähler',
    [r'a + b/c = \frac{a+b}{c}']),
  'mis.bar-not-division': (
-   'A fraction is a different kind of object from a division',
-   'Ein Bruch ist etwas anderes als eine Division',
+   'The bar is not a new operation',
+   'Der Bruchstrich ist keine neue Operation',
    [r'\frac{3}{4} \neq 3 : 4']),
  'anti.conjoining': (
-   'Every sum can be collapsed into a single term',
-   'Jede Summe lässt sich zu einem einzigen Term zusammenfassen',
+   'Don’t force unlike terms together',
+   'Ungleiche Terme nicht zusammenzwingen',
    [r'2 + 3x = 5x', r'3x + 2y = 5xy']),
  'mis.juxtaposition-as-plus': (
-   'Two things written side by side are added',
-   'Zwei Dinge nebeneinander werden addiert',
+   'Side by side is not plus',
+   'Nebeneinander ist nicht plus',
    [r'3x = 3 + x']),
  'mis.invisible-one-lost': (
-   'A term with no coefficient written has none to count',
-   'Ein Term ohne geschriebenen Koeffizienten zählt nicht mit',
+   'A missing number in front is not a missing term',
+   'Eine fehlende Zahl davor ist kein fehlender Term',
    [r'a + 3a = 3a']),
  'sal.implicit-op-overlooked': (
-   'Where no sign is written there is no operation',
-   'Wo kein Zeichen steht, ist keine Operation',
+   'No sign does not mean no operation',
+   'Kein Zeichen heisst nicht keine Operation',
    []),
  'mis.letters-differ': (
-   'A letter is a word or a unit, not a number',
-   'Ein Buchstabe ist ein Wort oder eine Einheit, keine Zahl',
+   'A letter is not a word or a unit',
+   'Ein Buchstabe ist kein Wort und keine Einheit',
    [r'a + a \neq 2a']),
  'mis.order-blindness': (
-   'Writing the factors the other way round changes the term',
-   'Die Faktoren anders herum zu schreiben ändert den Term',
+   'The other way round is not a different term',
+   'Andersherum ist kein anderer Term',
    [r'a \cdot 3 \neq 3a']),
  'anti.quadratic-pair-unchecked': (
-   'The numbers in the brackets can be read off the term',
-   'Die Zahlen in den Klammern kann man am Term ablesen',
+   'Don’t copy the numbers out of the term',
+   'Die Zahlen nicht aus dem Term abschreiben',
    [r'x^2 + 5x + 6 = (x+5)(x+6)']),
 }
 

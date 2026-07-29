@@ -103,8 +103,8 @@
               ]
             },
             {
-              "id": "mis.adjacent-signs",
-              "kind": "misreading",
+              "id": "omi.adjacent-signs",
+              "kind": "omission",
               "frequency": 2,
               "corrupts": [
                 "ix.no-adjacent-operator"
@@ -258,8 +258,8 @@
               ]
             },
             {
-              "id": "mis.bracket-dissolved",
-              "kind": "misreading",
+              "id": "anti.bracket-dissolved",
+              "kind": "anti-law",
               "frequency": 2,
               "corrupts": [
                 "ix.brackets"
@@ -338,8 +338,8 @@
               ]
             },
             {
-              "id": "mis.redundant-brackets-kept",
-              "kind": "misreading",
+              "id": "omi.redundant-brackets-kept",
+              "kind": "omission",
               "frequency": 1,
               "corrupts": [
                 "ix.brackets"

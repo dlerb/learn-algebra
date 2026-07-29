@@ -231,7 +231,7 @@
           ],
           "errors": [
             "mis.minus-roles-confused",
-            "mis.adjacent-signs",
+            "omi.adjacent-signs",
             "mis.subtraction-as-times-negative"
           ]
         },
@@ -307,7 +307,7 @@
           ],
           "errors": [
             "mis.minus-roles-confused",
-            "mis.adjacent-signs"
+            "omi.adjacent-signs"
           ]
         },
         {
@@ -439,7 +439,7 @@
             "ix.brackets"
           ],
           "errors": [
-            "mis.redundant-brackets-kept"
+            "omi.redundant-brackets-kept"
           ]
         },
         {

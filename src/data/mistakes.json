@@ -19,8 +19,8 @@
       "topic": "minus",
       "frequency": 3,
       "mistake": {
-        "en": "Every minus is a subtraction",
-        "de": "Jedes Minus ist eine Subtraktion"
+        "en": "Not every minus is a subtraction",
+        "de": "Nicht jedes Minus ist eine Subtraktion"
       },
       "latex": [
         "-(-a) \\neq a"
@@ -43,8 +43,8 @@
       "topic": "minus",
       "frequency": 2,
       "mistake": {
-        "en": "Anything either side of an operator may be swapped",
-        "de": "Was links und rechts von einem Operator steht, darf vertauscht werden"
+        "en": "Don’t swap across a minus or a fraction bar",
+        "de": "Nicht über ein Minus oder einen Bruchstrich hinweg vertauschen"
       },
       "latex": [
         "a - b = b - a",
@@ -63,13 +63,13 @@
       ]
     },
     {
-      "id": "mis.adjacent-signs",
-      "kind": "misreading",
+      "id": "omi.adjacent-signs",
+      "kind": "omission",
       "topic": "minus",
       "frequency": 2,
       "mistake": {
-        "en": "Two operators may stand next to each other",
-        "de": "Zwei Operatoren dürfen nebeneinander stehen"
+        "en": "Don’t leave a negative unbracketed after an operator",
+        "de": "Eine negative Zahl nach einem Operator nicht ohne Klammer lassen"
       },
       "latex": [],
       "note": {
@@ -89,8 +89,8 @@
       "topic": "minus",
       "frequency": 1,
       "mistake": {
-        "en": "Subtracting is multiplying by the negative",
-        "de": "Subtrahieren heisst mit dem Negativen multiplizieren"
+        "en": "Subtracting is not multiplying by the negative",
+        "de": "Subtrahieren ist nicht Multiplizieren mit dem Negativen"
       },
       "latex": [
         "a - b = a \\cdot (-b)"
@@ -113,8 +113,8 @@
       "topic": "reading",
       "frequency": 3,
       "mistake": {
-        "en": "A term is worked out from left to right",
-        "de": "Ein Term wird von links nach rechts abgearbeitet"
+        "en": "Left to right is not the order",
+        "de": "Von links nach rechts ist nicht die Reihenfolge"
       },
       "latex": [
         "2 + 3 \\cdot 4 = 20"
@@ -137,8 +137,8 @@
       "topic": "reading",
       "frequency": 3,
       "mistake": {
-        "en": "A power applies to everything written before it",
-        "de": "Eine Potenz gilt für alles, was davor steht"
+        "en": "A power does not reach back past one symbol",
+        "de": "Eine Potenz greift nicht weiter zurück als ein Zeichen"
       },
       "latex": [
         "-a^2 = (-a)^2",
@@ -158,13 +158,13 @@
       ]
     },
     {
-      "id": "mis.bracket-dissolved",
-      "kind": "misreading",
+      "id": "anti.bracket-dissolved",
+      "kind": "anti-law",
       "topic": "reading",
       "frequency": 2,
       "mistake": {
-        "en": "A bracket may be dropped without multiplying out",
-        "de": "Eine Klammer darf man weglassen, ohne auszumultiplizieren"
+        "en": "Don’t drop a bracket without multiplying it out",
+        "de": "Eine Klammer nicht weglassen, ohne auszumultiplizieren"
       },
       "latex": [
         "(a+b)c = a + bc"
@@ -187,8 +187,8 @@
       "topic": "reading",
       "frequency": 2,
       "mistake": {
-        "en": "The operation that catches the eye is the main one",
-        "de": "Die Operation, die ins Auge springt, ist die Hauptoperation"
+        "en": "The loudest operation is not the main one",
+        "de": "Die auffälligste Operation ist nicht die Hauptoperation"
       },
       "latex": [],
       "note": {
@@ -204,13 +204,13 @@
       ]
     },
     {
-      "id": "mis.redundant-brackets-kept",
-      "kind": "misreading",
+      "id": "omi.redundant-brackets-kept",
+      "kind": "omission",
       "topic": "reading",
       "frequency": 1,
       "mistake": {
-        "en": "Every bracket changes the reading",
-        "de": "Jede Klammer ändert die Lesart"
+        "en": "Don’t keep a bracket that changes nothing",
+        "de": "Eine Klammer, die nichts ändert, nicht stehen lassen"
       },
       "latex": [
         "(ab)c \\neq abc"
@@ -232,8 +232,8 @@
       "topic": "distributing",
       "frequency": 3,
       "mistake": {
-        "en": "Every operation spreads over a plus",
-        "de": "Jede Operation verteilt sich über ein Plus"
+        "en": "Don’t spread a power or a root over a plus",
+        "de": "Eine Potenz oder Wurzel nicht über ein Plus verteilen"
       },
       "latex": [
         "(a+b)^2 = a^2 + b^2",
@@ -256,8 +256,8 @@
       "topic": "distributing",
       "frequency": 3,
       "mistake": {
-        "en": "The factor in front reaches only the first term",
-        "de": "Der Faktor davor erreicht nur den ersten Term"
+        "en": "Don’t stop at the first term in the bracket",
+        "de": "Nicht beim ersten Term in der Klammer aufhören"
       },
       "latex": [
         "a(b+c) = ab + c"
@@ -279,8 +279,8 @@
       "topic": "distributing",
       "frequency": 2,
       "mistake": {
-        "en": "A power on a bracket reaches only one factor",
-        "de": "Eine Potenz auf einer Klammer erreicht nur einen Faktor"
+        "en": "Don’t let the power skip a factor",
+        "de": "Die Potenz keinen Faktor überspringen lassen"
       },
       "latex": [
         "(ab)^n = ab^n"
@@ -302,8 +302,8 @@
       "topic": "powers",
       "frequency": 3,
       "mistake": {
-        "en": "The operation on the powers is the operation on the exponents",
-        "de": "Die Operation auf den Potenzen ist die Operation auf den Exponenten"
+        "en": "Don’t copy the operation down into the exponents",
+        "de": "Die Operation nicht in die Exponenten übernehmen"
       },
       "latex": [
         "x^a \\cdot x^b = x^{ab}",
@@ -329,8 +329,8 @@
       "topic": "powers",
       "frequency": 2,
       "mistake": {
-        "en": "A power and a coefficient repeat the same operation",
-        "de": "Potenz und Koeffizient wiederholen dieselbe Operation"
+        "en": "Don’t read a square as a double",
+        "de": "Ein Quadrat nicht als das Doppelte lesen"
       },
       "latex": [
         "a^2 = 2a"
@@ -353,8 +353,8 @@
       "topic": "powers",
       "frequency": 1,
       "mistake": {
-        "en": "An exponent of zero makes the whole power zero",
-        "de": "Ein Exponent null macht die ganze Potenz null"
+        "en": "Don’t read a zero exponent as a zero answer",
+        "de": "Einen Exponenten null nicht als Ergebnis null lesen"
       },
       "latex": [
         "a^0 = 0"
@@ -377,8 +377,8 @@
       "topic": "powers",
       "frequency": 2,
       "mistake": {
-        "en": "A minus in the exponent makes the value negative",
-        "de": "Ein Minus im Exponenten macht den Wert negativ"
+        "en": "A minus in the exponent is not a minus on the value",
+        "de": "Ein Minus im Exponenten ist kein Minus am Wert"
       },
       "latex": [
         "x^{-1} = -x"
@@ -401,8 +401,8 @@
       "topic": "powers",
       "frequency": 2,
       "mistake": {
-        "en": "The root bar covers only the first term",
-        "de": "Der Wurzelstrich deckt nur den ersten Term"
+        "en": "The root bar does not stop after the first term",
+        "de": "Der Wurzelstrich hört nicht nach dem ersten Term auf"
       },
       "latex": [
         "\\sqrt{a+b} = \\sqrt{a} + b"
@@ -424,8 +424,8 @@
       "topic": "fractions",
       "frequency": 3,
       "mistake": {
-        "en": "Fractions add numerator to numerator and denominator to denominator",
-        "de": "Brüche addiert man Zähler zu Zähler und Nenner zu Nenner"
+        "en": "Don’t add fractions straight across",
+        "de": "Brüche nicht einfach quer addieren"
       },
       "latex": [
         "\\frac{a}{b} + \\frac{c}{d} = \\frac{a+c}{b+d}"
@@ -447,8 +447,8 @@
       "topic": "fractions",
       "frequency": 2,
       "mistake": {
-        "en": "Only the first term of the numerator is divided",
-        "de": "Nur der erste Term des Zählers wird geteilt"
+        "en": "The first term alone is not the numerator",
+        "de": "Der erste Term allein ist nicht der Zähler"
       },
       "latex": [
         "\\frac{a+b}{c} = a + \\frac{b}{c}"
@@ -470,8 +470,8 @@
       "topic": "fractions",
       "frequency": 1,
       "mistake": {
-        "en": "Everything written before a slash is divided by what follows",
-        "de": "Alles vor dem Schrägstrich wird durch das Folgende geteilt"
+        "en": "Everything before the slash is not the numerator",
+        "de": "Alles vor dem Schrägstrich ist nicht der Zähler"
       },
       "latex": [
         "a + b/c = \\frac{a+b}{c}"
@@ -493,8 +493,8 @@
       "topic": "fractions",
       "frequency": 1,
       "mistake": {
-        "en": "A fraction is a different kind of object from a division",
-        "de": "Ein Bruch ist etwas anderes als eine Division"
+        "en": "The bar is not a new operation",
+        "de": "Der Bruchstrich ist keine neue Operation"
       },
       "latex": [
         "\\frac{3}{4} \\neq 3 : 4"
@@ -517,8 +517,8 @@
       "topic": "terms",
       "frequency": 3,
       "mistake": {
-        "en": "Every sum can be collapsed into a single term",
-        "de": "Jede Summe lässt sich zu einem einzigen Term zusammenfassen"
+        "en": "Don’t force unlike terms together",
+        "de": "Ungleiche Terme nicht zusammenzwingen"
       },
       "latex": [
         "2 + 3x = 5x",
@@ -539,8 +539,8 @@
       "topic": "terms",
       "frequency": 2,
       "mistake": {
-        "en": "Two things written side by side are added",
-        "de": "Zwei Dinge nebeneinander werden addiert"
+        "en": "Side by side is not plus",
+        "de": "Nebeneinander ist nicht plus"
       },
       "latex": [
         "3x = 3 + x"
@@ -562,8 +562,8 @@
       "topic": "terms",
       "frequency": 2,
       "mistake": {
-        "en": "A term with no coefficient written has none to count",
-        "de": "Ein Term ohne geschriebenen Koeffizienten zählt nicht mit"
+        "en": "A missing number in front is not a missing term",
+        "de": "Eine fehlende Zahl davor ist kein fehlender Term"
       },
       "latex": [
         "a + 3a = 3a"
@@ -585,8 +585,8 @@
       "topic": "terms",
       "frequency": 2,
       "mistake": {
-        "en": "Where no sign is written there is no operation",
-        "de": "Wo kein Zeichen steht, ist keine Operation"
+        "en": "No sign does not mean no operation",
+        "de": "Kein Zeichen heisst nicht keine Operation"
       },
       "latex": [],
       "note": {
@@ -606,8 +606,8 @@
       "topic": "terms",
       "frequency": 1,
       "mistake": {
-        "en": "A letter is a word or a unit, not a number",
-        "de": "Ein Buchstabe ist ein Wort oder eine Einheit, keine Zahl"
+        "en": "A letter is not a word or a unit",
+        "de": "Ein Buchstabe ist kein Wort und keine Einheit"
       },
       "latex": [
         "a + a \\neq 2a"
@@ -629,8 +629,8 @@
       "topic": "terms",
       "frequency": 1,
       "mistake": {
-        "en": "Writing the factors the other way round changes the term",
-        "de": "Die Faktoren anders herum zu schreiben ändert den Term"
+        "en": "The other way round is not a different term",
+        "de": "Andersherum ist kein anderer Term"
       },
       "latex": [
         "a \\cdot 3 \\neq 3a"
@@ -652,8 +652,8 @@
       "topic": "factoring",
       "frequency": 2,
       "mistake": {
-        "en": "The numbers in the brackets can be read off the term",
-        "de": "Die Zahlen in den Klammern kann man am Term ablesen"
+        "en": "Don’t copy the numbers out of the term",
+        "de": "Die Zahlen nicht aus dem Term abschreiben"
       },
       "latex": [
         "x^2 + 5x + 6 = (x+5)(x+6)"
