@@ -388,7 +388,8 @@ tower cards in the 2026-07-23 bridge.)
 **Design tokens** (`src/styles/tokens.css`): one quiet neutral-led palette, color
 reserved for signal. This *is* the dark-mode groundwork. **Display prose for the
 curated side lives in data registries**, never hardcoded in components: `skillGroups`
-and `skillKinds` (slug-set validated == the kind enum), and since 2026-07-28 the skills
+and `skillKinds` (slug-set validated == the kind enum, and **localized since 2026-07-29** —
+their titles were the last English-only prose on the site), and since 2026-07-28 the skills
 **layer head** too (`src/data/skills/layer.json` — title, blurb, note, bilingual), which
 was the last page prose still living in a component. (The old `lawGroups`/
 `conventionGroups`/`lawKinds` registries went with laws.json/conventions.json in the

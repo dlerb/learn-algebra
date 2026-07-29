@@ -341,7 +341,7 @@ the flat `groups` / `skillKinds` display registries from the tree.
 | `id` | string `"<kind>.<slug>"` | ✓ | the identifier; prefix must equal the file's `kind` |
 | `kind` | `equivalence`\|`classification`\|`chunking`\|`transformation` | positional | strategy category (= id prefix = file); not authored on the leaf |
 | `group` | string | positional | topic slug = the containing group node's `slug`; not authored on the leaf |
-| `name` | LocalizedString | ✓ | the display heading (like a card's `name`) |
+| `name` | LocalizedString | ✓ | the display heading. ⚠️ **Plain text** — it becomes `LayerRow`'s `name`, rendered with `{{ }}`, so no `$…$` and no LaTeX |
 | `note` | LocalizedString | ✓ | the rationale — why the skill matters |
 | `illustration` | LaTeX | — | one canonical example that anchors the skill |
 | `wrong` | LaTeX[] | — | **the tempting form as a COMPLETE FALSE CLAIM** (`3x = 3 + x`, never a bare `3 + x`), so it stands alone under a ✗. Authored per skill, never fetched from the cited mistakes: the errors are general and the skills specific. Empty is meaningful — the contrast skills have no tempting form (rev. 12) |
@@ -372,7 +372,7 @@ the flat `groups` / `skillKinds` display registries from the tree.
 |---|---|---|---|
 | `id` | string `"rule.<slug>"` | ✓ | the identifier |
 | `kind` | `is`\|`do` | ✓ | IS = what a written form MEANS (decoding); DO = what to reach for |
-| `rule` | LocalizedString | ✓ | **the sentence** — "The fraction bar is a bracket". Was `name` until 2026-07-27, and it always was the rule |
+| `rule` | LocalizedString | ✓ | **the sentence** — "The fraction bar is a bracket". Was `name` until 2026-07-27, and it always was the rule. ⚠️ **Plain text**, same reason as a card's `name`: it lands in the rail |
 | `latex` | string[] | — | **the formula as data** (2026-07-28), not buried in the prose: a formulary cannot be typeset out of sentences with maths embedded in them. An ARRAY because one sentence can carry several lines worth showing and a table wants a row each. Empty is legitimate — 4 of 57 rules state something no equation states. ⚠️ **No words inside it**: `latex` is not localized, so `(n \text{ factors})` would ship English onto the German page |
 | `note` | LocalizedString | ✓ | its gloss, one sentence with an example. Was `rule`, and it always was the gloss |
 | `family` | string (rule id) | — | **the pool it belongs to**, as the id of the rule that IS that family (rev. 14). One level, no chains; a head is simply a rule somebody names, and its `rule` sentence is the label while its `note` says why the family coheres. ⚠️ **Family is one, sheets are many** — a rule may be printed wherever it is useful |
@@ -543,6 +543,35 @@ familiar-shapes group (binomial square, difference of squares).
    skill-level `conditions` field only for caveats that aren't card-derived.
 
 ## Revision notes
+
+**2026-07-29 (rev. 16, German for `/skills`, and one rule generalised):** the last monolingual
+page. 74/74 skill `name`s and `note`s, plus 15 group titles and 4 kind heads — which needed
+`groupDef.title`/`blurb` and `skillKindFile.title`/`blurb` to move from plain `string` to
+`localizedString` first, since those registries predate the localization contract.
+`validateGroupRegistry` compares slugs, not titles, so it was unaffected. **Every layer is now
+bilingual.**
+
+Terminology fixed across all 74 so a later correction is a replacement rather than 74 judgement
+calls: Term · Summe · Differenz · Produkt · Quotient · Potenz · Klammer · Faktor · Koeffizient ·
+Exponent · Basis · Zähler · Nenner · Bruch · Wurzel · gleichartige Terme · ausmultiplizieren ·
+ausklammern · zusammenfassen · kürzen · **Bausteine** (chunks). No `ß` anywhere (Swiss).
+
+⚠️ **One shared vocabulary means a term change can silently overload a word elsewhere.** The
+author's correction *Blöcke* → *Bausteine* collided with the equivalence blurb, which had used
+*Bausteine* for the English "fluency atoms" — one word naming two things on one page. Resolved
+by giving the term to chunking, where it must be exact. **Check a replacement against the rest
+of the German, do not find-and-replace blind**; `Term`, `Gestalt` and `Einheit` currently carry
+the most load and are the likeliest to collide next.
+
+⚠️ **THE PLAIN-TEXT RULE IS NOT ONLY ABOUT CARDS.** A card's `name` has always been documented
+as plain text because it renders with `{{ }}`. Three more fields now land in the same
+place — `LayerRow`'s `name` slot — and inherit the constraint: **`skill.name`, `rule.rule` and
+`mistake.mistake` must carry no inline `$…$`.** It bit three times in one day (two rule
+sentences, then a freshly written German skill name), each time showing raw dollar signs. The
+format tables now say so at the field.
+
+⚠️ **All of this German is UNREVIEWED by a native reader** and enlarges that debt rather than
+clearing it. What it buys is something concrete to review instead of an English page.
 
 **2026-07-29 (rev. 15, `rule.mnemonic`):** rendered in the RAIL of `/rules`, directly under the
 name, small and italic — it is another wording of the SAME sentence, so it belongs with the name
