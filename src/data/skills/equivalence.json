@@ -200,6 +200,9 @@
           "name": "Negative numbers and the unary minus",
           "note": "A negative number and its parenthesised form are the same object: -3 and (-3) are identical, and both equal 0 - 3.",
           "illustration": "-3 = (-3) = 0 - 3",
+          "wrong": [
+            "0 - 3 = 3 - 0"
+          ],
           "rules": [
             "rule.three-minuses"
           ],
@@ -208,6 +211,7 @@
             "th.negative-one-times"
           ],
           "errors": [
+            "mis.minus-roles-confused",
             "anti.commute-everything"
           ]
         },

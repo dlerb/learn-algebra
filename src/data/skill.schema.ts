@@ -673,7 +673,14 @@ export function auditCoverage(
     ])
     const unsupported = f.rules.filter(mid => {
       const mp = rules.find(m => m.id === mid)
-      return mp !== undefined && !mp.summarizes.some(r => coords.has(r))
+      // A rule with NO `summarizes` can be neither supported nor unsupported —
+      // it has no tower bridge to check against, so asking the question of it is
+      // meaningless and the answer was a permanent false positive. Eight of the
+      // 57 are like that: the six family names, plus `dominant-op-tools` and
+      // `unlike-terms-stay`, which are strategy sentences rather than digests of
+      // a card. Their lack of a bridge is the COVERAGE question's business, one
+      // audit line down; this line asks something else.
+      return mp !== undefined && mp.summarizes.length > 0 && !mp.summarizes.some(r => coords.has(r))
     })
     if (unsupported.length > 0) {
       lines.push(`"${f.id}" declares rules its coordinates don't support: ${unsupported.join(', ')}`)

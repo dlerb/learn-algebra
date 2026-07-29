@@ -103,10 +103,20 @@ const ruleById = new Map(rules.map(r => [r.id, r]))
 // it costs no authoring, and it is what a teacher actually says in class: you
 // cite the family, not the sentence. 48 of 57 rules have one.
 const familyOf = (id: string) => (ruleFamilies.get(id) ?? []).map(sh => t(sh.name))
-const ruleLinks = (ids: string[]) => ids.map(id => {
-  const r = ruleById.get(id)
-  return { id, name: r ? t(r.rule) : id, to: `/rules#${id}`, family: familyOf(id) }
-})
+const ruleLinks = (ids: string[]) => {
+  const out = ids.map(id => {
+    const r = ruleById.get(id)
+    return { id, name: r ? t(r.rule) : id, to: `/rules#${id}`, family: familyOf(id) }
+  })
+  // Say the family ONCE. Two rules of the same family stacked — the factoring
+  // skills cite two binomial formulas each — printed "Binomial formulas ·" twice
+  // in bold, one under the other, which reads as a repeated heading rather than
+  // as two members of one set.
+  return out.map((x, i) => ({
+    ...x,
+    family: i > 0 && out[i - 1].family.join() === x.family.join() ? [] : x.family,
+  }))
+}
 
 // THE BELIEF, not the label. `skill.errors` holds ids that resolve in both
 // errors.json and mistakes.json; the pool is the right source here because its
