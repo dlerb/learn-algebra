@@ -130,6 +130,18 @@ narrower one. Every reference page is now on this system.
   COMPLEMENTARY coordinate** — under a topic heading it says which strategy, under a strategy
   heading which topic — so the row never repeats the heading and never loses the other half.
 
+**The good half carries the ANSWER, not only a formula.** An equivalence or transformation
+skill answers with a form (`illustration` + `wrong`); a classification answers with a NAME
+(`answer`/`misreads`) and a chunking with a SPLIT (`chunks`/`misChunks`, rendered as boxed
+pieces so `3x` visibly reads as one thing). The view picks on PRESENCE, never on `kind`.
+⚠️ **The marks come as a pair or not at all** — the ✓ renders only when the bad half has
+something in it (`paired`). This was hardcoded to always-✓ when the row became two blocks and
+went unnoticed until the classification readings landed.
+
+**The family label in front of a rule comes from `rule.family`** (2026-07-29), not from sheet
+membership — so `/skills` imports nothing from `cheatsheets.json`. A family head's `rule` IS
+the label ("Power laws"); its `note` says why the family coheres.
+
 **Its row was rebuilt 2026-07-29 as TWO BLOCKS rather than four cells** — the user's model: a
 skill is one problem, solved right and solved wrong.
 

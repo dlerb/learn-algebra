@@ -533,6 +533,50 @@ familiar-shapes group (binomial square, difference of squares).
 
 ## Revision notes
 
+**2026-07-29 (rev. 14, `family` on a rule, and the other two answer shapes):**
+
+**`rule.family`** — the subject axis this pool was missing. Every other curated layer has two
+classifiers, a register/causal one and a subject one (mistakes `kind` + `topic`, skills `kind`
++ `group`); rules had only `kind: is|do`, so the subject axis had been approximated by SHEET
+MEMBERSHIP. That forced `/skills` to import from `cheatsheets.json` to answer a question about
+a rule, and it was **wrong as well as misplaced**: four rules came back with two families
+(`divide-by-one-and-self` → "Zero and one + Fraction laws"), which is *appears on two sheets*,
+not *belongs to two families*.
+
+    FAMILY IS ONE · SHEETS ARE MANY
+
+A rule belongs to one family and may be printed wherever it is useful. `sheet.name` and the
+derived `ruleFamilies` are both **deleted**; rev. 11's "a sheet owns nothing" is restored;
+`validateRuleFamilies` enforces one level, no chains.
+
+⚠️ **The heading IS the label, and the note says why.** A `short` field was tried and deleted
+the same day: once a head's `rule` is a bare name — *Power laws*, *Reading a term*,
+*Distributing* — it already is the label. The reason the family coheres moved into the `note`
+(*"Know these cold. Every one of them acts on the exponents; the base never changes."*). **There
+is no "is a head" flag**: a head is simply a rule somebody names as their `family`, which keeps
+the model at one field instead of two.
+
+**A seventh family and sheet, `distributing`.** `a(b+c) = ab + ac` was the most-cited rule in
+the pool — 9 skills, 3 mistakes — with no family and no sheet. ⚠️ It is **the first sheet
+broader than its family**: distributing cuts across the others (`minus-over-bracket` is a minus
+rule, `binomial-square` a binomial formula, `split-numerator` a fraction law) and all of them
+appear on it while keeping their own family. That is the split doing visible work — deriving
+family from sheet membership would have silently re-parented nine rules.
+
+**Two more answer shapes on a skill: `answer`/`misreads` (a `dominantOp`, classification) and
+`chunks`/`misChunks` (LaTeX pieces, chunking).** ⚠️ `wrong` was deliberately not reused — it
+holds a FALSE EQUATION, and neither kind produces one: a classification's wrong answer is a
+WORD, a chunking's is a GROUPING. Putting either under a mark meaning "false" would repeat the
+`omission` mistake, where two forms equal in value differ only in reading. The bigger half of
+the fix was the GOOD side: a classification row rendered `3x + 2y` and never said it was a sum,
+so it was missing its ANSWER, not just its ✗. ⚠️ These fields cluster by kind, bending "kind is
+not a data-shape discriminant"; the VIEW still branches on PRESENCE, never on kind.
+**Misreads are evidenced, never invented** — only the 9 of 20 that cite a mistake carry one.
+
+**Authored on the SKILL, not in the drill layer**, because the rebuilt drills will CONSUME
+skills (`docs/TODO.md`: the drill layer is disposable, not frozen). `skill.restsOn` also
+reached 74/74, bridge 252 → 294.
+
 **2026-07-29 (rev. 13, the pool sentences, `omission`, and a short name on a sheet):**
 
 **Every sentence now matches its `kind`.** A mistake's sentence is the CORRECTION and its mood
@@ -559,12 +603,8 @@ plus last squared` / `minus twice` / `minus last squared`), which is the standar
 phrasing and matches the German school form; the old third one described an ABSENCE and only
 parsed if you had just read the other two.
 
-**`sheet.name`** — a short display label ("Power laws"), two or three words, because the
-heading sentence does not work as a label. **This is the first thing a sheet owns**, and it
-bends rev. 11's "a sheet owns nothing" a little: the RULE is still the citable identity, the
-sheet just carries what to call it. The family a rule belongs to is derived through sheet
-membership and shown on `/rules` and `/skills`. ⚠️ That derived read is what raised the open
-question in `docs/TODO.md` about whether `cheatsheets` is a missing LAYER.
+⚠️ **`sheet.name` was added in this revision and DELETED in rev. 14** — along with the derived
+family it served. Both are superseded; see below. A sheet owns nothing again.
 
 **`skill.restsOn` is 74/74** (bridge 252 → 294). Thirteen of the last fourteen were
 classification/chunking, which is the right shape: those skills decode rather than transform,
