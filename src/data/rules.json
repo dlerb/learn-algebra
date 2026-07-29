@@ -353,8 +353,8 @@
       "id": "rule.exponent-counts-factors",
       "kind": "is",
       "rule": {
-        "en": "One factor is $a$, no factors is $1$",
-        "de": "Ein Faktor ist $a$, kein Faktor ist $1$"
+        "en": "One factor is the number itself, no factors is one",
+        "de": "Ein Faktor ist die Zahl selbst, kein Faktor ist eins"
       },
       "latex": [
         "a^1 = a",
@@ -580,8 +580,8 @@
       "id": "rule.divide-by-one-and-self",
       "kind": "is",
       "rule": {
-        "en": "Over $1$ it is itself, over itself it is $1$",
-        "de": "Durch $1$ ist es sich selbst, durch sich selbst ist es $1$"
+        "en": "Over one it is itself, over itself it is one",
+        "de": "Durch eins ist es sich selbst, durch sich selbst ist es eins"
       },
       "latex": [
         "\\frac{a}{1} = a",

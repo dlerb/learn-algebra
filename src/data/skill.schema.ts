@@ -354,6 +354,14 @@ export const sheetDef = z.object({
   /** The pool sentence that heads it — and the sheet's citable identity, since
    *  an error naming "the power laws" cites the rule, not the sheet. */
   rule: z.string(),
+  /** THE FAMILY'S SHORT NAME (2026-07-29) — "Power laws", "Minus rules". Two or
+   *  three words, because it is used as a LABEL in front of a rule on /rules and
+   *  /skills, where the heading sentence does not fit: four of the six head rules
+   *  end in an exhortation ("The power laws: know these cold") and two are not
+   *  family names at all but ordinary rules that happen to head a sheet ("Read
+   *  the term before you change it"). Presentation, so it lives on the sheet;
+   *  the RULE remains the citable identity. */
+  name: localizedString,
   groups: z.array(sheetGroup).min(1),
 })
 export type SheetDef = z.infer<typeof sheetDef>

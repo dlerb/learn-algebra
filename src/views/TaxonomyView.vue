@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { skills, drills, groups, skillKinds, rules, mistakes, errorPatterns, rawById, skillTree } from '../data'
+import { skills, drills, groups, skillKinds, rules, mistakes, ruleFamilies, rawById, skillTree } from '../data'
 import { loc, type Skill, type Drill, type LocalizedString } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
@@ -98,9 +98,14 @@ const cardLinks = (ids: string[]) => ids.map(id => {
 })
 
 const ruleById = new Map(rules.map(r => [r.id, r]))
+// THE POOL IN FRONT OF THE RULE — "Power laws · Multiplying powers of the same
+// base adds the exponents". Derived through the sheets (src/data/index.ts), so
+// it costs no authoring, and it is what a teacher actually says in class: you
+// cite the family, not the sentence. 48 of 57 rules have one.
+const familyOf = (id: string) => (ruleFamilies.get(id) ?? []).map(sh => t(sh.name))
 const ruleLinks = (ids: string[]) => ids.map(id => {
   const r = ruleById.get(id)
-  return { id, name: r ? t(r.rule) : id, to: `/rules#${id}` }
+  return { id, name: r ? t(r.rule) : id, to: `/rules#${id}`, family: familyOf(id) }
 })
 
 // THE BELIEF, not the label. `skill.errors` holds ids that resolve in both
@@ -108,26 +113,13 @@ const ruleLinks = (ids: string[]) => ids.map(id => {
 // sentence is the misconception stated as the student holds it, which is what a
 // ✗ form is an instance OF.
 const mistakeById = new Map(mistakes.map(m => [m.id, m]))
-// THE FIX, and it comes from errors.json — the ONE field the mistake pool
-// deliberately did not take, because a fix works a CASE while a pool entry states
-// a general claim (docs/TODO.md, the cheap test). Pulled back in here as an
-// experiment: does the remedy beside the belief read better than the belief
-// alone?
-// ⚠️ Watch what the fan does to it. `mis.juxtaposition-as-plus` is cited by FOUR
-// skills and its fix is one sentence about $3x$, so on `coefficient-zero` — whose
-// subject is $0x = 0$ — it will read off-target. If this experiment succeeds the
-// fix wants re-homing PER SKILL, which is exactly the errors.json migration.
-const fixById = new Map(errorPatterns.map(e => [e.id, e.fix]))
 // Frequency-ordered, like everywhere else the ★ appears: the belief most worth
 // dislodging leads.
 const mistakeLinks = (ids: string[]) => ids
   .map(id => mistakeById.get(id)!)
   .filter(Boolean)
   .sort((a, b) => b.frequency - a.frequency)
-  .map(m => ({
-    id: m.id, name: t(m.mistake), frequency: m.frequency, to: `/mistakes#${m.id}`,
-    fix: fixById.has(m.id) ? t(fixById.get(m.id)!) : undefined,
-  }))
+  .map(m => ({ id: m.id, name: t(m.mistake), frequency: m.frequency, to: `/mistakes#${m.id}` }))
 
 const requiredBy = new Map<string, string[]>()
 for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requiredBy.get(r) ?? []), s.id])
@@ -144,8 +136,8 @@ interface Row {
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
-  rules: { id: string; name: string; to: string }[]
-  errors: { id: string; name: string; frequency: number; to: string; fix?: string }[]
+  rules: { id: string; name: string; to: string; family: string[] }[]
+  errors: { id: string; name: string; frequency: number; to: string }[]
   drill?: Drill
   contrast: boolean
   raw: unknown
@@ -286,7 +278,7 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                caveat. It qualifies the form, so it sits under it. -->
           <div v-if="r.conditions" class="quant">{{ L.cond }} <MathExpr :latex="r.conditions" /></div>
           <RouterLink v-for="x in r.rules" :key="x.id" class="line" :to="x.to">
-            <span class="arrow">→</span>{{ x.name }}
+            <span class="arrow">→</span><span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
           </RouterLink>
         </div>
 
@@ -305,16 +297,16 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
             <span class="mark bad">✗</span>
             <span class="f"><MathExpr :latex="w" display /></span>
           </div>
-          <template v-for="e in r.errors" :key="e.id">
-            <RouterLink class="line" :to="e.to">
-              <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '\u2605'.repeat(e.frequency) }}</span>
-            </RouterLink>
-            <!-- THE REMEDY under the belief it answers, a step quieter: the
-                 belief is the claim, the fix is what to do about it, and the two
-                 read as one pair rather than as two list items.
-                 ⚠️ NOT `class="fix"` — KaTeX emits its own `<span class="fix">`. -->
-            <p v-if="e.fix" class="remedy"><RichText :text="e.fix" /></p>
-          </template>
+          <!-- NO `fix` HERE, and it was tried (2026-07-29). errors.json's fix is
+               authored per MISTAKE and rendered per SKILL, so the fan wrecks it:
+               of 70 renders only 15 mentioned maths the skill actually shows, and
+               seven fixes repeated 4-10 times each. It was also redundant by
+               construction — 19 of the 28 fixes restate the rule or the correct
+               form, which is exactly what the ✓ block one column left already
+               says. The right half showing the wrong move IS the fix. -->
+          <RouterLink v-for="e in r.errors" :key="e.id" class="line" :to="e.to">
+            <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '\u2605'.repeat(e.frequency) }}</span>
+          </RouterLink>
         </div>
 
         <!-- FULL WIDTH, and inspection-only: the frozen drill layer's material,
@@ -421,15 +413,13 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    ordered: it says which belief is worth dislodging first. */
 .freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
 
-/* THE REMEDY. Indented to the sentence's own text column, not the arrow's, so it
-   reads as hanging off the belief above it rather than as another item in the
-   list. No tint: it is prose inside the BAD block, and washing it green would put
-   the two colour signals on top of each other. */
-.remedy {
-  margin: .12rem 0 0; padding-left: 1.9rem;
-  font-family: var(--font-content); font-size: .8rem; line-height: 1.5;
-  color: var(--text-faint);
-}
+/* THE FAMILY NAME, in front of the rule it belongs to. Set apart by weight and
+   colour rather than by a chip: the taste record already rejected pills for
+   reference links as too loud, and this sits inside a line that is itself a
+   pointer. It is the label a teacher says out loud, so it reads as the sentence's
+   surname, not as a tag hung off it. */
+.fam { font-weight: 600; color: var(--text-muted); }
+.fam::after { content: ' · '; font-weight: 400; color: var(--text-faint); }
 
 /* Section-by switch — the tower's filter chips, and deliberately the same
    control: it changes what the page shows without leaving it. */
