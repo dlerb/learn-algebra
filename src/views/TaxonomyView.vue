@@ -69,11 +69,13 @@ const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
       guards: 'schützt vor', cond: 'sofern', drill: 'Übungsmaterial',
       by: 'gliedern nach', byGroup: 'Thema', byKind: 'Art', dominant: 'dominante Operation', not: 'nicht',
-      revise: 'wiederholen' }
+      revise: 'wiederholen',
+      op: { sum: 'eine Summe', difference: 'eine Differenz', product: 'ein Produkt', quotient: 'ein Quotient', power: 'eine Potenz' } as Record<string, string> }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
       guards: 'guards against', cond: 'provided', drill: 'drill material',
       by: 'section by', byGroup: 'topic', byKind: 'kind', dominant: 'dominant operation', not: 'not',
-      revise: 'revise' })
+      revise: 'revise',
+      op: { sum: 'a sum', difference: 'a difference', product: 'a product', quotient: 'a quotient', power: 'a power' } as Record<string, string> })
 
 // Deep link from /rules, where each rule lists the skills that teach it.
 const route = useRoute()
@@ -143,12 +145,19 @@ const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
 interface Row {
   id: string; kind: string; group: string; name: string
   illustration?: string; wrong: string[]; conditions?: string
+  answer?: string; misreads?: string; chunks: string[]; misChunks: string[]
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
   rules: { id: string; name: string; to: string; family: string[] }[]
   errors: { id: string; name: string; frequency: number; to: string }[]
   drill?: Drill
+  /** Is there anything in the bad half to contrast against? THE MARKS COME AS A
+   *  PAIR OR NOT AT ALL — a ✗ without its ✓ is forbidden on /errors, and a ✓ with
+   *  nothing opposite it says nothing. ⚠️ This was hardcoded to always-✓ when the
+   *  row became two blocks (2026-07-29) and went unnoticed until the classification
+   *  readings landed: rows like `linear-form` were showing a lone tick. */
+  paired: boolean
   contrast: boolean
   raw: unknown
 }
@@ -159,9 +168,11 @@ function toRow(s: Skill): Row {
   return {
     id: s.id, kind: s.kind, group: s.group, name: t(s.name),
     illustration: s.illustration, wrong: s.wrong, conditions: s.conditions,
+    answer: s.answer, misreads: s.misreads, chunks: s.chunks, misChunks: s.misChunks,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
     drill: drillBySkill.get(s.id),
+    paired: s.wrong.length > 0 || s.misreads !== undefined || s.misChunks.length > 0,
     // NEITHER JUSTIFICATION HOLDS: it guards no mistake and enables no other
     // skill. Not a defect and not a backlog — it is the CONTRAST SET, and the
     // label says so. Nobody believes $a+b \neq b+a$, so authoring an error for it
@@ -281,8 +292,18 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
              break the vertical line the column makes. -->
         <div class="block good">
           <div v-if="r.illustration" class="stmt">
-            <span class="mark good">✓</span>
+            <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
             <span class="f"><MathExpr :latex="r.illustration" display /></span>
+          </div>
+          <!-- THE READING, for the skills whose answer is not a formula: a
+               classification names the dominant operation, a chunking gives the
+               split. Rendered on PRESENCE, never on `kind`, so the shape of the
+               data stays out of the rendering path. Without this a
+               classification row showed `3x + 2y` and never said it was a sum —
+               the good half was missing its answer, not just its ✗. -->
+          <div v-if="r.answer" class="reading">{{ L.op[r.answer] ?? r.answer }}</div>
+          <div v-if="r.chunks.length" class="reading">
+            <span v-for="(c, i) in r.chunks" :key="i" class="chunk"><MathExpr :latex="c" /></span>
           </div>
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
@@ -306,6 +327,18 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
           <div v-for="(w, i) in r.wrong" :key="i" class="stmt">
             <span class="mark bad">✗</span>
             <span class="f"><MathExpr :latex="w" display /></span>
+          </div>
+          <!-- The same two shapes, mirrored. EVIDENCED, never invented: only the
+               9 of 20 that cite a mistake carry one, so 11 rows show a right
+               reading with no wrong one — which is the same "marks come as a
+               pair or not at all" rule the formulas follow. -->
+          <div v-if="r.misreads" class="stmt">
+            <span class="mark bad">✗</span>
+            <span class="reading f">{{ L.op[r.misreads] ?? r.misreads }}</span>
+          </div>
+          <div v-if="r.misChunks.length" class="stmt">
+            <span class="mark bad">✗</span>
+            <span class="f"><span v-for="(c, i) in r.misChunks" :key="i" class="chunk"><MathExpr :latex="c" /></span></span>
           </div>
           <!-- NO `fix` HERE, and it was tried (2026-07-29). errors.json's fix is
                authored per MISTAKE and rendered per SKILL, so the fan wrecks it:
@@ -404,6 +437,17 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 .mark { font-size: .82rem; line-height: 1; font-weight: 600; }
 .mark.good { color: var(--good); }
 .mark.bad { color: var(--bad); }
+/* THE READING — a named operation, or a split into chunks. Set in the content
+   serif like the formulas it answers for, one step down in size because it is
+   the ANSWER to the form above rather than another form. Indented onto the
+   formula column so it hangs under the expression, not under the mark. */
+.reading { padding-left: 1.1rem; font-family: var(--font-content); font-size: .92rem; color: var(--text); }
+.stmt > .reading { padding-left: 0; }
+/* Each chunk boxed just enough to read as one object — the whole point of a
+   chunking skill is that `3x` is ONE thing, so the grouping has to be visible
+   without a bracket, which would say something different. */
+.chunk { display: inline-block; padding: .06rem .35rem; margin-right: .3rem; border-radius: 4px; background: var(--band); }
+
 /* Indented onto the formula column, not the mark's: the caveat qualifies the
    statement, so it lines up under it rather than under the ✓. */
 .quant { margin-top: .15rem; padding-left: 1.1rem; font-size: .78rem; color: var(--text-muted); }

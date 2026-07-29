@@ -82,6 +82,26 @@ export const skill = z.object({
   // contradict it. A belief the student holds is fine and is written as the
   // claim itself — `a \cdot 3 \neq 3a` under a ✗ says that belief is false.
   wrong: z.array(z.string()).default([]),
+  // ── THE OTHER TWO ANSWER SHAPES (2026-07-29) ─────────────────────────────
+  // `wrong` holds a FALSE EQUATION, and neither classification nor chunking
+  // produces one: a classification's wrong answer is a WORD ("a product"), a
+  // chunking's is a GROUPING. Forcing either into `wrong` would repeat the
+  // `omission` mistake — two forms equal in value, differing only in reading,
+  // under a mark that is supposed to mean "false".
+  //
+  // ⚠️ These cluster by kind, which bends the rule at the top of this file that
+  // `kind` is "not a data-shape discriminant". The bend is deliberate and the
+  // alternative was worse. Note the VIEW still does not branch on kind — it
+  // renders whichever field is present, so kind stays out of the rendering path.
+  //
+  // ⚠️ Authored here and NOT in the drill layer, because the rebuilt drills will
+  // CONSUME skills (docs/TODO.md, "the drill layer is disposable"). A
+  // classification skill with no `answer` was simply incomplete: /skills rendered
+  // `3x + 2y` and never said it was a sum.
+  answer: dominantOp.optional(),        // classification: the dominant operation, the thing the skill asks you to name
+  misreads: dominantOp.optional(),      // …and the tempting wrong name. EVIDENCED, never invented: present only on the 6 classification skills that cite a mistake
+  chunks: z.array(z.string()).default([]),      // chunking: the decomposition, one LaTeX piece per chunk
+  misChunks: z.array(z.string()).default([]),   // …and the tempting wrong split, on the same evidence rule
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
@@ -785,6 +805,20 @@ export function auditCoverage(
 // the skills that train the specific discrimination that error reveals. Both
 // hold skill ids and must resolve; the requires graph must be acyclic — the
 // only ordering a skill carries (a dependency partial order, not a sequence).
+
+/** A wrong reading with no right reading beside it is the one thing the ✗/✓
+ *  contract forbids — the same rule that makes `instances` require `right` or
+ *  `hint`, and that keeps the marks on /skills coming as a pair or not at all. */
+export function validateReadings(skills: Skill[]): void {
+  for (const f of skills) {
+    if (f.misreads && !f.answer) {
+      throw new Error(`Skill "${f.id}" has a misreads but no answer.`)
+    }
+    if (f.misChunks.length > 0 && f.chunks.length === 0) {
+      throw new Error(`Skill "${f.id}" has misChunks but no chunks.`)
+    }
+  }
+}
 
 export function validateSkillLinks(skills: Skill[]): void {
   const byId = new Map(skills.map(f => [f.id, f]))

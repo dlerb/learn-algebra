@@ -4,7 +4,7 @@
 import {
   parseSkillTree, parseDrills, parseErrorTree, parseRuleTree, parseSheetTree,
   parseMistakeTree,
-  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateSkillLinks,
+  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateSkillLinks, validateReadings,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
   type Drill, type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
   type MistakeDef, type MistakeTree,
@@ -128,6 +128,7 @@ validateSkillKinds(skillKinds)
 validateRuleRefs(skills, rules)
 validateSheetRefs(sheets, rules)
 validateSkillLinks(skills)
+validateReadings(skills)
 validateDrills(drills, skills)
 validateErrors(errorPatterns, cardIds)
 validateMistakeRefs(mistakes, rules, cardIds)
