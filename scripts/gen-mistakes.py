@@ -12,7 +12,7 @@ the two files cannot disagree about frequency, kind, topic or the edges.
 Raw strings: a `\\;` in a normal string loses its backslash and KaTeX compiles the
 result happily, because semicolons are valid LaTeX.
 """
-import json, collections, sys
+import json, collections, sys, difflib, pathlib
 
 # id -> (en sentence, de sentence, [false claims as LaTeX])
 # THE SENTENCE IS THE CORRECTION, AND ITS MOOD IS PICKED BY `kind` (2026-07-29).
@@ -184,7 +184,25 @@ doc = {
   },
   'mistakes': out,
 }
-json.dump(doc, open('src/data/mistakes.json', 'w'), ensure_ascii=False, indent=2)
+# --check is the DRIFT GUARD, and it is why this file may be regenerated but
+# never hand-edited. mistakes.json derives its frequency, kind, topic, corrupts
+# and breaks from errors.json; while both files exist, an edit to one silently
+# stops matching the other, and nothing else in the pipeline would notice.
+TARGET = 'src/data/mistakes.json'
+text = json.dumps(doc, ensure_ascii=False, indent=2) + '\n'
+if '--check' in sys.argv:
+    on_disk = pathlib.Path(TARGET).read_text()
+    if on_disk != text:
+        diff = difflib.unified_diff(on_disk.splitlines(), text.splitlines(),
+                                    'on disk', 'regenerated', lineterm='', n=1)
+        print('✗ mistakes.json has drifted from errors.json + the generator.')
+        print('\n'.join(list(diff)[:40]))
+        print('\n  run: python3 scripts/gen-mistakes.py')
+        sys.exit(1)
+    print(f'✓ mistakes.json matches errors.json ({len(out)} mistakes).')
+    sys.exit(0)
+
+pathlib.Path(TARGET).write_text(text)
 print(f'{len(out)} mistakes; latex on {sum(1 for m in out if m["latex"])}, '
       f'{sum(1 for m in out if not m["latex"])} deliberately without')
 print('by kind:', dict(collections.Counter(m['kind'] for m in out)))

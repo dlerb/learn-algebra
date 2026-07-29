@@ -33,6 +33,21 @@
 import fs from 'node:fs'
 import { contentFiles } from './content-format.mjs'
 
+/** GENERATED MIRRORS — files whose entities deliberately reuse another file's
+ *  ids, so they are invisible to the uniqueness walk.
+ *
+ *  `mistakes.json` (2026-07-28) is derived from `errors.json` and keeps its ids
+ *  ON PURPOSE: that is what lets `skill.errors` resolve against either pool
+ *  without a single skill being touched. Counting both files therefore reported
+ *  every mistake as a duplicate of itself.
+ *  ⚠️ The invariant this file exists to protect is UNHARMED, because the two are
+ *  never both a resolution target: the id addresses the entity in errors.json,
+ *  and mistakes.json is regenerated from it (`pnpm gen-mistakes`, drift-checked
+ *  in `pnpm validate`). If the pool ever stops being generated, delete this
+ *  exclusion and give it its own ids. */
+const GENERATED_MIRRORS = ['mistakes.json']
+const isMirror = f => GENERATED_MIRRORS.some(m => f.endsWith(m))
+
 /** Every entity in one parsed document, as `{ id, path }`, where `path` is the
  *  key/index chain from the document root — exactly what a JSON patcher needs.
  *  Recursion is shape-blind on purpose; see the header. */
@@ -49,7 +64,7 @@ export function entityPaths(node, path = [], out = []) {
 /** id → { file, path } across all content files. The editor resolves with this,
  *  but only ever against bytes it has just read — a path is derived from the
  *  same text it is applied to, never cached across a write. */
-export function entityIndex(files = contentFiles()) {
+export function entityIndex(files = contentFiles().filter(f => !isMirror(f))) {
   const index = new Map()
   const duplicates = []
   for (const file of files) {
@@ -73,7 +88,7 @@ export function entityIndex(files = contentFiles()) {
  *  Resolved fresh on every call against the file as it is on disk right now.
  *  Nothing is cached, so an edit in VS Code between two clicks cannot produce a
  *  stale line. */
-export function locate(id, files = contentFiles()) {
+export function locate(id, files = contentFiles().filter(f => !isMirror(f))) {
   const { index } = entityIndex(files)
   const hit = index.get(id)
   if (!hit) return null
@@ -90,7 +105,7 @@ export function locate(id, files = contentFiles()) {
 // CLI: `node scripts/content-ids.mjs` checks the invariant,
 //      `node scripts/content-ids.mjs <id>` prints one entity's source location.
 if (import.meta.filename === process.argv[1]) {
-  const files = contentFiles()
+  const files = contentFiles().filter(f => !isMirror(f))
   const wanted = process.argv[2]
   if (wanted) {
     const hit = locate(wanted, files)
