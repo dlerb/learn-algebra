@@ -7,10 +7,9 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { skills, drills, groups, skillKinds, rules, mistakes, rawById, skillTree } from '../data'
+import { skills, drills, groups, skillKinds, rules, mistakes, errorPatterns, rawById, skillTree } from '../data'
 import { loc, type Skill, type Drill, type LocalizedString } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
-import { clipProse } from '../prose'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
 
@@ -68,11 +67,11 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 // and `note` are still English-only — that is a content debt, not a view one.
 const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
-      guards: 'schützt vor', cond: 'sofern', drill: 'Übungsmaterial', more: 'mehr', less: 'weniger',
+      guards: 'schützt vor', cond: 'sofern', drill: 'Übungsmaterial',
       by: 'gliedern nach', byGroup: 'Thema', byKind: 'Art', dominant: 'dominante Operation', not: 'nicht',
       revise: 'wiederholen' }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
-      guards: 'guards against', cond: 'provided', drill: 'drill material', more: 'more', less: 'less',
+      guards: 'guards against', cond: 'provided', drill: 'drill material',
       by: 'section by', byGroup: 'topic', byKind: 'kind', dominant: 'dominant operation', not: 'not',
       revise: 'revise' })
 
@@ -109,13 +108,26 @@ const ruleLinks = (ids: string[]) => ids.map(id => {
 // sentence is the misconception stated as the student holds it, which is what a
 // ✗ form is an instance OF.
 const mistakeById = new Map(mistakes.map(m => [m.id, m]))
+// THE FIX, and it comes from errors.json — the ONE field the mistake pool
+// deliberately did not take, because a fix works a CASE while a pool entry states
+// a general claim (docs/TODO.md, the cheap test). Pulled back in here as an
+// experiment: does the remedy beside the belief read better than the belief
+// alone?
+// ⚠️ Watch what the fan does to it. `mis.juxtaposition-as-plus` is cited by FOUR
+// skills and its fix is one sentence about $3x$, so on `coefficient-zero` — whose
+// subject is $0x = 0$ — it will read off-target. If this experiment succeeds the
+// fix wants re-homing PER SKILL, which is exactly the errors.json migration.
+const fixById = new Map(errorPatterns.map(e => [e.id, e.fix]))
 // Frequency-ordered, like everywhere else the ★ appears: the belief most worth
 // dislodging leads.
 const mistakeLinks = (ids: string[]) => ids
   .map(id => mistakeById.get(id)!)
   .filter(Boolean)
   .sort((a, b) => b.frequency - a.frequency)
-  .map(m => ({ id: m.id, name: t(m.mistake), frequency: m.frequency, to: `/mistakes#${m.id}` }))
+  .map(m => ({
+    id: m.id, name: t(m.mistake), frequency: m.frequency, to: `/mistakes#${m.id}`,
+    fix: fixById.has(m.id) ? t(fixById.get(m.id)!) : undefined,
+  }))
 
 const requiredBy = new Map<string, string[]>()
 for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requiredBy.get(r) ?? []), s.id])
@@ -123,23 +135,17 @@ for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requi
 const groupTitle = new Map(groups.map(g => [g.slug, g.title]))
 const kindTitle = new Map(skillKinds.map(k => [k.slug, k.title]))
 
-// PROSE TRUNCATION, the tower's (src/prose.ts): 9 of the 74 notes run past 240
-// characters — the factoring skills carry a paragraph — and one of them would
-// otherwise set the height of its whole row.
-const CUT = 240
-const clip = (s: string) => clipProse(s, CUT)
-
 // The drill joined by skill id. Read-only and inspection-only; see the banner.
 const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
 
 interface Row {
-  id: string; kind: string; group: string; name: string; note: string
+  id: string; kind: string; group: string; name: string
   illustration?: string; wrong: string[]; conditions?: string
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
   rules: { id: string; name: string; to: string }[]
-  errors: { id: string; name: string; frequency: number; to: string }[]
+  errors: { id: string; name: string; frequency: number; to: string; fix?: string }[]
   drill?: Drill
   contrast: boolean
   raw: unknown
@@ -149,7 +155,7 @@ function toRow(s: Skill): Row {
   const errors = mistakeLinks(s.errors)
   const rby = skillLinks(requiredBy.get(s.id) ?? [])
   return {
-    id: s.id, kind: s.kind, group: s.group, name: t(s.name), note: t(s.note),
+    id: s.id, kind: s.kind, group: s.group, name: t(s.name),
     illustration: s.illustration, wrong: s.wrong, conditions: s.conditions,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
@@ -198,8 +204,7 @@ const stripKind = (r: Row) =>
 // The size of the contrast set, on the page rather than only in the load log.
 const contrastCount = computed(() => skills.filter(s => toRow(s).contrast).length)
 
-// Per-row disclosure: the clipped note, and the drill block.
-const expand = ref(new Set<string>())
+// Per-row disclosure: only the drill block now.
 const drillOpen = ref(new Set<string>())
 const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add(id))
 
@@ -300,20 +305,16 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
             <span class="mark bad">✗</span>
             <span class="f"><MathExpr :latex="w" display /></span>
           </div>
-          <RouterLink v-for="e in r.errors" :key="e.id" class="line" :to="e.to">
-            <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '\u2605'.repeat(e.frequency) }}</span>
-          </RouterLink>
-        </div>
-
-        <!-- THE RATIONALE, inspection-only since the 2x2 (2026-07-29). On the
-             student page the ✓ form and its rule ARE the fix, so a prose cell
-             restating them was a fourth rendering of one claim. The note is the
-             author's "why this skill exists", which is exactly the material
-             /errors keeps in inspection as its diagnosis. -->
-        <div v-if="inspect" class="wide cell muted note">
-          <RichText :text="expand.has(r.id) || !clip(r.note).clipped ? clip(r.note).full : clip(r.note).head" /><template
-            v-if="clip(r.note).clipped && !expand.has(r.id)">… </template>
-          <button v-if="clip(r.note).clipped" class="more" @click="toggle(expand, r.id)">{{ expand.has(r.id) ? L.less : L.more }}</button>
+          <template v-for="e in r.errors" :key="e.id">
+            <RouterLink class="line" :to="e.to">
+              <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '\u2605'.repeat(e.frequency) }}</span>
+            </RouterLink>
+            <!-- THE REMEDY under the belief it answers, a step quieter: the
+                 belief is the claim, the fix is what to do about it, and the two
+                 read as one pair rather than as two list items.
+                 ⚠️ NOT `class="fix"` — KaTeX emits its own `<span class="fix">`. -->
+            <p v-if="e.fix" class="remedy"><RichText :text="e.fix" /></p>
+          </template>
         </div>
 
         <!-- FULL WIDTH, and inspection-only: the frozen drill layer's material,
@@ -420,8 +421,15 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    ordered: it says which belief is worth dislodging first. */
 .freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
 
-/* The rationale, full width under both blocks and inspection-only. */
-.note { margin-top: .55rem; }
+/* THE REMEDY. Indented to the sentence's own text column, not the arrow's, so it
+   reads as hanging off the belief above it rather than as another item in the
+   list. No tint: it is prose inside the BAD block, and washing it green would put
+   the two colour signals on top of each other. */
+.remedy {
+  margin: .12rem 0 0; padding-left: 1.9rem;
+  font-family: var(--font-content); font-size: .8rem; line-height: 1.5;
+  color: var(--text-faint);
+}
 
 /* Section-by switch — the tower's filter chips, and deliberately the same
    control: it changes what the page shows without leaving it. */
