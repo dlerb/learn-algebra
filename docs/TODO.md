@@ -82,6 +82,35 @@ than a drill curriculum — a formulary may carry a rule for reference that noth
 Promoting this to a validator would force skills into existence to satisfy an arithmetic
 rather than a student.
 
+## ✅ DONE 2026-07-29 — `rule.mnemonic`, and why mistakes get no `family`
+
+The question was whether MISTAKES should have a `family` — *"the freshman's dream"* — because
+students need reference points. **No**, on three grounds, and the third is decisive:
+
+1. Mistakes already carry **three** classifiers (`kind`, `topic`, and `breaks`, which clusters
+   them); rules had one, which is why `family` filled a hole there and would not here.
+2. The famous names identify a **single** mistake, not a group — *the freshman's dream* is
+   `anti.linearity`, *closure compulsion* is `anti.conjoining`. The names that DO group
+   (*sign errors*, *order-of-operations errors*) are already `topic`.
+3. ⚠️ ***The freshman's dream* has no standing German name.** The best available is a gloss.
+   An English-only nickname field in a German-speaking classroom is a teacher's convenience,
+   not a student's reference point — and the students are not freshmen.
+
+⚠️ **And there are no student-facing classes of mistakes independent of the rules.** `topic` is
+subject area, `breaks` IS the rule, and the only rule-independent grouping is `kind`
+(mechanism), which no student would say. The user reached this before I did.
+
+**What they were actually after** — *"nur die Dummen kürzen über Summen"* — is not a name for
+an error class. It is a **mnemonic for `rule.fraction-cancel`**, and mnemonics belong on rules.
+8 of 58 now carry one; see `content_model.md` rev. 15 for why it is not a `localizedString`
+and why the view must not fall back between languages.
+
+⚠️ **The best evidence for the whole design came out of the research**: *kürzen nur die Dummen*
+and *radizieren nur die Dummen* are the SAME rhyme on two different rules — the classroom
+tradition independently found the `distributing` family we had built the same afternoon.
+
+---
+
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
 
 - [ ] **`errors.json` STAYS FOR NOW (decided 2026-07-29)** and is the only home of **50

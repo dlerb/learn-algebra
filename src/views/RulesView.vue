@@ -82,6 +82,11 @@ const items = computed(() => rules.map(m => {
   return {
     id: m.id, kind: m.kind, rule: t(m.rule), latex: m.latex, note: t(m.note),
     family: familyOf(m.id),
+    // ⚠️ NO FALLBACK, deliberately. `loc()` falls back to English so prose never
+    // renders blank, but a mnemonic is not prose: showing a German reader
+    // "PEMDAS" — an acronym nobody in their classroom says — is worse than
+    // showing nothing. Each language has its own or has none.
+    mnemonic: m.mnemonic?.[lang.value],
     errors, skills: sk, reads: readsOf(m),
     sheet: sheetByRule.get(m.id),
     orphan: errors.length === 0 && sk.length === 0,
@@ -139,6 +144,10 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
         </div>
 
         <div class="cell muted gloss">
+          <!-- THE CLASSROOM PHRASING, ahead of the gloss because it is the part
+               a student leaves with. Quoted, not explained: its whole job is to
+               be repeatable. -->
+          <p v-if="m.mnemonic" class="mnemonic">{{ m.mnemonic }}</p>
           <RichText :text="m.note" />
           <!-- A family name's whole job is to head a sheet, so the link is the
                row's payload rather than a footnote. -->
@@ -190,6 +199,14 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
    ordered: it says which of the mistakes this rule heads off is worth heading
    off most. */
 .freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
+
+/* Set in the content serif and italic — it is a QUOTATION from the classroom,
+   not the app's own voice, and the convention for a quoted phrase is italic. A
+   little larger than the gloss it heads, because it is the line worth keeping. */
+.mnemonic {
+  margin: 0 0 .35rem; font-family: var(--font-content); font-style: italic;
+  font-size: .92rem; line-height: 1.45; color: var(--text);
+}
 
 .sheet-link { display: block; margin-top: .45rem; color: var(--text-muted); text-decoration: none; }
 .sheet-link:hover, .sheet-link:hover .arrow { color: var(--accent); }

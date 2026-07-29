@@ -236,6 +236,25 @@ export const ruleDef = z.object({
   // ⚠️ ONE LEVEL, NO CHAINS: a family head has no `family` of its own, and
   // validateRuleFamilies enforces it.
   family: z.string().optional(),
+  // ── THE CLASSROOM PHRASING (2026-07-29) ──────────────────────────────────
+  // The sticky version a student can SAY: "Punkt vor Strich", "keep, change,
+  // flip", "Differenzen und Summen kürzen nur die Dummen". Its job is retention,
+  // not classification — which is why it is neither a `family` nor an alias, and
+  // why most rules have none.
+  //
+  // ⚠️ NOT a `localizedString`, and that is the whole point. A localized string
+  // promises the SAME content in two languages; a mnemonic does not translate.
+  // The English counterpart of "Punkt vor Strich" is not a translation of it, it
+  // is a DIFFERENT device (PEMDAS, an acronym, which German does not use). Each
+  // language either has one or does not, so both sides are optional and the view
+  // must NOT fall back — showing a German reader an English acronym nobody in
+  // their classroom says is worse than showing nothing.
+  //
+  // ⚠️ NEVER INVENT ONE. A mnemonic that exists only here is not a reference
+  // point, it is a phrase we made up; the same rule that governs notation. Every
+  // entry below is in documented classroom use. German is the richer side, which
+  // makes this the first field where the German column leads.
+  mnemonic: z.object({ en: z.string().optional(), de: z.string().optional() }).optional(),
 })
 export type RuleDef = z.infer<typeof ruleDef>
 

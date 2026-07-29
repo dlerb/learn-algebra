@@ -210,6 +210,9 @@
         "en": "It is a theorem, not a decree: it is forced by wanting $(-1)(1 + (-1)) = 0$ to hold both ways round.",
         "de": "Das ist ein Satz, keine Setzung: Er wird erzwungen, wenn $(-1)(1 + (-1)) = 0$ auf beide Arten stimmen soll."
       },
+      "mnemonic": {
+        "de": "Minus mal Minus gibt Plus"
+      },
       "family": "rule.minus-rules",
       "summarizes": [
         "th.minus-times-minus"
@@ -326,6 +329,9 @@
       "note": {
         "en": "$-a^2$ means $-(a^2)$, not $(-a)^2$. The exponent applies first, the minus after.",
         "de": "$-a^2$ bedeutet $-(a^2)$, nicht $(-a)^2$. Zuerst wirkt der Exponent, dann das Minus."
+      },
+      "mnemonic": {
+        "de": "Klammer vor Potenz vor Punkt vor Strich"
       },
       "family": "rule.read-the-term-first",
       "summarizes": [
@@ -675,6 +681,10 @@
         "en": "Flip the one you are dividing BY, never the one you start with.",
         "de": "Umgedreht wird der Bruch, durch den man teilt, nie der, mit dem man beginnt."
       },
+      "mnemonic": {
+        "en": "Keep, change, flip",
+        "de": "Bereitet dir das Dividieren Qual, so dreh den zweiten Bruch um und nimm mal"
+      },
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-divide"
@@ -754,6 +764,9 @@
         "en": "Cancelling divides top and bottom by the same number, and that only works if the number is a factor of the whole of each.",
         "de": "Kürzen teilt oben und unten durch dieselbe Zahl, und das geht nur, wenn diese Zahl Faktor des Ganzen ist."
       },
+      "mnemonic": {
+        "de": "Differenzen und Summen kürzen nur die Dummen"
+      },
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.cancel-common-factor"
@@ -808,6 +821,10 @@
       "note": {
         "en": "Know these cold. Three identities, and every one of them is read in both directions: left to right you multiply out, right to left you factorise. The middle term is what gets lost.",
         "de": "Auswendig können. Drei Identitäten, und jede wird in beide Richtungen gelesen: von links nach rechts ausmultiplizieren, von rechts nach links faktorisieren. Verloren geht der mittlere Term."
+      },
+      "mnemonic": {
+        "en": "FOIL — First, Outer, Inner, Last",
+        "de": "Plusformel, Minusformel, Plusminusformel"
       }
     },
     {
@@ -902,6 +919,9 @@
         "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
         "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird."
       },
+      "mnemonic": {
+        "de": "Potenzen und Summen radizieren nur die Dummen"
+      },
       "family": "rule.read-the-term-first",
       "summarizes": [
         "ix.root"
@@ -948,6 +968,9 @@
       "note": {
         "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
         "de": "Würdest du den Term Schritt für Schritt ausrechnen, wäre die zuletzt ausgeführte Operation die dominante. Alles andere passiert innerhalb von Chunks."
+      },
+      "mnemonic": {
+        "de": "Die Klammer sagt: zuerst komm ich; denk ferner dran: stets Punkt vor Strich"
       },
       "family": "rule.read-the-term-first",
       "summarizes": [
@@ -1006,6 +1029,10 @@
       "note": {
         "en": "In $3x + 2y$ the multiplication is used up inside the terms; the dominant operation is the $+$. It is a sum, not a product.",
         "de": "In $3x + 2y$ ist die Multiplikation innerhalb der Terme verbraucht; die dominante Operation ist das $+$. Es ist eine Summe, kein Produkt."
+      },
+      "mnemonic": {
+        "en": "PEMDAS — Please Excuse My Dear Aunt Sally",
+        "de": "Punkt vor Strich"
       },
       "family": "rule.read-the-term-first",
       "summarizes": [

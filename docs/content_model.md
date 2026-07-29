@@ -533,6 +533,36 @@ familiar-shapes group (binomial square, difference of squares).
 
 ## Revision notes
 
+**2026-07-29 (rev. 15, `rule.mnemonic`):** the sticky classroom phrasing — *Punkt vor Strich*,
+*keep, change, flip*, *Differenzen und Summen kürzen nur die Dummen*. Its job is RETENTION, not
+classification, which is why it is neither a `family` nor an alias, and why 8 of 58 rules have
+one.
+
+⚠️ **NOT a `localizedString`, and that is the design.** A localized string promises the SAME
+content in two languages; a mnemonic does not translate. The English counterpart of *Punkt vor
+Strich* is not a translation but a DIFFERENT device — PEMDAS, an acronym German does not use.
+So both sides are independently optional (`{ en?, de? }`) and **the view must not fall back**:
+showing a German reader an acronym nobody in their classroom says is worse than showing
+nothing. `rule.fraction-cancel` therefore renders a mnemonic in German and none in English.
+
+⚠️ **Never invent one.** A mnemonic that exists only here is not a reference point, it is a
+phrase we made up — the same rule that governs notation. Every entry is in documented classroom
+use. **German is the richer side (8 vs 3), making this the first field where the German column
+leads.**
+
+The route to it is worth keeping: the user asked whether MISTAKES should have a `family`
+("the freshman's dream"). The answer was no on three grounds — mistakes already carry three
+classifiers where rules had one; the famous names identify a SINGLE mistake rather than a
+group, and the names that do group (*sign errors*) are already `topic`; and *the freshman's
+dream* has no standing German name, so the field would be English-only in a German-speaking
+classroom. What the user was actually reaching for was **"nur die Dummen kürzen über Summen"**,
+which is not a name for an error class at all — it is a mnemonic for `rule.fraction-cancel`.
+⚠️ **There are no student-facing classes of mistakes independent of the rules**: `topic` is
+subject area, `breaks` IS the rule, and the only rule-independent grouping is `kind`
+(mechanism), which is a teacher's taxonomy. And the tradition confirms where naming belongs —
+*kürzen nur die Dummen* and *radizieren nur die Dummen* are the same rhyme on two rules, so the
+classroom independently found the `distributing` family we had just built.
+
 **2026-07-29 (rev. 14, `family` on a rule, and the other two answer shapes):**
 
 **`rule.family`** — the subject axis this pool was missing. Every other curated layer has two
