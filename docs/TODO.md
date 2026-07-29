@@ -86,10 +86,9 @@ the first.
 - [ ] **Dissolving `errors.json`** means moving the 50 instances onto skills (18 already have a
   twin in `skill.wrong`) and splitting the 28 fixes — of three measured, one worked a case and
   two restated the rule. Not urgent while drift is guarded.
-- [ ] **Repoint one frozen drill when the freeze lifts**: `equivalence.minus-on-fraction`'s
-  pitfall `\frac{-a}{-b}` names `mis.minus-roles-confused` in `explainedBy`; the precise
-  mistake `anti.minus-on-both-parts` now exists. The old citation must stay on the skill until
-  then, because `explainedBy` is validated ⊆ the skill's `errors`.
+- [ ] **Repoint `equivalence.minus-on-fraction`** at `anti.minus-on-both-parts` and drop
+  `mis.minus-roles-confused`. It was kept only because a drill's `explainedBy` named it, and
+  **drill data is now disposable** — fix or delete that drill entry alongside.
 - [ ] **4 skill notes still write maths as unicode** instead of inline `$…$` (audit line). Fold
   into the German pass, since those notes get rewritten anyway.
 - [ ] **German for `/skills`** — the only monolingual page: **0 of 74** names and notes carry
@@ -98,9 +97,11 @@ the first.
   unreviewed-German pile rather than clearing it; only a native reader can clear that.
 - [ ] **`mis.letters-differ` still has no skill** (audit line, ★). Needs a variables/fluency
   skill or a decision.
-- [ ] **20 classification/chunking skills have no ✗**, and cannot get one without inventing
-  `answer`/`wrongAnswer` fields that duplicate the FROZEN drill layer's shape. Blocked by
-  decision, not by work.
+- [ ] **20 classification/chunking skills have no ✗** — **UNBLOCKED 2026-07-29.** Their wrong
+  answer is a NAME (`3x + 2y` ✗ "a product" ✓ "a sum") or a DECOMPOSITION, which needs
+  `answer`/`wrongAnswer` on the skill. That was held back as duplicating the drill's shape;
+  now that drills consume skills, the skill is where it belongs. **This is real work,
+  available now.**
 
 ---
 
@@ -747,21 +748,30 @@ sections, instances with `from/wrong/right/hint`, `fix`, `frequency`).
 
 ---
 
-## 🧊 FROZEN — the DRILL layer (2026-07-25)
+## 🗑️ THE DRILL LAYER IS DISPOSABLE (2026-07-29, supersedes the 2026-07-25 freeze)
 
-**Do not start drill work.** The user is planning a substantial revision of the drill
-layer, so anything that authors, reshapes, or builds on `src/data/drills/*.json` waits
-for that. Frozen: the *Exercise generators* section, *Drill / session + progression*,
-the undefined `chunking` drill format, Compute-Engine drill checks in `pnpm validate`,
-`_parked-priority.json`, Tier-3 endpoint grading and MathLive input, and the
-`frequency` → drill-emphasis idea recorded under "Errors as evidence" below.
+**Anything currently in `src/data/drills/*.json` can be totally ignored.** The layer will be
+rebuilt from scratch, and **the rebuilt drills will CONSUME SKILLS** — the skill layer is the
+source of truth and the drill reads from it, not the other way round.
 
-Also frozen by dependency: **presentation mode for the skills page** — a skill stripped
-to student view is really a *progress* surface, and that needs the drill runtime.
-⚠️ **Narrowed 2026-07-28.** The shell port went ahead and reads no drill data at all: the
-maths column is the skill's own `illustration` (all 74 carry one), and the drill material
-sits behind an inspection-only fold. What is still frozen is a *progress* surface; a
-*how-to* surface needed no runtime, which is what `/skills` now is.
+⚠️ **This inverts what the freeze implied and unblocks three things it was blocking.** The
+freeze said "do not build on drill data"; the correct reading now is "drill data is not
+evidence of anything, and nothing needs to stay compatible with it".
+
+1. **`answer` / `wrongAnswer` on a classification or chunking skill is NOT duplication.** It
+   was blocked as "inventing fields that duplicate the frozen drill's shape" — but if the drill
+   consumes the skill, that is exactly where the data belongs. This unblocks the ✗ for the
+   **20 classification/chunking skills**, whose wrong answer is a NAME or a DECOMPOSITION.
+2. **A `skill.errors` citation no longer has to survive `explainedBy`.** The one audit call
+   held back for that reason (`equivalence.minus-on-fraction` keeping
+   `mis.minus-roles-confused`) can now be repointed at `anti.minus-on-both-parts`; fix or drop
+   the drill entry with it.
+3. **The inspection-only `drill material` fold on `/skills` renders discardable content** and
+   should probably go, along with `validateDrills`' `explainedBy ⊆ skill.errors` check, which
+   now guards nothing worth guarding.
+
+**Still true and unaffected**: a *progress* surface for `/skills` needs a drill RUNTIME, which
+does not exist yet whatever the data says.
 
 **Not affected**, since they touch only the tower / errors / skills / metapattern layers:
 the manifest unification, the metapatterns presentation pass, the school-facing

@@ -169,9 +169,11 @@ specific enough.**
 
 This page is the **only** place the skill→mistake edge is visible, since mistakes must not
 cite skills.
-⚠️ The row deliberately does **not** touch the frozen drill layer: all 74 skills carry an
-`illustration`, which is what makes the maths column uniform, and the drill's own material
-sits inspection-only behind a `drill material` fold where it can be reshaped freely.
+⚠️ The row reads **no drill data**: all 74 skills carry an `illustration`, which is what makes
+the maths column uniform. That was originally to respect the drill freeze; since 2026-07-29 the
+drill layer is **disposable and will be rebuilt to CONSUME skills**, so the independence is now
+the permanent direction rather than a temporary courtesy. The inspection-only `drill material`
+fold renders discardable content and should probably go.
 
 ### `/mistakes` — the anti-registry (2026-07-28, MERGED 2026-07-29)
 
