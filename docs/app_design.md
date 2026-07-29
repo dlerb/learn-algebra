@@ -130,9 +130,45 @@ narrower one. Every reference page is now on this system.
   COMPLEMENTARY coordinate** — under a topic heading it says which strategy, under a strategy
   heading which topic — so the row never repeats the heading and never loses the other half.
 
-Its four cells are `name | illustration | rationale | the mistakes it heads off`. The last is
-the mirror of `/rules`' `prevents` column and the pitch of the whole layer, and this page is
-the **only** place the skill→error edge is visible, since errors must not cite skills.
+**Its row was rebuilt 2026-07-29 as TWO BLOCKS rather than four cells** — the user's model: a
+skill is one problem, solved right and solved wrong.
+
+    name │ ✓ the correct form         │ ✗ the tempting form
+         │ → the rule that licenses it │ → the belief it comes from
+
+The horizontal split is good vs bad; the vertical pairing inside each block is
+claim-then-why. Measured support: **27 of the 34 ✓/✗ pairs share a left-hand side outright**,
+and the other five differ only because the ✗ starts from a member of the ✓ chain.
+
+**The `fix`/`note` column is gone, and that is the point** — the correct form plus its rule IS
+the fix, so a third prose cell restating it was a fourth rendering of one claim. The errors
+data had already proved the split: of three `fix` strings measured, one worked a case (the ✓
+block) and two restated the rule (the → line). `note` moved to inspection, exactly as
+`/errors` demoted its diagnosis in 2026-07-25. It also **simplified the strip**: `teaches` and
+`guards against` were a fold and a column and are now the two → lines, so the strip is down to
+two authored folds (`rests on`, `requires`) with `required by` gated on inspect.
+
+⚠️ **The sentences come from the two POOLS** — `rules.json` and `mistakes.json`, never
+errors.json. A pool entry states the belief from the inside ("The factor in front reaches only
+the first term"), which is what pairs with a wrong form; the error layer's `name` labels it
+from outside and reads as a category tag under a formula. Ids are shared, so `skill.errors`
+resolves in the pool untouched — **but this makes the mistakes pool load-bearing for
+`/skills`**, which is why the branch is not split.
+
+Three columns, not five: the literal `2-3 good / 4-5 bad` reading was measured and does not
+fit (widest ✓ is a four-term chain at ~23rem, so two sentence columns beside it leave every
+column at its minimum). Laid out 2×2 the same content takes 79rem and each formula gets 33rem
+instead of 24 — more than the widest chain needs, so the maths stopped scrolling. What it
+costs: rules no longer align in a column of their own, which `/rules` does better anyway.
+
+⚠️ **`.block.good`, never `.good`.** The ✓/✗ marks carry `.good`/`.bad` too, so a bare
+`.good { grid-area: 2 / 2 }` also placed every *mark* at row 2 column 2 of its own `.stmt`
+grid — the mark took the 497px formula track and the formula was left with the 18px mark
+track. Same family as the KaTeX `.fix` collision: **a class name that is a colour is never
+specific enough.**
+
+This page is the **only** place the skill→mistake edge is visible, since mistakes must not
+cite skills.
 ⚠️ The row deliberately does **not** touch the frozen drill layer: all 74 skills carry an
 `illustration`, which is what makes the maths column uniform, and the drill's own material
 sits inspection-only behind a `drill material` fold where it can be reshaped freely.

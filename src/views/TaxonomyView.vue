@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { skills, drills, groups, skillKinds, rules, errorPatterns, rawById, skillTree } from '../data'
+import { skills, drills, groups, skillKinds, rules, mistakes, rawById, skillTree } from '../data'
 import { loc, type Skill, type Drill, type LocalizedString } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { clipProse } from '../prose'
@@ -25,11 +25,35 @@ import { inspect } from '../inspect'
 // equivalence chains overflowed a column each. Rows give the illustration a real
 // measure and put the four coordinates of a skill in four fixed places.
 //
-// THE FOUR CELLS: name | the illustration | the rationale | the mistakes it
-// heads off. The last one is the pitch of the whole layer and the mirror of
-// /rules' `prevents` column — and this page is the ONLY place the skill→error
-// edge is visible, since errors must not cite skills (that would close the
-// cycle; see docs/TODO.md, "The DAG is settled").
+// A SKILL IS ONE PROBLEM, SOLVED RIGHT AND SOLVED WRONG (2026-07-29, the user's
+// model). The row is TWO BLOCKS, not four columns:
+//
+//   name │ ✓ the correct form      │ ✗ the tempting form
+//        │ → the rule that licenses │ → the belief it comes from
+//
+// The horizontal split is good vs bad; the vertical pairing inside each block is
+// claim-then-why. Measured support for the framing: 27 of the 34 ✓/✗ pairs share
+// a left-hand side outright, and the other five differ only because the ✗ starts
+// from a member of the ✓ chain — so a skill really is one problem seen twice.
+//
+// THE `fix` COLUMN IS GONE, AND THAT IS THE POINT. The correct form plus the rule
+// IS the fix, so a third prose cell restating it was always a fourth rendering of
+// one claim. The errors data had already proved the split: of three `fix` strings
+// measured, one worked a case (that is the ✓ block) and two restated the rule
+// (that is the → line under it). `note` — the author's rationale — moves to
+// inspection, exactly as /errors demoted its diagnosis on 2026-07-25.
+//
+// It is also a SIMPLIFICATION of the strip: `teaches` and `guards against` were
+// folds and a column, and are now the two → lines, so the strip is down to the
+// two authored folds a reader might follow.
+//
+// ⚠️ THE SENTENCES COME FROM THE TWO POOLS — `rules.json` and `mistakes.json`,
+// never errors.json. A mistake pool entry states the belief FROM THE INSIDE
+// ("The factor in front reaches only the first term"), which is what pairs with
+// a wrong form; the error layer's `name` labels it from outside, which under a
+// formula reads as a category tag. Ids are shared, so `skill.errors` resolves in
+// the pool untouched. This page is the ONLY place the skill→mistake edge is
+// visible, since mistakes must not cite skills (that would close the cycle).
 //
 // ⚠️ THE DRILL LAYER IS FROZEN (docs/TODO.md), so the row deliberately does NOT
 // lean on it. Every one of the 74 skills carries an `illustration`, which is what
@@ -80,13 +104,18 @@ const ruleLinks = (ids: string[]) => ids.map(id => {
   return { id, name: r ? t(r.rule) : id, to: `/rules#${id}` }
 })
 
-const errById = new Map(errorPatterns.map(e => [e.id, e]))
-// Frequency-ordered, like everywhere else the ★ appears: the mistake most worth
-// heading off leads the list.
-const errorLinks = (ids: string[]) => ids
-  .map(id => errById.get(id)!)
+// THE BELIEF, not the label. `skill.errors` holds ids that resolve in both
+// errors.json and mistakes.json; the pool is the right source here because its
+// sentence is the misconception stated as the student holds it, which is what a
+// ✗ form is an instance OF.
+const mistakeById = new Map(mistakes.map(m => [m.id, m]))
+// Frequency-ordered, like everywhere else the ★ appears: the belief most worth
+// dislodging leads.
+const mistakeLinks = (ids: string[]) => ids
+  .map(id => mistakeById.get(id)!)
+  .filter(Boolean)
   .sort((a, b) => b.frequency - a.frequency)
-  .map(e => ({ id: e.id, name: t(e.name), frequency: e.frequency, to: `/errors#${e.id}` }))
+  .map(m => ({ id: m.id, name: t(m.mistake), frequency: m.frequency, to: `/mistakes#${m.id}` }))
 
 const requiredBy = new Map<string, string[]>()
 for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requiredBy.get(r) ?? []), s.id])
@@ -117,7 +146,7 @@ interface Row {
 }
 
 function toRow(s: Skill): Row {
-  const errors = errorLinks(s.errors)
+  const errors = mistakeLinks(s.errors)
   const rby = skillLinks(requiredBy.get(s.id) ?? [])
   return {
     id: s.id, kind: s.kind, group: s.group, name: t(s.name), note: t(s.note),
@@ -174,27 +203,18 @@ const expand = ref(new Set<string>())
 const drillOpen = ref(new Set<string>())
 const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add(id))
 
-// FOUR COLUMNS: name | illustration | rationale | the mistakes it heads off.
-// The rail runs to 14rem rather than the shared 11: a skill's name is a phrase
-// with a clause in it ("Sum of products — multiplication is inside the terms",
-// 52 characters), where a card's is two or three words, and at 11rem the longest
-// of them took five lines beside a two-line illustration.
-// The maths column is 23rem, wider than the tower's 19, and it is measured
-// rather than guessed: the illustrations are equivalence CHAINS of up to five
-// forms and the whole point of a chain is to be read across, so a scrollbar here
-// costs more than it does on a card's single statement. Rendered, exactly ONE of
-// the 74 exceeds 352px — equivalence.product-with-brackets at 363 — and the next
-// is 258, so 23rem (368) fits every one of them and 24 would buy nothing.
-// ⚠️ Measure that with a `max-content` range over `.katex-html`, never with
-// `scrollWidth`: a KaTeX span reports exactly 2px over its box whatever the box
-// is, so an overflow check reads as a permanent overrun and widening never
-// clears it.
-// ⚠️ Then 23 → 24rem when the ✗/✓ marks arrived (2026-07-28): the mark track is
-// a reserved 1.1rem on every statement, marked or not, so the widest illustration
-// needs 363 + 18 = 381px and 23rem (368) would have put the one that already
-// fitted back into a scrollbar.
-// 14 + 24 + 26 + 20 plus three 1.6rem gaps is 88.8rem, inside the page's 91.
-const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax(0, 20rem)'
+// THREE COLUMNS, NOT FIVE. The literal reading of "columns 2-3 good, 4-5 bad"
+// was measured and does not fit: the widest ✓ is a four-term chain at ~23rem and
+// two sentence columns beside it come to 83rem of content, so every column sits
+// at its minimum and both prose columns end up narrower than any other on the
+// site. Laid out 2x2 the same information takes 79rem, and each formula gets
+// 33rem instead of the 24 it had — more than the widest chain needs, so the
+// maths stops scrolling for the first time.
+// What it costs: the rules no longer line up in a column of their own down the
+// page. That is the right trade — /rules already carries that reverse index
+// (`drilled by`), and it carries it better.
+// 13 + 33 + 33 plus two 1.6rem gaps is 82.2rem, comfortably inside the page's 91.
+const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 </script>
 
 <template>
@@ -231,12 +251,12 @@ const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax
       >
         <template #folds>
           <RefFold :label="L.rests" :links="r.restsOn" />
-          <RefFold :label="L.teaches" :links="r.rules" />
           <RefFold :label="L.requires" :links="r.requires" />
-          <!-- Derived, hence the arrow: `requires` read backwards. Nobody
-               maintains it, and it is the only justification a recognition
-               skill has. -->
-          <RefFold :label="L.requiredBy" :links="r.requiredBy" derived />
+          <!-- Derived, and now INSPECTION-ONLY. It is the only justification a
+               recognition skill has, which makes it an author's question, not a
+               reader's — and four folds on the strip was most of what made this
+               page read as too much. -->
+          <RefFold v-if="inspect" :label="L.requiredBy" :links="r.requiredBy" derived />
         </template>
 
         <template #strip-right>
@@ -248,54 +268,52 @@ const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax
           </button>
         </template>
 
-        <!-- THE CANONICAL FORM, one per skill and all 74 carry one. Left-aligned
-             like the tower's statements: KaTeX centres display mode, which would
-             float each illustration in its cell and break the vertical line the
-             column makes.
-             RIGHT THEN WRONG — the reverse of /errors, and the reason is the
-             arrival direction. You reach /errors CARRYING a mistake, so
-             recognition is the entry point and ✗ leads; you reach /skills to
-             learn a capability, so the correct form leads and the tempting one
-             hangs off it as the warning. Same marks, same colours, opposite
-             order, and the order falls out of the layout rather than a prop.
-             THE MARKS COME AS A PAIR OR NOT AT ALL. A ✗ without its ✓ is already
-             forbidden on /errors; a ✓ with no ✗ says nothing, and 74 green ticks
-             down the page would be the loudest thing on it. So the ten
-             equivalence skills with no tempting form show a bare formula — which
-             is not an omission but the point: two of them are the contrast set. -->
-        <div class="maths" :class="{ marked: r.wrong.length }">
+        <!-- THE GOOD HALF: the problem solved correctly, then the rule that
+             licenses the move. Left-aligned like the tower's statements — KaTeX
+             centres display mode, which would float each form in its block and
+             break the vertical line the column makes. -->
+        <div class="block good">
           <div v-if="r.illustration" class="stmt">
-            <span class="mark good">{{ r.wrong.length ? '✓' : '' }}</span>
+            <span class="mark good">✓</span>
             <span class="f"><MathExpr :latex="r.illustration" display /></span>
           </div>
-          <!-- A COMPLETE FALSE CLAIM, not a bare form: `3x = 3 + x` stands on its
-               own under the ✗ exactly as an error's `wrong` does, so this needs
-               none of /errors' stem column — which is what keeps the whole page
-               inside the measured 23rem instead of the 36 the pairs there cost. -->
+          <!-- The tower's quantifier line, for the four skills with a domain
+               caveat. It qualifies the form, so it sits under it. -->
+          <div v-if="r.conditions" class="quant">{{ L.cond }} <MathExpr :latex="r.conditions" /></div>
+          <RouterLink v-for="x in r.rules" :key="x.id" class="line" :to="x.to">
+            <span class="arrow">→</span>{{ x.name }}
+          </RouterLink>
+        </div>
+
+        <!-- THE BAD HALF: the tempting solution, then the belief it comes from.
+             RIGHT THEN WRONG across the row, the reverse of /errors, because the
+             arrival direction is reversed — you reach /errors CARRYING a mistake,
+             so recognition leads; you reach /skills to learn a capability, so the
+             correct form leads and the tempting one hangs off it.
+             ⚠️ 40 of 74 blocks are empty today and that is honest, not broken:
+             all 10 transformation skills still need their ✗ authored, and the 20
+             classification/chunking skills have a wrong ANSWER (a name, a
+             decomposition) rather than a false equation — which is the frozen
+             drill layer's shape, so it is deliberately not decided here. -->
+        <div class="block bad">
           <div v-for="(w, i) in r.wrong" :key="i" class="stmt">
             <span class="mark bad">✗</span>
             <span class="f"><MathExpr :latex="w" display /></span>
           </div>
-          <!-- The tower's own quantifier line, for the four skills that carry a
-               domain caveat. It qualifies the formula, so it belongs under it
-               and not in the prose. -->
-          <div v-if="r.conditions" class="quant">{{ L.cond }} <MathExpr :latex="r.conditions" /></div>
+          <RouterLink v-for="e in r.errors" :key="e.id" class="line" :to="e.to">
+            <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '\u2605'.repeat(e.frequency) }}</span>
+          </RouterLink>
         </div>
 
-        <div class="cell note">
+        <!-- THE RATIONALE, inspection-only since the 2x2 (2026-07-29). On the
+             student page the ✓ form and its rule ARE the fix, so a prose cell
+             restating them was a fourth rendering of one claim. The note is the
+             author's "why this skill exists", which is exactly the material
+             /errors keeps in inspection as its diagnosis. -->
+        <div v-if="inspect" class="wide cell muted note">
           <RichText :text="expand.has(r.id) || !clip(r.note).clipped ? clip(r.note).full : clip(r.note).head" /><template
             v-if="clip(r.note).clipped && !expand.has(r.id)">… </template>
           <button v-if="clip(r.note).clipped" class="more" @click="toggle(expand, r.id)">{{ expand.has(r.id) ? L.less : L.more }}</button>
-        </div>
-
-        <!-- THE PITCH: practise this and these mistakes stop happening. Authored
-             (`skill.errors`), so no arrow — and uncapped, because nothing here
-             guards more than three. -->
-        <div v-if="r.errors.length" class="cell guards">
-          <span class="label">{{ L.guards }}</span>
-          <RouterLink v-for="e in r.errors" :key="e.id" class="guard" :to="e.to">
-            <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '★'.repeat(e.frequency) }}</span>
-          </RouterLink>
         </div>
 
         <!-- FULL WIDTH, and inspection-only: the frozen drill layer's material,
@@ -306,7 +324,7 @@ const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax
             <div class="stmt"><MathExpr :latex="r.drill.equivalents.join(' = ')" display /></div>
             <div v-for="(p, i) in r.drill.pitfalls" :key="i" class="pit">
               <MathExpr :latex="`${r.drill.equivalents[0]} \\neq ${p.expr}`" />
-              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => errById.get(x) ? t(errById.get(x)!.name) : x).join(' · ') }}</span>
+              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => mistakeById.get(x) ? t(mistakeById.get(x)!.mistake) : x).join(' · ') }}</span>
               <span v-if="p.revise?.length" class="revise">{{ L.revise }}: {{ p.revise.map(skillName).join(' · ') }}</span>
             </div>
           </template>
@@ -317,7 +335,7 @@ const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax
             <div class="answer">{{ L.dominant }}: <strong>{{ r.drill.answer }}</strong></div>
             <div v-for="(p, i) in r.drill.pitfalls" :key="i" class="pit">
               {{ L.not }} <strong>{{ p.answer }}</strong> — <RichText :text="t(p.why)" />
-              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => errById.get(x) ? t(errById.get(x)!.name) : x).join(' · ') }}</span>
+              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => mistakeById.get(x) ? t(mistakeById.get(x)!.mistake) : x).join(' · ') }}</span>
               <span v-if="p.revise?.length" class="revise">{{ L.revise }}: {{ p.revise.map(skillName).join(' · ') }}</span>
             </div>
           </template>
@@ -330,7 +348,7 @@ const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax
             </div>
             <div v-for="(p, i) in r.drill.pitfalls" :key="i" class="pit">
               <RichText :text="t(p.why)" />
-              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => errById.get(x) ? t(errById.get(x)!.name) : x).join(' · ') }}</span>
+              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => mistakeById.get(x) ? t(mistakeById.get(x)!.mistake) : x).join(' · ') }}</span>
               <span v-if="p.revise?.length" class="revise">{{ L.revise }}: {{ p.revise.map(skillName).join(' · ') }}</span>
             </div>
           </template>
@@ -342,29 +360,44 @@ const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax
 
 <style scoped>
 @media (min-width: 820px) {
-  .maths  { grid-area: 2 / 2; }
-  .note   { grid-area: 2 / 3; }
-  .guards { grid-area: 2 / 4; }
+  /* ⚠️ `.block.good`, NOT `.good`. The ✓/✗ marks carry `.good`/`.bad` too, so a
+     bare `.good { grid-area: 2 / 2 }` also placed every MARK at row 2 column 2 of
+     its own `.stmt` grid — the mark took the 497px formula track and the formula
+     was left with the 18px mark track. Same family as the KaTeX `.fix` collision
+     in docs/app_design.md: a class name that is a colour is never specific
+     enough. */
+  .block.good { grid-area: 2 / 2; }
+  .block.bad  { grid-area: 2 / 3; }
 }
 
-.maths { min-width: 0; }
-/* A FIXED MARK TRACK, RESERVED EVEN WHEN EMPTY — the shell's own rule, because a
+/* THE TWO BLOCKS. No fill — 74 rows of two large tinted fields would be the
+   loudest thing on the page, and the taste record already says anything filled
+   inside a panel risks reading as a hole punched through it. A 2px rule at the
+   left edge is enough to say which half you are in, because the ✓/✗ marks and
+   the arrows are already carrying the signal. Colour stays on its one axis:
+   green for what to do, red for what went wrong.
+   `align-content: start` is load-bearing, not tidiness: the two blocks are
+   stretched to the height of the taller one, and with the default `stretch` the
+   leftover height is dealt out BETWEEN the formula and its sentence, so the pair
+   drifts apart by a different amount on every row. */
+.block { min-width: 0; display: grid; align-content: start; padding-left: .7rem; border-left: 2px solid transparent; }
+.block.good { border-left-color: color-mix(in srgb, var(--good) 45%, var(--surface)); }
+.block.bad  { border-left-color: color-mix(in srgb, var(--bad) 45%, var(--surface)); }
+/* An empty bad block keeps its column but drops its rule: a bar with nothing
+   beside it reads as a missing row rather than as an absent mistake. */
+.block.bad:empty { border-left-color: transparent; }
+
+/* A FIXED MARK TRACK, reserved even when empty — the shell's own rule, because a
    gap in the same place on every row reads as structure while a gap that moves
-   reads as breakage. Without it the ten unmarked illustrations would start 1.1rem
-   left of the 34 marked ones and the column's left edge would flicker as you
-   scroll. It is what the maths column went 23rem → 24 to pay for. */
+   reads as breakage. */
 .stmt { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); align-items: baseline; }
 /* `overflow-x: auto` makes the computed `overflow-y` AUTO as well, so a formula
    whose ink exceeds its line box gets a surprise vertical scrollbar. The padding
-   absorbs it, and gives exponents and radicals room at the top. It sits on the
+   absorbs it and gives exponents and radicals room at the top. It sits on the
    FORMULA cell, not the row: a scrollbar under the mark would scroll the mark. */
 .f { overflow-x: auto; padding: .3rem 0; min-width: 0; }
 .stmt :deep(.katex-display) { margin: 0; text-align: left; }
 .stmt :deep(.katex-display > .katex) { text-align: left; }
-
-/* The ✗/✓ vocabulary of /errors, at the size WrongRight uses. Not bold and not
-   boxed: the mark qualifies the formula, it is not a heading for it. The ✓ is
-   an empty span on an unmarked row so the track still holds its width. */
 .mark { font-size: .82rem; line-height: 1; font-weight: 600; }
 .mark.good { color: var(--good); }
 .mark.bad { color: var(--bad); }
@@ -372,17 +405,23 @@ const COLS = 'minmax(0, 14rem) minmax(0, 24rem) minmax(0, var(--measure)) minmax
    statement, so it lines up under it rather than under the ✓. */
 .quant { margin-top: .15rem; padding-left: 1.1rem; font-size: .78rem; color: var(--text-muted); }
 
-/* A list of links that happens to sit in a prose column — it takes the measure
-   and the content serif from `.cell` and lays itself out as a list. Same
-   vocabulary as /rules' `prevents`, because it is the same edge: this is what
-   the layer is for. */
-.guards { display: flex; flex-direction: column; gap: .15rem; }
-.label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); margin-bottom: .1rem; }
-.guard { color: var(--text-muted); text-decoration: none; text-indent: -.9rem; padding-left: .9rem; line-height: 1.45; }
-.guard:hover { color: var(--accent); }
+/* THE SENTENCE UNDER THE FORM — the rule that licenses it, the belief it comes
+   from. Quoted from another pool, so it takes the content serif and the muted
+   voice of a quotation; the whole line is the link, because it is one short
+   sentence and a separate affordance under it would be chrome around nothing. */
+.line {
+  display: block; margin-top: .3rem; padding-left: 1.9rem; text-indent: -.8rem;
+  font-family: var(--font-content); font-size: .84rem; line-height: 1.5;
+  color: var(--text-muted); text-decoration: none;
+}
+.line:hover, .line:hover .arrow { color: var(--accent); }
 .arrow { color: var(--text-faint); margin-right: .35rem; }
-.guard:hover .arrow { color: var(--accent); }
+/* The mistake's own ★ carried across, so the list is weighted as well as
+   ordered: it says which belief is worth dislodging first. */
 .freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
+
+/* The rationale, full width under both blocks and inspection-only. */
+.note { margin-top: .55rem; }
 
 /* Section-by switch — the tower's filter chips, and deliberately the same
    control: it changes what the page shows without leaving it. */

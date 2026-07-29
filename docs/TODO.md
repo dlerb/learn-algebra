@@ -162,6 +162,25 @@ skills stands either way, and is the part you have already seen and liked.
 6. **Named families** — "the freshman's dream" — are worth pool entries only once something
    cites them, and the thing that would (a post-session diagnosis) is behind the drill freeze.
 
+### ✅ DONE 2026-07-29 — the /skills row as two blocks
+
+**A skill is one problem, solved right and solved wrong** (the user's model). Row rebuilt from
+four cells to `name │ ✓ form + its rule │ ✗ form + the belief`. See `app_design.md` for the
+measurements, the width argument, and the `.block.good` vs `.good` class collision.
+
+**It answered the `fix` vs `note` question by dissolving it**: the correct form plus its rule
+IS the fix, and `note` moved to inspection. It also cut the strip from four folds to two.
+
+**`/skills` now reads `mistakes.json`, not `errors.json`** — the pool states the belief from
+the inside, which is what pairs with a ✗ form. ⚠️ That makes the mistakes pool **load-bearing**,
+so the branch stays whole (cherry-picking the `wrong` commit alone would leave `/skills`
+pointing at a file that is not there).
+
+**40 of 74 bad blocks are empty, and that is the honest state**: all 10 transformation skills
+still need their ✗ authored (7/10 notes already carry the negation — this is the next job),
+and the 20 classification/chunking skills have a wrong ANSWER (a name, a decomposition) rather
+than a false equation, which is the frozen drill layer's shape and deliberately not decided.
+
 ### 🔎 IN REVIEW 2026-07-28 — `wrong` on a skill, equivalence group done
 
 Branch `feat/skill-wrong-forms`, **unmerged, awaiting a look before the other three kinds.**
