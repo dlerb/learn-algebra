@@ -547,8 +547,15 @@ nothing. `rule.fraction-cancel` therefore renders a mnemonic in German and none 
 
 ⚠️ **Never invent one.** A mnemonic that exists only here is not a reference point, it is a
 phrase we made up — the same rule that governs notation. Every entry is in documented classroom
-use. **German is the richer side (8 vs 3), making this the first field where the German column
+use. **German is the richer side (9 vs 4), making this the first field where the German column
 leads.**
+
+⚠️ **One entry is a NAME rather than a rhyme, and the only one carried into German
+untranslated**: *the freshman's dream* on `rule.no-power-law-for-sums`. It earns that here —
+a Swiss Gymnasium first-year literally IS the newcomer the name describes, so "freshman" reads
+as *fresh* rather than as a joke about American college. (This overturns the reason given two
+paragraphs of session earlier for leaving it out; the objection was about a name that would not
+land, and in this classroom it does.)
 
 The route to it is worth keeping: the user asked whether MISTAKES should have a `family`
 ("the freshman's dream"). The answer was no on three grounds — mistakes already carry three

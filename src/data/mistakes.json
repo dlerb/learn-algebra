@@ -244,7 +244,8 @@
         "de": "Jede Operation verteile sich über $+$. In Wahrheit tut das nur die Multiplikation (und die Division über den Zähler)."
       },
       "breaks": [
-        "rule.only-multiplication-distributes"
+        "rule.only-multiplication-distributes",
+        "rule.no-power-law-for-sums"
       ],
       "corrupts": [
         "ax.distributivity"

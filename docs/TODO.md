@@ -92,9 +92,12 @@ students need reference points. **No**, on three grounds, and the third is decis
 2. The famous names identify a **single** mistake, not a group — *the freshman's dream* is
    `anti.linearity`, *closure compulsion* is `anti.conjoining`. The names that DO group
    (*sign errors*, *order-of-operations errors*) are already `topic`.
-3. ⚠️ ***The freshman's dream* has no standing German name.** The best available is a gloss.
-   An English-only nickname field in a German-speaking classroom is a teacher's convenience,
-   not a student's reference point — and the students are not freshmen.
+3. ~~⚠️ *The freshman's dream* has no standing German name, and the students are not
+   freshmen.~~ **OVERTURNED by the user 2026-07-29**, correctly: a Swiss Gymnasium first-year
+   IS the newcomer the name describes, so *freshman* reads as *fresh*. It is now the mnemonic
+   on `rule.no-power-law-for-sums` — the one entry that is a NAME rather than a rhyme, and the
+   only one carried into German untranslated. **The reasoning against a mistake `family` stands
+   on the other two grounds**; what was wanted was a name for one thing, and it has one.
 
 ⚠️ **And there are no student-facing classes of mistakes independent of the rules.** `topic` is
 subject area, `breaks` IS the rule, and the only rule-independent grouping is `kind`
@@ -102,7 +105,7 @@ subject area, `breaks` IS the rule, and the only rule-independent grouping is `k
 
 **What they were actually after** — *"nur die Dummen kürzen über Summen"* — is not a name for
 an error class. It is a **mnemonic for `rule.fraction-cancel`**, and mnemonics belong on rules.
-8 of 58 now carry one; see `content_model.md` rev. 15 for why it is not a `localizedString`
+9 of 58 now carry one; see `content_model.md` rev. 15 for why it is not a `localizedString`
 and why the view must not fall back between languages.
 
 ⚠️ **The best evidence for the whole design came out of the research**: *kürzen nur die Dummen*

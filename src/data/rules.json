@@ -547,8 +547,12 @@
         "(a+b)^2 = a^2 + 2ab + b^2"
       ],
       "note": {
-        "en": "The power laws reach through products and quotients and stop at a plus. A sum squared has to be multiplied out.",
-        "de": "Die Potenzgesetze greifen durch Produkte und Quotienten und hören beim Plus auf. Eine Summe im Quadrat muss ausmultipliziert werden."
+        "en": "The power laws reach through products and quotients and stop at a plus. A sum squared has to be multiplied out. The name is for how badly one wishes it were true — and it is the single most common mistake in school algebra.",
+        "de": "Die Potenzgesetze greifen durch Produkte und Quotienten und hören beim Plus auf. Eine Summe im Quadrat muss ausmultipliziert werden. Der Name steht dafür, wie sehr man es sich wünscht — und es ist der häufigste Fehler der Schulalgebra."
+      },
+      "mnemonic": {
+        "en": "The freshman's dream",
+        "de": "Freshman's Dream — der Traum des Neulings"
       },
       "family": "rule.power-laws",
       "summarizes": [
