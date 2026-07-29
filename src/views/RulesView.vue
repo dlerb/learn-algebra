@@ -127,6 +127,15 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
         :kind="inspect ? m.kind : undefined"
         :targeted="m.id === targetId"
       >
+        <!-- THE CLASSROOM PHRASING, in the rail directly under the name. It is
+             another wording of the SAME sentence — what a teacher says instead —
+             so it belongs with the name rather than in the gloss column, where it
+             read as the first line of an explanation. Small and quiet: it is an
+             alternative, not an addition. -->
+        <template v-if="m.mnemonic" #rail>
+          <p class="mnemonic">{{ m.mnemonic }}</p>
+        </template>
+
         <template #folds>
           <!-- The pool it belongs to, ahead of the reference folds: it is what
                the sentence is CALLED, not somewhere else to go. -->
@@ -144,10 +153,6 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
         </div>
 
         <div class="cell muted gloss">
-          <!-- THE CLASSROOM PHRASING, ahead of the gloss because it is the part
-               a student leaves with. Quoted, not explained: its whole job is to
-               be repeatable. -->
-          <p v-if="m.mnemonic" class="mnemonic">{{ m.mnemonic }}</p>
           <RichText :text="m.note" />
           <!-- A family name's whole job is to head a sheet, so the link is the
                row's payload rather than a footnote. -->
@@ -200,12 +205,14 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
    off most. */
 .freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
 
-/* Set in the content serif and italic — it is a QUOTATION from the classroom,
-   not the app's own voice, and the convention for a quoted phrase is italic. A
-   little larger than the gloss it heads, because it is the line worth keeping. */
+/* Under the name, a step down in size and colour. Content serif and italic
+   because it is a QUOTATION from the classroom rather than the app's own voice,
+   and italic is the convention for a quoted phrase. `text-wrap: balance` because
+   the long ones run to three lines in a 22rem rail and an even shape reads as
+   deliberate. */
 .mnemonic {
-  margin: 0 0 .35rem; font-family: var(--font-content); font-style: italic;
-  font-size: .92rem; line-height: 1.45; color: var(--text);
+  margin: .3rem 0 0; font-family: var(--font-content); font-style: italic;
+  font-size: .78rem; line-height: 1.4; color: var(--text-muted); text-wrap: balance;
 }
 
 .sheet-link { display: block; margin-top: .45rem; color: var(--text-muted); text-decoration: none; }

@@ -533,7 +533,10 @@ familiar-shapes group (binomial square, difference of squares).
 
 ## Revision notes
 
-**2026-07-29 (rev. 15, `rule.mnemonic`):** the sticky classroom phrasing — *Punkt vor Strich*,
+**2026-07-29 (rev. 15, `rule.mnemonic`):** rendered in the RAIL of `/rules`, directly under the
+name, small and italic — it is another wording of the SAME sentence, so it belongs with the name
+rather than in the gloss column, where it first sat and read as the opening line of an
+explanation. The sticky classroom phrasing — *Punkt vor Strich*,
 *keep, change, flip*, *Differenzen und Summen kürzen nur die Dummen*. Its job is RETENTION, not
 classification, which is why it is neither a `family` nor an alias, and why 8 of 58 rules have
 one.
