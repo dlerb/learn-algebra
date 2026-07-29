@@ -229,7 +229,49 @@ Kinds now: misreading 13 · anti-law 11 · omission 2 · salience 2.
 through the sheets on /rules and /skills, plus a short `name` on each of the six sheets
 because the heading sentence does not work as a label.
 
-**NEXT: the transformation ✗ + the wiring audit, one pass.** All 10 transformation skills are
+### ✅ DONE 2026-07-29 — the transformation pass, and what the audit found
+
+**All 10 transformation skills were half-empty on both sides** — no `wrong`, and `rules: []`,
+so the good block showed a bare formula with nothing licensing it. Both authored, every ✗
+taken from the skill's own note. Coverage now: `wrong` 44/74, `rules` 62/74, mistakes 60/74;
+transformation is 10/10/10. Rules cited by nothing: **30 → 26**.
+
+Two authoring calls worth keeping: `factor-common`'s ✗ is `ab + c = a(b+c)` (pulling out a
+factor that is not in every term — the note's own caveat), and `cancel-common-factor`'s is
+`(a+k)/(b+k) = a/b` rather than `(3x+2)/3 = x+2`, because **that pair belongs to
+`equivalence.no-cancelling-in-a-sum`, which owns it**. Repeating a pair across two skills is
+what `wrong` exists to avoid.
+
+#### ⚠️ The audit's real finding is about the audit
+
+A string-overlap test flagged **51 of 70** citations — noise by construction. A mistake's
+`latex` is a GENERAL schema and a skill's ✗ is its OWN instance, so they are *supposed* to
+differ; the test measured exactly the property the design was built on. **Do not re-run it.**
+
+Judged by hand, one citation looked plain wrong — and **it was right**.
+`equivalence.negative-numbers` cites `anti.commute-everything`, which reads absurd against
+`-3 = (-3) = 0 - 3`. Removing it **broke the load**: the drill's distractor is `3 - 0`, a
+swapped subtraction, and `explainedBy` is validated ⊆ the skill's `errors`.
+
+⚠️ **Two lessons, both cheap to hit again.** A citation can be justified by **frozen drill
+data** rather than by the skill's own ✗ — so read `drills/*.json` before calling one wrong.
+And `pnpm validate` does **not** catch breaking it; only `npx vite-node src/data/index.ts`
+does. (The memory note about runtime validators earned its keep again.)
+
+Also fixed: the new `rules` refs exposed a **permanent false positive** in `auditCoverage` —
+a rule with no `summarizes` can be neither supported nor unsupported, and 8 of 57 have none
+(the six family names plus `dominant-op-tools` and `unlike-terms-stay`). Guarded.
+
+#### Still open on the skills page
+- **20 classification/chunking skills have no ✗**, and their wrong answer is a NAME or a
+  DECOMPOSITION rather than a false equation — the frozen drill layer's shape. Left undecided.
+- **`equivalence.minus-on-fraction`** cites `mis.minus-roles-confused` against
+  ✗ $-\frac{a}{b} = \frac{-a}{-b}$. Defensible (a minus gained rather than lost) but the real
+  misconception — *putting the minus on both parts cancels it* — has **no pool entry**. The one
+  genuine gap the audit turned up.
+- 14/74 skills still have no `restsOn`.
+
+**SUPERSEDED — the transformation ✗ + the wiring audit, one pass.** All 10 transformation skills are
 half-empty on BOTH sides — no `wrong` and, for the expanding/factoring ones, no `rules` either,
 so the good block shows a bare formula and the bad block a bare belief. Author both while
 auditing the citations below.
