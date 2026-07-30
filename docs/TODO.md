@@ -160,7 +160,11 @@ settle in thread 2 rather than a tidy-up:
 2. A generated drill item needs a **PROMPT**, and today it could only come from `kind`.
 3. ⚠️ **`kind` is deciding two different things at once** — the DATA SHAPE (`wrong` vs `answer`
    vs `chunks`) and the IMPLICIT QUESTION — and when they disagree the shape wins silently. See
-   the finding below, which is that disagreement caught in the act.
+   the fraction-bar finding below, which is that disagreement caught in the act.
+4. ⚠️ **`illustration` fuses the STIMULUS with the ANSWER**, and where the answer is *nothing* it
+   forces the author to write something false-by-implication. Four skills prove it — see "the
+   borrowed commutativity" below. **This is the deepest of the four and reframes the other
+   three.**
 
 The proposal is therefore to SPLIT them: `kind` keeps the data shape, `task` carries the
 question, and *"task: what is the numerator? · kind: equivalence"* becomes a visible mismatch
@@ -197,6 +201,56 @@ whole `fraction-bar-brackets` citation list into `chunking`.
 so re-filing means an id change, every `requires` reference that names it, and — the real cost —
 **authoring `chunks` for it, which is new content, not a rename.** Settle `task` first, then use
 it to audit `kind` across all 74: that turns a case-by-case judgement into a list.
+
+### 🔴 FOUND 2026-07-30 — the borrowed commutativity, and the four-way decomposition
+
+**THREAD 2 OPENS HERE.** The author's catch: `equivalence.number-plus-term` illustrates
+`2 + 3x = 3x + 2`, which is about COMMUTATIVITY and not about whether `3x + 2` can be combined —
+so the one thing in front of the student answers a question nobody asked. **It is not one bad
+illustration. It is systematic, and the same substitution was made four times:**
+
+    number-plus-term        "A number plus a term stays open"           2 + 3x  = 3x + 2
+    unlike-variable-terms   "Terms with different variables stay open"  3x + 2y = 2y + 3x
+    adding-powers           "A power plus a term stays open"            x^2 + x = x + x^2
+    root-of-a-sum           (a root does not split over a plus)         √(a+b)  = √(b+a)
+
+The NAME says *stays open*. The NOTE says *cannot combine*. The ILLUSTRATION demonstrates *you
+may swap the order* — true, unrelated, and exactly the wrong thing to be looking at.
+
+⚠️ **THE FAULT: `illustration` FUSES THE STIMULUS WITH THE ANSWER.** For an equivalence skill
+`A = B` means *stimulus A, answer "B, the same thing"*, which works whenever the answer is
+another form and **breaks completely when the answer is NOTHING** — an equation cannot say "no".
+So the author must either leave the field empty or reach for the nearest true equation over the
+same symbols. Commutativity is always available, so commutativity is what got reached for.
+
+**Four things, two fields, and that is the whole problem:**
+
+    stimulus   what you look at         2 + 3x
+    task       what you are asked       can this be combined?
+    answer     the correct response     no — it is already finished
+    wrong      the tempting response    2 + 3x = 5x        ← the only one that has its own field
+
+`illustration` = stimulus + answer · `kind` = task + answer-shape. And **"nothing" is a
+legitimate answer that no current shape admits**, which is why it keeps surfacing in disguise.
+
+**⚠️ THIS CORRECTS THE THREAD-2 NOTE ABOVE**, which said the layer has *no* skill framed as
+*recognise a finished form*. It has at least four, and they have been there all along wearing
+borrowed equations. **The stop-signal drill item has real material waiting — the shape had
+nowhere to put it, not the content.**
+
+**The proposal**: split `illustration` into **`stimulus`** and an optional **`answer`**, where
+absent means *nothing to do*. `number-plus-term` then becomes what it always was —
+`stimulus: 2 + 3x` · `task: can this be combined?` · no answer · ✗ `2 + 3x = 5x` (already
+authored) — and the equation disappears because it was never saying anything.
+
+⚠️ **NOT EVERY COMMUTATIVITY ILLUSTRATION IS FILLER.** `addition-commutative` and
+`multiplication-commutative` have it as their actual subject and are correct as they stand. The
+tell is the mismatch between the NAME and the illustration, not the presence of a swap.
+
+⚠️ **THE COST, so it is not discovered halfway.** All 74 skills carry an `illustration`;
+`/skills` measures its maths column against them (exactly ONE exceeds 352px, which is why the
+column is 23rem); and `LayerRow`'s geometry was tuned to that measurement. Splitting the field is
+a data migration PLUS a layout question, not an afternoon.
 
 ### 🧵 THREAD 2 — the schema, the bindings, and where items come from
 
