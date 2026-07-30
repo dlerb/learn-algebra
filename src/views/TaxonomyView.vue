@@ -69,12 +69,10 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
       guards: 'schützt vor', cond: 'sofern',
-      by: 'gliedern nach', byGroup: 'Thema', byProcess: 'Prozess',
-      op: { sum: 'eine Summe', difference: 'eine Differenz', product: 'ein Produkt', quotient: 'ein Quotient', power: 'eine Potenz' } as Record<string, string> }
+      by: 'gliedern nach', byGroup: 'Thema', byProcess: 'Prozess', }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
       guards: 'guards against', cond: 'provided',
-      by: 'section by', byGroup: 'topic', byProcess: 'process',
-      op: { sum: 'a sum', difference: 'a difference', product: 'a product', quotient: 'a quotient', power: 'a power' } as Record<string, string> })
+      by: 'section by', byGroup: 'topic', byProcess: 'process', })
 
 // Deep link from /rules, where each rule lists the skills that teach it.
 const route = useRoute()
@@ -145,9 +143,7 @@ const processTitle = new Map(processes.map((p: GroupDef) => [p.slug, t(p.title)]
 
 interface Row {
   id: string; process: string; group: string; name: string
-  illustration?: string; wrong: WrongForm[]; conditions?: string
-  answer?: string; misreads?: { op: string; explains: string }; chunks: string[]
-  misChunks?: { chunks: string[]; explains: string }
+  stimulus: string; right: string[]; wrong: WrongForm[]; conditions?: string
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
@@ -168,11 +164,10 @@ function toRow(s: Skill): Row {
   const rby = skillLinks(requiredBy.get(s.id) ?? [])
   return {
     id: s.id, process: s.process, group: s.group, name: t(s.name),
-    illustration: s.illustration, wrong: s.wrong, conditions: s.conditions,
-    answer: s.answer, misreads: s.misreads, chunks: s.chunks, misChunks: s.misChunks,
+    stimulus: s.stimulus, right: s.right, wrong: s.wrong, conditions: s.conditions,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
-    paired: s.wrong.length > 0 || s.misreads !== undefined || s.misChunks !== undefined,
+    paired: s.right.length > 0 && s.wrong.length > 0,
     // NEITHER JUSTIFICATION HOLDS: it guards no mistake and enables no other
     // skill. Not a defect and not a backlog — it is the CONTRAST SET, and the
     // label says so. Nobody believes $a+b \neq b+a$, so authoring an error for it
@@ -282,19 +277,21 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
              centres display mode, which would float each form in its block and
              break the vertical line the column makes. -->
         <div class="block good">
-          <div v-if="r.illustration" class="stmt">
+          <!-- THE CLAIM, COMPOSED AT RENDER TIME. `right[]` holds bare forms with
+               the stimulus implied as the left-hand side, so the equation is built
+               here rather than stored 71 times over. Both stacks then show
+               COMPLETE claims and the two columns of marks line up.
+               ⚠️ EMPTY `right[]` IS NOT AN EMPTY BLOCK — it means the stimulus is
+               already finished, so the stimulus itself is the answer and stands
+               alone. That is the whole reason four skills no longer illustrate
+               commutativity. -->
+          <div v-for="(x, i) in r.right" :key="i" class="stmt">
             <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
-            <span class="f"><MathExpr :latex="r.illustration" display /></span>
+            <span class="f"><MathExpr :latex="`${r.stimulus} = ${x}`" display /></span>
           </div>
-          <!-- THE READING, for the skills whose answer is not a formula: a
-               classification names the dominant operation, a chunking gives the
-               split. Rendered on PRESENCE, never on `kind`, so the shape of the
-               data stays out of the rendering path. Without this a
-               classification row showed `3x + 2y` and never said it was a sum —
-               the good half was missing its answer, not just its ✗. -->
-          <div v-if="r.answer" class="reading">{{ L.op[r.answer] ?? r.answer }}</div>
-          <div v-if="r.chunks.length" class="reading">
-            <span v-for="(c, i) in r.chunks" :key="i" class="chunk"><MathExpr :latex="c" /></span>
+          <div v-if="!r.right.length" class="stmt">
+            <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
+            <span class="f"><MathExpr :latex="r.stimulus" display /></span>
           </div>
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
@@ -330,14 +327,6 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                9 of 20 that cite a mistake carry one, so 11 rows show a right
                reading with no wrong one — which is the same "marks come as a
                pair or not at all" rule the formulas follow. -->
-          <div v-if="r.misreads" class="stmt">
-            <span class="mark bad">✗</span>
-            <span class="reading f">{{ L.op[r.misreads.op] ?? r.misreads.op }}</span>
-          </div>
-          <div v-if="r.misChunks" class="stmt">
-            <span class="mark bad">✗</span>
-            <span class="f"><span v-for="(c, i) in r.misChunks.chunks" :key="i" class="chunk"><MathExpr :latex="c" /></span></span>
-          </div>
           <!-- NO `fix` HERE, and it was tried (2026-07-29). errors.json's fix is
                authored per MISTAKE and rendered per SKILL, so the fan wrecks it:
                of 70 renders only 15 mentioned maths the skill actually shows, and

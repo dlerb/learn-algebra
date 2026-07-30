@@ -14,9 +14,6 @@ import katex from 'katex'
 // student runtime state (mastery, next-item selection, scheduling) is not here.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const dominantOp = z.enum(['sum', 'difference', 'product', 'quotient', 'power'])
-export type DominantOp = z.infer<typeof dominantOp>
-
 // ── Localization ─────────────────────────────────────────────────────────────
 // Prose fields are LocalizedString: authored as a plain string (= English) or
 // as { en, de }. English is the fallback so untranslated content never renders
@@ -108,62 +105,44 @@ export const skill = z.object({
   group: z.string(),                    // topic slug; positional in the process file (= the containing group node), re-attached by parseSkillTree
   name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
-  illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
-  // THE TEMPTING FORM, AS A FALSE CLAIM (2026-07-28). Each entry is a complete
-  // false equation in LaTeX — `3x = 3 + x`, not a bare `3 + x` — so it stands on
-  // its own under a ✗ exactly as an error's `instances[].wrong` does, and needs no
-  // stem column to be read.
+  // ── THE STIMULUS AND THE TWO STACKS (2026-07-30) ─────────────────────────
+  // One shape for every process. It replaced `illustration` + `answer` +
+  // `chunks` + `misreads` + `misChunks`:
   //
-  // AUTHORED PER SKILL, never fetched from the cited errors, and the measurement
-  // that decided it: 70 (skill → error) citations point at only 27 distinct
-  // errors, `anti.linearity` alone is cited by 10 skills, and 16 of those
-  // collisions fall inside a single topic panel. The errors are GENERAL and the
-  // skills are SPECIFIC — `minus-over-sum` and `minus-over-difference` both cite
-  // `anti.partial-distribution` but are tempted by different forms ($-a+b$ vs
-  // $-a-b$) — so the pair a skill needs cannot be derived from the error even in
-  // principle. Same ruling as rule.latex vs card.latex: each layer keeps its own
-  // formulas, and restating one at student level is translation, not duplication.
+  //     stimulus   one term — what the student looks at
+  //     right[]    what it may legitimately become — EMPTY MEANS FINISHED
+  //     wrong[]    the distractors, each naming the mistake it instantiates
   //
-  // AN ARRAY, because a note can carry two ($2a$ is not $a^2$, AND $a^2$ is not
-  // $2a$), and EMPTY IS MEANINGFUL: `skill.bracket-types` and
-  // `-addition-commutative` have no tempting wrong form at all, which is exactly
-  // why they exist — a Same-or-Different session needs items whose answer is
-  // `same`. Never invent one to fill the field.
+  // ⚠️ WHY `illustration` HAD TO GO: it FUSED the stimulus with the answer. For a
+  // fluency chain `A = B = C` that is harmless, but where the answer is NOTHING an
+  // equation cannot say so — so the author had to reach for the nearest true
+  // equation over the same symbols, and commutativity is always available. Four
+  // skills whose NAME says "stays open" and whose NOTE says "cannot combine"
+  // illustrated a SWAP (`2 + 3x = 3x + 2`). Those were never illustrations; they
+  // were wrong entries in `right[]`, testing commutativity instead of
+  // combinability, and they are DELETED rather than rewritten.
   //
-  // ⚠️ ONLY A FALSE CLAIM belongs here. `a + -b` is not false, it is badly
-  // written; that is the tower's avoid/prefer relation, where the two sides are
-  // EQUAL and WrongRight joins them with `=` and mutes the marks. Putting a
-  // clumsy-but-correct form under the same red ✗ would teach ✗ = wrong and then
-  // contradict it. A belief the student holds is fine and is written as the
-  // claim itself — `a \cdot 3 \neq 3a` under a ✗ says that belief is false.
+  // ⚠️ NOT BOTH EMPTY — enforced by validateStacks. That rule survives the two
+  // cases which would break a careless version: the contrast pair
+  // (`bracket-types`, `addition-commutative`) has a full `right[]` and no
+  // `wrong[]` BY DESIGN, and the recognition skills have a full `right[]` with the
+  // failure being that nothing was attempted.
+  stimulus: z.string(),
+  // BARE FORMS, the stimulus implied as the left-hand side — never whole
+  // equations, which would repeat the stimulus once per entry. For a CHUNKING
+  // skill the entry is the DECOMPOSITION AS A FORM (`3x + 2y` → `(3x) + (2y)`),
+  // from which the dominant operation AND the parts are both derivable; which of
+  // the two a student is asked for is the drill's business, not the skill's. The
+  // notation is not invented — `rule.multiplication-binds-tighter` has carried
+  // `3x + 2y = (3x) + (2y)` since the rules pool was built.
+  right: z.array(z.string()).default([]),
+  // ⚠️ ASYMMETRIC WITH `right[]` ON PURPOSE: a wrong entry is a COMPLETE false
+  // claim, not a bare form. The ✓ side always shares the stimulus — that is what
+  // makes it a right answer FOR this stimulus — but the ✗ side often attacks a
+  // different starting form (`factor-common` is tempted by `ab + c = a(b+c)`,
+  // whose left-hand side is not its stimulus at all), so it cannot be reduced to a
+  // right-hand side.
   wrong: z.array(wrongForm).default([]),
-  // ── THE OTHER TWO ANSWER SHAPES (2026-07-29) ─────────────────────────────
-  // `wrong` holds a FALSE EQUATION, and neither classification nor chunking
-  // produces one: a classification's wrong answer is a WORD ("a product"), a
-  // chunking's is a GROUPING. Forcing either into `wrong` would repeat the
-  // `omission` mistake — two forms equal in value, differing only in reading,
-  // under a mark that is supposed to mean "false".
-  //
-  // ⚠️ These cluster by kind, which bends the rule at the top of this file that
-  // `kind` is "not a data-shape discriminant". The bend is deliberate and the
-  // alternative was worse. Note the VIEW still does not branch on kind — it
-  // renders whichever field is present, so kind stays out of the rendering path.
-  //
-  // ⚠️ Authored here and NOT in the drill layer, because the rebuilt drills will
-  // CONSUME skills (docs/TODO.md, "the drill layer is disposable"). A
-  // classification skill with no `answer` was simply incomplete: /skills rendered
-  // `3x + 2y` and never said it was a sum.
-  //
-  // BOTH CARRY `explains` SINCE 2026-07-30, for the same reason `wrong` does: a
-  // wrong NAME and a wrong SPLIT are wrong answers, so each instantiates exactly
-  // one mistake. With the authored `errors` list gone, an unpaired wrong answer
-  // would also contribute nothing to the derived `mistakes` below.
-  answer: dominantOp.optional(),        // classification: the dominant operation, the thing the skill asks you to name
-  misreads: z.object({ op: dominantOp, explains: z.string() }).optional(),  // …and the tempting wrong name. EVIDENCED, never invented: present only on the 6 classification skills that cite a mistake
-  chunks: z.array(z.string()).default([]),      // chunking: the decomposition, one LaTeX piece per chunk
-  // …and the tempting wrong split. ONE alternative decomposition, not a list of
-  // them — which is why it pairs at FIELD level while `wrong` pairs per entry.
-  misChunks: z.object({ chunks: z.array(z.string()).min(2), explains: z.string() }).optional(),
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
@@ -187,8 +166,6 @@ export const skill = z.object({
   // converge on one mistake: `anti.linearity` is reached from four).
   mistakes: [...new Set([
     ...s.wrong.map(w => w.explains),
-    ...(s.misreads ? [s.misreads.explains] : []),
-    ...(s.misChunks ? [s.misChunks.explains] : []),
   ])],
 }))
 export type Skill = z.infer<typeof skill>
@@ -964,16 +941,16 @@ export function auditCoverage(
 // hold skill ids and must resolve; the requires graph must be acyclic — the
 // only ordering a skill carries (a dependency partial order, not a sequence).
 
-/** A wrong reading with no right reading beside it is the one thing the ✗/✓
- *  contract forbids — the same rule that makes `instances` require `right` or
- *  `hint`, and that keeps the marks on /skills coming as a pair or not at all. */
-export function validateReadings(skills: Skill[]): void {
+/** THE ONE SHAPE INVARIANT: a skill must show SOMETHING. An empty `right[]` is a
+ *  statement ("this form is finished") and an empty `wrong[]` is a statement
+ *  ("nothing tempting to show"), but both empty is a skill that renders as a bare
+ *  name and says nothing at all. Same family as the ✗/✓ rule on /errors — the
+ *  marks come as a pair or not at all, and this is what stops "not at all" from
+ *  quietly becoming the whole row. */
+export function validateStacks(skills: Skill[]): void {
   for (const f of skills) {
-    if (f.misreads && !f.answer) {
-      throw new Error(`Skill "${f.id}" has a misreads but no answer.`)
-    }
-    if (f.misChunks && f.chunks.length === 0) {
-      throw new Error(`Skill "${f.id}" has misChunks but no chunks.`)
+    if (f.right.length === 0 && f.wrong.length === 0) {
+      throw new Error(`Skill "${f.id}" has neither a right nor a wrong form — it would render as a bare name.`)
     }
   }
 }
@@ -1054,10 +1031,9 @@ export function validateLatexCompiles(
 
   for (const f of skills) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
-    if (f.illustration) check(f.id, 'illustration', f.illustration)
+    check(f.id, 'stimulus', f.stimulus)
+    f.right.forEach((r, i) => check(f.id, `right[${i}]`, r))
     f.wrong.forEach((w, i) => { if (w.latex) check(f.id, `wrong[${i}]`, w.latex) })
-    if (f.misChunks) f.misChunks.chunks.forEach((c, i) => check(f.id, `misChunks[${i}]`, c))
-    f.chunks.forEach((c, i) => check(f.id, `chunks[${i}]`, c))
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
   }
   for (const e of errors) {

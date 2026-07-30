@@ -2,79 +2,70 @@
 //
 // Importing the data module runs all the load-time validators (schema, unique
 // ids, graph, KaTeX) as import side-effects; if any throw, this script aborts
-// with their message. On top of that, this file adds the Compute-Engine checks
-// that are too heavy to want in the app's runtime bundle: it parses each
-// Skill-2 expression to an AST and cross-checks the hand-authored structure
-// fields against it.
+// with their message. On top of that, this file adds the Compute-Engine check
+// that is too heavy to want in the app's runtime bundle.
 //
-// Why an AST check: a chunking skill's `chunks` are meant to be the immediate
-// operands of the root operator, maximally (all terms of a sum, all factors of a
-// product). Compute Engine's n-ary Add/Multiply gives exactly that decomposition,
-// so it is the ground truth the authored chunks must agree with. This is what
-// would have caught `2x(x-1)(x+2)` authored as [2x,(x-1),(x+2)] (3 chunks) when
-// the tree has 4 factors.
+// ── WHAT IT CHECKS, since the stimulus/right split (2026-07-30) ──────────────
+// EVERY `right[]` ENTRY MUST EQUAL ITS STIMULUS. That is the whole contract of
+// the field — `right[]` holds what the stimulus may legitimately become, with the
+// stimulus implied as the left-hand side — so a semantic equality test validates
+// the entire good half of the layer in one sweep, fluency chains and chunking
+// decompositions alike. It is strictly stronger than what stood here before,
+// which could only compare a root operator class and an operand count against
+// hand-authored `answer`/`chunks` fields that no longer exist.
 //
-// ⚠️ IT READS THE SKILLS, NOT THE DRILLS (2026-07-30). It was written against
-// drills/*.json only because that is where the material lived; the header above
-// has always described a SKILL. With the drill layer retired it points at the
-// authored `answer` / `chunks` on the skill itself, which is both its proper
-// subject and a wider check — every classification and chunking skill is now
-// covered, not only those a drill happened to exist for.
+// ⚠️ CE NORMALIZES, and that is exactly why it is safe HERE and nowhere near the
+// display path: it reorders commutative operands, folds subtraction into
+// Add+Negate and folds signs into operands. Two forms differing only in surface
+// come back equal — the property this check wants, and the property that would
+// destroy the authored notation if it ever drove rendering.
 //
-// Compute Engine normalizes in ways we deliberately do NOT compare against:
-// it reorders commutative operands, folds subtraction into Add+Negate, and
-// folds signs into operands. So we check only the two properties that survive
-// all of that — operand COUNT and coarse op-CLASS — not operand strings/order.
+// ⚠️ THE EXEMPTIONS BELOW ARE NOT BUGS. Each is a real fact about notation or
+// domain that a computer algebra system cannot be expected to know, and in each
+// case it is the SUBJECT of the skill that carries it. Do not "fix" them by
+// rewriting the data; add to the list only for a reason of the same kind.
 
 import { ComputeEngine } from '@cortex-js/compute-engine'
 import { skills } from '../src/data/index'
 
 const ce = new ComputeEngine()
 
-// Coarse operator class. Skill-honest labels (sum vs difference, product vs
-// quotient) collapse in the semantic tree, so we can only validate the class.
-function astClass(op: string | undefined): string {
-  if (!op) return 'atom'
-  if (op === 'Add' || op === 'Subtract' || op === 'Negate') return 'additive'
-  if (op === 'Multiply' || op === 'Divide' || op === 'Rational') return 'multiplicative'
-  if (op === 'Power' || op === 'Root' || op === 'Sqrt') return 'power'
-  return op
-}
-const wantClass: Record<string, string> = {
-  sum: 'additive', difference: 'additive',
-  product: 'multiplicative', quotient: 'multiplicative', power: 'power',
+/** skill id → why CE cannot decide this one. */
+const CANNOT_DECIDE: Record<string, string> = {
+  // Bracket TYPE is a notation convention; to CE `[a+b]` and `\{a+b\}` are not
+  // brackets at all. That interchangeability is the entire content of the skill.
+  'skill.bracket-types': 'bracket variants are notation, not structure',
+  // `a^{m/n} = \sqrt[n]{a^m}` holds for a > 0, which is exactly what these skills'
+  // own `conditions` say. CE will not assert it unconditionally, and is right.
+  'skill.fractional-exponent-root': 'needs the a > 0 condition the skill declares',
+  'skill.negative-fractional-exponent': 'needs the a > 0 condition the skill declares',
+  // The colon is the primary-school division sign. CE reports "Unknown operator
+  // Colon" — and teaching that `a : b` is the same object is the skill's point.
+  'skill.division-variants': 'CE has no colon-as-division operator',
 }
 
 const issues: string[] = []
+let checked = 0
 
 for (const s of skills) {
-  const expr = s.illustration
-  if (!expr) continue
-  const parsed = ce.parse(expr, { canonical: true })
-  const got = astClass(parsed.operator)
-
-  // A classification skill names the dominant operation; the illustration's AST
-  // root must be in that class.
-  if (s.answer) {
-    const want = wantClass[s.answer]
-    if (got !== want) {
-      issues.push(`${s.id}: "${expr}" — answer=${s.answer} (${want}) but AST root is ${got}`)
-    }
-  }
-
-  // A chunking skill's chunks must be the MAXIMAL root operands.
-  if (s.chunks.length > 0) {
-    const nOps = parsed.ops?.length ?? 0
-    if (nOps !== s.chunks.length) {
-      issues.push(`${s.id}: "${expr}" — ${s.chunks.length} chunks authored but AST root has ${nOps} operands `
-        + `(${JSON.stringify(parsed.ops?.map(o => o.toString()))}). Chunks must be the maximal root operands.`)
+  if (CANNOT_DECIDE[s.id]) continue
+  const lhs = ce.parse(s.stimulus, { canonical: true })
+  for (const [i, r] of s.right.entries()) {
+    checked++
+    try {
+      if (!lhs.isEqual(ce.parse(r, { canonical: true }))) {
+        issues.push(`${s.id}: right[${i}] "${r}" is not equal to the stimulus "${s.stimulus}"`)
+      }
+    } catch (e) {
+      issues.push(`${s.id}: right[${i}] "${r}" — CE threw: ${(e as Error).message}`)
     }
   }
 }
 
 if (issues.length) {
-  console.error(`\n✗ AST validation: ${issues.length} issue(s)\n`)
+  console.error(`\n✗ stimulus/right equality: ${issues.length} issue(s)\n`)
   for (const m of issues) console.error('  ' + m)
   process.exit(1)
 }
-console.log(`✓ AST validation passed (op-class + chunk count) over ${skills.length} skills.`)
+console.log(`✓ every right[] entry equals its stimulus (${checked} checked, `
+  + `${Object.keys(CANNOT_DECIDE).length} skills exempt with cause).`)

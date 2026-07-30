@@ -30,7 +30,10 @@
             "en": "The reverse of expanding: pull the factor shared by every term out in front. $ab + ac = a(b+c)$. It only works when the factor is in every term — $ab + c$ has no common factor to pull. Check by multiplying back: $a(b+c) = ab + ac$.",
             "de": "Die Umkehrung des Ausmultiplizierens: den Faktor, den jeder Term hat, nach vorne ziehen. $ab + ac = a(b+c)$. Es geht nur, wenn der Faktor in jedem Term steckt — $ab + c$ hat keinen gemeinsamen Faktor. Prüfen durch Zurückmultiplizieren: $a(b+c) = ab + ac$."
           },
-          "illustration": "ab + ac = a(b + c)",
+          "stimulus": "ab + ac",
+          "right": [
+            "a(b + c)"
+          ],
           "wrong": [
             {
               "latex": "ab + c = a(b + c)",
@@ -59,7 +62,10 @@
             "en": "For $x^2 + px + q$, find two numbers that MULTIPLY to $q$ and ADD to $p$; they are the numbers in the brackets. $x^2 + 5x + 6 = (x+2)(x+3)$ because $2 \\cdot 3 = 6$ and $2 + 3 = 5$. The two conditions come straight from expanding: $(x+m)(x+n) = x^2 + (m+n)x + mn$ (ax.distributivity, then th.collect-like-terms), so the middle coefficient is a collected sum and the constant a product. Both conditions must hold — a pair that gives the right constant but the wrong middle term is not a factorisation. Not every quadratic factors over the rationals; check by multiplying back.",
             "de": "Für $x^2 + px + q$ zwei Zahlen suchen, die MULTIPLIZIERT $q$ und ADDIERT $p$ ergeben; das sind die Zahlen in den Klammern. $x^2 + 5x + 6 = (x+2)(x+3)$, weil $2 \\cdot 3 = 6$ und $2 + 3 = 5$. Die beiden Bedingungen kommen direkt vom Ausmultiplizieren: $(x+m)(x+n) = x^2 + (m+n)x + mn$, also ist der mittlere Koeffizient eine zusammengefasste Summe und die Konstante ein Produkt. Beide Bedingungen müssen gelten — ein Paar mit der richtigen Konstanten, aber dem falschen mittleren Term ist keine Faktorisierung. Nicht jede quadratische Form zerfällt über den rationalen Zahlen; prüfen durch Zurückmultiplizieren."
           },
-          "illustration": "x^2 + 5x + 6 = (x + 2)(x + 3)",
+          "stimulus": "x^2 + 5x + 6",
+          "right": [
+            "(x + 2)(x + 3)"
+          ],
           "wrong": [
             {
               "latex": "x^2 + 5x + 6 = (x + 5)(x + 6)",
@@ -102,7 +108,10 @@
             "en": "Add the coefficients of like terms; unlike terms stay apart. $3x + 2x = 5x$, but $3x + 2$ stays open — a term and a constant are not alike. This is the active twin of recognising that $2 + 3x$ does not collapse: there you judge which terms are alike, here you perform the merge.",
             "de": "Die Koeffizienten gleichartiger Terme addieren; ungleichartige bleiben getrennt. $3x + 2x = 5x$, aber $3x + 2$ bleibt offen — ein Term und eine Konstante sind nicht gleichartig. Das ist das aktive Gegenstück zum Erkennen, dass $2 + 3x$ nicht zusammenfällt: dort beurteilst du, welche Terme gleichartig sind, hier führst du das Zusammenfassen aus."
           },
-          "illustration": "3x + 2x = 5x",
+          "stimulus": "3x + 2x",
+          "right": [
+            "5x"
+          ],
           "wrong": [
             {
               "latex": "3x + 2 = 5x",
@@ -134,14 +143,16 @@
             "en": "A factor shared by the whole numerator and the whole denominator cancels: $\\frac{ak}{bk} = \\frac{a}{b}$. What you cannot do is cancel against one term of a sum — $\\frac{3x+2}{3} \\ne x + 2$. Cancelling needs a factor of everything above and below, which is why you often factor first.",
             "de": "Ein Faktor, den der ganze Zähler und der ganze Nenner gemeinsam haben, lässt sich kürzen: $\\frac{ak}{bk} = \\frac{a}{b}$. Nicht erlaubt ist das Kürzen gegen einen einzelnen Term einer Summe — $\\frac{3x+2}{3} \\ne x + 2$. Kürzen braucht einen Faktor von allem oben und allem unten, und darum faktorisiert man oft zuerst."
           },
-          "illustration": "\\frac{ak}{bk} = \\frac{a}{b}",
+          "stimulus": "\\frac{ak}{bk}",
+          "right": [
+            "\\frac{a}{b}"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a + k}{b + k} = \\frac{a}{b}",
               "explains": "anti.linearity"
             }
           ],
-          "conditions": "b \\ne 0,\\ k \\ne 0",
           "requires": [
             "skill.factor-common",
             "skill.no-cancelling-in-a-sum",
@@ -152,7 +163,8 @@
           ],
           "restsOn": [
             "th.cancel-common-factor"
-          ]
+          ],
+          "conditions": "b \\ne 0,\\ k \\ne 0"
         },
         {
           "id": "skill.combine-fractions",
@@ -164,7 +176,10 @@
             "en": "Write a sum, difference, or quotient of fractions as a single fraction. Multiplying and dividing go straight across ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$, and dividing flips the divisor: $\\frac{a/b}{c/d} = \\frac{ad}{bc}$); adding and subtracting do not — they need a common denominator first, so $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$. The straight-across reflex is the whole trap: right for a product, wrong for a sum, because the fraction bar is built from multiplication and not from addition.",
             "de": "Eine Summe, Differenz oder einen Quotienten von Brüchen als einen einzigen Bruch schreiben. Multiplizieren und Dividieren gehen quer durch ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$, und beim Dividieren wird der Divisor umgekehrt: $\\frac{a/b}{c/d} = \\frac{ad}{bc}$); Addieren und Subtrahieren nicht — sie brauchen zuerst einen gemeinsamen Nenner, also $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$, nie $\\frac{a+c}{b+d}$. Der Quer-durch-Reflex ist die ganze Falle: richtig beim Produkt, falsch bei der Summe, weil der Bruchstrich aus Multiplikation gebaut ist und nicht aus Addition."
           },
-          "illustration": "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}",
+          "stimulus": "\\frac{a}{b} + \\frac{c}{d}",
+          "right": [
+            "\\frac{ad + bc}{bd}"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a + c}{b + d}",
@@ -207,7 +222,10 @@
             "en": "These are equal in value but have different dominant operations: $x^2-1$ is a difference, $(x+1)(x-1)$ is a product. Rewriting changes the dominant operation — the heart of Skill 3.",
             "de": "Diese sind wertgleich, haben aber verschiedene Hauptoperationen: $x^2-1$ ist eine Differenz, $(x+1)(x-1)$ ein Produkt. Umformen ändert die Hauptoperation — der Kern von Stufe 3."
           },
-          "illustration": "x^2 - 1 = (x+1)(x-1)",
+          "stimulus": "x^2 - 1",
+          "right": [
+            "(x+1)(x-1)"
+          ],
           "wrong": [
             {
               "latex": "x^2 - 1 = (x-1)^2",

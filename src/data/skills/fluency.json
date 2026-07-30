@@ -26,7 +26,13 @@
             "en": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product, not a two-digit number.",
             "de": "Zeichen nebeneinander, oder mit $\\cdot$ oder $\\times$ verbunden, bedeuten alle mal. $3x$ ist ein Produkt, keine zweistellige Zahl."
           },
-          "illustration": "3 \\times x = 3 \\cdot x = 3x = x \\cdot 3 = (3)(x)",
+          "stimulus": "3 \\times x",
+          "right": [
+            "3 \\cdot x",
+            "3x",
+            "x \\cdot 3",
+            "(3)(x)"
+          ],
           "wrong": [
             {
               "latex": "3x = 3 + x",
@@ -51,7 +57,12 @@
             "en": "A number against a bracket means multiply: $2(x+1)$ is 2 times $(x+1)$.",
             "de": "Eine Zahl direkt vor einer Klammer heisst mal: $2(x+1)$ ist 2 mal $(x+1)$."
           },
-          "illustration": "2 \\times (x+1) = 2 \\cdot (x+1) = 2(x+1) = (x+1) \\cdot 2",
+          "stimulus": "2 \\times (x+1)",
+          "right": [
+            "2 \\cdot (x+1)",
+            "2(x+1)",
+            "(x+1) \\cdot 2"
+          ],
           "wrong": [
             {
               "latex": "2(x+1) = 2 + (x+1)",
@@ -80,7 +91,12 @@
             "en": "An invisible coefficient of -1 means negate: (-1)a, -1a and -a are the same object. (Similarly a coefficient of 1 is invisible: 1x = x.)",
             "de": "Ein unsichtbarer Koeffizient $-1$ bedeutet negieren: $(-1)a$, $-1a$ und $-a$ sind dasselbe. (Ebenso ist ein Koeffizient 1 unsichtbar: $1x = x$.)"
           },
-          "illustration": "(-1) \\cdot a = (-1)a = -1a = -a",
+          "stimulus": "(-1) \\cdot a",
+          "right": [
+            "(-1)a",
+            "-1a",
+            "-a"
+          ],
           "wrong": [
             {
               "latex": "(-1)a = -1 + a",
@@ -111,7 +127,11 @@
             "en": "Zero times anything is zero: $0x = 0$, regardless of $x$.",
             "de": "Null mal irgendetwas ist null: $0x = 0$, ganz gleich, was $x$ ist."
           },
-          "illustration": "0 \\cdot x = 0x = 0",
+          "stimulus": "0 \\cdot x",
+          "right": [
+            "0x",
+            "0"
+          ],
           "wrong": [
             {
               "latex": "0x = x",
@@ -139,7 +159,10 @@
             "en": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Multiplying is what makes a power: $x \\cdot x = x^2$.",
             "de": "Einen Term zu sich selbst addieren vervielfacht ihn: $x + x = 2x$ (und $x+x+x = 3x$). Erst das Multiplizieren macht eine Potenz: $x \\cdot x = x^2$."
           },
-          "illustration": "x + x = 2x",
+          "stimulus": "x + x",
+          "right": [
+            "2x"
+          ],
           "wrong": [
             {
               "latex": "x + x = x^2",
@@ -180,7 +203,8 @@
             "en": "$2 + 3x$ is a finished object. Only like terms combine ($x + x = 2x$); $2$ and $3x$ are not like.",
             "de": "$2 + 3x$ ist ein fertiges Objekt. Nur gleichartige Terme lassen sich zusammenfassen ($x + x = 2x$); $2$ und $3x$ sind nicht gleichartig."
           },
-          "illustration": "2 + 3x = 3x + 2",
+          "stimulus": "2 + 3x",
+          "right": [],
           "wrong": [
             {
               "latex": "2 + 3x = 5x",
@@ -208,7 +232,8 @@
             "en": "$3x + 2y$ cannot combine into one term — $x$ and $y$ are different objects. $5xy$ would be a product, something else entirely.",
             "de": "$3x + 2y$ lässt sich nicht zu einem Term zusammenfassen — $x$ und $y$ sind verschiedene Objekte. $5xy$ wäre ein Produkt, also etwas ganz anderes."
           },
-          "illustration": "3x + 2y = 2y + 3x",
+          "stimulus": "3x + 2y",
+          "right": [],
           "wrong": [
             {
               "latex": "3x + 2y = 5xy",
@@ -236,7 +261,8 @@
             "en": "$x^2 + x$ has two unlike terms. Exponents grow when powers are multiplied ($x^2 \\cdot x = x^3$), never when they are added.",
             "de": "$x^2 + x$ hat zwei ungleichartige Terme. Exponenten wachsen beim Multiplizieren von Potenzen ($x^2 \\cdot x = x^3$), nie beim Addieren."
           },
-          "illustration": "x^2 + x = x + x^2",
+          "stimulus": "x^2 + x",
+          "right": [],
           "wrong": [
             {
               "latex": "x^2 + x = x^3",
@@ -274,7 +300,11 @@
             "en": "A negative number and its parenthesised form are the same object: -3 and (-3) are identical, and both equal 0 - 3.",
             "de": "Eine negative Zahl und ihre eingeklammerte Form sind dasselbe Objekt: $-3$ und $(-3)$ sind identisch, und beide sind $0 - 3$."
           },
-          "illustration": "-3 = (-3) = 0 - 3",
+          "stimulus": "-3",
+          "right": [
+            "(-3)",
+            "0 - 3"
+          ],
           "wrong": [
             {
               "latex": "0 - 3 = 3 - 0",
@@ -299,7 +329,11 @@
             "en": "Subtracting is the same as adding the opposite: a - b = a + (-b). The minus and the number belong together.",
             "de": "Subtrahieren ist dasselbe wie das Gegenteil addieren: $a - b = a + (-b)$. Das Minus gehört zur Zahl."
           },
-          "illustration": "a - b = a + (-b) = a + (-1) \\cdot b",
+          "stimulus": "a - b",
+          "right": [
+            "a + (-b)",
+            "a + (-1) \\cdot b"
+          ],
           "wrong": [
             {
               "latex": "a - b = a \\cdot (-b)",
@@ -331,7 +365,11 @@
             "en": "A minus in front of a bracket means multiply the whole bracket by $-1$, so it hits every term inside: $-(a+b) = (-1)(a+b) = -a - b$.",
             "de": "Ein Minus vor einer Klammer heisst: die ganze Klammer mal $-1$, also trifft es jeden Term darin: $-(a+b) = (-1)(a+b) = -a - b$."
           },
-          "illustration": "-(a + b) = (-1)(a + b) = -a - b",
+          "stimulus": "-(a + b)",
+          "right": [
+            "(-1)(a + b)",
+            "-a - b"
+          ],
           "wrong": [
             {
               "latex": "-(a + b) = -a + b",
@@ -362,7 +400,11 @@
             "en": "The minus flips the sign of every term inside the bracket: $-(a-b) = -a+b$.",
             "de": "Das Minus kehrt das Vorzeichen jedes Terms in der Klammer um: $-(a-b) = -a+b$."
           },
-          "illustration": "-(a - b) = -a + b = b - a",
+          "stimulus": "-(a - b)",
+          "right": [
+            "-a + b",
+            "b - a"
+          ],
           "wrong": [
             {
               "latex": "-(a - b) = -a - b",
@@ -393,7 +435,10 @@
             "en": "Two minuses make a plus: subtracting a negative adds. (Likewise $-(-a) = a$.)",
             "de": "Zwei Minus ergeben ein Plus: ein Negatives zu subtrahieren heisst addieren. (Ebenso $-(-a) = a$.)"
           },
-          "illustration": "a - (-b) = a + b",
+          "stimulus": "a - (-b)",
+          "right": [
+            "a + b"
+          ],
           "wrong": [
             {
               "latex": "a - (-b) = a - b",
@@ -426,7 +471,10 @@
             "en": "A negative times a negative is positive. (One negative factor gives a negative: $(-a)(b) = -ab$.)",
             "de": "Minus mal Minus ist positiv. (Ein einzelner negativer Faktor ergibt ein Negatives: $(-a)(b) = -ab$.)"
           },
-          "illustration": "(-a)(-b) = ab",
+          "stimulus": "(-a)(-b)",
+          "right": [
+            "ab"
+          ],
           "wrong": [
             {
               "latex": "(-a)(-b) = -ab",
@@ -458,7 +506,11 @@
             "en": "A single minus on a fraction can sit out front, on the numerator, or on the denominator — all equal. Moving it to both at once cancels it.",
             "de": "Ein einzelnes Minus an einem Bruch darf vorne, beim Zähler oder beim Nenner stehen — alles gleichwertig. Setzt man es an beide Stellen, hebt es sich auf."
           },
-          "illustration": "-\\frac{a}{b} = \\frac{-a}{b} = \\frac{a}{-b}",
+          "stimulus": "-\\frac{a}{b}",
+          "right": [
+            "\\frac{-a}{b}",
+            "\\frac{a}{-b}"
+          ],
           "wrong": [
             {
               "latex": "-\\frac{a}{b} = \\frac{-a}{-b}",
@@ -491,7 +543,10 @@
             "en": "The minus hits every term inside, not just the first. Same rule as $-(b+c)$, now with a term in front — recognising that the leading term does not shield the rest is the discrimination here.",
             "de": "Das Minus trifft jeden Term darin, nicht nur den ersten. Dieselbe Regel wie bei $-(b+c)$, nur mit einem Term davor — zu erkennen, dass der vordere Term den Rest nicht schützt, ist hier das Entscheidende."
           },
-          "illustration": "a - (b + c) = a - b - c",
+          "stimulus": "a - (b + c)",
+          "right": [
+            "a - b - c"
+          ],
           "wrong": [
             {
               "latex": "a - (b + c) = a - b + c",
@@ -522,7 +577,10 @@
             "en": "The minus flips every sign inside: $a - (b-c) = a - b + c$. The leading term makes the missed sign-flip on the second term especially easy to overlook.",
             "de": "Das Minus kehrt jedes Vorzeichen darin um: $a - (b-c) = a - b + c$. Der vordere Term macht es besonders leicht, den Wechsel beim zweiten Term zu übersehen."
           },
-          "illustration": "a - (b - c) = a - b + c",
+          "stimulus": "a - (b - c)",
+          "right": [
+            "a - b + c"
+          ],
           "wrong": [
             {
               "latex": "a - (b - c) = a - b - c",
@@ -562,7 +620,11 @@
             "en": "Round, square, and curly brackets group in exactly the same way: (a+b), [a+b] and {a+b} are identical.",
             "de": "Runde, eckige und geschweifte Klammern gruppieren genau gleich: $(a+b)$, $[a+b]$ und $\\{a+b\\}$ sind identisch."
           },
-          "illustration": "(a + b) = [a + b] = \\{a + b\\}",
+          "stimulus": "(a + b)",
+          "right": [
+            "[a + b]",
+            "\\{a + b\\}"
+          ],
           "restsOn": [
             "ix.brackets"
           ]
@@ -577,7 +639,11 @@
             "en": "Brackets around something already whole can be dropped: ((a+b)) = (a+b) = a+b, and (x) = x.",
             "de": "Klammern um etwas, das schon ein Ganzes ist, darf man weglassen: $((a+b)) = (a+b) = a+b$, und $(x) = x$."
           },
-          "illustration": "((a + b)) = (a + b) = a + b",
+          "stimulus": "((a + b))",
+          "right": [
+            "(a + b)",
+            "a + b"
+          ],
           "wrong": [
             {
               "latex": "((a + b)) \\neq (a + b)",
@@ -598,7 +664,10 @@
             "en": "Multiplication happens before addition: $a + b \\cdot c$ means $a + (b \\cdot c)$. A bracket changes the meaning: $(a+b) \\cdot c$ is different.",
             "de": "Mal kommt vor plus: $a + b \\cdot c$ bedeutet $a + (b \\cdot c)$. Eine Klammer ändert die Bedeutung: $(a+b) \\cdot c$ ist etwas anderes."
           },
-          "illustration": "a + b \\cdot c = a + bc",
+          "stimulus": "a + b \\cdot c",
+          "right": [
+            "a + bc"
+          ],
           "wrong": [
             {
               "latex": "a + b \\cdot c = (a + b) \\cdot c",
@@ -623,7 +692,10 @@
             "en": "The fraction bar groups the whole numerator: $(a+b)/c$ is all of $a+b$ over $c$.",
             "de": "Der Bruchstrich fasst den ganzen Zähler zusammen: $(a+b)/c$ ist ganz $a+b$ durch $c$."
           },
-          "illustration": "\\frac{a+b}{c} = (a+b) \\div c",
+          "stimulus": "\\frac{a+b}{c}",
+          "right": [
+            "(a+b) \\div c"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a+b}{c} = a + \\frac{b}{c}",
@@ -634,7 +706,6 @@
               "explains": "mis.linear-slash-overgrouped"
             }
           ],
-          "conditions": "c \\ne 0",
           "requires": [
             "skill.division-variants"
           ],
@@ -643,7 +714,8 @@
           ],
           "restsOn": [
             "ix.fraction-bar"
-          ]
+          ],
+          "conditions": "c \\ne 0"
         },
         {
           "id": "skill.multiplying-into-a-bracket",
@@ -655,7 +727,10 @@
             "en": "Multiplication distributes to every term inside: the 2 hits both the $x$ and the 1.",
             "de": "Die Multiplikation verteilt sich auf jeden Term darin: die 2 trifft sowohl das $x$ als auch die 1."
           },
-          "illustration": "2(x + 1) = 2x + 2",
+          "stimulus": "2(x + 1)",
+          "right": [
+            "2x + 2"
+          ],
           "wrong": [
             {
               "latex": "2(x + 1) = 2x + 1",
@@ -685,7 +760,10 @@
             "en": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$. This is the active twin of recognising $2(x+1) = 2x+2$ — there you check equality, here you generate it — and the commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
             "de": "Die ausmultiplizierte Form herstellen: der Faktor aussen landet auf jedem Term darin. $a(b+c) = ab + ac$. Das ist das aktive Gegenstück zum Erkennen von $2(x+1) = 2x+2$ — dort prüfst du die Gleichheit, hier erzeugst du sie — und der häufigste Fehltritt ist, nach dem ersten Term aufzuhören ($a(b+c) \\to ab + c$). Ein führendes Minus ist der Faktor $-1$: $-(b+c) = -b - c$."
           },
-          "illustration": "a(b + c) = ab + ac",
+          "stimulus": "a(b + c)",
+          "right": [
+            "ab + ac"
+          ],
           "wrong": [
             {
               "latex": "a(b + c) = ab + c",
@@ -721,7 +799,10 @@
             "en": "A power is repeated multiplication: $a^2 = a \\cdot a$, $a^3 = a \\cdot a \\cdot a$, $a^1 = a$.",
             "de": "Eine Potenz ist wiederholte Multiplikation: $a^2 = a \\cdot a$, $a^3 = a \\cdot a \\cdot a$, $a^1 = a$."
           },
-          "illustration": "a^2 = a \\cdot a",
+          "stimulus": "a^2",
+          "right": [
+            "a \\cdot a"
+          ],
           "wrong": [
             {
               "latex": "a^2 = a + a",
@@ -745,7 +826,10 @@
             "en": "$2a$ means $a+a$ and $a^2$ means $a \\cdot a$. The two forms that look most alike mean the most different things.",
             "de": "$2a$ heisst $a+a$, und $a^2$ heisst $a \\cdot a$. Die beiden Formen, die sich am ähnlichsten sehen, bedeuten das Verschiedenste."
           },
-          "illustration": "2a = a + a",
+          "stimulus": "2a",
+          "right": [
+            "a + a"
+          ],
           "wrong": [
             {
               "latex": "2a = a^2",
@@ -780,7 +864,10 @@
             "en": "The exponent binds before the minus, so $-a^2 = -(a^2)$ is negative while $(-a)^2 = a^2$ is positive. E.g. $-3^2 = -9$ but $(-3)^2 = 9$.",
             "de": "Der Exponent bindet vor dem Minus, also ist $-a^2 = -(a^2)$ negativ, während $(-a)^2 = a^2$ positiv ist. Zum Beispiel $-3^2 = -9$, aber $(-3)^2 = 9$."
           },
-          "illustration": "-a^2 = -(a^2)",
+          "stimulus": "-a^2",
+          "right": [
+            "-(a^2)"
+          ],
           "wrong": [
             {
               "latex": "-a^2 = (-a)^2",
@@ -811,7 +898,10 @@
             "en": "A power on a bracket applies to every factor: $(ab)^2 = a^2 b^2$, and $(2x)^2 = 4x^2$. Without the bracket the exponent hits $b$ only.",
             "de": "Eine Potenz auf einer Klammer gilt für jeden Faktor: $(ab)^2 = a^2 b^2$, und $(2x)^2 = 4x^2$. Ohne Klammer trifft der Exponent nur das $b$."
           },
-          "illustration": "(ab)^2 = a^2 b^2",
+          "stimulus": "(ab)^2",
+          "right": [
+            "a^2 b^2"
+          ],
           "wrong": [
             {
               "latex": "(ab)^2 = ab^2",
@@ -841,7 +931,10 @@
             "en": "Any nonzero base to the power 0 is 1. And $a^1 = a$.",
             "de": "Jede Basis ausser null hoch 0 ist 1. Und $a^1 = a$."
           },
-          "illustration": "a^0 = 1",
+          "stimulus": "a^0",
+          "right": [
+            "1"
+          ],
           "wrong": [
             {
               "latex": "a^0 = 0",
@@ -866,7 +959,10 @@
             "en": "A negative exponent means reciprocal, not a negative number. So $a^{-1} = 1/a$, and $1/a^{-n} = a^n$.",
             "de": "Ein negativer Exponent bedeutet Kehrwert, nicht negative Zahl. Also $a^{-1} = 1/a$, und $1/a^{-n} = a^n$."
           },
-          "illustration": "a^{-n} = \\frac{1}{a^n}",
+          "stimulus": "a^{-n}",
+          "right": [
+            "\\frac{1}{a^n}"
+          ],
           "wrong": [
             {
               "latex": "a^{-n} = -a^n",
@@ -897,7 +993,11 @@
             "en": "A fractional exponent is a root: the denominator is the root index, the numerator the power.",
             "de": "Ein gebrochener Exponent ist eine Wurzel: der Nenner ist der Wurzelexponent, der Zähler die Potenz."
           },
-          "illustration": "a^{m/n} = \\sqrt[n]{a^m} = (\\sqrt[n]{a})^m",
+          "stimulus": "a^{m/n}",
+          "right": [
+            "\\sqrt[n]{a^m}",
+            "(\\sqrt[n]{a})^m"
+          ],
           "wrong": [
             {
               "explains": "omi.no-move-attempted"
@@ -925,7 +1025,11 @@
             "en": "Combine the two rules: a^(-m/n) = 1 / (nth root of aᵐ). The minus gives the reciprocal, the fraction gives the root.",
             "de": "Beide Regeln zusammen: $a^{-m/n} = 1 / \\sqrt[n]{a^m}$. Das Minus gibt den Kehrwert, der Bruch die Wurzel."
           },
-          "illustration": "a^{-m/n} = \\frac{1}{\\sqrt[n]{a^m}} = \\frac{1}{a^{m/n}}",
+          "stimulus": "a^{-m/n}",
+          "right": [
+            "\\frac{1}{\\sqrt[n]{a^m}}",
+            "\\frac{1}{a^{m/n}}"
+          ],
           "wrong": [
             {
               "explains": "omi.no-move-attempted"
@@ -956,7 +1060,10 @@
             "en": "A power does not distribute over $+$: $(a+b)^2$ means $(a+b)(a+b)$. Contrast $(ab)^2 = a^2b^2$ — over $\\times$ it works, over $+$ it never does.",
             "de": "Eine Potenz verteilt sich nicht über $+$: $(a+b)^2$ heisst $(a+b)(a+b)$. Vergleiche $(ab)^2 = a^2b^2$ — über $\\times$ geht es, über $+$ nie."
           },
-          "illustration": "(a+b)^2 = (a+b)(a+b)",
+          "stimulus": "(a+b)^2",
+          "right": [
+            "(a+b)(a+b)"
+          ],
           "wrong": [
             {
               "latex": "(a+b)^2 = a^2 + b^2",
@@ -987,7 +1094,10 @@
             "en": "A root splits over $\\times$: $\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$.",
             "de": "Eine Wurzel zerfällt über $\\times$: $\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$."
           },
-          "illustration": "\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}",
+          "stimulus": "\\sqrt{ab}",
+          "right": [
+            "\\sqrt{a} \\cdot \\sqrt{b}"
+          ],
           "wrong": [
             {
               "explains": "omi.no-move-attempted"
@@ -1014,7 +1124,8 @@
             "en": "A root does NOT split over $+$. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, but $3 + 4 = 7$.",
             "de": "Eine Wurzel zerfällt NICHT über $+$. Probier $a = 9$, $b = 16$: $\\sqrt{25} = 5$, aber $3 + 4 = 7$."
           },
-          "illustration": "\\sqrt{a+b} = \\sqrt{b+a}",
+          "stimulus": "\\sqrt{a+b}",
+          "right": [],
           "wrong": [
             {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}",
@@ -1029,7 +1140,6 @@
               "explains": "mis.root-scope"
             }
           ],
-          "conditions": "a \\ge 0, b \\ge 0",
           "requires": [
             "skill.root-of-a-product"
           ],
@@ -1039,7 +1149,8 @@
           ],
           "restsOn": [
             "ix.root"
-          ]
+          ],
+          "conditions": "a \\ge 0, b \\ge 0"
         },
         {
           "id": "skill.simplify-power-product",
@@ -1051,7 +1162,10 @@
             "en": "Same base, so add the exponents: $x^a \\cdot x^b = x^{a+b}$, not $x^{ab}$. A power counts factors, and multiplying two powers stacks their factors, so the counts add. The mirror slip — multiplying the exponents — is what $(x^a)^b = x^{ab}$ actually does, one step away.",
             "de": "Gleiche Basis, also die Exponenten addieren: $x^a \\cdot x^b = x^{a+b}$, nicht $x^{ab}$. Eine Potenz zählt Faktoren, und zwei Potenzen zu multiplizieren stapelt ihre Faktoren, also addieren sich die Anzahlen. Der Spiegelfehler — die Exponenten multiplizieren — ist das, was $(x^a)^b = x^{ab}$ wirklich tut, einen Schritt daneben."
           },
-          "illustration": "x^a \\cdot x^b = x^{a+b}",
+          "stimulus": "x^a \\cdot x^b",
+          "right": [
+            "x^{a+b}"
+          ],
           "wrong": [
             {
               "latex": "x^a \\cdot x^b = x^{ab}",
@@ -1087,7 +1201,11 @@
             "en": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
             "de": "Die Division hat viele Gesichter: $a \\div b = a : b = a/b$. Alles dasselbe Objekt. (Der Doppelpunkt ist das Divisionszeichen aus der Primarschule.)"
           },
-          "illustration": "a \\div b = a : b = \\frac{a}{b}",
+          "stimulus": "a \\div b",
+          "right": [
+            "a : b",
+            "\\frac{a}{b}"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a}{b} \\neq a : b",
@@ -1109,7 +1227,10 @@
             "en": "Dividing by $b$ is multiplying by $1/b$: $a/b = a \\cdot (1/b)$. This is why dividing by a fraction means multiplying by its reciprocal.",
             "de": "Durch $b$ teilen heisst mit $1/b$ multiplizieren: $a/b = a \\cdot (1/b)$. Darum heisst durch einen Bruch teilen: mit seinem Kehrwert multiplizieren."
           },
-          "illustration": "\\frac{a}{b} = a \\cdot \\frac{1}{b}",
+          "stimulus": "\\frac{a}{b}",
+          "right": [
+            "a \\cdot \\frac{1}{b}"
+          ],
           "wrong": [
             {
               "explains": "omi.no-move-attempted"
@@ -1132,7 +1253,10 @@
             "en": "Dividing by 1 changes nothing: a/1 = a.",
             "de": "Durch 1 teilen ändert nichts: $a/1 = a$."
           },
-          "illustration": "\\frac{a}{1} = a",
+          "stimulus": "\\frac{a}{1}",
+          "right": [
+            "a"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a}{1} = \\frac{1}{a}",
@@ -1156,7 +1280,10 @@
             "en": "You may split a sum in the numerator: (a+b)/c = a/c + b/c. You may NOT split the denominator: a/(b+c) is not a/b + a/c.",
             "de": "Eine Summe im Zähler darf man aufteilen: $(a+b)/c = a/c + b/c$. Den Nenner darf man NICHT aufteilen: $a/(b+c)$ ist nicht $a/b + a/c$."
           },
-          "illustration": "\\frac{a+b}{c} = \\frac{a}{c} + \\frac{b}{c}",
+          "stimulus": "\\frac{a+b}{c}",
+          "right": [
+            "\\frac{a}{c} + \\frac{b}{c}"
+          ],
           "requires": [
             "skill.fraction-bar-grouping"
           ],
@@ -1180,14 +1307,16 @@
             "en": "Splitting works over the numerator only: $c/(a+b)$ is $c$ divided by the whole chunk $a+b$. (Check with numbers: $12/(2+4) = 2$, but $12/2 + 12/4 = 9$.)",
             "de": "Aufteilen geht nur über den Zähler: $c/(a+b)$ ist $c$ geteilt durch den ganzen Baustein $a+b$. (Mit Zahlen prüfen: $12/(2+4) = 2$, aber $12/2 + 12/4 = 9$.)"
           },
-          "illustration": "\\frac{c}{a+b} = c \\div (a+b)",
+          "stimulus": "\\frac{c}{a+b}",
+          "right": [
+            "c \\div (a+b)"
+          ],
           "wrong": [
             {
               "latex": "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}",
               "explains": "anti.linearity"
             }
           ],
-          "conditions": "a+b \\ne 0",
           "requires": [
             "skill.splitting-a-fraction"
           ],
@@ -1198,7 +1327,8 @@
           "restsOn": [
             "th.split-numerator",
             "ix.fraction-bar"
-          ]
+          ],
+          "conditions": "a+b \\ne 0"
         },
         {
           "id": "skill.no-cancelling-in-a-sum",
@@ -1210,7 +1340,10 @@
             "en": "Cancelling needs a common factor of the WHOLE numerator, so the 3 cannot go against one term of it.",
             "de": "Kürzen braucht einen gemeinsamen Faktor des GANZEN Zählers, also kann die 3 nicht gegen einen einzelnen Term davon gehen."
           },
-          "illustration": "\\frac{3x+2}{3} = x + \\frac{2}{3}",
+          "stimulus": "\\frac{3x+2}{3}",
+          "right": [
+            "x + \\frac{2}{3}"
+          ],
           "wrong": [
             {
               "latex": "\\frac{3x+2}{3} = x + 2",
@@ -1249,7 +1382,10 @@
             "en": "Order does not matter for addition: a + b = b + a.",
             "de": "Bei der Addition spielt die Reihenfolge keine Rolle: $a + b = b + a$."
           },
-          "illustration": "a + b = b + a",
+          "stimulus": "a + b",
+          "right": [
+            "b + a"
+          ],
           "restsOn": [
             "ax.add-commutative"
           ]
@@ -1264,7 +1400,10 @@
             "en": "Order does not matter for multiplication: ab = ba.",
             "de": "Bei der Multiplikation spielt die Reihenfolge keine Rolle: $ab = ba$."
           },
-          "illustration": "ab = ba",
+          "stimulus": "ab",
+          "right": [
+            "ba"
+          ],
           "wrong": [
             {
               "latex": "a \\cdot 3 \\neq 3a",
@@ -1292,7 +1431,10 @@
             "en": "Subtraction does not commute. But flipping the order flips the sign: $a - b = -(b - a)$.",
             "de": "Die Subtraktion ist nicht vertauschbar. Aber die Reihenfolge zu drehen dreht das Vorzeichen: $a - b = -(b - a)$."
           },
-          "illustration": "a - b = -(b - a)",
+          "stimulus": "a - b",
+          "right": [
+            "-(b - a)"
+          ],
           "wrong": [
             {
               "latex": "a - b = b - a",
@@ -1320,7 +1462,10 @@
             "en": "Division does not commute: swapping numerator and denominator gives the reciprocal, not the same value.",
             "de": "Die Division ist nicht vertauschbar: Zähler und Nenner zu tauschen gibt den Kehrwert, nicht denselben Wert."
           },
-          "illustration": "a \\div b = \\frac{a}{b}",
+          "stimulus": "a \\div b",
+          "right": [
+            "\\frac{a}{b}"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a}{b} = \\frac{b}{a}",
@@ -1358,7 +1503,10 @@
             "en": "$(a+b)^2$ is $(a+b)(a+b)$, not $a^2 + b^2$. Expanding gives the cross term twice: $(a+b)^2 = a^2 + 2ab + b^2$. Dropping the $2ab$ is the single most common error in school algebra — a power does not distribute over a sum, because it is built from multiplication, not addition.",
             "de": "$(a+b)^2$ ist $(a+b)(a+b)$, nicht $a^2 + b^2$. Beim Ausmultiplizieren kommt das gemischte Produkt zweimal: $(a+b)^2 = a^2 + 2ab + b^2$. Das $2ab$ wegzulassen ist der häufigste Fehler der Schulalgebra — eine Potenz verteilt sich nicht über eine Summe, denn sie ist aus Multiplikation gebaut, nicht aus Addition."
           },
-          "illustration": "(a + b)^2 = a^2 + 2ab + b^2",
+          "stimulus": "(a + b)^2",
+          "right": [
+            "a^2 + 2ab + b^2"
+          ],
           "wrong": [
             {
               "latex": "(a + b)^2 = a^2 + b^2",
@@ -1385,7 +1533,10 @@
             "en": "Two squares with a minus between them factor into the two matching brackets: $a^2 - b^2 = (a+b)(a-b)$. It works because the mixed products cancel — expanding gives $a^2 - ab + ab - b^2$, and $-ab + ab$ is $0$ (th.difference-of-squares). Two things to hold on to: the SUM of squares does not factor this way at all, and the answer is not $(a-b)^2$ — squaring a difference leaves a middle term ($-2ab$), which the true factorisation has none of. Check by multiplying back.",
             "de": "Zwei Quadrate mit einem Minus dazwischen zerfallen in die beiden passenden Klammern: $a^2 - b^2 = (a+b)(a-b)$. Es geht, weil die gemischten Produkte sich aufheben — Ausmultiplizieren gibt $a^2 - ab + ab - b^2$, und $-ab + ab$ ist $0$. Zwei Dinge festhalten: die SUMME zweier Quadrate zerfällt so gar nicht, und die Antwort ist nicht $(a-b)^2$ — eine quadrierte Differenz hat einen mittleren Term ($-2ab$), den die echte Faktorisierung nicht hat. Prüfen durch Zurückmultiplizieren."
           },
-          "illustration": "a^2 - b^2 = (a + b)(a - b)",
+          "stimulus": "a^2 - b^2",
+          "right": [
+            "(a + b)(a - b)"
+          ],
           "wrong": [
             {
               "latex": "a^2 - b^2 = (a - b)^2",
@@ -1422,7 +1573,10 @@
             "en": "Three terms in the shape $a^2 + 2ab + b^2$ collapse into one square: $(a+b)^2$ (th.binomial-square, read right to left). The middle term is what identifies it — it must be exactly twice the product of the two roots, which is the term students drop when they expand and the term they must find when they factor. With a minus in the middle the same identity gives $(a-b)^2$ (th.square-of-difference). Check by expanding.",
             "de": "Drei Terme in der Gestalt $a^2 + 2ab + b^2$ ziehen sich zu einem Quadrat zusammen: $(a+b)^2$ (die binomische Formel, von rechts nach links gelesen). Der mittlere Term ist das Erkennungsmerkmal — er muss genau das Doppelte des Produkts der beiden Wurzeln sein; genau ihn lassen Schülerinnen und Schüler beim Ausmultiplizieren weg und genau ihn müssen sie beim Faktorisieren finden. Mit einem Minus in der Mitte gibt dieselbe Formel $(a-b)^2$. Prüfen durch Ausmultiplizieren."
           },
-          "illustration": "a^2 + 2ab + b^2 = (a + b)^2",
+          "stimulus": "a^2 + 2ab + b^2",
+          "right": [
+            "(a + b)^2"
+          ],
           "wrong": [
             {
               "latex": "a^2 + b^2 = (a + b)^2",
