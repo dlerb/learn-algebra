@@ -21,7 +21,7 @@
       },
       "skills": [
         {
-          "id": "transformation.expand-distribute",
+          "id": "skill.expand-distribute",
           "name": {
             "en": "Expand: multiply into a bracket",
             "de": "Ausmultiplizieren: in eine Klammer hinein"
@@ -38,7 +38,7 @@
             }
           ],
           "requires": [
-            "equivalence.multiplying-into-a-bracket"
+            "skill.multiplying-into-a-bracket"
           ],
           "rules": [
             "rule.only-multiplication-distributes"
@@ -48,7 +48,7 @@
           ]
         },
         {
-          "id": "transformation.expand-binomial-square",
+          "id": "skill.expand-binomial-square",
           "name": {
             "en": "Expand a squared binomial",
             "de": "Ein Binom quadrieren"
@@ -65,7 +65,7 @@
             }
           ],
           "requires": [
-            "transformation.expand-distribute"
+            "skill.expand-distribute"
           ],
           "rules": [
             "rule.binomial-square"
@@ -88,7 +88,7 @@
       },
       "skills": [
         {
-          "id": "transformation.factor-common",
+          "id": "skill.factor-common",
           "name": {
             "en": "Factor out a common factor",
             "de": "Einen gemeinsamen Faktor ausklammern"
@@ -105,9 +105,9 @@
             }
           ],
           "requires": [
-            "classification.common-factor",
-            "transformation.expand-distribute",
-            "chunking.chunks-in-product"
+            "skill.common-factor",
+            "skill.expand-distribute",
+            "skill.chunks-in-product"
           ],
           "rules": [
             "rule.only-multiplication-distributes"
@@ -117,7 +117,7 @@
           ]
         },
         {
-          "id": "transformation.factor-difference-of-squares",
+          "id": "skill.factor-difference-of-squares",
           "name": {
             "en": "Factor a difference of squares",
             "de": "Eine Differenz von Quadraten faktorisieren"
@@ -138,8 +138,8 @@
             }
           ],
           "requires": [
-            "classification.difference-of-squares",
-            "transformation.expand-distribute"
+            "skill.difference-of-squares",
+            "skill.expand-distribute"
           ],
           "rules": [
             "rule.difference-of-squares",
@@ -150,7 +150,7 @@
           ]
         },
         {
-          "id": "transformation.factor-perfect-square",
+          "id": "skill.factor-perfect-square",
           "name": {
             "en": "Factor a perfect square trinomial",
             "de": "Ein vollständiges Quadrat faktorisieren"
@@ -167,8 +167,8 @@
             }
           ],
           "requires": [
-            "classification.perfect-square-trinomial",
-            "transformation.expand-binomial-square"
+            "skill.perfect-square-trinomial",
+            "skill.expand-binomial-square"
           ],
           "rules": [
             "rule.binomial-square",
@@ -180,7 +180,7 @@
           ]
         },
         {
-          "id": "transformation.factor-quadratic",
+          "id": "skill.factor-quadratic",
           "name": {
             "en": "Factor a quadratic",
             "de": "Eine quadratische Form faktorisieren"
@@ -197,9 +197,9 @@
             }
           ],
           "requires": [
-            "classification.quadratic-form",
-            "transformation.expand-distribute",
-            "transformation.collect-like-terms"
+            "skill.quadratic-form",
+            "skill.expand-distribute",
+            "skill.collect-like-terms"
           ],
           "rules": [
             "rule.quadratic-pair"
@@ -223,7 +223,7 @@
       },
       "skills": [
         {
-          "id": "transformation.collect-like-terms",
+          "id": "skill.collect-like-terms",
           "name": {
             "en": "Collect like terms",
             "de": "Gleichartige Terme zusammenfassen"
@@ -244,7 +244,7 @@
             }
           ],
           "requires": [
-            "equivalence.number-plus-term"
+            "skill.number-plus-term"
           ],
           "rules": [
             "rule.unlike-terms-stay",
@@ -255,7 +255,7 @@
           ]
         },
         {
-          "id": "transformation.simplify-power-product",
+          "id": "skill.simplify-power-product",
           "name": {
             "en": "Simplify a product of powers",
             "de": "Ein Produkt von Potenzen vereinfachen"
@@ -272,7 +272,7 @@
             }
           ],
           "requires": [
-            "equivalence.exponent-as-repeated-product"
+            "skill.exponent-as-repeated-product"
           ],
           "rules": [
             "rule.same-base"
@@ -282,7 +282,7 @@
           ]
         },
         {
-          "id": "transformation.cancel-common-factor",
+          "id": "skill.cancel-common-factor",
           "name": {
             "en": "Cancel a common factor",
             "de": "Einen gemeinsamen Faktor kürzen"
@@ -300,9 +300,9 @@
           ],
           "conditions": "b \\ne 0,\\ k \\ne 0",
           "requires": [
-            "transformation.factor-common",
-            "equivalence.no-cancelling-in-a-sum",
-            "chunking.chunks-in-product"
+            "skill.factor-common",
+            "skill.no-cancelling-in-a-sum",
+            "skill.chunks-in-product"
           ],
           "rules": [
             "rule.fraction-cancel"
@@ -312,7 +312,7 @@
           ]
         },
         {
-          "id": "transformation.combine-fractions",
+          "id": "skill.combine-fractions",
           "name": {
             "en": "Combine fractions into one",
             "de": "Brüche zu einem Bruch zusammenfassen"
@@ -329,8 +329,8 @@
             }
           ],
           "requires": [
-            "equivalence.fraction-as-reciprocal-product",
-            "equivalence.no-splitting-the-denominator"
+            "skill.fraction-as-reciprocal-product",
+            "skill.no-splitting-the-denominator"
           ],
           "rules": [
             "rule.fraction-common-denominator"

@@ -17,7 +17,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.explicit-vs-implicit-product",
+          "id": "skill.explicit-vs-implicit-product",
           "name": {
             "en": "Explicit vs. implicit multiplication",
             "de": "Explizite und implizite Multiplikation"
@@ -42,7 +42,7 @@
           ]
         },
         {
-          "id": "equivalence.product-with-brackets",
+          "id": "skill.product-with-brackets",
           "name": {
             "en": "Multiplication with brackets",
             "de": "Multiplikation mit Klammern"
@@ -59,7 +59,7 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.juxtaposition",
@@ -71,7 +71,7 @@
           ]
         },
         {
-          "id": "equivalence.coefficient-negative-one",
+          "id": "skill.coefficient-negative-one",
           "name": {
             "en": "Coefficient of -1",
             "de": "Koeffizient -1"
@@ -88,8 +88,8 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product",
-            "equivalence.negative-numbers"
+            "skill.explicit-vs-implicit-product",
+            "skill.negative-numbers"
           ],
           "rules": [
             "rule.juxtaposition",
@@ -102,7 +102,7 @@
           ]
         },
         {
-          "id": "equivalence.coefficient-zero",
+          "id": "skill.coefficient-zero",
           "name": {
             "en": "Coefficient of 0",
             "de": "Koeffizient 0"
@@ -119,7 +119,7 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.juxtaposition"
@@ -130,7 +130,7 @@
           ]
         },
         {
-          "id": "equivalence.repeated-addition",
+          "id": "skill.repeated-addition",
           "name": {
             "en": "Repeated addition vs. multiplication",
             "de": "Wiederholte Addition und Multiplikation"
@@ -147,7 +147,7 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.juxtaposition"
@@ -171,7 +171,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.number-plus-term",
+          "id": "skill.number-plus-term",
           "name": {
             "en": "A number plus a term stays open",
             "de": "Zahl plus Term bleibt offen"
@@ -188,7 +188,7 @@
             }
           ],
           "requires": [
-            "equivalence.repeated-addition"
+            "skill.repeated-addition"
           ],
           "rules": [
             "rule.juxtaposition"
@@ -199,7 +199,7 @@
           ]
         },
         {
-          "id": "equivalence.unlike-variable-terms",
+          "id": "skill.unlike-variable-terms",
           "name": {
             "en": "Terms with different variables stay open",
             "de": "Terme mit verschiedenen Variablen bleiben offen"
@@ -216,7 +216,7 @@
             }
           ],
           "requires": [
-            "equivalence.number-plus-term"
+            "skill.number-plus-term"
           ],
           "rules": [
             "rule.juxtaposition"
@@ -227,7 +227,7 @@
           ]
         },
         {
-          "id": "equivalence.adding-powers",
+          "id": "skill.adding-powers",
           "name": {
             "en": "A power plus a term stays open",
             "de": "Potenz plus Term bleibt offen"
@@ -244,8 +244,8 @@
             }
           ],
           "requires": [
-            "equivalence.exponent-as-repeated-product",
-            "equivalence.number-plus-term"
+            "skill.exponent-as-repeated-product",
+            "skill.number-plus-term"
           ],
           "restsOn": [
             "th.collect-like-terms"
@@ -265,7 +265,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.negative-numbers",
+          "id": "skill.negative-numbers",
           "name": {
             "en": "Negative numbers and the unary minus",
             "de": "Negative Zahlen und das unäre Minus"
@@ -290,7 +290,7 @@
           ]
         },
         {
-          "id": "equivalence.subtraction-as-adding-opposite",
+          "id": "skill.subtraction-as-adding-opposite",
           "name": {
             "en": "Subtracting vs. adding a negative",
             "de": "Subtrahieren und das Negative addieren"
@@ -311,7 +311,7 @@
             }
           ],
           "requires": [
-            "equivalence.coefficient-negative-one"
+            "skill.coefficient-negative-one"
           ],
           "rules": [
             "rule.three-minuses"
@@ -322,7 +322,7 @@
           ]
         },
         {
-          "id": "equivalence.minus-over-sum",
+          "id": "skill.minus-over-sum",
           "name": {
             "en": "Distributing a negative over a sum",
             "de": "Ein Minus über eine Summe verteilen"
@@ -339,7 +339,7 @@
             }
           ],
           "requires": [
-            "equivalence.coefficient-negative-one"
+            "skill.coefficient-negative-one"
           ],
           "rules": [
             "rule.three-minuses",
@@ -353,7 +353,7 @@
           ]
         },
         {
-          "id": "equivalence.minus-over-difference",
+          "id": "skill.minus-over-difference",
           "name": {
             "en": "Distributing a negative over a difference",
             "de": "Ein Minus über eine Differenz verteilen"
@@ -370,7 +370,7 @@
             }
           ],
           "requires": [
-            "equivalence.coefficient-negative-one"
+            "skill.coefficient-negative-one"
           ],
           "rules": [
             "rule.three-minuses",
@@ -384,7 +384,7 @@
           ]
         },
         {
-          "id": "equivalence.double-negative",
+          "id": "skill.double-negative",
           "name": {
             "en": "Double negative",
             "de": "Doppeltes Minus"
@@ -405,7 +405,7 @@
             }
           ],
           "requires": [
-            "equivalence.subtraction-as-adding-opposite"
+            "skill.subtraction-as-adding-opposite"
           ],
           "rules": [
             "rule.three-minuses"
@@ -417,7 +417,7 @@
           ]
         },
         {
-          "id": "equivalence.negative-times-negative",
+          "id": "skill.negative-times-negative",
           "name": {
             "en": "Negative times negative",
             "de": "Minus mal Minus"
@@ -434,8 +434,8 @@
             }
           ],
           "requires": [
-            "equivalence.negative-numbers",
-            "equivalence.explicit-vs-implicit-product"
+            "skill.negative-numbers",
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.juxtaposition",
@@ -449,7 +449,7 @@
           ]
         },
         {
-          "id": "equivalence.minus-on-fraction",
+          "id": "skill.minus-on-fraction",
           "name": {
             "en": "Minus in front of a fraction",
             "de": "Minus vor einem Bruch"
@@ -466,8 +466,8 @@
             }
           ],
           "requires": [
-            "equivalence.negative-numbers",
-            "equivalence.division-variants"
+            "skill.negative-numbers",
+            "skill.division-variants"
           ],
           "rules": [
             "rule.three-minuses",
@@ -482,7 +482,7 @@
           ]
         },
         {
-          "id": "equivalence.subtracting-a-sum",
+          "id": "skill.subtracting-a-sum",
           "name": {
             "en": "Subtracting a bracketed sum",
             "de": "Eine geklammerte Summe subtrahieren"
@@ -499,7 +499,7 @@
             }
           ],
           "requires": [
-            "equivalence.minus-over-sum"
+            "skill.minus-over-sum"
           ],
           "rules": [
             "rule.three-minuses",
@@ -513,7 +513,7 @@
           ]
         },
         {
-          "id": "equivalence.subtracting-a-difference",
+          "id": "skill.subtracting-a-difference",
           "name": {
             "en": "Subtracting a bracketed difference",
             "de": "Eine geklammerte Differenz subtrahieren"
@@ -530,7 +530,7 @@
             }
           ],
           "requires": [
-            "equivalence.minus-over-difference"
+            "skill.minus-over-difference"
           ],
           "rules": [
             "rule.three-minuses",
@@ -553,7 +553,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.bracket-types",
+          "id": "skill.bracket-types",
           "name": {
             "en": "Bracket types are interchangeable",
             "de": "Klammerarten sind austauschbar"
@@ -568,7 +568,7 @@
           ]
         },
         {
-          "id": "equivalence.redundant-brackets",
+          "id": "skill.redundant-brackets",
           "name": {
             "en": "Redundant brackets",
             "de": "Überflüssige Klammern"
@@ -589,7 +589,7 @@
           ]
         },
         {
-          "id": "equivalence.precedence-brackets",
+          "id": "skill.precedence-brackets",
           "name": {
             "en": "Brackets and order of operations",
             "de": "Klammern und Reihenfolge der Operationen"
@@ -606,7 +606,7 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "restsOn": [
             "ix.precedence",
@@ -614,7 +614,7 @@
           ]
         },
         {
-          "id": "equivalence.fraction-bar-grouping",
+          "id": "skill.fraction-bar-grouping",
           "name": {
             "en": "Implicit brackets in the fraction bar",
             "de": "Unsichtbare Klammern im Bruchstrich"
@@ -636,7 +636,7 @@
           ],
           "conditions": "c \\ne 0",
           "requires": [
-            "equivalence.division-variants"
+            "skill.division-variants"
           ],
           "rules": [
             "rule.fraction-bar-brackets"
@@ -646,7 +646,7 @@
           ]
         },
         {
-          "id": "equivalence.multiplying-into-a-bracket",
+          "id": "skill.multiplying-into-a-bracket",
           "name": {
             "en": "Multiplying into a bracket",
             "de": "In eine Klammer hineinmultiplizieren"
@@ -663,7 +663,7 @@
             }
           ],
           "requires": [
-            "equivalence.product-with-brackets"
+            "skill.product-with-brackets"
           ],
           "rules": [
             "rule.implicit-op-before-bracket",
@@ -685,7 +685,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.exponent-as-repeated-product",
+          "id": "skill.exponent-as-repeated-product",
           "name": {
             "en": "Exponent as repeated multiplication",
             "de": "Exponent als wiederholte Multiplikation"
@@ -702,14 +702,14 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "restsOn": [
             "def.pow"
           ]
         },
         {
-          "id": "equivalence.coefficient-vs-exponent",
+          "id": "skill.coefficient-vs-exponent",
           "name": {
             "en": "Coefficient vs. exponent",
             "de": "Koeffizient und Exponent"
@@ -730,8 +730,8 @@
             }
           ],
           "requires": [
-            "equivalence.repeated-addition",
-            "equivalence.exponent-as-repeated-product"
+            "skill.repeated-addition",
+            "skill.exponent-as-repeated-product"
           ],
           "rules": [
             "rule.juxtaposition"
@@ -744,7 +744,7 @@
           ]
         },
         {
-          "id": "equivalence.negated-square-vs-negative-base",
+          "id": "skill.negated-square-vs-negative-base",
           "name": {
             "en": "Negative base vs. negated square",
             "de": "Negative Basis und negiertes Quadrat"
@@ -761,8 +761,8 @@
             }
           ],
           "requires": [
-            "equivalence.coefficient-negative-one",
-            "equivalence.exponent-as-repeated-product"
+            "skill.coefficient-negative-one",
+            "skill.exponent-as-repeated-product"
           ],
           "rules": [
             "rule.exponent-binds-tighter"
@@ -775,7 +775,7 @@
           ]
         },
         {
-          "id": "equivalence.power-of-a-product",
+          "id": "skill.power-of-a-product",
           "name": {
             "en": "Exponent on a product",
             "de": "Exponent auf einem Produkt"
@@ -792,8 +792,8 @@
             }
           ],
           "requires": [
-            "equivalence.product-with-brackets",
-            "equivalence.exponent-as-repeated-product"
+            "skill.product-with-brackets",
+            "skill.exponent-as-repeated-product"
           ],
           "rules": [
             "rule.exponent-binds-tighter"
@@ -805,7 +805,7 @@
           ]
         },
         {
-          "id": "equivalence.zero-and-one-exponent",
+          "id": "skill.zero-and-one-exponent",
           "name": {
             "en": "Zero and one as exponents",
             "de": "Null und Eins als Exponenten"
@@ -822,7 +822,7 @@
             }
           ],
           "requires": [
-            "equivalence.exponent-as-repeated-product"
+            "skill.exponent-as-repeated-product"
           ],
           "restsOn": [
             "def.pow-zero",
@@ -830,7 +830,7 @@
           ]
         },
         {
-          "id": "equivalence.negative-exponent",
+          "id": "skill.negative-exponent",
           "name": {
             "en": "Negative exponent as a reciprocal",
             "de": "Negativer Exponent als Kehrwert"
@@ -847,8 +847,8 @@
             }
           ],
           "requires": [
-            "equivalence.exponent-as-repeated-product",
-            "equivalence.division-variants"
+            "skill.exponent-as-repeated-product",
+            "skill.division-variants"
           ],
           "rules": [
             "rule.exponent-binds-tighter"
@@ -861,7 +861,7 @@
           ]
         },
         {
-          "id": "equivalence.fractional-exponent-root",
+          "id": "skill.fractional-exponent-root",
           "name": {
             "en": "Fractional exponent as a root",
             "de": "Gebrochener Exponent als Wurzel"
@@ -877,7 +877,7 @@
             }
           ],
           "requires": [
-            "equivalence.exponent-as-repeated-product"
+            "skill.exponent-as-repeated-product"
           ],
           "rules": [
             "rule.exponent-binds-tighter"
@@ -889,7 +889,7 @@
           ]
         },
         {
-          "id": "equivalence.negative-fractional-exponent",
+          "id": "skill.negative-fractional-exponent",
           "name": {
             "en": "Negative fractional exponent",
             "de": "Negativer gebrochener Exponent"
@@ -905,8 +905,8 @@
             }
           ],
           "requires": [
-            "equivalence.negative-exponent",
-            "equivalence.fractional-exponent-root"
+            "skill.negative-exponent",
+            "skill.fractional-exponent-root"
           ],
           "rules": [
             "rule.exponent-binds-tighter"
@@ -920,7 +920,7 @@
           ]
         },
         {
-          "id": "equivalence.power-of-a-sum",
+          "id": "skill.power-of-a-sum",
           "name": {
             "en": "Exponent on a sum",
             "de": "Exponent auf einer Summe"
@@ -937,8 +937,8 @@
             }
           ],
           "requires": [
-            "equivalence.exponent-as-repeated-product",
-            "equivalence.product-with-brackets"
+            "skill.exponent-as-repeated-product",
+            "skill.product-with-brackets"
           ],
           "rules": [
             "rule.only-multiplication-distributes"
@@ -951,7 +951,7 @@
           ]
         },
         {
-          "id": "equivalence.root-of-a-product",
+          "id": "skill.root-of-a-product",
           "name": {
             "en": "Root of a product",
             "de": "Wurzel eines Produkts"
@@ -967,7 +967,7 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.power-over-product"
@@ -978,7 +978,7 @@
           ]
         },
         {
-          "id": "equivalence.root-of-a-sum",
+          "id": "skill.root-of-a-sum",
           "name": {
             "en": "Root of a sum",
             "de": "Wurzel einer Summe"
@@ -1004,7 +1004,7 @@
           ],
           "conditions": "a \\ge 0, b \\ge 0",
           "requires": [
-            "equivalence.root-of-a-product"
+            "skill.root-of-a-product"
           ],
           "rules": [
             "rule.only-multiplication-distributes",
@@ -1024,7 +1024,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.division-variants",
+          "id": "skill.division-variants",
           "name": {
             "en": "Division notation variants",
             "de": "Schreibweisen der Division"
@@ -1046,7 +1046,7 @@
           ]
         },
         {
-          "id": "equivalence.fraction-as-reciprocal-product",
+          "id": "skill.fraction-as-reciprocal-product",
           "name": {
             "en": "Fraction as multiplication by a reciprocal",
             "de": "Bruch als Multiplikation mit dem Kehrwert"
@@ -1062,14 +1062,14 @@
             }
           ],
           "requires": [
-            "equivalence.division-variants"
+            "skill.division-variants"
           ],
           "restsOn": [
             "def.div"
           ]
         },
         {
-          "id": "equivalence.divide-by-one",
+          "id": "skill.divide-by-one",
           "name": {
             "en": "Dividing by 1",
             "de": "Durch 1 teilen"
@@ -1086,14 +1086,14 @@
             }
           ],
           "requires": [
-            "equivalence.division-variants"
+            "skill.division-variants"
           ],
           "restsOn": [
             "th.divide-by-one"
           ]
         },
         {
-          "id": "equivalence.splitting-a-fraction",
+          "id": "skill.splitting-a-fraction",
           "name": {
             "en": "Splitting a fraction over addition",
             "de": "Einen Bruch über eine Addition aufteilen"
@@ -1104,7 +1104,7 @@
           },
           "illustration": "\\frac{a+b}{c} = \\frac{a}{c} + \\frac{b}{c}",
           "requires": [
-            "equivalence.fraction-bar-grouping"
+            "skill.fraction-bar-grouping"
           ],
           "rules": [
             "rule.fraction-bar-brackets",
@@ -1117,7 +1117,7 @@
           ]
         },
         {
-          "id": "equivalence.no-splitting-the-denominator",
+          "id": "skill.no-splitting-the-denominator",
           "name": {
             "en": "A sum in the denominator does not split",
             "de": "Eine Summe im Nenner zerfällt nicht"
@@ -1135,7 +1135,7 @@
           ],
           "conditions": "a+b \\ne 0",
           "requires": [
-            "equivalence.splitting-a-fraction"
+            "skill.splitting-a-fraction"
           ],
           "rules": [
             "rule.fraction-bar-brackets",
@@ -1147,7 +1147,7 @@
           ]
         },
         {
-          "id": "equivalence.no-cancelling-in-a-sum",
+          "id": "skill.no-cancelling-in-a-sum",
           "name": {
             "en": "No cancelling inside a sum",
             "de": "Nicht in einer Summe kürzen"
@@ -1164,7 +1164,7 @@
             }
           ],
           "requires": [
-            "equivalence.splitting-a-fraction"
+            "skill.splitting-a-fraction"
           ],
           "rules": [
             "rule.fraction-bar-brackets",
@@ -1186,7 +1186,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.addition-commutative",
+          "id": "skill.addition-commutative",
           "name": {
             "en": "Addition is commutative",
             "de": "Die Addition ist vertauschbar"
@@ -1201,7 +1201,7 @@
           ]
         },
         {
-          "id": "equivalence.multiplication-commutative",
+          "id": "skill.multiplication-commutative",
           "name": {
             "en": "Multiplication is commutative",
             "de": "Die Multiplikation ist vertauschbar"
@@ -1218,7 +1218,7 @@
             }
           ],
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.juxtaposition"
@@ -1229,7 +1229,7 @@
           ]
         },
         {
-          "id": "equivalence.subtraction-not-commutative",
+          "id": "skill.subtraction-not-commutative",
           "name": {
             "en": "Subtraction is not commutative",
             "de": "Die Subtraktion ist nicht vertauschbar"
@@ -1246,7 +1246,7 @@
             }
           ],
           "requires": [
-            "equivalence.minus-over-difference"
+            "skill.minus-over-difference"
           ],
           "rules": [
             "rule.three-minuses"
@@ -1257,7 +1257,7 @@
           ]
         },
         {
-          "id": "equivalence.division-not-commutative",
+          "id": "skill.division-not-commutative",
           "name": {
             "en": "Division is not commutative",
             "de": "Die Division ist nicht vertauschbar"
@@ -1274,7 +1274,7 @@
             }
           ],
           "requires": [
-            "equivalence.division-variants"
+            "skill.division-variants"
           ],
           "restsOn": [
             "def.div",
@@ -1291,7 +1291,7 @@
       },
       "skills": [
         {
-          "id": "equivalence.same-value-different-structure",
+          "id": "skill.same-value-different-structure",
           "name": {
             "en": "Same value, different dominant operation",
             "de": "Gleicher Wert, andere Hauptoperation"
@@ -1308,8 +1308,8 @@
             }
           ],
           "requires": [
-            "classification.difference",
-            "classification.product"
+            "skill.difference",
+            "skill.product"
           ],
           "rules": [
             "rule.dominant-op-last"

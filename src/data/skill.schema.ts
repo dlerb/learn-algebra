@@ -73,9 +73,15 @@ const wrongForm = z.object({
 export type WrongForm = z.infer<typeof wrongForm>
 
 export const skill = z.object({
-  id: z.string().regex(/^(equivalence|classification|chunking|transformation)\.[a-z0-9-]+$/,
-    'id must be "<kind>.<slug>" (kind ∈ equivalence|classification|chunking|transformation)'),
-  kind: skillKind,                     // = id prefix (validated); positional in the kind file, re-attached by parseSkillTree
+  // ⚠️ THE ID NO LONGER CARRIES THE CLASSIFICATION (2026-07-30). It used to be
+  // `<kind>.<slug>`, which made every re-classification a mass rename — and this
+  // layer's classification turned out to be revisable: `fraction-bar-grouping` is
+  // a chunking skill that was filed as equivalence because its illustration
+  // happened to be written as an equation. A `skill.` TYPE prefix matches every
+  // other entity here (`rule.`, `sheet.`, `th.`, `ax.`, `ix.`), and re-filing is
+  // now a one-field edit.
+  id: z.string().regex(/^skill\.[a-z0-9-]+$/, 'id must be "skill.<slug>"'),
+  kind: skillKind,                     // positional in the kind file, re-attached by parseSkillTree — NOT derivable from the id any more
   group: z.string(),                    // topic slug; positional in the kind file (= the containing group node), re-attached by parseSkillTree
   name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
@@ -96,7 +102,7 @@ export const skill = z.object({
   // formulas, and restating one at student level is translation, not duplication.
   //
   // AN ARRAY, because a note can carry two ($2a$ is not $a^2$, AND $a^2$ is not
-  // $2a$), and EMPTY IS MEANINGFUL: `equivalence.bracket-types` and
+  // $2a$), and EMPTY IS MEANINGFUL: `skill.bracket-types` and
   // `-addition-commutative` have no tempting wrong form at all, which is exactly
   // why they exist — a Same-or-Different session needs items whose answer is
   // `same`. Never invent one to fill the field.
@@ -1026,15 +1032,16 @@ export function validateLatexCompiles(
   }
 }
 
-// Every id must be unique, and the id prefix must match the skill's `kind`.
+// Every id must be unique. The kind/prefix agreement check went with the prefix
+// itself (2026-07-30): an id says only WHICH skill this is, never what kind it is,
+// so there is nothing left for the two to disagree about. The slug must therefore
+// be unique across ALL kinds, not just within one file — which was checked before
+// the rename and holds.
 export function validateUniqueIds(skills: Skill[]): void {
   const seen = new Set<string>()
   for (const f of skills) {
     if (seen.has(f.id)) throw new Error(`Duplicate skill id "${f.id}".`)
     seen.add(f.id)
-    if (!f.id.startsWith(f.kind + '.')) {
-      throw new Error(`Skill "${f.id}" has kind "${f.kind}" but a mismatching id prefix.`)
-    }
   }
 }
 

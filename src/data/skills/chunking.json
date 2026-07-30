@@ -17,7 +17,7 @@
       },
       "skills": [
         {
-          "id": "chunking.chunks-in-sum",
+          "id": "skill.chunks-in-sum",
           "name": {
             "en": "Chunks in a sum or difference",
             "de": "Bausteine in einer Summe oder Differenz"
@@ -43,7 +43,7 @@
             "explains": "sal.implicit-op-overlooked"
           },
           "requires": [
-            "equivalence.explicit-vs-implicit-product"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.multiplication-binds-tighter"
@@ -55,7 +55,7 @@
           ]
         },
         {
-          "id": "chunking.chunks-in-product",
+          "id": "skill.chunks-in-product",
           "name": {
             "en": "Chunks in a product",
             "de": "Bausteine in einem Produkt"
@@ -71,7 +71,7 @@
             "(x+1)"
           ],
           "requires": [
-            "equivalence.product-with-brackets"
+            "skill.product-with-brackets"
           ],
           "rules": [
             "rule.bracket-chunk"
@@ -83,7 +83,7 @@
           ]
         },
         {
-          "id": "chunking.implicit-chunking",
+          "id": "skill.implicit-chunking",
           "name": {
             "en": "Implicit chunking — multiplication precedence",
             "de": "Unsichtbare Bausteine — Vorrang der Multiplikation"
@@ -105,7 +105,7 @@
             "explains": "mis.precedence-ignored"
           },
           "requires": [
-            "equivalence.precedence-brackets"
+            "skill.precedence-brackets"
           ],
           "rules": [
             "rule.dominant-op-last"
@@ -117,7 +117,7 @@
           ]
         },
         {
-          "id": "chunking.bracket-as-chunk",
+          "id": "skill.bracket-as-chunk",
           "name": {
             "en": "Bracket as a single chunk",
             "de": "Klammer als ein einziger Baustein"
@@ -139,7 +139,7 @@
             "explains": "anti.bracket-dissolved"
           },
           "requires": [
-            "equivalence.product-with-brackets"
+            "skill.product-with-brackets"
           ],
           "rules": [
             "rule.bracket-chunk"
