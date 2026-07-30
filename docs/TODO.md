@@ -4,62 +4,279 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🔵 NEXT SESSION — BRAINSTORM THE DRILL LAYER (handover 2026-07-29)
+## 🔵 THE DRILL BRAINSTORM — two threads, taken one at a time (2026-07-30)
 
-**Design first, in prose, before any schema.** The reference side is done and coherent; the
-drill is the actual product — a daily trainer that cannot yet drill anything. ⚠️ **Expect
-ripple**: drills consume skills, so designing them will expose what the skill layer lacks, and
-changes underneath are expected rather than a failure.
+The brainstorm ran and split into two independent jobs. **Do thread 1 first, then thread 2.**
+They touch the same file and nothing else in common.
 
-### What the skill layer already offers a drill
+### 🧵 THREAD 1 — one ✗, one mistake
 
-Every skill answers a question, and the shape of the answer is per kind. **This is the material
-a drill needs, and it now exists** — it was authored onto the skills this session precisely
-because the rebuilt drills will read from them.
+**The finding, and it is not a bug.** `TaxonomyView.vue:355` renders the skill's **whole**
+`errors` list under the **whole** ✗ column — a list beside a column, never a link from a form
+to a sentence. Nothing was derived and nothing was hand-filled. For the 34 skills with one ✗
+and one mistake, proximity IS the edge and it is right. **A drill cannot live on proximity**:
+it must name one sentence when the student picks one form.
 
-| kind | n | the ✓ | the ✗ | drill shape it suggests |
-|---|---|---|---|---|
-| equivalence | 44 | `illustration` (a chain) 44 | `wrong` 35 | **same or different?** — the chain gives true items, `wrong` gives false ones |
-| classification | 16 | `answer` 16 | `misreads` 6 | **name the main operation** — 5 options, one right |
-| chunking | 4 | `chunks` 4 | `misChunks` 2 | **split it** — pick or mark the pieces |
-| transformation | 10 | `illustration` (an identity) 10 | `wrong` 10 | **produce the form** — free input, needs grading |
+**Nine skills have a ✗ and more than one mistake. Judged by hand, they split three ways** —
+and only the first way is noise:
 
-⚠️ **The contrast set matters here**: `equivalence.bracket-types` and `-addition-commutative`
-have no ✗ *by design*, because a Same-or-Different session needs items whose answer is *same*
-or students answer "different" by reflex. Do not read those two as gaps.
+| type | n | what it is |
+|---|---|---|
+| A — neighbourhood context | 5 | one mistake matches the ✗, the other is about the skill's general area. `minus-over-sum`, `double-negative`, `minus-on-fraction`, `negative-numbers`, `subtraction-as-adding-opposite` |
+| **B — a ✗ nobody wrote** | **3** | the second mistake names a *different direction* of the same confusion. **Author the missing ✗** |
+| C — already 1:1 | 1 | `collect-like-terms`: 2 ✗, 2 mistakes, pairing correct and unstated |
 
-### Decisions already made that the brainstorm must not re-litigate
+**Type B in full, because it is new content, not cleanup:**
 
-- **The drill reads the skill, never the reverse.** `src/data/drills/*.json` is DISPOSABLE —
-  ignore it entirely, it is not evidence of anything.
-- **`requires` is the only ordering a skill carries** — a dependency partial order, never a
-  sequence. 68 of 74 skills have one.
-- **Ordering vs emphasis are different questions**: `requires` says what must be automatic
-  first; **mistake `frequency` says what to weight**. The parked `drills/_parked-priority.json`
-  holds a teacher's hand-ranked drilling order (1–29) from before the split — a design input,
-  not data to reload.
-- **An error is not drillable.** You drill a capability and *detect* an error.
-- **Tutorial DRIVES drills — one runner, two drivers** (guided `requires`-traversal vs free
-  pick). Do not fork the runner.
-- ⚠️ **The tutorial will collide with `/sheets`** if it is built to hold content. The sheets are
-  the reference it should walk, not duplicate.
-- **Display the authored LaTeX, never Compute Engine output** — CE canonicalises and loses
-  surface form. CE answers only semantic questions ("are these equal?"). See `app_design.md`.
+    root-of-a-sum          ✗ √(a+b) = √a + √b   → anti.linearity
+                             the other names READING √(a+b) as √a + b
+    fraction-bar-grouping  ✗ (a+b)/c = a + b/c  → mis.fraction-bar-grouping-lost
+                             the other names the inline-slash form a+b/c
+    power-of-a-product     ✗ (ab)² = ab²        → anti.power-of-product-partial
+                             the other names READING ab² as (ab)²
 
-### Questions the brainstorm should settle
+In each, one is a generative move and the other a misreading. The mistake list was recording a
+wrong form nobody had authored.
 
-1. **What is a session?** Length, mix across kinds, and whether it is generated or authored.
-2. **Where does progress live?** The first runtime state in the app — everything so far is
-   static content. Pinia + localStorage is the obvious floor; anything more is a real decision.
-3. **How is a transformation graded?** Free input needs equivalence checking (CE) and probably
-   MathLive for entry. The other three kinds need no grading at all — they are selections.
-4. **Does the skill layer need per-item material**, or can items be generated from
-   `illustration` + `wrong` + `requires`? Generating keeps one source of truth; authoring gives
-   control. This is the ripple question.
-5. **What does a wrong answer show?** The row on `/skills` already pairs ✓ with ✗ and names the
-   mistake — the drill should probably reuse that, not invent a second explanation surface.
-6. **Sheet coverage as a curriculum question**: 31 of 50 sheet rules have no skill. If students
-   drill what is on the cheat sheet, that gap is the syllabus talking.
+**✅ DECIDED — `skill.errors` IS DELETED AND `mistakes` IS DERIVED** from the wrong forms. The
+field said the same thing twice and its second copy was carrying mis-wiring: five skills cited
+the nearest available pool entry rather than their actual failure (`root-of-a-product` cites
+`anti.linearity`, but its real error is *"can't do anything"*).
+
+⚠️ **An earlier "keep it as a validated superset" argument here was OVERTURNED** and should not
+be re-run. It rested on five skills that would be "left claiming nothing" — false on two counts:
+four of them are RECOGNITION skills already justified by `required by` (measured: 3 of the 4 are
+required by something), and the fifth (`exponent-as-repeated-product`) turned out to have a real
+✗ nobody had written.
+
+**⚠️ The cost, measured, because it is bigger than the 11 skills the pairing touches.** With no
+field to fall back on, the "a bare string is legal when the skill cites exactly one mistake"
+rule becomes circular — the fallback would need the list the list is derived from. So **every
+wrong-thing must carry `explains`**: ~60 skills, and `misreads` / `misChunks` stop being bare
+values and become objects. **This is mechanical, not editorial** — for the 53 skills with one ✗
+and one mistake, `explains` is a copy of the single id.
+
+```jsonc
+"wrong":     [{ "latex": "-(a+b) = -a + b", "explains": "anti.partial-distribution" }]
+"wrong":     [{ "explains": "omi.no-move-attempted" }]      // latex OPTIONAL — see below
+"misreads":  { "op": "product", "explains": "sal.loudest-op-wins" }
+"misChunks": { "chunks": ["3x + 1", "-2x - 1"], "explains": "anti.bracket-dissolved" }
+```
+
+### ✅ THE STOP SIGNAL — two new pool entries (the author's, 2026-07-30)
+
+**The gap, and the argument that carried it:** *"We drill formulas with which something can be
+done, but we do not drill the stop signal: nothing can be done here."* That is why
+$\sqrt{a^2+b^2}$ is such a popular mistake. **Measured: not one of the 29 pool entries is "you
+moved when nothing could be done"** — every anti-law names a SPECIFIC wrong move.
+
+But the RULES pool has been carrying the stop signals all along, and nothing breaks them:
+
+    rule.no-power-law-for-sums   [is]  There is no law for a power of a sum
+    rule.no-root-law-for-sums    [is]  There is no law for a root of a sum
+    rule.unlike-terms-stay       [do]  Leave unlike terms alone
+
+which is what this file's older line — *"`rule.no-power-law-for-sums` is an anti-law wearing a
+rule's clothes"* — was circling without naming.
+
+    omi.no-move-attempted   [omission]  "Don't leave it standing when a rule applies"
+    anti.forced-move        [anti-law]  "Don't invent a move where there is none"
+                                        breaks: no-power-law-for-sums, no-root-law-for-sums,
+                                                unlike-terms-stay
+
+⚠️ **Two entries, TWO DIFFERENT KINDS** — the author proposed them as a symmetric pair and the
+mood must still follow the mechanism: inactivity is *a step simply not taken* (the `omission`
+definition verbatim), wrongly-active is a generative move that should not happen (the `anti-law`
+definition verbatim).
+
+⚠️ **BOTH CARRY `latex: []` AND RENDER AS ✗ …** — so `wrong.latex` becomes OPTIONAL and the VIEW
+draws the ellipsis. Do NOT put `\ldots` in a `latex` field: the field means "the false claim",
+and the whole point is that there is none. `omi.adjacent-signs` is the precedent that the pool
+already tolerates a formless entry.
+
+⚠️ **THESE TWO ARE THE ONLY TASK-RELATIVE ENTRIES IN THE POOL.** Every other mistake is false
+whatever was asked — `3x = 3+x` is wrong on any page. "You did nothing" and "you did something"
+are mistakes only GIVEN A JOB. So they may be shown inside a drill with a stated task, and on a
+page only where the task is stated. Check this before rendering one under a bare formula.
+
+⚠️ **`errors.json` CANNOT EXPRESS THE INACTIVITY ENTRY** — `errorInstance.wrong` is REQUIRED, and
+an inactivity error writes nothing. Since `mistakes.json` is GENERATED from errors.json plus the
+sentence table in `scripts/gen-mistakes.py`, these two need a **pool-only** path in that script:
+entries with no errors.json twin. (`anti.forced-move` could have one — it is exactly the
+documented *dead end* instance shape, `from` + `wrong` + `hint` — but keep the pair together.)
+
+### 📐 The sharpened duplication rule
+
+The old form — *"repeating a pair across two skills is what `wrong` exists to avoid"* — is aimed
+at the wrong object, and the author is right that **several starting forms converge on the same
+error**. `anti.linearity` is cited by 10 skills and four show four DIFFERENT ✗:
+
+    no-splitting-the-denominator   c/(a+b) = c/a + c/b
+    no-cancelling-in-a-sum         (3x+2)/3 = x + 2
+    cancel-common-factor           (a+k)/(b+k) = a/b
+    root-of-a-sum                  √(a+b) = √a + √b
+
+**What must not repeat is the STARTING FORM, not the mistake.** Sharing a mistake across skills
+is normal — that is what a pool is for. The rule gives the same verdict on the case decided by
+hand on 2026-07-29 (`cancel-common-factor` avoided `(3x+2)/3 = x+2` because that STARTING FORM
+belongs to `no-cancelling-in-a-sum`), with a better reason. And note the consequence:
+`root-of-a-product` was never blocked from having a ✗ — its starting form `√(ab)` is unique to
+it. **It is empty because the failure mode is inaction, not because the rule forbade it.**
+
+### The 16 changes, in one content pass
+
+    A. pair an existing ✗ (9)   negative-numbers · subtraction-as-adding-opposite · minus-over-sum
+                                double-negative · minus-on-fraction · fraction-bar-grouping
+                                power-of-a-product · root-of-a-sum · collect-like-terms
+    B. new ✗, transcribed (3)   fraction-bar-grouping += "a + b/c = \frac{a+b}{c}"
+                                root-of-a-sum        += "\sqrt{a+b} = \sqrt{a} + b"
+                                division-variants    += "\frac{a}{b} \neq a : b"
+    C. clumsy pairs (2)         subtraction-as-adding-opposite += "a + -b = a + (-b)"
+                                double-negative               += "a - -b = a - (-b)"
+    D. new misChunks (1)        bracket-as-chunk: ["3x + 1", "-2x - 1"]   ⚠️ AUTHOR TO CHECK —
+                                the only form that does not come straight out of the pool
+    E. a real ✗ (1)             exponent-as-repeated-product += "a^2 = a + a"  ⚠️ NOT a duplicate:
+                                coefficient-vs-exponent has `2a = a^2` and `a^2 = 2a`, never this
+    F. inactivity (4)           root-of-a-product · fractional-exponent-root ·
+                                negative-fractional-exponent · fraction-as-reciprocal-product
+                                → { "explains": "omi.no-move-attempted" }
+
+One citation is DROPPED: `minus-on-fraction` loses `mis.minus-roles-confused`, which closes the
+housekeeping item below.
+
+### 🔎 OPEN — should a skill carry its TASK? (the author's, 2026-07-30)
+
+*"We are experienced and automatically find the question that is implicitly asked. Why not make
+it explicit?"* Today the question is inferred from `kind` — equivalence → *same or different?*,
+classification → *name the main operation*, chunking → *split it*, transformation → *produce the
+form* — which is coarse: per skill the real question differs (*"can you split this root?"*,
+*"write it without a negative exponent"*, *"can anything be done here?"*).
+
+**Two things make this more than tidiness.** The two new pool entries are TASK-RELATIVE and
+illegible without a stated job — a `task` field is what would make them showable on a page. And
+a generated drill item needs a PROMPT, which today could only come from `kind`. Settle it at the
+start of thread 2; it is a localized prose field, so it also lands in the German debt.
+
+### 🧵 THREAD 2 — the schema, the bindings, and where items come from
+
+**⚠️ THE HANDOVER'S PREMISE WAS WRONG, and it was measured.** "The material already exists" is
+false. Every distinct item the 74 skills can yield today:
+
+    equivalence      85 same-pairs (from 44 chains) + 36 false claims
+    classification   16      chunking 4      transformation 10
+    ────────────────────────────────────────────────────────────────
+    TOTAL           151 items ≈ ONE 10–15 min session
+
+and 30 of the 44 chains have exactly two segments, so "the chain gives true items" means *one
+pair* for two thirds of the layer. **The disposable drill layer holds 161 items — MORE than the
+skills do.** So "drills consume skills" as literally stated LOSES material. Generation is not a
+preference; it is forced by arithmetic.
+
+**Why it is short: `illustration` is a SCHEMA, not an item.** `classification.sum` illustrates
+`a + b` and asks you to name the main operation — the answer is written on the page. And the
+field silently does two jobs: **48 of 74 illustrations are schematic** (free `a`,`b`,`c`), **26
+are concrete instances** (`3 \times x = 3 \cdot x = 3x`, `x^2+5x+6 = (x+2)(x+3)`). Both typeset
+beautifully, so the inconsistency is invisible on `/skills` and fatal to a drill reading the
+field blind.
+
+**DECIDED — a nested `schema` key ON the skill, not a parallel binding layer.** The letters
+already live on the skill (`illustration`, `wrong`, `chunks`), so a separate layer would have to
+restate every ✗ in its own letters — duplicating exactly what was hand-authored last week. One
+nested key also keeps the drill contract visibly separate: the page reads none of it.
+
+```
+schematic already (48)   "schema": { "binds": { "a": ["variable","monomial"], … } }
+                         chain / wrong / chunks fall back to the authored fields
+concrete illustration    "schema": { "chain": "n \\times a = n \\cdot a = na = …",
+  (~26)                              "wrong": ["na = n + a"],
+                                     "binds": { "n": ["numeral"], "a": ["variable"] } }
+```
+
+The page keeps its vivid `3x`; the drill gets `5y`, `2k`, `7a`. **One binding instantiates the
+stem, the correct answer AND the tempting wrong form in lockstep** — that is the whole reason
+this shape is worth having.
+
+**The vocabulary is ONE new shared file, and it is COMPOSED, not enumerated.** A hand-picked
+`monomial: ["3x","2y","5a"]` is three items where `numeral × variable` is sixty-four.
+
+    numeral      range 2–9        ⚠️ exclusions ARE the content: 1 gives "1x", 0 collapses the term
+    variable     curated list     ⚠️ NOT interchangeable: e, i, o, l are out (constants, confusable with 1)
+    monomial     {numeral}{variable}
+    power        {variable}^{2..4}
+    bracket-sum  ({variable} + {numeral})
+
+`classification.sum` alone goes from 1 item to ~4000. The bank problem stops existing.
+
+**⚠️ THE SCHEMA IS A SURFACE TEMPLATE AND MUST NEVER BECOME AN AST.** `app_design.md` already
+decided this — "Tier 1 stays on surface strings; an AST cannot represent `3x` vs `3·x`". The
+entire equivalence layer is about surfaces: `3 \times x = 3 \cdot x = 3x = (3)(x)` is ONE tree
+and FIVE surfaces, and as an AST the skill has nothing to teach. CE **checks** an instantiated
+item (root op-class still `answer`?); it never generates or renders one.
+
+**⚠️ SLOTS CARRY THEIR OWN BRACKETS** — `bracket-sum` yields `(x+1)`, never `x+1` — so
+substitution stays literal string replacement. The moment it must insert brackets itself it
+needs a parser, and that is the door the AST creeps back through. It is also why a narrowing is
+**a narrower slot, not a constraint language**: `negated-square-vs-negative-base` binds `a` to
+`variable` only, because `3x` in `-a^2` gives `-3x^2` and the skill quietly becomes another one.
+
+**Legal vs wanted** — the answer to "different drills need different ranges": a bind value is
+the list of slots that are **legal** (a correctness statement, authored once, CE-gated); the
+**session** filters that list by `level` for difficulty. Same authored range, easy Monday and
+hard Friday, no duplicated lists.
+
+- **Escape hatch**: an authored `items` array per skill, where no schema is sensible. Bindings
+  are the floor, not the ceiling.
+- ⚠️ **Item spaces will overlap**: `classification.sum` at level 2 yields `3x + 2y`, which is
+  verbatim `classification.sum-of-products`' illustration. Harmless where the answers agree —
+  the CE gate should watch for where they do not.
+
+**🛑 THE STOP-SIGNAL ITEM TYPE — a curriculum gap, not just a schema one (2026-07-30).** *"We
+drill formulas with which something can be done, but we do not drill the stop signal."* So the
+runner needs a **"can anything be done here?"** item whose honest answer is sometimes NO.
+
+⚠️ **This is the same instinct that produced the contrast pair**: `bracket-types` and
+`addition-commutative` exist so a Same-or-Different session has items whose answer is *same*, or
+students answer "different" by reflex. **A do-something session needs items whose answer is
+*nothing*, for exactly the same reason.**
+
+⚠️ And the layer has **no skill framed that way**. The content is scattered across
+`no-cancelling-in-a-sum`, `no-splitting-the-denominator`, `unlike-variable-terms`,
+`number-plus-term`, `root-of-a-sum`, `power-of-a-sum` — every one authored as an EQUIVALENCE,
+none as *recognise a finished form*. Whether that becomes a skill or a property of items is
+thread 2's to settle, and it is the strongest evidence yet that thread 2 CHANGES the skill layer
+rather than only reading it.
+
+### Settled during the brainstorm (do not re-litigate)
+
+- **`skills` IS the interface to the reference corpus.** `restsOn` → cards 74/74, `rules` 62/74,
+  mistakes 60/74. Sheets are reachable ONLY backwards (skill → rule → reverse index) and must
+  stay that way — a drill citing a sheet makes layout a dependency of practice.
+- **Anything no skill reaches is undrillable BY CONSTRUCTION.** That turns the 31-of-48 sheet
+  number from a nag into a curriculum instrument: it says *these are printed and never
+  practised*. **Do not close the gap to quiet the audit.**
+- **Progress state is per SKILL, never per item.** Items are generated and disposable; skill ids
+  are stable, so item-level state would be invalidated by every content edit. Leitner boxes plus
+  availability gated on `requires` (6 roots, depth ≤ 5) — and the two drivers then fall out of
+  one runner without forking it.
+- **No MathLive / runtime CE grading in v1.** It is the heaviest engineering in the app and
+  serves 10 of 74 skills, and the stated purpose is *reading and classification*, so free-form
+  production is a scope expansion. Every transformation skill has an authored `wrong` — a
+  ready-made distractor for a selection format needing no grading at all.
+- **Keep same-or-different for equivalence** despite the 50% guess rate: two keys and no options
+  to read is the fastest possible response, and speed is the point of Tier 1. Handle guessing
+  with streaks and response time, not with more options.
+
+### Still true from the 2026-07-29 handover
+
+- **The drill reads the skill, never the reverse.** `src/data/drills/*.json` is DISPOSABLE.
+- **`requires` is the only ordering a skill carries** — a partial order, never a sequence.
+- **Ordering vs emphasis**: `requires` says what must be automatic first, mistake `frequency`
+  says what to weight. `drills/_parked-priority.json` is a design input, not data to reload.
+- **A mistake is not drillable.** You drill a capability and *detect* a mistake.
+- **Tutorial DRIVES drills — one runner, two drivers.** Do not fork the runner. ⚠️ It will
+  collide with `/sheets` if built to hold content.
+- ⚠️ **`equivalence.bracket-types` and `-addition-commutative` have no ✗ BY DESIGN** — a
+  Same-or-Different session needs items whose answer is *same*.
 
 ### Not blocking, but decide early
 - The inspection-only `drill material` fold on `/skills` renders discardable content, and
@@ -81,6 +298,13 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
 ---
 
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
+
+- [ ] **Two view files carry pre-rename names** (2026-07-30). `/skills` renders
+  `TaxonomyView.vue` — the name predates the taxonomy → skills rename — and `/errors` renders
+  `ReferenceView.vue`, from when it was the only reference page. **`SkillsView.vue` and
+  `ErrorsView.vue`.** Every other view is named for its route (`RulesView`, `SheetsView`,
+  `MistakesView`, `OverviewView`), so these two are the odd ones out. Mechanical: the files, the
+  imports in `router.ts`, and nothing else.
 
 - [ ] **`errors.json` STAYS FOR NOW (decided 2026-07-29)** and is the only home of **50
   instances, 28 `fix` strings and 14 hints**. `mistakes.json` took only the general half.

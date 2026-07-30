@@ -28,7 +28,10 @@
           },
           "illustration": "3 \\times x = 3 \\cdot x = 3x = x \\cdot 3 = (3)(x)",
           "wrong": [
-            "3x = 3 + x"
+            {
+              "latex": "3x = 3 + x",
+              "explains": "mis.juxtaposition-as-plus"
+            }
           ],
           "rules": [
             "rule.juxtaposition"
@@ -36,9 +39,6 @@
           "restsOn": [
             "ix.juxtaposition",
             "ix.coefficient-front"
-          ],
-          "errors": [
-            "mis.juxtaposition-as-plus"
           ]
         },
         {
@@ -53,7 +53,10 @@
           },
           "illustration": "2 \\times (x+1) = 2 \\cdot (x+1) = 2(x+1) = (x+1) \\cdot 2",
           "wrong": [
-            "2(x+1) = 2 + (x+1)"
+            {
+              "latex": "2(x+1) = 2 + (x+1)",
+              "explains": "mis.juxtaposition-as-plus"
+            }
           ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
@@ -65,9 +68,6 @@
           "restsOn": [
             "ix.juxtaposition",
             "ix.brackets"
-          ],
-          "errors": [
-            "mis.juxtaposition-as-plus"
           ]
         },
         {
@@ -82,7 +82,10 @@
           },
           "illustration": "(-1) \\cdot a = (-1)a = -1a = -a",
           "wrong": [
-            "(-1)a = -1 + a"
+            {
+              "latex": "(-1)a = -1 + a",
+              "explains": "mis.juxtaposition-as-plus"
+            }
           ],
           "requires": [
             "equivalence.explicit-vs-implicit-product",
@@ -96,9 +99,6 @@
             "th.negative-one-times",
             "ix.invisible-one",
             "ix.juxtaposition"
-          ],
-          "errors": [
-            "mis.juxtaposition-as-plus"
           ]
         },
         {
@@ -113,7 +113,10 @@
           },
           "illustration": "0 \\cdot x = 0x = 0",
           "wrong": [
-            "0x = x"
+            {
+              "latex": "0x = x",
+              "explains": "mis.juxtaposition-as-plus"
+            }
           ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
@@ -124,9 +127,6 @@
           "restsOn": [
             "th.zero-times",
             "ix.juxtaposition"
-          ],
-          "errors": [
-            "mis.juxtaposition-as-plus"
           ]
         },
         {
@@ -141,7 +141,10 @@
           },
           "illustration": "x + x = 2x",
           "wrong": [
-            "x + x = x^2"
+            {
+              "latex": "x + x = x^2",
+              "explains": "anti.repetition-confusion"
+            }
           ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
@@ -152,9 +155,6 @@
           "restsOn": [
             "def.multiple",
             "ix.juxtaposition"
-          ],
-          "errors": [
-            "anti.repetition-confusion"
           ]
         }
       ]
@@ -182,7 +182,10 @@
           },
           "illustration": "2 + 3x = 3x + 2",
           "wrong": [
-            "2 + 3x = 5x"
+            {
+              "latex": "2 + 3x = 5x",
+              "explains": "anti.conjoining"
+            }
           ],
           "requires": [
             "equivalence.repeated-addition"
@@ -193,9 +196,6 @@
           "restsOn": [
             "th.collect-like-terms",
             "ix.juxtaposition"
-          ],
-          "errors": [
-            "anti.conjoining"
           ]
         },
         {
@@ -210,7 +210,10 @@
           },
           "illustration": "3x + 2y = 2y + 3x",
           "wrong": [
-            "3x + 2y = 5xy"
+            {
+              "latex": "3x + 2y = 5xy",
+              "explains": "anti.conjoining"
+            }
           ],
           "requires": [
             "equivalence.number-plus-term"
@@ -221,9 +224,6 @@
           "restsOn": [
             "th.collect-like-terms",
             "ix.juxtaposition"
-          ],
-          "errors": [
-            "anti.conjoining"
           ]
         },
         {
@@ -238,7 +238,10 @@
           },
           "illustration": "x^2 + x = x + x^2",
           "wrong": [
-            "x^2 + x = x^3"
+            {
+              "latex": "x^2 + x = x^3",
+              "explains": "anti.conjoining"
+            }
           ],
           "requires": [
             "equivalence.exponent-as-repeated-product",
@@ -246,9 +249,6 @@
           ],
           "restsOn": [
             "th.collect-like-terms"
-          ],
-          "errors": [
-            "anti.conjoining"
           ]
         }
       ]
@@ -276,7 +276,10 @@
           },
           "illustration": "-3 = (-3) = 0 - 3",
           "wrong": [
-            "0 - 3 = 3 - 0"
+            {
+              "latex": "0 - 3 = 3 - 0",
+              "explains": "anti.commute-everything"
+            }
           ],
           "rules": [
             "rule.three-minuses"
@@ -284,10 +287,6 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ],
-          "errors": [
-            "mis.minus-roles-confused",
-            "anti.commute-everything"
           ]
         },
         {
@@ -302,7 +301,14 @@
           },
           "illustration": "a - b = a + (-b) = a + (-1) \\cdot b",
           "wrong": [
-            "a - b = a \\cdot (-b)"
+            {
+              "latex": "a - b = a \\cdot (-b)",
+              "explains": "mis.subtraction-as-times-negative"
+            },
+            {
+              "latex": "a + -b = a + (-b)",
+              "explains": "omi.adjacent-signs"
+            }
           ],
           "requires": [
             "equivalence.coefficient-negative-one"
@@ -313,11 +319,6 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ],
-          "errors": [
-            "mis.minus-roles-confused",
-            "omi.adjacent-signs",
-            "mis.subtraction-as-times-negative"
           ]
         },
         {
@@ -332,7 +333,10 @@
           },
           "illustration": "-(a + b) = (-1)(a + b) = -a - b",
           "wrong": [
-            "-(a + b) = -a + b"
+            {
+              "latex": "-(a + b) = -a + b",
+              "explains": "anti.partial-distribution"
+            }
           ],
           "requires": [
             "equivalence.coefficient-negative-one"
@@ -346,10 +350,6 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ],
-          "errors": [
-            "anti.partial-distribution",
-            "mis.minus-roles-confused"
           ]
         },
         {
@@ -364,7 +364,10 @@
           },
           "illustration": "-(a - b) = -a + b = b - a",
           "wrong": [
-            "-(a - b) = -a - b"
+            {
+              "latex": "-(a - b) = -a - b",
+              "explains": "anti.partial-distribution"
+            }
           ],
           "requires": [
             "equivalence.coefficient-negative-one"
@@ -378,9 +381,6 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ],
-          "errors": [
-            "anti.partial-distribution"
           ]
         },
         {
@@ -395,7 +395,14 @@
           },
           "illustration": "a - (-b) = a + b",
           "wrong": [
-            "a - (-b) = a - b"
+            {
+              "latex": "a - (-b) = a - b",
+              "explains": "mis.minus-roles-confused"
+            },
+            {
+              "latex": "a - -b = a - (-b)",
+              "explains": "omi.adjacent-signs"
+            }
           ],
           "requires": [
             "equivalence.subtraction-as-adding-opposite"
@@ -407,10 +414,6 @@
             "def.sub",
             "th.minus-in-product",
             "th.negative-one-times"
-          ],
-          "errors": [
-            "mis.minus-roles-confused",
-            "omi.adjacent-signs"
           ]
         },
         {
@@ -425,7 +428,10 @@
           },
           "illustration": "(-a)(-b) = ab",
           "wrong": [
-            "(-a)(-b) = -ab"
+            {
+              "latex": "(-a)(-b) = -ab",
+              "explains": "mis.minus-roles-confused"
+            }
           ],
           "requires": [
             "equivalence.negative-numbers",
@@ -440,9 +446,6 @@
             "ix.juxtaposition",
             "th.negative-one-times",
             "def.sub"
-          ],
-          "errors": [
-            "mis.minus-roles-confused"
           ]
         },
         {
@@ -457,7 +460,10 @@
           },
           "illustration": "-\\frac{a}{b} = \\frac{-a}{b} = \\frac{a}{-b}",
           "wrong": [
-            "-\\frac{a}{b} = \\frac{-a}{-b}"
+            {
+              "latex": "-\\frac{a}{b} = \\frac{-a}{-b}",
+              "explains": "anti.minus-on-both-parts"
+            }
           ],
           "requires": [
             "equivalence.negative-numbers",
@@ -473,10 +479,6 @@
             "th.negative-one-times",
             "def.sub",
             "ix.fraction-bar"
-          ],
-          "errors": [
-            "anti.minus-on-both-parts",
-            "mis.minus-roles-confused"
           ]
         },
         {
@@ -491,7 +493,10 @@
           },
           "illustration": "a - (b + c) = a - b - c",
           "wrong": [
-            "a - (b + c) = a - b + c"
+            {
+              "latex": "a - (b + c) = a - b + c",
+              "explains": "anti.partial-distribution"
+            }
           ],
           "requires": [
             "equivalence.minus-over-sum"
@@ -505,9 +510,6 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ],
-          "errors": [
-            "anti.partial-distribution"
           ]
         },
         {
@@ -522,7 +524,10 @@
           },
           "illustration": "a - (b - c) = a - b + c",
           "wrong": [
-            "a - (b - c) = a - b - c"
+            {
+              "latex": "a - (b - c) = a - b - c",
+              "explains": "anti.partial-distribution"
+            }
           ],
           "requires": [
             "equivalence.minus-over-difference"
@@ -536,9 +541,6 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ],
-          "errors": [
-            "anti.partial-distribution"
           ]
         }
       ]
@@ -577,13 +579,13 @@
           },
           "illustration": "((a + b)) = (a + b) = a + b",
           "wrong": [
-            "((a + b)) \\neq (a + b)"
+            {
+              "latex": "((a + b)) \\neq (a + b)",
+              "explains": "omi.redundant-brackets-kept"
+            }
           ],
           "restsOn": [
             "ix.brackets"
-          ],
-          "errors": [
-            "omi.redundant-brackets-kept"
           ]
         },
         {
@@ -598,7 +600,10 @@
           },
           "illustration": "a + b \\cdot c = a + bc",
           "wrong": [
-            "a + b \\cdot c = (a + b) \\cdot c"
+            {
+              "latex": "a + b \\cdot c = (a + b) \\cdot c",
+              "explains": "mis.precedence-ignored"
+            }
           ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
@@ -606,9 +611,6 @@
           "restsOn": [
             "ix.precedence",
             "ix.brackets"
-          ],
-          "errors": [
-            "mis.precedence-ignored"
           ]
         },
         {
@@ -623,7 +625,14 @@
           },
           "illustration": "\\frac{a+b}{c} = (a+b) \\div c",
           "wrong": [
-            "\\frac{a+b}{c} = a + \\frac{b}{c}"
+            {
+              "latex": "\\frac{a+b}{c} = a + \\frac{b}{c}",
+              "explains": "mis.fraction-bar-grouping-lost"
+            },
+            {
+              "latex": "a + b/c = \\frac{a+b}{c}",
+              "explains": "mis.linear-slash-overgrouped"
+            }
           ],
           "conditions": "c \\ne 0",
           "requires": [
@@ -634,10 +643,6 @@
           ],
           "restsOn": [
             "ix.fraction-bar"
-          ],
-          "errors": [
-            "mis.fraction-bar-grouping-lost",
-            "mis.linear-slash-overgrouped"
           ]
         },
         {
@@ -652,7 +657,10 @@
           },
           "illustration": "2(x + 1) = 2x + 2",
           "wrong": [
-            "2(x + 1) = 2x + 1"
+            {
+              "latex": "2(x + 1) = 2x + 1",
+              "explains": "anti.partial-distribution"
+            }
           ],
           "requires": [
             "equivalence.product-with-brackets"
@@ -665,9 +673,6 @@
             "ax.distributivity",
             "ix.juxtaposition",
             "ix.brackets"
-          ],
-          "errors": [
-            "anti.partial-distribution"
           ]
         }
       ]
@@ -690,14 +695,17 @@
             "de": "Eine Potenz ist wiederholte Multiplikation: $a^2 = a \\cdot a$, $a^3 = a \\cdot a \\cdot a$, $a^1 = a$."
           },
           "illustration": "a^2 = a \\cdot a",
+          "wrong": [
+            {
+              "latex": "a^2 = a + a",
+              "explains": "anti.repetition-confusion"
+            }
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
           "restsOn": [
             "def.pow"
-          ],
-          "errors": [
-            "anti.repetition-confusion"
           ]
         },
         {
@@ -712,8 +720,14 @@
           },
           "illustration": "2a = a + a",
           "wrong": [
-            "2a = a^2",
-            "a^2 = 2a"
+            {
+              "latex": "2a = a^2",
+              "explains": "anti.repetition-confusion"
+            },
+            {
+              "latex": "a^2 = 2a",
+              "explains": "anti.repetition-confusion"
+            }
           ],
           "requires": [
             "equivalence.repeated-addition",
@@ -727,9 +741,6 @@
             "def.pow",
             "ix.juxtaposition",
             "ix.invisible-one"
-          ],
-          "errors": [
-            "anti.repetition-confusion"
           ]
         },
         {
@@ -744,7 +755,10 @@
           },
           "illustration": "-a^2 = -(a^2)",
           "wrong": [
-            "-a^2 = (-a)^2"
+            {
+              "latex": "-a^2 = (-a)^2",
+              "explains": "mis.exponent-scope"
+            }
           ],
           "requires": [
             "equivalence.coefficient-negative-one",
@@ -758,9 +772,6 @@
             "th.negative-base",
             "th.negative-one-times",
             "def.sub"
-          ],
-          "errors": [
-            "mis.exponent-scope"
           ]
         },
         {
@@ -775,7 +786,10 @@
           },
           "illustration": "(ab)^2 = a^2 b^2",
           "wrong": [
-            "(ab)^2 = ab^2"
+            {
+              "latex": "(ab)^2 = ab^2",
+              "explains": "anti.power-of-product-partial"
+            }
           ],
           "requires": [
             "equivalence.product-with-brackets",
@@ -788,10 +802,6 @@
             "pl.of-product",
             "ix.pow",
             "th.negative-base"
-          ],
-          "errors": [
-            "mis.exponent-scope",
-            "anti.power-of-product-partial"
           ]
         },
         {
@@ -806,7 +816,10 @@
           },
           "illustration": "a^0 = 1",
           "wrong": [
-            "a^0 = 0"
+            {
+              "latex": "a^0 = 0",
+              "explains": "anti.zero-exponent"
+            }
           ],
           "requires": [
             "equivalence.exponent-as-repeated-product"
@@ -814,9 +827,6 @@
           "restsOn": [
             "def.pow-zero",
             "def.pow-neg"
-          ],
-          "errors": [
-            "anti.zero-exponent"
           ]
         },
         {
@@ -831,7 +841,10 @@
           },
           "illustration": "a^{-n} = \\frac{1}{a^n}",
           "wrong": [
-            "a^{-n} = -a^n"
+            {
+              "latex": "a^{-n} = -a^n",
+              "explains": "mis.negative-exponent-negates"
+            }
           ],
           "requires": [
             "equivalence.exponent-as-repeated-product",
@@ -845,9 +858,6 @@
             "def.pow-neg",
             "ix.pow",
             "th.negative-base"
-          ],
-          "errors": [
-            "mis.negative-exponent-negates"
           ]
         },
         {
@@ -861,6 +871,11 @@
             "de": "Ein gebrochener Exponent ist eine Wurzel: der Nenner ist der Wurzelexponent, der Zähler die Potenz."
           },
           "illustration": "a^{m/n} = \\sqrt[n]{a^m} = (\\sqrt[n]{a})^m",
+          "wrong": [
+            {
+              "explains": "omi.no-move-attempted"
+            }
+          ],
           "requires": [
             "equivalence.exponent-as-repeated-product"
           ],
@@ -871,9 +886,6 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
-          ],
-          "errors": [
-            "mis.root-scope"
           ]
         },
         {
@@ -887,6 +899,11 @@
             "de": "Beide Regeln zusammen: $a^{-m/n} = 1 / \\sqrt[n]{a^m}$. Das Minus gibt den Kehrwert, der Bruch die Wurzel."
           },
           "illustration": "a^{-m/n} = \\frac{1}{\\sqrt[n]{a^m}} = \\frac{1}{a^{m/n}}",
+          "wrong": [
+            {
+              "explains": "omi.no-move-attempted"
+            }
+          ],
           "requires": [
             "equivalence.negative-exponent",
             "equivalence.fractional-exponent-root"
@@ -900,10 +917,6 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
-          ],
-          "errors": [
-            "mis.negative-exponent-negates",
-            "mis.root-scope"
           ]
         },
         {
@@ -918,7 +931,10 @@
           },
           "illustration": "(a+b)^2 = (a+b)(a+b)",
           "wrong": [
-            "(a+b)^2 = a^2 + b^2"
+            {
+              "latex": "(a+b)^2 = a^2 + b^2",
+              "explains": "anti.linearity"
+            }
           ],
           "requires": [
             "equivalence.exponent-as-repeated-product",
@@ -932,9 +948,6 @@
             "th.binomial-square",
             "ix.pow",
             "th.negative-base"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         },
         {
@@ -948,6 +961,11 @@
             "de": "Eine Wurzel zerfällt über $\\times$: $\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}$."
           },
           "illustration": "\\sqrt{ab} = \\sqrt{a} \\cdot \\sqrt{b}",
+          "wrong": [
+            {
+              "explains": "omi.no-move-attempted"
+            }
+          ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
@@ -958,9 +976,6 @@
           "restsOn": [
             "th.root-of-product",
             "ix.root"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         },
         {
@@ -975,7 +990,14 @@
           },
           "illustration": "\\sqrt{a+b} = \\sqrt{b+a}",
           "wrong": [
-            "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}"
+            {
+              "latex": "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}",
+              "explains": "anti.linearity"
+            },
+            {
+              "latex": "\\sqrt{a+b} = \\sqrt{a} + b",
+              "explains": "mis.root-scope"
+            }
           ],
           "conditions": "a \\ge 0, b \\ge 0",
           "requires": [
@@ -987,10 +1009,6 @@
           ],
           "restsOn": [
             "ix.root"
-          ],
-          "errors": [
-            "anti.linearity",
-            "mis.root-scope"
           ]
         }
       ]
@@ -1013,13 +1031,15 @@
             "de": "Die Division hat viele Gesichter: $a \\div b = a : b = a/b$. Alles dasselbe Objekt. (Der Doppelpunkt ist das Divisionszeichen aus der Primarschule.)"
           },
           "illustration": "a \\div b = a : b = \\frac{a}{b}",
+          "wrong": [
+            {
+              "latex": "\\frac{a}{b} \\neq a : b",
+              "explains": "mis.bar-not-division"
+            }
+          ],
           "restsOn": [
             "ix.division-symbols",
             "def.div"
-          ],
-          "errors": [
-            "anti.commute-everything",
-            "mis.bar-not-division"
           ]
         },
         {
@@ -1033,14 +1053,16 @@
             "de": "Durch $b$ teilen heisst mit $1/b$ multiplizieren: $a/b = a \\cdot (1/b)$. Darum heisst durch einen Bruch teilen: mit seinem Kehrwert multiplizieren."
           },
           "illustration": "\\frac{a}{b} = a \\cdot \\frac{1}{b}",
+          "wrong": [
+            {
+              "explains": "omi.no-move-attempted"
+            }
+          ],
           "requires": [
             "equivalence.division-variants"
           ],
           "restsOn": [
             "def.div"
-          ],
-          "errors": [
-            "mis.bar-not-division"
           ]
         },
         {
@@ -1055,16 +1077,16 @@
           },
           "illustration": "\\frac{a}{1} = a",
           "wrong": [
-            "\\frac{a}{1} = \\frac{1}{a}"
+            {
+              "latex": "\\frac{a}{1} = \\frac{1}{a}",
+              "explains": "anti.commute-everything"
+            }
           ],
           "requires": [
             "equivalence.division-variants"
           ],
           "restsOn": [
             "th.divide-by-one"
-          ],
-          "errors": [
-            "anti.commute-everything"
           ]
         },
         {
@@ -1103,7 +1125,10 @@
           },
           "illustration": "\\frac{c}{a+b} = c \\div (a+b)",
           "wrong": [
-            "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}"
+            {
+              "latex": "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}",
+              "explains": "anti.linearity"
+            }
           ],
           "conditions": "a+b \\ne 0",
           "requires": [
@@ -1116,9 +1141,6 @@
           "restsOn": [
             "th.split-numerator",
             "ix.fraction-bar"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         },
         {
@@ -1133,7 +1155,10 @@
           },
           "illustration": "\\frac{3x+2}{3} = x + \\frac{2}{3}",
           "wrong": [
-            "\\frac{3x+2}{3} = x + 2"
+            {
+              "latex": "\\frac{3x+2}{3} = x + 2",
+              "explains": "anti.linearity"
+            }
           ],
           "requires": [
             "equivalence.splitting-a-fraction"
@@ -1146,9 +1171,6 @@
             "th.split-numerator",
             "th.cancel-common-factor",
             "ix.fraction-bar"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         }
       ]
@@ -1187,7 +1209,10 @@
           },
           "illustration": "ab = ba",
           "wrong": [
-            "a \\cdot 3 \\neq 3a"
+            {
+              "latex": "a \\cdot 3 \\neq 3a",
+              "explains": "mis.order-blindness"
+            }
           ],
           "requires": [
             "equivalence.explicit-vs-implicit-product"
@@ -1198,9 +1223,6 @@
           "restsOn": [
             "ax.mul-commutative",
             "ix.juxtaposition"
-          ],
-          "errors": [
-            "mis.order-blindness"
           ]
         },
         {
@@ -1215,7 +1237,10 @@
           },
           "illustration": "a - b = -(b - a)",
           "wrong": [
-            "a - b = b - a"
+            {
+              "latex": "a - b = b - a",
+              "explains": "anti.commute-everything"
+            }
           ],
           "requires": [
             "equivalence.minus-over-difference"
@@ -1226,9 +1251,6 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ],
-          "errors": [
-            "anti.commute-everything"
           ]
         },
         {
@@ -1243,7 +1265,10 @@
           },
           "illustration": "a \\div b = \\frac{a}{b}",
           "wrong": [
-            "\\frac{a}{b} = \\frac{b}{a}"
+            {
+              "latex": "\\frac{a}{b} = \\frac{b}{a}",
+              "explains": "anti.commute-everything"
+            }
           ],
           "requires": [
             "equivalence.division-variants"
@@ -1251,9 +1276,6 @@
           "restsOn": [
             "def.div",
             "ix.division-symbols"
-          ],
-          "errors": [
-            "anti.commute-everything"
           ]
         }
       ]
@@ -1277,7 +1299,10 @@
           },
           "illustration": "x^2 - 1 = (x+1)(x-1)",
           "wrong": [
-            "x^2 - 1 = (x-1)^2"
+            {
+              "latex": "x^2 - 1 = (x-1)^2",
+              "explains": "anti.linearity"
+            }
           ],
           "requires": [
             "classification.difference",
@@ -1290,9 +1315,6 @@
             "ix.precedence",
             "ix.brackets",
             "th.difference-of-squares"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         }
       ]

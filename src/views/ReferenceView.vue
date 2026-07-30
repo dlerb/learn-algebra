@@ -38,7 +38,7 @@ const L = computed(() => lang.value === 'de'
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
 
-const citedErrs = new Set(skills.flatMap(s => s.errors))
+const citedErrs = new Set(skills.flatMap(s => s.mistakes))
 const unused = computed(() => errorTree.errors.filter(e => !citedErrs.has(e.id)).length)
 
 // The rule an error breaks, as the card's NAME — `ax.distributivity` is a code the

@@ -94,6 +94,7 @@
     {
       "id": "rule.zero-and-one",
       "kind": "is",
+      "head": true,
       "rule": {
         "en": "Zero and one",
         "de": "Null und Eins"
@@ -186,6 +187,7 @@
     {
       "id": "rule.minus-rules",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Minus rules",
         "de": "Minusregeln"
@@ -342,6 +344,7 @@
     {
       "id": "rule.power-laws",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Power laws",
         "de": "Potenzgesetze"
@@ -605,6 +608,7 @@
     {
       "id": "rule.fraction-laws",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Fraction laws",
         "de": "Bruchregeln"
@@ -839,6 +843,7 @@
     {
       "id": "rule.binomial-formulas",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Binomial formulas",
         "de": "Binomische Formeln"
@@ -952,6 +957,7 @@
     {
       "id": "rule.distributing",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Distributing",
         "de": "Ausmultiplizieren"
@@ -1132,6 +1138,7 @@
     {
       "id": "rule.read-the-term-first",
       "kind": "is",
+      "head": true,
       "rule": {
         "en": "Reading a term",
         "de": "Einen Term lesen"

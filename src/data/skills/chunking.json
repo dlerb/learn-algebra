@@ -32,13 +32,16 @@
             "2y",
             "-z"
           ],
-          "misChunks": [
-            "3",
-            "x",
-            "2",
-            "y",
-            "z"
-          ],
+          "misChunks": {
+            "chunks": [
+              "3",
+              "x",
+              "2",
+              "y",
+              "z"
+            ],
+            "explains": "sal.implicit-op-overlooked"
+          },
           "requires": [
             "equivalence.explicit-vs-implicit-product"
           ],
@@ -49,9 +52,6 @@
             "ix.precedence",
             "ix.juxtaposition",
             "def.sub"
-          ],
-          "errors": [
-            "sal.implicit-op-overlooked"
           ]
         },
         {
@@ -97,10 +97,13 @@
             "3x",
             "2y"
           ],
-          "misChunks": [
-            "3x + 2",
-            "y"
-          ],
+          "misChunks": {
+            "chunks": [
+              "3x + 2",
+              "y"
+            ],
+            "explains": "mis.precedence-ignored"
+          },
           "requires": [
             "equivalence.precedence-brackets"
           ],
@@ -111,9 +114,6 @@
             "ax.add-associative",
             "ax.add-commutative",
             "ix.precedence"
-          ],
-          "errors": [
-            "mis.precedence-ignored"
           ]
         },
         {
@@ -131,6 +131,13 @@
             "3(x+1)",
             "2(x-1)"
           ],
+          "misChunks": {
+            "chunks": [
+              "3x + 1",
+              "-2x - 1"
+            ],
+            "explains": "anti.bracket-dissolved"
+          },
           "requires": [
             "equivalence.product-with-brackets"
           ],
@@ -141,9 +148,6 @@
             "ix.brackets",
             "ix.juxtaposition",
             "def.sub"
-          ],
-          "errors": [
-            "anti.bracket-dissolved"
           ]
         }
       ]

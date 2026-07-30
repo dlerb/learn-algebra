@@ -4,7 +4,7 @@
 import {
   parseSkillTree, parseDrills, parseErrorTree, parseRuleTree, parseSheetTree,
   parseMistakeTree,
-  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateSkillLinks, validateReadings,
+  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateFamilies, validateSkillLinks, validateReadings,
   validateDrills, validateErrors, validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
   type Drill, type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
   type MistakeDef, type MistakeTree,
@@ -109,12 +109,13 @@ validateSkillKinds(skillKinds)
 validateRuleRefs(skills, rules)
 validateSheetRefs(sheets, rules)
 validateRuleFamilies(rules)
+validateFamilies(mistakes, 'Mistake')
 validateSkillLinks(skills)
 validateReadings(skills)
 validateDrills(drills, skills)
 validateErrors(errorPatterns, cardIds)
 validateMistakeRefs(mistakes, rules, cardIds)
-validateLayerRefs(skills, rules, cardIds, errorPatterns)
+validateLayerRefs(skills, rules, cardIds, errorPatterns, mistakes)
 validateLatexCompiles(skills, drills, rules, errorPatterns)
 
 // Matrix audit — a report, not a validator: empty cells are questions.

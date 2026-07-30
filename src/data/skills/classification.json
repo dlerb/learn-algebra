@@ -167,7 +167,10 @@
           },
           "illustration": "3x + 2y",
           "answer": "sum",
-          "misreads": "product",
+          "misreads": {
+            "op": "product",
+            "explains": "sal.loudest-op-wins"
+          },
           "requires": [
             "classification.sum",
             "equivalence.explicit-vs-implicit-product"
@@ -179,9 +182,6 @@
             "ix.precedence",
             "ix.juxtaposition",
             "op.add"
-          ],
-          "errors": [
-            "sal.loudest-op-wins"
           ]
         },
         {
@@ -196,7 +196,10 @@
           },
           "illustration": "3(x+1)",
           "answer": "product",
-          "misreads": "sum",
+          "misreads": {
+            "op": "sum",
+            "explains": "sal.loudest-op-wins"
+          },
           "requires": [
             "classification.product",
             "equivalence.product-with-brackets"
@@ -207,9 +210,6 @@
           "restsOn": [
             "ix.brackets",
             "ix.precedence"
-          ],
-          "errors": [
-            "sal.loudest-op-wins"
           ]
         },
         {
@@ -224,7 +224,10 @@
           },
           "illustration": "2x^2",
           "answer": "product",
-          "misreads": "power",
+          "misreads": {
+            "op": "power",
+            "explains": "mis.exponent-scope"
+          },
           "requires": [
             "classification.product",
             "equivalence.power-of-a-product"
@@ -235,9 +238,6 @@
           "restsOn": [
             "ix.pow",
             "th.negative-base"
-          ],
-          "errors": [
-            "mis.exponent-scope"
           ]
         },
         {
@@ -252,7 +252,10 @@
           },
           "illustration": "-3x + 2y",
           "answer": "sum",
-          "misreads": "difference",
+          "misreads": {
+            "op": "difference",
+            "explains": "mis.minus-roles-confused"
+          },
           "requires": [
             "classification.sum-of-products",
             "equivalence.coefficient-negative-one"
@@ -264,9 +267,6 @@
             "ix.precedence",
             "def.sub",
             "ix.coefficient-front"
-          ],
-          "errors": [
-            "mis.minus-roles-confused"
           ]
         },
         {
@@ -281,7 +281,10 @@
           },
           "illustration": "(x+1)^2",
           "answer": "power",
-          "misreads": "sum",
+          "misreads": {
+            "op": "sum",
+            "explains": "sal.loudest-op-wins"
+          },
           "requires": [
             "classification.power",
             "classification.product-with-inner-sum",
@@ -294,9 +297,6 @@
             "ix.brackets",
             "ix.pow",
             "ix.power-precedence"
-          ],
-          "errors": [
-            "sal.loudest-op-wins"
           ]
         },
         {
@@ -311,7 +311,10 @@
           },
           "illustration": "\\frac{3x+2}{x-1}",
           "answer": "quotient",
-          "misreads": "sum",
+          "misreads": {
+            "op": "sum",
+            "explains": "sal.loudest-op-wins"
+          },
           "requires": [
             "classification.quotient",
             "equivalence.fraction-bar-grouping"
@@ -323,9 +326,6 @@
             "ix.fraction-bar",
             "ix.brackets",
             "def.div"
-          ],
-          "errors": [
-            "sal.loudest-op-wins"
           ]
         }
       ]

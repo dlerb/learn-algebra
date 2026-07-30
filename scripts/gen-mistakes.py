@@ -149,6 +149,73 @@ M = {
    [r'x^2 + 5x + 6 = (x+5)(x+6)']),
 }
 
+# ── FAMILIES (2026-07-30) ────────────────────────────────────────────────────
+# The same mechanism as a rule's `family`, one level deep, and it exists because
+# `kind` is too coarse to be one: `anti.linearity` and `anti.partial-distribution`
+# are both anti-laws and are not the same failure at all — one INVENTED a move,
+# the other made the right move and stopped early. The family is what makes an
+# error message read the way a teacher says it:
+#
+#     Forced move · Don't spread a power or a root over a plus
+FAMILY = {
+ 'anti.linearity':           'anti.forced-move',
+ 'anti.conjoining':          'anti.forced-move',
+ 'anti.fraction-addition':   'anti.forced-move',
+ 'anti.exponent-arithmetic': 'anti.forced-move',
+ 'anti.commute-everything':  'anti.forced-move',
+ 'anti.minus-on-both-parts': 'anti.forced-move',
+}
+
+# ── POOL-ONLY ENTRIES ────────────────────────────────────────────────────────
+# ⚠️ THESE HAVE NO errors.json TWIN, AND CANNOT HAVE ONE. `errorInstance.wrong` is
+# REQUIRED, and an inactivity error writes nothing at all — so errors.json, which
+# exists to carry concrete wrong→right instances, has no way to express it. That
+# is itself the evidence that the model had no room for the stop signal.
+#
+# ⚠️ BOTH ARE TASK-RELATIVE, and they are the only two entries here that are.
+# Every other mistake is false whatever was asked — `3x = 3+x` is wrong on any
+# page. "You did nothing" and "you did something" are mistakes only GIVEN A JOB,
+# so they may be shown inside a drill with a stated task, and on a page only where
+# the task is stated.
+#
+# ⚠️ `topic` IS OMITTED ON A HEAD. A family cuts across topics: forced moves happen
+# in distributing, fractions, powers and terms alike, so naming one would be a lie.
+POOL_ONLY = [
+ {
+  'id': 'anti.forced-move',
+  'kind': 'anti-law',
+  'head': True,
+  'frequency': 3,
+  'mistake': {
+    'en': 'Forced move',
+    'de': 'Erzwungener Schritt',
+  },
+  'latex': [],
+  'note': {
+    'en': 'A move invented because one seemed to be required. The belief underneath is that every expression can be made shorter, so a rule is reached for that does not apply here. ⚠️ This is the FAMILY, never the diagnosis: where a specific tempting move can be named, name it — a student who wrote $\\sqrt{a^2+b^2} = a+b$ needs to hear that a root does not spread over a plus, not that they invented a move.',
+    'de': 'Ein Schritt wird erfunden, weil einer verlangt schien. Dahinter steht die Annahme, jeder Term lasse sich kürzer schreiben — also wird eine Regel geholt, die hier nicht gilt. ⚠️ Das ist die FAMILIE, nie die Diagnose: Wo sich ein bestimmter verlockender Schritt benennen lässt, wird er benannt.',
+  },
+  'breaks': [],
+  'corrupts': [],
+ },
+ {
+  'id': 'omi.no-move-attempted',
+  'kind': 'omission',
+  'frequency': 2,
+  'mistake': {
+    'en': 'Nothing attempted',
+    'de': 'Nichts versucht',
+  },
+  'latex': [],
+  'note': {
+    'en': 'The form was left standing although a rule applies to it. Nothing false is written — the shape was simply not recognised, which is why it shows as a blank rather than as a wrong answer, and why the only justification such a skill has is that other skills require it.',
+    'de': 'Der Term bleibt stehen, obwohl eine Regel darauf passt. Es wird nichts Falsches geschrieben — die Gestalt wurde schlicht nicht erkannt. Darum steht hier kein falscher Term, sondern nichts, und darum rechtfertigt sich eine solche Fertigkeit nur dadurch, dass andere sie voraussetzen.',
+  },
+  'breaks': [],
+  'corrupts': [],
+ },
+]
+
 src = json.load(open('src/data/errors.json'))
 out = []
 for sec in src['sections']:
@@ -157,9 +224,13 @@ for sec in src['sections']:
             if e['id'] not in M:
                 sys.exit(f'unauthored mistake: {e["id"]}')
             en, de, latex = M[e['id']]
-            out.append({
+            entry = {
                 'id': e['id'],
                 'kind': e['kind'],
+            }
+            if e['id'] in FAMILY:
+                entry['family'] = FAMILY[e['id']]
+            entry.update({
                 'topic': sec['slug'],
                 'frequency': e.get('frequency', 1),
                 'mistake': {'en': en, 'de': de},
@@ -170,6 +241,11 @@ for sec in src['sections']:
                 'breaks': e.get('rules', []),
                 'corrupts': e.get('corrupts', []),
             })
+            out.append(entry)
+
+# The pool-only entries go last: they carry no `topic`, so they belong to no
+# section of the errors tree and have no position in it to inherit.
+out.extend(POOL_ONLY)
 
 doc = {
   'layer': 'mistakes',
@@ -206,4 +282,4 @@ pathlib.Path(TARGET).write_text(text)
 print(f'{len(out)} mistakes; latex on {sum(1 for m in out if m["latex"])}, '
       f'{sum(1 for m in out if not m["latex"])} deliberately without')
 print('by kind:', dict(collections.Counter(m['kind'] for m in out)))
-print('by topic:', dict(collections.Counter(m['topic'] for m in out)))
+print('by topic:', dict(collections.Counter(m.get('topic', '—') for m in out)))
