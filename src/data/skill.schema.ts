@@ -978,12 +978,38 @@ export function validateReadings(skills: Skill[]): void {
   }
 }
 
+// THE PROCESSES ARE A LAYERING, NOT A TAXONOMY (2026-07-30), and this is the
+// check that keeps them one. You know a pattern by heart, which lets you see the
+// structure, which lets you see the move — so a prerequisite may never sit at a
+// LATER process than the skill that needs it.
+//
+// It was measured before it was enforced: on the graph as authored — long before
+// this model existed — 95 of 97 edges already ran fluency → chunking →
+// transformation, nothing outside transformation depended on a transformation, and
+// both exceptions were the same mis-filed skill (`same-value-different-structure`,
+// whose own note said "the heart of Skill 3" while it sat in equivalence). After
+// the migration it is 92 edges and zero backward.
+//
+// ⚠️ WHY IT IS A VALIDATOR AND NOT AN AUDIT LINE, unlike most questions about this
+// layer: a backward edge is not a judgement call about emphasis or coverage, it is
+// two fields contradicting each other. `process` says "this is recalled before
+// anything is read", `requires` says "you must first be able to carry out a
+// procedure". One of them is wrong, always. That makes mis-filing unwritable
+// rather than merely visible — the same move as `explains ⊆ mistakes`.
+const processRank: Record<SkillProcess, number> = { fluency: 0, chunking: 1, transformation: 2 }
+
 export function validateSkillLinks(skills: Skill[]): void {
   const byId = new Map(skills.map(f => [f.id, f]))
 
   for (const f of skills) {
     for (const r of f.requires) {
       if (!byId.has(r)) throw new Error(`Skill "${f.id}" requires unknown skill "${r}".`)
+      const need = byId.get(r)!
+      if (processRank[need.process] > processRank[f.process]) {
+        throw new Error(
+          `Skill "${f.id}" (${f.process}) requires "${r}" (${need.process}) — a prerequisite may not `
+          + `sit at a later process. Either the requirement is wrong or one of the two is mis-filed.`)
+      }
     }
   }
 
