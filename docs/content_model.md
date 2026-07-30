@@ -1,5 +1,42 @@
 # Content model — design rationale
 
+> ⚠️ **THE SKILL LAYER WAS REBUILT 2026-07-30. Every section below that describes a
+> skill is history.** What replaced it:
+>
+> **One shape for all 71 skills** — `stimulus` (one term) + `right[]` (what it may
+> legitimately become; **empty means FINISHED**) + `wrong[]` (`{latex?, mistake}`).
+> `illustration`, `answer`, `chunks`, `misreads`, `misChunks` are gone. `illustration`
+> had FUSED the stimulus with the answer, so where the answer was *nothing* an equation
+> could not say so and four skills illustrated commutativity instead (`2 + 3x = 3x + 2`)
+> — deleted, not rewritten.
+>
+> **`kind` → `process`, and there are THREE**: `fluency | chunking | transformation`,
+> the MENTAL PROCESS a student must master. `kind` was never a data-shape discriminant —
+> measured: `equivalence` and `transformation` had identical field signatures. The shape
+> is now derived from `right[]` and never authored. These are exactly the three tiers
+> this document already called Fluency / Chunking / Manipulation; `classification` was
+> the fourth value that never fit and split in two directions.
+>
+> ⚠️ **The processes are a LAYERING, not a taxonomy**, and `validateSkillLinks` enforces
+> it: `requires` may never run backwards across `fluency < chunking < transformation`.
+> Measured on the graph as authored, before the model existed: 95 of 97 edges already
+> obeyed it and both exceptions were one mis-filed skill.
+>
+> **Ids are `skill.<slug>`** — a TYPE prefix like `rule.`/`sheet.`/`th.`, no longer
+> carrying the classification, because the classification turned out to be revisable.
+>
+> **`skill.mistakes` is DERIVED** from `wrong[].mistake`; the authored `errors` list is
+> gone. **`skill.rules` is still authored** — see the pruning item in `docs/TODO.md`.
+>
+> **The drill layer is DELETED** (`drills/*.json`, `parseDrills`, `validateDrills`). It
+> was disposable; the rebuilt drills consume skills. The Compute-Engine check moved onto
+> the skills and got stronger: every `right[]` entry must be semantically EQUAL to its
+> stimulus.
+>
+> **Rules say what IS and what to DO; prohibitions are mistakes.** Two rules that were
+> pure negations were deleted into `anti.linearity`. **Both pools now carry `family` +
+> an explicit `head: true`.**
+>
 > ⚠️ **Partially superseded 2026-07-23/24.** The **fundament tower** (`fundamentals ·
 > numbers · powers · terms`, `src/data/<layer>/cards.json`) is now the primary
 > reference, and **`laws.json` / `conventions.json` and their registries

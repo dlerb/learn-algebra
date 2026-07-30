@@ -4,12 +4,71 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🔵 THE DRILL BRAINSTORM — two threads, taken one at a time (2026-07-30)
+## 🔵 NEXT SESSION — THE PRUNING PASS (handover 2026-07-30)
 
-The brainstorm ran and split into two independent jobs. **Do thread 1 first, then thread 2.**
-They touch the same file and nothing else in common.
+**The topic is exactly one thing: which rule a skill should cite, and which it should stop
+citing.** Everything structural is merged and green; this is editorial, and it is the gate on
+the last open design question.
 
-### 🧵 THREAD 1 — one ✗, one mistake
+### What the last session established, so it is not re-derived
+
+**The skills cited `is` rules where a `do` rule existed.** They named the DECODING rule (why the
+form means what it means) instead of the rule that states the MOVE — and the apt rule was
+sitting ORPHANED in the pool with byte-identical `latex`:
+
+    skill.minus-over-sum   -(a+b) = -a - b
+      cited      three-minuses(is) + implicit-op-before-bracket(is)
+      should be  rule.minus-over-bracket(do)  «Flip every sign inside the bracket»
+                 latex -(a+b) = -a - b        ← identical, and was cited by NOTHING
+
+⚠️ **The orphan list and the multi-rule skills are ONE defect seen from two ends.** That is why
+adding 14 apt citations moved orphans 25 → 19 without touching the pool.
+
+⚠️ **An earlier claim was MEASURED WRONG and must not come back**: "a right form is licensed by a
+CONJUNCTION of rules, and that is the mathematics." It is not arity, it is mis-citation. 12 of
+the 17 multi-rule skills had an `is`+`is` signature — two decoders standing in for one move.
+
+### The job
+
+**Ten skills now cite the apt rule BESIDE the general ones.** Decide, per skill, whether the
+background stays. The list is in HOUSEKEEPING below (*"PRUNE THE BACKGROUND RULES"*) with what
+each cites today.
+
+The question to ask each time is the one that worked for the mistake pool: **does this rule
+state THIS form, or the neighbourhood it sits in?** Where a form's own rule now exists, the
+decoder is usually background — but `three-minuses` on a `-(a+b)` skill may be genuinely load
+bearing, and that is a teacher's call, not a measurable one.
+
+### Then, and only then, the design question it gates
+
+**Should `rules` move onto the `right[]` entries**, mirroring `wrong[].mistake`, so that
+`skill.rules` becomes DERIVED exactly as `skill.mistakes` already is?
+
+- It is 1:1 by construction wherever a rule states the form — **22 `right[]` entries today**, and
+  more after the pruning.
+- The four FINISHED skills (empty `right[]`) reach their rule through the mistake instead:
+  `anti.conjoining` breaks `rule.unlike-terms-stay`, `anti.linearity` breaks
+  `rule.only-multiplication-distributes`. **Measured — that objection does not survive.**
+- ⚠️ **Do not do this before the pruning.** Moving `rules` per-entry now would bake today's
+  noise into a finer structure.
+- ⚠️ Open sub-question: for a FLUENCY CHAIN the rules arguably license the equivalence CLASS
+  rather than any single member (`explicit-vs-implicit-product` has 4 right forms and 1 rule).
+  Per-entry may be false precision there even after pruning.
+
+### Two smaller things queued behind it
+
+Both are in HOUSEKEEPING with their evidence: **letting a cheat sheet print a MISTAKE** (two
+sheet sections were deleted for want of it), and **`sum-of-products` vs `implicit-chunking`**,
+which now share a stimulus AND a `right[]` and differ only in note and wrong form.
+
+---
+
+## ✅ DONE 2026-07-30 — the drill brainstorm, both threads
+
+Thread 1 (one ✗, one mistake) and thread 2's foundation (the process model) are **merged**.
+Kept below because the reasoning is what stops it being re-litigated; the plan is spent.
+
+### 🧵 THREAD 1 — one ✗, one mistake  ✅ MERGED
 
 **The finding, and it is not a bug.** `TaxonomyView.vue:355` renders the skill's **whole**
 `errors` list under the **whole** ✗ column — a list beside a column, never a link from a form
@@ -386,6 +445,9 @@ column is 23rem); and `LayerRow`'s geometry was tuned to that measurement. Split
 a data migration PLUS a layout question, not an afternoon.
 
 ### 🧵 THREAD 2 — the schema, the bindings, and where items come from
+**⚠️ THE FOUNDATION IS MERGED** (process model, stimulus/right/wrong). What is left of this
+thread is the BINDINGS and item generation below — untouched, and still the right next move once
+the pruning lands.
 
 **⚠️ THE HANDOVER'S PREMISE WAS WRONG, and it was measured.** "The material already exists" is
 false. Every distinct item the 74 skills can yield today:
@@ -554,6 +616,12 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
   An earlier claim here that "a right form is licensed by a CONJUNCTION of rules, and that is the
   mathematics" was **measured wrong**: it is mis-citation, not arity.
 
+- [ ] **`sum-of-products` vs `implicit-chunking` now share a STIMULUS and a `right[]`**
+  (2026-07-30). Both are `3x + 2y` → `(3x) + (2y)`; they differ only in their note and their
+  wrong form (a misread operator vs a wrong split). A fifth merge candidate, deliberately NOT
+  taken — three unplanned merges already landed this session. Either merge them (the wrong forms
+  simply concatenate, which is what the unified shape predicts) or give one a different stimulus.
+
 - [ ] **A CHEAT SHEET SHOULD BE ABLE TO PRINT A MISTAKE** (2026-07-30, the author's). Today
   `sheetGroup.rules` takes rule ids only, so a sheet can show what to do and never what not to.
   ⚠️ **The requirement is not hypothetical — two sheet sections were deleted for want of it.**
@@ -708,7 +776,7 @@ phrase with a clause in it ("Sum of products — multiplication is inside the te
 ⚠️ Measure a KaTeX column with a `max-content` range over `.katex-html`, never `scrollWidth`
 — see the trap list in `docs/app_design.md`.
 
-## 🔴 NEXT SESSION — decide the mistakes pool (2026-07-28)
+## ✅ DONE 2026-07-29 — the mistakes pool (was NEXT SESSION 2026-07-28)
 
 **Everything below is on `feat/skill-wrong-forms`, THREE commits, UNMERGED.** Nothing in main
 changed. `/errors` still works and is untouched — the whole point is that the two treatments
@@ -1891,7 +1959,7 @@ vocabulary for naming their elements*, and both halves have obvious holes:
 
 ---
 
-## NEXT SESSION — Tier 2 (structure) content pass
+## Superseded 2026-07-30 — Tier 2 (structure) content pass (was NEXT SESSION, 2026-07-10)
 
 Tier-1 (notation) content is **fully complete** as of 2026-07-10 (tags +
 distractors + prose contract — see the Done section). The 21 structure
