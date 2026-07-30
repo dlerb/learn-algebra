@@ -453,7 +453,8 @@
             "skill.precedence-brackets"
           ],
           "rules": [
-            "rule.dominant-op-last"
+            "rule.dominant-op-last",
+            "rule.multiplication-binds-tighter"
           ],
           "restsOn": [
             "ax.add-associative",

@@ -381,7 +381,8 @@
           ],
           "rules": [
             "rule.three-minuses",
-            "rule.implicit-op-before-bracket"
+            "rule.implicit-op-before-bracket",
+            "rule.minus-over-bracket"
           ],
           "restsOn": [
             "th.minus-over-sum",
@@ -487,9 +488,11 @@
           ],
           "rules": [
             "rule.juxtaposition",
-            "rule.three-minuses"
+            "rule.three-minuses",
+            "rule.minus-times-minus"
           ],
           "restsOn": [
+            "th.minus-times-minus",
             "th.minus-in-product",
             "ix.juxtaposition",
             "th.negative-one-times",
@@ -558,7 +561,8 @@
           ],
           "rules": [
             "rule.three-minuses",
-            "rule.implicit-op-before-bracket"
+            "rule.implicit-op-before-bracket",
+            "rule.subtract-a-bracket"
           ],
           "restsOn": [
             "th.subtract-a-sum",
@@ -592,7 +596,8 @@
           ],
           "rules": [
             "rule.three-minuses",
-            "rule.implicit-op-before-bracket"
+            "rule.implicit-op-before-bracket",
+            "rule.subtract-a-bracket"
           ],
           "restsOn": [
             "th.subtract-a-sum",
@@ -814,6 +819,9 @@
           ],
           "restsOn": [
             "def.pow"
+          ],
+          "rules": [
+            "rule.power-vs-coefficient"
           ]
         },
         {
@@ -845,7 +853,8 @@
             "skill.exponent-as-repeated-product"
           ],
           "rules": [
-            "rule.juxtaposition"
+            "rule.juxtaposition",
+            "rule.power-vs-coefficient"
           ],
           "restsOn": [
             "def.multiple",
@@ -947,6 +956,9 @@
           "restsOn": [
             "def.pow-zero",
             "def.pow-neg"
+          ],
+          "rules": [
+            "rule.exponent-counts-factors"
           ]
         },
         {
@@ -974,7 +986,8 @@
             "skill.division-variants"
           ],
           "rules": [
-            "rule.exponent-binds-tighter"
+            "rule.exponent-binds-tighter",
+            "rule.minus-in-exponent"
           ],
           "restsOn": [
             "def.pow-zero",
@@ -1007,7 +1020,8 @@
             "skill.exponent-as-repeated-product"
           ],
           "rules": [
-            "rule.exponent-binds-tighter"
+            "rule.exponent-binds-tighter",
+            "rule.fractional-exponent-root"
           ],
           "restsOn": [
             "def.pow-rat",
@@ -1267,6 +1281,9 @@
           ],
           "restsOn": [
             "th.divide-by-one"
+          ],
+          "rules": [
+            "rule.divide-by-one-and-self"
           ]
         },
         {
@@ -1288,7 +1305,8 @@
           ],
           "rules": [
             "rule.fraction-bar-brackets",
-            "rule.only-multiplication-distributes"
+            "rule.only-multiplication-distributes",
+            "rule.split-numerator"
           ],
           "restsOn": [
             "th.split-numerator",
@@ -1387,6 +1405,9 @@
           ],
           "restsOn": [
             "ax.add-commutative"
+          ],
+          "rules": [
+            "rule.only-plus-and-times-commute"
           ]
         },
         {
@@ -1413,7 +1434,8 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition"
+            "rule.juxtaposition",
+            "rule.only-plus-and-times-commute"
           ],
           "restsOn": [
             "ax.mul-commutative",

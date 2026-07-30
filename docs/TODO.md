@@ -527,6 +527,33 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
 
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
 
+- [ ] **PRUNE THE BACKGROUND RULES — 10 skills** (2026-07-30). The apt rule was added to 14
+  skills where a rule's `latex` is byte-identical to the skill's own `stimulus = right[i]`
+  (orphaned rules 25 → 19). **Four cited nothing at all, so those are closed.** The other ten now
+  cite the apt rule BESIDE the general ones they cited instead — and whether the background
+  stays is editorial, not measurable, so it was deliberately left:
+
+      minus-over-sum            + minus-over-bracket    beside three-minuses, implicit-op-before-bracket
+      subtracting-a-sum         + subtract-a-bracket    beside three-minuses, implicit-op-before-bracket
+      subtracting-a-difference  + subtract-a-bracket    beside three-minuses, implicit-op-before-bracket
+      splitting-a-fraction      + split-numerator       beside fraction-bar-brackets, only-multiplication-distributes
+      negative-times-negative   + minus-times-minus     beside juxtaposition, three-minuses
+      multiplication-commutative + only-plus-and-times-commute  beside juxtaposition
+      coefficient-vs-exponent   + power-vs-coefficient  beside juxtaposition
+      negative-exponent         + minus-in-exponent     beside exponent-binds-tighter
+      fractional-exponent-root  + fractional-exponent-root beside exponent-binds-tighter
+      implicit-chunking         + multiplication-binds-tighter beside dominant-op-last
+
+  ⚠️ **THE PATTERN IS `is` STANDING IN FOR `do`**: the skills cited DECODING rules (why the form
+  means what it means) where the rule that states the MOVE existed and sat orphaned. That is why
+  12 of the 17 multi-rule skills had an `is`+`is` signature. Same disease as the mistake pool
+  before the pairing, same cure — name the rule that states THIS form.
+  ⚠️ **DECIDE THIS BEFORE moving `rules` per-`right[]`-entry.** Once each entry cites the rule
+  that states it, the mapping is 1:1 by construction and `skill.rules` becomes derivable exactly
+  as `mistakes` is — but doing the storage first would bake the noise into a finer structure.
+  An earlier claim here that "a right form is licensed by a CONJUNCTION of rules, and that is the
+  mathematics" was **measured wrong**: it is mis-citation, not arity.
+
 - [ ] **A CHEAT SHEET SHOULD BE ABLE TO PRINT A MISTAKE** (2026-07-30, the author's). Today
   `sheetGroup.rules` takes rule ids only, so a sheet can show what to do and never what not to.
   ⚠️ **The requirement is not hypothetical — two sheet sections were deleted for want of it.**
