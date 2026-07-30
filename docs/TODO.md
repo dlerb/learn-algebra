@@ -144,31 +144,164 @@ it. **It is empty because the failure mode is inaction, not because the rule for
 One citation is DROPPED: `minus-on-fraction` loses `mis.minus-roles-confused`, which closes the
 housekeeping item below.
 
-### 🔎 OPEN — should a skill carry its TASK? (the author's, 2026-07-30)
+### 🟢 THE PROCESS MODEL — thread 2's design, reached 2026-07-30
 
-*"We are experienced and automatically find the question that is implicitly asked. Why not make
-it explicit?"* Today the question is inferred from `kind` — equivalence → *same or different?*,
-classification → *name the main operation*, chunking → *split it*, transformation → *produce the
-form* — which is coarse: per skill the real question differs (*"can you split this root?"*,
-*"write it without a negative exponent"*, *"can anything be done here?"*).
+**One shape for all 74 skills**, and it came from the author's own reframing:
 
-**THREE independent arguments arrived in one session**, which is why this is the first thing to
-settle in thread 2 rather than a tidy-up:
+    stimulus   one term
+    right[]    what it may legitimately become    — EMPTY MEANS FINISHED
+    wrong[]    the distractors, each with `explains` (built 2026-07-30) — empty is legitimate
+               ⚠️ NOT BOTH EMPTY — a good validator, and it survives the two cases that would
+               break a careless version: the contrast pair has a full right[] and no wrong[] BY
+               DESIGN, and the recognition skills have a full right[] (√(ab) really does become
+               √a·√b) with the failure being that nothing was attempted.
 
-1. The two new pool entries are **TASK-RELATIVE** and illegible without a stated job — a `task`
-   field is what would make them showable on a page at all.
-2. A generated drill item needs a **PROMPT**, and today it could only come from `kind`.
-3. ⚠️ **`kind` is deciding two different things at once** — the DATA SHAPE (`wrong` vs `answer`
-   vs `chunks`) and the IMPLICIT QUESTION — and when they disagree the shape wins silently. See
-   the fraction-bar finding below, which is that disagreement caught in the act.
-4. ⚠️ **`illustration` fuses the STIMULUS with the ANSWER**, and where the answer is *nothing* it
-   forces the author to write something false-by-implication. Four skills prove it — see "the
-   borrowed commutativity" below. **This is the deepest of the four and reframes the other
-   three.**
+`illustration`, `answer` and `chunks` collapse into `right[]`; `misreads` and `misChunks` into
+`wrong[]`.
 
-The proposal is therefore to SPLIT them: `kind` keeps the data shape, `task` carries the
-question, and *"task: what is the numerator? · kind: equivalence"* becomes a visible mismatch
-instead of an invisible one. It is a localized prose field, so it also lands in the German debt.
+**⚠️ THIS DISSOLVES THE BORROWED COMMUTATIVITY (below) INTO A DATA ERROR.** `number-plus-term` is
+`stimulus: 2+3x` · `right[]: —` · `wrong[]: [5x]`, and the empty right list IS the content. And
+`2 + 3x = 3x + 2` was never an illustration — **it was a wrong entry in `right[]`**, testing
+commutativity instead of combinability. **The fix is deletion, not re-authoring.**
+
+**⚠️ AND THE STOP SIGNAL NEEDS NO MACHINERY**: it is `right[] === []`. No new kind, no new field.
+
+#### ✅ `/skills` IS NOT A STUDENT PAGE — the author, 2026-07-30
+
+This **settles the open question this file has carried** ("whether a student-facing skills page
+is a progress surface or just a how-to"). It is neither; students see only the drills.
+
+⚠️ Two consequences, and they overturned two objections raised against the model:
+**"never invent notation students meet nowhere else" DOES NOT BIND on an author surface**, so
+`3x + 2y = +` and `3x + 4b = [3x, 4b]` are fine — and using SYMBOLS rather than words (`+ − \cdot
+\div ^`) also makes a classification answer language-neutral, so it can live in `latex` like
+everything else instead of being localized prose.
+
+#### ✅ `task` BELONGS TO THE DRILL, NOT THE SKILL — reversed the same day
+
+An earlier version of this section argued three times for a `task` field ON the skill. **All
+three arguments were really about the drill**: the task-relative mistakes need a stated job (the
+drill states it), a generated item needs a prompt (the drill writes it), and `kind` conflating
+task with shape is fixed by `process` below rather than by a new field. The direction a
+transformation runs is already in the data — `stimulus: a(b+c)` · `right[]: [ab+ac]` says
+*expand* without a sentence saying so.
+
+**The skill carries the material; the drill picks the mode** — judge (`is 3x = 3+x`?) / select
+(which of these equals `3x`?) / produce (expand it) — over the same three fields.
+
+#### ✅ `kind` → `process`: the MENTAL PROCESS, and there are THREE
+
+`kind` was never a data-shape discriminant — **measured: `equivalence` and `transformation` have
+literally identical field signatures** (`illustration + wrong`), 38 and 9 skills, with no field
+anywhere separating them. So it was reporting the shape sometimes and the task other times.
+
+The shape is DERIVABLE from `right[]` and stops being authored, which makes the fraction-bar
+mis-filing **unwritable**. What the field should carry is the mental process:
+
+    fluency         one-step recall — the bare pattern, known by heart, INCLUDING ITS SCOPE
+    chunking        read the structure — the dominant operator and the parts, ONE decomposition
+    transformation  carry out a procedure — search, choose, apply, several steps
+
+⚠️ **KEEP THE WORD `chunking`, not "decomposition"** — decomposition also means factoring, and
+**`Bausteine` already owns the term in the German** after the `Blöcke` collision was fixed.
+
+⚠️ **These are exactly the three tiers `content_model.md` already carries** (Fluency / Chunking /
+Manipulation). The tiers were right from the start; `classification` was the fourth value that
+never fit, which is why it splits in two directions and leaves nothing behind.
+
+**The author's theory that binds them**: *once you know the pattern by heart, you have the
+machinery to recognise the structure, and therefore to see how to transform.*
+
+#### 🔬 THE THEORY IS CONFIRMED BY THE `requires` GRAPH — 95 of 97 edges
+
+Authored long before the theory existed, read as *required → requiring*:
+
+                      fluency  chunking  transformation
+    fluency             47        17           6
+    chunking             2        12           6
+    transformation       0         0           7
+
+**Nothing outside transformation depends on a transformation.** And the two backward edges are
+ONE skill, `equivalence.same-value-different-structure`, which is mis-filed and says so itself —
+note: *"Rewriting changes the dominant operation — **the heart of Skill 3**"*, illustration
+`x^2 - 1 = (x+1)(x-1)`, sitting in a group called **`full-classification` inside
+`equivalence.json`**. Move it to transformation and the layering is **exact, 97 of 97**. (It also
+duplicates `transformation.factor-difference-of-squares` — schema vs instance.)
+
+- [ ] **THE VALIDATOR THAT FOLLOWS**: `requires` must never run backwards across processes. Same
+  class of guard as `explains ⊆ mistakes` — it makes the wrong thing unwritable, and it would
+  have caught this skill at authoring time.
+- **The tutorial's traversal is then free**: the requires-graph already respects the pedagogy.
+- ⚠️ **QUALIFICATION: 68% of edges are WITHIN process** (47 fluency→fluency alone). The three
+  layers order the tiers, NOT the work inside them — the drill still needs the graph itself.
+
+#### 📐 How `classification` splits (11 / 5), and why `recognition` is not a process
+
+The split already exists as `group`. `basic-forms` (5) + `misleading-forms` (6) are all *"which
+is the dominant operation?"* — **and their own notes already say they are chunking**: *"Dominant
+op = the outermost +; its terms are the chunks"*, *"the chunks are numerator and denominator"*,
+*"base and exponent are the chunks"*. Operator and parts are two readings of ONE decomposition.
+
+⚠️ **`familiar-shapes` (5) shows the borrowed-commutativity fault in a different field.** Every
+one has `answer` set to a dominant operation and **four of the five answer `sum`** — useless as
+classification items. The real content is in prose after a full stop: *"Dominant operation: a
+sum. **The shape is special:** the middle term is twice the product"*. The schema demanded an
+answer of the wrong type, so the author supplied a true-but-irrelevant one.
+
+**A `right[]` entry for chunking is the DECOMPOSITION AS A FORM**, from which operator and parts
+are both derivable, and the drill picks which half to ask for:
+
+    3x + 2y   →   (3x) + (2y)          3(x+1)   →   (3) \cdot ((x+1))
+
+⚠️ **Not invented notation**: `rule.multiplication-binds-tighter` has carried `3x + 2y = (3x) +
+(2y)` since the rules pool was built, for exactly this purpose.
+
+**`recognition` was proposed as a fourth process and does not survive** — on the current 74 it
+would hold ZERO skills:
+
+    difference-of-squares      → fluency, once "known by heart" is the criterion: the identity
+    perfect-square-trinomial   → fluency   IS the recognition, you cannot recall it without
+                                           recognising it
+    common-factor              → the first step of transformation.factor-common
+    quadratic-form             → the first step of transformation.factor-quadratic
+    linear-form                → licenses NOTHING in this layer (it gates solving) ⚠️ author's call:
+                                 a recognition skill with nothing to unlock, or just vocabulary?
+
+A procedure's first step is not a separate process. **Recognition survives as a DRILL MODE** —
+*"which tool applies here?"* over a mixed set of stimuli — needing no new skills.
+
+#### ✂️ The by-heart / procedure line runs THROUGH `transformation`
+
+The author's criterion — *do I need to know this by heart?* — moves several:
+
+    KNOWN BY HEART → fluency          A PROCEDURE → transformation
+      expand-binomial-square            factor-quadratic     "find two numbers that multiply to q, add to p"
+      factor-difference-of-squares      combine-fractions    common denominator, convert, add
+      factor-perfect-square             factor-common        find the shared factor, then divide
+      simplify-power-product            collect-like-terms   scan, group, add coefficients
+                                        cancel-common-factor find the shared factor, cancel
+
+**The procedures give themselves away in their own notes** (a search, a sequence); the by-heart
+ones state a formula. And this file already records the three binomials being rewritten as ONE
+RECIPE — *"first squared, plus twice the product, plus last squared"* — which is explicitly a
+memorisation device, so the corpus was treating them as by-heart material already.
+
+⚠️ **`expand-distribute` is the borderline** and is NOT decided: by the criterion it is a single
+law (fluency), but its own note calls it *"the ENGINE of expanding"*, and putting the engine in a
+different process from the procedures built on it may read oddly.
+
+#### 💰 The costs, on the table before anything starts
+
+- **`equivalence` → `fluency` is a 44-id rename** (the id carries the process by regex), plus
+  every `requires` reference, the drill data and the docs. It IS the point rather than
+  incidental: "equivalence" names the data shape, which is the confusion being removed.
+- **`classification` disappears as a value**, 11 skills to `chunking` and 5 redistributed.
+- **`illustration` → `stimulus` + `right[]`** across 74 skills. ⚠️ `/skills`' maths column is
+  23rem because exactly ONE illustration exceeds 352px; the row geometry was measured against
+  that, so this is a migration PLUS a layout question.
+- ⚠️ **`classification.difference-of-squares` and `transformation.factor-difference-of-squares`
+  would share a stimulus and a `right[]`** and differ only in process. Decide deliberately
+  whether they merge — do not discover it mid-migration.
 
 ### 🔎 FOUND 2026-07-30 — the fraction bar is chunking, filed as equivalence
 
