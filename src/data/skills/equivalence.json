@@ -994,6 +994,10 @@
               "explains": "anti.linearity"
             },
             {
+              "latex": "\\sqrt{a^2+b^2} = a + b",
+              "explains": "anti.linearity"
+            },
+            {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + b",
               "explains": "mis.root-scope"
             }

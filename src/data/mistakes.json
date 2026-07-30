@@ -238,7 +238,7 @@
         "de": "Eine Potenz oder Wurzel nicht über ein Plus verteilen"
       },
       "latex": [
-        "(a+b)^2 = a^2 + b^2",
+        "(a+b)^n = a^n + b^n",
         "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}"
       ],
       "note": {

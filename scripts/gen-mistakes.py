@@ -70,7 +70,7 @@ M = {
  'anti.linearity': (
    'Don’t spread a power or a root over a plus',
    'Eine Potenz oder Wurzel nicht über ein Plus verteilen',
-   [r'(a+b)^2 = a^2 + b^2', r'\sqrt{a+b} = \sqrt{a} + \sqrt{b}']),
+   [r'(a+b)^n = a^n + b^n', r'\sqrt{a+b} = \sqrt{a} + \sqrt{b}']),
  'anti.partial-distribution': (
    'Don’t stop at the first term in the bracket',
    'Nicht beim ersten Term in der Klammer aufhören',
