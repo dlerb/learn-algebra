@@ -970,7 +970,6 @@
             "equivalence.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.only-multiplication-distributes",
             "rule.power-over-product"
           ],
           "restsOn": [
