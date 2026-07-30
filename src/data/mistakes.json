@@ -40,6 +40,7 @@
     {
       "id": "anti.commute-everything",
       "kind": "anti-law",
+      "family": "anti.forced-move",
       "topic": "minus",
       "frequency": 2,
       "mistake": {
@@ -229,6 +230,7 @@
     {
       "id": "anti.linearity",
       "kind": "anti-law",
+      "family": "anti.forced-move",
       "topic": "distributing",
       "frequency": 3,
       "mistake": {
@@ -236,7 +238,7 @@
         "de": "Eine Potenz oder Wurzel nicht über ein Plus verteilen"
       },
       "latex": [
-        "(a+b)^2 = a^2 + b^2",
+        "(a+b)^n = a^n + b^n",
         "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}"
       ],
       "note": {
@@ -301,6 +303,7 @@
     {
       "id": "anti.exponent-arithmetic",
       "kind": "anti-law",
+      "family": "anti.forced-move",
       "topic": "powers",
       "frequency": 3,
       "mistake": {
@@ -423,6 +426,7 @@
     {
       "id": "anti.fraction-addition",
       "kind": "anti-law",
+      "family": "anti.forced-move",
       "topic": "fractions",
       "frequency": 3,
       "mistake": {
@@ -516,6 +520,7 @@
     {
       "id": "anti.minus-on-both-parts",
       "kind": "anti-law",
+      "family": "anti.forced-move",
       "topic": "fractions",
       "frequency": 1,
       "mistake": {
@@ -539,6 +544,7 @@
     {
       "id": "anti.conjoining",
       "kind": "anti-law",
+      "family": "anti.forced-move",
       "topic": "terms",
       "frequency": 3,
       "mistake": {
@@ -694,6 +700,39 @@
         "ax.distributivity",
         "th.collect-like-terms"
       ]
+    },
+    {
+      "id": "anti.forced-move",
+      "kind": "anti-law",
+      "head": true,
+      "frequency": 3,
+      "mistake": {
+        "en": "Forced move",
+        "de": "Erzwungener Schritt"
+      },
+      "latex": [],
+      "note": {
+        "en": "A move invented because one seemed to be required. The belief underneath is that every expression can be made shorter, so a rule is reached for that does not apply here. ⚠️ This is the FAMILY, never the diagnosis: where a specific tempting move can be named, name it — a student who wrote $\\sqrt{a^2+b^2} = a+b$ needs to hear that a root does not spread over a plus, not that they invented a move.",
+        "de": "Ein Schritt wird erfunden, weil einer verlangt schien. Dahinter steht die Annahme, jeder Term lasse sich kürzer schreiben — also wird eine Regel geholt, die hier nicht gilt. ⚠️ Das ist die FAMILIE, nie die Diagnose: Wo sich ein bestimmter verlockender Schritt benennen lässt, wird er benannt."
+      },
+      "breaks": [],
+      "corrupts": []
+    },
+    {
+      "id": "omi.no-move-attempted",
+      "kind": "omission",
+      "frequency": 2,
+      "mistake": {
+        "en": "Nothing attempted",
+        "de": "Nichts versucht"
+      },
+      "latex": [],
+      "note": {
+        "en": "The form was left standing although a rule applies to it. Nothing false is written — the shape was simply not recognised, which is why it shows as a blank rather than as a wrong answer, and why the only justification such a skill has is that other skills require it.",
+        "de": "Der Term bleibt stehen, obwohl eine Regel darauf passt. Es wird nichts Falsches geschrieben — die Gestalt wurde schlicht nicht erkannt. Darum steht hier kein falscher Term, sondern nichts, und darum rechtfertigt sich eine solche Fertigkeit nur dadurch, dass andere sie voraussetzen."
+      },
+      "breaks": [],
+      "corrupts": []
     }
   ]
 }

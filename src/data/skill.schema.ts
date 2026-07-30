@@ -46,6 +46,32 @@ export function loc(ls: LocalizedString, lang: Lang): string {
 export const skillKind = z.enum(['equivalence', 'classification', 'chunking', 'transformation'])
 export type SkillKind = z.infer<typeof skillKind>
 
+// ── A WRONG ANSWER AND THE MISTAKE IT INSTANTIATES (2026-07-30) ───────────────
+// `explains` is the edge the layer was missing. Before it, /skills rendered the
+// skill's WHOLE mistake list under its WHOLE ✗ column — a list beside a column,
+// never a link from a form to a sentence. That reads fine (the eye pairs them by
+// proximity) and is unusable to a drill, which must name ONE sentence when the
+// student picks ONE form. Nine skills showed two or three sentences under a
+// single ✗, and in three of those the extra sentence was quietly recording a
+// wrong form nobody had authored.
+//
+// ⚠️ SINGULAR, ALWAYS. A form may be describable at two levels — `\sqrt{a^2+b^2}
+// = a+b` is both *a root spread over a plus* and *a move invented where none
+// applies* — and allowing both here would reinstate exactly the ambiguity this
+// field exists to remove. Name WHICH move was wrong; the level above is the
+// mistake's `family`.
+//
+// ⚠️ `latex` IS OPTIONAL, and absent means INEXPRESSIBLE, not missing. A
+// recognition skill fails by inaction: the student writes nothing, so there is no
+// false claim to show, and the view draws an ellipsis under the ✗. Do NOT put
+// `\ldots` in here to fill it — the field means "the false claim", and the whole
+// point of these entries is that there is none.
+const wrongForm = z.object({
+  latex: z.string().optional(),
+  explains: z.string(),
+})
+export type WrongForm = z.infer<typeof wrongForm>
+
 export const skill = z.object({
   id: z.string().regex(/^(equivalence|classification|chunking|transformation)\.[a-z0-9-]+$/,
     'id must be "<kind>.<slug>" (kind ∈ equivalence|classification|chunking|transformation)'),
@@ -81,7 +107,7 @@ export const skill = z.object({
   // clumsy-but-correct form under the same red ✗ would teach ✗ = wrong and then
   // contradict it. A belief the student holds is fine and is written as the
   // claim itself — `a \cdot 3 \neq 3a` under a ✗ says that belief is false.
-  wrong: z.array(z.string()).default([]),
+  wrong: z.array(wrongForm).default([]),
   // ── THE OTHER TWO ANSWER SHAPES (2026-07-29) ─────────────────────────────
   // `wrong` holds a FALSE EQUATION, and neither classification nor chunking
   // produces one: a classification's wrong answer is a WORD ("a product"), a
@@ -98,16 +124,44 @@ export const skill = z.object({
   // CONSUME skills (docs/TODO.md, "the drill layer is disposable"). A
   // classification skill with no `answer` was simply incomplete: /skills rendered
   // `3x + 2y` and never said it was a sum.
+  //
+  // BOTH CARRY `explains` SINCE 2026-07-30, for the same reason `wrong` does: a
+  // wrong NAME and a wrong SPLIT are wrong answers, so each instantiates exactly
+  // one mistake. With the authored `errors` list gone, an unpaired wrong answer
+  // would also contribute nothing to the derived `mistakes` below.
   answer: dominantOp.optional(),        // classification: the dominant operation, the thing the skill asks you to name
-  misreads: dominantOp.optional(),      // …and the tempting wrong name. EVIDENCED, never invented: present only on the 6 classification skills that cite a mistake
+  misreads: z.object({ op: dominantOp, explains: z.string() }).optional(),  // …and the tempting wrong name. EVIDENCED, never invented: present only on the 6 classification skills that cite a mistake
   chunks: z.array(z.string()).default([]),      // chunking: the decomposition, one LaTeX piece per chunk
-  misChunks: z.array(z.string()).default([]),   // …and the tempting wrong split, on the same evidence rule
+  // …and the tempting wrong split. ONE alternative decomposition, not a list of
+  // them — which is why it pairs at FIELD level while `wrong` pairs per entry.
+  misChunks: z.object({ chunks: z.array(z.string()).min(2), explains: z.string() }).optional(),
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
-  errors: z.array(z.string()).default([]),       // error-pattern ids — the skill's misconception catalog
   conditions: z.string().optional(),    // domain caveat, pure LaTeX
-})
+}).transform(s => ({
+  ...s,
+  // ── `mistakes` IS DERIVED, NEVER AUTHORED (2026-07-30) ───────────────────
+  // The union of what this skill's wrong answers explain, in first-appearance
+  // order. It replaced an authored `errors: string[]` that said the same thing
+  // twice and drifted: five skills cited the nearest available pool entry rather
+  // than their actual failure — `root-of-a-product` cited `anti.linearity`, but a
+  // student's error there is inaction, and it cites `omi.no-move-attempted` now.
+  // Deriving makes that class of mis-wiring unrepresentable.
+  //
+  // ⚠️ EMPTY IS LEGITIMATE and means the skill shows nothing wrong: the contrast
+  // pair (`bracket-types`, `addition-commutative`), which exists so a
+  // Same-or-Different session has items whose answer is *same*, and the few
+  // deliberate abstentions where the tempting form belongs to a neighbouring
+  // skill (the STARTING-FORM rule — what must not repeat across two skills is the
+  // form a student starts from, never the mistake, since many starting forms
+  // converge on one mistake: `anti.linearity` is reached from four).
+  mistakes: [...new Set([
+    ...s.wrong.map(w => w.explains),
+    ...(s.misreads ? [s.misreads.explains] : []),
+    ...(s.misChunks ? [s.misChunks.explains] : []),
+  ])],
+}))
 export type Skill = z.infer<typeof skill>
 
 // ── Drill layer ──────────────────────────────────────────────────────────────
@@ -238,8 +292,19 @@ export const ruleDef = z.object({
   // why the family had nowhere to live.
   //
   // ⚠️ ONE LEVEL, NO CHAINS: a family head has no `family` of its own, and
-  // validateRuleFamilies enforces it.
+  // validateFamilies enforces it.
   family: z.string().optional(),
+  // ── AND THE HEAD SAYS SO (2026-07-30) ────────────────────────────────────
+  // A head used to be implicit — "a head is simply a rule somebody names" — which
+  // is true and unreadable: 7 of these 59 entries are family heads and NOTHING
+  // about a head's own JSON says so. You had to scan all 59 `family` values to
+  // find out. It also made a family unauthorable until its first member existed.
+  //
+  // Now it is declared, and validateFamilies checks BOTH directions: a head must
+  // not itself have a `family`, and anything named as a family must be declared a
+  // head. Two fields that can disagree are worth it only when the disagreement is
+  // caught, and it is.
+  head: z.boolean().optional(),
   // ── THE CLASSROOM PHRASING (2026-07-29) ──────────────────────────────────
   // The sticky version a student can SAY: "Punkt vor Strich", "keep, change,
   // flip", "Differenzen und Summen kürzen nur die Dummen". Its job is retention,
@@ -344,9 +409,26 @@ export function parseRuleTree(raw: unknown): RuleTree {
 // WHAT IT DELIBERATELY DOES NOT TAKE from errors.json: `instances` and `fix`.
 // Both work a CASE, and a case belongs to the skill that teaches it.
 export const mistakeDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so `skill.errors` resolves here without touching a single skill
+  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so a skill's `explains` resolves here without touching a single skill
   kind: z.enum(['anti-law', 'misreading', 'salience', 'omission']),
-  topic: z.string(),
+  // ── THE FAMILY AXIS (2026-07-30), the same mechanism as a rule's ──────────
+  // `kind` turned out to be too coarse to be the family. `anti.linearity` and
+  // `anti.partial-distribution` are both anti-laws and are not the same failure
+  // at all: one INVENTED a move, the other made the right move and stopped early.
+  // The family is that missing level, and it is what makes an error message read
+  // the way a teacher says it — "Forced move · Don't spread a power or a root
+  // over a plus" — exactly as /rules already prints "Power laws · …".
+  //
+  // ⚠️ A HEAD HAS NO `topic`, which is why that field is now optional. A family
+  // cuts ACROSS topics: forced moves happen in distributing, fractions, powers
+  // and terms alike, so naming one would be a lie. A rule never hit this because
+  // a rule has no topic.
+  //
+  // ⚠️ `frequency` ON A HEAD IS MEANINGLESS — a family is not made more or less
+  // often, its members are. Views must not rank heads by it.
+  family: z.string().optional(),
+  head: z.boolean().optional(),
+  topic: z.string().optional(),
   frequency: z.number().int().min(1).max(3).default(1),
   mistake: localizedString,               // THE FALSE SENTENCE, stated as the student holds it — "Every minus is a subtraction", not "Losing one of two minuses". The error layer names the mistake from outside; a pool entry states it from inside, so it reads as a claim that can be marked ✗ exactly as a rule reads as one that can be marked ✓
   latex: z.array(z.string()).default([]), // the false claim(s). Empty is legitimate: the two salience mistakes and the adjacent-signs omission have no expressible schema
@@ -452,15 +534,28 @@ export function parseSheetTree(raw: unknown): SheetTree {
  *  lookup. There is no separate "is a head" flag: a head is simply a rule
  *  somebody names, and its `rule` sentence IS the label, which is why it is a
  *  bare name ("Power laws") while its `note` carries why the family coheres. */
-export function validateRuleFamilies(rules: RulesFile): void {
-  const byId = new Map(rules.map(r => [r.id, r]))
-  for (const r of rules) {
+export function validateFamilies(
+  entries: { id: string; family?: string; head?: boolean }[], what: string,
+): void {
+  const byId = new Map(entries.map(r => [r.id, r]))
+  for (const r of entries) {
+    if (r.head && r.family) {
+      throw new Error(`${what} "${r.id}" is declared a head and also has a family — families are one level deep.`)
+    }
     if (!r.family) continue
     const head = byId.get(r.family)
-    if (!head) throw new Error(`Rule "${r.id}" has unknown family "${r.family}".`)
-    if (r.family === r.id) throw new Error(`Rule "${r.id}" is its own family.`)
+    if (!head) throw new Error(`${what} "${r.id}" has unknown family "${r.family}".`)
+    if (r.family === r.id) throw new Error(`${what} "${r.id}" is its own family.`)
     if (head.family) throw new Error(`Family "${r.family}" itself has a family — families are one level deep.`)
+    // THE SECOND DIRECTION, and the whole reason `head` exists: being named as a
+    // family is not enough to be one, or the flag would be decorative and could
+    // silently disagree with the data it describes.
+    if (!head.head) throw new Error(`${what} "${r.id}" names family "${r.family}", which is not declared a head.`)
   }
+}
+
+export function validateRuleFamilies(rules: RulesFile): void {
+  validateFamilies(rules, 'Rule')
 }
 
 /** Every rule a sheet names must exist — a sheet owns nothing, so a dangling
@@ -669,16 +764,20 @@ export function parseErrorTree(raw: unknown): ErrorTree {
 // scripts/sweep-layers.mjs.
 export function validateLayerRefs(
   skills: Skill[], rules: RulesFile,
-  cardIds: Set<string>, errors: ErrorDef[],
+  cardIds: Set<string>, errors: ErrorDef[], mistakes: MistakeDef[] = [],
 ): void {
-  const errIds = new Set(errors.map(e => e.id))
+  // ⚠️ RESOLVED AGAINST THE POOL, NOT THE ERROR LAYER (2026-07-30). The ids are
+  // shared, so this was the same set until the pool gained entries errors.json
+  // cannot express: `errorInstance.wrong` is REQUIRED, and an inactivity mistake
+  // writes nothing at all. `mistakes.json` is what a skill's `explains` means.
+  const errIds = new Set([...errors.map(e => e.id), ...mistakes.map(m => m.id)])
 
   for (const f of skills) {
     for (const r of f.restsOn) {
       if (!cardIds.has(r)) throw new Error(`Skill "${f.id}" restsOn unknown card "${r}".`)
     }
-    for (const r of f.errors) {
-      if (!errIds.has(r)) throw new Error(`Skill "${f.id}" lists unknown error pattern "${r}".`)
+    for (const r of f.mistakes) {
+      if (!errIds.has(r)) throw new Error(`Skill "${f.id}" explains unknown mistake "${r}".`)
     }
   }
   for (const m of rules) {
@@ -740,7 +839,7 @@ export function auditCoverage(
     if (f.restsOn.length === 0) continue
     const coords = new Set([
       ...f.restsOn,
-      ...f.errors.flatMap(eid => corruptsOf.get(eid) ?? []),
+      ...f.mistakes.flatMap(eid => corruptsOf.get(eid) ?? []),
     ])
     const unsupported = f.rules.filter(mid => {
       const mp = rules.find(m => m.id === mid)
@@ -824,7 +923,7 @@ export function auditCoverage(
 
   // Direction 1 — errors nothing drills. Frequency-ranked, because a ★★★ mistake
   // with no skill is a curriculum hole and a ★ one may just be rare.
-  const citedErrs = new Set(skills.flatMap(f => f.errors))
+  const citedErrs = new Set(skills.flatMap(f => f.mistakes))
   const undrilled = errors.filter(e => !citedErrs.has(e.id)).sort((a, b) => b.frequency - a.frequency)
   if (undrilled.length > 0) {
     lines.push(`Errors no skill drills (${undrilled.length}): ` +
@@ -846,7 +945,7 @@ export function auditCoverage(
   const byId = new Map(skills.map(s => [s.id, s]))
   const viaDrill = new Set(
     drills.filter(d => d.pitfalls.some(p => (p.explainedBy?.length ?? 0) > 0)).map(d => d.skill))
-  const justified = new Set(skills.filter(f => f.errors.length > 0 || viaDrill.has(f.id)).map(f => f.id))
+  const justified = new Set(skills.filter(f => f.mistakes.length > 0 || viaDrill.has(f.id)).map(f => f.id))
   for (let grew = true; grew;) {
     grew = false
     for (const id of [...justified]) {
@@ -891,7 +990,7 @@ export function validateReadings(skills: Skill[]): void {
     if (f.misreads && !f.answer) {
       throw new Error(`Skill "${f.id}" has a misreads but no answer.`)
     }
-    if (f.misChunks.length > 0 && f.chunks.length === 0) {
+    if (f.misChunks && f.chunks.length === 0) {
       throw new Error(`Skill "${f.id}" has misChunks but no chunks.`)
     }
   }
@@ -948,7 +1047,9 @@ export function validateLatexCompiles(
   for (const f of skills) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
     if (f.illustration) check(f.id, 'illustration', f.illustration)
-    f.wrong.forEach((w, i) => check(f.id, `wrong[${i}]`, w))
+    f.wrong.forEach((w, i) => { if (w.latex) check(f.id, `wrong[${i}]`, w.latex) })
+    if (f.misChunks) f.misChunks.chunks.forEach((c, i) => check(f.id, `misChunks[${i}]`, c))
+    f.chunks.forEach((c, i) => check(f.id, `chunks[${i}]`, c))
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
   }
   for (const d of drills) {
@@ -1108,15 +1209,15 @@ export function validateDrills(drills: Drill[], skills: Skill[]): void {
     if (seen.has(d.skill)) throw new Error(`More than one drill for skill "${d.skill}".`)
     seen.add(d.skill)
     if (d.kind !== f.kind) throw new Error(`Drill for "${d.skill}" is kind "${d.kind}" but the skill is "${f.kind}".`)
-    const declared = new Set(f.errors)
+    // ⚠️ THE `explainedBy ⊆ skill.mistakes` CHECK IS GONE (2026-07-30). It guarded
+    // nothing once `mistakes` became derived: a drill's distractor could only cite
+    // what the skill's own ✗ already explains, so the check either restated the
+    // pairing or — as it did the day the pairing landed — failed on citations the
+    // skill had deliberately dropped. `src/data/drills/*.json` is disposable and
+    // must not be able to hold the skill layer hostage.
     for (const p of d.pitfalls) {
       for (const r of p.revise ?? []) {
         if (!famIds.has(r)) throw new Error(`Drill "${d.skill}" revises unknown skill "${r}".`)
-      }
-      for (const r of p.explainedBy ?? []) {
-        if (!declared.has(r)) {
-          throw new Error(`Drill "${d.skill}" has a distractor explainedBy "${r}", not in the skill's errors.`)
-        }
       }
     }
   }

@@ -94,6 +94,7 @@
     {
       "id": "rule.zero-and-one",
       "kind": "is",
+      "head": true,
       "rule": {
         "en": "Zero and one",
         "de": "Null und Eins"
@@ -186,6 +187,7 @@
     {
       "id": "rule.minus-rules",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Minus rules",
         "de": "Minusregeln"
@@ -342,6 +344,7 @@
     {
       "id": "rule.power-laws",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Power laws",
         "de": "Potenzgesetze"
@@ -543,7 +546,6 @@
         "de": "Für eine Potenz einer Summe gibt es kein Gesetz"
       },
       "latex": [
-        "(a+b)^n \\neq a^n + b^n",
         "(a+b)^2 = a^2 + 2ab + b^2"
       ],
       "note": {
@@ -571,10 +573,7 @@
       "mnemonic": {
         "de": "Potenzen und Summen radizieren nur die Dummen"
       },
-      "latex": [
-        "\\sqrt{a+b} \\neq \\sqrt{a} + \\sqrt{b}",
-        "\\sqrt{a^2+b^2} \\neq a + b"
-      ],
+      "latex": [],
       "note": {
         "en": "The root reaches through products and quotients and stops at a plus — the same wall the power laws hit, because a root is a power with a fractional exponent. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, while $3 + 4 = 7$. You meet this more often than any other case of it, because a sum under a root is everywhere: in Pythagoras, $\\sqrt{a^2+b^2}$ IS the answer, not a step on the way to one.",
         "de": "Die Wurzel greift durch Produkte und Quotienten und hört beim Plus auf — dieselbe Wand wie bei den Potenzgesetzen, denn eine Wurzel ist eine Potenz mit gebrochenem Exponenten. Probier $a = 9$, $b = 16$: $\\sqrt{25} = 5$, aber $3 + 4 = 7$. Diesem Fall begegnet man am häufigsten, weil eine Summe unter der Wurzel überall vorkommt: Bei Pythagoras IST $\\sqrt{a^2+b^2}$ die Antwort und kein Zwischenschritt."
@@ -605,6 +604,7 @@
     {
       "id": "rule.fraction-laws",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Fraction laws",
         "de": "Bruchregeln"
@@ -662,7 +662,7 @@
         "de": "Der Bruchstrich ist eine Klammer"
       },
       "latex": [
-        "\\frac{a+b}{c} \\neq a + \\frac{b}{c}"
+        "\\frac{a+b}{c} = \\frac{(a+b)}{c}"
       ],
       "note": {
         "en": "Everything above the line is one grouped object, everything below another. $a + b/c$ and $(a+b)/c$ are different things.",
@@ -782,8 +782,7 @@
         "de": "Kürze einen ganzen Faktor, nie einen Summanden"
       },
       "latex": [
-        "\\frac{a \\cdot c}{b \\cdot c} = \\frac{a}{b}",
-        "\\frac{a + c}{b + c} \\neq \\frac{a}{b}"
+        "\\frac{a \\cdot c}{b \\cdot c} = \\frac{a}{b}"
       ],
       "note": {
         "en": "Cancelling divides top and bottom by the same number, and that only works if the number is a factor of the whole of each.",
@@ -805,8 +804,7 @@
         "de": "Eine Summe über dem Strich aufteilen, nie darunter"
       },
       "latex": [
-        "\\frac{a + b}{c} = \\frac{a}{c} + \\frac{b}{c}",
-        "\\frac{a}{b + c} \\neq \\frac{a}{b} + \\frac{a}{c}"
+        "\\frac{a + b}{c} = \\frac{a}{c} + \\frac{b}{c}"
       ],
       "note": {
         "en": "Dividing distributes over the numerator because it is multiplying by $\\frac{1}{c}$. Nothing distributes over a denominator.",
@@ -839,6 +837,7 @@
     {
       "id": "rule.binomial-formulas",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Binomial formulas",
         "de": "Binomische Formeln"
@@ -938,7 +937,7 @@
         "de": "Der Wurzelstrich ist eine Klammer"
       },
       "latex": [
-        "\\sqrt{a+b} \\neq \\sqrt{a} + b"
+        "\\sqrt{a+b} = \\sqrt{(a+b)}"
       ],
       "note": {
         "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
@@ -952,6 +951,7 @@
     {
       "id": "rule.distributing",
       "kind": "do",
+      "head": true,
       "rule": {
         "en": "Distributing",
         "de": "Ausmultiplizieren"
@@ -1026,8 +1026,7 @@
         "de": "Klammern zählen nur dort, wo sie die Lesart ändern"
       },
       "latex": [
-        "(ab)c = abc",
-        "(a+b)c \\neq a + bc"
+        "(ab)c = abc"
       ],
       "note": {
         "en": "$(ab)c$ and $abc$ are the same product, so those brackets may be dropped. $(a+b)c$ and $a + bc$ are not, so those may not.",
@@ -1132,6 +1131,7 @@
     {
       "id": "rule.read-the-term-first",
       "kind": "is",
+      "head": true,
       "rule": {
         "en": "Reading a term",
         "de": "Einen Term lesen"

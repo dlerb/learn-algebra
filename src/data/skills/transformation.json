@@ -32,7 +32,10 @@
           },
           "illustration": "a(b + c) = ab + ac",
           "wrong": [
-            "a(b + c) = ab + c"
+            {
+              "latex": "a(b + c) = ab + c",
+              "explains": "anti.partial-distribution"
+            }
           ],
           "requires": [
             "equivalence.multiplying-into-a-bracket"
@@ -42,9 +45,6 @@
           ],
           "restsOn": [
             "ax.distributivity"
-          ],
-          "errors": [
-            "anti.partial-distribution"
           ]
         },
         {
@@ -59,7 +59,10 @@
           },
           "illustration": "(a + b)^2 = a^2 + 2ab + b^2",
           "wrong": [
-            "(a + b)^2 = a^2 + b^2"
+            {
+              "latex": "(a + b)^2 = a^2 + b^2",
+              "explains": "anti.linearity"
+            }
           ],
           "requires": [
             "transformation.expand-distribute"
@@ -69,9 +72,6 @@
           ],
           "restsOn": [
             "th.binomial-square"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         }
       ]
@@ -99,7 +99,10 @@
           },
           "illustration": "ab + ac = a(b + c)",
           "wrong": [
-            "ab + c = a(b + c)"
+            {
+              "latex": "ab + c = a(b + c)",
+              "explains": "anti.partial-distribution"
+            }
           ],
           "requires": [
             "classification.common-factor",
@@ -111,9 +114,6 @@
           ],
           "restsOn": [
             "ax.distributivity"
-          ],
-          "errors": [
-            "anti.partial-distribution"
           ]
         },
         {
@@ -128,8 +128,14 @@
           },
           "illustration": "a^2 - b^2 = (a + b)(a - b)",
           "wrong": [
-            "a^2 - b^2 = (a - b)^2",
-            "a^2 + b^2 = (a + b)(a - b)"
+            {
+              "latex": "a^2 - b^2 = (a - b)^2",
+              "explains": "anti.linearity"
+            },
+            {
+              "latex": "a^2 + b^2 = (a + b)(a - b)",
+              "explains": "anti.linearity"
+            }
           ],
           "requires": [
             "classification.difference-of-squares",
@@ -141,9 +147,6 @@
           ],
           "restsOn": [
             "th.difference-of-squares"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         },
         {
@@ -158,7 +161,10 @@
           },
           "illustration": "a^2 + 2ab + b^2 = (a + b)^2",
           "wrong": [
-            "a^2 + b^2 = (a + b)^2"
+            {
+              "latex": "a^2 + b^2 = (a + b)^2",
+              "explains": "anti.linearity"
+            }
           ],
           "requires": [
             "classification.perfect-square-trinomial",
@@ -171,9 +177,6 @@
           "restsOn": [
             "th.binomial-square",
             "th.square-of-difference"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         },
         {
@@ -188,7 +191,10 @@
           },
           "illustration": "x^2 + 5x + 6 = (x + 2)(x + 3)",
           "wrong": [
-            "x^2 + 5x + 6 = (x + 5)(x + 6)"
+            {
+              "latex": "x^2 + 5x + 6 = (x + 5)(x + 6)",
+              "explains": "anti.quadratic-pair-unchecked"
+            }
           ],
           "requires": [
             "classification.quadratic-form",
@@ -201,9 +207,6 @@
           "restsOn": [
             "ax.distributivity",
             "th.collect-like-terms"
-          ],
-          "errors": [
-            "anti.quadratic-pair-unchecked"
           ]
         }
       ]
@@ -231,8 +234,14 @@
           },
           "illustration": "3x + 2x = 5x",
           "wrong": [
-            "3x + 2 = 5x",
-            "a + 3a = 3a"
+            {
+              "latex": "3x + 2 = 5x",
+              "explains": "anti.conjoining"
+            },
+            {
+              "latex": "a + 3a = 3a",
+              "explains": "mis.invisible-one-lost"
+            }
           ],
           "requires": [
             "equivalence.number-plus-term"
@@ -243,10 +252,6 @@
           ],
           "restsOn": [
             "th.collect-like-terms"
-          ],
-          "errors": [
-            "anti.conjoining",
-            "mis.invisible-one-lost"
           ]
         },
         {
@@ -261,7 +266,10 @@
           },
           "illustration": "x^a \\cdot x^b = x^{a+b}",
           "wrong": [
-            "x^a \\cdot x^b = x^{ab}"
+            {
+              "latex": "x^a \\cdot x^b = x^{ab}",
+              "explains": "anti.exponent-arithmetic"
+            }
           ],
           "requires": [
             "equivalence.exponent-as-repeated-product"
@@ -271,9 +279,6 @@
           ],
           "restsOn": [
             "pl.same-base"
-          ],
-          "errors": [
-            "anti.exponent-arithmetic"
           ]
         },
         {
@@ -288,7 +293,10 @@
           },
           "illustration": "\\frac{ak}{bk} = \\frac{a}{b}",
           "wrong": [
-            "\\frac{a + k}{b + k} = \\frac{a}{b}"
+            {
+              "latex": "\\frac{a + k}{b + k} = \\frac{a}{b}",
+              "explains": "anti.linearity"
+            }
           ],
           "conditions": "b \\ne 0,\\ k \\ne 0",
           "requires": [
@@ -301,9 +309,6 @@
           ],
           "restsOn": [
             "th.cancel-common-factor"
-          ],
-          "errors": [
-            "anti.linearity"
           ]
         },
         {
@@ -318,7 +323,10 @@
           },
           "illustration": "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}",
           "wrong": [
-            "\\frac{a}{b} + \\frac{c}{d} = \\frac{a + c}{b + d}"
+            {
+              "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a + c}{b + d}",
+              "explains": "anti.fraction-addition"
+            }
           ],
           "requires": [
             "equivalence.fraction-as-reciprocal-product",
@@ -331,9 +339,6 @@
             "th.fraction-multiply",
             "th.fraction-divide",
             "th.fraction-add"
-          ],
-          "errors": [
-            "anti.fraction-addition"
           ]
         }
       ]

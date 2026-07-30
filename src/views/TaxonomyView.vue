@@ -7,6 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
+import type { WrongForm } from '../data/skill.schema'
 import { skills, drills, groups, skillKinds, rules, mistakes, rawById, skillTree } from '../data'
 import { loc, type Skill, type Drill, type LocalizedString, type GroupDef } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
@@ -149,8 +150,9 @@ const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
 
 interface Row {
   id: string; kind: string; group: string; name: string
-  illustration?: string; wrong: string[]; conditions?: string
-  answer?: string; misreads?: string; chunks: string[]; misChunks: string[]
+  illustration?: string; wrong: WrongForm[]; conditions?: string
+  answer?: string; misreads?: { op: string; explains: string }; chunks: string[]
+  misChunks?: { chunks: string[]; explains: string }
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
@@ -168,7 +170,7 @@ interface Row {
 }
 
 function toRow(s: Skill): Row {
-  const errors = mistakeLinks(s.errors)
+  const errors = mistakeLinks(s.mistakes)
   const rby = skillLinks(requiredBy.get(s.id) ?? [])
   return {
     id: s.id, kind: s.kind, group: s.group, name: t(s.name),
@@ -177,7 +179,7 @@ function toRow(s: Skill): Row {
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
     drill: drillBySkill.get(s.id),
-    paired: s.wrong.length > 0 || s.misreads !== undefined || s.misChunks.length > 0,
+    paired: s.wrong.length > 0 || s.misreads !== undefined || s.misChunks !== undefined,
     // NEITHER JUSTIFICATION HOLDS: it guards no mistake and enables no other
     // skill. Not a defect and not a backlog — it is the CONTRAST SET, and the
     // label says so. Nobody believes $a+b \neq b+a$, so authoring an error for it
@@ -329,9 +331,16 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
              decomposition) rather than a false equation — which is the frozen
              drill layer's shape, so it is deliberately not decided here. -->
         <div class="block bad">
+          <!-- ⚠️ NO `latex` MEANS INEXPRESSIBLE, NOT MISSING (2026-07-30). A
+               recognition skill fails by INACTION — the student writes nothing,
+               so there is no false claim to show and the ellipsis is the honest
+               rendering. Do not fill it from the mistake's own `latex`: the pool
+               entry is a general schema and this column is the skill's own
+               instance. -->
           <div v-for="(w, i) in r.wrong" :key="i" class="stmt">
             <span class="mark bad">✗</span>
-            <span class="f"><MathExpr :latex="w" display /></span>
+            <span v-if="w.latex" class="f"><MathExpr :latex="w.latex" display /></span>
+            <span v-else class="f nothing">…</span>
           </div>
           <!-- The same two shapes, mirrored. EVIDENCED, never invented: only the
                9 of 20 that cite a mistake carry one, so 11 rows show a right
@@ -339,11 +348,11 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                pair or not at all" rule the formulas follow. -->
           <div v-if="r.misreads" class="stmt">
             <span class="mark bad">✗</span>
-            <span class="reading f">{{ L.op[r.misreads] ?? r.misreads }}</span>
+            <span class="reading f">{{ L.op[r.misreads.op] ?? r.misreads.op }}</span>
           </div>
-          <div v-if="r.misChunks.length" class="stmt">
+          <div v-if="r.misChunks" class="stmt">
             <span class="mark bad">✗</span>
-            <span class="f"><span v-for="(c, i) in r.misChunks" :key="i" class="chunk"><MathExpr :latex="c" /></span></span>
+            <span class="f"><span v-for="(c, i) in r.misChunks.chunks" :key="i" class="chunk"><MathExpr :latex="c" /></span></span>
           </div>
           <!-- NO `fix` HERE, and it was tried (2026-07-29). errors.json's fix is
                authored per MISTAKE and rendered per SKILL, so the fan wrecks it:
@@ -448,6 +457,10 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    formula column so it hangs under the expression, not under the mark. */
 .reading { padding-left: 1.1rem; font-family: var(--font-content); font-size: .92rem; color: var(--text); }
 .stmt > .reading { padding-left: 0; }
+/* An inactivity mistake has no false claim to show — the ellipsis stands in for
+   the form the student never wrote. Muted, because it is an ABSENCE and must not
+   read as loudly as a wrong formula sitting under the same mark. */
+.f.nothing { color: var(--text-faint); font-family: var(--font-content); letter-spacing: .1em; }
 /* Each chunk boxed just enough to read as one object — the whole point of a
    chunking skill is that `3x` is ONE thing, so the grouping has to be visible
    without a bracket, which would say something different. */

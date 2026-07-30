@@ -56,7 +56,7 @@ const corruptsOf = (m: MistakeDef) => m.corrupts.map(id => {
 // The reverse index: who exemplifies this sentence. Reads `skill.errors`, which
 // still holds these exact ids — the whole point of not renaming them.
 const guardedBy = (m: MistakeDef) => skills
-  .filter(s => s.errors.includes(m.id))
+  .filter(s => s.mistakes.includes(m.id))
   .map(s => ({ id: s.id, name: t(s.name), to: `/skills#${s.id}` }))
 
 // SECTIONED BY TOPIC, where /rules is flat — the one deliberate divergence from
@@ -81,7 +81,7 @@ const items = computed(() => mistakes.map(m => ({
   breaks: breaksOf(m), corrupts: corruptsOf(m), guardedBy: guardedBy(m),
   // A sentence nothing exemplifies is dead weight, exactly as on /rules: the
   // citing skill is the only thing that gives a pool entry meaning.
-  orphan: !skills.some(s => s.errors.includes(m.id)),
+  orphan: !skills.some(s => s.mistakes.includes(m.id)),
   raw: m,
 })))
 
