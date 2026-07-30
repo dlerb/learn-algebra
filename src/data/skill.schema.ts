@@ -67,7 +67,7 @@ export const skillProcess = z.enum(['fluency', 'chunking', 'transformation'])
 export type SkillProcess = z.infer<typeof skillProcess>
 
 // ── A WRONG ANSWER AND THE MISTAKE IT INSTANTIATES (2026-07-30) ───────────────
-// `explains` is the edge the layer was missing. Before it, /skills rendered the
+// `mistake` is the edge the layer was missing. Before it, /skills rendered the
 // skill's WHOLE mistake list under its WHOLE ✗ column — a list beside a column,
 // never a link from a form to a sentence. That reads fine (the eye pairs them by
 // proximity) and is unusable to a drill, which must name ONE sentence when the
@@ -88,7 +88,7 @@ export type SkillProcess = z.infer<typeof skillProcess>
 // point of these entries is that there is none.
 const wrongForm = z.object({
   latex: z.string().optional(),
-  explains: z.string(),
+  mistake: z.string(),
 })
 export type WrongForm = z.infer<typeof wrongForm>
 
@@ -165,7 +165,7 @@ export const skill = z.object({
   // form a student starts from, never the mistake, since many starting forms
   // converge on one mistake: `anti.linearity` is reached from four).
   mistakes: [...new Set([
-    ...s.wrong.map(w => w.explains),
+    ...s.wrong.map(w => w.mistake),
   ])],
 }))
 export type Skill = z.infer<typeof skill>
@@ -370,7 +370,7 @@ export function parseRuleTree(raw: unknown): RuleTree {
 // WHAT IT DELIBERATELY DOES NOT TAKE from errors.json: `instances` and `fix`.
 // Both work a CASE, and a case belongs to the skill that teaches it.
 export const mistakeDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so a skill's `explains` resolves here without touching a single skill
+  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so a skill's `wrong[].mistake` resolves here without touching a single skill
   kind: z.enum(['anti-law', 'misreading', 'salience', 'omission']),
   // ── THE FAMILY AXIS (2026-07-30), the same mechanism as a rule's ──────────
   // `kind` turned out to be too coarse to be the family. `anti.linearity` and
@@ -730,7 +730,7 @@ export function validateLayerRefs(
   // ⚠️ RESOLVED AGAINST THE POOL, NOT THE ERROR LAYER (2026-07-30). The ids are
   // shared, so this was the same set until the pool gained entries errors.json
   // cannot express: `errorInstance.wrong` is REQUIRED, and an inactivity mistake
-  // writes nothing at all. `mistakes.json` is what a skill's `explains` means.
+  // writes nothing at all. `mistakes.json` is what a skill's `wrong[].mistake` means.
   const errIds = new Set([...errors.map(e => e.id), ...mistakes.map(m => m.id)])
 
   for (const f of skills) {
@@ -738,7 +738,7 @@ export function validateLayerRefs(
       if (!cardIds.has(r)) throw new Error(`Skill "${f.id}" restsOn unknown card "${r}".`)
     }
     for (const r of f.mistakes) {
-      if (!errIds.has(r)) throw new Error(`Skill "${f.id}" explains unknown mistake "${r}".`)
+      if (!errIds.has(r)) throw new Error(`Skill "${f.id}" names unknown mistake "${r}".`)
     }
   }
   for (const m of rules) {
@@ -972,7 +972,7 @@ export function validateStacks(skills: Skill[]): void {
 // two fields contradicting each other. `process` says "this is recalled before
 // anything is read", `requires` says "you must first be able to carry out a
 // procedure". One of them is wrong, always. That makes mis-filing unwritable
-// rather than merely visible — the same move as `explains ⊆ mistakes`.
+// rather than merely visible — the same move as deriving `mistakes` from the forms.
 const processRank: Record<SkillProcess, number> = { fluency: 0, chunking: 1, transformation: 2 }
 
 export function validateSkillLinks(skills: Skill[]): void {

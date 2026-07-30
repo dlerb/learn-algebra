@@ -134,8 +134,6 @@
           },
           "layout": "flow",
           "rules": [
-            "rule.no-power-law-for-sums",
-            "rule.no-root-law-for-sums",
             "rule.split-numerator",
             "rule.fraction-cancel"
           ]
@@ -301,17 +299,6 @@
           "rules": [
             "rule.power-of-power"
           ]
-        },
-        {
-          "title": {
-            "en": "No law for sums",
-            "de": "Kein Gesetz für Summen"
-          },
-          "layout": "flow",
-          "rules": [
-            "rule.no-power-law-for-sums",
-            "rule.no-root-law-for-sums"
-          ]
         }
       ]
     },
@@ -349,16 +336,6 @@
           "layout": "flow",
           "rules": [
             "rule.quadratic-pair"
-          ]
-        },
-        {
-          "title": {
-            "en": "What is not a formula",
-            "de": "Was keine Formel ist"
-          },
-          "layout": "flow",
-          "rules": [
-            "rule.no-power-law-for-sums"
           ]
         }
       ]

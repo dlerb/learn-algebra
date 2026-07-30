@@ -539,48 +539,6 @@
       ]
     },
     {
-      "id": "rule.no-power-law-for-sums",
-      "kind": "is",
-      "rule": {
-        "en": "There is no law for a power of a sum",
-        "de": "Für eine Potenz einer Summe gibt es kein Gesetz"
-      },
-      "latex": [
-        "(a+b)^2 = a^2 + 2ab + b^2"
-      ],
-      "note": {
-        "en": "The power laws reach through products and quotients and stop at a plus. A sum squared has to be multiplied out. The name is for how badly one wishes it were true — and it is the single most common mistake in school algebra.",
-        "de": "Die Potenzgesetze greifen durch Produkte und Quotienten und hören beim Plus auf. Eine Summe im Quadrat muss ausmultipliziert werden. Der Name steht dafür, wie sehr man es sich wünscht — und es ist der häufigste Fehler der Schulalgebra."
-      },
-      "mnemonic": {
-        "en": "The freshman's dream",
-        "de": "Freshman's Dream — der Traum des Neulings"
-      },
-      "family": "rule.power-laws",
-      "summarizes": [
-        "pl.no-sum-law",
-        "th.binomial-square"
-      ]
-    },
-    {
-      "id": "rule.no-root-law-for-sums",
-      "kind": "is",
-      "family": "rule.power-laws",
-      "rule": {
-        "en": "There is no law for a root of a sum",
-        "de": "Für eine Wurzel einer Summe gibt es kein Gesetz"
-      },
-      "mnemonic": {
-        "de": "Potenzen und Summen radizieren nur die Dummen"
-      },
-      "latex": [],
-      "note": {
-        "en": "The root reaches through products and quotients and stops at a plus — the same wall the power laws hit, because a root is a power with a fractional exponent. Try $a = 9$, $b = 16$: $\\sqrt{25} = 5$, while $3 + 4 = 7$. You meet this more often than any other case of it, because a sum under a root is everywhere: in Pythagoras, $\\sqrt{a^2+b^2}$ IS the answer, not a step on the way to one.",
-        "de": "Die Wurzel greift durch Produkte und Quotienten und hört beim Plus auf — dieselbe Wand wie bei den Potenzgesetzen, denn eine Wurzel ist eine Potenz mit gebrochenem Exponenten. Probier $a = 9$, $b = 16$: $\\sqrt{25} = 5$, aber $3 + 4 = 7$. Diesem Fall begegnet man am häufigsten, weil eine Summe unter der Wurzel überall vorkommt: Bei Pythagoras IST $\\sqrt{a^2+b^2}$ die Antwort und kein Zwischenschritt."
-      },
-      "summarizes": []
-    },
-    {
       "id": "rule.power-vs-coefficient",
       "kind": "is",
       "rule": {

@@ -37,7 +37,7 @@
           "wrong": [
             {
               "latex": "ab + c = a(b + c)",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
@@ -69,7 +69,7 @@
           "wrong": [
             {
               "latex": "x^2 + 5x + 6 = (x + 5)(x + 6)",
-              "explains": "anti.quadratic-pair-unchecked"
+              "mistake": "anti.quadratic-pair-unchecked"
             }
           ],
           "requires": [
@@ -115,11 +115,11 @@
           "wrong": [
             {
               "latex": "3x + 2 = 5x",
-              "explains": "anti.conjoining"
+              "mistake": "anti.conjoining"
             },
             {
               "latex": "a + 3a = 3a",
-              "explains": "mis.invisible-one-lost"
+              "mistake": "mis.invisible-one-lost"
             }
           ],
           "requires": [
@@ -150,7 +150,7 @@
           "wrong": [
             {
               "latex": "\\frac{a + k}{b + k} = \\frac{a}{b}",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [
@@ -183,7 +183,7 @@
           "wrong": [
             {
               "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a + c}{b + d}",
-              "explains": "anti.fraction-addition"
+              "mistake": "anti.fraction-addition"
             }
           ],
           "requires": [
@@ -229,7 +229,7 @@
           "wrong": [
             {
               "latex": "x^2 - 1 = (x-1)^2",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [

@@ -182,7 +182,7 @@
           "wrong": [
             {
               "latex": "3x + 2y = (3x) \\cdot (2y)",
-              "explains": "sal.loudest-op-wins"
+              "mistake": "sal.loudest-op-wins"
             }
           ],
           "requires": [
@@ -215,7 +215,7 @@
           "wrong": [
             {
               "latex": "3(x+1) = (3) + (x+1)",
-              "explains": "sal.loudest-op-wins"
+              "mistake": "sal.loudest-op-wins"
             }
           ],
           "requires": [
@@ -247,7 +247,7 @@
           "wrong": [
             {
               "latex": "2x^2 = (2x)^{2}",
-              "explains": "mis.exponent-scope"
+              "mistake": "mis.exponent-scope"
             }
           ],
           "requires": [
@@ -279,7 +279,7 @@
           "wrong": [
             {
               "latex": "-3x + 2y = (3x) - (2y)",
-              "explains": "mis.minus-roles-confused"
+              "mistake": "mis.minus-roles-confused"
             }
           ],
           "requires": [
@@ -312,7 +312,7 @@
           "wrong": [
             {
               "latex": "(x+1)^2 = (x) + (1)^{2}",
-              "explains": "sal.loudest-op-wins"
+              "mistake": "sal.loudest-op-wins"
             }
           ],
           "requires": [
@@ -346,7 +346,7 @@
           "wrong": [
             {
               "latex": "\\frac{3x+2}{x-1} = (3x) + \\frac{2}{x-1}",
-              "explains": "sal.loudest-op-wins"
+              "mistake": "sal.loudest-op-wins"
             }
           ],
           "requires": [
@@ -388,7 +388,7 @@
           "wrong": [
             {
               "latex": "3x + 2y - z = (3) + (x) + (2) + (y) + (z)",
-              "explains": "sal.implicit-op-overlooked"
+              "mistake": "sal.implicit-op-overlooked"
             }
           ],
           "requires": [
@@ -446,7 +446,7 @@
           "wrong": [
             {
               "latex": "3x + 2y = (3x + 2) \\cdot (y)",
-              "explains": "mis.precedence-ignored"
+              "mistake": "mis.precedence-ignored"
             }
           ],
           "requires": [
@@ -478,7 +478,7 @@
           "wrong": [
             {
               "latex": "3(x+1) - 2(x-1) = (3x + 1) + (-2x - 1)",
-              "explains": "anti.bracket-dissolved"
+              "mistake": "anti.bracket-dissolved"
             }
           ],
           "requires": [

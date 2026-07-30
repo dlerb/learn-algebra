@@ -36,7 +36,7 @@
           "wrong": [
             {
               "latex": "3x = 3 + x",
-              "explains": "mis.juxtaposition-as-plus"
+              "mistake": "mis.juxtaposition-as-plus"
             }
           ],
           "rules": [
@@ -66,7 +66,7 @@
           "wrong": [
             {
               "latex": "2(x+1) = 2 + (x+1)",
-              "explains": "mis.juxtaposition-as-plus"
+              "mistake": "mis.juxtaposition-as-plus"
             }
           ],
           "requires": [
@@ -100,7 +100,7 @@
           "wrong": [
             {
               "latex": "(-1)a = -1 + a",
-              "explains": "mis.juxtaposition-as-plus"
+              "mistake": "mis.juxtaposition-as-plus"
             }
           ],
           "requires": [
@@ -135,7 +135,7 @@
           "wrong": [
             {
               "latex": "0x = x",
-              "explains": "mis.juxtaposition-as-plus"
+              "mistake": "mis.juxtaposition-as-plus"
             }
           ],
           "requires": [
@@ -166,7 +166,7 @@
           "wrong": [
             {
               "latex": "x + x = x^2",
-              "explains": "anti.repetition-confusion"
+              "mistake": "anti.repetition-confusion"
             }
           ],
           "requires": [
@@ -208,14 +208,14 @@
           "wrong": [
             {
               "latex": "2 + 3x = 5x",
-              "explains": "anti.conjoining"
+              "mistake": "anti.conjoining"
             }
           ],
           "requires": [
             "skill.repeated-addition"
           ],
           "rules": [
-            "rule.juxtaposition"
+            "rule.unlike-terms-stay"
           ],
           "restsOn": [
             "th.collect-like-terms",
@@ -237,14 +237,14 @@
           "wrong": [
             {
               "latex": "3x + 2y = 5xy",
-              "explains": "anti.conjoining"
+              "mistake": "anti.conjoining"
             }
           ],
           "requires": [
             "skill.number-plus-term"
           ],
           "rules": [
-            "rule.juxtaposition"
+            "rule.unlike-terms-stay"
           ],
           "restsOn": [
             "th.collect-like-terms",
@@ -266,7 +266,7 @@
           "wrong": [
             {
               "latex": "x^2 + x = x^3",
-              "explains": "anti.conjoining"
+              "mistake": "anti.conjoining"
             }
           ],
           "requires": [
@@ -308,7 +308,7 @@
           "wrong": [
             {
               "latex": "0 - 3 = 3 - 0",
-              "explains": "anti.commute-everything"
+              "mistake": "anti.commute-everything"
             }
           ],
           "rules": [
@@ -337,11 +337,11 @@
           "wrong": [
             {
               "latex": "a - b = a \\cdot (-b)",
-              "explains": "mis.subtraction-as-times-negative"
+              "mistake": "mis.subtraction-as-times-negative"
             },
             {
               "latex": "a + -b = a + (-b)",
-              "explains": "omi.adjacent-signs"
+              "mistake": "omi.adjacent-signs"
             }
           ],
           "requires": [
@@ -373,7 +373,7 @@
           "wrong": [
             {
               "latex": "-(a + b) = -a + b",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
@@ -408,7 +408,7 @@
           "wrong": [
             {
               "latex": "-(a - b) = -a - b",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
@@ -442,11 +442,11 @@
           "wrong": [
             {
               "latex": "a - (-b) = a - b",
-              "explains": "mis.minus-roles-confused"
+              "mistake": "mis.minus-roles-confused"
             },
             {
               "latex": "a - -b = a - (-b)",
-              "explains": "omi.adjacent-signs"
+              "mistake": "omi.adjacent-signs"
             }
           ],
           "requires": [
@@ -478,7 +478,7 @@
           "wrong": [
             {
               "latex": "(-a)(-b) = -ab",
-              "explains": "mis.minus-roles-confused"
+              "mistake": "mis.minus-roles-confused"
             }
           ],
           "requires": [
@@ -514,7 +514,7 @@
           "wrong": [
             {
               "latex": "-\\frac{a}{b} = \\frac{-a}{-b}",
-              "explains": "anti.minus-on-both-parts"
+              "mistake": "anti.minus-on-both-parts"
             }
           ],
           "requires": [
@@ -550,7 +550,7 @@
           "wrong": [
             {
               "latex": "a - (b + c) = a - b + c",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
@@ -584,7 +584,7 @@
           "wrong": [
             {
               "latex": "a - (b - c) = a - b - c",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
@@ -647,7 +647,7 @@
           "wrong": [
             {
               "latex": "((a + b)) \\neq (a + b)",
-              "explains": "omi.redundant-brackets-kept"
+              "mistake": "omi.redundant-brackets-kept"
             }
           ],
           "restsOn": [
@@ -671,7 +671,7 @@
           "wrong": [
             {
               "latex": "a + b \\cdot c = (a + b) \\cdot c",
-              "explains": "mis.precedence-ignored"
+              "mistake": "mis.precedence-ignored"
             }
           ],
           "requires": [
@@ -699,11 +699,11 @@
           "wrong": [
             {
               "latex": "\\frac{a+b}{c} = a + \\frac{b}{c}",
-              "explains": "mis.fraction-bar-grouping-lost"
+              "mistake": "mis.fraction-bar-grouping-lost"
             },
             {
               "latex": "a + b/c = \\frac{a+b}{c}",
-              "explains": "mis.linear-slash-overgrouped"
+              "mistake": "mis.linear-slash-overgrouped"
             }
           ],
           "requires": [
@@ -734,7 +734,7 @@
           "wrong": [
             {
               "latex": "2(x + 1) = 2x + 1",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
@@ -767,7 +767,7 @@
           "wrong": [
             {
               "latex": "a(b + c) = ab + c",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
@@ -806,7 +806,7 @@
           "wrong": [
             {
               "latex": "a^2 = a + a",
-              "explains": "anti.repetition-confusion"
+              "mistake": "anti.repetition-confusion"
             }
           ],
           "requires": [
@@ -833,11 +833,11 @@
           "wrong": [
             {
               "latex": "2a = a^2",
-              "explains": "anti.repetition-confusion"
+              "mistake": "anti.repetition-confusion"
             },
             {
               "latex": "a^2 = 2a",
-              "explains": "anti.repetition-confusion"
+              "mistake": "anti.repetition-confusion"
             }
           ],
           "requires": [
@@ -871,7 +871,7 @@
           "wrong": [
             {
               "latex": "-a^2 = (-a)^2",
-              "explains": "mis.exponent-scope"
+              "mistake": "mis.exponent-scope"
             }
           ],
           "requires": [
@@ -905,7 +905,7 @@
           "wrong": [
             {
               "latex": "(ab)^2 = ab^2",
-              "explains": "anti.power-of-product-partial"
+              "mistake": "anti.power-of-product-partial"
             }
           ],
           "requires": [
@@ -938,7 +938,7 @@
           "wrong": [
             {
               "latex": "a^0 = 0",
-              "explains": "anti.zero-exponent"
+              "mistake": "anti.zero-exponent"
             }
           ],
           "requires": [
@@ -966,7 +966,7 @@
           "wrong": [
             {
               "latex": "a^{-n} = -a^n",
-              "explains": "mis.negative-exponent-negates"
+              "mistake": "mis.negative-exponent-negates"
             }
           ],
           "requires": [
@@ -1000,7 +1000,7 @@
           ],
           "wrong": [
             {
-              "explains": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted"
             }
           ],
           "requires": [
@@ -1032,7 +1032,7 @@
           ],
           "wrong": [
             {
-              "explains": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted"
             }
           ],
           "requires": [
@@ -1067,7 +1067,7 @@
           "wrong": [
             {
               "latex": "(a+b)^2 = a^2 + b^2",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [
@@ -1100,7 +1100,7 @@
           ],
           "wrong": [
             {
-              "explains": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted"
             }
           ],
           "requires": [
@@ -1129,23 +1129,22 @@
           "wrong": [
             {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             },
             {
               "latex": "\\sqrt{a^2+b^2} = a + b",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             },
             {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + b",
-              "explains": "mis.root-scope"
+              "mistake": "mis.root-scope"
             }
           ],
           "requires": [
             "skill.root-of-a-product"
           ],
           "rules": [
-            "rule.only-multiplication-distributes",
-            "rule.no-root-law-for-sums"
+            "rule.only-multiplication-distributes"
           ],
           "restsOn": [
             "ix.root"
@@ -1169,7 +1168,7 @@
           "wrong": [
             {
               "latex": "x^a \\cdot x^b = x^{ab}",
-              "explains": "anti.exponent-arithmetic"
+              "mistake": "anti.exponent-arithmetic"
             }
           ],
           "requires": [
@@ -1209,7 +1208,7 @@
           "wrong": [
             {
               "latex": "\\frac{a}{b} \\neq a : b",
-              "explains": "mis.bar-not-division"
+              "mistake": "mis.bar-not-division"
             }
           ],
           "restsOn": [
@@ -1233,7 +1232,7 @@
           ],
           "wrong": [
             {
-              "explains": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted"
             }
           ],
           "requires": [
@@ -1260,7 +1259,7 @@
           "wrong": [
             {
               "latex": "\\frac{a}{1} = \\frac{1}{a}",
-              "explains": "anti.commute-everything"
+              "mistake": "anti.commute-everything"
             }
           ],
           "requires": [
@@ -1314,7 +1313,7 @@
           "wrong": [
             {
               "latex": "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [
@@ -1347,7 +1346,7 @@
           "wrong": [
             {
               "latex": "\\frac{3x+2}{3} = x + 2",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [
@@ -1407,7 +1406,7 @@
           "wrong": [
             {
               "latex": "a \\cdot 3 \\neq 3a",
-              "explains": "mis.order-blindness"
+              "mistake": "mis.order-blindness"
             }
           ],
           "requires": [
@@ -1438,7 +1437,7 @@
           "wrong": [
             {
               "latex": "a - b = b - a",
-              "explains": "anti.commute-everything"
+              "mistake": "anti.commute-everything"
             }
           ],
           "requires": [
@@ -1469,7 +1468,7 @@
           "wrong": [
             {
               "latex": "\\frac{a}{b} = \\frac{b}{a}",
-              "explains": "anti.commute-everything"
+              "mistake": "anti.commute-everything"
             }
           ],
           "requires": [
@@ -1510,7 +1509,7 @@
           "wrong": [
             {
               "latex": "(a + b)^2 = a^2 + b^2",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [
@@ -1540,11 +1539,11 @@
           "wrong": [
             {
               "latex": "a^2 - b^2 = (a - b)^2",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             },
             {
               "latex": "a^2 + b^2 = (a + b)(a - b)",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [
@@ -1553,8 +1552,7 @@
           ],
           "rules": [
             "rule.difference-of-squares",
-            "rule.binomials-read-backwards",
-            "rule.dominant-op-last"
+            "rule.binomials-read-backwards"
           ],
           "restsOn": [
             "th.difference-of-squares",
@@ -1580,7 +1578,7 @@
           "wrong": [
             {
               "latex": "a^2 + b^2 = (a + b)^2",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
           "requires": [
@@ -1588,8 +1586,7 @@
           ],
           "rules": [
             "rule.binomial-square",
-            "rule.binomials-read-backwards",
-            "rule.dominant-op-last"
+            "rule.binomials-read-backwards"
           ],
           "restsOn": [
             "th.binomial-square",

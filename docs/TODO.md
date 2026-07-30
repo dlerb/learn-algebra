@@ -527,6 +527,15 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
 
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
 
+- [ ] **A CHEAT SHEET SHOULD BE ABLE TO PRINT A MISTAKE** (2026-07-30, the author's). Today
+  `sheetGroup.rules` takes rule ids only, so a sheet can show what to do and never what not to.
+  ⚠️ **The requirement is not hypothetical — two sheet sections were deleted for want of it.**
+  `rule.no-power-law-for-sums` and `rule.no-root-law-for-sums` were removed as prohibitions
+  wearing a rule's clothes (see below), and that emptied `sheet.power-laws` → *"No law for sums"*
+  and `sheet.binomial-formulas` → *"What is not a formula"* — two groups whose entire purpose was
+  the warning. Their content lives on in `anti.linearity`; what is missing is a way to print it.
+  A `sheetGroup` would need to take mistake ids alongside rule ids, and `/sheets` a ✗ register.
+
 - [ ] **Two view files carry pre-rename names** (2026-07-30). `/skills` renders
   `TaxonomyView.vue` — the name predates the taxonomy → skills rename — and `/errors` renders
   `ReferenceView.vue`, from when it was the only reference page. **`SkillsView.vue` and

@@ -395,9 +395,7 @@
                 "ax.distributivity"
               ],
               "rules": [
-                "rule.only-multiplication-distributes",
-                "rule.no-power-law-for-sums",
-                "rule.no-root-law-for-sums"
+                "rule.only-multiplication-distributes"
               ],
               "name": {
                 "en": "Spreading an operation over a plus",
