@@ -164,51 +164,6 @@ export const skill = z.object({
 }))
 export type Skill = z.infer<typeof skill>
 
-// ── Drill layer ──────────────────────────────────────────────────────────────
-// Drill material, parked out of the skills (drills/*.json). Each drill points
-// at its `skill` by id. Discriminated on `kind` for now — that is the shape of
-// the parked material; the real drill layer will likely key on a `format`
-// instead. A pitfall's `explainedBy` names which of the skill's `errors` this
-// concrete distractor instantiates (validated ⊆ the skill's set).
-const equivPitfall = z
-  .union([z.string(), z.object({
-    expr: z.string(),
-    revise: z.array(z.string()).min(1).optional(),
-    explainedBy: z.array(z.string()).min(1).optional(),
-  })])
-  .transform((p): { expr: string; revise?: string[]; explainedBy?: string[] } =>
-    (typeof p === 'string' ? { expr: p } : p))
-
-export const drill = z.discriminatedUnion('kind', [
-  z.object({
-    kind: z.literal('equivalence'), skill: z.string(),
-    equivalents: z.array(z.string()).min(2),
-    pitfalls: z.array(equivPitfall).default([]),
-  }),
-  z.object({
-    kind: z.literal('classification'), skill: z.string(),
-    examples: z.array(z.string()).min(1),
-    answer: dominantOp,
-    pitfalls: z.array(z.object({
-      answer: dominantOp, why: localizedString,
-      revise: z.array(z.string()).min(1).optional(),
-      explainedBy: z.array(z.string()).min(1).optional(),
-    })).default([]),
-  }),
-  z.object({
-    kind: z.literal('chunking'), skill: z.string(),
-    examples: z.array(z.object({
-      expr: z.string(), chunks: z.array(z.string()).min(2), op: dominantOp,
-    })).min(1),
-    pitfalls: z.array(z.object({
-      chunks: z.array(z.string()), why: localizedString,
-      revise: z.array(z.string()).min(1).optional(),
-      explainedBy: z.array(z.string()).min(1).optional(),
-    })).default([]),
-  }),
-])
-export type Drill = z.infer<typeof drill>
-
 // ── Groups ───────────────────────────────────────────────────────────────────
 // Groups organize skills into ordered sections in the lookup view. Authored
 // inline in the per-kind tree files (a group node = { slug, title, blurb?,
@@ -804,7 +759,6 @@ export function validateLayerRefs(
 export function auditCoverage(
   skills: Skill[], rules: RulesFile, errors: ErrorDef[],
   cardConds: Map<string, string | undefined> = new Map(),
-  drills: Drill[] = [],
   sheets: SheetDef[] = [],
 ): string[] {
   const lines: string[] = []
@@ -940,12 +894,11 @@ export function auditCoverage(
   //   · the error was never authored                           → author it
   //   · the skill is a CONTRAST (the true-form twin of a wrong
   //     one, e.g. the commutativity pair against
-  //     anti.commute-everything) and will never own an error   → cite it from
-  //     the drill's pitfalls, which is the mechanism that already exists
+  //     anti.commute-everything) and will never own an error   → it stays listed,
+  //     and the `pure contrast` chip on /skills names it rather than counting it
+  //     as work outstanding
   const byId = new Map(skills.map(s => [s.id, s]))
-  const viaDrill = new Set(
-    drills.filter(d => d.pitfalls.some(p => (p.explainedBy?.length ?? 0) > 0)).map(d => d.skill))
-  const justified = new Set(skills.filter(f => f.mistakes.length > 0 || viaDrill.has(f.id)).map(f => f.id))
+  const justified = new Set(skills.filter(f => f.mistakes.length > 0).map(f => f.id))
   for (let grew = true; grew;) {
     grew = false
     for (const id of [...justified]) {
@@ -1033,7 +986,7 @@ function proseMath(ls?: LocalizedString): string[] {
 }
 
 export function validateLatexCompiles(
-  skills: Skill[], drills: Drill[], rules: RulesFile, errors: ErrorDef[],
+  skills: Skill[], rules: RulesFile, errors: ErrorDef[],
 ): void {
   const failures: string[] = []
   function check(owner: string, field: string, latex: string): void {
@@ -1051,25 +1004,6 @@ export function validateLatexCompiles(
     if (f.misChunks) f.misChunks.chunks.forEach((c, i) => check(f.id, `misChunks[${i}]`, c))
     f.chunks.forEach((c, i) => check(f.id, `chunks[${i}]`, c))
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
-  }
-  for (const d of drills) {
-    if (d.kind === 'equivalence') {
-      d.equivalents.forEach((x, i) => check(d.skill, `equivalents[${i}]`, x))
-      d.pitfalls.forEach((p, i) => check(d.skill, `pitfalls[${i}]`, p.expr))
-    } else if (d.kind === 'classification') {
-      d.examples.forEach((x, i) => check(d.skill, `examples[${i}]`, x))
-      d.pitfalls.forEach((p, i) =>
-        proseMath(p.why).forEach(m => check(d.skill, `pitfalls[${i}].why`, m)))
-    } else {
-      d.examples.forEach((ex, i) => {
-        check(d.skill, `examples[${i}].expr`, ex.expr)
-        ex.chunks.forEach((c, j) => check(d.skill, `examples[${i}].chunks[${j}]`, c))
-      })
-      d.pitfalls.forEach((p, i) => {
-        p.chunks.forEach((c, j) => check(d.skill, `pitfalls[${i}].chunks[${j}]`, c))
-        proseMath(p.why).forEach(m => check(d.skill, `pitfalls[${i}].why`, m))
-      })
-    }
   }
   for (const e of errors) {
     e.instances.forEach((x, i) => {
@@ -1181,44 +1115,4 @@ export function parseSkillTree(files: unknown[], head: unknown): SkillTree {
   })
   const { title, blurb, note } = h.data
   return { meta: { title, blurb, note }, skills: parseSkills(rawEntries), groups, skillKinds, rawEntries }
-}
-
-// ── Drill validation ─────────────────────────────────────────────────────────
-export function parseDrills(raw: unknown[]): Drill[] {
-  return raw.map((entry, i) => {
-    const result = drill.safeParse(entry)
-    if (!result.success) {
-      const fam = (entry as { skill?: string })?.skill ?? `index ${i}`
-      throw new Error(`Invalid drill for "${fam}":\n${z.prettifyError(result.error)}`)
-    }
-    return result.data
-  })
-}
-
-// Each drill points at a real skill, shares its kind, and every distractor's
-// `explainedBy` / `revise` must resolve — and `explainedBy` must be one of the
-// skill's declared `errors` (a distractor can't test a misconception the skill
-// never claims). One drill per skill (for now).
-export function validateDrills(drills: Drill[], skills: Skill[]): void {
-  const byId = new Map(skills.map(f => [f.id, f]))
-  const famIds = new Set(byId.keys())
-  const seen = new Set<string>()
-  for (const d of drills) {
-    const f = byId.get(d.skill)
-    if (!f) throw new Error(`Drill references unknown skill "${d.skill}".`)
-    if (seen.has(d.skill)) throw new Error(`More than one drill for skill "${d.skill}".`)
-    seen.add(d.skill)
-    if (d.kind !== f.kind) throw new Error(`Drill for "${d.skill}" is kind "${d.kind}" but the skill is "${f.kind}".`)
-    // ⚠️ THE `explainedBy ⊆ skill.mistakes` CHECK IS GONE (2026-07-30). It guarded
-    // nothing once `mistakes` became derived: a drill's distractor could only cite
-    // what the skill's own ✗ already explains, so the check either restated the
-    // pairing or — as it did the day the pairing landed — failed on citations the
-    // skill had deliberately dropped. `src/data/drills/*.json` is disposable and
-    // must not be able to hold the skill layer hostage.
-    for (const p of d.pitfalls) {
-      for (const r of p.revise ?? []) {
-        if (!famIds.has(r)) throw new Error(`Drill "${d.skill}" revises unknown skill "${r}".`)
-      }
-    }
-  }
 }

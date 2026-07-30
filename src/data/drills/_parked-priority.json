@@ -1,5 +1,5 @@
 {
-  "_note": "Parked from the old skill-level `priority` field (the teacher's drilling rank, lower = earlier). Removed from skills/*.json in the family->skill rename: drilling sequence is a drill/session-layer concern, deferred, not a property of the skill itself. NOT loaded by the app.",
+  "_note": "Parked from the old skill-level `priority` field (the teacher's drilling rank, lower = earlier). Removed from skills/*.json in the family->skill rename: drilling sequence is a drill/session-layer concern, deferred, not a property of the skill itself. NOT loaded by the app. ⚠️ IDS ARE PRE-RENAME (2026-07-30): these are the old `<kind>.<slug>` ids from before skills moved to `skill.<slug>` and `kind` became `process`. Kept as written — this is a record of a teacher's hand-ranked order, not live data, and rewriting the ids would make it look like something the app reads.",
   "priorities": {
     "classification.sum": 1,
     "equivalence.explicit-vs-implicit-product": 1,
