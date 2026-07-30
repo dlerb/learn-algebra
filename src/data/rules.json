@@ -661,7 +661,9 @@
         "en": "The fraction bar is a bracket",
         "de": "Der Bruchstrich ist eine Klammer"
       },
-      "latex": [],
+      "latex": [
+        "\\frac{a+b}{c} = \\frac{(a+b)}{c}"
+      ],
       "note": {
         "en": "Everything above the line is one grouped object, everything below another. $a + b/c$ and $(a+b)/c$ are different things.",
         "de": "Alles über dem Strich ist EIN Objekt, alles darunter ein anderes. $a + b/c$ und $(a+b)/c$ sind verschiedene Dinge."
@@ -934,7 +936,9 @@
         "en": "The root bar is a bracket",
         "de": "Der Wurzelstrich ist eine Klammer"
       },
-      "latex": [],
+      "latex": [
+        "\\sqrt{a+b} = \\sqrt{(a+b)}"
+      ],
       "note": {
         "en": "The bar of a root groups like a bracket: everything under it is one object, taken all at once.",
         "de": "Der Wurzelstrich gruppiert wie eine Klammer: Alles darunter ist ein einziges Objekt, das als Ganzes genommen wird."

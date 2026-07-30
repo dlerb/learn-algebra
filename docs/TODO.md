@@ -152,10 +152,51 @@ classification → *name the main operation*, chunking → *split it*, transform
 form* — which is coarse: per skill the real question differs (*"can you split this root?"*,
 *"write it without a negative exponent"*, *"can anything be done here?"*).
 
-**Two things make this more than tidiness.** The two new pool entries are TASK-RELATIVE and
-illegible without a stated job — a `task` field is what would make them showable on a page. And
-a generated drill item needs a PROMPT, which today could only come from `kind`. Settle it at the
-start of thread 2; it is a localized prose field, so it also lands in the German debt.
+**THREE independent arguments arrived in one session**, which is why this is the first thing to
+settle in thread 2 rather than a tidy-up:
+
+1. The two new pool entries are **TASK-RELATIVE** and illegible without a stated job — a `task`
+   field is what would make them showable on a page at all.
+2. A generated drill item needs a **PROMPT**, and today it could only come from `kind`.
+3. ⚠️ **`kind` is deciding two different things at once** — the DATA SHAPE (`wrong` vs `answer`
+   vs `chunks`) and the IMPLICIT QUESTION — and when they disagree the shape wins silently. See
+   the finding below, which is that disagreement caught in the act.
+
+The proposal is therefore to SPLIT them: `kind` keeps the data shape, `task` carries the
+question, and *"task: what is the numerator? · kind: equivalence"* becomes a visible mismatch
+instead of an invisible one. It is a localized prose field, so it also lands in the German debt.
+
+### 🔎 FOUND 2026-07-30 — the fraction bar is chunking, filed as equivalence
+
+**The author's question — "or is it even chunking?" — and the data says yes.** All four chunking
+skills are flat sums and products:
+
+    chunks-in-sum        3x + 2y - z       chunks-in-product   3 \cdot x \cdot (x+1)
+    implicit-chunking    3x + 2y           bracket-as-chunk    3(x+1) - 2(x-1)
+
+**Not one involves a fraction bar or a root bar** — yet the bar is the commonest invisible
+grouper in school algebra, and `rule.fraction-bar-brackets` is cited by FIVE skills, all of them
+filed as `equivalence`. (`rule.root-bar-brackets` is cited by **no skill at all** — the root twin
+of `equivalence.fraction-bar-grouping` does not exist.)
+
+⚠️ **THE MECHANISM OF THE MIS-FILING IS VISIBLE, and it is what argument 3 above is about:**
+
+    equivalence.fraction-bar-grouping   \frac{a+b}{c} = (a+b) \div c     ← an EQUATION
+    chunking.chunks-in-sum              3x + 2y - z  +  chunks[]         ← not an equation
+
+**The kind was decided by the SHAPE OF THE ILLUSTRATION, not by the question being asked.** Write
+it as an equality and it lands in `equivalence`; write it as a form plus its pieces and it lands
+in `chunking`. The capability in `fraction-bar-grouping` is *"what is the numerator?"*, which is
+a chunking question wearing an equation's clothes.
+
+⚠️ **NOT ALL FIVE ARE LIKE THIS.** `no-splitting-the-denominator` and `no-cancelling-in-a-sum`
+really are asking *"can these two forms be swapped?"* — genuine equivalence. Do not sweep the
+whole `fraction-bar-brackets` citation list into `chunking`.
+
+⚠️ **DO NOT RE-FILE YET, and the cost is why.** The id carries the kind (the regex enforces it),
+so re-filing means an id change, every `requires` reference that names it, and — the real cost —
+**authoring `chunks` for it, which is new content, not a rename.** Settle `task` first, then use
+it to audit `kind` across all 74: that turns a case-by-case judgement into a list.
 
 ### 🧵 THREAD 2 — the schema, the bindings, and where items come from
 
