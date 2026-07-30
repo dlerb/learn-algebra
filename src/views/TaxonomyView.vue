@@ -151,9 +151,13 @@ interface Row {
   errors: { id: string; name: string; frequency: number; to: string }[]
   /** Is there anything in the bad half to contrast against? THE MARKS COME AS A
    *  PAIR OR NOT AT ALL — a ✗ without its ✓ is forbidden on /errors, and a ✓ with
-   *  nothing opposite it says nothing. ⚠️ This was hardcoded to always-✓ when the
-   *  row became two blocks (2026-07-29) and went unnoticed until the classification
-   *  readings landed: rows like `linear-form` were showing a lone tick. */
+   *  nothing opposite it says nothing.
+   *  ⚠️ IT ASKS ABOUT THE BAD HALF ONLY, and briefly did not (2026-07-30): adding
+   *  `right.length > 0` looked symmetric and broke exactly the rows this migration
+   *  exists for. A FINISHED skill has an empty `right[]` and shows its stimulus as
+   *  the answer — `2 + 3x` opposite ✗ `2 + 3x = 5x` — so suppressing its ✓ left a
+   *  lone ✗ facing an unmarked formula, which is the one thing the contract bans.
+   *  Caught by looking at the rendered row, not by any check. */
   paired: boolean
   contrast: boolean
   raw: unknown
@@ -167,7 +171,7 @@ function toRow(s: Skill): Row {
     stimulus: s.stimulus, right: s.right, wrong: s.wrong, conditions: s.conditions,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
-    paired: s.right.length > 0 && s.wrong.length > 0,
+    paired: s.wrong.length > 0,
     // NEITHER JUSTIFICATION HOLDS: it guards no mistake and enables no other
     // skill. Not a defect and not a backlog — it is the CONTRAST SET, and the
     // label says so. Nobody believes $a+b \neq b+a$, so authoring an error for it

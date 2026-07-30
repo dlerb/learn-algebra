@@ -181,11 +181,33 @@ specific enough.**
 
 This page is the **only** place the skill→mistake edge is visible, since mistakes must not
 cite skills.
-⚠️ The row reads **no drill data**: all 74 skills carry an `illustration`, which is what makes
-the maths column uniform. That was originally to respect the drill freeze; since 2026-07-29 the
-drill layer is **disposable and will be rebuilt to CONSUME skills**, so the independence is now
-the permanent direction rather than a temporary courtesy. The inspection-only `drill material`
-fold renders discardable content and should probably go.
+
+**⚠️ NOT A STUDENT PAGE (settled 2026-07-30).** Students see only the drills. That is why the
+"never invent notation students meet nowhere else" rule does **not** bind here, and why a
+chunking answer may be shown as `3x + 2y = (3x) + (2y)` — brackets that are redundant and
+deliberately shown, the same device `rule.multiplication-binds-tighter` has always used.
+
+**THE ROW IS TWO STACKS over one stimulus (2026-07-30).** `right[]` holds BARE forms with the
+stimulus implied as the left-hand side, and the view composes `stimulus = right[i]` at render
+time — so the stimulus is stored once instead of 77 times and both stacks show complete claims,
+which is what makes the two columns of marks line up.
+
+⚠️ **An empty `right[]` renders the STIMULUS ALONE, under a ✓.** It means *this form is already
+finished*, which is the whole point of the field: four skills used to illustrate commutativity
+(`2 + 3x = 3x + 2`) because an equation cannot say "nothing". And `paired` asks about the **bad
+half only** — briefly it also required a non-empty `right[]`, which looked symmetric and left
+those four rows showing a lone ✗ opposite an unmarked formula, the one thing the ✗/✓ contract
+bans. **Caught by looking at a rendered row, not by any check.**
+
+**Re-measured after the split** (Range `getBoundingClientRect`, 153 formulas, 1500px viewport):
+**widest 341px** (`bracket-as-chunk`), p90 176px, p50 119px — **nothing exceeds the 33rem/528px
+column**, which now carries ~190px of slack per side because composing one claim per line is
+shorter than the old whole-chain illustration. Tightening to 24rem would fit everything and pull
+the two stacks together; left alone deliberately, since the width is the author's taste call on
+a layout already approved.
+
+⚠️ Measure with a Range's **bounding** rect. `getClientRects()` returns one rect per span, so a
+max over them measures the widest *atom* — it reported 92px for a 341px formula.
 
 ### `/mistakes` — the anti-registry (2026-07-28, MERGED 2026-07-29)
 
