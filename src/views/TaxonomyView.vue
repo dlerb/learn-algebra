@@ -7,7 +7,7 @@ import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
 import type { WrongForm } from '../data/skill.schema'
-import { skills, groups, skillKinds, rules, mistakes, rawById, skillTree } from '../data'
+import { skills, groups, processes, rules, mistakes, rawById, skillTree } from '../data'
 import { loc, type Skill, type LocalizedString, type GroupDef } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
@@ -69,11 +69,11 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
       guards: 'schützt vor', cond: 'sofern',
-      by: 'gliedern nach', byGroup: 'Thema', byKind: 'Art',
+      by: 'gliedern nach', byGroup: 'Thema', byProcess: 'Prozess',
       op: { sum: 'eine Summe', difference: 'eine Differenz', product: 'ein Produkt', quotient: 'ein Quotient', power: 'eine Potenz' } as Record<string, string> }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
       guards: 'guards against', cond: 'provided',
-      by: 'section by', byGroup: 'topic', byKind: 'kind',
+      by: 'section by', byGroup: 'topic', byProcess: 'process',
       op: { sum: 'a sum', difference: 'a difference', product: 'a product', quotient: 'a quotient', power: 'a power' } as Record<string, string> })
 
 // Deep link from /rules, where each rule lists the skills that teach it.
@@ -141,10 +141,10 @@ const requiredBy = new Map<string, string[]>()
 for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requiredBy.get(r) ?? []), s.id])
 
 const groupTitle = new Map(groups.map(g => [g.slug, t(g.title)]))
-const kindTitle = new Map(skillKinds.map(k => [k.slug, t(k.title)]))
+const processTitle = new Map(processes.map((p: GroupDef) => [p.slug, t(p.title)]))
 
 interface Row {
-  id: string; kind: string; group: string; name: string
+  id: string; process: string; group: string; name: string
   illustration?: string; wrong: WrongForm[]; conditions?: string
   answer?: string; misreads?: { op: string; explains: string }; chunks: string[]
   misChunks?: { chunks: string[]; explains: string }
@@ -167,7 +167,7 @@ function toRow(s: Skill): Row {
   const errors = mistakeLinks(s.mistakes)
   const rby = skillLinks(requiredBy.get(s.id) ?? [])
   return {
-    id: s.id, kind: s.kind, group: s.group, name: t(s.name),
+    id: s.id, process: s.process, group: s.group, name: t(s.name),
     illustration: s.illustration, wrong: s.wrong, conditions: s.conditions,
     answer: s.answer, misreads: s.misreads, chunks: s.chunks, misChunks: s.misChunks,
     requires: skillLinks(s.requires), requiredBy: rby,
@@ -194,16 +194,16 @@ const byName = (a: Skill, b: Skill) => t(a.name).localeCompare(t(b.name))
 // real ways in. The switch sits in LayerPage's `filters` slot — the same place
 // the tower's chips sit — because it is the same kind of control: it changes what
 // the page shows without leaving it.
-const sectionBy = ref<'group' | 'kind'>('group')
+const sectionBy = ref<'group' | 'process'>('group')
 
 interface Sec { slug: string; title: string; blurb?: string; items: Row[] }
-const sectionsOf = (reg: GroupDef[], key: 'group' | 'kind') =>
+const sectionsOf = (reg: GroupDef[], key: 'group' | 'process') =>
   reg
     .map(g => ({ slug: g.slug, title: t(g.title), blurb: g.blurb ? t(g.blurb) : undefined, items: skills.filter(s => s[key] === g.slug).sort(byName).map(toRow) }))
     .filter(s => s.items.length > 0)
 
 const sections = computed<Sec[]>(() =>
-  sectionBy.value === 'group' ? sectionsOf(groups, 'group') : sectionsOf(skillKinds, 'kind'))
+  sectionBy.value === 'group' ? sectionsOf(groups, 'group') : sectionsOf(processes, 'process'))
 
 // THE COMPLEMENTARY COORDINATE in the strip's `kind` slot, never the one the
 // section heading already says. A skill has two, and the heading spends one of
@@ -212,7 +212,7 @@ const sections = computed<Sec[]>(() =>
 // the mode: on a long page you are usually mid-section with the heading scrolled
 // away, which is exactly when the other coordinate orients you.
 const stripKind = (r: Row) =>
-  sectionBy.value === 'group' ? (kindTitle.get(r.kind) ?? r.kind) : (groupTitle.get(r.group) ?? r.group)
+  sectionBy.value === 'group' ? (processTitle.get(r.process) ?? r.process) : (groupTitle.get(r.group) ?? r.group)
 
 // The size of the contrast set, on the page rather than only in the load log.
 const contrastCount = computed(() => skills.filter(s => toRow(s).contrast).length)
@@ -249,8 +249,8 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
           <button class="fchip" :class="{ off: sectionBy !== 'group' }" @click="sectionBy = 'group'">
             {{ L.byGroup }}<span class="fcount">{{ groups.length }}</span>
           </button>
-          <button class="fchip" :class="{ off: sectionBy !== 'kind' }" @click="sectionBy = 'kind'">
-            {{ L.byKind }}<span class="fcount">{{ skillKinds.length }}</span>
+          <button class="fchip" :class="{ off: sectionBy !== 'process' }" @click="sectionBy = 'process'">
+            {{ L.byProcess }}<span class="fcount">{{ processes.length }}</span>
           </button>
         </div>
       </div>

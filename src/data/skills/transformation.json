@@ -1,81 +1,14 @@
 {
-  "kind": "transformation",
+  "process": "transformation",
   "title": {
     "en": "Transformation",
     "de": "Umformung"
   },
   "blurb": {
-    "en": "Directed manipulation — factor, expand, simplify.",
-    "de": "Gezieltes Umformen — ausklammern, ausmultiplizieren, vereinfachen."
+    "en": "Carrying out a procedure — search, choose, apply.",
+    "de": "Ein Verfahren ausführen — suchen, wählen, anwenden."
   },
   "groups": [
-    {
-      "slug": "expanding",
-      "title": {
-        "en": "Expanding",
-        "de": "Ausmultiplizieren"
-      },
-      "blurb": {
-        "en": "Producing the multiplied-out form: distribute a factor, square a binomial. The active twin of the recognition skills.",
-        "de": "Die ausmultiplizierte Form herstellen: einen Faktor verteilen, ein Binom quadrieren. Das aktive Gegenstück zu den Erkennungsfertigkeiten."
-      },
-      "skills": [
-        {
-          "id": "skill.expand-distribute",
-          "name": {
-            "en": "Expand: multiply into a bracket",
-            "de": "Ausmultiplizieren: in eine Klammer hinein"
-          },
-          "note": {
-            "en": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$. This is the active twin of recognising $2(x+1) = 2x+2$ — there you check equality, here you generate it — and the commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
-            "de": "Die ausmultiplizierte Form herstellen: der Faktor aussen landet auf jedem Term darin. $a(b+c) = ab + ac$. Das ist das aktive Gegenstück zum Erkennen von $2(x+1) = 2x+2$ — dort prüfst du die Gleichheit, hier erzeugst du sie — und der häufigste Fehltritt ist, nach dem ersten Term aufzuhören ($a(b+c) \\to ab + c$). Ein führendes Minus ist der Faktor $-1$: $-(b+c) = -b - c$."
-          },
-          "illustration": "a(b + c) = ab + ac",
-          "wrong": [
-            {
-              "latex": "a(b + c) = ab + c",
-              "explains": "anti.partial-distribution"
-            }
-          ],
-          "requires": [
-            "skill.multiplying-into-a-bracket"
-          ],
-          "rules": [
-            "rule.only-multiplication-distributes"
-          ],
-          "restsOn": [
-            "ax.distributivity"
-          ]
-        },
-        {
-          "id": "skill.expand-binomial-square",
-          "name": {
-            "en": "Expand a squared binomial",
-            "de": "Ein Binom quadrieren"
-          },
-          "note": {
-            "en": "$(a+b)^2$ is $(a+b)(a+b)$, not $a^2 + b^2$. Expanding gives the cross term twice: $(a+b)^2 = a^2 + 2ab + b^2$. Dropping the $2ab$ is the single most common error in school algebra — a power does not distribute over a sum, because it is built from multiplication, not addition.",
-            "de": "$(a+b)^2$ ist $(a+b)(a+b)$, nicht $a^2 + b^2$. Beim Ausmultiplizieren kommt das gemischte Produkt zweimal: $(a+b)^2 = a^2 + 2ab + b^2$. Das $2ab$ wegzulassen ist der häufigste Fehler der Schulalgebra — eine Potenz verteilt sich nicht über eine Summe, denn sie ist aus Multiplikation gebaut, nicht aus Addition."
-          },
-          "illustration": "(a + b)^2 = a^2 + 2ab + b^2",
-          "wrong": [
-            {
-              "latex": "(a + b)^2 = a^2 + b^2",
-              "explains": "anti.linearity"
-            }
-          ],
-          "requires": [
-            "skill.expand-distribute"
-          ],
-          "rules": [
-            "rule.binomial-square"
-          ],
-          "restsOn": [
-            "th.binomial-square"
-          ]
-        }
-      ]
-    },
     {
       "slug": "factoring",
       "title": {
@@ -114,69 +47,6 @@
           ],
           "restsOn": [
             "ax.distributivity"
-          ]
-        },
-        {
-          "id": "skill.factor-difference-of-squares",
-          "name": {
-            "en": "Factor a difference of squares",
-            "de": "Eine Differenz von Quadraten faktorisieren"
-          },
-          "note": {
-            "en": "Two squares with a minus between them factor into the two matching brackets: $a^2 - b^2 = (a+b)(a-b)$. It works because the mixed products cancel — expanding gives $a^2 - ab + ab - b^2$, and $-ab + ab$ is $0$ (th.difference-of-squares). Two things to hold on to: the SUM of squares does not factor this way at all, and the answer is not $(a-b)^2$ — squaring a difference leaves a middle term ($-2ab$), which the true factorisation has none of. Check by multiplying back.",
-            "de": "Zwei Quadrate mit einem Minus dazwischen zerfallen in die beiden passenden Klammern: $a^2 - b^2 = (a+b)(a-b)$. Es geht, weil die gemischten Produkte sich aufheben — Ausmultiplizieren gibt $a^2 - ab + ab - b^2$, und $-ab + ab$ ist $0$. Zwei Dinge festhalten: die SUMME zweier Quadrate zerfällt so gar nicht, und die Antwort ist nicht $(a-b)^2$ — eine quadrierte Differenz hat einen mittleren Term ($-2ab$), den die echte Faktorisierung nicht hat. Prüfen durch Zurückmultiplizieren."
-          },
-          "illustration": "a^2 - b^2 = (a + b)(a - b)",
-          "wrong": [
-            {
-              "latex": "a^2 - b^2 = (a - b)^2",
-              "explains": "anti.linearity"
-            },
-            {
-              "latex": "a^2 + b^2 = (a + b)(a - b)",
-              "explains": "anti.linearity"
-            }
-          ],
-          "requires": [
-            "skill.difference-of-squares",
-            "skill.expand-distribute"
-          ],
-          "rules": [
-            "rule.difference-of-squares",
-            "rule.binomials-read-backwards"
-          ],
-          "restsOn": [
-            "th.difference-of-squares"
-          ]
-        },
-        {
-          "id": "skill.factor-perfect-square",
-          "name": {
-            "en": "Factor a perfect square trinomial",
-            "de": "Ein vollständiges Quadrat faktorisieren"
-          },
-          "note": {
-            "en": "Three terms in the shape $a^2 + 2ab + b^2$ collapse into one square: $(a+b)^2$ (th.binomial-square, read right to left). The middle term is what identifies it — it must be exactly twice the product of the two roots, which is the term students drop when they expand and the term they must find when they factor. With a minus in the middle the same identity gives $(a-b)^2$ (th.square-of-difference). Check by expanding.",
-            "de": "Drei Terme in der Gestalt $a^2 + 2ab + b^2$ ziehen sich zu einem Quadrat zusammen: $(a+b)^2$ (die binomische Formel, von rechts nach links gelesen). Der mittlere Term ist das Erkennungsmerkmal — er muss genau das Doppelte des Produkts der beiden Wurzeln sein; genau ihn lassen Schülerinnen und Schüler beim Ausmultiplizieren weg und genau ihn müssen sie beim Faktorisieren finden. Mit einem Minus in der Mitte gibt dieselbe Formel $(a-b)^2$. Prüfen durch Ausmultiplizieren."
-          },
-          "illustration": "a^2 + 2ab + b^2 = (a + b)^2",
-          "wrong": [
-            {
-              "latex": "a^2 + b^2 = (a + b)^2",
-              "explains": "anti.linearity"
-            }
-          ],
-          "requires": [
-            "skill.perfect-square-trinomial",
-            "skill.expand-binomial-square"
-          ],
-          "rules": [
-            "rule.binomial-square",
-            "rule.binomials-read-backwards"
-          ],
-          "restsOn": [
-            "th.binomial-square",
-            "th.square-of-difference"
           ]
         },
         {
@@ -255,33 +125,6 @@
           ]
         },
         {
-          "id": "skill.simplify-power-product",
-          "name": {
-            "en": "Simplify a product of powers",
-            "de": "Ein Produkt von Potenzen vereinfachen"
-          },
-          "note": {
-            "en": "Same base, so add the exponents: $x^a \\cdot x^b = x^{a+b}$, not $x^{ab}$. A power counts factors, and multiplying two powers stacks their factors, so the counts add. The mirror slip — multiplying the exponents — is what $(x^a)^b = x^{ab}$ actually does, one step away.",
-            "de": "Gleiche Basis, also die Exponenten addieren: $x^a \\cdot x^b = x^{a+b}$, nicht $x^{ab}$. Eine Potenz zählt Faktoren, und zwei Potenzen zu multiplizieren stapelt ihre Faktoren, also addieren sich die Anzahlen. Der Spiegelfehler — die Exponenten multiplizieren — ist das, was $(x^a)^b = x^{ab}$ wirklich tut, einen Schritt daneben."
-          },
-          "illustration": "x^a \\cdot x^b = x^{a+b}",
-          "wrong": [
-            {
-              "latex": "x^a \\cdot x^b = x^{ab}",
-              "explains": "anti.exponent-arithmetic"
-            }
-          ],
-          "requires": [
-            "skill.exponent-as-repeated-product"
-          ],
-          "rules": [
-            "rule.same-base"
-          ],
-          "restsOn": [
-            "pl.same-base"
-          ]
-        },
-        {
           "id": "skill.cancel-common-factor",
           "name": {
             "en": "Cancel a common factor",
@@ -339,6 +182,49 @@
             "th.fraction-multiply",
             "th.fraction-divide",
             "th.fraction-add"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rewriting",
+      "title": {
+        "en": "Rewriting",
+        "de": "Umschreiben"
+      },
+      "blurb": {
+        "en": "Where a rewrite changes what the term IS, not just how it looks.",
+        "de": "Wo eine Umformung ändert, was der Term IST — nicht nur, wie er aussieht."
+      },
+      "skills": [
+        {
+          "id": "skill.same-value-different-structure",
+          "name": {
+            "en": "Same value, different dominant operation",
+            "de": "Gleicher Wert, andere Hauptoperation"
+          },
+          "note": {
+            "en": "These are equal in value but have different dominant operations: $x^2-1$ is a difference, $(x+1)(x-1)$ is a product. Rewriting changes the dominant operation — the heart of Skill 3.",
+            "de": "Diese sind wertgleich, haben aber verschiedene Hauptoperationen: $x^2-1$ ist eine Differenz, $(x+1)(x-1)$ ein Produkt. Umformen ändert die Hauptoperation — der Kern von Stufe 3."
+          },
+          "illustration": "x^2 - 1 = (x+1)(x-1)",
+          "wrong": [
+            {
+              "latex": "x^2 - 1 = (x-1)^2",
+              "explains": "anti.linearity"
+            }
+          ],
+          "requires": [
+            "skill.difference",
+            "skill.product"
+          ],
+          "rules": [
+            "rule.dominant-op-last"
+          ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.brackets",
+            "th.difference-of-squares"
           ]
         }
       ]

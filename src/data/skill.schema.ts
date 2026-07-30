@@ -6,9 +6,9 @@ import katex from 'katex'
 // the TypeScript `Skill` type (via z.infer). Skill data is authored as JSON in
 // src/data/skills/*.json and validated against this schema on load.
 //
-// A skill is a mathematical unit only. It declares WHAT IT IS (its `kind`);
-// how it is drilled (exercise type) is derived from the kind in code, never
-// stored here. A skill carries no linear ordering: dependency lives in the
+// A skill is a mathematical unit only. It declares WHICH MENTAL PROCESS it trains
+// (`process`); how it is drilled — the question asked, the answer widget — is the
+// DRILL's business and is never stored here. A skill carries no linear ordering: dependency lives in the
 // `requires` graph, but drilling *sequence* is a drill/session-layer concern
 // (the old `priority` field was parked to drills/_parked-priority.json). Per-
 // student runtime state (mastery, next-item selection, scheduling) is not here.
@@ -36,15 +36,38 @@ export function loc(ls: LocalizedString, lang: Lang): string {
   return ls[lang] ?? ls.en
 }
 
-// A skill is a curated STRATEGY/SKILL — NOT drill material. It says what the
-// skill is, why it matters (`note`), one canonical `illustration`, the
-// misconceptions it guards against (`errors` → error-pattern ids), and its links
-// into the tower (`restsOn` → card ids) and the rules registry. All the
-// drill-specific material — instances, answers, distractors — lives in the drill
-// layer (drills/*.json), keyed by skill id. Uniform shape across kinds: `kind` is
-// a plain category label (= id prefix), not a data-shape discriminant.
-export const skillKind = z.enum(['equivalence', 'classification', 'chunking', 'transformation'])
-export type SkillKind = z.infer<typeof skillKind>
+// ── THE MENTAL PROCESS (2026-07-30, was `kind`) ──────────────────────────────
+// What the STUDENT has to master, not what shape the data takes. `kind` was never
+// a data-shape discriminant and the measurement proved it: `equivalence` and
+// `transformation` had IDENTICAL field signatures (illustration + wrong), 38 and 9
+// skills, with no field anywhere separating them — so the field was reporting the
+// shape sometimes and the question other times, and when they disagreed the shape
+// won silently. That is how `fraction-bar-grouping` came to be filed as an
+// equivalence: its illustration happened to be written as an equation.
+//
+//   fluency         one-step recall — the bare pattern known by heart, INCLUDING
+//                   its scope (knowing a(b+c)=ab+ac means knowing that (a+b)/c
+//                   splits and c/(a+b) does not)
+//   chunking        read the structure — the dominant operation and the parts it
+//                   joins, which are two readings of ONE decomposition
+//   transformation  carry out a procedure — search, choose, apply, several steps
+//
+// ⚠️ THREE, NOT FOUR, and they are exactly the tiers `docs/content_model.md` has
+// carried all along (Fluency / Chunking / Manipulation). `classification` was the
+// value that never fit: eleven of its sixteen skills said "the chunks are …" in
+// their own notes, and the other five had `answer` set to a dominant operation
+// with the real content in prose after a full stop.
+//
+// ⚠️ `chunking` KEEPS ITS NAME rather than becoming "decomposition": that word
+// also means factoring, and `Bausteine` already owns the term on the German side.
+//
+// THE ORDER IS REAL, not just a taxonomy. Measured on the requires graph, which
+// was authored long before this model existed: 95 of 97 edges already ran
+// fluency → chunking → transformation, nothing outside transformation depended on
+// a transformation, and both exceptions were one mis-filed skill. That is what
+// validateSkillLinks now enforces.
+export const skillProcess = z.enum(['fluency', 'chunking', 'transformation'])
+export type SkillProcess = z.infer<typeof skillProcess>
 
 // ── A WRONG ANSWER AND THE MISTAKE IT INSTANTIATES (2026-07-30) ───────────────
 // `explains` is the edge the layer was missing. Before it, /skills rendered the
@@ -81,8 +104,8 @@ export const skill = z.object({
   // other entity here (`rule.`, `sheet.`, `th.`, `ax.`, `ix.`), and re-filing is
   // now a one-field edit.
   id: z.string().regex(/^skill\.[a-z0-9-]+$/, 'id must be "skill.<slug>"'),
-  kind: skillKind,                     // positional in the kind file, re-attached by parseSkillTree — NOT derivable from the id any more
-  group: z.string(),                    // topic slug; positional in the kind file (= the containing group node), re-attached by parseSkillTree
+  process: skillProcess,               // positional in the process file, re-attached by parseSkillTree — NOT derivable from the id any more
+  group: z.string(),                    // topic slug; positional in the process file (= the containing group node), re-attached by parseSkillTree
   name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
   illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
@@ -173,7 +196,7 @@ export type Skill = z.infer<typeof skill>
 // ── Groups ───────────────────────────────────────────────────────────────────
 // Groups organize skills into ordered sections in the lookup view. Authored
 // inline in the per-kind tree files (a group node = { slug, title, blurb?,
-// skills[] }); `groups` and `skillKinds` are the flattened registries
+// skills[] }); `groups` and `processes` are the flattened registries
 // parseSkillTree derives from them (array order = display order). GroupDef is the
 // shared { slug, title, blurb? } shape both derived registries use.
 
@@ -191,7 +214,7 @@ export type GroupDef = z.infer<typeof groupDef>
 export const groupsFile = z.array(groupDef)
 export type GroupsFile = z.infer<typeof groupsFile>
 
-// A derived display registry (the skillKinds list, …) must name exactly the enum
+// A derived display registry (the processes list, …) must name exactly the enum
 // it titles: no duplicate slug, no unknown slug, no missing title.
 function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[], file: string): void {
   const slugs = registry.map(g => g.slug)
@@ -203,8 +226,8 @@ function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[],
   for (const s of inEnum) if (!inReg.has(s)) throw new Error(`${file} is missing a title for group "${s}".`)
 }
 
-export function validateSkillKinds(registry: GroupDef[]): void {
-  validateGroupRegistry(registry, skillKind.options, 'the skill kind files')
+export function validateProcesses(registry: GroupDef[]): void {
+  validateGroupRegistry(registry, skillProcess.options, 'the skill process files')
 }
 
 // ── Rules ────────────────────────────────────────────────────────────────────
@@ -1057,24 +1080,24 @@ export function parseSkills(raw: unknown[]): Skill[] {
   })
 }
 
-// ── Skill tree files (one per kind) ───────────────────────────────────────────
+// ── Skill tree files (one per process) ───────────────────────────────────────────
 // Since 2026-07-24 skills are authored as one file per KIND, mirroring the
 // fundament tower's one-file-per-layer containment tree: `kind → groups[] →
 // skills[]`. `kind` and `group` are POSITIONAL — a skill body in the file carries
 // neither — and re-injected at load, so the runtime Skill keeps both fields while
 // the two side registries (skillGroups.json / skillKinds.json) are gone: their
 // titles and display order now live inline in the tree. `groups` (flattened, in
-// display order) and `skillKinds` (one per file) are derived here, not authored.
+// display order) and `processes` (one per file) are derived here, not authored.
 const skillGroupNode = groupDef.extend({
   skills: z.array(z.record(z.string(), z.unknown())).min(1),
 })
-export const skillKindFile = z.object({
-  kind: skillKind,
+export const skillProcessFile = z.object({
+  process: skillProcess,
   title: localizedString,
   blurb: localizedString.optional(),
   groups: z.array(skillGroupNode).min(1),
 })
-export type SkillKindFile = z.infer<typeof skillKindFile>
+export type SkillProcessFile = z.infer<typeof skillProcessFile>
 
 // A LAYER HEAD FOR A LAYER THAT HAS NO ONE FILE (2026-07-28). Every other layer
 // keeps its title, its student-facing `blurb` and its authoring `note` at the top
@@ -1094,7 +1117,7 @@ export interface SkillTree {
   meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
   skills: Skill[]
   groups: GroupDef[]      // flattened across kinds, in display (array) order
-  skillKinds: GroupDef[]  // one entry per kind file, in file order
+  processes: GroupDef[]   // one entry per process file, in file order
   rawEntries: unknown[]   // kind/group-injected skill bodies, keyed by id downstream
 }
 
@@ -1105,21 +1128,21 @@ export function parseSkillTree(files: unknown[], head: unknown): SkillTree {
   const h = skillsHead.safeParse(head)
   if (!h.success) throw new Error(`Invalid skills layer head:\n${z.prettifyError(h.error)}`)
   const groups: GroupDef[] = []
-  const skillKinds: GroupDef[] = []
+  const processes: GroupDef[] = []
   const rawEntries: unknown[] = []
   files.forEach((f, i) => {
-    const parsed = skillKindFile.safeParse(f)
+    const parsed = skillProcessFile.safeParse(f)
     if (!parsed.success) {
-      const kind = (f as { kind?: string })?.kind ?? `index ${i}`
+      const kind = (f as { process?: string })?.process ?? `index ${i}`
       throw new Error(`Invalid skill file "${kind}":\n${z.prettifyError(parsed.error)}`)
     }
     const kf = parsed.data
-    skillKinds.push({ slug: kf.kind, title: kf.title, blurb: kf.blurb })
+    processes.push({ slug: kf.process, title: kf.title, blurb: kf.blurb })
     for (const g of kf.groups) {
       groups.push({ slug: g.slug, title: g.title, blurb: g.blurb })
-      for (const s of g.skills) rawEntries.push({ ...s, kind: kf.kind, group: g.slug })
+      for (const s of g.skills) rawEntries.push({ ...s, process: kf.process, group: g.slug })
     }
   })
   const { title, blurb, note } = h.data
-  return { meta: { title, blurb, note }, skills: parseSkills(rawEntries), groups, skillKinds, rawEntries }
+  return { meta: { title, blurb, note }, skills: parseSkills(rawEntries), groups, processes, rawEntries }
 }

@@ -4,7 +4,7 @@
 import {
   parseSkillTree, parseErrorTree, parseRuleTree, parseSheetTree,
   parseMistakeTree,
-  validateUniqueIds, validateSkillKinds, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateFamilies, validateSkillLinks, validateReadings,
+  validateUniqueIds, validateProcesses, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateFamilies, validateSkillLinks, validateReadings,
   validateErrors, validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
   type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
   type MistakeDef, type MistakeTree,
@@ -14,10 +14,12 @@ import rulesRaw from './rules.json'
 import sheetsRaw from './cheatsheets.json'
 import errorsRaw from './errors.json'
 import mistakesRaw from './mistakes.json'
-// Skills: one file per kind (kind → groups[] → skills[]), mirroring the fundament
-// tower's one-file-per-layer tree. Add a kind = add a file + one line below.
-import equivalenceSkills from './skills/equivalence.json'
-import classificationSkills from './skills/classification.json'
+// Skills: one file per PROCESS (process → groups[] → skills[]), mirroring the
+// fundament tower's one-file-per-layer tree. Add a process = add a file + one
+// line below. Three since 2026-07-30: `classification` was split, eleven of its
+// skills into chunking (their own notes already said "the chunks are …") and the
+// rest redistributed.
+import fluencySkills from './skills/fluency.json'
 import chunkingSkills from './skills/chunking.json'
 import transformationSkills from './skills/transformation.json'
 // …and the layer head beside them: a layer split across four files has nowhere
@@ -27,12 +29,12 @@ import skillsLayerHead from './skills/layer.json'
 // group and kind registries all come out of parseSkillTree, which re-attaches
 // kind/group from tree position so downstream sees the same flat shape as before.
 const skillTree = parseSkillTree([
-  equivalenceSkills, classificationSkills, chunkingSkills, transformationSkills,
+  fluencySkills, chunkingSkills, transformationSkills,
 ], skillsLayerHead)
 export const skills = skillTree.skills
 export { skillTree }
 export const groups: GroupsFile = skillTree.groups
-export const skillKinds: GroupsFile = skillTree.skillKinds
+export const processes: GroupsFile = skillTree.processes
 // NOTE: `layers.json` (a one-entry GroupsFile holding the errors page's title and
 // blurb) was deleted 2026-07-25 — that metadata now lives at the head of the
 // errors tree itself, and its export here collided by name with the tower manifest
@@ -76,7 +78,7 @@ export const rawById = new Map<string, unknown>(
 )
 
 validateUniqueIds(skills)
-validateSkillKinds(skillKinds)
+validateProcesses(processes)
 validateRuleRefs(skills, rules)
 validateSheetRefs(sheets, rules)
 validateRuleFamilies(rules)
