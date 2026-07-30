@@ -519,7 +519,7 @@ This is the hierarchy the library user should be able to see (the
 
 The `classification` and `chunking` skills sit outside this tower: they cite
 conventions (brackets, precedence, fraction bar, exponent scope — parsing), not
-laws — except `equivalence.same-value-different-structure` and the
+laws — except `skill.same-value-different-structure` and the
 familiar-shapes group (binomial square, difference of squares).
 
 ---
@@ -532,8 +532,8 @@ familiar-shapes group (binomial square, difference of squares).
 3. **Right-distribution of division.** `thm.split-numerator` splits over the
    numerator only ($\frac{c}{a+b}$ does NOT split); no skill drilled that
    asymmetry — first genuine gap the matrix audit surfaced. → Skill
-   `equivalence.no-splitting-the-denominator` added (fractions group,
-   contrasting with `equivalence.splitting-a-fraction`; pitfall cites
+   `skill.no-splitting-the-denominator` added (fractions group,
+   contrasting with `skill.splitting-a-fraction`; pitfall cites
    `anti.linearity`).
 4. **False laws stay flat** — no `derivedFrom` on error patterns; the
    machinery isn't worth it. (They do carry the `of` link to what they

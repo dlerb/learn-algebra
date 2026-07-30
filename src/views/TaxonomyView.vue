@@ -2,14 +2,13 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import MathExpr from '../components/MathExpr.vue'
-import RichText from '../components/RichText.vue'
 import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
 import type { WrongForm } from '../data/skill.schema'
-import { skills, drills, groups, skillKinds, rules, mistakes, rawById, skillTree } from '../data'
-import { loc, type Skill, type Drill, type LocalizedString, type GroupDef } from '../data/skill.schema'
+import { skills, groups, processes, rules, mistakes, rawById, skillTree } from '../data'
+import { loc, type Skill, type LocalizedString, type GroupDef } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
@@ -55,12 +54,13 @@ import { inspect } from '../inspect'
 // the pool untouched. This page is the ONLY place the skill→mistake edge is
 // visible, since mistakes must not cite skills (that would close the cycle).
 //
-// ⚠️ THE DRILL LAYER IS FROZEN (docs/TODO.md), so the row deliberately does NOT
-// lean on it. Every one of the 74 skills carries an `illustration`, which is what
-// makes the maths column uniform; the drill's own material — the equivalents
-// chain, the classification examples, the chunk decompositions and all the
-// pitfalls — is inspection-only, behind a fold, and can be reshaped without
-// touching this layout.
+// ⚠️ THE DRILL LAYER IS RETIRED (2026-07-30). `src/data/drills/*.json` and the
+// inspection-only `drill material` fold that rendered it are both gone: the
+// material was disposable, the rebuilt drills CONSUME skills, and the fold's
+// content would otherwise have had to be dragged through the process migration
+// for nothing. Every one of the 74 skills carries its own `illustration`, which
+// is what makes the maths column uniform, and the row's geometry never depended
+// on the drill.
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 // The prose this view owns: fold labels, the two cell labels, the section-by
@@ -68,15 +68,11 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 // and `note` are still English-only — that is a content debt, not a view one.
 const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
-      guards: 'schützt vor', cond: 'sofern', drill: 'Übungsmaterial',
-      by: 'gliedern nach', byGroup: 'Thema', byKind: 'Art', dominant: 'dominante Operation', not: 'nicht',
-      revise: 'wiederholen',
-      op: { sum: 'eine Summe', difference: 'eine Differenz', product: 'ein Produkt', quotient: 'ein Quotient', power: 'eine Potenz' } as Record<string, string> }
+      guards: 'schützt vor', cond: 'sofern',
+      by: 'gliedern nach', byGroup: 'Thema', byProcess: 'Prozess', }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
-      guards: 'guards against', cond: 'provided', drill: 'drill material',
-      by: 'section by', byGroup: 'topic', byKind: 'kind', dominant: 'dominant operation', not: 'not',
-      revise: 'revise',
-      op: { sum: 'a sum', difference: 'a difference', product: 'a product', quotient: 'a quotient', power: 'a power' } as Record<string, string> })
+      guards: 'guards against', cond: 'provided',
+      by: 'section by', byGroup: 'topic', byProcess: 'process', })
 
 // Deep link from /rules, where each rule lists the skills that teach it.
 const route = useRoute()
@@ -143,27 +139,25 @@ const requiredBy = new Map<string, string[]>()
 for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requiredBy.get(r) ?? []), s.id])
 
 const groupTitle = new Map(groups.map(g => [g.slug, t(g.title)]))
-const kindTitle = new Map(skillKinds.map(k => [k.slug, t(k.title)]))
-
-// The drill joined by skill id. Read-only and inspection-only; see the banner.
-const drillBySkill = new Map<string, Drill>(drills.map(d => [d.skill, d]))
+const processTitle = new Map(processes.map((p: GroupDef) => [p.slug, t(p.title)]))
 
 interface Row {
-  id: string; kind: string; group: string; name: string
-  illustration?: string; wrong: WrongForm[]; conditions?: string
-  answer?: string; misreads?: { op: string; explains: string }; chunks: string[]
-  misChunks?: { chunks: string[]; explains: string }
+  id: string; process: string; group: string; name: string
+  stimulus: string; right: string[]; wrong: WrongForm[]; conditions?: string
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
   rules: { id: string; name: string; to: string; family: string[] }[]
   errors: { id: string; name: string; frequency: number; to: string }[]
-  drill?: Drill
   /** Is there anything in the bad half to contrast against? THE MARKS COME AS A
    *  PAIR OR NOT AT ALL — a ✗ without its ✓ is forbidden on /errors, and a ✓ with
-   *  nothing opposite it says nothing. ⚠️ This was hardcoded to always-✓ when the
-   *  row became two blocks (2026-07-29) and went unnoticed until the classification
-   *  readings landed: rows like `linear-form` were showing a lone tick. */
+   *  nothing opposite it says nothing.
+   *  ⚠️ IT ASKS ABOUT THE BAD HALF ONLY, and briefly did not (2026-07-30): adding
+   *  `right.length > 0` looked symmetric and broke exactly the rows this migration
+   *  exists for. A FINISHED skill has an empty `right[]` and shows its stimulus as
+   *  the answer — `2 + 3x` opposite ✗ `2 + 3x = 5x` — so suppressing its ✓ left a
+   *  lone ✗ facing an unmarked formula, which is the one thing the contract bans.
+   *  Caught by looking at the rendered row, not by any check. */
   paired: boolean
   contrast: boolean
   raw: unknown
@@ -173,13 +167,11 @@ function toRow(s: Skill): Row {
   const errors = mistakeLinks(s.mistakes)
   const rby = skillLinks(requiredBy.get(s.id) ?? [])
   return {
-    id: s.id, kind: s.kind, group: s.group, name: t(s.name),
-    illustration: s.illustration, wrong: s.wrong, conditions: s.conditions,
-    answer: s.answer, misreads: s.misreads, chunks: s.chunks, misChunks: s.misChunks,
+    id: s.id, process: s.process, group: s.group, name: t(s.name),
+    stimulus: s.stimulus, right: s.right, wrong: s.wrong, conditions: s.conditions,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
-    drill: drillBySkill.get(s.id),
-    paired: s.wrong.length > 0 || s.misreads !== undefined || s.misChunks !== undefined,
+    paired: s.wrong.length > 0,
     // NEITHER JUSTIFICATION HOLDS: it guards no mistake and enables no other
     // skill. Not a defect and not a backlog — it is the CONTRAST SET, and the
     // label says so. Nobody believes $a+b \neq b+a$, so authoring an error for it
@@ -201,16 +193,16 @@ const byName = (a: Skill, b: Skill) => t(a.name).localeCompare(t(b.name))
 // real ways in. The switch sits in LayerPage's `filters` slot — the same place
 // the tower's chips sit — because it is the same kind of control: it changes what
 // the page shows without leaving it.
-const sectionBy = ref<'group' | 'kind'>('group')
+const sectionBy = ref<'group' | 'process'>('group')
 
 interface Sec { slug: string; title: string; blurb?: string; items: Row[] }
-const sectionsOf = (reg: GroupDef[], key: 'group' | 'kind') =>
+const sectionsOf = (reg: GroupDef[], key: 'group' | 'process') =>
   reg
     .map(g => ({ slug: g.slug, title: t(g.title), blurb: g.blurb ? t(g.blurb) : undefined, items: skills.filter(s => s[key] === g.slug).sort(byName).map(toRow) }))
     .filter(s => s.items.length > 0)
 
 const sections = computed<Sec[]>(() =>
-  sectionBy.value === 'group' ? sectionsOf(groups, 'group') : sectionsOf(skillKinds, 'kind'))
+  sectionBy.value === 'group' ? sectionsOf(groups, 'group') : sectionsOf(processes, 'process'))
 
 // THE COMPLEMENTARY COORDINATE in the strip's `kind` slot, never the one the
 // section heading already says. A skill has two, and the heading spends one of
@@ -219,14 +211,10 @@ const sections = computed<Sec[]>(() =>
 // the mode: on a long page you are usually mid-section with the heading scrolled
 // away, which is exactly when the other coordinate orients you.
 const stripKind = (r: Row) =>
-  sectionBy.value === 'group' ? (kindTitle.get(r.kind) ?? r.kind) : (groupTitle.get(r.group) ?? r.group)
+  sectionBy.value === 'group' ? (processTitle.get(r.process) ?? r.process) : (groupTitle.get(r.group) ?? r.group)
 
 // The size of the contrast set, on the page rather than only in the load log.
 const contrastCount = computed(() => skills.filter(s => toRow(s).contrast).length)
-
-// Per-row disclosure: only the drill block now.
-const drillOpen = ref(new Set<string>())
-const toggle = (s: Set<string>, id: string) => (s.has(id) ? s.delete(id) : s.add(id))
 
 // THREE COLUMNS, NOT FIVE. The literal reading of "columns 2-3 good, 4-5 bad"
 // was measured and does not fit: the widest ✓ is a four-term chain at ~23rem and
@@ -260,8 +248,8 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
           <button class="fchip" :class="{ off: sectionBy !== 'group' }" @click="sectionBy = 'group'">
             {{ L.byGroup }}<span class="fcount">{{ groups.length }}</span>
           </button>
-          <button class="fchip" :class="{ off: sectionBy !== 'kind' }" @click="sectionBy = 'kind'">
-            {{ L.byKind }}<span class="fcount">{{ skillKinds.length }}</span>
+          <button class="fchip" :class="{ off: sectionBy !== 'process' }" @click="sectionBy = 'process'">
+            {{ L.byProcess }}<span class="fcount">{{ processes.length }}</span>
           </button>
         </div>
       </div>
@@ -286,11 +274,6 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 
         <template #strip-right>
           <span v-if="inspect && r.contrast" class="badge">contrast</span>
-          <!-- With the json fold, not beside the name: the drill layer is the
-               author's material, and this row is deliberately not built on it. -->
-          <button v-if="inspect && r.drill" class="dfold" @click="toggle(drillOpen, r.id)">
-            {{ drillOpen.has(r.id) ? '▾' : '▸' }} {{ L.drill }}
-          </button>
         </template>
 
         <!-- THE GOOD HALF: the problem solved correctly, then the rule that
@@ -298,19 +281,21 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
              centres display mode, which would float each form in its block and
              break the vertical line the column makes. -->
         <div class="block good">
-          <div v-if="r.illustration" class="stmt">
+          <!-- THE CLAIM, COMPOSED AT RENDER TIME. `right[]` holds bare forms with
+               the stimulus implied as the left-hand side, so the equation is built
+               here rather than stored 71 times over. Both stacks then show
+               COMPLETE claims and the two columns of marks line up.
+               ⚠️ EMPTY `right[]` IS NOT AN EMPTY BLOCK — it means the stimulus is
+               already finished, so the stimulus itself is the answer and stands
+               alone. That is the whole reason four skills no longer illustrate
+               commutativity. -->
+          <div v-for="(x, i) in r.right" :key="i" class="stmt">
             <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
-            <span class="f"><MathExpr :latex="r.illustration" display /></span>
+            <span class="f"><MathExpr :latex="`${r.stimulus} = ${x}`" display /></span>
           </div>
-          <!-- THE READING, for the skills whose answer is not a formula: a
-               classification names the dominant operation, a chunking gives the
-               split. Rendered on PRESENCE, never on `kind`, so the shape of the
-               data stays out of the rendering path. Without this a
-               classification row showed `3x + 2y` and never said it was a sum —
-               the good half was missing its answer, not just its ✗. -->
-          <div v-if="r.answer" class="reading">{{ L.op[r.answer] ?? r.answer }}</div>
-          <div v-if="r.chunks.length" class="reading">
-            <span v-for="(c, i) in r.chunks" :key="i" class="chunk"><MathExpr :latex="c" /></span>
+          <div v-if="!r.right.length" class="stmt">
+            <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
+            <span class="f"><MathExpr :latex="r.stimulus" display /></span>
           </div>
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
@@ -346,14 +331,6 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                9 of 20 that cite a mistake carry one, so 11 rows show a right
                reading with no wrong one — which is the same "marks come as a
                pair or not at all" rule the formulas follow. -->
-          <div v-if="r.misreads" class="stmt">
-            <span class="mark bad">✗</span>
-            <span class="reading f">{{ L.op[r.misreads.op] ?? r.misreads.op }}</span>
-          </div>
-          <div v-if="r.misChunks" class="stmt">
-            <span class="mark bad">✗</span>
-            <span class="f"><span v-for="(c, i) in r.misChunks.chunks" :key="i" class="chunk"><MathExpr :latex="c" /></span></span>
-          </div>
           <!-- NO `fix` HERE, and it was tried (2026-07-29). errors.json's fix is
                authored per MISTAKE and rendered per SKILL, so the fan wrecks it:
                of 70 renders only 15 mentioned maths the skill actually shows, and
@@ -366,43 +343,6 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
           </RouterLink>
         </div>
 
-        <!-- FULL WIDTH, and inspection-only: the frozen drill layer's material,
-             shown so it stays visible to the author without any of the row's
-             geometry depending on it. Three shapes, one per drill kind. -->
-        <div v-if="r.drill && drillOpen.has(r.id)" class="wide drill">
-          <template v-if="r.drill.kind === 'equivalence'">
-            <div class="stmt"><MathExpr :latex="r.drill.equivalents.join(' = ')" display /></div>
-            <div v-for="(p, i) in r.drill.pitfalls" :key="i" class="pit">
-              <MathExpr :latex="`${r.drill.equivalents[0]} \\neq ${p.expr}`" />
-              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => mistakeById.get(x) ? t(mistakeById.get(x)!.mistake) : x).join(' · ') }}</span>
-              <span v-if="p.revise?.length" class="revise">{{ L.revise }}: {{ p.revise.map(skillName).join(' · ') }}</span>
-            </div>
-          </template>
-          <template v-else-if="r.drill.kind === 'classification'">
-            <div class="examples">
-              <span v-for="(ex, i) in r.drill.examples" :key="i"><MathExpr :latex="ex" /></span>
-            </div>
-            <div class="answer">{{ L.dominant }}: <strong>{{ r.drill.answer }}</strong></div>
-            <div v-for="(p, i) in r.drill.pitfalls" :key="i" class="pit">
-              {{ L.not }} <strong>{{ p.answer }}</strong> — <RichText :text="t(p.why)" />
-              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => mistakeById.get(x) ? t(mistakeById.get(x)!.mistake) : x).join(' · ') }}</span>
-              <span v-if="p.revise?.length" class="revise">{{ L.revise }}: {{ p.revise.map(skillName).join(' · ') }}</span>
-            </div>
-          </template>
-          <template v-else>
-            <div v-for="(d, i) in r.drill.examples" :key="i" class="decomp">
-              <MathExpr :latex="d.expr" />
-              <span class="arrow">→</span>
-              <span v-for="(ch, j) in d.chunks" :key="j" class="chunk">[<MathExpr :latex="ch" />]</span>
-              <span class="opname">{{ d.op }}</span>
-            </div>
-            <div v-for="(p, i) in r.drill.pitfalls" :key="i" class="pit">
-              <RichText :text="t(p.why)" />
-              <span v-if="p.explainedBy?.length" class="cites">{{ p.explainedBy.map(x => mistakeById.get(x) ? t(mistakeById.get(x)!.mistake) : x).join(' · ') }}</span>
-              <span v-if="p.revise?.length" class="revise">{{ L.revise }}: {{ p.revise.map(skillName).join(' · ') }}</span>
-            </div>
-          </template>
-        </div>
       </LayerRow>
     </LayerSection>
   </LayerPage>
@@ -505,9 +445,6 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 
 /* Matches LayerRow's `json` fold exactly — same size, colour and marker — so the
    strip's affordances read as one row of controls. */
-.dfold { font-size: .62rem; color: var(--text-faint); background: none; border: none; cursor: pointer; padding: 0; font-family: inherit; }
-.dfold:hover { color: var(--text-muted); }
-
 /* The drill block: author plumbing, so it takes the quiet register of the json
    fold rather than the row's own. It sits on the band, not on a grey fill —
    inside a light panel a grey block reads as a hole punched through the page. */

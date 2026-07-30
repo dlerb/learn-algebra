@@ -6,16 +6,13 @@ import katex from 'katex'
 // the TypeScript `Skill` type (via z.infer). Skill data is authored as JSON in
 // src/data/skills/*.json and validated against this schema on load.
 //
-// A skill is a mathematical unit only. It declares WHAT IT IS (its `kind`);
-// how it is drilled (exercise type) is derived from the kind in code, never
-// stored here. A skill carries no linear ordering: dependency lives in the
+// A skill is a mathematical unit only. It declares WHICH MENTAL PROCESS it trains
+// (`process`); how it is drilled — the question asked, the answer widget — is the
+// DRILL's business and is never stored here. A skill carries no linear ordering: dependency lives in the
 // `requires` graph, but drilling *sequence* is a drill/session-layer concern
 // (the old `priority` field was parked to drills/_parked-priority.json). Per-
 // student runtime state (mastery, next-item selection, scheduling) is not here.
 // ─────────────────────────────────────────────────────────────────────────────
-
-export const dominantOp = z.enum(['sum', 'difference', 'product', 'quotient', 'power'])
-export type DominantOp = z.infer<typeof dominantOp>
 
 // ── Localization ─────────────────────────────────────────────────────────────
 // Prose fields are LocalizedString: authored as a plain string (= English) or
@@ -36,18 +33,41 @@ export function loc(ls: LocalizedString, lang: Lang): string {
   return ls[lang] ?? ls.en
 }
 
-// A skill is a curated STRATEGY/SKILL — NOT drill material. It says what the
-// skill is, why it matters (`note`), one canonical `illustration`, the
-// misconceptions it guards against (`errors` → error-pattern ids), and its links
-// into the tower (`restsOn` → card ids) and the rules registry. All the
-// drill-specific material — instances, answers, distractors — lives in the drill
-// layer (drills/*.json), keyed by skill id. Uniform shape across kinds: `kind` is
-// a plain category label (= id prefix), not a data-shape discriminant.
-export const skillKind = z.enum(['equivalence', 'classification', 'chunking', 'transformation'])
-export type SkillKind = z.infer<typeof skillKind>
+// ── THE MENTAL PROCESS (2026-07-30, was `kind`) ──────────────────────────────
+// What the STUDENT has to master, not what shape the data takes. `kind` was never
+// a data-shape discriminant and the measurement proved it: `equivalence` and
+// `transformation` had IDENTICAL field signatures (illustration + wrong), 38 and 9
+// skills, with no field anywhere separating them — so the field was reporting the
+// shape sometimes and the question other times, and when they disagreed the shape
+// won silently. That is how `fraction-bar-grouping` came to be filed as an
+// equivalence: its illustration happened to be written as an equation.
+//
+//   fluency         one-step recall — the bare pattern known by heart, INCLUDING
+//                   its scope (knowing a(b+c)=ab+ac means knowing that (a+b)/c
+//                   splits and c/(a+b) does not)
+//   chunking        read the structure — the dominant operation and the parts it
+//                   joins, which are two readings of ONE decomposition
+//   transformation  carry out a procedure — search, choose, apply, several steps
+//
+// ⚠️ THREE, NOT FOUR, and they are exactly the tiers `docs/content_model.md` has
+// carried all along (Fluency / Chunking / Manipulation). `classification` was the
+// value that never fit: eleven of its sixteen skills said "the chunks are …" in
+// their own notes, and the other five had `answer` set to a dominant operation
+// with the real content in prose after a full stop.
+//
+// ⚠️ `chunking` KEEPS ITS NAME rather than becoming "decomposition": that word
+// also means factoring, and `Bausteine` already owns the term on the German side.
+//
+// THE ORDER IS REAL, not just a taxonomy. Measured on the requires graph, which
+// was authored long before this model existed: 95 of 97 edges already ran
+// fluency → chunking → transformation, nothing outside transformation depended on
+// a transformation, and both exceptions were one mis-filed skill. That is what
+// validateSkillLinks now enforces.
+export const skillProcess = z.enum(['fluency', 'chunking', 'transformation'])
+export type SkillProcess = z.infer<typeof skillProcess>
 
 // ── A WRONG ANSWER AND THE MISTAKE IT INSTANTIATES (2026-07-30) ───────────────
-// `explains` is the edge the layer was missing. Before it, /skills rendered the
+// `mistake` is the edge the layer was missing. Before it, /skills rendered the
 // skill's WHOLE mistake list under its WHOLE ✗ column — a list beside a column,
 // never a link from a form to a sentence. That reads fine (the eye pairs them by
 // proximity) and is unusable to a drill, which must name ONE sentence when the
@@ -68,73 +88,61 @@ export type SkillKind = z.infer<typeof skillKind>
 // point of these entries is that there is none.
 const wrongForm = z.object({
   latex: z.string().optional(),
-  explains: z.string(),
+  mistake: z.string(),
 })
 export type WrongForm = z.infer<typeof wrongForm>
 
 export const skill = z.object({
-  id: z.string().regex(/^(equivalence|classification|chunking|transformation)\.[a-z0-9-]+$/,
-    'id must be "<kind>.<slug>" (kind ∈ equivalence|classification|chunking|transformation)'),
-  kind: skillKind,                     // = id prefix (validated); positional in the kind file, re-attached by parseSkillTree
-  group: z.string(),                    // topic slug; positional in the kind file (= the containing group node), re-attached by parseSkillTree
+  // ⚠️ THE ID NO LONGER CARRIES THE CLASSIFICATION (2026-07-30). It used to be
+  // `<kind>.<slug>`, which made every re-classification a mass rename — and this
+  // layer's classification turned out to be revisable: `fraction-bar-grouping` is
+  // a chunking skill that was filed as equivalence because its illustration
+  // happened to be written as an equation. A `skill.` TYPE prefix matches every
+  // other entity here (`rule.`, `sheet.`, `th.`, `ax.`, `ix.`), and re-filing is
+  // now a one-field edit.
+  id: z.string().regex(/^skill\.[a-z0-9-]+$/, 'id must be "skill.<slug>"'),
+  process: skillProcess,               // positional in the process file, re-attached by parseSkillTree — NOT derivable from the id any more
+  group: z.string(),                    // topic slug; positional in the process file (= the containing group node), re-attached by parseSkillTree
   name: localizedString,                // the skill's display heading (like a card's `name`)
   note: localizedString,                // the rationale — why this skill matters; prose + inline $…$ KaTeX
-  illustration: z.string().optional(),  // ONE canonical example (LaTeX) that anchors the skill
-  // THE TEMPTING FORM, AS A FALSE CLAIM (2026-07-28). Each entry is a complete
-  // false equation in LaTeX — `3x = 3 + x`, not a bare `3 + x` — so it stands on
-  // its own under a ✗ exactly as an error's `instances[].wrong` does, and needs no
-  // stem column to be read.
+  // ── THE STIMULUS AND THE TWO STACKS (2026-07-30) ─────────────────────────
+  // One shape for every process. It replaced `illustration` + `answer` +
+  // `chunks` + `misreads` + `misChunks`:
   //
-  // AUTHORED PER SKILL, never fetched from the cited errors, and the measurement
-  // that decided it: 70 (skill → error) citations point at only 27 distinct
-  // errors, `anti.linearity` alone is cited by 10 skills, and 16 of those
-  // collisions fall inside a single topic panel. The errors are GENERAL and the
-  // skills are SPECIFIC — `minus-over-sum` and `minus-over-difference` both cite
-  // `anti.partial-distribution` but are tempted by different forms ($-a+b$ vs
-  // $-a-b$) — so the pair a skill needs cannot be derived from the error even in
-  // principle. Same ruling as rule.latex vs card.latex: each layer keeps its own
-  // formulas, and restating one at student level is translation, not duplication.
+  //     stimulus   one term — what the student looks at
+  //     right[]    what it may legitimately become — EMPTY MEANS FINISHED
+  //     wrong[]    the distractors, each naming the mistake it instantiates
   //
-  // AN ARRAY, because a note can carry two ($2a$ is not $a^2$, AND $a^2$ is not
-  // $2a$), and EMPTY IS MEANINGFUL: `equivalence.bracket-types` and
-  // `-addition-commutative` have no tempting wrong form at all, which is exactly
-  // why they exist — a Same-or-Different session needs items whose answer is
-  // `same`. Never invent one to fill the field.
+  // ⚠️ WHY `illustration` HAD TO GO: it FUSED the stimulus with the answer. For a
+  // fluency chain `A = B = C` that is harmless, but where the answer is NOTHING an
+  // equation cannot say so — so the author had to reach for the nearest true
+  // equation over the same symbols, and commutativity is always available. Four
+  // skills whose NAME says "stays open" and whose NOTE says "cannot combine"
+  // illustrated a SWAP (`2 + 3x = 3x + 2`). Those were never illustrations; they
+  // were wrong entries in `right[]`, testing commutativity instead of
+  // combinability, and they are DELETED rather than rewritten.
   //
-  // ⚠️ ONLY A FALSE CLAIM belongs here. `a + -b` is not false, it is badly
-  // written; that is the tower's avoid/prefer relation, where the two sides are
-  // EQUAL and WrongRight joins them with `=` and mutes the marks. Putting a
-  // clumsy-but-correct form under the same red ✗ would teach ✗ = wrong and then
-  // contradict it. A belief the student holds is fine and is written as the
-  // claim itself — `a \cdot 3 \neq 3a` under a ✗ says that belief is false.
+  // ⚠️ NOT BOTH EMPTY — enforced by validateStacks. That rule survives the two
+  // cases which would break a careless version: the contrast pair
+  // (`bracket-types`, `addition-commutative`) has a full `right[]` and no
+  // `wrong[]` BY DESIGN, and the recognition skills have a full `right[]` with the
+  // failure being that nothing was attempted.
+  stimulus: z.string(),
+  // BARE FORMS, the stimulus implied as the left-hand side — never whole
+  // equations, which would repeat the stimulus once per entry. For a CHUNKING
+  // skill the entry is the DECOMPOSITION AS A FORM (`3x + 2y` → `(3x) + (2y)`),
+  // from which the dominant operation AND the parts are both derivable; which of
+  // the two a student is asked for is the drill's business, not the skill's. The
+  // notation is not invented — `rule.multiplication-binds-tighter` has carried
+  // `3x + 2y = (3x) + (2y)` since the rules pool was built.
+  right: z.array(z.string()).default([]),
+  // ⚠️ ASYMMETRIC WITH `right[]` ON PURPOSE: a wrong entry is a COMPLETE false
+  // claim, not a bare form. The ✓ side always shares the stimulus — that is what
+  // makes it a right answer FOR this stimulus — but the ✗ side often attacks a
+  // different starting form (`factor-common` is tempted by `ab + c = a(b+c)`,
+  // whose left-hand side is not its stimulus at all), so it cannot be reduced to a
+  // right-hand side.
   wrong: z.array(wrongForm).default([]),
-  // ── THE OTHER TWO ANSWER SHAPES (2026-07-29) ─────────────────────────────
-  // `wrong` holds a FALSE EQUATION, and neither classification nor chunking
-  // produces one: a classification's wrong answer is a WORD ("a product"), a
-  // chunking's is a GROUPING. Forcing either into `wrong` would repeat the
-  // `omission` mistake — two forms equal in value, differing only in reading,
-  // under a mark that is supposed to mean "false".
-  //
-  // ⚠️ These cluster by kind, which bends the rule at the top of this file that
-  // `kind` is "not a data-shape discriminant". The bend is deliberate and the
-  // alternative was worse. Note the VIEW still does not branch on kind — it
-  // renders whichever field is present, so kind stays out of the rendering path.
-  //
-  // ⚠️ Authored here and NOT in the drill layer, because the rebuilt drills will
-  // CONSUME skills (docs/TODO.md, "the drill layer is disposable"). A
-  // classification skill with no `answer` was simply incomplete: /skills rendered
-  // `3x + 2y` and never said it was a sum.
-  //
-  // BOTH CARRY `explains` SINCE 2026-07-30, for the same reason `wrong` does: a
-  // wrong NAME and a wrong SPLIT are wrong answers, so each instantiates exactly
-  // one mistake. With the authored `errors` list gone, an unpaired wrong answer
-  // would also contribute nothing to the derived `mistakes` below.
-  answer: dominantOp.optional(),        // classification: the dominant operation, the thing the skill asks you to name
-  misreads: z.object({ op: dominantOp, explains: z.string() }).optional(),  // …and the tempting wrong name. EVIDENCED, never invented: present only on the 6 classification skills that cite a mistake
-  chunks: z.array(z.string()).default([]),      // chunking: the decomposition, one LaTeX piece per chunk
-  // …and the tempting wrong split. ONE alternative decomposition, not a list of
-  // them — which is why it pairs at FIELD level while `wrong` pairs per entry.
-  misChunks: z.object({ chunks: z.array(z.string()).min(2), explains: z.string() }).optional(),
   requires: z.array(z.string()).default([]),     // DIRECT prerequisite skill ids
   rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
@@ -157,62 +165,15 @@ export const skill = z.object({
   // form a student starts from, never the mistake, since many starting forms
   // converge on one mistake: `anti.linearity` is reached from four).
   mistakes: [...new Set([
-    ...s.wrong.map(w => w.explains),
-    ...(s.misreads ? [s.misreads.explains] : []),
-    ...(s.misChunks ? [s.misChunks.explains] : []),
+    ...s.wrong.map(w => w.mistake),
   ])],
 }))
 export type Skill = z.infer<typeof skill>
 
-// ── Drill layer ──────────────────────────────────────────────────────────────
-// Drill material, parked out of the skills (drills/*.json). Each drill points
-// at its `skill` by id. Discriminated on `kind` for now — that is the shape of
-// the parked material; the real drill layer will likely key on a `format`
-// instead. A pitfall's `explainedBy` names which of the skill's `errors` this
-// concrete distractor instantiates (validated ⊆ the skill's set).
-const equivPitfall = z
-  .union([z.string(), z.object({
-    expr: z.string(),
-    revise: z.array(z.string()).min(1).optional(),
-    explainedBy: z.array(z.string()).min(1).optional(),
-  })])
-  .transform((p): { expr: string; revise?: string[]; explainedBy?: string[] } =>
-    (typeof p === 'string' ? { expr: p } : p))
-
-export const drill = z.discriminatedUnion('kind', [
-  z.object({
-    kind: z.literal('equivalence'), skill: z.string(),
-    equivalents: z.array(z.string()).min(2),
-    pitfalls: z.array(equivPitfall).default([]),
-  }),
-  z.object({
-    kind: z.literal('classification'), skill: z.string(),
-    examples: z.array(z.string()).min(1),
-    answer: dominantOp,
-    pitfalls: z.array(z.object({
-      answer: dominantOp, why: localizedString,
-      revise: z.array(z.string()).min(1).optional(),
-      explainedBy: z.array(z.string()).min(1).optional(),
-    })).default([]),
-  }),
-  z.object({
-    kind: z.literal('chunking'), skill: z.string(),
-    examples: z.array(z.object({
-      expr: z.string(), chunks: z.array(z.string()).min(2), op: dominantOp,
-    })).min(1),
-    pitfalls: z.array(z.object({
-      chunks: z.array(z.string()), why: localizedString,
-      revise: z.array(z.string()).min(1).optional(),
-      explainedBy: z.array(z.string()).min(1).optional(),
-    })).default([]),
-  }),
-])
-export type Drill = z.infer<typeof drill>
-
 // ── Groups ───────────────────────────────────────────────────────────────────
 // Groups organize skills into ordered sections in the lookup view. Authored
 // inline in the per-kind tree files (a group node = { slug, title, blurb?,
-// skills[] }); `groups` and `skillKinds` are the flattened registries
+// skills[] }); `groups` and `processes` are the flattened registries
 // parseSkillTree derives from them (array order = display order). GroupDef is the
 // shared { slug, title, blurb? } shape both derived registries use.
 
@@ -230,7 +191,7 @@ export type GroupDef = z.infer<typeof groupDef>
 export const groupsFile = z.array(groupDef)
 export type GroupsFile = z.infer<typeof groupsFile>
 
-// A derived display registry (the skillKinds list, …) must name exactly the enum
+// A derived display registry (the processes list, …) must name exactly the enum
 // it titles: no duplicate slug, no unknown slug, no missing title.
 function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[], file: string): void {
   const slugs = registry.map(g => g.slug)
@@ -242,8 +203,8 @@ function validateGroupRegistry(registry: GroupDef[], allowed: readonly string[],
   for (const s of inEnum) if (!inReg.has(s)) throw new Error(`${file} is missing a title for group "${s}".`)
 }
 
-export function validateSkillKinds(registry: GroupDef[]): void {
-  validateGroupRegistry(registry, skillKind.options, 'the skill kind files')
+export function validateProcesses(registry: GroupDef[]): void {
+  validateGroupRegistry(registry, skillProcess.options, 'the skill process files')
 }
 
 // ── Rules ────────────────────────────────────────────────────────────────────
@@ -409,7 +370,7 @@ export function parseRuleTree(raw: unknown): RuleTree {
 // WHAT IT DELIBERATELY DOES NOT TAKE from errors.json: `instances` and `fix`.
 // Both work a CASE, and a case belongs to the skill that teaches it.
 export const mistakeDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so a skill's `explains` resolves here without touching a single skill
+  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // ids are UNCHANGED from errors.json, so a skill's `wrong[].mistake` resolves here without touching a single skill
   kind: z.enum(['anti-law', 'misreading', 'salience', 'omission']),
   // ── THE FAMILY AXIS (2026-07-30), the same mechanism as a rule's ──────────
   // `kind` turned out to be too coarse to be the family. `anti.linearity` and
@@ -769,7 +730,7 @@ export function validateLayerRefs(
   // ⚠️ RESOLVED AGAINST THE POOL, NOT THE ERROR LAYER (2026-07-30). The ids are
   // shared, so this was the same set until the pool gained entries errors.json
   // cannot express: `errorInstance.wrong` is REQUIRED, and an inactivity mistake
-  // writes nothing at all. `mistakes.json` is what a skill's `explains` means.
+  // writes nothing at all. `mistakes.json` is what a skill's `wrong[].mistake` means.
   const errIds = new Set([...errors.map(e => e.id), ...mistakes.map(m => m.id)])
 
   for (const f of skills) {
@@ -777,7 +738,7 @@ export function validateLayerRefs(
       if (!cardIds.has(r)) throw new Error(`Skill "${f.id}" restsOn unknown card "${r}".`)
     }
     for (const r of f.mistakes) {
-      if (!errIds.has(r)) throw new Error(`Skill "${f.id}" explains unknown mistake "${r}".`)
+      if (!errIds.has(r)) throw new Error(`Skill "${f.id}" names unknown mistake "${r}".`)
     }
   }
   for (const m of rules) {
@@ -804,7 +765,6 @@ export function validateLayerRefs(
 export function auditCoverage(
   skills: Skill[], rules: RulesFile, errors: ErrorDef[],
   cardConds: Map<string, string | undefined> = new Map(),
-  drills: Drill[] = [],
   sheets: SheetDef[] = [],
 ): string[] {
   const lines: string[] = []
@@ -940,12 +900,11 @@ export function auditCoverage(
   //   · the error was never authored                           → author it
   //   · the skill is a CONTRAST (the true-form twin of a wrong
   //     one, e.g. the commutativity pair against
-  //     anti.commute-everything) and will never own an error   → cite it from
-  //     the drill's pitfalls, which is the mechanism that already exists
+  //     anti.commute-everything) and will never own an error   → it stays listed,
+  //     and the `pure contrast` chip on /skills names it rather than counting it
+  //     as work outstanding
   const byId = new Map(skills.map(s => [s.id, s]))
-  const viaDrill = new Set(
-    drills.filter(d => d.pitfalls.some(p => (p.explainedBy?.length ?? 0) > 0)).map(d => d.skill))
-  const justified = new Set(skills.filter(f => f.mistakes.length > 0 || viaDrill.has(f.id)).map(f => f.id))
+  const justified = new Set(skills.filter(f => f.mistakes.length > 0).map(f => f.id))
   for (let grew = true; grew;) {
     grew = false
     for (const id of [...justified]) {
@@ -982,19 +941,39 @@ export function auditCoverage(
 // hold skill ids and must resolve; the requires graph must be acyclic — the
 // only ordering a skill carries (a dependency partial order, not a sequence).
 
-/** A wrong reading with no right reading beside it is the one thing the ✗/✓
- *  contract forbids — the same rule that makes `instances` require `right` or
- *  `hint`, and that keeps the marks on /skills coming as a pair or not at all. */
-export function validateReadings(skills: Skill[]): void {
+/** THE ONE SHAPE INVARIANT: a skill must show SOMETHING. An empty `right[]` is a
+ *  statement ("this form is finished") and an empty `wrong[]` is a statement
+ *  ("nothing tempting to show"), but both empty is a skill that renders as a bare
+ *  name and says nothing at all. Same family as the ✗/✓ rule on /errors — the
+ *  marks come as a pair or not at all, and this is what stops "not at all" from
+ *  quietly becoming the whole row. */
+export function validateStacks(skills: Skill[]): void {
   for (const f of skills) {
-    if (f.misreads && !f.answer) {
-      throw new Error(`Skill "${f.id}" has a misreads but no answer.`)
-    }
-    if (f.misChunks && f.chunks.length === 0) {
-      throw new Error(`Skill "${f.id}" has misChunks but no chunks.`)
+    if (f.right.length === 0 && f.wrong.length === 0) {
+      throw new Error(`Skill "${f.id}" has neither a right nor a wrong form — it would render as a bare name.`)
     }
   }
 }
+
+// THE PROCESSES ARE A LAYERING, NOT A TAXONOMY (2026-07-30), and this is the
+// check that keeps them one. You know a pattern by heart, which lets you see the
+// structure, which lets you see the move — so a prerequisite may never sit at a
+// LATER process than the skill that needs it.
+//
+// It was measured before it was enforced: on the graph as authored — long before
+// this model existed — 95 of 97 edges already ran fluency → chunking →
+// transformation, nothing outside transformation depended on a transformation, and
+// both exceptions were the same mis-filed skill (`same-value-different-structure`,
+// whose own note said "the heart of Skill 3" while it sat in equivalence). After
+// the migration it is 92 edges and zero backward.
+//
+// ⚠️ WHY IT IS A VALIDATOR AND NOT AN AUDIT LINE, unlike most questions about this
+// layer: a backward edge is not a judgement call about emphasis or coverage, it is
+// two fields contradicting each other. `process` says "this is recalled before
+// anything is read", `requires` says "you must first be able to carry out a
+// procedure". One of them is wrong, always. That makes mis-filing unwritable
+// rather than merely visible — the same move as deriving `mistakes` from the forms.
+const processRank: Record<SkillProcess, number> = { fluency: 0, chunking: 1, transformation: 2 }
 
 export function validateSkillLinks(skills: Skill[]): void {
   const byId = new Map(skills.map(f => [f.id, f]))
@@ -1002,6 +981,12 @@ export function validateSkillLinks(skills: Skill[]): void {
   for (const f of skills) {
     for (const r of f.requires) {
       if (!byId.has(r)) throw new Error(`Skill "${f.id}" requires unknown skill "${r}".`)
+      const need = byId.get(r)!
+      if (processRank[need.process] > processRank[f.process]) {
+        throw new Error(
+          `Skill "${f.id}" (${f.process}) requires "${r}" (${need.process}) — a prerequisite may not `
+          + `sit at a later process. Either the requirement is wrong or one of the two is mis-filed.`)
+      }
     }
   }
 
@@ -1033,7 +1018,7 @@ function proseMath(ls?: LocalizedString): string[] {
 }
 
 export function validateLatexCompiles(
-  skills: Skill[], drills: Drill[], rules: RulesFile, errors: ErrorDef[],
+  skills: Skill[], rules: RulesFile, errors: ErrorDef[],
 ): void {
   const failures: string[] = []
   function check(owner: string, field: string, latex: string): void {
@@ -1046,30 +1031,10 @@ export function validateLatexCompiles(
 
   for (const f of skills) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
-    if (f.illustration) check(f.id, 'illustration', f.illustration)
+    check(f.id, 'stimulus', f.stimulus)
+    f.right.forEach((r, i) => check(f.id, `right[${i}]`, r))
     f.wrong.forEach((w, i) => { if (w.latex) check(f.id, `wrong[${i}]`, w.latex) })
-    if (f.misChunks) f.misChunks.chunks.forEach((c, i) => check(f.id, `misChunks[${i}]`, c))
-    f.chunks.forEach((c, i) => check(f.id, `chunks[${i}]`, c))
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
-  }
-  for (const d of drills) {
-    if (d.kind === 'equivalence') {
-      d.equivalents.forEach((x, i) => check(d.skill, `equivalents[${i}]`, x))
-      d.pitfalls.forEach((p, i) => check(d.skill, `pitfalls[${i}]`, p.expr))
-    } else if (d.kind === 'classification') {
-      d.examples.forEach((x, i) => check(d.skill, `examples[${i}]`, x))
-      d.pitfalls.forEach((p, i) =>
-        proseMath(p.why).forEach(m => check(d.skill, `pitfalls[${i}].why`, m)))
-    } else {
-      d.examples.forEach((ex, i) => {
-        check(d.skill, `examples[${i}].expr`, ex.expr)
-        ex.chunks.forEach((c, j) => check(d.skill, `examples[${i}].chunks[${j}]`, c))
-      })
-      d.pitfalls.forEach((p, i) => {
-        p.chunks.forEach((c, j) => check(d.skill, `pitfalls[${i}].chunks[${j}]`, c))
-        proseMath(p.why).forEach(m => check(d.skill, `pitfalls[${i}].why`, m))
-      })
-    }
   }
   for (const e of errors) {
     e.instances.forEach((x, i) => {
@@ -1092,15 +1057,16 @@ export function validateLatexCompiles(
   }
 }
 
-// Every id must be unique, and the id prefix must match the skill's `kind`.
+// Every id must be unique. The kind/prefix agreement check went with the prefix
+// itself (2026-07-30): an id says only WHICH skill this is, never what kind it is,
+// so there is nothing left for the two to disagree about. The slug must therefore
+// be unique across ALL kinds, not just within one file — which was checked before
+// the rename and holds.
 export function validateUniqueIds(skills: Skill[]): void {
   const seen = new Set<string>()
   for (const f of skills) {
     if (seen.has(f.id)) throw new Error(`Duplicate skill id "${f.id}".`)
     seen.add(f.id)
-    if (!f.id.startsWith(f.kind + '.')) {
-      throw new Error(`Skill "${f.id}" has kind "${f.kind}" but a mismatching id prefix.`)
-    }
   }
 }
 
@@ -1116,24 +1082,24 @@ export function parseSkills(raw: unknown[]): Skill[] {
   })
 }
 
-// ── Skill tree files (one per kind) ───────────────────────────────────────────
+// ── Skill tree files (one per process) ───────────────────────────────────────────
 // Since 2026-07-24 skills are authored as one file per KIND, mirroring the
 // fundament tower's one-file-per-layer containment tree: `kind → groups[] →
 // skills[]`. `kind` and `group` are POSITIONAL — a skill body in the file carries
 // neither — and re-injected at load, so the runtime Skill keeps both fields while
 // the two side registries (skillGroups.json / skillKinds.json) are gone: their
 // titles and display order now live inline in the tree. `groups` (flattened, in
-// display order) and `skillKinds` (one per file) are derived here, not authored.
+// display order) and `processes` (one per file) are derived here, not authored.
 const skillGroupNode = groupDef.extend({
   skills: z.array(z.record(z.string(), z.unknown())).min(1),
 })
-export const skillKindFile = z.object({
-  kind: skillKind,
+export const skillProcessFile = z.object({
+  process: skillProcess,
   title: localizedString,
   blurb: localizedString.optional(),
   groups: z.array(skillGroupNode).min(1),
 })
-export type SkillKindFile = z.infer<typeof skillKindFile>
+export type SkillProcessFile = z.infer<typeof skillProcessFile>
 
 // A LAYER HEAD FOR A LAYER THAT HAS NO ONE FILE (2026-07-28). Every other layer
 // keeps its title, its student-facing `blurb` and its authoring `note` at the top
@@ -1153,7 +1119,7 @@ export interface SkillTree {
   meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
   skills: Skill[]
   groups: GroupDef[]      // flattened across kinds, in display (array) order
-  skillKinds: GroupDef[]  // one entry per kind file, in file order
+  processes: GroupDef[]   // one entry per process file, in file order
   rawEntries: unknown[]   // kind/group-injected skill bodies, keyed by id downstream
 }
 
@@ -1164,61 +1130,21 @@ export function parseSkillTree(files: unknown[], head: unknown): SkillTree {
   const h = skillsHead.safeParse(head)
   if (!h.success) throw new Error(`Invalid skills layer head:\n${z.prettifyError(h.error)}`)
   const groups: GroupDef[] = []
-  const skillKinds: GroupDef[] = []
+  const processes: GroupDef[] = []
   const rawEntries: unknown[] = []
   files.forEach((f, i) => {
-    const parsed = skillKindFile.safeParse(f)
+    const parsed = skillProcessFile.safeParse(f)
     if (!parsed.success) {
-      const kind = (f as { kind?: string })?.kind ?? `index ${i}`
+      const kind = (f as { process?: string })?.process ?? `index ${i}`
       throw new Error(`Invalid skill file "${kind}":\n${z.prettifyError(parsed.error)}`)
     }
     const kf = parsed.data
-    skillKinds.push({ slug: kf.kind, title: kf.title, blurb: kf.blurb })
+    processes.push({ slug: kf.process, title: kf.title, blurb: kf.blurb })
     for (const g of kf.groups) {
       groups.push({ slug: g.slug, title: g.title, blurb: g.blurb })
-      for (const s of g.skills) rawEntries.push({ ...s, kind: kf.kind, group: g.slug })
+      for (const s of g.skills) rawEntries.push({ ...s, process: kf.process, group: g.slug })
     }
   })
   const { title, blurb, note } = h.data
-  return { meta: { title, blurb, note }, skills: parseSkills(rawEntries), groups, skillKinds, rawEntries }
-}
-
-// ── Drill validation ─────────────────────────────────────────────────────────
-export function parseDrills(raw: unknown[]): Drill[] {
-  return raw.map((entry, i) => {
-    const result = drill.safeParse(entry)
-    if (!result.success) {
-      const fam = (entry as { skill?: string })?.skill ?? `index ${i}`
-      throw new Error(`Invalid drill for "${fam}":\n${z.prettifyError(result.error)}`)
-    }
-    return result.data
-  })
-}
-
-// Each drill points at a real skill, shares its kind, and every distractor's
-// `explainedBy` / `revise` must resolve — and `explainedBy` must be one of the
-// skill's declared `errors` (a distractor can't test a misconception the skill
-// never claims). One drill per skill (for now).
-export function validateDrills(drills: Drill[], skills: Skill[]): void {
-  const byId = new Map(skills.map(f => [f.id, f]))
-  const famIds = new Set(byId.keys())
-  const seen = new Set<string>()
-  for (const d of drills) {
-    const f = byId.get(d.skill)
-    if (!f) throw new Error(`Drill references unknown skill "${d.skill}".`)
-    if (seen.has(d.skill)) throw new Error(`More than one drill for skill "${d.skill}".`)
-    seen.add(d.skill)
-    if (d.kind !== f.kind) throw new Error(`Drill for "${d.skill}" is kind "${d.kind}" but the skill is "${f.kind}".`)
-    // ⚠️ THE `explainedBy ⊆ skill.mistakes` CHECK IS GONE (2026-07-30). It guarded
-    // nothing once `mistakes` became derived: a drill's distractor could only cite
-    // what the skill's own ✗ already explains, so the check either restated the
-    // pairing or — as it did the day the pairing landed — failed on citations the
-    // skill had deliberately dropped. `src/data/drills/*.json` is disposable and
-    // must not be able to hold the skill layer hostage.
-    for (const p of d.pitfalls) {
-      for (const r of p.revise ?? []) {
-        if (!famIds.has(r)) throw new Error(`Drill "${d.skill}" revises unknown skill "${r}".`)
-      }
-    }
-  }
+  return { meta: { title, blurb, note }, skills: parseSkills(rawEntries), groups, processes, rawEntries }
 }

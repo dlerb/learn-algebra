@@ -190,7 +190,7 @@ re-deriving inline until this card gave it a name (it now cites it).
   left joins the numerators. It is the card `anti.fraction-addition` corrupts.
 
 `bd` is *a* common denominator, always available; the smallest is a convenience, not a
-different rule. These are drilled by **`transformation.combine-fractions`** (Tier-3,
+different rule. These are drilled by **`skill.combine-fractions`** (Tier-3,
 added 2026-07-24), which rests on the three cards above and guards
 `anti.fraction-addition` — so that anti-law finally has a skill.
 

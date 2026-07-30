@@ -222,11 +222,11 @@ Authored long before the theory existed, read as *required → requiring*:
     transformation       0         0           7
 
 **Nothing outside transformation depends on a transformation.** And the two backward edges are
-ONE skill, `equivalence.same-value-different-structure`, which is mis-filed and says so itself —
+ONE skill, `skill.same-value-different-structure`, which is mis-filed and says so itself —
 note: *"Rewriting changes the dominant operation — **the heart of Skill 3**"*, illustration
 `x^2 - 1 = (x+1)(x-1)`, sitting in a group called **`full-classification` inside
 `equivalence.json`**. Move it to transformation and the layering is **exact, 97 of 97**. (It also
-duplicates `transformation.factor-difference-of-squares` — schema vs instance.)
+duplicates `skill.factor-difference-of-squares` — schema vs instance.)
 
 - [ ] **THE VALIDATOR THAT FOLLOWS**: `requires` must never run backwards across processes. Same
   class of guard as `explains ⊆ mistakes` — it makes the wrong thing unwritable, and it would
@@ -262,8 +262,8 @@ would hold ZERO skills:
     difference-of-squares      → fluency, once "known by heart" is the criterion: the identity
     perfect-square-trinomial   → fluency   IS the recognition, you cannot recall it without
                                            recognising it
-    common-factor              → the first step of transformation.factor-common
-    quadratic-form             → the first step of transformation.factor-quadratic
+    common-factor              → the first step of skill.factor-common
+    quadratic-form             → the first step of skill.factor-quadratic
     linear-form                → licenses NOTHING in this layer (it gates solving) ⚠️ author's call:
                                  a recognition skill with nothing to unlock, or just vocabulary?
 
@@ -299,7 +299,7 @@ different process from the procedures built on it may read oddly.
 - **`illustration` → `stimulus` + `right[]`** across 74 skills. ⚠️ `/skills`' maths column is
   23rem because exactly ONE illustration exceeds 352px; the row geometry was measured against
   that, so this is a migration PLUS a layout question.
-- ⚠️ **`classification.difference-of-squares` and `transformation.factor-difference-of-squares`
+- ⚠️ **`skill.difference-of-squares` and `skill.factor-difference-of-squares`
   would share a stimulus and a `right[]`** and differ only in process. Decide deliberately
   whether they merge — do not discover it mid-migration.
 
@@ -314,12 +314,12 @@ skills are flat sums and products:
 **Not one involves a fraction bar or a root bar** — yet the bar is the commonest invisible
 grouper in school algebra, and `rule.fraction-bar-brackets` is cited by FIVE skills, all of them
 filed as `equivalence`. (`rule.root-bar-brackets` is cited by **no skill at all** — the root twin
-of `equivalence.fraction-bar-grouping` does not exist.)
+of `skill.fraction-bar-grouping` does not exist.)
 
 ⚠️ **THE MECHANISM OF THE MIS-FILING IS VISIBLE, and it is what argument 3 above is about:**
 
-    equivalence.fraction-bar-grouping   \frac{a+b}{c} = (a+b) \div c     ← an EQUATION
-    chunking.chunks-in-sum              3x + 2y - z  +  chunks[]         ← not an equation
+    skill.fraction-bar-grouping   \frac{a+b}{c} = (a+b) \div c     ← an EQUATION
+    skill.chunks-in-sum              3x + 2y - z  +  chunks[]         ← not an equation
 
 **The kind was decided by the SHAPE OF THE ILLUSTRATION, not by the question being asked.** Write
 it as an equality and it lands in `equivalence`; write it as a form plus its pieces and it lands
@@ -337,7 +337,7 @@ it to audit `kind` across all 74: that turns a case-by-case judgement into a lis
 
 ### 🔴 FOUND 2026-07-30 — the borrowed commutativity, and the four-way decomposition
 
-**THREAD 2 OPENS HERE.** The author's catch: `equivalence.number-plus-term` illustrates
+**THREAD 2 OPENS HERE.** The author's catch: `skill.number-plus-term` illustrates
 `2 + 3x = 3x + 2`, which is about COMMUTATIVITY and not about whether `3x + 2` can be combined —
 so the one thing in front of the student answers a question nobody asked. **It is not one bad
 illustration. It is systematic, and the same substitution was made four times:**
@@ -400,7 +400,7 @@ pair* for two thirds of the layer. **The disposable drill layer holds 161 items 
 skills do.** So "drills consume skills" as literally stated LOSES material. Generation is not a
 preference; it is forced by arithmetic.
 
-**Why it is short: `illustration` is a SCHEMA, not an item.** `classification.sum` illustrates
+**Why it is short: `illustration` is a SCHEMA, not an item.** `skill.sum` illustrates
 `a + b` and asks you to name the main operation — the answer is written on the page. And the
 field silently does two jobs: **48 of 74 illustrations are schematic** (free `a`,`b`,`c`), **26
 are concrete instances** (`3 \times x = 3 \cdot x = 3x`, `x^2+5x+6 = (x+2)(x+3)`). Both typeset
@@ -433,7 +433,7 @@ this shape is worth having.
     power        {variable}^{2..4}
     bracket-sum  ({variable} + {numeral})
 
-`classification.sum` alone goes from 1 item to ~4000. The bank problem stops existing.
+`skill.sum` alone goes from 1 item to ~4000. The bank problem stops existing.
 
 **⚠️ THE SCHEMA IS A SURFACE TEMPLATE AND MUST NEVER BECOME AN AST.** `app_design.md` already
 decided this — "Tier 1 stays on surface strings; an AST cannot represent `3x` vs `3·x`". The
@@ -454,8 +454,8 @@ hard Friday, no duplicated lists.
 
 - **Escape hatch**: an authored `items` array per skill, where no schema is sensible. Bindings
   are the floor, not the ceiling.
-- ⚠️ **Item spaces will overlap**: `classification.sum` at level 2 yields `3x + 2y`, which is
-  verbatim `classification.sum-of-products`' illustration. Harmless where the answers agree —
+- ⚠️ **Item spaces will overlap**: `skill.sum` at level 2 yields `3x + 2y`, which is
+  verbatim `skill.sum-of-products`' illustration. Harmless where the answers agree —
   the CE gate should watch for where they do not.
 
 **🛑 THE STOP-SIGNAL ITEM TYPE — a curriculum gap, not just a schema one (2026-07-30).** *"We
@@ -503,13 +503,13 @@ rather than only reading it.
 - **A mistake is not drillable.** You drill a capability and *detect* a mistake.
 - **Tutorial DRIVES drills — one runner, two drivers.** Do not fork the runner. ⚠️ It will
   collide with `/sheets` if built to hold content.
-- ⚠️ **`equivalence.bracket-types` and `-addition-commutative` have no ✗ BY DESIGN** — a
+- ⚠️ **`skill.bracket-types` and `-addition-commutative` have no ✗ BY DESIGN** — a
   Same-or-Different session needs items whose answer is *same*.
 
 ### Not blocking, but decide early
 - The inspection-only `drill material` fold on `/skills` renders discardable content, and
   `validateDrills`' `explainedBy ⊆ skill.errors` check guards nothing. Both can go.
-- `equivalence.minus-on-fraction` still carries `mis.minus-roles-confused` only because a
+- `skill.minus-on-fraction` still carries `mis.minus-roles-confused` only because a
   disposable drill's `explainedBy` names it. Repoint at `anti.minus-on-both-parts`.
 
 ---
@@ -527,6 +527,42 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
 
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
 
+- [ ] **PRUNE THE BACKGROUND RULES — 10 skills** (2026-07-30). The apt rule was added to 14
+  skills where a rule's `latex` is byte-identical to the skill's own `stimulus = right[i]`
+  (orphaned rules 25 → 19). **Four cited nothing at all, so those are closed.** The other ten now
+  cite the apt rule BESIDE the general ones they cited instead — and whether the background
+  stays is editorial, not measurable, so it was deliberately left:
+
+      minus-over-sum            + minus-over-bracket    beside three-minuses, implicit-op-before-bracket
+      subtracting-a-sum         + subtract-a-bracket    beside three-minuses, implicit-op-before-bracket
+      subtracting-a-difference  + subtract-a-bracket    beside three-minuses, implicit-op-before-bracket
+      splitting-a-fraction      + split-numerator       beside fraction-bar-brackets, only-multiplication-distributes
+      negative-times-negative   + minus-times-minus     beside juxtaposition, three-minuses
+      multiplication-commutative + only-plus-and-times-commute  beside juxtaposition
+      coefficient-vs-exponent   + power-vs-coefficient  beside juxtaposition
+      negative-exponent         + minus-in-exponent     beside exponent-binds-tighter
+      fractional-exponent-root  + fractional-exponent-root beside exponent-binds-tighter
+      implicit-chunking         + multiplication-binds-tighter beside dominant-op-last
+
+  ⚠️ **THE PATTERN IS `is` STANDING IN FOR `do`**: the skills cited DECODING rules (why the form
+  means what it means) where the rule that states the MOVE existed and sat orphaned. That is why
+  12 of the 17 multi-rule skills had an `is`+`is` signature. Same disease as the mistake pool
+  before the pairing, same cure — name the rule that states THIS form.
+  ⚠️ **DECIDE THIS BEFORE moving `rules` per-`right[]`-entry.** Once each entry cites the rule
+  that states it, the mapping is 1:1 by construction and `skill.rules` becomes derivable exactly
+  as `mistakes` is — but doing the storage first would bake the noise into a finer structure.
+  An earlier claim here that "a right form is licensed by a CONJUNCTION of rules, and that is the
+  mathematics" was **measured wrong**: it is mis-citation, not arity.
+
+- [ ] **A CHEAT SHEET SHOULD BE ABLE TO PRINT A MISTAKE** (2026-07-30, the author's). Today
+  `sheetGroup.rules` takes rule ids only, so a sheet can show what to do and never what not to.
+  ⚠️ **The requirement is not hypothetical — two sheet sections were deleted for want of it.**
+  `rule.no-power-law-for-sums` and `rule.no-root-law-for-sums` were removed as prohibitions
+  wearing a rule's clothes (see below), and that emptied `sheet.power-laws` → *"No law for sums"*
+  and `sheet.binomial-formulas` → *"What is not a formula"* — two groups whose entire purpose was
+  the warning. Their content lives on in `anti.linearity`; what is missing is a way to print it.
+  A `sheetGroup` would need to take mistake ids alongside rule ids, and `/sheets` a ✗ register.
+
 - [ ] **Two view files carry pre-rename names** (2026-07-30). `/skills` renders
   `TaxonomyView.vue` — the name predates the taxonomy → skills rename — and `/errors` renders
   `ReferenceView.vue`, from when it was the only reference page. **`SkillsView.vue` and
@@ -543,7 +579,7 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
 - [ ] **Dissolving `errors.json`** means moving the 50 instances onto skills (18 already have a
   twin in `skill.wrong`) and splitting the 28 fixes — of three measured, one worked a case and
   two restated the rule. Not urgent while drift is guarded.
-- [ ] **Repoint `equivalence.minus-on-fraction`** at `anti.minus-on-both-parts` and drop
+- [ ] **Repoint `skill.minus-on-fraction`** at `anti.minus-on-both-parts` and drop
   `mis.minus-roles-confused`. It was kept only because a drill's `explainedBy` named it, and
   **drill data is now disposable** — fix or delete that drill entry alongside.
 - [x] ~~4 skill notes still write maths as unicode~~ **DONE 2026-07-29** with the German pass —
@@ -658,13 +694,13 @@ recognition skill has — failing to recognise a shape produces no wrong answer,
 
 **The audit's two red skills are labelled, not fixed.** `contrast = no errors AND nothing
 requires it` resolves to exactly the two `auditCoverage` names
-(`equivalence.bracket-types`, `equivalence.addition-commutative`), so the page and the load
+(`skill.bracket-types`, `skill.addition-commutative`), so the page and the load
 log read the same thing — but the chip says **`2 pure contrast`** in the neutral band, not a
 warn-coloured count of work outstanding, because those two exist so a Same-or-Different
 session has items whose answer is *same*.
 
 **Measured, not guessed:** exactly ONE of the 74 illustrations exceeds 352px rendered
-(`equivalence.product-with-brackets`, 363) and the next is 258, so the maths column is 23rem
+(`skill.product-with-brackets`, 363) and the next is 258, so the maths column is 23rem
 and 24 would buy nothing. The rail is 14rem rather than the shared 11 — a skill's name is a
 phrase with a clause in it ("Sum of products — multiplication is inside the terms"), and at
 11rem the longest took five lines beside a two-line illustration.
@@ -809,7 +845,7 @@ transformation is 10/10/10. Rules cited by nothing: **30 → 26**.
 Two authoring calls worth keeping: `factor-common`'s ✗ is `ab + c = a(b+c)` (pulling out a
 factor that is not in every term — the note's own caveat), and `cancel-common-factor`'s is
 `(a+k)/(b+k) = a/b` rather than `(3x+2)/3 = x+2`, because **that pair belongs to
-`equivalence.no-cancelling-in-a-sum`, which owns it**. Repeating a pair across two skills is
+`skill.no-cancelling-in-a-sum`, which owns it**. Repeating a pair across two skills is
 what `wrong` exists to avoid.
 
 #### ⚠️ The audit's real finding is about the audit
@@ -819,7 +855,7 @@ A string-overlap test flagged **51 of 70** citations — noise by construction. 
 differ; the test measured exactly the property the design was built on. **Do not re-run it.**
 
 Judged by hand, one citation looked plain wrong — and **it was right**.
-`equivalence.negative-numbers` cites `anti.commute-everything`, which reads absurd against
+`skill.negative-numbers` cites `anti.commute-everything`, which reads absurd against
 `-3 = (-3) = 0 - 3`. Removing it **broke the load**: the drill's distractor is `3 - 0`, a
 swapped subtraction, and `explainedBy` is validated ⊆ the skill's `errors`.
 
@@ -835,7 +871,7 @@ a rule with no `summarizes` can be neither supported nor unsupported, and 8 of 5
 #### Still open on the skills page
 - **20 classification/chunking skills have no ✗**, and their wrong answer is a NAME or a
   DECOMPOSITION rather than a false equation — the frozen drill layer's shape. Left undecided.
-- [x] ~~**`equivalence.minus-on-fraction`** has no pool entry for the real misconception.~~
+- [x] ~~**`skill.minus-on-fraction`** has no pool entry for the real misconception.~~
   **CLOSED 2026-07-29** — `anti.minus-on-both-parts`, *"Don't put one minus in two places"*,
   ✗ $-\frac{a}{b} = \frac{-a}{-b}$. It breaks `rule.fraction-minus-moves` ("the minus may sit
   in any of THREE places" — the mistake puts it in two at once), which was cited by nothing
@@ -866,8 +902,8 @@ so the good block shows a bare formula and the bad block a bare belief. Author b
 auditing the citations below.
 
 **A finding the rewrite exposed**: specific sentences make bad `skill.errors` wiring visible.
-`equivalence.minus-on-fraction` shows ✗ $-\frac{a}{b} = \frac{-a}{-b}$ under *"Not every minus
-is a subtraction"*, and `equivalence.negative-numbers` cites *"Don't swap across a minus"* with
+`skill.minus-on-fraction` shows ✗ $-\frac{a}{b} = \frac{-a}{-b}$ under *"Not every minus
+is a subtraction"*, and `skill.negative-numbers` cites *"Don't swap across a minus"* with
 no ✗ at all. Vague sentences hid these; sharp ones do not. Worth an audit pass.
 
 ### ✅ DONE 2026-07-29 — the /skills row as two blocks
@@ -1232,7 +1268,7 @@ evidence of anything, and nothing needs to stay compatible with it".
    consumes the skill, that is exactly where the data belongs. This unblocks the ✗ for the
    **20 classification/chunking skills**, whose wrong answer is a NAME or a DECOMPOSITION.
 2. **A `skill.errors` citation no longer has to survive `explainedBy`.** The one audit call
-   held back for that reason (`equivalence.minus-on-fraction` keeping
+   held back for that reason (`skill.minus-on-fraction` keeping
    `mis.minus-roles-confused`) can now be repointed at `anti.minus-on-both-parts`; fix or drop
    the drill entry with it.
 3. **The inspection-only `drill material` fold on `/skills` renders discardable content** and
@@ -1370,7 +1406,7 @@ other way round. That is the right order — you only drill what students get wr
 is an *epistemic* order, not a merger. Skills are not the other face of the error coin:
 
 - **The coin-ness varies by tier.** At Tier 3 they nearly coincide
-  (`transformation.combine-fractions` ↔ `anti.fraction-addition`), which is why seeding
+  (`skill.combine-fractions` ↔ `anti.fraction-addition`), which is why seeding
   Tier 3 from the mistake catalog worked. At Tier 1 they diverge, because fluency fails
   *silently*. Measured: **every `anti-law` is cited by a Tier-1 or Tier-3 skill and none by
   Tier 2; every uncited error is a `misreading`**; anti-laws average 2.3 instances and
@@ -1400,14 +1436,14 @@ Empirically grounded, and it only became available once errors carried frequency
    No new data, no new fields. The ten edges:
    `omi.adjacent-signs` → `subtraction-as-adding-opposite` + `double-negative` ·
    `mis.root-scope` → `root-of-a-sum` + `fractional-exponent-root` ·
-   `mis.invisible-one-lost` → `transformation.collect-like-terms` ·
+   `mis.invisible-one-lost` → `skill.collect-like-terms` ·
    `mis.subtraction-as-times-negative` → `subtraction-as-adding-opposite` ·
    `omi.redundant-brackets-kept` → `redundant-brackets` ·
    `mis.linear-slash-overgrouped` → `fraction-bar-grouping` (the twin of
    `-grouping-lost`) · `mis.bar-not-division` → `division-variants` +
    `fraction-as-reciprocal-product` · `mis.order-blindness` →
    `multiplication-commutative`.
-   ⚠️ **That last one corrects the claim below**: `equivalence.multiplication-commutative`
+   ⚠️ **That last one corrects the claim below**: `skill.multiplication-commutative`
    DOES own an error — `a \cdot 3` not recognised as `3a` is a commutativity failure. Only
    `addition-commutative` is a pure contrast skill.
 2. [x] ~~**Author the error** — the exponent-extension skills.~~ **DONE 2026-07-25**,
@@ -1427,32 +1463,32 @@ Empirically grounded, and it only became available once errors carried frequency
      the misread *glyph* is a misreading.
 3. [~] **Missing edge — and mostly BLOCKED ON MISSING TIER-3 SKILLS** (investigated
    2026-07-25). Two conclusions:
-   - ✅ **The trigger mechanism needs no new field.** `transformation.factor-common`
-     already requires `classification.common-factor`, which is why that is the one shape
+   - ✅ **The trigger mechanism needs no new field.** `skill.factor-common`
+     already requires `skill.common-factor`, which is why that is the one shape
      the audit reaches. Plain `requires` IS the Tier-2→Tier-3 trigger; **do not
      reintroduce `gateway` or a typed edge** (closes that open question in the Tier-3
      section below).
    - ❌ **Four shapes have nothing to be required BY.** The factoring group holds exactly
      one skill. Each remaining shape needs a Tier-3 skill that does not exist:
-     `difference-of-squares` → `transformation.factor-difference-of-squares`;
-     `perfect-square-trinomial` → `transformation.factor-perfect-square`;
-     `quadratic-form` → `transformation.factor-quadratic`. And **two of the six are
-     chained, not orphaned** — `classification.difference` is already required by
+     `difference-of-squares` → `skill.factor-difference-of-squares`;
+     `perfect-square-trinomial` → `skill.factor-perfect-square`;
+     `quadratic-form` → `skill.factor-quadratic`. And **two of the six are
+     chained, not orphaned** — `skill.difference` is already required by
      `difference-of-squares`, and `linear-form` by `quadratic-form`, so fixing the head of
      each chain resolves them for free. **Three missing skills, not six missing edges.**
    - Not faked: `expand-binomial-square` does NOT require `perfect-square-trinomial` —
      expanding $(a+b)^2$ reads a bracket-power, while recognising $a^2+2ab+b^2$ is the
      *factoring* side. Pointing the edge there would invert the dependency.
-   - [x] ~~`chunking.chunks-in-product`~~ **DONE**: added to `transformation.factor-common`
+   - [x] ~~`skill.chunks-in-product`~~ **DONE**: added to `skill.factor-common`
      and `-cancel-common-factor` as an ordinary prerequisite (you must read a term's
      factors before pulling one out). **Unreached 10 → 9.**
    - [x] ~~**Author the three Tier-3 factoring skills.**~~ **DONE 2026-07-25**, skills
      **71 → 74**, unreached **9 → 7**. The `factoring` group is no longer a group of one:
-     `transformation.factor-difference-of-squares` (restsOn `th.difference-of-squares`),
+     `skill.factor-difference-of-squares` (restsOn `th.difference-of-squares`),
      `-factor-perfect-square` (`th.binomial-square` + `th.square-of-difference`),
      `-factor-quadratic` (`ax.distributivity` + `th.collect-like-terms`). Each requires its
      recognition shape, which is what closed the chain: `difference-of-squares`,
-     `classification.difference` and `perfect-square-trinomial` all went green.
+     `skill.difference` and `perfect-square-trinomial` all went green.
    - [x] ~~**BLOCKED**: `factor-quadratic` had no error, so `quadratic-form` +
      `linear-form` stayed red behind it.~~ **RESOLVED 2026-07-25** by a **7th topic
      section, `factoring`** (placed last — it depends on everything above it) holding
@@ -1485,11 +1521,11 @@ Empirically grounded, and it only became available once errors carried frequency
    - `same-value-different-structure`: pitfall `(x-1)^2` ← `anti.linearity`. "Factoring"
      $x^2-1$ as $(x-1)^2$ is the freshman's dream mirrored — $a^2-b^2=(a-b)^2$ is the same
      false identity as $(a+b)^2=a^2+b^2$, which is why
-     `transformation.factor-difference-of-squares` cites it too.
+     `skill.factor-difference-of-squares` cites it too.
 
 - [ ] ⚠️ **THE FLOOR: 2 skills, 1 error — and they should probably stay.** The audit will
   never read 0/0, and that is correct rather than a backlog:
-  - `equivalence.bracket-types` and `equivalence.addition-commutative` have **no tempting
+  - `skill.bracket-types` and `skill.addition-commutative` have **no tempting
     wrong form at all**. No student believes $a+b \ne b+a$ or that $[a+b]$ groups
     differently from $(a+b)$. Note these are **exactly the two** `docs/common_mistakes.md`
     named as cut candidates ("notation-trivia / the two commutativity-holds skills") — the
@@ -1796,7 +1832,7 @@ now cites the bar it is written with); the **quotient power laws** went to `powe
 (`th.split-numerator`, `th.cancel-common-factor`, `th.fraction-minus-moves`,
 `th.divide-by-one`). See `docs/terms.md`. **`conventions.json` is now empty and
 `laws.json` is down to 4.**
-  - **Fraction arithmetic completed 2026-07-24** (was the acknowledged hole): `th.inverse-of-product` `(ab)⁻¹=a⁻¹b⁻¹` added to `fundamentals` Field theorems (the multiplicative twin of `th.minus-in-product`; `th.cancel-common-factor` now cites it instead of re-deriving inline), and `th.fraction-multiply`, `th.fraction-divide` (reciprocal + **double fractions**: stacked form, mixed cases, "which bar is the main one" reading folded into `ix.fraction-bar`), `th.fraction-add` (common denominator `bd`; special case `a/b+c/b`) added to `terms` fractions. `anti.fraction-addition` re-pointed to `th.fraction-add`. Tower now **101 cards**. Drilled by **`transformation.combine-fractions`** (added 2026-07-24), which wires `anti.fraction-addition` to a skill.
+  - **Fraction arithmetic completed 2026-07-24** (was the acknowledged hole): `th.inverse-of-product` `(ab)⁻¹=a⁻¹b⁻¹` added to `fundamentals` Field theorems (the multiplicative twin of `th.minus-in-product`; `th.cancel-common-factor` now cites it instead of re-deriving inline), and `th.fraction-multiply`, `th.fraction-divide` (reciprocal + **double fractions**: stacked form, mixed cases, "which bar is the main one" reading folded into `ix.fraction-bar`), `th.fraction-add` (common denominator `bd`; special case `a/b+c/b`) added to `terms` fractions. `anti.fraction-addition` re-pointed to `th.fraction-add`. Tower now **101 cards**. Drilled by **`skill.combine-fractions`** (added 2026-07-24), which wires `anti.fraction-addition` to a skill.
 
 **Cluster 2 — the binomial. ✅ DONE 2026-07-23**, and it is what created the layer.
 All three now live in `src/data/terms/cards.json` (`docs/terms.md`):
@@ -1920,7 +1956,7 @@ and distractor items below are done. Only incremental threads remain.
   Errors-layer work; rationale in `docs/powers-nat-act.md`.
 - [ ] Fine-tune taxonomy from classroom use (ongoing).
 - [~] Prerequisites as a graph: `requires` + validators in schema; graph fully authored and priority-consistent (notation strict 1–29 after the 2026-07-09 insertion; structure basic forms 1–5, linear-form 14 with quadratic-form requiring it). The graph is a v1 hypothesis until drill data confirms it.
-  - Resolved 2026-07-24: `equivalence.minus-as-times-negative-one` was merged into `equivalence.minus-over-sum` (SAME equivalence class; the ×(−1) form folded into its note + drill equivalents). `subtracting-a-sum`/`subtracting-a-difference` stay SEPARATE skills — a merge was tried and reverted because `a-(b+c)` is a different equivalence class than `-(a+b)` (different drilled discrimination; the drill schema can't share one equivalents-set). Merge Tier-1 skills only when same equivalence class, not merely same strategy. See `docs/common_mistakes.md`.
+  - Resolved 2026-07-24: `equivalence.minus-as-times-negative-one` was merged into `skill.minus-over-sum` (SAME equivalence class; the ×(−1) form folded into its note + drill equivalents). `subtracting-a-sum`/`subtracting-a-difference` stay SEPARATE skills — a merge was tried and reverted because `a-(b+c)` is a different equivalence class than `-(a+b)` (different drilled discrimination; the drill schema can't share one equivalents-set). Merge Tier-1 skills only when same equivalence class, not merely same strategy. See `docs/common_mistakes.md`.
 - [~] **Layer 1+2 — laws & notation conventions**: IMPLEMENTED 2026-07-09 — SOURCE OF TRUTH is `laws.json` (37: 9 ax / 7 def / 21 thm), `conventions.json` (12), `errors.json` (20: 5 false laws + 15 misreadings); `docs/content_model.md` is rationale only (no content tables — they'd drift). In-app **Laws & Conventions view** (`ReferenceView.vue`, tab in App.vue) renders law cards with derivation chains, conventions, error patterns. Schema + validators (sort↔id-prefix, DAG over `basedOn` ∪ `derivedFrom`, `of` refs, cross-layer refs), matrix-audit console report, meta-pattern `refs`, `justifiedBy`/`conventions` on skills, `cites` on pitfalls. LocalizedString (`{en, de}`, en fallback, de = Schweizer Hochdeutsch) + de/en toggle. Power laws carry classroom names incl. quotient/root forms; `thm.power-same-base-quotient` added (was missing). New skill `notation.no-splitting-the-denominator` ranked 26 (26–28 shifted to 27–29; notation now a strict 1–29 sequence). Meta-patterns migrated to slug ids (`meta.…` + display code M1–M6) with localized title/text (student-facing feedback takeaway); assignment stays authored — derivation tested and rejected (recovers all, over-generates); authored-⊆-derived is an audit line. Prose format contract: text + inline `$…$` KaTeX (`RichText.vue`; markdown rejected), `conditions` = pure LaTeX; load-time KaTeX compile check on every latex field and `$…$` segment. Remaining work is split into the tier-2 pass and tier-1 leftovers sections above; the audit reports live counts.
 - [ ] Pitfall-level `revise` refs where an error points at a sharper gap than the skill's `requires` (schema supports it on all three kinds; author only where skill-level links aren't precise enough).
 - [ ] Per-skill variation dimensions (what varies / constant / discriminating feature) — variation theory (Marton / bianshi).
@@ -2023,7 +2059,7 @@ Tier 3 = chains Tier 1 equivalences, located via Tier 2 parsing, toward a target
 - [ ] **Drill "dirty" expressions** — Tier-3 terms will need to contain messy sub-forms (`a/1`, `--a`, unsimplified coefficients) that the student must handle/clean as part of the transformation. Deferred, but a real requirement for the transformation drills.
 - [ ] Add the `transformation` `kind` to the schema (`target` field); ids get the `transformation.` prefix like every other kind (no separate namespace — skill derives from kind)
 - [ ] Author Tier 3 skills; wire the `familiar-shapes` skills as their recognition triggers (the old `gateway` flag was removed — see note above)
-- [ ] **Coefficient-lens chunking** (`2x(x+1) → [2x, (x+1)]`, keeping the coefficient with its variable): operation-relative grouping, the recognition-half of an *expand* move — author as a Tier-3 skill. The example was removed from the Tier-2 `chunking.chunks-in-product` card on 2026-07-11 (Tier-2 chunking is maximal/flat: `[2, x, (x+1)]`); this is where its coefficient-lens version lands.
+- [ ] **Coefficient-lens chunking** (`2x(x+1) → [2x, (x+1)]`, keeping the coefficient with its variable): operation-relative grouping, the recognition-half of an *expand* move — author as a Tier-3 skill. The example was removed from the Tier-2 `skill.chunks-in-product` card on 2026-07-11 (Tier-2 chunking is maximal/flat: `[2, x, (x+1)]`); this is where its coefficient-lens version lands.
 
 ## Open questions — salvaged from archived taxonomy docs (2026-07-13)
 

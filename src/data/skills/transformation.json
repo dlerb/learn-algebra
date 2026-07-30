@@ -1,81 +1,14 @@
 {
-  "kind": "transformation",
+  "process": "transformation",
   "title": {
     "en": "Transformation",
     "de": "Umformung"
   },
   "blurb": {
-    "en": "Directed manipulation — factor, expand, simplify.",
-    "de": "Gezieltes Umformen — ausklammern, ausmultiplizieren, vereinfachen."
+    "en": "Carrying out a procedure — search, choose, apply.",
+    "de": "Ein Verfahren ausführen — suchen, wählen, anwenden."
   },
   "groups": [
-    {
-      "slug": "expanding",
-      "title": {
-        "en": "Expanding",
-        "de": "Ausmultiplizieren"
-      },
-      "blurb": {
-        "en": "Producing the multiplied-out form: distribute a factor, square a binomial. The active twin of the recognition skills.",
-        "de": "Die ausmultiplizierte Form herstellen: einen Faktor verteilen, ein Binom quadrieren. Das aktive Gegenstück zu den Erkennungsfertigkeiten."
-      },
-      "skills": [
-        {
-          "id": "transformation.expand-distribute",
-          "name": {
-            "en": "Expand: multiply into a bracket",
-            "de": "Ausmultiplizieren: in eine Klammer hinein"
-          },
-          "note": {
-            "en": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$. This is the active twin of recognising $2(x+1) = 2x+2$ — there you check equality, here you generate it — and the commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
-            "de": "Die ausmultiplizierte Form herstellen: der Faktor aussen landet auf jedem Term darin. $a(b+c) = ab + ac$. Das ist das aktive Gegenstück zum Erkennen von $2(x+1) = 2x+2$ — dort prüfst du die Gleichheit, hier erzeugst du sie — und der häufigste Fehltritt ist, nach dem ersten Term aufzuhören ($a(b+c) \\to ab + c$). Ein führendes Minus ist der Faktor $-1$: $-(b+c) = -b - c$."
-          },
-          "illustration": "a(b + c) = ab + ac",
-          "wrong": [
-            {
-              "latex": "a(b + c) = ab + c",
-              "explains": "anti.partial-distribution"
-            }
-          ],
-          "requires": [
-            "equivalence.multiplying-into-a-bracket"
-          ],
-          "rules": [
-            "rule.only-multiplication-distributes"
-          ],
-          "restsOn": [
-            "ax.distributivity"
-          ]
-        },
-        {
-          "id": "transformation.expand-binomial-square",
-          "name": {
-            "en": "Expand a squared binomial",
-            "de": "Ein Binom quadrieren"
-          },
-          "note": {
-            "en": "$(a+b)^2$ is $(a+b)(a+b)$, not $a^2 + b^2$. Expanding gives the cross term twice: $(a+b)^2 = a^2 + 2ab + b^2$. Dropping the $2ab$ is the single most common error in school algebra — a power does not distribute over a sum, because it is built from multiplication, not addition.",
-            "de": "$(a+b)^2$ ist $(a+b)(a+b)$, nicht $a^2 + b^2$. Beim Ausmultiplizieren kommt das gemischte Produkt zweimal: $(a+b)^2 = a^2 + 2ab + b^2$. Das $2ab$ wegzulassen ist der häufigste Fehler der Schulalgebra — eine Potenz verteilt sich nicht über eine Summe, denn sie ist aus Multiplikation gebaut, nicht aus Addition."
-          },
-          "illustration": "(a + b)^2 = a^2 + 2ab + b^2",
-          "wrong": [
-            {
-              "latex": "(a + b)^2 = a^2 + b^2",
-              "explains": "anti.linearity"
-            }
-          ],
-          "requires": [
-            "transformation.expand-distribute"
-          ],
-          "rules": [
-            "rule.binomial-square"
-          ],
-          "restsOn": [
-            "th.binomial-square"
-          ]
-        }
-      ]
-    },
     {
       "slug": "factoring",
       "title": {
@@ -88,7 +21,7 @@
       },
       "skills": [
         {
-          "id": "transformation.factor-common",
+          "id": "skill.factor-common",
           "name": {
             "en": "Factor out a common factor",
             "de": "Einen gemeinsamen Faktor ausklammern"
@@ -97,17 +30,20 @@
             "en": "The reverse of expanding: pull the factor shared by every term out in front. $ab + ac = a(b+c)$. It only works when the factor is in every term — $ab + c$ has no common factor to pull. Check by multiplying back: $a(b+c) = ab + ac$.",
             "de": "Die Umkehrung des Ausmultiplizierens: den Faktor, den jeder Term hat, nach vorne ziehen. $ab + ac = a(b+c)$. Es geht nur, wenn der Faktor in jedem Term steckt — $ab + c$ hat keinen gemeinsamen Faktor. Prüfen durch Zurückmultiplizieren: $a(b+c) = ab + ac$."
           },
-          "illustration": "ab + ac = a(b + c)",
+          "stimulus": "ab + ac",
+          "right": [
+            "a(b + c)"
+          ],
           "wrong": [
             {
               "latex": "ab + c = a(b + c)",
-              "explains": "anti.partial-distribution"
+              "mistake": "anti.partial-distribution"
             }
           ],
           "requires": [
-            "classification.common-factor",
-            "transformation.expand-distribute",
-            "chunking.chunks-in-product"
+            "skill.common-factor",
+            "skill.expand-distribute",
+            "skill.chunks-in-product"
           ],
           "rules": [
             "rule.only-multiplication-distributes"
@@ -117,70 +53,7 @@
           ]
         },
         {
-          "id": "transformation.factor-difference-of-squares",
-          "name": {
-            "en": "Factor a difference of squares",
-            "de": "Eine Differenz von Quadraten faktorisieren"
-          },
-          "note": {
-            "en": "Two squares with a minus between them factor into the two matching brackets: $a^2 - b^2 = (a+b)(a-b)$. It works because the mixed products cancel — expanding gives $a^2 - ab + ab - b^2$, and $-ab + ab$ is $0$ (th.difference-of-squares). Two things to hold on to: the SUM of squares does not factor this way at all, and the answer is not $(a-b)^2$ — squaring a difference leaves a middle term ($-2ab$), which the true factorisation has none of. Check by multiplying back.",
-            "de": "Zwei Quadrate mit einem Minus dazwischen zerfallen in die beiden passenden Klammern: $a^2 - b^2 = (a+b)(a-b)$. Es geht, weil die gemischten Produkte sich aufheben — Ausmultiplizieren gibt $a^2 - ab + ab - b^2$, und $-ab + ab$ ist $0$. Zwei Dinge festhalten: die SUMME zweier Quadrate zerfällt so gar nicht, und die Antwort ist nicht $(a-b)^2$ — eine quadrierte Differenz hat einen mittleren Term ($-2ab$), den die echte Faktorisierung nicht hat. Prüfen durch Zurückmultiplizieren."
-          },
-          "illustration": "a^2 - b^2 = (a + b)(a - b)",
-          "wrong": [
-            {
-              "latex": "a^2 - b^2 = (a - b)^2",
-              "explains": "anti.linearity"
-            },
-            {
-              "latex": "a^2 + b^2 = (a + b)(a - b)",
-              "explains": "anti.linearity"
-            }
-          ],
-          "requires": [
-            "classification.difference-of-squares",
-            "transformation.expand-distribute"
-          ],
-          "rules": [
-            "rule.difference-of-squares",
-            "rule.binomials-read-backwards"
-          ],
-          "restsOn": [
-            "th.difference-of-squares"
-          ]
-        },
-        {
-          "id": "transformation.factor-perfect-square",
-          "name": {
-            "en": "Factor a perfect square trinomial",
-            "de": "Ein vollständiges Quadrat faktorisieren"
-          },
-          "note": {
-            "en": "Three terms in the shape $a^2 + 2ab + b^2$ collapse into one square: $(a+b)^2$ (th.binomial-square, read right to left). The middle term is what identifies it — it must be exactly twice the product of the two roots, which is the term students drop when they expand and the term they must find when they factor. With a minus in the middle the same identity gives $(a-b)^2$ (th.square-of-difference). Check by expanding.",
-            "de": "Drei Terme in der Gestalt $a^2 + 2ab + b^2$ ziehen sich zu einem Quadrat zusammen: $(a+b)^2$ (die binomische Formel, von rechts nach links gelesen). Der mittlere Term ist das Erkennungsmerkmal — er muss genau das Doppelte des Produkts der beiden Wurzeln sein; genau ihn lassen Schülerinnen und Schüler beim Ausmultiplizieren weg und genau ihn müssen sie beim Faktorisieren finden. Mit einem Minus in der Mitte gibt dieselbe Formel $(a-b)^2$. Prüfen durch Ausmultiplizieren."
-          },
-          "illustration": "a^2 + 2ab + b^2 = (a + b)^2",
-          "wrong": [
-            {
-              "latex": "a^2 + b^2 = (a + b)^2",
-              "explains": "anti.linearity"
-            }
-          ],
-          "requires": [
-            "classification.perfect-square-trinomial",
-            "transformation.expand-binomial-square"
-          ],
-          "rules": [
-            "rule.binomial-square",
-            "rule.binomials-read-backwards"
-          ],
-          "restsOn": [
-            "th.binomial-square",
-            "th.square-of-difference"
-          ]
-        },
-        {
-          "id": "transformation.factor-quadratic",
+          "id": "skill.factor-quadratic",
           "name": {
             "en": "Factor a quadratic",
             "de": "Eine quadratische Form faktorisieren"
@@ -189,17 +62,20 @@
             "en": "For $x^2 + px + q$, find two numbers that MULTIPLY to $q$ and ADD to $p$; they are the numbers in the brackets. $x^2 + 5x + 6 = (x+2)(x+3)$ because $2 \\cdot 3 = 6$ and $2 + 3 = 5$. The two conditions come straight from expanding: $(x+m)(x+n) = x^2 + (m+n)x + mn$ (ax.distributivity, then th.collect-like-terms), so the middle coefficient is a collected sum and the constant a product. Both conditions must hold — a pair that gives the right constant but the wrong middle term is not a factorisation. Not every quadratic factors over the rationals; check by multiplying back.",
             "de": "Für $x^2 + px + q$ zwei Zahlen suchen, die MULTIPLIZIERT $q$ und ADDIERT $p$ ergeben; das sind die Zahlen in den Klammern. $x^2 + 5x + 6 = (x+2)(x+3)$, weil $2 \\cdot 3 = 6$ und $2 + 3 = 5$. Die beiden Bedingungen kommen direkt vom Ausmultiplizieren: $(x+m)(x+n) = x^2 + (m+n)x + mn$, also ist der mittlere Koeffizient eine zusammengefasste Summe und die Konstante ein Produkt. Beide Bedingungen müssen gelten — ein Paar mit der richtigen Konstanten, aber dem falschen mittleren Term ist keine Faktorisierung. Nicht jede quadratische Form zerfällt über den rationalen Zahlen; prüfen durch Zurückmultiplizieren."
           },
-          "illustration": "x^2 + 5x + 6 = (x + 2)(x + 3)",
+          "stimulus": "x^2 + 5x + 6",
+          "right": [
+            "(x + 2)(x + 3)"
+          ],
           "wrong": [
             {
               "latex": "x^2 + 5x + 6 = (x + 5)(x + 6)",
-              "explains": "anti.quadratic-pair-unchecked"
+              "mistake": "anti.quadratic-pair-unchecked"
             }
           ],
           "requires": [
-            "classification.quadratic-form",
-            "transformation.expand-distribute",
-            "transformation.collect-like-terms"
+            "skill.quadratic-form",
+            "skill.expand-distribute",
+            "skill.collect-like-terms"
           ],
           "rules": [
             "rule.quadratic-pair"
@@ -223,7 +99,7 @@
       },
       "skills": [
         {
-          "id": "transformation.collect-like-terms",
+          "id": "skill.collect-like-terms",
           "name": {
             "en": "Collect like terms",
             "de": "Gleichartige Terme zusammenfassen"
@@ -232,19 +108,22 @@
             "en": "Add the coefficients of like terms; unlike terms stay apart. $3x + 2x = 5x$, but $3x + 2$ stays open — a term and a constant are not alike. This is the active twin of recognising that $2 + 3x$ does not collapse: there you judge which terms are alike, here you perform the merge.",
             "de": "Die Koeffizienten gleichartiger Terme addieren; ungleichartige bleiben getrennt. $3x + 2x = 5x$, aber $3x + 2$ bleibt offen — ein Term und eine Konstante sind nicht gleichartig. Das ist das aktive Gegenstück zum Erkennen, dass $2 + 3x$ nicht zusammenfällt: dort beurteilst du, welche Terme gleichartig sind, hier führst du das Zusammenfassen aus."
           },
-          "illustration": "3x + 2x = 5x",
+          "stimulus": "3x + 2x",
+          "right": [
+            "5x"
+          ],
           "wrong": [
             {
               "latex": "3x + 2 = 5x",
-              "explains": "anti.conjoining"
+              "mistake": "anti.conjoining"
             },
             {
               "latex": "a + 3a = 3a",
-              "explains": "mis.invisible-one-lost"
+              "mistake": "mis.invisible-one-lost"
             }
           ],
           "requires": [
-            "equivalence.number-plus-term"
+            "skill.number-plus-term"
           ],
           "rules": [
             "rule.unlike-terms-stay",
@@ -255,34 +134,7 @@
           ]
         },
         {
-          "id": "transformation.simplify-power-product",
-          "name": {
-            "en": "Simplify a product of powers",
-            "de": "Ein Produkt von Potenzen vereinfachen"
-          },
-          "note": {
-            "en": "Same base, so add the exponents: $x^a \\cdot x^b = x^{a+b}$, not $x^{ab}$. A power counts factors, and multiplying two powers stacks their factors, so the counts add. The mirror slip — multiplying the exponents — is what $(x^a)^b = x^{ab}$ actually does, one step away.",
-            "de": "Gleiche Basis, also die Exponenten addieren: $x^a \\cdot x^b = x^{a+b}$, nicht $x^{ab}$. Eine Potenz zählt Faktoren, und zwei Potenzen zu multiplizieren stapelt ihre Faktoren, also addieren sich die Anzahlen. Der Spiegelfehler — die Exponenten multiplizieren — ist das, was $(x^a)^b = x^{ab}$ wirklich tut, einen Schritt daneben."
-          },
-          "illustration": "x^a \\cdot x^b = x^{a+b}",
-          "wrong": [
-            {
-              "latex": "x^a \\cdot x^b = x^{ab}",
-              "explains": "anti.exponent-arithmetic"
-            }
-          ],
-          "requires": [
-            "equivalence.exponent-as-repeated-product"
-          ],
-          "rules": [
-            "rule.same-base"
-          ],
-          "restsOn": [
-            "pl.same-base"
-          ]
-        },
-        {
-          "id": "transformation.cancel-common-factor",
+          "id": "skill.cancel-common-factor",
           "name": {
             "en": "Cancel a common factor",
             "de": "Einen gemeinsamen Faktor kürzen"
@@ -291,28 +143,31 @@
             "en": "A factor shared by the whole numerator and the whole denominator cancels: $\\frac{ak}{bk} = \\frac{a}{b}$. What you cannot do is cancel against one term of a sum — $\\frac{3x+2}{3} \\ne x + 2$. Cancelling needs a factor of everything above and below, which is why you often factor first.",
             "de": "Ein Faktor, den der ganze Zähler und der ganze Nenner gemeinsam haben, lässt sich kürzen: $\\frac{ak}{bk} = \\frac{a}{b}$. Nicht erlaubt ist das Kürzen gegen einen einzelnen Term einer Summe — $\\frac{3x+2}{3} \\ne x + 2$. Kürzen braucht einen Faktor von allem oben und allem unten, und darum faktorisiert man oft zuerst."
           },
-          "illustration": "\\frac{ak}{bk} = \\frac{a}{b}",
+          "stimulus": "\\frac{ak}{bk}",
+          "right": [
+            "\\frac{a}{b}"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a + k}{b + k} = \\frac{a}{b}",
-              "explains": "anti.linearity"
+              "mistake": "anti.linearity"
             }
           ],
-          "conditions": "b \\ne 0,\\ k \\ne 0",
           "requires": [
-            "transformation.factor-common",
-            "equivalence.no-cancelling-in-a-sum",
-            "chunking.chunks-in-product"
+            "skill.factor-common",
+            "skill.no-cancelling-in-a-sum",
+            "skill.chunks-in-product"
           ],
           "rules": [
             "rule.fraction-cancel"
           ],
           "restsOn": [
             "th.cancel-common-factor"
-          ]
+          ],
+          "conditions": "b \\ne 0,\\ k \\ne 0"
         },
         {
-          "id": "transformation.combine-fractions",
+          "id": "skill.combine-fractions",
           "name": {
             "en": "Combine fractions into one",
             "de": "Brüche zu einem Bruch zusammenfassen"
@@ -321,16 +176,19 @@
             "en": "Write a sum, difference, or quotient of fractions as a single fraction. Multiplying and dividing go straight across ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$, and dividing flips the divisor: $\\frac{a/b}{c/d} = \\frac{ad}{bc}$); adding and subtracting do not — they need a common denominator first, so $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$, never $\\frac{a+c}{b+d}$. The straight-across reflex is the whole trap: right for a product, wrong for a sum, because the fraction bar is built from multiplication and not from addition.",
             "de": "Eine Summe, Differenz oder einen Quotienten von Brüchen als einen einzigen Bruch schreiben. Multiplizieren und Dividieren gehen quer durch ($\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{ac}{bd}$, und beim Dividieren wird der Divisor umgekehrt: $\\frac{a/b}{c/d} = \\frac{ad}{bc}$); Addieren und Subtrahieren nicht — sie brauchen zuerst einen gemeinsamen Nenner, also $\\frac{a}{b} + \\frac{c}{d} = \\frac{ad+bc}{bd}$, nie $\\frac{a+c}{b+d}$. Der Quer-durch-Reflex ist die ganze Falle: richtig beim Produkt, falsch bei der Summe, weil der Bruchstrich aus Multiplikation gebaut ist und nicht aus Addition."
           },
-          "illustration": "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}",
+          "stimulus": "\\frac{a}{b} + \\frac{c}{d}",
+          "right": [
+            "\\frac{ad + bc}{bd}"
+          ],
           "wrong": [
             {
               "latex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{a + c}{b + d}",
-              "explains": "anti.fraction-addition"
+              "mistake": "anti.fraction-addition"
             }
           ],
           "requires": [
-            "equivalence.fraction-as-reciprocal-product",
-            "equivalence.no-splitting-the-denominator"
+            "skill.fraction-as-reciprocal-product",
+            "skill.no-splitting-the-denominator"
           ],
           "rules": [
             "rule.fraction-common-denominator"
@@ -339,6 +197,52 @@
             "th.fraction-multiply",
             "th.fraction-divide",
             "th.fraction-add"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rewriting",
+      "title": {
+        "en": "Rewriting",
+        "de": "Umschreiben"
+      },
+      "blurb": {
+        "en": "Where a rewrite changes what the term IS, not just how it looks.",
+        "de": "Wo eine Umformung ändert, was der Term IST — nicht nur, wie er aussieht."
+      },
+      "skills": [
+        {
+          "id": "skill.same-value-different-structure",
+          "name": {
+            "en": "Same value, different dominant operation",
+            "de": "Gleicher Wert, andere Hauptoperation"
+          },
+          "note": {
+            "en": "These are equal in value but have different dominant operations: $x^2-1$ is a difference, $(x+1)(x-1)$ is a product. Rewriting changes the dominant operation — the heart of Skill 3.",
+            "de": "Diese sind wertgleich, haben aber verschiedene Hauptoperationen: $x^2-1$ ist eine Differenz, $(x+1)(x-1)$ ein Produkt. Umformen ändert die Hauptoperation — der Kern von Stufe 3."
+          },
+          "stimulus": "x^2 - 1",
+          "right": [
+            "(x+1)(x-1)"
+          ],
+          "wrong": [
+            {
+              "latex": "x^2 - 1 = (x-1)^2",
+              "mistake": "anti.linearity"
+            }
+          ],
+          "requires": [
+            "skill.difference",
+            "skill.product"
+          ],
+          "rules": [
+            "rule.dominant-op-last"
+          ],
+          "restsOn": [
+            "ix.precedence",
+            "ix.brackets",
+            "th.difference-of-squares"
           ]
         }
       ]

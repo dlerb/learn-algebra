@@ -201,11 +201,11 @@ the fluency skills matter even though few *are* errors themselves.
 | C1/C2 `(x+y)ⁿ` | `pl.no-sum-law` | sum inside a power is one chunk | expanding |
 | C3 `√(x+y)` | `pl.no-sum-law` (radical shadow) | sum under the root is one chunk | splitting the root |
 | C4 `3(2x−5)²` | — | the square binds before the 3 | distributing too early |
-| D1 `xᵃ·xᵇ` product of powers | `pl.same-base` (add exponents) | — | `transformation.simplify-power-product` (error `anti.exponent-arithmetic`) |
+| D1 `xᵃ·xᵇ` product of powers | `pl.same-base` (add exponents) | — | `skill.simplify-power-product` (error `anti.exponent-arithmetic`) |
 | D2 `(xᵃ)ᵇ` power of a power | `pl.of-power` (multiply exponents) | — | covered by the same skill + error |
 | D3/D4/D5/D7 coeff-vs-exp, neg/zero exp, √16 | **these ARE the fluency** | — | — |
-| D4 negative exponent | `def.pow-neg` (minus = reciprocal) | — | error `mis.negative-exponent-negates`, authored 2026-07-25 → `equivalence.negative-exponent`, `-negative-fractional-exponent` |
-| D5 zero / one exponent | `def.pow-zero` (forced, not decreed) | — | error `anti.zero-exponent`, authored 2026-07-25 → `equivalence.zero-and-one-exponent` |
+| D4 negative exponent | `def.pow-neg` (minus = reciprocal) | — | error `mis.negative-exponent-negates`, authored 2026-07-25 → `skill.negative-exponent`, `-negative-fractional-exponent` |
+| D5 zero / one exponent | `def.pow-zero` (forced, not decreed) | — | error `anti.zero-exponent`, authored 2026-07-25 → `skill.zero-and-one-exponent` |
 | D6 `√(7x)` grouping | — | radicand is one chunk | writing the power |
 | E1 cancel in a sum (~48%!) | — | `a+b` is one chunk, not two | cancelling / simplifying |
 | E2 denominator doesn't split | — | the sum is one chunk | splitting the fraction |
