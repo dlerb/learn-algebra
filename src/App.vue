@@ -45,7 +45,9 @@ const layerMenu = (family: 'fundament' | 'curated') =>
 const menuOptions: MenuOption[] = [
   { label: 'Fundament', key: 'tower-menu', children: layerMenu('fundament') },
   // Curated is ordered and levelled in the manifest to echo its own stack:
-  // rules at the base, sheets and errors on it, skills over everything.
+  // rules at the base, sheets and mistakes on it, skills over mistakes.
+  // ⚠️ The indent draws a PARENT-CHILD edge, so manifest order matters as much
+  // as `level` does — see the warning on curatedLayers.
   { label: 'Curated', key: 'curated-menu', children: layerMenu('curated') },
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },
