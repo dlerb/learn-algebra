@@ -47,6 +47,10 @@
         "en": "Don’t swap across a minus or a fraction bar",
         "de": "Nicht über ein Minus oder einen Bruchstrich hinweg vertauschen"
       },
+      "shortName": {
+        "en": "No swapping across a minus",
+        "de": "Kein Vertauschen über Minus"
+      },
       "latex": [
         "a - b = b - a",
         "\\frac{a}{b} = \\frac{b}{a}"
@@ -111,11 +115,16 @@
     {
       "id": "mis.precedence-ignored",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "reading",
       "frequency": 3,
       "mistake": {
         "en": "Left to right is not the order",
         "de": "Von links nach rechts ist nicht die Reihenfolge"
+      },
+      "shortName": {
+        "en": "Computed left to right",
+        "de": "Von links nach rechts gerechnet"
       },
       "latex": [
         "2 + 3 \\cdot 4 = 20"
@@ -135,6 +144,7 @@
     {
       "id": "mis.exponent-scope",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "reading",
       "frequency": 3,
       "mistake": {
@@ -161,6 +171,7 @@
     {
       "id": "anti.bracket-dissolved",
       "kind": "anti-law",
+      "family": "mis.term-misread",
       "topic": "reading",
       "frequency": 2,
       "mistake": {
@@ -185,6 +196,7 @@
     {
       "id": "sal.loudest-op-wins",
       "kind": "salience",
+      "family": "mis.term-misread",
       "topic": "reading",
       "frequency": 2,
       "mistake": {
@@ -207,6 +219,7 @@
     {
       "id": "omi.redundant-brackets-kept",
       "kind": "omission",
+      "family": "mis.term-misread",
       "topic": "reading",
       "frequency": 1,
       "mistake": {
@@ -230,7 +243,7 @@
     {
       "id": "anti.linearity",
       "kind": "anti-law",
-      "family": "anti.forced-move",
+      "family": "anti.freshmans-dream",
       "topic": "distributing",
       "frequency": 3,
       "mistake": {
@@ -260,6 +273,10 @@
       "mistake": {
         "en": "Don’t stop at the first term in the bracket",
         "de": "Nicht beim ersten Term in der Klammer aufhören"
+      },
+      "shortName": {
+        "en": "Half-distributed",
+        "de": "Halb ausmultipliziert"
       },
       "latex": [
         "a(b+c) = ab + c"
@@ -329,6 +346,7 @@
     {
       "id": "anti.repetition-confusion",
       "kind": "anti-law",
+      "family": "mis.term-misread",
       "topic": "powers",
       "frequency": 2,
       "mistake": {
@@ -401,6 +419,7 @@
     {
       "id": "mis.root-scope",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "powers",
       "frequency": 2,
       "mistake": {
@@ -448,6 +467,7 @@
     {
       "id": "mis.fraction-bar-grouping-lost",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "fractions",
       "frequency": 2,
       "mistake": {
@@ -471,6 +491,7 @@
     {
       "id": "mis.linear-slash-overgrouped",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "fractions",
       "frequency": 1,
       "mistake": {
@@ -494,6 +515,7 @@
     {
       "id": "mis.bar-not-division",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "fractions",
       "frequency": 1,
       "mistake": {
@@ -565,6 +587,7 @@
     {
       "id": "mis.juxtaposition-as-plus",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "terms",
       "frequency": 2,
       "mistake": {
@@ -588,11 +611,16 @@
     {
       "id": "mis.invisible-one-lost",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "terms",
       "frequency": 2,
       "mistake": {
         "en": "A missing number in front is not a missing term",
         "de": "Eine fehlende Zahl davor ist kein fehlender Term"
+      },
+      "shortName": {
+        "en": "Invisible one missed",
+        "de": "Unsichtbare Eins übersehen"
       },
       "latex": [
         "a + 3a = 3a"
@@ -611,11 +639,16 @@
     {
       "id": "sal.implicit-op-overlooked",
       "kind": "salience",
+      "family": "mis.term-misread",
       "topic": "terms",
       "frequency": 2,
       "mistake": {
         "en": "No sign does not mean no operation",
         "de": "Kein Zeichen heisst nicht keine Operation"
+      },
+      "shortName": {
+        "en": "Invisible dot missed",
+        "de": "Unsichtbarer Punkt übersehen"
       },
       "latex": [],
       "note": {
@@ -632,6 +665,7 @@
     {
       "id": "mis.letters-differ",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "terms",
       "frequency": 1,
       "mistake": {
@@ -655,6 +689,7 @@
     {
       "id": "mis.order-blindness",
       "kind": "misreading",
+      "family": "mis.term-misread",
       "topic": "terms",
       "frequency": 1,
       "mistake": {
@@ -717,6 +752,48 @@
       "corrupts": []
     },
     {
+      "id": "mis.term-misread",
+      "kind": "misreading",
+      "head": true,
+      "frequency": 3,
+      "mistake": {
+        "en": "The term was read wrong before anything was done to it",
+        "de": "Der Term wurde falsch gelesen, bevor überhaupt gerechnet wurde"
+      },
+      "shortName": {
+        "en": "Misreading",
+        "de": "Lesefehler"
+      },
+      "latex": [],
+      "note": {
+        "en": "Nothing here is a wrong MOVE — the move may even be correct for the term the student saw. What failed is the reading: how far a bar, a root, an exponent or an invisible operator reaches. That is why these sit together despite spanning every kind, and why the cure is always the same one: read the term first, name the main operation, and only then reach for a rule.",
+        "de": "Keiner dieser Fehler ist ein falscher SCHRITT — der Schritt kann für den Term, den man gesehen hat, sogar richtig sein. Falsch war das Lesen: wie weit ein Bruchstrich, eine Wurzel, ein Exponent oder ein unsichtbarer Operator reicht. Darum gehören sie zusammen, obwohl sie jede Art umfassen, und darum ist die Abhilfe immer dieselbe: zuerst den Term lesen, die Hauptoperation benennen, und erst dann zu einer Regel greifen."
+      },
+      "breaks": [],
+      "corrupts": []
+    },
+    {
+      "id": "anti.freshmans-dream",
+      "kind": "anti-law",
+      "head": true,
+      "frequency": 3,
+      "mistake": {
+        "en": "Not every operation spreads over a plus",
+        "de": "Nicht jede Operation verteilt sich über ein Plus"
+      },
+      "shortName": {
+        "en": "Freshman's dream",
+        "de": "Freshman's dream"
+      },
+      "latex": [],
+      "note": {
+        "en": "The wish that every operation behaves like multiplication. Multiplication really does spread over a plus, and it is met first and used constantly, so it becomes the shape every other operation is expected to have. It never is: a power, a root and a denominator all fail it. ⚠️ This is the FAMILY, never the diagnosis — a student who wrote $\\sqrt{a^2+b^2} = a+b$ needs to hear which operation failed, not that they dreamt.",
+        "de": "Der Wunsch, jede Operation verhalte sich wie die Multiplikation. Die Multiplikation verteilt sich wirklich über ein Plus, man begegnet ihr zuerst und braucht sie ständig — also wird sie zur Form, die man von jeder anderen Operation erwartet. Sie hat sie nie: Potenz, Wurzel und Nenner scheitern alle daran. ⚠️ Das ist die FAMILIE, nie die Diagnose: Wer $\\sqrt{a^2+b^2} = a+b$ schreibt, muss hören, welche Operation versagt, nicht dass sie geträumt hat."
+      },
+      "breaks": [],
+      "corrupts": []
+    },
+    {
       "id": "anti.cancel-over-sum",
       "kind": "anti-law",
       "family": "anti.forced-move",
@@ -748,7 +825,7 @@
     {
       "id": "anti.split-denominator",
       "kind": "anti-law",
-      "family": "anti.forced-move",
+      "family": "anti.freshmans-dream",
       "topic": "fractions",
       "frequency": 2,
       "mistake": {

@@ -150,7 +150,7 @@
           "wrong": [
             {
               "latex": "\\frac{a + k}{b + k} = \\frac{a}{b}",
-              "mistake": "anti.linearity"
+              "mistake": "anti.cancel-over-sum"
             }
           ],
           "requires": [
