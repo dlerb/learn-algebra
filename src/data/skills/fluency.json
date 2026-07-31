@@ -156,8 +156,8 @@
             "de": "Wiederholte Addition und Multiplikation"
           },
           "note": {
-            "en": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Multiplying is what makes a power: $x \\cdot x = x^2$.",
-            "de": "Einen Term zu sich selbst addieren vervielfacht ihn: $x + x = 2x$ (und $x+x+x = 3x$). Erst das Multiplizieren macht eine Potenz: $x \\cdot x = x^2$."
+            "en": "Adding a term to itself scales it: $x + x = 2x$ (and $x+x+x = 3x$). Multiplying is what makes a power: $x \\cdot x = x^2$. Both $x$ are the SAME number — a letter is a number, not a label for a thing — which is why they combine at all.",
+            "de": "Einen Term zu sich selbst addieren vervielfacht ihn: $x + x = 2x$ (und $x+x+x = 3x$). Erst das Multiplizieren macht eine Potenz: $x \\cdot x = x^2$. Beide $x$ sind DIESELBE Zahl — ein Buchstabe ist eine Zahl, kein Etikett für ein Ding — und nur darum lassen sie sich überhaupt zusammenfassen."
           },
           "stimulus": "x + x",
           "right": [
@@ -167,15 +167,20 @@
             {
               "latex": "x + x = x^2",
               "mistake": "anti.repetition-confusion"
+            },
+            {
+              "latex": "x + x \\neq 2x",
+              "mistake": "mis.letters-differ"
             }
           ],
           "requires": [
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition"
+            "rule.variable-is-a-fixed-number"
           ],
           "restsOn": [
+            "pre.variables",
             "def.multiple",
             "ix.juxtaposition"
           ]
@@ -1362,8 +1367,8 @@
             "skill.splitting-a-fraction"
           ],
           "rules": [
-            "rule.fraction-bar-brackets",
-            "rule.only-multiplication-distributes"
+            "rule.split-numerator",
+            "rule.fraction-cancel"
           ],
           "restsOn": [
             "th.split-numerator",
@@ -1376,8 +1381,8 @@
     {
       "slug": "commutativity",
       "title": {
-        "en": "Commutativity & Order",
-        "de": "Vertauschbarkeit und Reihenfolge"
+        "en": "Rearranging: order and brackets",
+        "de": "Umstellen: Reihenfolge und Klammern"
       },
       "skills": [
         {
@@ -1464,6 +1469,37 @@
           ]
         },
         {
+          "id": "skill.subtraction-not-associative",
+          "name": {
+            "en": "Subtraction is not associative",
+            "de": "Die Subtraktion ist nicht assoziativ"
+          },
+          "note": {
+            "en": "Brackets in a chain of subtractions are not decoration. $(a-b)-c$ is the plain left-to-right reading and may drop them, but moving them changes the answer: $(8-3)-2 = 3$ while $8-(3-2) = 7$. A pure sum may be rebracketed freely; the moment a minus is in the chain it may not.",
+            "de": "Klammern in einer Kette von Subtraktionen sind keine Zierde. $(a-b)-c$ ist die normale Lesart von links nach rechts und darf sie weglassen, aber sie zu verschieben ändert das Ergebnis: $(8-3)-2 = 3$, $8-(3-2) = 7$. Eine reine Summe darf man beliebig umklammern; sobald ein Minus in der Kette steht, nicht mehr."
+          },
+          "stimulus": "(a - b) - c",
+          "right": [
+            "a - b - c"
+          ],
+          "wrong": [
+            {
+              "latex": "(a - b) - c = a - (b - c)",
+              "mistake": "anti.associate-everything"
+            }
+          ],
+          "requires": [
+            "skill.subtraction-not-commutative"
+          ],
+          "rules": [
+            "rule.only-plus-and-times-associate"
+          ],
+          "restsOn": [
+            "ax.add-associative",
+            "def.sub"
+          ]
+        },
+        {
           "id": "skill.division-not-commutative",
           "name": {
             "en": "Division is not commutative",
@@ -1489,6 +1525,37 @@
           "restsOn": [
             "def.div",
             "ix.division-symbols"
+          ]
+        },
+        {
+          "id": "skill.division-not-associative",
+          "name": {
+            "en": "Division is not associative",
+            "de": "Die Division ist nicht assoziativ"
+          },
+          "note": {
+            "en": "Dividing twice divides by the product: $(a \\div b) \\div c = \\frac{a}{bc}$. Regrouping does something else entirely — $a \\div (b \\div c)$ multiplies by $c$ instead of dividing. Check with numbers: $(12 \\div 6) \\div 2 = 1$, but $12 \\div (6 \\div 2) = 4$.",
+            "de": "Zweimal teilen heisst durch das Produkt teilen: $(a \\div b) \\div c = \\frac{a}{bc}$. Umklammern tut etwas ganz anderes — $a \\div (b \\div c)$ multipliziert mit $c$, statt zu teilen. Mit Zahlen prüfen: $(12 \\div 6) \\div 2 = 1$, aber $12 \\div (6 \\div 2) = 4$."
+          },
+          "stimulus": "(a \\div b) \\div c",
+          "right": [
+            "\\frac{a}{bc}"
+          ],
+          "wrong": [
+            {
+              "latex": "(a \\div b) \\div c = a \\div (b \\div c)",
+              "mistake": "anti.associate-everything"
+            }
+          ],
+          "requires": [
+            "skill.division-not-commutative"
+          ],
+          "rules": [
+            "rule.only-plus-and-times-associate"
+          ],
+          "restsOn": [
+            "ax.mul-associative",
+            "def.div"
           ]
         }
       ]
