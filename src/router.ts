@@ -14,7 +14,7 @@ const viewOf: Record<string, () => Promise<unknown>> = {
   rules: () => import('./views/RulesView.vue'),
   mistakes: () => import('./views/MistakesView.vue'),
   cheatsheets: () => import('./views/SheetsView.vue'),
-  skills: () => import('./views/TaxonomyView.vue'),
+  skills: () => import('./views/SkillsView.vue'),
 }
 
 const routes: RouteRecordRaw[] = [
