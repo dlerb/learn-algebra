@@ -78,6 +78,10 @@ const TOPIC_TITLE: Record<string, { en: string; de: string }> = {
 const items = computed(() => mistakes.map(m => ({
   id: m.id, kind: m.kind, topic: m.topic, frequency: m.frequency,
   mistake: t(m.mistake), latex: m.latex, note: t(m.note),
+  // THE NAME AND THE DEVICE, mirroring /rules exactly — the pools are
+  // symmetric and their naming is too. No cross-language fallback on either:
+  // each language has its own or has none.
+  shortName: m.shortName?.[lang.value], mnemonic: m.mnemonic?.[lang.value],
   breaks: breaksOf(m), corrupts: corruptsOf(m), guardedBy: guardedBy(m),
   // A sentence nothing exemplifies is dead weight, exactly as on /rules: the
   // citing skill is the only thing that gives a pool entry meaning.
@@ -219,6 +223,13 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
       >
         <template #marks><span class="freq">{{ '★'.repeat(m.frequency) }}</span></template>
 
+        <!-- The name above the device, as on /rules: one is what the mistake is
+             CALLED, the other a way to remember it. -->
+        <template v-if="m.shortName || m.mnemonic" #rail>
+          <p v-if="m.shortName" class="short-name">{{ m.shortName }}</p>
+          <p v-if="m.mnemonic" class="mnemonic">{{ m.mnemonic }}</p>
+        </template>
+
         <template #folds>
           <RefFold :label="L.corrupts" :links="m.corrupts" />
           <RefFold :label="L.taught" :links="m.guardedBy" derived />
@@ -276,6 +287,14 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
 .mark { font-size: .82rem; line-height: 1; font-weight: 600; }
 .mark.bad { color: var(--bad); }
 
+.short-name {
+  margin: .3rem 0 0; font-family: var(--font-content); font-weight: 600;
+  font-size: .82rem; line-height: 1.35; color: var(--text); text-wrap: balance;
+}
+.mnemonic {
+  margin: .3rem 0 0; font-family: var(--font-content); font-style: italic;
+  font-size: .78rem; line-height: 1.4; color: var(--text-muted); text-wrap: balance;
+}
 .freq { font-size: .74rem; letter-spacing: .06em; }
 
 /* The rule is QUOTED from another pool, so it takes the neutral band and a plain

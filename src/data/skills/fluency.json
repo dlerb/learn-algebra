@@ -1323,15 +1323,14 @@
           "wrong": [
             {
               "latex": "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}",
-              "mistake": "anti.linearity"
+              "mistake": "anti.split-denominator"
             }
           ],
           "requires": [
             "skill.splitting-a-fraction"
           ],
           "rules": [
-            "rule.fraction-bar-brackets",
-            "rule.only-multiplication-distributes"
+            "rule.split-numerator"
           ],
           "restsOn": [
             "th.split-numerator",

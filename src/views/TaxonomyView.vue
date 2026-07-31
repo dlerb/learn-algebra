@@ -113,11 +113,11 @@ const familyOf = (id: string) => {
 // NAME it; the sentence is one click away on /rules for when the name is not
 // enough yet. Rules with no name in current classroom use keep their sentence.
 //
-// ⚠️ Falls back to the SENTENCE, never to the other language. `label` is not a
+// ⚠️ Falls back to the SENTENCE, never to the other language. `shortName` is not a
 // localizedString for the same reason `mnemonic` is not: "3. binomische Formel"
 // has no English counterpart, and showing an English reader a German name is
 // worse than showing them the rule itself.
-const nameOf = (r: RuleDef) => r.label?.[lang.value] ?? t(r.rule)
+const nameOf = (r: RuleDef) => r.shortName?.[lang.value] ?? t(r.rule)
 const ruleLinks = (ids: string[]) => {
   const out = ids.map(id => {
     const r = ruleById.get(id)
@@ -144,7 +144,12 @@ const mistakeLinks = (ids: string[]) => ids
   .map(id => mistakeById.get(id)!)
   .filter(Boolean)
   .sort((a, b) => b.frequency - a.frequency)
-  .map(m => ({ id: m.id, name: t(m.mistake), frequency: m.frequency, to: `/mistakes#${m.id}` }))
+  // Same rule as the ✓ side: the NAME if the mistake has one, the sentence
+  // otherwise, and never the other language's name.
+  .map(m => ({
+    id: m.id, name: m.shortName?.[lang.value] ?? t(m.mistake),
+    frequency: m.frequency, to: `/mistakes#${m.id}`,
+  }))
 
 const requiredBy = new Map<string, string[]>()
 for (const s of skills) for (const r of s.requires) requiredBy.set(r, [...(requiredBy.get(r) ?? []), s.id])
