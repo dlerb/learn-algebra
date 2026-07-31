@@ -8,7 +8,7 @@ import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
 import type { WrongForm } from '../data/skill.schema'
 import { skills, groups, processes, rules, mistakes, rawById, skillTree } from '../data'
-import { loc, type Skill, type LocalizedString, type GroupDef } from '../data/skill.schema'
+import { loc, type Skill, type LocalizedString, type GroupDef, type RuleDef } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
@@ -107,10 +107,21 @@ const familyOf = (id: string) => {
   const head = f ? ruleById.get(f) : undefined
   return head ? [t(head.rule)] : []
 }
+// THE NAME BEATS THE SENTENCE HERE (2026-07-31). A skill cites "Power laws ›
+// Same base rule", not "Multiply powers of the same base by adding the
+// exponents". The point is to train the student to SEE a building block and
+// NAME it; the sentence is one click away on /rules for when the name is not
+// enough yet. Rules with no name in current classroom use keep their sentence.
+//
+// ⚠️ Falls back to the SENTENCE, never to the other language. `label` is not a
+// localizedString for the same reason `mnemonic` is not: "3. binomische Formel"
+// has no English counterpart, and showing an English reader a German name is
+// worse than showing them the rule itself.
+const nameOf = (r: RuleDef) => r.label?.[lang.value] ?? t(r.rule)
 const ruleLinks = (ids: string[]) => {
   const out = ids.map(id => {
     const r = ruleById.get(id)
-    return { id, name: r ? t(r.rule) : id, to: `/rules#${id}`, family: familyOf(id) }
+    return { id, name: r ? nameOf(r) : id, to: `/rules#${id}`, family: familyOf(id) }
   })
   // Say the family ONCE. Two rules of the same family stacked — the factoring
   // skills cite two binomial formulas each — printed "Binomial formulas ·" twice

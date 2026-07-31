@@ -445,15 +445,14 @@
           ],
           "wrong": [
             {
-              "latex": "3x + 2y = (3x + 2) \\cdot (y)",
-              "mistake": "mis.precedence-ignored"
+              "latex": "3x + 2y = 5xy",
+              "mistake": "anti.conjoining"
             }
           ],
           "requires": [
             "skill.precedence-brackets"
           ],
           "rules": [
-            "rule.dominant-op-last",
             "rule.multiplication-binds-tighter"
           ],
           "restsOn": [

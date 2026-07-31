@@ -266,6 +266,27 @@ export const ruleDef = z.object({
   // head. Two fields that can disagree are worth it only when the disagreement is
   // caught, and it is.
   head: z.boolean().optional(),
+  // ── THE NAME YOU CALL IT BY (2026-07-31) ─────────────────────────────────
+  // `rule` is a SENTENCE the student can act on; `label` is the HANDLE they
+  // grab it by — "3. binomische Formel", "Kommutativgesetz (KG)", "Wurzelregel".
+  // Keeping them apart is the point: prefixing the sentence with its own name
+  // ("Same base rule: multiply, add the exponents") breaks the one promise the
+  // sentence makes. A skill cites `family › label` and links out; the sentence
+  // is what you read when you follow the link.
+  //
+  // ⚠️ SAME SHAPE AND SAME DISCIPLINE AS `mnemonic`, for the same reason. Not a
+  // `localizedString`: German school naming is far stronger than English —
+  // "1./2./3. binomische Formel" is universal in a Swiss classroom and has no
+  // English counterpart, so those carry `de` only and the view must NOT fall
+  // back. And NEVER INVENT ONE: an abbreviation that exists only here is not a
+  // reference point. "KG"/"DG" are in daily use, "SB" would be made up, so the
+  // same-base rule gets a name and no abbreviation.
+  //
+  // ⚠️ A LABEL IS FAMILY-SCOPED. "Zero rule", "fraction rule" and "root rule"
+  // are unambiguous only inside `rule.power-laws` — `rule.zero-and-one` also has
+  // a zero rule and the fraction laws are all fraction rules. Anywhere a label
+  // appears outside its family's heading it must be rendered WITH the family.
+  label: z.object({ en: z.string().optional(), de: z.string().optional() }).optional(),
   // ── THE CLASSROOM PHRASING (2026-07-29) ──────────────────────────────────
   // The sticky version a student can SAY: "Punkt vor Strich", "keep, change,
   // flip", "Differenzen und Summen kürzen nur die Dummen". Its job is retention,
