@@ -26,7 +26,7 @@
           "rules": [
             "rule.neutral-elements",
             "rule.divide-by-one-and-self",
-            "rule.exponent-counts-factors"
+            "rule.exponent-one"
           ]
         },
         {
@@ -263,7 +263,8 @@
           "layout": "flow",
           "rules": [
             "rule.power-is-repeated-product",
-            "rule.exponent-counts-factors",
+            "rule.exponent-one",
+            "rule.exponent-zero",
             "rule.minus-in-exponent",
             "rule.fractional-exponent-root"
           ]
@@ -287,7 +288,9 @@
           "layout": "table",
           "rules": [
             "rule.power-over-product",
-            "rule.power-over-quotient"
+            "rule.power-over-quotient",
+            "rule.root-over-product",
+            "rule.root-over-quotient"
           ]
         },
         {
@@ -297,7 +300,8 @@
           },
           "layout": "table",
           "rules": [
-            "rule.power-of-power"
+            "rule.power-of-power",
+            "rule.root-of-power"
           ]
         }
       ]

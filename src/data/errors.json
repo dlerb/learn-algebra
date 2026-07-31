@@ -601,7 +601,7 @@
                 "def.pow"
               ],
               "rules": [
-                "rule.exponent-counts-factors"
+                "rule.exponent-zero"
               ],
               "name": {
                 "en": "Zero exponent read as zero",

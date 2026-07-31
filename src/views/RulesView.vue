@@ -86,6 +86,12 @@ const items = computed(() => rules.map(m => {
     // renders blank, but a mnemonic is not prose: showing a German reader
     // "PEMDAS" — an acronym nobody in their classroom says — is worse than
     // showing nothing. Each language has its own or has none.
+    // THE NAME IT IS CITED BY (2026-07-31). /skills prints "Power laws › Same
+    // base rule" and links here, so the name has to be findable on arrival —
+    // otherwise the student follows a name to a page that never says it. Same
+    // no-fallback discipline as the mnemonic, and for the same reason: a rule
+    // named only in German shows nothing to an English reader.
+    label: m.label?.[lang.value],
     mnemonic: m.mnemonic?.[lang.value],
     errors, skills: sk, reads: readsOf(m),
     sheet: sheetByRule.get(m.id),
@@ -132,8 +138,13 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
              so it belongs with the name rather than in the gloss column, where it
              read as the first line of an explanation. Small and quiet: it is an
              alternative, not an addition. -->
-        <template v-if="m.mnemonic" #rail>
-          <p class="mnemonic">{{ m.mnemonic }}</p>
+        <!-- The NAME sits above the mnemonic and reads louder than it: one is
+             what the rule is CALLED, the other is a way to remember what it
+             says. Both are alternatives to the sentence in the row's name, so
+             both belong in the rail rather than in the gloss column. -->
+        <template v-if="m.label || m.mnemonic" #rail>
+          <p v-if="m.label" class="label">{{ m.label }}</p>
+          <p v-if="m.mnemonic" class="mnemonic">{{ m.mnemonic }}</p>
         </template>
 
         <template #folds>
@@ -210,6 +221,13 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
    and italic is the convention for a quoted phrase. `text-wrap: balance` because
    the long ones run to three lines in a 22rem rail and an even shape reads as
    deliberate. */
+/* THE NAME: upright and unmuted, so it reads as a handle rather than as a
+   second gloss. The mnemonic under it stays italic and quiet — the two must not
+   look like one two-line remark. */
+.label {
+  margin: .3rem 0 0; font-family: var(--font-content); font-weight: 600;
+  font-size: .82rem; line-height: 1.35; color: var(--text); text-wrap: balance;
+}
 .mnemonic {
   margin: .3rem 0 0; font-family: var(--font-content); font-style: italic;
   font-size: .78rem; line-height: 1.4; color: var(--text-muted); text-wrap: balance;

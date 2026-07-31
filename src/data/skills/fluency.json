@@ -380,7 +380,6 @@
             "skill.coefficient-negative-one"
           ],
           "rules": [
-            "rule.three-minuses",
             "rule.implicit-op-before-bracket",
             "rule.minus-over-bracket"
           ],
@@ -487,8 +486,6 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition",
-            "rule.three-minuses",
             "rule.minus-times-minus"
           ],
           "restsOn": [
@@ -525,9 +522,7 @@
             "skill.division-variants"
           ],
           "rules": [
-            "rule.three-minuses",
-            "rule.fraction-minus-moves",
-            "rule.fraction-bar-brackets"
+            "rule.fraction-minus-moves"
           ],
           "restsOn": [
             "th.fraction-minus-moves",
@@ -560,8 +555,6 @@
             "skill.minus-over-sum"
           ],
           "rules": [
-            "rule.three-minuses",
-            "rule.implicit-op-before-bracket",
             "rule.subtract-a-bracket"
           ],
           "restsOn": [
@@ -595,8 +588,6 @@
             "skill.minus-over-difference"
           ],
           "rules": [
-            "rule.three-minuses",
-            "rule.implicit-op-before-bracket",
             "rule.subtract-a-bracket"
           ],
           "restsOn": [
@@ -853,7 +844,6 @@
             "skill.exponent-as-repeated-product"
           ],
           "rules": [
-            "rule.juxtaposition",
             "rule.power-vs-coefficient"
           ],
           "restsOn": [
@@ -958,7 +948,7 @@
             "def.pow-neg"
           ],
           "rules": [
-            "rule.exponent-counts-factors"
+            "rule.exponent-zero"
           ]
         },
         {
@@ -1020,7 +1010,6 @@
             "skill.exponent-as-repeated-product"
           ],
           "rules": [
-            "rule.exponent-binds-tighter",
             "rule.fractional-exponent-root"
           ],
           "restsOn": [
@@ -1121,7 +1110,7 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.power-over-product"
+            "rule.root-over-product"
           ],
           "restsOn": [
             "th.root-of-product",
@@ -1300,12 +1289,15 @@
           "right": [
             "\\frac{a}{c} + \\frac{b}{c}"
           ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted"
+            }
+          ],
           "requires": [
             "skill.fraction-bar-grouping"
           ],
           "rules": [
-            "rule.fraction-bar-brackets",
-            "rule.only-multiplication-distributes",
             "rule.split-numerator"
           ],
           "restsOn": [
@@ -1434,7 +1426,6 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition",
             "rule.only-plus-and-times-commute"
           ],
           "restsOn": [

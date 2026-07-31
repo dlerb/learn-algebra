@@ -367,7 +367,7 @@
         "de": "Der Exponent wird als Wert gelesen: $x^0$ ergibt angeblich $0$, $x^1$ angeblich $1$. $a^0 = 1$ ist keine Setzung — es wird durch $a^m \\cdot a^n = a^{m+n}$ erzwungen, weshalb def.pow-zero es herleitet. Verunsichernd ist die echte Ausnahme: $0^0$ ist tatsächlich undefiniert, und eine Regel mit einem Loch wirkt weniger wie eine Regel."
       },
       "breaks": [
-        "rule.exponent-counts-factors"
+        "rule.exponent-zero"
       ],
       "corrupts": [
         "def.pow-zero",

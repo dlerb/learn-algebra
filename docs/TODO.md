@@ -4,42 +4,103 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🔵 NEXT SESSION — THE PRUNING PASS (handover 2026-07-30)
+## ✅ DONE 2026-07-31 — THE PRUNING PASS, AND THE NAMING PASS IT TURNED INTO
 
-**The topic is exactly one thing: which rule a skill should cite, and which it should stop
-citing.** Everything structural is merged and green; this is editorial, and it is the gate on
-the last open design question.
+Eleven skills pruned, 11 citations removed (91 → 80), then the three flagged calls, then a
+`label` field and two rule splits. Kept below because the criteria are what stop it being
+re-litigated.
 
-### What the last session established, so it is not re-derived
+### ⚠️ THE `is` → `do` FRAMING WAS A CORRELATE, NOT THE CRITERION
 
-**The skills cited `is` rules where a `do` rule existed.** They named the DECODING rule (why the
-form means what it means) instead of the rule that states the MOVE — and the apt rule was
-sitting ORPHANED in the pool with byte-identical `latex`:
+The handover said the pattern was "`is` standing in for `do`". **Measured false**: 5 of the 10
+apt rules added were themselves `is` (`minus-times-minus`, `power-vs-coefficient`,
+`minus-in-exponent`, `fractional-exponent-root`, `multiplication-binds-tighter`). Mood never
+entered it. The criterion is the one the handover also stated correctly: **does the rule's
+`latex` state THIS skill's stimulus → right?**
 
-    skill.minus-over-sum   -(a+b) = -a - b
-      cited      three-minuses(is) + implicit-op-before-bracket(is)
-      should be  rule.minus-over-bracket(do)  «Flip every sign inside the bracket»
-                 latex -(a+b) = -a - b        ← identical, and was cited by NOTHING
+### ⚠️ AND DO NOT BLACKLIST THE DECODERS
 
-⚠️ **The orphan list and the multi-rule skills are ONE defect seen from two ends.** That is why
-adding 14 apt citations moved orphans 25 → 19 without touching the pool.
+Eight rules carry almost all citations (`dominant-op-last` 11, `three-minuses` 11,
+`juxtaposition` 8, `only-multiplication-distributes` 8, `implicit-op-before-bracket` 6,
+`fraction-bar-brackets` / `exponent-binds-tighter` / `bracket-chunk` 5). The obvious move is to
+prune those eight everywhere. **That is wrong: 34 of 71 skills cite ONLY those, and for a
+recognition skill they ARE the content** — `skill.sum` → `dominant-op-last` is right.
 
-⚠️ **An earlier claim was MEASURED WRONG and must not come back**: "a right form is licensed by a
-CONJUNCTION of rules, and that is the mathematics." It is not arity, it is mis-citation. 12 of
-the 17 multi-rule skills had an `is`+`is` signature — two decoders standing in for one move.
+**A decoder is background only in the presence of a rule that states the form.** Pruning is
+defined per skill, relative to what else it cites, never per rule.
 
-### The job
+### The test that was applied, in order
 
-**Ten skills now cite the apt rule BESIDE the general ones.** Decide, per skill, whether the
-background stays. The list is in HOUSEKEEPING below (*"PRUNE THE BACKGROUND RULES"*) with what
-each cites today.
+1. Does its latex state one of THIS skill's `right[]` entries? **Keep.**
+2. Does it explain the ✗ instead? It belongs in `mistake.breaks`, which already carries it —
+   verified on `mis.minus-roles-confused` → `three-minuses` and `mis.precedence-ignored` →
+   `multiplication-binds-tighter` + `dominant-op-last`. **Drop from the skill.**
+3. Neither → background. **Drop.**
 
-The question to ask each time is the one that worked for the mistake pool: **does this rule
-state THIS form, or the neighbourhood it sits in?** Where a form's own rule now exists, the
-decoder is usually background — but `three-minuses` on a `-(a+b)` skill may be genuinely load
-bearing, and that is a teacher's call, not a measurable one.
+`skill.minus-over-sum` is the find and is NOT a prune: `implicit-op-before-bracket` states
+`right[0]` = `(-1)(a+b)` and `minus-over-bracket` states `right[1]` = `-a-b`. **One rule per
+right form, not a conjunction** — the strongest evidence yet for the design question below.
+`skill.minus-on-fraction` was an 11th case the handover list missed (found by the test, not by
+byte-identical latex — so sweep by the test, not by the list).
 
-### Then, and only then, the design question it gates
+### ⚠️ ORPHAN COUNT IS NOT THE METRIC
+
+It went 25 → 19 going in and 19 → 23 coming out, by design. It also measures something else: the
+orphans are mostly power/fraction/binomial rules **no skill covers yet** — a coverage gap, not a
+citation gap. Conflating them makes the pass look like a regression.
+
+### The three flagged calls, all resolved by the sibling skill
+
+- **`splitting-a-fraction`** — dropped both decoders. `skill.no-splitting-the-denominator` cites
+  exactly that pair and nothing else; the prohibition has a home. The real defect was that the
+  skill **had no ✗ at all** — now `omi.no-move-attempted`. ⚠️ Citing
+  `fraction-common-denominator` here was considered and rejected: the tower has `th.fraction-add`
+  `derivedFrom` `th.split-numerator`, so for the splitting direction `split-numerator` is the
+  parent. It is already cited where it belongs, on the combine-fractions skill.
+- **`negative-exponent`** — dropped `exponent-binds-tighter`. It is about a minus OUTSIDE the
+  power (`-a^2`); in `a^{-n}` the minus is already inside. `skill.negated-square-vs-negative-base`
+  owns it. ⚠️ An idea to add it to `mis.negative-exponent-negates.breaks` was **rejected** for the
+  same reason.
+- **`implicit-chunking`** — dropped `dominant-op-last`; it is the tier's method sentence and the
+  only chunking skill with a form-stating rule. **The ✗ was replaced**: `anti.conjoining` already
+  carried `3x + 2y = 5xy` byte-identical, while the skill cited `mis.precedence-ignored` with an
+  invented `(3x+2)·y` that no student writes. **Same disease as the rules, in the mistake column.**
+
+### THE NAMING PASS (the author's, and it worked as a diagnostic)
+
+New optional **`label`** — the handle, beside `rule` which is the sentence. Same shape and
+discipline as `mnemonic`: per-language optional, **no cross-language fallback** (falls back to the
+sentence instead), **never invent one** (KG/DG are in daily use, "SB" would be made up), and
+**family-scoped** ("zero rule" means nothing outside `power-laws`). `/skills` now prints
+`Power laws › Same base rule` and links out; `/rules` shows the name in the rail.
+
+**Naming found two rules doing two jobs:**
+
+- `exponent-counts-factors` held `a^1 = a` AND `a^0 = 1` → split into **`rule.exponent-one`**
+  (Einserregel) + **`rule.exponent-zero`** (Nullregel). A rule that needs two names is two rules.
+- The root laws were packed inside the power rules as a second latex line → split out as
+  **`root-over-product` / `root-over-quotient` / `root-of-power`**. Proof it was real:
+  `skill.root-of-a-product` (√(ab), resting on `th.root-of-product`) was citing
+  **`rule.power-over-product`** — a root skill forced to cite a power rule because no root rule
+  existed.
+
+Also added **`rule.only-plus-and-times-associate`** (AG), phrased in parallel with the commutative
+rule. `rule.brackets-that-matter` stays — that is the notational consequence, not the law.
+
+⚠️ **`rule` is a SENTENCE, `label` is a NAME, and they must not merge.** "Punkt vor Strich" was
+briefly put into `rule.de` during this session and moved back out. Prefixing a sentence with its
+own name breaks the one promise the sentence makes.
+
+### ⚠️ WHAT THE NAMING MEASURED, AND ITS LIMIT
+
+**Only 22 of 77 skill citations show a name; 55 still show the sentence.** The split is along
+`family`: `power-laws`, `fraction-laws`, `binomial-formulas`, `zero-and-one` and the three
+-gesetze are named; `read-the-term-first` and most of `minus-rules` are not — **because they are
+not named laws, they are literacy**. The rules skills cite MOST are exactly the unnamed ones
+(`dominant-op-last` 10, `three-minuses` 6, `juxtaposition` 5, `bracket-chunk` 5). Official names
+have run out; the 19 remaining need the AUTHOR's classroom names or none.
+
+### 🔵 The design question this still gates
 
 **Should `rules` move onto the `right[]` entries**, mirroring `wrong[].mistake`, so that
 `skill.rules` becomes DERIVED exactly as `skill.mistakes` already is?
@@ -54,6 +115,22 @@ bearing, and that is a teacher's call, not a measurable one.
 - ⚠️ Open sub-question: for a FLUENCY CHAIN the rules arguably license the equivalence CLASS
   rather than any single member (`explicit-vs-implicit-product` has 4 right forms and 1 rule).
   Per-entry may be false precision there even after pruning.
+- ✅ **The pruning gate is now open** (2026-07-31), and the pruning strengthened the case:
+  49 of 71 skills cite exactly one rule (was 42) and only ONE cites three (was 6).
+  `skill.minus-over-sum` is the worked example of the per-entry mapping being real.
+
+### 🔵 Two new items the naming pass left behind
+
+- **NAME THE 19 READING RULES, or decide they stay unnamed.** Only the author can: these are
+  classroom names, not official ones. In descending order of how often a skill cites them:
+  `dominant-op-last` (10), `three-minuses` (6), `juxtaposition` (5), `bracket-chunk` (5),
+  `implicit-op-before-bracket` (4), `exponent-binds-tighter` (4), `unlike-terms-stay` (3),
+  `fraction-bar-brackets` (3), then twelve with 1–2. Naming the top five flips `/skills` from
+  mostly-sentences to mostly-names.
+- **`skill.zero-and-one-exponents` should probably split**, mirroring the rule split. Its
+  stimulus is `a^0` with right form `1`, so it now cites `rule.exponent-zero` alone — but its
+  name and note promise `a^1 = a` too. **`rule.exponent-one` is cited by no skill.** The rule
+  split exposed a skill doing two jobs, exactly as naming exposed the rule doing two.
 
 ### Two smaller things queued behind it
 
@@ -589,32 +666,10 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
 
 ## 🧹 HOUSEKEEPING THAT MUST NOT BE FORGOTTEN
 
-- [ ] **PRUNE THE BACKGROUND RULES — 10 skills** (2026-07-30). The apt rule was added to 14
-  skills where a rule's `latex` is byte-identical to the skill's own `stimulus = right[i]`
-  (orphaned rules 25 → 19). **Four cited nothing at all, so those are closed.** The other ten now
-  cite the apt rule BESIDE the general ones they cited instead — and whether the background
-  stays is editorial, not measurable, so it was deliberately left:
-
-      minus-over-sum            + minus-over-bracket    beside three-minuses, implicit-op-before-bracket
-      subtracting-a-sum         + subtract-a-bracket    beside three-minuses, implicit-op-before-bracket
-      subtracting-a-difference  + subtract-a-bracket    beside three-minuses, implicit-op-before-bracket
-      splitting-a-fraction      + split-numerator       beside fraction-bar-brackets, only-multiplication-distributes
-      negative-times-negative   + minus-times-minus     beside juxtaposition, three-minuses
-      multiplication-commutative + only-plus-and-times-commute  beside juxtaposition
-      coefficient-vs-exponent   + power-vs-coefficient  beside juxtaposition
-      negative-exponent         + minus-in-exponent     beside exponent-binds-tighter
-      fractional-exponent-root  + fractional-exponent-root beside exponent-binds-tighter
-      implicit-chunking         + multiplication-binds-tighter beside dominant-op-last
-
-  ⚠️ **THE PATTERN IS `is` STANDING IN FOR `do`**: the skills cited DECODING rules (why the form
-  means what it means) where the rule that states the MOVE existed and sat orphaned. That is why
-  12 of the 17 multi-rule skills had an `is`+`is` signature. Same disease as the mistake pool
-  before the pairing, same cure — name the rule that states THIS form.
-  ⚠️ **DECIDE THIS BEFORE moving `rules` per-`right[]`-entry.** Once each entry cites the rule
-  that states it, the mapping is 1:1 by construction and `skill.rules` becomes derivable exactly
-  as `mistakes` is — but doing the storage first would bake the noise into a finer structure.
-  An earlier claim here that "a right form is licensed by a CONJUNCTION of rules, and that is the
-  mathematics" was **measured wrong**: it is mis-citation, not arity.
+- [x] **PRUNE THE BACKGROUND RULES — done 2026-07-31.** Eleven skills (the ten listed plus
+  `minus-on-fraction`, which the list missed), 11 citations removed. Criteria, the two claims
+  that were measured wrong, and the three flagged calls are in the DONE section at the top of
+  this file. Outcome: 49 of 71 skills cite exactly one rule (was 42); one cites three (was 6).
 
 - [ ] **`sum-of-products` vs `implicit-chunking` now share a STIMULUS and a `right[]`**
   (2026-07-30). Both are `3x + 2y` → `(3x) + (2y)`; they differ only in their note and their
