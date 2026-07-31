@@ -65,7 +65,11 @@ export interface LayerData {
   sections: Section[]
 }
 /** `fundament` = the reference tower, rendered by LayerView from `data`.
- *  `curated` = the pedagogy on top of it (errors · rules · skills), each
+ *  ⚠️ EACH FAMILY IS ALSO A FOLDER since 2026-07-31: `src/data/fundament/` and
+ *  `src/data/curated/`. The two were symmetric everywhere except on disk, where
+ *  the tower had a directory and the curated files were loose beside `index.ts`.
+ *
+ *  `curated` = the pedagogy on top of it (rules · sheets · mistakes · skills), each
  *  with its own view and its own data file. The families are what App.vue groups
  *  the nav by, and what says which layers `cardIndex` is built from. */
 export type LayerFamily = 'fundament' | 'curated'
@@ -103,8 +107,14 @@ export const layers: Layer[] = [
  *
  *      rules            the pool of student-facing sentences
  *      ├── sheets       presentation over the pool: which rules, grouped how
- *      └── errors       the mistakes, each citing the rule it breaks
- *          └── skills   the interventions, citing errors, rules and cards
+ *      └── mistakes     the negative pool, each citing the rule it breaks
+ *          └── skills   the interventions, citing mistakes, rules and cards
+ *
+ *  ⚠️ ARRAY ORDER IS PART OF THE DRAWING (2026-07-31). The nav draws a `└` and
+ *  indents by level, so a nested child must come IMMEDIATELY AFTER its parent.
+ *  `sheets` used to sit between `mistakes` and `skills`, which put the indented
+ *  `skills` under `sheets` and said the one thing that is false: skills cite
+ *  mistakes, rules and cards, and never a sheet. Order here = the tree above.
  *
  *  Titles are the student-facing page names (2026-07-25) — the nav used to say
  *  "Errors" while the page said "Common mistakes". "Reading rules" became "All
@@ -113,13 +123,13 @@ export const layers: Layer[] = [
  *  which is a selection. */
 export const curatedLayers: LayerRef[] = [
   { id: 'rules', slug: 'rules', title: 'All rules', family: 'curated', level: 0 },
-  // THE MISTAKE POOL — the negative face of the rules pool, beside it at level 0.
-  // It began (2026-07-28) as a parallel build shown next to /errors so the two
-  // treatments of the same content could be compared; that comparison is over.
-  // /errors is gone and errors.json is parked in legacy/, so this is the only
-  // mistake layer. See skill.schema → mistakeDef.
-  { id: 'mistakes', slug: 'mistakes', title: 'All mistakes', family: 'curated', level: 0 },
   { id: 'cheatsheets', slug: 'sheets', title: 'Cheat sheets', family: 'curated', level: 1 },
+  // THE MISTAKE POOL — the negative face of the rules pool, sitting ON it: every
+  // entry `breaks` a rule, which is the only pool→pool edge in the design, so it
+  // is level 1 beside sheets rather than level 0 beside rules. Since 2026-07-31
+  // it is the only mistake layer — /errors is gone and errors.json is parked in
+  // legacy/. See skill.schema → mistakeDef.
+  { id: 'mistakes', slug: 'mistakes', title: 'All mistakes', family: 'curated', level: 1 },
   { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated', level: 2 },
 ]
 

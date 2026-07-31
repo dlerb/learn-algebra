@@ -95,8 +95,8 @@ const cite = (from, id, field, pool) => {
   if (!pool.has(id)) errs.push(`${from}.${field} cites unknown ${id}`)
 }
 // Skills are one file per kind: a `kind → groups[] → skills[]` tree (2026-07-24).
-for (const f of fs.readdirSync('src/data/skills')) {
-  const kindFile = readJSON(`src/data/skills/${f}`)
+for (const f of fs.readdirSync('src/data/curated/skills')) {
+  const kindFile = readJSON(`src/data/curated/skills/${f}`)
   for (const g of kindFile.groups || [])
     for (const sk of g.skills || [])
       for (const id of sk.restsOn || []) cite(sk.id, id, 'restsOn', codes)
@@ -104,13 +104,13 @@ for (const f of fs.readdirSync('src/data/skills')) {
 // The mistake pool is flat, and hand-authored since 2026-07-31. It replaced the
 // errors tree the sweep used to walk here; errors.json is parked in legacy/ and
 // deliberately outside everything that reads src/data.
-for (const e of readJSON('src/data/mistakes.json').mistakes)
+for (const e of readJSON('src/data/curated/mistakes.json').mistakes)
   for (const id of e.corrupts || [])
     cite(e.id, id, 'corrupts', codes)
 // The rules registry gained a layer head (title/blurb/note) on 2026-07-25 and was
 // renamed off "metapatterns" on 2026-07-27; the entries live under `rules`.
 // The list itself stays flat — a registry of sentences has no structure to give it.
-for (const m of readJSON('src/data/rules.json').rules)
+for (const m of readJSON('src/data/curated/rules.json').rules)
   for (const id of m.summarizes || [])
     cite(m.id, id, 'summarizes', codes)
 

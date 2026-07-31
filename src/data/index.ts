@@ -10,20 +10,20 @@ import {
   type MistakeDef, type MistakeTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
-import rulesRaw from './rules.json'
-import sheetsRaw from './cheatsheets.json'
-import mistakesRaw from './mistakes.json'
+import rulesRaw from './curated/rules.json'
+import sheetsRaw from './curated/cheatsheets.json'
+import mistakesRaw from './curated/mistakes.json'
 // Skills: one file per PROCESS (process → groups[] → skills[]), mirroring the
 // fundament tower's one-file-per-layer tree. Add a process = add a file + one
 // line below. Three since 2026-07-30: `classification` was split, eleven of its
 // skills into chunking (their own notes already said "the chunks are …") and the
 // rest redistributed.
-import fluencySkills from './skills/fluency.json'
-import chunkingSkills from './skills/chunking.json'
-import transformationSkills from './skills/transformation.json'
+import fluencySkills from './curated/skills/fluency.json'
+import chunkingSkills from './curated/skills/chunking.json'
+import transformationSkills from './curated/skills/transformation.json'
 // …and the layer head beside them: a layer split across four files has nowhere
 // else to keep its title, blurb and note (skill.schema → skillsHead).
-import skillsLayerHead from './skills/layer.json'
+import skillsLayerHead from './curated/skills/layer.json'
 // Skills load as a tree (one file per kind); the flat Skill[] plus the derived
 // group and kind registries all come out of parseSkillTree, which re-attaches
 // kind/group from tree position so downstream sees the same flat shape as before.

@@ -12,7 +12,7 @@ import { inspect } from '../inspect'
 // THE CHEAT SHEETS — the formulas worth knowing by heart, grouped the way they
 // are taught.
 //
-// A sheet OWNS NOTHING. It names rules from the pool (src/data/rules.json) and
+// A sheet OWNS NOTHING. It names rules from the pool (src/data/curated/rules.json) and
 // says which, in what order, under what heading; every formula on this page is
 // looked up from the rule it names. Edit a formula in the pool and every sheet
 // showing it changes, because there is no second copy.

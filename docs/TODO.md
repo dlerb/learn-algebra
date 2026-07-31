@@ -838,7 +838,7 @@ visible, since errors must not cite skills.
 
 **The two things the handover flagged, both settled:**
 
-1. **Skills now has a layer head** — `src/data/skills/layer.json`, joined by
+1. **Skills now has a layer head** — `src/data/curated/skills/layer.json`, joined by
    `parseSkillTree(files, head)`. A layer split across four kind files has nowhere else to
    keep its title, blurb and note, and until this existed `/skills` was the one page whose
    lede was hardcoded view prose, and so **the one page that could not be read in German**.
@@ -1754,7 +1754,7 @@ each with its cards tree), `curatedLayers` (3), `allLayers`, and `layersOf(famil
   one layer split across four files by section. The manifest blesses both rather than
   forcing a filesystem change.
 - [x] ~~**Skills is the one curated layer with no layer head**~~ **DONE 2026-07-28**:
-  `src/data/skills/layer.json`, joined by `parseSkillTree(files, head)`. It gained the
+  `src/data/curated/skills/layer.json`, joined by `parseSkillTree(files, head)`. It gained the
   presentation/inspection split with the shell port at the same time.
 
 - [x] ~~**Metapatterns presentation pass.**~~ **DONE 2026-07-25.** `/metapatterns` now has
@@ -2045,7 +2045,7 @@ vocabulary for naming their elements*, and both halves have obvious holes:
   - [x] `kind` discriminator = the skill's *mental step*: `equivalence` (equal-forms set), `recognition` (equal-forms set, but a Tier-2 "same value across different structure" step), `classification` (`examples` + `answer`), `chunking` (`examples[].chunks`); `transformation` reserved for Tier 3.
   - [x] Exercise type derived from `kind`, not stored; `flag`/`id` dropped as redundant
   - [x] Readable slug ids **kind-prefixed** (`<kind>.<slug>`), mirroring law `ax/def/thm`. `skill` (equivalence/classification/transformation) is DERIVED from kind via `skillOf()`, not stored, not in the id — the notation/structure namespace was retired 2026-07-13 (commit a05749f) because it conflated skill with naming and couldn't hold a third skill.
-- [x] All 54 skills authored as JSON, one file per group (`src/data/skills/*.json`)
+- [x] All 54 skills authored as JSON, one file per group (`src/data/curated/skills/*.json`)
 - [x] Groups + meta-patterns as namespaced data (`skillGroups.json`, `metapatterns.json`), referenced by skills
 - [x] Load-time validation: schema, unique ids, group refs, meta-pattern refs (throws with offending id)
 - [x] Read-only card view (`TaxonomyView.vue`) — green true-forms vs red pitfalls
@@ -2169,7 +2169,7 @@ and distractor items below are done. Only incremental threads remain.
   documents the two towers, the pages, the scripts, the prose contract and the doc index.
 - [ ] Mobile layout polish (large tap targets, phone-readable)
 - [ ] PWA setup (installable, offline)
-- [ ] JSON Schema for IDE authoring: generate via `z.toJSONSchema(skill, { io: 'input' })`, register in `.vscode/settings.json` (`json.schemas`) for `src/data/skills/*.json` — autocomplete + inline validation while editing
+- [ ] JSON Schema for IDE authoring: generate via `z.toJSONSchema(skill, { io: 'input' })`, register in `.vscode/settings.json` (`json.schemas`) for `src/data/curated/skills/*.json` — autocomplete + inline validation while editing
 - [ ] Consider renaming the `examples` field for the **`chunking`** kind (`{expr, chunks, op}`): each entry carries its *own* answer, so it's labeled ground-truth data, not illustrative "examples" — `cases` / `items` reads truer. Cosmetic; **bundle it with any future `{expr, ast}` migration** rather than churning it alone (touches schema + `TaxonomyView.vue` + all chunking JSON). Note: `structure` kind's `examples` (multiple exprs sharing one `answer`) is fine as-is — genuine examples of one class.
 - [~] `pnpm validate` script (`scripts/validate.ts`, via `vite-node`) — runs the schema + graph validators (import side-effects) **plus** Compute-Engine AST checks on Tier 2 (root op-class vs `answer`/`op`; chunk count vs the tree's maximal root operands). CE first use; kept out of the app bundle. TODO: wire into CI; extend CE checks to Tier 1 (`equivalents` mutually equal, `pitfalls` non-equal at sampled points) and Tier-3 endpoint-grading; add full per-chunk structural match (needs sum/difference + sign reconciliation).
 

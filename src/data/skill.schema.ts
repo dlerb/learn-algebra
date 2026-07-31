@@ -4,7 +4,7 @@ import katex from 'katex'
 // ─────────────────────────────────────────────────────────────────────────────
 // Skill schema — the single source of truth for BOTH the runtime validator and
 // the TypeScript `Skill` type (via z.infer). Skill data is authored as JSON in
-// src/data/skills/*.json and validated against this schema on load.
+// src/data/curated/skills/*.json and validated against this schema on load.
 //
 // A skill is a mathematical unit only. It declares WHICH MENTAL PROCESS it trains
 // (`process`); how it is drilled — the question asked, the answer widget — is the

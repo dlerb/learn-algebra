@@ -31,9 +31,11 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 const L = computed(() => lang.value === 'de'
   ? { corrupts: 'verfälscht', taught: 'geübt in', breaks: 'verletzt',
-      by: 'gliedern nach', byTopic: 'Thema', byRule: 'verletzte Regel', again: 'auch oben' }
+      by: 'gliedern nach', byTopic: 'Thema', byRule: 'verletzte Regel', byFamily: 'Familie',
+      noFamily: 'Ohne Familie', again: 'auch oben' }
   : { corrupts: 'corrupts',   taught: 'guarded by', breaks: 'breaks',
-      by: 'section by', byTopic: 'topic', byRule: 'rule broken', again: 'also above' })
+      by: 'section by', byTopic: 'topic', byRule: 'rule broken', byFamily: 'family',
+      noFamily: 'No family', again: 'also above' })
 
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
@@ -123,7 +125,7 @@ const LONERS_NOTE = {
   de: 'Jeder dieser Fehler verletzt eine Regel, die kein anderer verletzt. Alleinstehen ist kein Mangel, sondern der Normalfall — und genau deshalb lohnt es sich, die Familien darüber zu benennen.',
 }
 
-const familySections = computed(() => {
+const brokenRuleSections = computed(() => {
   const byRule = new Map<string, typeof items.value>()
   for (const m of items.value) {
     for (const b of m.breaks) byRule.set(b.id, [...(byRule.get(b.id) ?? []), m])
@@ -172,9 +174,58 @@ const familySections = computed(() => {
   return out
 })
 
-const sectionBy = ref<'topic' | 'rule'>('topic')
-const sections = computed(() => (sectionBy.value === 'topic' ? topicSections.value : familySections.value))
-const familyCount = computed(() => familySections.value.filter(s => s.slug !== 'by-loners').length)
+// ── THE THIRD SECTIONING: BY THE AUTHORED FAMILY (2026-07-31) ────────────────
+// ⚠️ NOT the same axis as "rule broken" above, which is why both exist. That one
+// is DERIVED from `breaks` and is causal — "one conversation fixes all of these".
+// This one is the AUTHORED `family` field: the shape of the misconception itself,
+// which cuts across the rules broken. `mis.term-misread` (Lesefehler) holds
+// mistakes that break eight different rules; `anti.freshmans-dream` holds three
+// that break two. Neither grouping can produce the other.
+//
+// The head is the HEADING, never a row: a family head has no `latex`, no
+// `breaks` and a meaningless `frequency`, so listing it beside its members would
+// put an empty row at the top of every section.
+const familySections = computed(() => {
+  const heads = mistakes.filter(m => m.head)
+  const out = heads.map(h => ({
+    slug: `fam-${h.id}`,
+    // The name if the family has one — "Lesefehler", "Freshman's dream" — and
+    // the sentence otherwise. Same rule as everywhere else the pools are read.
+    title: h.shortName?.[lang.value] ?? t(h.mistake),
+    note: t(h.note) as string | undefined,
+    items: items.value.filter(i => i.raw.family === h.id)
+      .sort((a, b) => b.frequency - a.frequency)
+      .map(item => ({ item, primary: true })),
+  })).filter(s => s.items.length > 0)
+    .sort((a, b) => b.items.length - a.items.length)
+
+  // A mistake with no family is not a defect either — 9 of 38 are singular
+  // enough that no shape holds them, and saying so is more honest than
+  // inventing a family to absorb them.
+  const rest = items.value.filter(i => !i.raw.head && !i.raw.family)
+    .sort((a, b) => b.frequency - a.frequency)
+  if (rest.length) {
+    out.push({
+      slug: 'fam-none', title: t(L_NOFAM.title), note: t(L_NOFAM.note),
+      items: rest.map(item => ({ item, primary: true })),
+    })
+  }
+  return out
+})
+
+const L_NOFAM = {
+  title: { en: 'No family', de: 'Ohne Familie' },
+  note: {
+    en: 'These belong to no shape the others share. A pool where everything had a family would be one where the families meant nothing.',
+    de: 'Diese gehören zu keiner Gestalt, die die anderen teilen. Ein Pool, in dem alles eine Familie hätte, wäre einer, in dem die Familien nichts bedeuten.',
+  },
+}
+
+const sectionBy = ref<'topic' | 'rule' | 'family'>('topic')
+const sections = computed(() => sectionBy.value === 'topic' ? topicSections.value
+  : sectionBy.value === 'rule' ? brokenRuleSections.value
+  : familySections.value)
+const brokenRuleCount = computed(() => brokenRuleSections.value.filter(s => s.slug !== 'by-loners').length)
 
 const orphans = computed(() => items.value.filter(i => i.orphan).length)
 
@@ -207,7 +258,10 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
             {{ L.byTopic }}<span class="fcount">{{ topicSections.length }}</span>
           </button>
           <button class="fchip" :class="{ off: sectionBy !== 'rule' }" @click="sectionBy = 'rule'">
-            {{ L.byRule }}<span class="fcount">{{ familyCount }}</span>
+            {{ L.byRule }}<span class="fcount">{{ brokenRuleCount }}</span>
+          </button>
+          <button class="fchip" :class="{ off: sectionBy !== 'family' }" @click="sectionBy = 'family'">
+            {{ L.byFamily }}<span class="fcount">{{ familySections.length }}</span>
           </button>
         </div>
       </div>

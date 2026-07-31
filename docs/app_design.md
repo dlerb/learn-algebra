@@ -121,7 +121,7 @@ narrower one. Every reference page is now on this system.
 
 - **A layer head for a layer with no one file.** Every other layer keeps its title, blurb and
   note at the top of its single tree; skills are four kind files and the head belongs to none
-  of them, so it is authored on its own in `src/data/skills/layer.json` and joined by
+  of them, so it is authored on its own in `src/data/curated/skills/layer.json` and joined by
   `parseSkillTree(files, head)`. Until then `/skills` was the one page whose title and lede
   were hardcoded view prose — and so the one page that could not be read in German.
 - **Two sectionings of one list**, in `LayerPage`'s `filters` slot beside where the tower's
@@ -236,6 +236,11 @@ their classroom says is worse off than one shown nothing.
   real id — invalid HTML, though every resolver involved takes the first, which is the primary
   by construction. `LayerRow` needs a separate `anchor` prop so the id stops doing two jobs
   (entity address *and* page position).
+- ⚠️ **CONTENT LIVES IN TWO FOLDERS, ONE PER FAMILY (2026-07-31)**: `src/data/fundament/`
+  and `src/data/curated/` (rules · cheatsheets · mistakes · skills). The families were
+  symmetric in the manifest and everywhere else; only on disk did the tower have a directory
+  while the curated files sat loose beside `index.ts`. `contentFiles()` walks recursively, so
+  nothing about formatting, the id walk or the in-app editor's source links depends on depth.
 - ⚠️ **`mistakes.json` IS HAND-AUTHORED (since 2026-07-31)** and `scripts/gen-mistakes.py` is
   deleted. It was a generated mirror of `errors.json` until the derivation stopped being true
   in both directions — 10 pool entries had no errors.json twin, one errors.json entry had been
@@ -416,7 +421,7 @@ reserved for signal. This *is* the dark-mode groundwork. **Display prose for the
 curated side lives in data registries**, never hardcoded in components: `skillGroups`
 and `skillKinds` (slug-set validated == the kind enum, and **localized since 2026-07-29** —
 their titles were the last English-only prose on the site), and since 2026-07-28 the skills
-**layer head** too (`src/data/skills/layer.json` — title, blurb, note, bilingual), which
+**layer head** too (`src/data/curated/skills/layer.json` — title, blurb, note, bilingual), which
 was the last page prose still living in a component. (The old `lawGroups`/
 `conventionGroups`/`lawKinds` registries went with laws.json/conventions.json in the
 bridge; the tower's own section/group titles live inline in each `cards.json`.)

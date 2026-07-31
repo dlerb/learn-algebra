@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import MathExpr from '../components/MathExpr.vue'
 import RichText from '../components/RichText.vue'
@@ -23,15 +23,27 @@ import { inspect } from '../inspect'
 // Which is also why the page cannot go stale — it says exactly what the rest of
 // the data says about each sentence, or nothing.
 //
-// ON THE ROW SHELL since 2026-07-27 (Layer{Page,Section,Row}), and it is the FLAT
-// case: no sections, one panel, `LayerSection` with no title. A registry of
-// sentences has no structure to give it, and the container tolerating that was
-// half the point of building this layer before the manifest unification.
+// ON THE ROW SHELL since 2026-07-27 (Layer{Page,Section,Row}). It began as the
+// FLAT case — one panel, `LayerSection` with no title — because a registry of
+// sentences had no structure to give it, and the container tolerating that was
+// half the point of building this layer first. FLAT IS STILL THE DEFAULT and
+// still the honest reading of a registry.
+//
+// ⚠️ BUT IT NOW HAS TWO AXES TO OFFER (2026-07-31), and both were already
+// authored. `family` arrived 2026-07-29 and is the SUBJECT axis — "the power
+// laws", "the minus rules" — with its heads declared. `kind` is the REGISTER
+// axis and is the older of the two: this pool is the DO/IS registry, and until
+// you can see the two halves side by side that claim is only in the prose.
+// Neither is derived; sectioning by them just draws what the fields say.
 const t = (ls: LocalizedString) => loc(ls, lang.value)
 
 const L = computed(() => lang.value === 'de'
-  ? { reads: 'fasst zusammen', drills: 'geübt in',  prevents: 'verhindert', sheet: 'Merkblatt' }
-  : { reads: 'summarises',      drills: 'drilled by', prevents: 'prevents',   sheet: 'Cheat sheet' })
+  ? { reads: 'fasst zusammen', drills: 'geübt in',  prevents: 'verhindert', sheet: 'Merkblatt',
+      by: 'gliedern nach', byFlat: 'gar nicht', byFamily: 'Familie', byKind: 'Register',
+      isTitle: 'Was eine Form IST', doTitle: 'Was man TUT', noFamily: 'Ohne Familie' }
+  : { reads: 'summarises',      drills: 'drilled by', prevents: 'prevents',   sheet: 'Cheat sheet',
+      by: 'section by', byFlat: 'nothing', byFamily: 'family', byKind: 'register',
+      isTitle: 'What a form IS', doTitle: 'What to DO', noFamily: 'No family' })
 
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
@@ -107,6 +119,41 @@ const items = computed(() => rules.map(m => {
 }))
 const orphans = computed(() => items.value.filter(i => i.orphan).length)
 
+// ⚠️ A HEAD IS A HEADING, NEVER A ROW, in both sectionings. The eight family
+// heads carry a name and a note and no `latex`, so listed as rows they are eight
+// blanks; as section titles they are exactly what they were written to be. That
+// is also why the flat view still shows them — with no sections to become, a
+// head is just another sentence in the registry.
+const heads = computed(() => rules.filter(r => r.head))
+const members = computed(() => items.value.filter(i => !i.raw.head))
+
+const familySections = computed(() => {
+  const out = heads.value.map(h => ({
+    slug: `fam-${h.id}`,
+    title: t(h.rule),
+    note: t(h.note) as string | undefined,
+    items: members.value.filter(i => i.raw.family === h.id),
+  })).filter(x => x.items.length > 0)
+  const rest = members.value.filter(i => !i.raw.family)
+  if (rest.length) out.push({ slug: 'fam-none', title: L.value.noFamily, note: undefined, items: rest })
+  return out
+})
+
+// The registry's own claim, drawn: IS says what a written form MEANS, DO says
+// what you may do to it. `is` leads because you cannot act on a form you have
+// not read — the same order the skill processes are in.
+const kindSections = computed(() => ([
+  { slug: 'kind-is', title: L.value.isTitle, note: undefined as string | undefined,
+    items: members.value.filter(i => i.kind === 'is') },
+  { slug: 'kind-do', title: L.value.doTitle, note: undefined as string | undefined,
+    items: members.value.filter(i => i.kind === 'do') },
+] as const).filter(x => x.items.length > 0))
+
+const sectionBy = ref<'flat' | 'family' | 'kind'>('flat')
+const sections = computed(() => sectionBy.value === 'family' ? familySections.value
+  : sectionBy.value === 'kind' ? kindSections.value
+  : [{ slug: 'all', title: undefined as string | undefined, note: undefined as string | undefined, items: items.value }])
+
 // FOUR COLUMNS: the sentence | its formula | its gloss | the mistakes it prevents.
 // The maths column arrived with `latex` (2026-07-28) and changes what the page
 // is for: a student hunting "the one about exponents" scans formulas, not 26
@@ -131,10 +178,30 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
       <span v-if="inspect && orphans" class="orphan-chip" title="cited by no error and no skill">{{ orphans }} orphaned</span>
     </template>
 
-    <!-- No title: the list is flat, so there is nothing to head it with. -->
-    <LayerSection>
+    <template #filters>
+      <div class="filters">
+        <div class="filter-row">
+          <span class="filter-label">{{ L.by }}</span>
+          <button class="fchip" :class="{ off: sectionBy !== 'flat' }" @click="sectionBy = 'flat'">
+            <!-- No count: its neighbours count SECTIONS, and flat has none. A
+                 number meaning something different from the one beside it is
+                 worse than no number. -->
+            {{ L.byFlat }}
+          </button>
+          <button class="fchip" :class="{ off: sectionBy !== 'family' }" @click="sectionBy = 'family'">
+            {{ L.byFamily }}<span class="fcount">{{ familySections.length }}</span>
+          </button>
+          <button class="fchip" :class="{ off: sectionBy !== 'kind' }" @click="sectionBy = 'kind'">
+            {{ L.byKind }}<span class="fcount">{{ kindSections.length }}</span>
+          </button>
+        </div>
+      </div>
+    </template>
+
+    <!-- Flat renders as ONE untitled section, which is what the page always was. -->
+    <LayerSection v-for="s in sections" :key="s.slug" :title="s.title" :note="s.note">
       <LayerRow
-        v-for="m in items" :key="m.id"
+        v-for="m in s.items" :key="m.id + s.slug"
         :id="m.id" :name="m.rule" :record="m.raw"
         :kind="inspect ? m.kind : undefined"
         :targeted="m.id === targetId"
@@ -227,6 +294,17 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
    and italic is the convention for a quoted phrase. `text-wrap: balance` because
    the long ones run to three lines in a 22rem rail and an even shape reads as
    deliberate. */
+/* THE SECTION-BY CHIPS. Byte-identical to /mistakes' — the two pages are read
+   side by side and a control that behaved or looked even slightly differently
+   across them would read as two controls. */
+.filters { margin-top: 1rem; display: grid; gap: .4rem; }
+.filter-row { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.filter-label { font-size: .62rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; width: 6rem; }
+.fchip { font-size: .72rem; padding: .16rem .55rem; border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: var(--on-accent); cursor: pointer; }
+.fchip.off { background: transparent; color: var(--text-muted); border-color: var(--border-strong); }
+.fchip:hover { filter: brightness(1.08); }
+.fcount { margin-left: .3rem; font-size: .64rem; opacity: .7; font-variant-numeric: tabular-nums; }
+
 /* THE NAME: upright and unmuted, so it reads as a handle rather than as a
    second gloss. The mnemonic under it stays italic and quiet — the two must not
    look like one two-line remark. */
