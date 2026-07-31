@@ -42,6 +42,18 @@ const CANNOT_DECIDE: Record<string, string> = {
   // The colon is the primary-school division sign. CE reports "Unknown operator
   // Colon" — and teaching that `a : b` is the same object is the skill's point.
   'skill.division-variants': 'CE has no colon-as-division operator',
+  // `x^a x^b = x^{a+b}` needs its EXPONENTS quantified: pl.same-base states it for
+  // m, n ∈ ℕ, where it holds for every real base. The skill inherits that through
+  // restsOn and does not restate it (design decision 5), so CE sees free symbols,
+  // samples a non-integer exponent against a negative base, and is right to refuse.
+  //
+  // ⚠️ THIS ONE WAS FOUND BY LUCK RUNNING OUT, not by a data change. CE falls back
+  // to NUMERIC SAMPLING when it cannot decide symbolically, so `isEqual` on the
+  // very same two expression objects returns false about 10% of the time and
+  // `pnpm validate` had been green by chance. Measured over 40 full sweeps this is
+  // the only entry that ever flickered — but a future skill can join it silently,
+  // and a green run is not by itself proof the check was decided.
+  'skill.simplify-power-product': 'CE samples exponents the skill quantifies over ℕ',
 }
 
 const issues: string[] = []
