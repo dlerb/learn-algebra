@@ -91,7 +91,7 @@ const items = computed(() => rules.map(m => {
     // otherwise the student follows a name to a page that never says it. Same
     // no-fallback discipline as the mnemonic, and for the same reason: a rule
     // named only in German shows nothing to an English reader.
-    label: m.label?.[lang.value],
+    shortName: m.shortName?.[lang.value],
     mnemonic: m.mnemonic?.[lang.value],
     errors, skills: sk, reads: readsOf(m),
     sheet: sheetByRule.get(m.id),
@@ -142,8 +142,8 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
              what the rule is CALLED, the other is a way to remember what it
              says. Both are alternatives to the sentence in the row's name, so
              both belong in the rail rather than in the gloss column. -->
-        <template v-if="m.label || m.mnemonic" #rail>
-          <p v-if="m.label" class="label">{{ m.label }}</p>
+        <template v-if="m.shortName || m.mnemonic" #rail>
+          <p v-if="m.shortName" class="short-name">{{ m.shortName }}</p>
           <p v-if="m.mnemonic" class="mnemonic">{{ m.mnemonic }}</p>
         </template>
 
@@ -224,7 +224,7 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
 /* THE NAME: upright and unmuted, so it reads as a handle rather than as a
    second gloss. The mnemonic under it stays italic and quiet — the two must not
    look like one two-line remark. */
-.label {
+.short-name {
   margin: .3rem 0 0; font-family: var(--font-content); font-weight: 600;
   font-size: .82rem; line-height: 1.35; color: var(--text); text-wrap: balance;
 }

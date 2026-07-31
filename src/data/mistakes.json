@@ -717,6 +717,93 @@
       "corrupts": []
     },
     {
+      "id": "anti.cancel-over-sum",
+      "kind": "anti-law",
+      "family": "anti.forced-move",
+      "topic": "fractions",
+      "frequency": 3,
+      "mistake": {
+        "en": "Don’t cancel one term out of a sum",
+        "de": "Nicht einen einzelnen Summanden wegkürzen"
+      },
+      "shortName": {
+        "en": "Cancelling over a sum",
+        "de": "Kein Kürzen über Summen"
+      },
+      "latex": [
+        "\\frac{a+b}{b} = a",
+        "\\frac{2x+3}{2} = x+3"
+      ],
+      "note": {
+        "en": "Cancelling divides top and bottom by the same number, so that number has to be a factor of the WHOLE of each — and a summand is not. Check with numbers: $\frac{2+4}{2}$ is $3$, not $4$. The pull is that the $b$ is visible in both places, which looks like permission.",
+        "de": "Kürzen teilt oben und unten durch dieselbe Zahl, diese Zahl muss also Faktor des GANZEN sein — ein Summand ist das nicht. Mit Zahlen prüfen: $\frac{2+4}{2}$ ist $3$, nicht $4$. Verlockend ist es, weil das $b$ oben und unten sichtbar dasteht, was wie eine Erlaubnis aussieht."
+      },
+      "breaks": [
+        "rule.fraction-cancel"
+      ],
+      "corrupts": [
+        "th.cancel-common-factor"
+      ]
+    },
+    {
+      "id": "anti.split-denominator",
+      "kind": "anti-law",
+      "family": "anti.forced-move",
+      "topic": "fractions",
+      "frequency": 2,
+      "mistake": {
+        "en": "Don’t split a sum in the denominator",
+        "de": "Eine Summe im Nenner nicht aufteilen"
+      },
+      "shortName": {
+        "en": "Splitting the denominator",
+        "de": "Kein Aufteilen im Nenner"
+      },
+      "latex": [
+        "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}"
+      ],
+      "note": {
+        "en": "The numerator splits because dividing by $c$ is multiplying by $\frac{1}{c}$, and multiplication distributes. Nothing distributes over the denominator. Check with numbers: $\frac{12}{2+4} = 2$, while $\frac{12}{2} + \frac{12}{4} = 9$. It is the mirror of a move that IS legal, which is what makes it tempting.",
+        "de": "Der Zähler lässt sich aufteilen, weil Teilen durch $c$ Multiplizieren mit $\frac{1}{c}$ ist und die Multiplikation sich verteilt. Über den Nenner verteilt sich nichts. Mit Zahlen prüfen: $\frac{12}{2+4} = 2$, aber $\frac{12}{2} + \frac{12}{4} = 9$. Es ist das Spiegelbild eines erlaubten Schrittes, und genau das macht es verlockend."
+      },
+      "breaks": [
+        "rule.split-numerator"
+      ],
+      "corrupts": [
+        "th.split-numerator"
+      ]
+    },
+    {
+      "id": "anti.associate-everything",
+      "kind": "anti-law",
+      "family": "anti.forced-move",
+      "topic": "minus",
+      "frequency": 2,
+      "mistake": {
+        "en": "Don’t regroup across a minus or a division",
+        "de": "Nicht über ein Minus oder ein Geteilt hinweg umklammern"
+      },
+      "shortName": {
+        "en": "Regrouping anything",
+        "de": "Kein Umklammern über Minus"
+      },
+      "latex": [
+        "(a-b)-c = a-(b-c)",
+        "(a:b):c = a:(b:c)"
+      ],
+      "note": {
+        "en": "The exact counterpart of swapping across a minus, and it comes from the same belief: that brackets in a chain never matter. In a pure sum or product they do not, which is why $a+b+c$ needs none — but $(8-3)-2 = 3$ while $8-(3-2) = 7$.",
+        "de": "Das genaue Gegenstück zum Vertauschen über ein Minus, und es kommt aus derselben Annahme: Klammern in einer Kette seien egal. In einer reinen Summe oder einem reinen Produkt sind sie es, darum braucht $a+b+c$ keine — aber $(8-3)-2 = 3$ und $8-(3-2) = 7$."
+      },
+      "breaks": [
+        "rule.only-plus-and-times-associate"
+      ],
+      "corrupts": [
+        "ax.add-associative",
+        "ax.mul-associative"
+      ]
+    },
+    {
       "id": "omi.no-move-attempted",
       "kind": "omission",
       "frequency": 2,

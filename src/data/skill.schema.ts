@@ -267,7 +267,7 @@ export const ruleDef = z.object({
   // caught, and it is.
   head: z.boolean().optional(),
   // ── THE NAME YOU CALL IT BY (2026-07-31) ─────────────────────────────────
-  // `rule` is a SENTENCE the student can act on; `label` is the HANDLE they
+  // `rule` is a SENTENCE the student can act on; `shortName` is the HANDLE they
   // grab it by — "3. binomische Formel", "Kommutativgesetz (KG)", "Wurzelregel".
   // Keeping them apart is the point: prefixing the sentence with its own name
   // ("Same base rule: multiply, add the exponents") breaks the one promise the
@@ -286,7 +286,7 @@ export const ruleDef = z.object({
   // are unambiguous only inside `rule.power-laws` — `rule.zero-and-one` also has
   // a zero rule and the fraction laws are all fraction rules. Anywhere a label
   // appears outside its family's heading it must be rendered WITH the family.
-  label: z.object({ en: z.string().optional(), de: z.string().optional() }).optional(),
+  shortName: z.object({ en: z.string().optional(), de: z.string().optional() }).optional(),
   // ── THE CLASSROOM PHRASING (2026-07-29) ──────────────────────────────────
   // The sticky version a student can SAY: "Punkt vor Strich", "keep, change,
   // flip", "Differenzen und Summen kürzen nur die Dummen". Its job is retention,
@@ -415,6 +415,22 @@ export const mistakeDef = z.object({
   mistake: localizedString,               // THE FALSE SENTENCE, stated as the student holds it — "Every minus is a subtraction", not "Losing one of two minuses". The error layer names the mistake from outside; a pool entry states it from inside, so it reads as a claim that can be marked ✗ exactly as a rule reads as one that can be marked ✓
   latex: z.array(z.string()).default([]), // the false claim(s). Empty is legitimate: the two salience mistakes and the adjacent-signs omission have no expressible schema
   note: localizedString,                  // the diagnosis — mechanism and cause, which was always a statement about the misconception rather than about one case of it
+  // ── THE SAME TWO NAME FIELDS A RULE HAS (2026-07-31) ─────────────────────
+  // The pools are symmetric, so their naming is: `mistake` is the sentence,
+  // `shortName` the handle a class calls it by ("Kein Kürzen über Summen"),
+  // `mnemonic` a memory DEVICE — rhyme, acronym, cadence.
+  //
+  // ⚠️ THE TEST THAT KEEPS THEM APART, and it was learned the expensive way. A
+  // mnemonic must be a device. If it is merely short it is a shortName wearing a
+  // mnemonic's clothes — measured on the rules pool, where 3 of 7 `mnemonic`
+  // entries were not mnemonics at all: one repeated its own rule verbatim, one
+  // repeated its shortName, and "Differenzen und Summen kürzen nur die Dummen"
+  // was the name of a MISTAKE parked on a rule because the mistake did not exist.
+  //
+  // ⚠️ NO CROSS-LANGUAGE FALLBACK on either, as on a rule: each language has its
+  // own or has none, and the view falls back to the sentence instead.
+  shortName: z.object({ en: z.string().optional(), de: z.string().optional() }).optional(),
+  mnemonic: z.object({ en: z.string().optional(), de: z.string().optional() }).optional(),
   breaks: z.array(z.string()).default([]),    // rule ids
   corrupts: z.array(z.string()).default([]),  // card ids
 })

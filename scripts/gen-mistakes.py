@@ -157,6 +157,15 @@ M = {
 # error message read the way a teacher says it:
 #
 #     Forced move · Don't spread a power or a root over a plus
+# id -> (en, de) THE HANDLE, not the sentence — the same field a rule carries and
+# for the same reason: /skills prints the name in the ✗ column and links out, and
+# a name trains recognition where a sentence only gets read.
+SHORT = {}
+
+# id -> {'en'/'de': device}. A MEMORY DEVICE — rhyme, acronym, cadence.
+# ⚠️ If it is merely short it belongs in SHORT. The rules pool had 3 of 7 wrong.
+MNEM = {}
+
 FAMILY = {
  'anti.linearity':           'anti.forced-move',
  'anti.conjoining':          'anti.forced-move',
@@ -198,6 +207,81 @@ POOL_ONLY = [
   'breaks': [],
   'corrupts': [],
  },
+ # ── FOUND BY THE PROHIBITION SWEEP (2026-07-31) ──────────────────────────────
+ # Three rules stated a prohibition in their own sentence with NO mistake naming
+ # it — the anti-law hiding inside a rule, the same shape as the orphaned rules
+ # the skills pass turned up. Found by testing every rule sentence for a
+ # never/only/nicht/nur and asking which had nothing in `breaks` pointing back.
+ #
+ # ⚠️ THESE ARE NOT IN errors.json AND MUST NOT BE ADDED TO IT. That file is
+ # legacy; POOL_ONLY is where a mistake is authored now. They declare their own
+ # `topic` rather than inheriting one from the errors tree.
+ {
+  'id': 'anti.cancel-over-sum',
+  'kind': 'anti-law',
+  'family': 'anti.forced-move',
+  'topic': 'fractions',
+  'frequency': 3,
+  'mistake': {
+    'en': 'Don’t cancel one term out of a sum',
+    'de': 'Nicht einen einzelnen Summanden wegkürzen',
+  },
+  'shortName': {
+    'en': 'Cancelling over a sum',
+    'de': 'Kein Kürzen über Summen',
+  },
+  'latex': [r'\frac{a+b}{b} = a', r'\frac{2x+3}{2} = x+3'],
+  'note': {
+    'en': 'Cancelling divides top and bottom by the same number, so that number has to be a factor of the WHOLE of each — and a summand is not. Check with numbers: $\frac{2+4}{2}$ is $3$, not $4$. The pull is that the $b$ is visible in both places, which looks like permission.',
+    'de': 'Kürzen teilt oben und unten durch dieselbe Zahl, diese Zahl muss also Faktor des GANZEN sein — ein Summand ist das nicht. Mit Zahlen prüfen: $\frac{2+4}{2}$ ist $3$, nicht $4$. Verlockend ist es, weil das $b$ oben und unten sichtbar dasteht, was wie eine Erlaubnis aussieht.',
+  },
+  'breaks': ['rule.fraction-cancel'],
+  'corrupts': ['th.cancel-common-factor'],
+ },
+ {
+  'id': 'anti.split-denominator',
+  'kind': 'anti-law',
+  'family': 'anti.forced-move',
+  'topic': 'fractions',
+  'frequency': 2,
+  'mistake': {
+    'en': 'Don’t split a sum in the denominator',
+    'de': 'Eine Summe im Nenner nicht aufteilen',
+  },
+  'shortName': {
+    'en': 'Splitting the denominator',
+    'de': 'Kein Aufteilen im Nenner',
+  },
+  'latex': [r'\frac{c}{a+b} = \frac{c}{a} + \frac{c}{b}'],
+  'note': {
+    'en': 'The numerator splits because dividing by $c$ is multiplying by $\frac{1}{c}$, and multiplication distributes. Nothing distributes over the denominator. Check with numbers: $\frac{12}{2+4} = 2$, while $\frac{12}{2} + \frac{12}{4} = 9$. It is the mirror of a move that IS legal, which is what makes it tempting.',
+    'de': 'Der Zähler lässt sich aufteilen, weil Teilen durch $c$ Multiplizieren mit $\frac{1}{c}$ ist und die Multiplikation sich verteilt. Über den Nenner verteilt sich nichts. Mit Zahlen prüfen: $\frac{12}{2+4} = 2$, aber $\frac{12}{2} + \frac{12}{4} = 9$. Es ist das Spiegelbild eines erlaubten Schrittes, und genau das macht es verlockend.',
+  },
+  'breaks': ['rule.split-numerator'],
+  'corrupts': ['th.split-numerator'],
+ },
+ {
+  'id': 'anti.associate-everything',
+  'kind': 'anti-law',
+  'family': 'anti.forced-move',
+  'topic': 'minus',
+  'frequency': 2,
+  'mistake': {
+    'en': 'Don’t regroup across a minus or a division',
+    'de': 'Nicht über ein Minus oder ein Geteilt hinweg umklammern',
+  },
+  'shortName': {
+    'en': 'Regrouping anything',
+    'de': 'Kein Umklammern über Minus',
+  },
+  'latex': [r'(a-b)-c = a-(b-c)', r'(a:b):c = a:(b:c)'],
+  'note': {
+    'en': 'The exact counterpart of swapping across a minus, and it comes from the same belief: that brackets in a chain never matter. In a pure sum or product they do not, which is why $a+b+c$ needs none — but $(8-3)-2 = 3$ while $8-(3-2) = 7$.',
+    'de': 'Das genaue Gegenstück zum Vertauschen über ein Minus, und es kommt aus derselben Annahme: Klammern in einer Kette seien egal. In einer reinen Summe oder einem reinen Produkt sind sie es, darum braucht $a+b+c$ keine — aber $(8-3)-2 = 3$ und $8-(3-2) = 7$.',
+  },
+  'breaks': ['rule.only-plus-and-times-associate'],
+  'corrupts': ['ax.add-associative', 'ax.mul-associative'],
+ },
  {
   'id': 'omi.no-move-attempted',
   'kind': 'omission',
@@ -234,10 +318,17 @@ for sec in src['sections']:
                 'topic': sec['slug'],
                 'frequency': e.get('frequency', 1),
                 'mistake': {'en': en, 'de': de},
-                'latex': latex,
-                # The diagnosis carries over untouched: it was always a statement
-                # about the misconception, never about one case of it.
-                'note': e['note'],
+            })
+            if e['id'] in SHORT:
+                sen, sde = SHORT[e['id']]
+                entry['shortName'] = {k: v for k, v in (('en', sen), ('de', sde)) if v}
+            entry['latex'] = latex
+            # The diagnosis carries over untouched: it was always a statement
+            # about the misconception, never about one case of it.
+            entry['note'] = e['note']
+            if e['id'] in MNEM:
+                entry['mnemonic'] = MNEM[e['id']]
+            entry.update({
                 'breaks': e.get('rules', []),
                 'corrupts': e.get('corrupts', []),
             })
