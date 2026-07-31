@@ -713,6 +713,19 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
   `MistakesView`, `OverviewView`), so these two are the odd ones out. Mechanical: the files, the
   imports in `router.ts`, and nothing else.
 
+- [x] **THE POOL STOPPED BEING GENERATED (2026-07-31).** `scripts/gen-mistakes.py` is deleted
+  (537 lines), `pnpm validate` lost its drift-check step, and `POOL_ONLY` / `RETIRED` stopped
+  being concepts. ⚠️ **The trigger was that the derivation had become false in BOTH directions**
+  — 10 of 38 pool entries had no `errors.json` twin, and `anti.linearity` had been retired from
+  the pool while errors.json still carried it. A derivation needing escape hatches for a quarter
+  of its output is a copy; the copy became the original.
+  ⚠️ **`content-ids.mjs` NOW SHADOWS `errors.json`, NOT `mistakes.json`** — the pool is walked
+  and reachable by the in-app editor, and the legacy file is not. Exactly one of the two can be,
+  while they share ids. That capability MOVED; it was not removed.
+  ⚠️ **This did NOT touch `/errors`**, which is still live and still the only home of 52
+  instances, 29 fixes and 14 hints — only 24 of the 52 have a twin in `skill.wrong`. Retiring the
+  page is a separate, product-shaped decision; see the next item.
+
 - [ ] **`errors.json` STAYS FOR NOW (decided 2026-07-29)** and is the only home of **50
   instances, 28 `fix` strings and 14 hints**. `mistakes.json` took only the general half.
   ⚠️ **`mistakes.json` is a GENERATED MIRROR** — `pnpm gen-mistakes` rebuilds it, `pnpm

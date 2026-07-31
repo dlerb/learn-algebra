@@ -56,12 +56,15 @@ export const errorTree: ErrorTree = parseErrorTree(errorsRaw)
 export const errorPatterns: ErrorDef[] = errorTree.errors
 
 // THE MISTAKE POOL, the negative face of the rules registry (skill.schema →
-// mistakeDef). Built ALONGSIDE errors.json on purpose, not in place of it: this
-// is the parallel build that lets /mistakes and /errors be compared on screen
-// before anything is migrated. ⚠️ While both exist they share ids and derive
-// frequency/kind/topic/corrupts/breaks from the same source, so mistakes.json
-// must be REGENERATED rather than hand-edited when errors.json changes — the
-// generator is scripts/gen-mistakes.py.
+// mistakeDef). ⚠️ HAND-AUTHORED SINCE 2026-07-31, and edited here like every
+// other content file. It was generated from errors.json until the derivation
+// stopped being true in both directions: 10 of its entries had no errors.json
+// twin and one errors.json entry had been retired from it, and the generator had
+// grown two escape hatches (POOL_ONLY, RETIRED) whose only job was to let the two
+// files disagree. A derivation needing escape hatches for a quarter of its output
+// is a copy, so the copy became the original and the 537-line generator went
+// away. errors.json stays where it is, legacy and unedited, and still backs
+// /errors with 52 instances and 29 fixes the pool never took.
 export const mistakeTree: MistakeTree = parseMistakeTree(mistakesRaw)
 export const mistakes: MistakeDef[] = mistakeTree.mistakes
 

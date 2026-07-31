@@ -33,20 +33,22 @@
 import fs from 'node:fs'
 import { contentFiles } from './content-format.mjs'
 
-/** GENERATED MIRRORS — files whose entities deliberately reuse another file's
- *  ids, so they are invisible to the uniqueness walk.
+/** THE SHADOWED FILE — one of two files that deliberately share ids, hidden from
+ *  the uniqueness walk so the other can be addressed by them.
  *
- *  `mistakes.json` (2026-07-28) is derived from `errors.json` and keeps its ids
- *  ON PURPOSE: that is what lets `skill.errors` resolve against either pool
- *  without a single skill being touched. Counting both files therefore reported
- *  every mistake as a duplicate of itself.
- *  ⚠️ The invariant this file exists to protect is UNHARMED, because the two are
- *  never both a resolution target: the id addresses the entity in errors.json,
- *  and mistakes.json is regenerated from it (`pnpm gen-mistakes`, drift-checked
- *  in `pnpm validate`). If the pool ever stops being generated, delete this
- *  exclusion and give it its own ids. */
-const GENERATED_MIRRORS = ['mistakes.json']
-const isMirror = f => GENERATED_MIRRORS.some(m => f.endsWith(m))
+ *  ⚠️ THIS USED TO BE `mistakes.json` AND THE DIRECTION IS NOW REVERSED
+ *  (2026-07-31). While the pool was generated, `errors.json` held the ids and the
+ *  mirror was hidden. The pool is hand-authored now — it has 10 entries
+ *  errors.json never had and has retired one it still contains — so the pool is
+ *  what an id addresses, and the legacy file is the shadow.
+ *
+ *  ⚠️ THE COST, STATED RATHER THAN HIDDEN: a shadowed file is invisible to
+ *  `locate()` too, so the in-app editor can no longer reach errors.json prose.
+ *  That is the right way round — the pool is edited, the legacy file is frozen —
+ *  but it is a capability that MOVED, not one that never existed. Exactly one of
+ *  the two can be walked while they share ids. */
+const SHADOWED = ['errors.json']
+const isMirror = f => SHADOWED.some(m => f.endsWith(m))
 
 /** Every entity in one parsed document, as `{ id, path }`, where `path` is the
  *  key/index chain from the document root — exactly what a JSON patcher needs.
