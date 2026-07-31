@@ -2,17 +2,16 @@
 // duplicate id, a dangling group, or a dangling rule reference throws
 // here immediately with the offending id named.
 import {
-  parseSkillTree, parseErrorTree, parseRuleTree, parseSheetTree,
+  parseSkillTree, parseRuleTree, parseSheetTree,
   parseMistakeTree,
   validateUniqueIds, validateProcesses, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateFamilies, validateSkillLinks, validateStacks,
-  validateErrors, validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
-  type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree, type ErrorDef, type ErrorTree,
+  validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
+  type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree,
   type MistakeDef, type MistakeTree,
 } from './skill.schema'
 import { cardIndex } from './layers'
 import rulesRaw from './rules.json'
 import sheetsRaw from './cheatsheets.json'
-import errorsRaw from './errors.json'
 import mistakesRaw from './mistakes.json'
 // Skills: one file per PROCESS (process → groups[] → skills[]), mirroring the
 // fundament tower's one-file-per-layer tree. Add a process = add a file + one
@@ -47,14 +46,6 @@ export const sheetTree: SheetTree = parseSheetTree(sheetsRaw)
 export const sheets: SheetDef[] = sheetTree.sheets
 
 
-// The fundament's shadow: false laws and misreadings, each `corrupts` a card in
-// the tower (src/data/layers.ts). The laws/conventions files they used to point
-// at were folded into the tower and deleted; see docs/content_model.md.
-// Authored since 2026-07-25 as a containment tree (sections = TOPICS) like a
-// fundament layer; `errorPatterns` stays the flat list every consumer already had.
-export const errorTree: ErrorTree = parseErrorTree(errorsRaw)
-export const errorPatterns: ErrorDef[] = errorTree.errors
-
 // THE MISTAKE POOL, the negative face of the rules registry (skill.schema →
 // mistakeDef). ⚠️ HAND-AUTHORED SINCE 2026-07-31, and edited here like every
 // other content file. It was generated from errors.json until the derivation
@@ -88,13 +79,12 @@ validateRuleFamilies(rules)
 validateFamilies(mistakes, 'Mistake')
 validateSkillLinks(skills)
 validateStacks(skills)
-validateErrors(errorPatterns, cardIds)
 validateMistakeRefs(mistakes, rules, cardIds)
-validateLayerRefs(skills, rules, cardIds, errorPatterns, mistakes)
-validateLatexCompiles(skills, rules, errorPatterns)
+validateLayerRefs(skills, rules, cardIds, mistakes)
+validateLatexCompiles(skills, rules, mistakes)
 
 // Matrix audit — a report, not a validator: empty cells are questions.
 const cardConds = new Map([...cardIndex].map(([id, e]) => [id, e.card.cond]))
-for (const line of auditCoverage(skills, rules, errorPatterns, cardConds, sheets)) {
+for (const line of auditCoverage(skills, rules, mistakes, cardConds, sheets)) {
   console.info(`[audit] ${line}`)
 }

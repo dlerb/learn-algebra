@@ -93,13 +93,13 @@ everything below.
 ### One shell, seven pages (2026-07-27, completed 2026-07-28)
 
 The row system started inside `LayerView` and now lives in four components under
-`src/components/`, so `/errors`, `/rules` and `/skills` are the same application as the tower
+`src/components/`, so `/mistakes`, `/rules` and `/skills` are the same application as the tower
 rather than four pages that happen to import the same file:
 
 - **`LayerPage`** — the measure vocabulary (`--rail` 11rem, `--maths` 19rem, `--measure`
   26rem), the page's one left edge, the header, the inspect toggle. **`cols` is a prop**,
   because the column budget is a per-layer decision and belongs in the consuming page's own
-  stylesheet beside the arithmetic justifying it: the tower, `/errors`, `/rules` and
+  stylesheet beside the arithmetic justifying it: the tower, `/mistakes`, `/rules` and
   `/skills` all run four, and no two of them the same four widths.
 - **`LayerSection`** — heading and note on the page plane, one panel per section. `title` is
   optional, for a FLAT layer: `/rules` is a registry of sentences with no structure to give

@@ -863,8 +863,8 @@
         "\\frac{2x+3}{2} = x+3"
       ],
       "note": {
-        "en": "Cancelling divides top and bottom by the same number, so that number has to be a factor of the WHOLE of each — and a summand is not. Check with numbers: $\frac{2+4}{2}$ is $3$, not $4$. The pull is that the $b$ is visible in both places, which looks like permission.",
-        "de": "Kürzen teilt oben und unten durch dieselbe Zahl, diese Zahl muss also Faktor des GANZEN sein — ein Summand ist das nicht. Mit Zahlen prüfen: $\frac{2+4}{2}$ ist $3$, nicht $4$. Verlockend ist es, weil das $b$ oben und unten sichtbar dasteht, was wie eine Erlaubnis aussieht."
+        "en": "Cancelling divides top and bottom by the same number, so that number has to be a factor of the WHOLE of each — and a summand is not. Check with numbers: $\\frac{2+4}{2}$ is $3$, not $4$. The pull is that the $b$ is visible in both places, which looks like permission.",
+        "de": "Kürzen teilt oben und unten durch dieselbe Zahl, diese Zahl muss also Faktor des GANZEN sein — ein Summand ist das nicht. Mit Zahlen prüfen: $\\frac{2+4}{2}$ ist $3$, nicht $4$. Verlockend ist es, weil das $b$ oben und unten sichtbar dasteht, was wie eine Erlaubnis aussieht."
       },
       "breaks": [
         "rule.fraction-cancel"
@@ -891,8 +891,8 @@
         "\\frac{c}{a+b} = \\frac{c}{a} + \\frac{c}{b}"
       ],
       "note": {
-        "en": "The numerator splits because dividing by $c$ is multiplying by $\frac{1}{c}$, and multiplication distributes. Nothing distributes over the denominator. Check with numbers: $\frac{12}{2+4} = 2$, while $\frac{12}{2} + \frac{12}{4} = 9$. It is the mirror of a move that IS legal, which is what makes it tempting.",
-        "de": "Der Zähler lässt sich aufteilen, weil Teilen durch $c$ Multiplizieren mit $\frac{1}{c}$ ist und die Multiplikation sich verteilt. Über den Nenner verteilt sich nichts. Mit Zahlen prüfen: $\frac{12}{2+4} = 2$, aber $\frac{12}{2} + \frac{12}{4} = 9$. Es ist das Spiegelbild eines erlaubten Schrittes, und genau das macht es verlockend."
+        "en": "The numerator splits because dividing by $c$ is multiplying by $\\frac{1}{c}$, and multiplication distributes. Nothing distributes over the denominator. Check with numbers: $\\frac{12}{2+4} = 2$, while $\\frac{12}{2} + \\frac{12}{4} = 9$. It is the mirror of a move that IS legal, which is what makes it tempting.",
+        "de": "Der Zähler lässt sich aufteilen, weil Teilen durch $c$ Multiplizieren mit $\\frac{1}{c}$ ist und die Multiplikation sich verteilt. Über den Nenner verteilt sich nichts. Mit Zahlen prüfen: $\\frac{12}{2+4} = 2$, aber $\\frac{12}{2} + \\frac{12}{4} = 9$. Es ist das Spiegelbild eines erlaubten Schrittes, und genau das macht es verlockend."
       },
       "breaks": [
         "rule.split-numerator"

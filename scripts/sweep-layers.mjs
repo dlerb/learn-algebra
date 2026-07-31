@@ -85,11 +85,10 @@ for (const [layer, ordered] of layerOrder) {
 // ---- the bridge -----------------------------------------------------------
 // The legacy laws.json / conventions.json were deleted on 2026-07-23; since the
 // 2026-07-24 cleanup every reference from the curated side (skills'
-// restsOn, errors' corrupts, rules' summarizes) lands on a
+// restsOn, mistakes' corrupts, rules' summarizes) lands on a
 // card id — the curated layers form a downward-only stack over the tower.
 // Anything else is a dangling reference. Build-time twin of validateLayerRefs.
 const readJSON = f => JSON.parse(fs.readFileSync(f, 'utf8'))
-const errFile = readJSON('src/data/errors.json')
 let bridged = 0
 const cite = (from, id, field, pool) => {
   bridged++
@@ -102,10 +101,10 @@ for (const f of fs.readdirSync('src/data/skills')) {
     for (const sk of g.skills || [])
       for (const id of sk.restsOn || []) cite(sk.id, id, 'restsOn', codes)
 }
-// Errors are one containment tree: `sections[] → groups[] → errors[]` (2026-07-25),
-// the same shape as a fundament layer. Sections are topics, not kinds.
-const allErrors = (errFile.sections || []).flatMap(s => (s.groups || []).flatMap(g => g.errors || []))
-for (const e of allErrors)
+// The mistake pool is flat, and hand-authored since 2026-07-31. It replaced the
+// errors tree the sweep used to walk here; errors.json is parked in legacy/ and
+// deliberately outside everything that reads src/data.
+for (const e of readJSON('src/data/mistakes.json').mistakes)
   for (const id of e.corrupts || [])
     cite(e.id, id, 'corrupts', codes)
 // The rules registry gained a layer head (title/blurb/note) on 2026-07-25 and was
