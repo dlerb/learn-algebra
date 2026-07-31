@@ -790,6 +790,7 @@
         "rule.only-multiplication-distributes"
       ],
       "corrupts": [
+        "ax.distributivity",
         "th.binomial-square"
       ]
     },
@@ -816,6 +817,7 @@
         "rule.root-bar-brackets"
       ],
       "corrupts": [
+        "ax.distributivity",
         "th.root-of-product"
       ]
     },
@@ -898,6 +900,7 @@
         "rule.split-numerator"
       ],
       "corrupts": [
+        "ax.distributivity",
         "th.split-numerator"
       ]
     },
