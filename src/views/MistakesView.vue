@@ -19,8 +19,8 @@ import { inspect } from '../inspect'
 // difference in kind is that a rule is true and this is false, which is why the
 // formula column sits under a ✗ where /rules has none.
 //
-// Built ALONGSIDE /errors, not in place of it (src/data/index.ts): this is the
-// parallel build that lets the two be compared on screen before anything is
+// ⚠️ THE PARALLEL BUILD IS OVER (2026-07-31): /errors is retired and this is the
+// ONLY mistake layer. It was built alongside it so the two could be compared
 // migrated. The ids are UNCHANGED from errors.json, so every reverse index below
 // resolves off `skill.errors` without a single skill being touched.
 //
@@ -142,7 +142,7 @@ const brokenRuleSections = computed(() => {
   // would leak into the strip's source link, which addresses the entity and not
   // the position. Deep links resolve by document order, so they land on the
   // primary by construction (families are ordered, and `claimed` is filled in
-  // that order). ⚠️ Known rough edge of this parallel build: two elements then
+  // that order). ⚠️ Known rough edge of this sectioning: two elements then
   // share a DOM id, which is invalid even though every resolver involved —
   // getElementById, querySelector, vue-router's scrollBehavior — is defined to
   // take the first. If this sectioning is kept, LayerRow should grow a separate
@@ -235,7 +235,7 @@ const orphans = computed(() => items.value.filter(i => i.orphan).length)
 // AUTHORS it (`breaks`), because a misconception knows which law it violates
 // while a law does not know which misconceptions exist.
 // Same widths as /rules, so the two pages measure identically when read side by
-// side, which is the whole point of the parallel build.
+// side — which was the point of the parallel build, and is still worth keeping.
 const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem)'
 </script>
 

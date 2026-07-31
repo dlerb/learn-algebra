@@ -65,7 +65,7 @@ const hintInline = () => Boolean(props.hint && !props.right)
    right the row used to say "a−b, b−a, −(b−a)" in one voice, and you had to work
    out which one you were being shown. It is now a table's STUB column: right
    aligned against a fixed track so every stem ends on the same vertical line, and
-   the page paints a continuous rule there (see `.pairs` in ReferenceView). The
+   the page paints a continuous rule there (`.pairs` in the now-deleted ReferenceView). The
    two candidates then read as two claims ABOUT the thing to the left of the rule.
    Right, not left: the stem's job is to abut the rule, and ragged-right stems
    left a gap that varied with the formula's width. */

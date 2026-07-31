@@ -326,7 +326,7 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
              arrival direction is reversed — you reach /errors CARRYING a mistake,
              so recognition leads; you reach /skills to learn a capability, so the
              correct form leads and the tempting one hangs off it.
-             ⚠️ 40 of 74 blocks are empty today and that is honest, not broken:
+             ⚠️ 10 of 74 blocks are empty today and that is honest, not broken:
              all 10 transformation skills still need their ✗ authored, and the 20
              classification/chunking skills have a wrong ANSWER (a name, a
              decomposition) rather than a false equation — which is the frozen

@@ -4,6 +4,50 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## ✅ DONE 2026-07-31 — THE REST OF THE DAY, after the pruning and naming passes
+
+Everything below is merged and green. Recorded because the *reasons* are what stop each
+being re-litigated; the plans are spent.
+
+**THE MISTAKE POOL BECAME PRIMARY.** `shortName` + `mnemonic` on both pools; `gen-mistakes.py`
+deleted (537 lines) once the derivation was false in both directions; `/errors` retired and
+`errors.json` parked in `legacy/`. See the housekeeping entries below for each.
+
+**THREE MISTAKE FAMILIES**, from 1: `anti.forced-move` (8), `mis.term-misread` = Lesefehler
+(15, membership DERIVED — it breaks a `read-the-term-first` rule), `anti.freshmans-dream` (3).
+Family-less went 24 → 9.
+
+**THE PROHIBITION SWEEP.** Every rule whose sentence says never/only/nicht/nur, cross-checked
+against what any mistake `breaks`. Three had nothing pointing back, so three mistakes were
+authored: `anti.cancel-over-sum`, `anti.split-denominator`, `anti.associate-everything`.
+⚠️ The third was a hole this same session opened — `rule.only-plus-and-times-associate` was
+added hours earlier with no mistake to break it.
+
+**FOUR SPLITS OF ONE SHAPE.** `exponent-counts-factors` (a¹ and a⁰), `power-over-product`
+(power and root), `power-of-power`, `power-over-quotient`, then `anti.linearity` (power and
+root). ⚠️ **An entry carrying two latex forms is usually two entries** — that is the rule the
+day produced, and it held five times.
+
+**FIVE MIS-CITATIONS OF ONE SHAPE**, all the same disease the pruning pass opened with: a skill
+citing a DECODER where the rule that states its form sat uncited. `minus-over-sum`,
+`multiplication-commutative`, `repeated-addition`, `no-cancelling-in-a-sum`, and the root skill
+citing `power-over-product` because no root rule existed.
+
+**"Mistakes no skill drills" IS NOW EMPTY** — `skill.subtraction-not-associative`,
+`skill.division-not-associative` and `skill.sum-of-squares` authored; 72 → 74 skills.
+
+**UI**: `/rules` gained section-by (nothing · family · register), `/mistakes` gained a third
+axis (family), the nav stopped drawing a hierarchy it cannot draw, and `src/data/curated/`
+now mirrors `src/data/fundament/`.
+
+⚠️ **`pnpm validate` WAS GREEN BY LUCK ~90% OF THE TIME.** Compute Engine falls back to numeric
+sampling; `isEqual` on the same two objects returned false 20 times in 200. Fixed by exemption,
+but **a green run is not proof the check was decided** — measured over 40 sweeps, one entry
+flickered. Author new `right[]` forms against a repeated check, as
+`skill.division-not-associative` was.
+
+---
+
 ## ✅ DONE 2026-07-31 — THE PRUNING PASS, AND THE NAMING PASS IT TURNED INTO
 
 Eleven skills pruned, 11 citations removed (91 → 80), then the three flagged calls, then a
@@ -706,12 +750,9 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
   the warning. Their content lives on in `anti.linearity`; what is missing is a way to print it.
   A `sheetGroup` would need to take mistake ids alongside rule ids, and `/sheets` a ✗ register.
 
-- [ ] **Two view files carry pre-rename names** (2026-07-30). `/skills` renders
-  `TaxonomyView.vue` — the name predates the taxonomy → skills rename — and `/errors` renders
-  `ReferenceView.vue`, from when it was the only reference page. **`SkillsView.vue` and
-  `ErrorsView.vue`.** Every other view is named for its route (`RulesView`, `SheetsView`,
-  `MistakesView`, `OverviewView`), so these two are the odd ones out. Mechanical: the files, the
-  imports in `router.ts`, and nothing else.
+- [x] **Both pre-rename view files are gone (2026-07-31).** `TaxonomyView.vue` →
+  **`SkillsView.vue`**, and `ReferenceView.vue` was deleted outright with `/errors`. Every view
+  is now named for its route.
 
 - [x] **THE POOL STOPPED BEING GENERATED (2026-07-31).** `scripts/gen-mistakes.py` is deleted
   (537 lines), `pnpm validate` lost its drift-check step, and `POOL_ONLY` / `RETIRED` stopped
