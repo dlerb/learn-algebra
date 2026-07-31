@@ -4,6 +4,49 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## 🔵 NEXT SESSION — TWO CANDIDATES (author's handover, 2026-07-31)
+
+**Pick one; they are not related and neither blocks the other.**
+
+### A. Further revision of rules · mistakes · skills
+
+Editorial, and the day just showed the method works. The live leads, all measured and all in
+HOUSEKEEPING below with their evidence:
+
+- **22 rules cited by no mistake and no skill** — mostly power laws, fraction laws and binomial
+  formulas. ⚠️ **This is a COVERAGE gap, not a citation gap**: the rules are right, no skill
+  teaches that ground yet. Authoring power/fraction skills is the work, not authoring rules.
+- **9 mistakes still have no family**, and 7 correctly have no `shortName`. Both may simply be
+  the honest end state — *better none than a contrived one* — but neither has been re-read since
+  the families landed.
+- **`rule.unlike-terms-stay` summarizes nothing**, the only one of 62. Its latex `ax + bx =
+  (a+b)x` is distributivity backwards, so `ax.distributivity` + `th.collect-like-terms` is the
+  obvious fix; left alone because `anti.conjoining`'s note says it "links to no true law", which
+  is true of the MISTAKE and not of the rule.
+- **`sum-of-products` vs `implicit-chunking` still share a stimulus and a `right[]`** (below).
+- **2 skills no mistake reaches**: `skill.bracket-types`, `skill.addition-commutative`.
+
+⚠️ **The two rules the day produced apply to any such pass**: an entry carrying two latex forms
+is usually two entries (held five times), and a skill citing a DECODER where its form-stating
+rule sits uncited (found five times).
+
+### B. The schema attached to each skill
+
+⚠️ **AMBIGUOUS AS STATED — ASK BEFORE STARTING.** Two different things could be meant:
+
+1. **JSON Schema for IDE authoring** — the existing item near the end of HOUSEKEEPING:
+   `z.toJSONSchema(skill, { io: 'input' })` registered in `.vscode/settings.json` so authoring
+   `src/data/curated/skills/*.json` gets autocomplete and inline validation. Mechanical, small,
+   and pure authoring ergonomics.
+2. **The per-skill DRILL schema** — what a `task` looks like for a given skill, which is the
+   half of the drill thread that was never built. ⚠️ `task` was deliberately excluded from the
+   skill model ("`task` belongs to the drill"), and the drill layer's shape is still open —
+   which is exactly why `legacy/errors_legacy.json` was parked whole rather than migrated.
+
+These are unrelated in size and risk: (1) is an afternoon, (2) reopens the drill design.
+
+---
+
 ## ✅ DONE 2026-07-31 — THE REST OF THE DAY, after the pruning and naming passes
 
 Everything below is merged and green. Recorded because the *reasons* are what stop each
