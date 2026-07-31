@@ -20,6 +20,10 @@
         "en": "Side by side means times",
         "de": "Nebeneinander heisst mal"
       },
+      "label": {
+        "en": "Invisible dot",
+        "de": "Unsichtbarer Punkt"
+      },
       "latex": [
         "ab = a \\cdot b"
       ],
@@ -38,6 +42,10 @@
       "rule": {
         "en": "A missing coefficient is a 1",
         "de": "Ein fehlender Koeffizient ist eine 1"
+      },
+      "label": {
+        "en": "Invisible one",
+        "de": "Unsichtbare Eins"
       },
       "latex": [
         "a = 1 \\cdot a"
@@ -207,6 +215,10 @@
         "en": "A minus is one of two things",
         "de": "Ein Minus ist eines von zwei Dingen"
       },
+      "label": {
+        "en": "The two roles of the minus",
+        "de": "Die zwei Rollen des Minus"
+      },
       "latex": [
         "a - b = a + (-b)"
       ],
@@ -283,6 +295,10 @@
         "en": "Flip every sign inside the bracket",
         "de": "Alle Vorzeichen in der Klammer wechseln"
       },
+      "label": {
+        "en": "Sign change",
+        "de": "Vorzeichenwechsel"
+      },
       "latex": [
         "-(a+b) = -a - b"
       ],
@@ -301,6 +317,10 @@
       "rule": {
         "en": "Flip every sign in the bracket you subtract",
         "de": "Beim Subtrahieren einer Klammer alle Vorzeichen darin wechseln"
+      },
+      "label": {
+        "en": "Dissolving a minus bracket",
+        "de": "Minusklammer auflösen"
       },
       "latex": [
         "a - (b+c) = a - b - c",
@@ -341,6 +361,10 @@
         "en": "Brackets carry an implicit operation in front",
         "de": "Vor einer Klammer steht eine unsichtbare Operation"
       },
+      "label": {
+        "en": "Invisible dot before a bracket",
+        "de": "Unsichtbarer Punkt vor der Klammer"
+      },
       "latex": [
         "a(b+c) = a \\cdot (b+c)",
         "-(b+c) = (-1) \\cdot (b+c)"
@@ -361,6 +385,10 @@
       "rule": {
         "en": "Exponents bind tighter than coefficients and signs",
         "de": "Exponenten binden stärker als Koeffizienten und Vorzeichen"
+      },
+      "label": {
+        "en": "Powers before products",
+        "de": "Potenz vor Punkt"
       },
       "latex": [
         "-a^2 = -(a^2)"
@@ -772,6 +800,10 @@
         "en": "The fraction bar is a bracket",
         "de": "Der Bruchstrich ist eine Klammer"
       },
+      "label": {
+        "en": "The bar brackets",
+        "de": "Bruchstrich klammert"
+      },
       "latex": [
         "\\frac{a+b}{c} = \\frac{(a+b)}{c}"
       ],
@@ -1127,6 +1159,10 @@
         "en": "The main operation is the one you would do last",
         "de": "Die Hauptoperation ist die, die man zuletzt ausführt"
       },
+      "label": {
+        "en": "Main operation",
+        "de": "Hauptoperation"
+      },
       "note": {
         "en": "If you evaluated the expression step by step, the operation you would do last is the dominant one. Everything else happens inside chunks.",
         "de": "Würdest du den Term Schritt für Schritt ausrechnen, wäre die zuletzt ausgeführte Operation die dominante. Alles andere passiert innerhalb von Chunks."
@@ -1148,6 +1184,10 @@
       "rule": {
         "en": "Brackets make a chunk",
         "de": "Klammern bilden einen Chunk"
+      },
+      "label": {
+        "en": "Brackets first",
+        "de": "Klammer zuerst"
       },
       "note": {
         "en": "Whatever is inside brackets is a single object. The dominant operation is always outside all brackets.",
@@ -1223,6 +1263,10 @@
         "en": "Leave unlike terms alone",
         "de": "Ungleiche Terme stehen lassen"
       },
+      "label": {
+        "en": "Like terms",
+        "de": "Gleichartige Terme"
+      },
       "latex": [
         "ax + bx = (a+b)x"
       ],
@@ -1239,6 +1283,10 @@
       "rule": {
         "en": "Find the pair that multiplies to the constant and adds to the middle",
         "de": "Das Paar finden, das die Konstante ergibt und die mittlere Zahl summiert"
+      },
+      "label": {
+        "en": "Vieta's formula",
+        "de": "Satz von Vieta"
       },
       "latex": [
         "(x+m)(x+n) = x^2 + (m+n)x + mn"

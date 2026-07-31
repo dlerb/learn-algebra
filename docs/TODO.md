@@ -121,12 +121,32 @@ have run out; the 19 remaining need the AUTHOR's classroom names or none.
 
 ### 🔵 Two new items the naming pass left behind
 
-- **NAME THE 19 READING RULES, or decide they stay unnamed.** Only the author can: these are
-  classroom names, not official ones. In descending order of how often a skill cites them:
-  `dominant-op-last` (10), `three-minuses` (6), `juxtaposition` (5), `bracket-chunk` (5),
-  `implicit-op-before-bracket` (4), `exponent-binds-tighter` (4), `unlike-terms-stay` (3),
-  `fraction-bar-brackets` (3), then twelve with 1–2. Naming the top five flips `/skills` from
-  mostly-sentences to mostly-names.
+- [x] **NAME THE READING RULES — done 2026-07-31.** 12 labels; **67 of 77 citations now show a
+  name (87%)**, up from 22. ⚠️ "19 reading rules" was a MIS-FRAMING: only 8 were
+  `read-the-term-first`, and four of the rest already had current names nobody had looked for.
+  - **THE PRECEDENCE CHAIN WAS ALREADY THERE.** *"Klammer vor Potenz vor Punkt vor Strich"* is
+    standard, and `multiplication-binds-tighter` had been given *Punkt vor Strich* without
+    noticing it was one link. `bracket-chunk` → **Klammer zuerst**, `exponent-binds-tighter` →
+    **Potenz vor Punkt**. Three loose sentences became one recitation, and none of it is coined.
+  - Already-current names: `minus-over-bracket` → **Vorzeichenwechsel**, `unlike-terms-stay` →
+    **Gleichartige Terme**, `quadratic-pair` → **Satz von Vieta** (⚠️ the standard statement uses
+    the roots, so its $m,n$ are the negatives of this rule's — the author accepted the
+    convention), `subtract-a-bracket` → **Minusklammer auflösen**.
+  - Coined as a SET, the author's: everything notation leaves out is *unsichtbar*, and it is a
+    **Punkt**, never a "Mal" — so the vocabulary matches Punkt vor Strich instead of competing
+    with it. `invisible-one`, `juxtaposition`, `implicit-op-before-bracket`,
+    `fraction-bar-brackets`, plus `dominant-op-last` → **Hauptoperation** and `three-minuses` →
+    **Die zwei Rollen des Minus**.
+  - ⚠️ **`Vorzeichenwechsel` DOES NOT REOPEN THE NOTATION RECKONING**, and this was measured, not
+    assumed. All 7 surviving uses of *Vorzeichen* in the data are the TERM-sign sense ("das
+    Vorzeichen des ersten Terms", "alle Vorzeichen in der Klammer wechseln"). What was retired is
+    the NUMERAL-sign sense — a sign living inside the number. Different object; the kept sense is
+    the only one the data ever used.
+  - **7 left deliberately unnamed** (`power-vs-coefficient`, `binomials-read-backwards`,
+    `minus-times-minus`, `fraction-minus-moves`, `divide-by-one-and-self`, `split-numerator`,
+    `dominant-op-tools`). Each would only restate its own sentence in fewer words, and
+    *"Minus mal Minus gibt Plus"* IS the name already. **The fallback to the sentence exists for
+    exactly this — a made-up name is worse than a sentence that works.**
 - **`skill.zero-and-one-exponents` should probably split**, mirroring the rule split. Its
   stimulus is `a^0` with right form `1`, so it now cites `rule.exponent-zero` alone — but its
   name and note promise `a^1 = a` too. **`rule.exponent-one` is cited by no skill.** The rule
