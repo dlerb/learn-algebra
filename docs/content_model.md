@@ -772,9 +772,11 @@ times is ordinary. It differs from `ruleDef` in five ways, in order of weight:
 
 ⚠️ **`mistake` is the belief stated from the INSIDE** — "Every minus is a subtraction", not
 the error layer's outside naming ("Losing one of two minuses") — so it reads as a claim that
-can be marked ✗ exactly as a rule reads as one that can be marked ✓. That rewrite was the only
-authoring; everything else is derived, which is why the file is GENERATED
-(`scripts/gen-mistakes.py`) while `errors.json` still exists beside it.
+can be marked ✗ exactly as a rule reads as one that can be marked ✓. That rewrite was once the
+only authoring, which is why the file was GENERATED from `errors.json` — but the pool has since
+outgrown its source (10 entries with no twin, one twin retired), so it is **hand-authored since
+2026-07-31** and the generator is deleted. `errors.json` stays beside it, legacy and frozen,
+still backing `/errors` with the 52 instances and 29 fixes the pool never took.
 
 **No `group` field, and none is wanted: `breaks` IS the family.** Six rules are broken by 2–3
 mistakes each and 15 mistakes break a rule nobody else breaks. The grouping is causal rather

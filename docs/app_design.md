@@ -236,9 +236,13 @@ their classroom says is worse off than one shown nothing.
   real id — invalid HTML, though every resolver involved takes the first, which is the primary
   by construction. `LayerRow` needs a separate `anchor` prop so the id stops doing two jobs
   (entity address *and* page position).
-- ⚠️ **`mistakes.json` is a GENERATED MIRROR of `errors.json`** — `pnpm gen-mistakes` rebuilds,
-  `pnpm validate` fails with a diff on drift, and `scripts/content-ids.mjs` excludes it from
-  the global id-uniqueness walk because it reuses errors.json's ids on purpose.
+- ⚠️ **`mistakes.json` IS HAND-AUTHORED (since 2026-07-31)** and `scripts/gen-mistakes.py` is
+  deleted. It was a generated mirror of `errors.json` until the derivation stopped being true
+  in both directions — 10 pool entries had no errors.json twin, one errors.json entry had been
+  retired from the pool — and the generator had grown two escape hatches whose only job was to
+  let the two files disagree. `scripts/content-ids.mjs` still shadows one of the pair, but the
+  direction is REVERSED: the pool is walked and editable, **`errors.json` is the shadow**, which
+  also means the in-app editor can no longer reach errors.json prose.
 
 **`/sheets` uses the shell differently, and that is the point.** A cheat sheet is not a row —
 a row is four columns of prose with one formula; a sheet is formulas under headings. So it
