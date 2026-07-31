@@ -83,11 +83,6 @@ export interface LayerRef {
    *  its own data head (see the import-cycle note above). */
   title: string
   family: LayerFamily
-  /** Depth in the curated stack, for the nav to indent by (2026-07-28). The
-   *  curated side is no longer a flat list of three: rules is the pool, sheets
-   *  and errors both sit on it, and skills sits on everything. Display only —
-   *  nothing validates against it, and the real dependency is the refs. */
-  level?: number
 }
 
 /** A tower layer, which additionally carries its cards tree. */
@@ -103,18 +98,20 @@ export const layers: Layer[] = [
   { id: 'terms', slug: 'terms', title: 'Term manipulations', family: 'fundament', data: terms as unknown as LayerData },
 ]
 
-/** The curated layers, ordered bottom-up and levelled by what they consume:
+/** The curated layers, ordered bottom-up by what they consume:
  *
  *      rules            the pool of student-facing sentences
  *      ├── sheets       presentation over the pool: which rules, grouped how
  *      └── mistakes     the negative pool, each citing the rule it breaks
  *          └── skills   the interventions, citing mistakes, rules and cards
  *
- *  ⚠️ ARRAY ORDER IS PART OF THE DRAWING (2026-07-31). The nav draws a `└` and
- *  indents by level, so a nested child must come IMMEDIATELY AFTER its parent.
- *  `sheets` used to sit between `mistakes` and `skills`, which put the indented
- *  `skills` under `sheets` and said the one thing that is false: skills cite
- *  mistakes, rules and cards, and never a sheet. Order here = the tree above.
+ *  ⚠️ THE NAV DOES NOT DRAW THIS, AND A `level` FIELD FOR IT WAS DELETED
+ *  (2026-07-31). It is a DAG, not a tree: skills cite mistakes AND rules AND
+ *  cards, so one indent column must pick a single parent and hide the others —
+ *  which is how `skills` came to read as a child of `sheets`. Array order below
+ *  is bottom-up and says only "read them in this order". The graph itself is
+ *  drawn at `/` (OverviewView), where every edge is a labelled arrow and no
+ *  relationship has to be implied by position.
  *
  *  Titles are the student-facing page names (2026-07-25) — the nav used to say
  *  "Errors" while the page said "Common mistakes". "Reading rules" became "All
@@ -122,15 +119,16 @@ export const layers: Layer[] = [
  *  a minority of it, and "all" is what distinguishes the list from a sheet,
  *  which is a selection. */
 export const curatedLayers: LayerRef[] = [
-  { id: 'rules', slug: 'rules', title: 'All rules', family: 'curated', level: 0 },
-  { id: 'cheatsheets', slug: 'sheets', title: 'Cheat sheets', family: 'curated', level: 1 },
-  // THE MISTAKE POOL — the negative face of the rules pool, sitting ON it: every
-  // entry `breaks` a rule, which is the only pool→pool edge in the design, so it
-  // is level 1 beside sheets rather than level 0 beside rules. Since 2026-07-31
+  { id: 'rules', slug: 'rules', title: 'All rules', family: 'curated' },
+  { id: 'cheatsheets', slug: 'sheets', title: 'Cheat sheets', family: 'curated' },
+  // THE MISTAKE POOL — the negative face of the rules pool and its SIBLING, not
+  // its child: `breaks` is a cross-reference, not composition. A sheet is empty
+  // without the pool; a mistake owns every word it says and merely cites. Since
+  // 2026-07-31
   // it is the only mistake layer — /errors is gone and errors.json is parked in
   // legacy/. See skill.schema → mistakeDef.
-  { id: 'mistakes', slug: 'mistakes', title: 'All mistakes', family: 'curated', level: 1 },
-  { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated', level: 2 },
+  { id: 'mistakes', slug: 'mistakes', title: 'All mistakes', family: 'curated' },
+  { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated' },
 ]
 
 /** Every layer, tower first. Routes and nav are generated from this. */

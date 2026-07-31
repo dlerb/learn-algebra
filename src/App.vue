@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, h } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter, RouterLink, RouterView } from 'vue-router'
 import {
   NConfigProvider, NGlobalStyle, NLayoutHeader, NMenu, NPopover,
@@ -28,26 +28,25 @@ const router = useRouter()
 // leaf keys are route names, and a parent with children just expands (never
 // navigates), so `go` only ever sees a leaf. `route.name` matching a leaf key
 // auto-highlights that leaf and its parent.
-// THE CURATED STACK, drawn rather than merely indented: a `└` in the margin says
-// "this one sits on the one above", where whitespace alone only said "these are
-// not the same". Display only — the real dependency is the refs between layers.
+// ⚠️ FLAT, AND DELIBERATELY (2026-07-31). The menu used to draw a `└` and indent
+// by a `level` field. It could not tell the truth: the curated layers are a DAG,
+// not a tree — skills cite mistakes AND rules AND cards — so a single indent
+// column has to pick one parent and hide the rest. It picked whatever sat above,
+// which made Skills read as a child of Cheat sheets, an edge that does not exist.
+// Demoting mistakes under rules to repair that was worse still: `breaks` is a
+// cross-reference, not composition. A sheet owns nothing and is empty without the
+// pool; a mistake owns every word it says and merely cites one.
+//
+// So the nav is now a plain list, and the DAG is drawn where it can be drawn
+// properly — the Overview graph at `/`, with one labelled arrow per field.
 const layerMenu = (family: 'fundament' | 'curated') =>
-  layersOf(family).map(l => ({
-    label: l.level
-      ? () => h('span', { style: { paddingLeft: `${(l.level! - 1) * 14}px` } }, [
-          h('span', { style: { color: 'var(--text-faint)', marginRight: '.35rem' } }, '\u2514'),
-          l.title,
-        ])
-      : l.title,
-    key: l.slug,
-  }))
+  layersOf(family).map(l => ({ label: l.title, key: l.slug }))
 
 const menuOptions: MenuOption[] = [
   { label: 'Fundament', key: 'tower-menu', children: layerMenu('fundament') },
-  // Curated is ordered and levelled in the manifest to echo its own stack:
-  // rules at the base, sheets and mistakes on it, skills over mistakes.
-  // ⚠️ The indent draws a PARENT-CHILD edge, so manifest order matters as much
-  // as `level` does — see the warning on curatedLayers.
+  // Curated is still ORDERED bottom-up in the manifest — rules, sheets,
+  // mistakes, skills — which claims only "read them in this order", never
+  // "this one is under that one".
   { label: 'Curated', key: 'curated-menu', children: layerMenu('curated') },
   { label: 'Tutorial', key: 'tutorial' },
   { label: 'Drills', key: 'drills' },
