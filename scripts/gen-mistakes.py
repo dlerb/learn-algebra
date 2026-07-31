@@ -160,14 +160,49 @@ M = {
 # id -> (en, de) THE HANDLE, not the sentence — the same field a rule carries and
 # for the same reason: /skills prints the name in the ✗ column and links out, and
 # a name trains recognition where a sentence only gets read.
-SHORT = {}
+SHORT = {
+ # ⚠️ A MISTAKE'S NAME MUST READ AS AN ERROR UNDER A ✗ (2026-07-31). A rule's
+ # shortName names what you do RIGHT; a mistake's must name what GOES WRONG, and
+ # the pool has exactly two shapes that pass: the PROHIBITION ("Kein Kürzen über
+ # Summen") and the DONE-WRONG PARTICIPLE ("übersehen", "gerechnet"). Anything
+ # else is a topic label wearing an error's clothes — "Von links nach rechts" is
+ # an order, "Von links nach rechts gerechnet" is a mistake.
+ #
+ # ⚠️ AND IT MUST BE A NAME A STUDENT HEARS, not one a teacher reads. Nine
+ # candidates were rejected on this: "Linearitätsfehler" is a term from
+ # maths-education RESEARCH, and "Zusammenziehen" / "Buchstabe als Etikett" are
+ # diagnosis language — what a teacher says ABOUT a student. Better no shortName
+ # than a contrived one; most of this pool correctly has none.
+ 'mis.precedence-ignored':      ('Computed left to right', 'Von links nach rechts gerechnet'),
+ 'sal.implicit-op-overlooked':  ('Invisible dot missed',   'Unsichtbarer Punkt übersehen'),
+ 'mis.invisible-one-lost':      ('Invisible one missed',   'Unsichtbare Eins übersehen'),
+ 'anti.commute-everything':     ('No swapping across a minus', 'Kein Vertauschen über Minus'),
+ 'anti.partial-distribution':   ('Half-distributed',       'Halb ausmultipliziert'),
+}
 
 # id -> {'en'/'de': device}. A MEMORY DEVICE — rhyme, acronym, cadence.
 # ⚠️ If it is merely short it belongs in SHORT. The rules pool had 3 of 7 wrong.
 MNEM = {}
 
 FAMILY = {
- 'anti.linearity':           'anti.forced-move',
+ # The one shape inside the forced-move basket worth naming on its own.
+ 'anti.linearity':           'anti.freshmans-dream',
+ # Lesefehler — every mistake that breaks a `rule.read-the-term-first` rule.
+ 'mis.precedence-ignored':         'mis.term-misread',
+ 'mis.exponent-scope':             'mis.term-misread',
+ 'anti.bracket-dissolved':         'mis.term-misread',
+ 'sal.loudest-op-wins':            'mis.term-misread',
+ 'omi.redundant-brackets-kept':    'mis.term-misread',
+ 'anti.repetition-confusion':      'mis.term-misread',
+ 'mis.root-scope':                 'mis.term-misread',
+ 'mis.fraction-bar-grouping-lost': 'mis.term-misread',
+ 'mis.linear-slash-overgrouped':   'mis.term-misread',
+ 'mis.bar-not-division':           'mis.term-misread',
+ 'mis.juxtaposition-as-plus':      'mis.term-misread',
+ 'mis.invisible-one-lost':         'mis.term-misread',
+ 'sal.implicit-op-overlooked':     'mis.term-misread',
+ 'mis.letters-differ':             'mis.term-misread',
+ 'mis.order-blindness':            'mis.term-misread',
  'anti.conjoining':          'anti.forced-move',
  'anti.fraction-addition':   'anti.forced-move',
  'anti.exponent-arithmetic': 'anti.forced-move',
@@ -216,6 +251,61 @@ POOL_ONLY = [
  # ⚠️ THESE ARE NOT IN errors.json AND MUST NOT BE ADDED TO IT. That file is
  # legacy; POOL_ONLY is where a mistake is authored now. They declare their own
  # `topic` rather than inheriting one from the errors tree.
+ # ── LESEFEHLER (2026-07-31), and its membership is DERIVED, not chosen ───────
+ # The ✗ counterpart of the rules pool's `rule.read-the-term-first`, which had no
+ # mirror. A mistake belongs here iff it BREAKS a rule in that family — 15 do, and
+ # none of them had a family before, so nothing had to be taken from anywhere.
+ #
+ # ⚠️ IT IS NOT `kind` UNDER ANOTHER NAME, which is the obvious objection and it
+ # was checked: the 15 span all four kinds (10 misreading, 2 anti-law, 2 salience,
+ # 1 omission), and 4 of the 13 misreadings stay OUT because they are about what a
+ # symbol MEANS rather than how far it REACHES.
+ {
+  'id': 'mis.term-misread',
+  'kind': 'misreading',
+  'head': True,
+  'frequency': 3,
+  'mistake': {
+    'en': 'The term was read wrong before anything was done to it',
+    'de': 'Der Term wurde falsch gelesen, bevor überhaupt gerechnet wurde',
+  },
+  'shortName': {'en': 'Misreading', 'de': 'Lesefehler'},
+  'latex': [],
+  'note': {
+    'en': 'Nothing here is a wrong MOVE — the move may even be correct for the term the student saw. What failed is the reading: how far a bar, a root, an exponent or an invisible operator reaches. That is why these sit together despite spanning every kind, and why the cure is always the same one: read the term first, name the main operation, and only then reach for a rule.',
+    'de': 'Keiner dieser Fehler ist ein falscher SCHRITT — der Schritt kann für den Term, den man gesehen hat, sogar richtig sein. Falsch war das Lesen: wie weit ein Bruchstrich, eine Wurzel, ein Exponent oder ein unsichtbarer Operator reicht. Darum gehören sie zusammen, obwohl sie jede Art umfassen, und darum ist die Abhilfe immer dieselbe: zuerst den Term lesen, die Hauptoperation benennen, und erst dann zu einer Regel greifen.',
+  },
+  'breaks': [],
+  'corrupts': [],
+ },
+ # ── FRESHMAN'S DREAM (2026-07-31, the author's) ──────────────────────────────
+ # $f(a+b) = f(a) + f(b)$ for an $f$ that does no such thing. `anti.forced-move`
+ # stays the general basket; this is the one shape inside it common enough to be
+ # worth naming, and the name is the standard one for $(a+b)^n = a^n + b^n$.
+ #
+ # ⚠️ THE SHORTNAME IS THE SAME IN BOTH LANGUAGES — deliberate, and the only entry
+ # like it. There is no German version in classroom use ("Traum des Erstsemesters"
+ # is a translation nobody says), and the English is memorable enough to be worth
+ # borrowing whole. It passes the reads-as-an-error test by IRONY rather than by
+ # grammar: a dream is exactly a thing that is not true.
+ {
+  'id': 'anti.freshmans-dream',
+  'kind': 'anti-law',
+  'head': True,
+  'frequency': 3,
+  'mistake': {
+    'en': 'Not every operation spreads over a plus',
+    'de': 'Nicht jede Operation verteilt sich über ein Plus',
+  },
+  'shortName': {'en': "Freshman's dream", 'de': "Freshman's dream"},
+  'latex': [],
+  'note': {
+    'en': 'The wish that every operation behaves like multiplication. Multiplication really does spread over a plus, and it is met first and used constantly, so it becomes the shape every other operation is expected to have. It never is: a power, a root and a denominator all fail it. ⚠️ This is the FAMILY, never the diagnosis — a student who wrote $\\sqrt{a^2+b^2} = a+b$ needs to hear which operation failed, not that they dreamt.',
+    'de': 'Der Wunsch, jede Operation verhalte sich wie die Multiplikation. Die Multiplikation verteilt sich wirklich über ein Plus, man begegnet ihr zuerst und braucht sie ständig — also wird sie zur Form, die man von jeder anderen Operation erwartet. Sie hat sie nie: Potenz, Wurzel und Nenner scheitern alle daran. ⚠️ Das ist die FAMILIE, nie die Diagnose: Wer $\\sqrt{a^2+b^2} = a+b$ schreibt, muss hören, welche Operation versagt, nicht dass sie geträumt hat.',
+  },
+  'breaks': [],
+  'corrupts': [],
+ },
  {
   'id': 'anti.cancel-over-sum',
   'kind': 'anti-law',
@@ -241,7 +331,7 @@ POOL_ONLY = [
  {
   'id': 'anti.split-denominator',
   'kind': 'anti-law',
-  'family': 'anti.forced-move',
+  'family': 'anti.freshmans-dream',
   'topic': 'fractions',
   'frequency': 2,
   'mistake': {

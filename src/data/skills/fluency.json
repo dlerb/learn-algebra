@@ -1355,7 +1355,7 @@
           "wrong": [
             {
               "latex": "\\frac{3x+2}{3} = x + 2",
-              "mistake": "anti.linearity"
+              "mistake": "anti.cancel-over-sum"
             }
           ],
           "requires": [
