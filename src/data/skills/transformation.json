@@ -229,7 +229,7 @@
           "wrong": [
             {
               "latex": "x^2 - 1 = (x-1)^2",
-              "mistake": "anti.linearity"
+              "mistake": "anti.power-over-sum"
             }
           ],
           "requires": [

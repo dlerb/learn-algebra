@@ -1070,7 +1070,7 @@
           "wrong": [
             {
               "latex": "(a+b)^2 = a^2 + b^2",
-              "mistake": "anti.linearity"
+              "mistake": "anti.power-over-sum"
             }
           ],
           "requires": [
@@ -1132,11 +1132,11 @@
           "wrong": [
             {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}",
-              "mistake": "anti.linearity"
+              "mistake": "anti.root-over-sum"
             },
             {
               "latex": "\\sqrt{a^2+b^2} = a + b",
-              "mistake": "anti.linearity"
+              "mistake": "anti.root-over-sum"
             },
             {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + b",
@@ -1521,7 +1521,7 @@
           "wrong": [
             {
               "latex": "(a + b)^2 = a^2 + b^2",
-              "mistake": "anti.linearity"
+              "mistake": "anti.power-over-sum"
             }
           ],
           "requires": [
@@ -1551,11 +1551,7 @@
           "wrong": [
             {
               "latex": "a^2 - b^2 = (a - b)^2",
-              "mistake": "anti.linearity"
-            },
-            {
-              "latex": "a^2 + b^2 = (a + b)(a - b)",
-              "mistake": "anti.linearity"
+              "mistake": "anti.power-over-sum"
             }
           ],
           "requires": [
@@ -1571,6 +1567,39 @@
             "ix.precedence",
             "ix.pow",
             "th.negative-base"
+          ]
+        },
+        {
+          "id": "skill.sum-of-squares",
+          "name": {
+            "en": "A sum of two squares does not factor",
+            "de": "Eine Summe zweier Quadrate zerfällt nicht"
+          },
+          "note": {
+            "en": "A FINISHED form. $a^2 - b^2$ factors and $a^2 + b^2$ does not — over the reals it cannot, because it is positive for every $a$ and $b$ that are not both zero. Recognising that there is nothing to do is the skill: the two temptations are to fetch the third binomial formula anyway, and to read the sum as a square it is not.",
+            "de": "Eine FERTIGE Form. $a^2 - b^2$ zerfällt, $a^2 + b^2$ nicht — über den reellen Zahlen kann es das nicht, denn es ist positiv für alle $a$ und $b$, die nicht beide null sind. Zu erkennen, dass hier nichts zu tun ist, IST die Fertigkeit: verlockend sind die 3. binomische Formel trotzdem zu holen und die Summe als ein Quadrat zu lesen, das sie nicht ist."
+          },
+          "stimulus": "a^2 + b^2",
+          "right": [],
+          "wrong": [
+            {
+              "latex": "a^2 + b^2 = (a + b)(a - b)",
+              "mistake": "anti.sum-of-squares-factored"
+            },
+            {
+              "latex": "a^2 + b^2 = (a + b)^2",
+              "mistake": "anti.power-over-sum"
+            }
+          ],
+          "requires": [
+            "skill.difference-of-squares"
+          ],
+          "rules": [
+            "rule.difference-of-squares"
+          ],
+          "restsOn": [
+            "th.difference-of-squares",
+            "th.square-positive"
           ]
         },
         {
@@ -1590,7 +1619,7 @@
           "wrong": [
             {
               "latex": "a^2 + b^2 = (a + b)^2",
-              "mistake": "anti.linearity"
+              "mistake": "anti.power-over-sum"
             }
           ],
           "requires": [
