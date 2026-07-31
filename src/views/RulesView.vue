@@ -7,7 +7,7 @@ import LayerPage from '../components/LayerPage.vue'
 import LayerSection from '../components/LayerSection.vue'
 import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
-import { ruleTree, rules, sheets, errorPatterns, skills } from '../data'
+import { ruleTree, rules, sheets, mistakes, skills } from '../data'
 import { cardIndex } from '../data/layers'
 import { loc, type RuleDef, type LocalizedString } from '../data/skill.schema'
 import { lang } from '../lang'
@@ -44,10 +44,16 @@ const targetId = computed(() => route.hash.slice(1))
 //   skills  — `skill.rules`.
 //   reads   — the one FORWARD edge, `summarizes`: the bridge claim that this
 //             sentence is the student-facing form of those formal statements.
-const preventedBy = (m: RuleDef) => errorPatterns
-  .filter(e => e.rules.includes(m.id))
+// Reads the POOL since 2026-07-31: /errors is gone, so this both resolves against
+// the only mistake layer left and links somewhere that exists. It also shows the
+// name where a mistake has one, the sentence otherwise — the same rule as /skills.
+const preventedBy = (m: RuleDef) => mistakes
+  .filter(e => !e.head && e.breaks.includes(m.id))
   .sort((a, b) => b.frequency - a.frequency)
-  .map(e => ({ id: e.id, name: t(e.name), frequency: e.frequency, to: `/errors#${e.id}` }))
+  .map(e => ({
+    id: e.id, name: e.shortName?.[lang.value] ?? t(e.mistake),
+    frequency: e.frequency, to: `/mistakes#${e.id}`,
+  }))
 
 const drilledBy = (m: RuleDef) => skills
   .filter(s => s.rules.includes(m.id))

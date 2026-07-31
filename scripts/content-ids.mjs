@@ -33,23 +33,6 @@
 import fs from 'node:fs'
 import { contentFiles } from './content-format.mjs'
 
-/** THE SHADOWED FILE — one of two files that deliberately share ids, hidden from
- *  the uniqueness walk so the other can be addressed by them.
- *
- *  ⚠️ THIS USED TO BE `mistakes.json` AND THE DIRECTION IS NOW REVERSED
- *  (2026-07-31). While the pool was generated, `errors.json` held the ids and the
- *  mirror was hidden. The pool is hand-authored now — it has 10 entries
- *  errors.json never had and has retired one it still contains — so the pool is
- *  what an id addresses, and the legacy file is the shadow.
- *
- *  ⚠️ THE COST, STATED RATHER THAN HIDDEN: a shadowed file is invisible to
- *  `locate()` too, so the in-app editor can no longer reach errors.json prose.
- *  That is the right way round — the pool is edited, the legacy file is frozen —
- *  but it is a capability that MOVED, not one that never existed. Exactly one of
- *  the two can be walked while they share ids. */
-const SHADOWED = ['errors.json']
-const isMirror = f => SHADOWED.some(m => f.endsWith(m))
-
 /** Every entity in one parsed document, as `{ id, path }`, where `path` is the
  *  key/index chain from the document root — exactly what a JSON patcher needs.
  *  Recursion is shape-blind on purpose; see the header. */
@@ -66,7 +49,7 @@ export function entityPaths(node, path = [], out = []) {
 /** id → { file, path } across all content files. The editor resolves with this,
  *  but only ever against bytes it has just read — a path is derived from the
  *  same text it is applied to, never cached across a write. */
-export function entityIndex(files = contentFiles().filter(f => !isMirror(f))) {
+export function entityIndex(files = contentFiles()) {
   const index = new Map()
   const duplicates = []
   for (const file of files) {
@@ -90,7 +73,7 @@ export function entityIndex(files = contentFiles().filter(f => !isMirror(f))) {
  *  Resolved fresh on every call against the file as it is on disk right now.
  *  Nothing is cached, so an edit in VS Code between two clicks cannot produce a
  *  stale line. */
-export function locate(id, files = contentFiles().filter(f => !isMirror(f))) {
+export function locate(id, files = contentFiles()) {
   const { index } = entityIndex(files)
   const hit = index.get(id)
   if (!hit) return null
@@ -107,7 +90,7 @@ export function locate(id, files = contentFiles().filter(f => !isMirror(f))) {
 // CLI: `node scripts/content-ids.mjs` checks the invariant,
 //      `node scripts/content-ids.mjs <id>` prints one entity's source location.
 if (import.meta.filename === process.argv[1]) {
-  const files = contentFiles().filter(f => !isMirror(f))
+  const files = contentFiles()
   const wanted = process.argv[2]
   if (wanted) {
     const hit = locate(wanted, files)

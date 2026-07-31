@@ -113,13 +113,13 @@ export const layers: Layer[] = [
  *  which is a selection. */
 export const curatedLayers: LayerRef[] = [
   { id: 'rules', slug: 'rules', title: 'All rules', family: 'curated', level: 0 },
-  // THE PARALLEL BUILD (2026-07-28): the negative face of the rules pool, sitting
-  // beside it at level 0 and shown next to /errors so the two treatments of the
-  // same content can be compared before either is migrated. See skill.schema →
-  // mistakeDef for how the two pools differ.
+  // THE MISTAKE POOL — the negative face of the rules pool, beside it at level 0.
+  // It began (2026-07-28) as a parallel build shown next to /errors so the two
+  // treatments of the same content could be compared; that comparison is over.
+  // /errors is gone and errors.json is parked in legacy/, so this is the only
+  // mistake layer. See skill.schema → mistakeDef.
   { id: 'mistakes', slug: 'mistakes', title: 'All mistakes', family: 'curated', level: 0 },
   { id: 'cheatsheets', slug: 'sheets', title: 'Cheat sheets', family: 'curated', level: 1 },
-  { id: 'errors', slug: 'errors', title: 'Common mistakes', family: 'curated', level: 1 },
   { id: 'skills', slug: 'skills', title: 'Skills', family: 'curated', level: 2 },
 ]
 

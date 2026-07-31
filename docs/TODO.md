@@ -726,15 +726,25 @@ something else. `Term`, `Gestalt` and `Einheit` carry the most load.
   instances, 29 fixes and 14 hints — only 24 of the 52 have a twin in `skill.wrong`. Retiring the
   page is a separate, product-shaped decision; see the next item.
 
-- [ ] **`errors.json` STAYS FOR NOW (decided 2026-07-29)** and is the only home of **50
-  instances, 28 `fix` strings and 14 hints**. `mistakes.json` took only the general half.
-  ⚠️ **`mistakes.json` is a GENERATED MIRROR** — `pnpm gen-mistakes` rebuilds it, `pnpm
-  validate` fails with a diff on drift, and `scripts/content-ids.mjs` excludes it from the
-  global id-uniqueness walk because it reuses errors.json's ids on purpose. **If the pool ever
-  stops being generated, delete that exclusion and give it its own ids.**
-- [ ] **Dissolving `errors.json`** means moving the 50 instances onto skills (18 already have a
-  twin in `skill.wrong`) and splitting the 28 fixes — of three measured, one worked a case and
-  two restated the rule. Not urgent while drift is guarded.
+- [x] **THE ERROR LAYER IS RETIRED (2026-07-31) — a clean cut, not a migration.**
+  `/errors` is gone, `ReferenceView.vue` is deleted, and `errors.json` is parked at
+  `legacy/errors_legacy.json` (outside `src/data`, so nothing walks, formats, validates or
+  ships it). `legacy/README.md` records what is in it and why it stayed whole.
+  ⚠️ **`fix`, `instances` and `hint` were NOT migrated, and that was the decision, not an
+  oversight.** They are **DRILL-shaped, not reference-shaped**: a `fix` is feedback after an
+  attempt and an `instance` is a worked case. Moving them onto skills or mistakes would have
+  put them in the wrong home purely to avoid deleting them, and baked in guesses about a drill
+  layer whose shape is still open. **The drill layer may reuse them as they stand or start from
+  scratch — that is unknown today, and parking keeps the choice open.**
+  What came with it: `errorDef`/`ErrorTree`/`parseErrorTree`/`validateErrors` deleted from the
+  schema (167 lines); `validateLayerRefs`, `validateLatexCompiles` and `auditCoverage` now read
+  the POOL; `content-ids.mjs` lost `SHADOWED` entirely, because the two files that shared ids no
+  longer both ship; `/rules`' *prevented by* strip and the Overview tile point at `/mistakes`.
+  ⚠️ **AND IT IMMEDIATELY CAUGHT A BUG.** `validateLatexCompiles` had never looked at mistake
+  notes — it looked at errors.json's — so pointing it at the pool found **10 lost backslashes**
+  in `anti.cancel-over-sum` and `anti.split-denominator`: `\frac` written in a NON-RAW Python
+  string in the old generator became a FORM FEED. The generator's own docstring warned about
+  exactly this for `\;`. Both notes were authored the same morning and nothing had checked them.
 - [ ] **Repoint `skill.minus-on-fraction`** at `anti.minus-on-both-parts` and drop
   `mis.minus-roles-confused`. It was kept only because a drill's `explainedBy` named it, and
   **drill data is now disposable** — fix or delete that drill entry alongside.

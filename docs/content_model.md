@@ -81,7 +81,7 @@ validated by `skill.schema.ts` on load. The layers:
   (`lawGroups`/`lawKinds`/`conventionGroups`), the Zod schemas and the reference view's
   law/convention segments all went with them; `ReferenceView` is now an errors page.
 - **errors** (`errors.json`) — the error patterns that shadow the tower; each
-  `corrupts` a card. Browsed at `/errors` (`ReferenceView`, now errors-only).
+  `corrupts` a card. ⚠️ RETIRED 2026-07-31 — browse the pool at `/mistakes` instead.
 - **rules** (`rules.json`, renamed from `metapatterns.json` 2026-07-27) — the **DO/IS
   registry**: student-facing one-liners, each either what a written form IS (decoding) or
   what to DO with it. 25 sentences, 18 IS / 7 DO. Cited by errors (`error.rules`) and
@@ -107,7 +107,7 @@ and audit themselves, they do not generate them. Group **display** metadata
 (a group node carries its own title/blurb; array order = display order) — the old
 sibling registries `skillGroups.json` / `skillKinds.json` were absorbed and
 deleted (2026-07-24), and `parseSkillTree` derives the flat `groups` / `skillKinds`
-lists from the tree. Browse errors at `/errors`, skills in the **Taxonomy view**
+lists from the tree. Browse mistakes at `/mistakes`, skills in the **Taxonomy view**
 (`/skills`), the tower one page per layer (`/fundamentals`, `/numbers`, `/powers`,
 `/terms`).
 This doc records the *why*, not the content tables (they would drift).
@@ -776,7 +776,10 @@ can be marked ✗ exactly as a rule reads as one that can be marked ✓. That re
 only authoring, which is why the file was GENERATED from `errors.json` — but the pool has since
 outgrown its source (10 entries with no twin, one twin retired), so it is **hand-authored since
 2026-07-31** and the generator is deleted. `errors.json` stays beside it, legacy and frozen,
-still backing `/errors` with the 52 instances and 29 fixes the pool never took.
+**and on 2026-07-31 `/errors` was retired**: the page is gone, `ReferenceView` is deleted, and
+`errors.json` is parked at `legacy/errors_legacy.json` with its 52 instances and 29 fixes intact.
+Those are drill-shaped — a `fix` is feedback after an attempt — so they were deliberately NOT
+migrated onto skills or mistakes; see `legacy/README.md`.
 
 **No `group` field, and none is wanted: `breaks` IS the family.** Six rules are broken by 2–3
 mistakes each and 15 mistakes break a rule nobody else breaks. The grouping is causal rather

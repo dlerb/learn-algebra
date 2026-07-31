@@ -11,7 +11,6 @@ import { allLayers } from './data/layers'
 // grading) code-splits off the reference pages. The tower shares one view
 // parameterized by `layerId`; each curated layer has its own.
 const viewOf: Record<string, () => Promise<unknown>> = {
-  errors: () => import('./views/ReferenceView.vue'),
   rules: () => import('./views/RulesView.vue'),
   mistakes: () => import('./views/MistakesView.vue'),
   cheatsheets: () => import('./views/SheetsView.vue'),

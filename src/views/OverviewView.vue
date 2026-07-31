@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { skills, errorPatterns, rules, sheets } from '../data'
+import { skills, mistakes, rules, sheets } from '../data'
 import { layers, cardIndex } from '../data/layers'
 
 // THE REFERENCE GRAPH as a clickable stack, and every arrow points DOWN.
 //
 // Redrawn 2026-07-28, when the curated side stopped being three flat lenses:
-// rules is the POOL at the base of it, sheets and errors both sit on the pool,
-// and skills sits on everything. The old picture had errors and rules as
+// rules is the POOL at the base of it, sheets and mistakes both sit on the pool,
+// and skills sits on everything. The old picture had mistakes and rules as
 // siblings, which stopped being true the moment an error cited a rule.
 const router = useRouter()
 const go = (path: string) => router.push(path)
@@ -15,7 +15,7 @@ const go = (path: string) => router.push(path)
 const n = {
   cards: cardIndex.size,
   skills: skills.length,
-  errors: errorPatterns.length,
+  mistakes: mistakes.length,
   rules: rules.length,
   sheets: sheets.length,
 }
@@ -37,7 +37,7 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
     </div>
 
     <svg class="diagram" viewBox="0 0 820 560" role="img"
-         aria-label="Reference graph: skills cite errors, rules and cards; errors cite rules and cards; cheat sheets cite rules; rules cite cards.">
+         aria-label="Reference graph: skills cite mistakes, rules and cards; mistakes cite rules and cards; cheat sheets cite rules; rules cite cards.">
       <defs>
         <marker id="ov-arrow" viewBox="0 0 10 10" refX="9" refY="5"
                 markerWidth="7" markerHeight="7" orient="auto">
@@ -57,7 +57,7 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
       <path class="edge" d="M 530 52 C 792 70, 792 330, 706 398" marker-end="url(#ov-arrow)" />
 
       <!-- edge labels: the actual field names -->
-      <text class="edge-label" x="288" y="112" text-anchor="middle">errors</text>
+      <text class="edge-label" x="288" y="112" text-anchor="middle">mistakes</text>
       <text class="edge-label" x="420" y="196" text-anchor="start">rules</text>
       <text class="edge-label" x="292" y="262" text-anchor="middle">rules</text>
       <text class="edge-label" x="536" y="262" text-anchor="middle">rules</text>
@@ -74,13 +74,13 @@ const chips = layers.map((l, i) => ({ slug: l.slug, title: l.title, x: 80 + i * 
         <text class="box-sub" x="410" y="66" text-anchor="middle" font-size="11">{{ n.skills }} · strategies</text>
       </g>
 
-      <!-- ERRORS -->
+      <!-- MISTAKES -->
       <g class="node" tabindex="0" role="link" aria-label="Common mistakes"
-         @click="go('/errors')" @keyup.enter="go('/errors')">
+         @click="go('/mistakes')" @keyup.enter="go('/mistakes')">
         <title>Common mistakes — the tower's shadow</title>
         <rect class="box" x="110" y="150" width="200" height="60" rx="10" />
         <text class="box-title" x="210" y="176" text-anchor="middle" font-size="17">Mistakes</text>
-        <text class="box-sub" x="210" y="196" text-anchor="middle" font-size="11">{{ n.errors }} · the shadow</text>
+        <text class="box-sub" x="210" y="196" text-anchor="middle" font-size="11">{{ n.mistakes }} · the shadow</text>
       </g>
 
       <!-- CHEAT SHEETS -->

@@ -585,173 +585,6 @@ export function validateRuleRefs(skills: Skill[], rules: RulesFile): void {
   }
 }
 
-export const errorKind = z.enum(['anti-law', 'misreading', 'salience', 'omission'])
-export type ErrorKind = z.infer<typeof errorKind>
-
-// An INSTANCE is one concrete wrong→right pair — the unit the /errors page shows a
-// student and the unit `WrongRight.vue` renders. `wrong` is ALWAYS a false claim;
-// `from` and `right` are the shorthand for the common case where that claim is an
-// equation with a shared left-hand side, so the two candidates can be stacked
-// against an invariant stem (`(a+b)^2` ✗ `a^2+b^2` / ✓ `a^2+2ab+b^2`).
-//
-// Three shapes fall out of that, all authored, none derivable (a card states the
-// general law; the correction of a specific instance usually lives on a DIFFERENT
-// card than the one the error `corrupts` — see docs/TODO.md):
-//   rewrite  — from + wrong + right       the common case
-//   dead end — from + wrong + hint        the right move is "none": no rule applies,
-//                                         or the term was already finished
-//   belief   — wrong (a `\neq` claim) + hint
-//               the student thinks two equal forms differ; nothing was transformed,
-//               so there is no stem and no rewrite, only a false claim to deny.
-export const errorInstance = z.object({
-  from: z.string().optional(),    // the shared stem, KaTeX; absent = the claim stands alone
-  wrong: z.string(),              // the false claim / the wrong continuation, KaTeX
-  right: z.string().optional(),   // the correction, KaTeX
-  hint: localizedString.optional(),  // prose correction — required when `right` cannot say it
-})
-export type ErrorInstance = z.output<typeof errorInstance>
-
-export const errorDef = z.object({
-  id: z.string().regex(/^(anti|mis|sal|omi)\.[a-z0-9-]+$/),  // the single identifier — a dotted slug
-  kind: errorKind,                 // cross-cuts `topic`, so it stays a field, not a tree level
-  topic: z.string(),               // POSITIONAL — the section slug, re-attached by parseErrorTree
-  frequency: z.number().int().min(1).max(3).default(1),  // ★–★★★, from docs/common_mistakes.md
-  corrupts: z.array(z.string()).default([]),
-  // THE RULE THIS MISTAKE IS THE COUNTEREXAMPLE TO (authored 2026-07-27,
-  // rules.json). It replaced a derivation — `corrupts` ∩ a rule's `summarizes`,
-  // first two — which is fine for "related reading" and wrong for the sentence a
-  // student reads first: it guessed, it capped, and it could not be overruled.
-  // Ordered, most useful first. Empty is legitimate and visible: 9 of 28 have no
-  // sentence yet, and all but two of those are anti-laws, whose general form is a
-  // LAW in the tower (reachable via `corrupts`) that nobody has written as a
-  // student-facing one-liner.
-  rules: z.array(z.string()).default([]),
-  name: localizedString,
-  // TWO PROSE FIELDS, two readers (2026-07-25). `name` says WHICH mistake this is;
-  // `fix` says HOW TO GET IT RIGHT, in a 15-year-old's language, and is the entry's
-  // main prose in presentation mode. `note` is the DIAGNOSIS — the mechanism, the
-  // cause, why the error exists in the taxonomy — written for a teacher and shown
-  // in inspection only. It is not student prose and rewriting it in place would
-  // have deleted the better material ("$3x$ read as $3+x$ — the mixed-number
-  // carryover" names a cause no student needs and no teacher should lose).
-  //
-  // `fix` vs the rule: the rule is the general decoding sentence
-  // shared across many errors, `fix` is the concrete one for THIS mistake. Where
-  // they would coincide, keep `fix` concrete ("two minuses make a plus") and let
-  // the rule carry the general form. 7 of the 28 errors reach no rule at all.
-  fix: localizedString,
-  note: localizedString,
-  instances: z.array(errorInstance).min(1),     // see above; at least one, enforced so a
-})                                              // bare error cannot silently reach the page
-export type ErrorDef = z.output<typeof errorDef>
-
-const errorPrefixOfKind: Record<ErrorKind, string> =
-  { 'anti-law': 'anti.', misreading: 'mis.', salience: 'sal.', omission: 'omi.' }
-
-// `cardIds` is the set of fundament-tower card ids (src/data/layers.ts). Since
-// 2026-07-23 the legacy laws.json / conventions.json are gone and every error's
-// `corrupts` target is a card there — an anti-law corrupts a law card, a misreading
-// a convention card, and (since 2026-07-24) a salience error a structure card. Every
-// error kind now points straight into the tower: the curated layers form a clean
-// downward stack (cards ← errors ← skills, and rules ← both) with no upward edges.
-export function validateErrors(
-  errors: ErrorDef[], cardIds: Set<string>,
-): void {
-  const poolOfKind: Record<ErrorKind, { ids: Set<string>; name: string }> = {
-    'anti-law': { ids: cardIds, name: 'law card' },
-    misreading: { ids: cardIds, name: 'convention card' },
-    salience: { ids: cardIds, name: 'structure card' },
-    omission: { ids: cardIds, name: 'convention card' },
-  }
-  const seen = new Set<string>()
-  for (const e of errors) {
-    if (seen.has(e.id)) throw new Error(`Duplicate error id "${e.id}".`)
-    seen.add(e.id)
-    if (!e.id.startsWith(errorPrefixOfKind[e.kind])) {
-      throw new Error(`Error "${e.id}" has kind "${e.kind}" but a mismatching id prefix.`)
-    }
-    const pool = poolOfKind[e.kind]
-    for (const r of e.corrupts) {
-      if (!pool.ids.has(r)) throw new Error(`Error "${e.id}" corrupts unknown ${pool.name} "${r}".`)
-    }
-    // The ✗ must never be shown without its ✓. An instance with neither `right`
-    // nor `hint` would render as an unanswered wrong form — the one thing the
-    // research on incorrect worked examples says not to do.
-    e.instances.forEach((x, i) => {
-      if (!x.right && !x.hint) {
-        throw new Error(`Error "${e.id}" instances[${i}] has no correction: give it "right" or "hint".`)
-      }
-    })
-  }
-}
-
-// ── Error tree file ──────────────────────────────────────────────────────────
-// Errors are authored as ONE containment tree, the same shape as a fundament
-// layer (`layer → sections[] → groups[] → entries[]`, page order = array order at
-// every level) — see src/data/layers.ts. The sections are TOPICS, not kinds: a
-// topic is how a student looks a mistake up ("I keep messing up fractions"),
-// whereas `kind` (anti-law / misreading / salience) cross-cuts it — the `minus`
-// topic holds three misreadings and an anti-law — so kind stays a field on the
-// entry and is shown in inspection mode only. `topic` is POSITIONAL and injected
-// here, exactly as parseSkillTree injects kind/group.
-//
-// The group level is kept even though every topic currently has a single
-// anonymous group: that is precisely how the `terms` layer is authored, and it
-// leaves room to sub-group a topic later without a schema change.
-const errorGroupNode = z.object({
-  slug: z.string(),
-  title: localizedString.optional(),
-  blurb: localizedString.optional(),
-  errors: z.array(z.record(z.string(), z.unknown())).min(1),
-})
-const errorSectionNode = z.object({
-  slug: z.string(),
-  title: localizedString,
-  blurb: localizedString.optional(),
-  groups: z.array(errorGroupNode).min(1),
-})
-export const errorTreeFile = z.object({
-  layer: z.literal('errors'),
-  title: localizedString,
-  blurb: localizedString,   // the student-facing lede
-  note: localizedString,    // the authoring/inspection note
-  sections: z.array(errorSectionNode).min(1),
-})
-export type ErrorSection = z.output<typeof errorSectionNode>
-
-export interface ErrorTree {
-  meta: { title: LocalizedString; blurb: LocalizedString; note: LocalizedString }
-  errors: ErrorDef[]                                    // flat, in tree order
-  sections: { slug: string; title: LocalizedString; blurb?: LocalizedString; errors: ErrorDef[] }[]
-}
-
-export function parseErrorTree(raw: unknown): ErrorTree {
-  const parsed = errorTreeFile.safeParse(raw)
-  if (!parsed.success) throw new Error(`Invalid errors file:\n${z.prettifyError(parsed.error)}`)
-  const f = parsed.data
-
-  const seenSlug = new Set<string>()
-  const sections = f.sections.map(s => {
-    if (seenSlug.has(s.slug)) throw new Error(`errors: duplicate section slug "${s.slug}"`)
-    seenSlug.add(s.slug)
-    const errors = s.groups.flatMap(g => g.errors.map(e => {
-      const result = errorDef.safeParse({ ...e, topic: s.slug })
-      if (!result.success) {
-        const id = (e as { id?: string })?.id ?? `(no id) in section ${s.slug}`
-        throw new Error(`Invalid error "${id}":\n${z.prettifyError(result.error)}`)
-      }
-      return result.data
-    }))
-    return { slug: s.slug, title: s.title, blurb: s.blurb, errors }
-  })
-
-  return {
-    meta: { title: f.title, blurb: f.blurb, note: f.note },
-    errors: sections.flatMap(s => s.errors),
-    sections,
-  }
-}
-
 // ── Cross-layer references from skills and rules ──────────────────────────
 // The bridge into the fundament tower: `restsOn` is now card ids (was the two
 // arrays justifiedBy/governedBy, merged 2026-07-24 — law vs convention is read off
@@ -762,13 +595,11 @@ export function parseErrorTree(raw: unknown): ErrorTree {
 // scripts/sweep-layers.mjs.
 export function validateLayerRefs(
   skills: Skill[], rules: RulesFile,
-  cardIds: Set<string>, errors: ErrorDef[], mistakes: MistakeDef[] = [],
+  cardIds: Set<string>, mistakes: MistakeDef[] = [],
 ): void {
-  // ⚠️ RESOLVED AGAINST THE POOL, NOT THE ERROR LAYER (2026-07-30). The ids are
-  // shared, so this was the same set until the pool gained entries errors.json
-  // cannot express: `errorInstance.wrong` is REQUIRED, and an inactivity mistake
-  // writes nothing at all. `mistakes.json` is what a skill's `wrong[].mistake` means.
-  const errIds = new Set([...errors.map(e => e.id), ...mistakes.map(m => m.id)])
+  // Resolved against the pool, which since 2026-07-31 is the only mistake layer
+  // there is: /errors is gone and errors.json is parked in legacy/.
+  const errIds = new Set(mistakes.map(m => m.id))
 
   for (const f of skills) {
     for (const r of f.restsOn) {
@@ -785,12 +616,6 @@ export function validateLayerRefs(
       }
     }
   }
-  const ruleIds = new Set(rules.map(m => m.id))
-  for (const e of errors) {
-    for (const r of e.rules) {
-      if (!ruleIds.has(r)) throw new Error(`Error "${e.id}" cites unknown rule "${r}".`)
-    }
-  }
 }
 
 // ── Matrix audit ─────────────────────────────────────────────────────────────
@@ -800,7 +625,7 @@ export function validateLayerRefs(
 // error — so this warns, it does not throw.
 
 export function auditCoverage(
-  skills: Skill[], rules: RulesFile, errors: ErrorDef[],
+  skills: Skill[], rules: RulesFile, mistakes: MistakeDef[],
   cardConds: Map<string, string | undefined> = new Map(),
   sheets: SheetDef[] = [],
 ): string[] {
@@ -829,9 +654,9 @@ export function auditCoverage(
   // (Authored stays curation — this only catches a missing tag or a
   // rule citation that doesn't fit the skill.) Since 2026-07-24 a
   // a rule summarizes CARDS only, so the skill's coordinates are its card
-  // ids: `restsOn`, plus the cards its errors corrupt (the two lenses meet at the
-  // tower — skill → error → card mirrors skill → meta → card).
-  const corruptsOf = new Map(errors.map(e => [e.id, e.corrupts]))
+  // ids: `restsOn`, plus the cards its mistakes corrupt (the two lenses meet at
+  // the tower — skill → mistake → card mirrors skill → meta → card).
+  const corruptsOf = new Map(mistakes.map(e => [e.id, e.corrupts]))
   for (const f of skills) {
     if (f.restsOn.length === 0) continue
     const coords = new Set([
@@ -863,10 +688,10 @@ export function auditCoverage(
   // give. REACH AS GARBAGE COLLECTION — never as an admission test, since what
   // belongs in the registry is whatever turns out to be important, however
   // narrowly it is used.
-  const citedRules = new Set([...skills.flatMap(f => f.rules), ...errors.flatMap(e => e.rules)])
+  const citedRules = new Set([...skills.flatMap(f => f.rules), ...mistakes.flatMap(e => e.breaks)])
   const orphaned = rules.filter(m => !citedRules.has(m.id))
   if (orphaned.length > 0) {
-    lines.push(`Rules cited by no error and no skill (${orphaned.length}): ${orphaned.map(m => m.id).join(', ')}`)
+    lines.push(`Rules cited by no mistake and no skill (${orphaned.length}): ${orphaned.map(m => m.id).join(', ')}`)
   }
 
   // ── THE SHEET COVERAGE QUESTION (2026-07-29) ──────────────────────────────
@@ -899,31 +724,31 @@ export function auditCoverage(
   // `error.rules` replaced (2026-07-27). That derivation was always better at
   // SUGGESTING than at deciding — it is what turned up the five missing reading
   // rules — so it survives here rather than in the page.
-  //   a. errors with no sentence at all, frequency-ranked;
-  //   b. errors whose corrupted cards ARE summarized by a rule they do not cite,
+  //   a. mistakes with no sentence at all, frequency-ranked;
+  //   b. mistakes whose corrupted cards ARE summarized by a rule they do not cite,
   //      which is either a missed reference or a deliberate rejection.
-  const ruled = errors.filter(e => e.rules.length === 0).sort((a, b) => b.frequency - a.frequency)
+  const ruled = mistakes.filter(e => !e.head && e.breaks.length === 0).sort((a, b) => b.frequency - a.frequency)
   if (ruled.length > 0) {
-    lines.push(`Errors citing no rule (${ruled.length}): ` +
+    lines.push(`Mistakes citing no rule (${ruled.length}): ` +
       ruled.map(e => `${'\u2605'.repeat(e.frequency)} ${e.id}`).join(', '))
   }
-  const suggested = errors
+  const suggested = mistakes
     .map(e => {
       const cards = new Set(e.corrupts)
-      const hit = rules.filter(m => m.summarizes.some(c => cards.has(c)) && !e.rules.includes(m.id))
+      const hit = rules.filter(m => m.summarizes.some(c => cards.has(c)) && !e.breaks.includes(m.id))
       return hit.length ? `${e.id} → ${hit.map(m => m.id).join(', ')}` : null
     })
     .filter((x): x is string => x !== null)
   if (suggested.length > 0) {
-    lines.push(`Rules an error's cards reach but it does not cite (${suggested.length}): ${suggested.join(' | ')}`)
+    lines.push(`Rules a mistake's cards reach but it does not cite (${suggested.length}): ${suggested.join(' | ')}`)
   }
 
-  // Direction 1 — errors nothing drills. Frequency-ranked, because a ★★★ mistake
+  // Direction 1 — mistakes nothing drills. Frequency-ranked, because a ★★★ mistake
   // with no skill is a curriculum hole and a ★ one may just be rare.
   const citedErrs = new Set(skills.flatMap(f => f.mistakes))
-  const undrilled = errors.filter(e => !citedErrs.has(e.id)).sort((a, b) => b.frequency - a.frequency)
+  const undrilled = mistakes.filter(e => !e.head && !citedErrs.has(e.id)).sort((a, b) => b.frequency - a.frequency)
   if (undrilled.length > 0) {
-    lines.push(`Errors no skill drills (${undrilled.length}): ` +
+    lines.push(`Mistakes no skill drills (${undrilled.length}): ` +
       undrilled.map(e => `${'★'.repeat(e.frequency)} ${e.id}`).join(', '))
   }
 
@@ -952,7 +777,7 @@ export function auditCoverage(
   }
   const unjustified = skills.filter(f => !justified.has(f.id))
   if (unjustified.length > 0) {
-    lines.push(`Skills no error reaches (${unjustified.length}/${skills.length}, incl. via requires): ` +
+    lines.push(`Skills no mistake reaches (${unjustified.length}/${skills.length}, incl. via requires): ` +
       unjustified.map(f => f.id).join(', '))
   }
 
@@ -964,7 +789,7 @@ export function auditCoverage(
   const countDirty = (fields: string[][]) => fields.filter(f => f.some(s => unicodeMath.test(s))).length
   const dirty = {
     'skill notes': countDirty(skills.map(f => locVals(f.note))),
-    'error notes': countDirty(errors.map(e => locVals(e.note))),
+    'mistake notes': countDirty(mistakes.map(e => locVals(e.note))),
     'rule sentences': countDirty(rules.map(m => locVals(m.rule))),
   }
   const parts = Object.entries(dirty).filter(([, n]) => n > 0).map(([k, n]) => `${k}: ${n}`)
@@ -1055,7 +880,7 @@ function proseMath(ls?: LocalizedString): string[] {
 }
 
 export function validateLatexCompiles(
-  skills: Skill[], rules: RulesFile, errors: ErrorDef[],
+  skills: Skill[], rules: RulesFile, mistakes: MistakeDef[],
 ): void {
   const failures: string[] = []
   function check(owner: string, field: string, latex: string): void {
@@ -1073,14 +898,9 @@ export function validateLatexCompiles(
     f.wrong.forEach((w, i) => { if (w.latex) check(f.id, `wrong[${i}]`, w.latex) })
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
   }
-  for (const e of errors) {
-    e.instances.forEach((x, i) => {
-      if (x.from) check(e.id, `instances[${i}].from`, x.from)
-      check(e.id, `instances[${i}].wrong`, x.wrong)
-      if (x.right) check(e.id, `instances[${i}].right`, x.right)
-      proseMath(x.hint).forEach(m => check(e.id, `instances[${i}].hint`, m))
-    })
-    proseMath(e.fix).forEach(m => check(e.id, 'fix', m))
+  for (const e of mistakes) {
+    e.latex.forEach((l, i) => check(e.id, `latex[${i}]`, l))
+    proseMath(e.mistake).forEach(m => check(e.id, 'mistake', m))
     proseMath(e.note).forEach(m => check(e.id, 'note', m))
   }
   for (const m of rules) {
