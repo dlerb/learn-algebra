@@ -67,10 +67,6 @@ M = {
    'Don’t keep a bracket that changes nothing',
    'Eine Klammer, die nichts ändert, nicht stehen lassen',
    [r'(ab)c \neq abc']),
- 'anti.linearity': (
-   'Don’t spread a power or a root over a plus',
-   'Eine Potenz oder Wurzel nicht über ein Plus verteilen',
-   [r'(a+b)^n = a^n + b^n', r'\sqrt{a+b} = \sqrt{a} + \sqrt{b}']),
  'anti.partial-distribution': (
    'Don’t stop at the first term in the bracket',
    'Nicht beim ersten Term in der Klammer aufhören',
@@ -186,7 +182,6 @@ MNEM = {}
 
 FAMILY = {
  # The one shape inside the forced-move basket worth naming on its own.
- 'anti.linearity':           'anti.freshmans-dream',
  # Lesefehler — every mistake that breaks a `rule.read-the-term-first` rule.
  'mis.precedence-ignored':         'mis.term-misread',
  'mis.exponent-scope':             'mis.term-misread',
@@ -306,6 +301,67 @@ POOL_ONLY = [
   'breaks': [],
   'corrupts': [],
  },
+ # ── THE TWO HALVES OF anti.linearity (2026-07-31) ────────────────────────────
+ # One entry cannot be named, and this one had to answer to two different skills
+ # with two different forms. Both are the dream; they differ in which operation
+ # is wrongly assumed to spread.
+ {
+  'id': 'anti.power-over-sum',
+  'kind': 'anti-law',
+  'family': 'anti.freshmans-dream',
+  'topic': 'distributing',
+  'frequency': 3,
+  'mistake': {
+    'en': 'Don’t spread a power over a plus',
+    'de': 'Eine Potenz nicht über ein Plus verteilen',
+  },
+  'latex': [r'(a+b)^n = a^n + b^n', r'a^2 + b^2 = (a+b)^2'],
+  'note': {
+    'en': 'Squaring a sum is not squaring the parts: $(a+b)^2$ has a middle term $2ab$ that this loses, which is the whole content of the first binomial formula. Read backwards it is the same claim — $a^2 + b^2 = (a+b)^2$ — and the missing $2ab$ is what identifies it either way. Check with numbers: $(3+4)^2 = 49$, not $9 + 16$.',
+    'de': 'Eine Summe quadrieren heisst nicht, die Teile zu quadrieren: $(a+b)^2$ hat einen mittleren Term $2ab$, der hier verlorengeht — genau das ist der Inhalt der 1. binomischen Formel. Rückwärts gelesen ist es dieselbe Behauptung, $a^2 + b^2 = (a+b)^2$, und das fehlende $2ab$ verrät sie so wie so. Mit Zahlen prüfen: $(3+4)^2 = 49$, nicht $9 + 16$.',
+  },
+  'breaks': ['rule.only-multiplication-distributes'],
+  'corrupts': ['th.binomial-square'],
+ },
+ {
+  'id': 'anti.root-over-sum',
+  'kind': 'anti-law',
+  'family': 'anti.freshmans-dream',
+  'topic': 'powers',
+  'frequency': 3,
+  'mistake': {
+    'en': 'Don’t spread a root over a plus',
+    'de': 'Eine Wurzel nicht über ein Plus verteilen',
+  },
+  'latex': [r'\sqrt{a+b} = \sqrt{a} + \sqrt{b}', r'\sqrt{a^2+b^2} = a + b'],
+  'note': {
+    'en': 'A root splits over a product and over a quotient, never over a sum — which is exactly why $\\sqrt{a^2+b^2}$ is so tempting: both terms under the bar are already squares, so the root looks like it should just undo them. It cannot. Check with numbers: $\\sqrt{9+16} = 5$, not $3 + 4$.',
+    'de': 'Eine Wurzel zerfällt über ein Produkt und über einen Quotienten, nie über eine Summe — und genau darum ist $\\sqrt{a^2+b^2}$ so verlockend: unter dem Strich stehen schon zwei Quadrate, die Wurzel scheint sie nur rückgängig machen zu müssen. Sie kann es nicht. Mit Zahlen prüfen: $\\sqrt{9+16} = 5$, nicht $3 + 4$.',
+  },
+  'breaks': ['rule.only-multiplication-distributes', 'rule.root-bar-brackets'],
+  'corrupts': ['th.root-of-product'],
+ },
+ # ⚠️ NOT THE DREAM, which is why the split left it homeless. Nothing is assumed
+ # to spread here — a formula that exists is fetched for a form it does not fit.
+ # That is a forced move, and the family says so.
+ {
+  'id': 'anti.sum-of-squares-factored',
+  'kind': 'anti-law',
+  'family': 'anti.forced-move',
+  'topic': 'factoring',
+  'frequency': 2,
+  'mistake': {
+    'en': 'Don’t factor a sum of two squares',
+    'de': 'Eine Summe zweier Quadrate nicht faktorisieren',
+  },
+  'latex': [r'a^2 + b^2 = (a+b)(a-b)'],
+  'note': {
+    'en': 'The third binomial formula needs a MINUS, and with a plus there is nothing to fetch: over the reals $a^2 + b^2$ does not factor at all, because it is positive for every $a$ and $b$ that are not both zero. Multiply the claim back and the mixed terms cancel to $a^2 - b^2$, which is not what was there.',
+    'de': 'Die 3. binomische Formel braucht ein MINUS; mit einem Plus gibt es nichts zu holen: Über den reellen Zahlen zerfällt $a^2 + b^2$ gar nicht, denn es ist positiv für alle $a$ und $b$, die nicht beide null sind. Multipliziert man die Behauptung zurück, heben sich die gemischten Terme zu $a^2 - b^2$ — und das stand da nicht.',
+  },
+  'breaks': ['rule.difference-of-squares'],
+  'corrupts': ['th.difference-of-squares', 'th.square-positive'],
+ },
  {
   'id': 'anti.cancel-over-sum',
   'kind': 'anti-law',
@@ -390,11 +446,26 @@ POOL_ONLY = [
  },
 ]
 
+# ── SUPERSEDED IN THE POOL, STILL PRESENT IN THE LEGACY FILE ─────────────────
+# errors.json is legacy and is not edited any more, so when the pool moves past
+# one of its entries the divergence has to be declared rather than silently
+# tolerated: without this the loop would abort with "unauthored mistake".
+RETIRED = {
+ 'anti.linearity':
+   'split 2026-07-31 into anti.power-over-sum + anti.root-over-sum. It carried the '
+   'power form AND the root form in one entry — the same shape that forced the '
+   'exponent-counts-factors and power-over-product splits, and precisely the '
+   'distinction rule.no-power-law-for-sums / rule.no-root-law-for-sums had before '
+   'they were deleted.',
+}
+
 src = json.load(open('src/data/errors.json'))
 out = []
 for sec in src['sections']:
     for g in sec['groups']:
         for e in g['errors']:
+            if e['id'] in RETIRED:
+                continue
             if e['id'] not in M:
                 sys.exit(f'unauthored mistake: {e["id"]}')
             en, de, latex = M[e['id']]
