@@ -89,10 +89,17 @@ export type SkillProcess = z.infer<typeof skillProcess>
 // ⚠️ THIS REVERSES A DECISION RECORDED HERE ON 2026-07-30, which said of
 // `wrong[].latex`: "Do NOT put `\ldots` in here to fill it — the field means 'the
 // false claim', and the whole point of these entries is that there is none." That
-// argument is still true about the MATHS and was overturned on other grounds:
-// absence is indistinguishable from unfinished authoring, an explicit marker is
-// not, and the two sides of a row should have one shape rather than two. The
-// honest cost is that `latex` no longer means only "the false claim" — it means
+// argument is still true about the MATHS. It was overturned on SYMMETRY, which is
+// the author's decision and was reaffirmed after the objection below: the two
+// halves of a row are one design, and a reader, a view and a drill should not have
+// to learn two shapes to read them.
+//
+// The objection, recorded because it is the thing to re-examine if this ever
+// itches: the ambiguity that motivated the sentinel is real only on the RIGHT
+// side, where `right: []` could equally mean "finished" or "not authored yet". The
+// wrong side never had it — `mistake` is required, so an absent latex was already
+// unmistakably deliberate. So the ✗ sentinel buys symmetry, not disambiguation.
+// The honest cost is that `latex` no longer means only "the false claim"; it means
 // "what to draw in the claim's place", which the sentinel names.
 //
 // ⚠️ NOT EXPRESSIONS, and no consumer may treat them as such. `\blacksquare` is
