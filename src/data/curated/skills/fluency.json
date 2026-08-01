@@ -386,17 +386,16 @@
         {
           "id": "skill.subtraction-as-adding-opposite",
           "name": {
-            "en": "Subtracting vs. adding a negative",
-            "de": "Subtrahieren und das Negative addieren"
+            "en": "Adding a negative vs. subtracting",
+            "de": "Das Negative addieren und subtrahieren"
           },
           "note": {
-            "en": "Subtracting is the same as adding the opposite: a - b = a + (-b). The minus and the number belong together.",
-            "de": "Subtrahieren ist dasselbe wie das Gegenteil addieren: $a - b = a + (-b)$. Das Minus gehört zur Zahl."
+            "en": "Adding the opposite is the same as subtracting: $a + (-b) = a - b$. The minus and the number belong together, which is why the bracket may go.",
+            "de": "Das Gegenteil addieren ist dasselbe wie subtrahieren: $a + (-b) = a - b$. Das Minus gehört zur Zahl, darum darf die Klammer weg."
           },
-          "stimulus": "a - b",
+          "stimulus": "a + (-b)",
           "right": [
-            "a + (-b)",
-            "a + (-1) \\cdot b"
+            "a - b"
           ],
           "wrong": [
             {
@@ -1115,40 +1114,6 @@
           ]
         },
         {
-          "id": "skill.power-of-a-sum",
-          "name": {
-            "en": "Exponent on a sum",
-            "de": "Exponent auf einer Summe"
-          },
-          "note": {
-            "en": "A power does not distribute over $+$: $(a+b)^2$ means $(a+b)(a+b)$. Contrast $(ab)^2 = a^2b^2$ — over $\\times$ it works, over $+$ it never does.",
-            "de": "Eine Potenz verteilt sich nicht über $+$: $(a+b)^2$ heisst $(a+b)(a+b)$. Vergleiche $(ab)^2 = a^2b^2$ — über $\\times$ geht es, über $+$ nie."
-          },
-          "stimulus": "(a+b)^2",
-          "right": [
-            "(a+b)(a+b)"
-          ],
-          "wrong": [
-            {
-              "latex": "(a+b)^2 = a^2 + b^2",
-              "mistake": "anti.power-over-sum"
-            }
-          ],
-          "requires": [
-            "skill.exponent-as-repeated-product",
-            "skill.product-with-brackets"
-          ],
-          "rules": [
-            "rule.only-multiplication-distributes"
-          ],
-          "restsOn": [
-            "def.pow",
-            "th.binomial-square",
-            "ix.pow",
-            "th.negative-base"
-          ]
-        },
-        {
           "id": "skill.root-of-a-product",
           "name": {
             "en": "Root of a product",
@@ -1262,12 +1227,11 @@
             "de": "Schreibweisen der Division"
           },
           "note": {
-            "en": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
-            "de": "Die Division hat viele Gesichter: $a \\div b = a : b = a/b$. Alles dasselbe Objekt. (Der Doppelpunkt ist das Divisionszeichen aus der Primarschule.)"
+            "en": "Division has two faces: $a : b = \\frac{a}{b}$. The same object. (The colon is the primary-school division sign; the bar is what you write from here on.)",
+            "de": "Die Division hat zwei Gesichter: $a : b = \\frac{a}{b}$. Dasselbe Objekt. (Der Doppelpunkt ist das Divisionszeichen aus der Primarschule; ab jetzt schreibt man den Bruchstrich.)"
           },
-          "stimulus": "a \\div b",
+          "stimulus": "a : b",
           "right": [
-            "a : b",
             "\\frac{a}{b}"
           ],
           "wrong": [
@@ -1586,34 +1550,6 @@
           ]
         },
         {
-          "id": "skill.division-not-commutative",
-          "name": {
-            "en": "Division is not commutative",
-            "de": "Die Division ist nicht vertauschbar"
-          },
-          "note": {
-            "en": "Division does not commute: swapping numerator and denominator gives the reciprocal, not the same value.",
-            "de": "Die Division ist nicht vertauschbar: Zähler und Nenner zu tauschen gibt den Kehrwert, nicht denselben Wert."
-          },
-          "stimulus": "a \\div b",
-          "right": [
-            "\\frac{a}{b}"
-          ],
-          "wrong": [
-            {
-              "latex": "\\frac{a}{b} = \\frac{b}{a}",
-              "mistake": "anti.commute-everything"
-            }
-          ],
-          "requires": [
-            "skill.division-variants"
-          ],
-          "restsOn": [
-            "def.div",
-            "ix.division-symbols"
-          ]
-        },
-        {
           "id": "skill.division-not-associative",
           "name": {
             "en": "Division is not associative",
@@ -1634,7 +1570,7 @@
             }
           ],
           "requires": [
-            "skill.division-not-commutative"
+            "skill.division-variants"
           ],
           "rules": [
             "rule.only-plus-and-times-associate"
