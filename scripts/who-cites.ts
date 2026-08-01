@@ -26,7 +26,7 @@ import type { Citation, EntityKind } from '../src/data/citations'
 // output is meant to be read as a checklist or piped as JSON.
 const info = console.info
 console.info = () => {}
-const { citations, citationsTo, citationsFrom, entities, resolve } =
+const { citations, citationsTo, citationsFrom, entities, resolve, inheritedCitations } =
   await import('../src/data/citations')
 console.info = info
 
@@ -127,7 +127,42 @@ function audit(kind: EntityKind): void {
   console.log(`  ${nothing.length}/${pool.length} nothing cites at all.`)
 }
 
-if (flag('--audit')) {
+/** The revision worksheet: one row per citation a prerequisite already teaches.
+ *  Three verdicts, and the tool deliberately supplies none of them — see the
+ *  drop/replace/keep note in citations.ts. */
+function inherited(): void {
+  const rows = inheritedCitations()
+  const bySkill = new Map<string, typeof rows>()
+  for (const r of rows) {
+    const list = bySkill.get(r.skill)
+    if (list) list.push(r)
+    else bySkill.set(r.skill, [r])
+  }
+  // Zero-remaining first: those are where a verdict actually changes something.
+  const order = [...bySkill.values()].sort((a, b) =>
+    a[0].remaining - b[0].remaining || a[0].process.localeCompare(b[0].process))
+
+  for (const group of order) {
+    const { skill, process, stimulus, remaining } = group[0]
+    const tag = remaining === 0
+      ? '\x1b[33m→ would keep NO rule\x1b[0m'
+      : `→ would keep ${remaining}`
+    console.log(`\n\x1b[1m${skill.replace('skill.', '')}\x1b[0m  \x1b[2m${process}\x1b[0m`
+      + `   ${stimulus}   ${tag}`)
+    for (const r of group) {
+      console.log(`    ${pad(r.rule.replace('rule.', ''), 34)}`
+        + `\x1b[2mintroduced by\x1b[0m ${r.taughtBy.replace('skill.', '')}`)
+    }
+  }
+  console.log(`\n${bySkill.size} skills, ${rows.length} inherited citations.`)
+  console.log('  verdicts: \x1b[2mdrop\x1b[0m (true inheritance) · '
+    + '\x1b[2mreplace\x1b[0m (the citation is wrong, not redundant) · '
+    + '\x1b[2mkeep\x1b[0m (it states where the rule stops)')
+}
+
+if (flag('--inherited')) {
+  inherited()
+} else if (flag('--audit')) {
   const kind = (opt('--kind') ?? 'rule') as EntityKind
   if (!KIND_ORDER.includes(kind)) {
     console.error(`Unknown --kind "${kind}". One of: ${KIND_ORDER.join(', ')}`)

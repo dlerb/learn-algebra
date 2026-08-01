@@ -150,6 +150,70 @@ export const entities: Map<string, Entity> = new Map<string, Entity>([
   ...[...cardIndex].map(([id, e]): [string, Entity] => [id, { id, kind: 'card', label: EN(e.card.name) }]),
 ])
 
+// ── INHERITED CITATIONS ──────────────────────────────────────────────────────
+// A skill whose prerequisite already teaches a rule is citing it twice: once
+// where it is introduced and again wherever it is used. `requires` is acyclic and
+// process-layered, so "what does the student already know here" is a graph walk,
+// and a citation reachable that way adds nothing a reader did not have.
+//
+// ⚠️ THIS IS A REPORT, NEVER A PATCH, and the reason is that the graph cannot see
+// the difference between three things that look identical from here:
+//
+//   drop     true inheritance — `double-negative` citing `three-minuses`, which
+//            `negative-numbers` introduced two steps upstream
+//   replace  the citation is WRONG, not redundant — `coefficient-zero` cites
+//            `juxtaposition` while its own note says "zero times anything is
+//            zero", which is `rule.zero-times`, uncited. Dropping the inherited
+//            one empties the skill; citing the right rule fixes it
+//   keep     a BOUNDARY — `no-splitting-the-denominator` cites `split-numerator`
+//            to say where that rule STOPS. Scope is part of knowing a rule
+//            (content_model: knowing a(b+c)=ab+ac means knowing c/(a+b) does
+//            not split), so that citation is the content, not noise
+//
+// Which of the three a row is cannot be derived; it is read off the stimulus.
+export interface InheritedCitation {
+  skill: string
+  process: string
+  stimulus: string
+  rule: string
+  /** The nearest prerequisite that also cites it — nearest by closure size, so
+   *  the row names where the rule enters rather than an arbitrary ancestor. */
+  taughtBy: string
+  /** How many citations the skill would keep. Zero is a question, not a verdict. */
+  remaining: number
+}
+
+const skillById = new Map(skills.map(s => [s.id, s]))
+
+function prerequisiteClosure(id: string, seen = new Set<string>()): Set<string> {
+  for (const r of skillById.get(id)?.requires ?? []) {
+    if (!seen.has(r)) { seen.add(r); prerequisiteClosure(r, seen) }
+  }
+  return seen
+}
+
+export function inheritedCitations(): InheritedCitation[] {
+  const out: InheritedCitation[] = []
+  for (const s of skills) {
+    if (s.rules.length === 0) continue
+    const upstream = [...prerequisiteClosure(s.id)]
+    const hits = s.rules.flatMap(rule => {
+      const teachers = upstream.filter(u => skillById.get(u)!.rules.includes(rule))
+      if (teachers.length === 0) return []
+      const nearest = teachers.sort(
+        (a, b) => prerequisiteClosure(a).size - prerequisiteClosure(b).size)[0]
+      return [{ rule, taughtBy: nearest }]
+    })
+    for (const h of hits) {
+      out.push({
+        skill: s.id, process: s.process, stimulus: s.stimulus,
+        rule: h.rule, taughtBy: h.taughtBy, remaining: s.rules.length - hits.length,
+      })
+    }
+  }
+  return out
+}
+
 /** Resolve a bare slug (`minus-rules`) or a full id. Returns every match, since
  *  a slug can name a rule and a mistake at once. */
 export function resolve(query: string): Entity[] {
