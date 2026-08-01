@@ -11,6 +11,7 @@
     "validate": "node scripts/content-format.mjs --check && node scripts/content-ids.mjs && vite-node scripts/validate.ts",
     "sweep-layers": "node scripts/sweep-layers.mjs",
     "who-cites": "vite-node scripts/who-cites.ts --",
+    "todos": "node scripts/todos.mjs",
     "format-content": "node scripts/content-format.mjs",
     "format-content:check": "node scripts/content-format.mjs --check",
     "check-ids": "node scripts/content-ids.mjs"
