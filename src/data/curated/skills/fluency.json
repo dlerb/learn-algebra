@@ -150,6 +150,35 @@
           ]
         },
         {
+          "id": "skill.coefficient-one",
+          "name": {
+            "en": "Coefficient of 1",
+            "de": "Koeffizient 1"
+          },
+          "note": {
+            "en": "A coefficient of $1$ is never written: $1a$ is just $a$. Leaving it standing is not wrong, but it hides the term you are about to work with.",
+            "de": "Der Koeffizient $1$ wird nie geschrieben: $1a$ ist einfach $a$. Ihn stehen zu lassen ist nicht falsch, verdeckt aber den Term, mit dem man weiterarbeitet."
+          },
+          "stimulus": "1 \\cdot a",
+          "right": [
+            "a"
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted"
+            }
+          ],
+          "requires": [
+            "skill.explicit-vs-implicit-product"
+          ],
+          "rules": [
+            "rule.neutral-elements"
+          ],
+          "restsOn": [
+            "ax.one-neutral"
+          ]
+        },
+        {
           "id": "skill.repeated-addition",
           "name": {
             "en": "Repeated addition vs. multiplication",
@@ -220,11 +249,39 @@
             "skill.repeated-addition"
           ],
           "rules": [
-            "rule.unlike-terms-stay"
+            "rule.unlike-terms-stay",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "th.collect-like-terms",
             "ix.juxtaposition"
+          ]
+        },
+        {
+          "id": "skill.add-zero",
+          "name": {
+            "en": "Adding 0",
+            "de": "Null addieren"
+          },
+          "note": {
+            "en": "Adding zero changes nothing: $a + 0$ is $a$. Worth clearing away — a $+\\,0$ left standing looks like a term still waiting to be combined.",
+            "de": "Null addieren ändert nichts: $a + 0$ ist $a$. Man schreibt es weg — ein stehengebliebenes $+\\,0$ sieht aus wie ein Term, der noch zusammengefasst werden will."
+          },
+          "stimulus": "a + 0",
+          "right": [
+            "a"
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted"
+            }
+          ],
+          "requires": [],
+          "rules": [
+            "rule.neutral-elements"
+          ],
+          "restsOn": [
+            "ax.zero-neutral"
           ]
         },
         {
@@ -249,7 +306,8 @@
             "skill.number-plus-term"
           ],
           "rules": [
-            "rule.unlike-terms-stay"
+            "rule.unlike-terms-stay",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "th.collect-like-terms",
@@ -280,6 +338,9 @@
           ],
           "restsOn": [
             "th.collect-like-terms"
+          ],
+          "rules": [
+            "rule.nothing-to-do"
           ]
         }
       ]
@@ -928,12 +989,12 @@
         {
           "id": "skill.zero-and-one-exponent",
           "name": {
-            "en": "Zero and one as exponents",
-            "de": "Null und Eins als Exponenten"
+            "en": "Exponent 0",
+            "de": "Exponent 0"
           },
           "note": {
-            "en": "Any nonzero base to the power 0 is 1. And $a^1 = a$.",
-            "de": "Jede Basis ausser null hoch 0 ist 1. Und $a^1 = a$."
+            "en": "Any nonzero base to the power $0$ is $1$: $a^0 = 1$.",
+            "de": "Jede Basis ausser null hoch $0$ ist $1$: $a^0 = 1$."
           },
           "stimulus": "a^0",
           "right": [
@@ -954,6 +1015,36 @@
           ],
           "rules": [
             "rule.exponent-zero"
+          ],
+          "todo": "Name and note narrowed to a^0 when skill.exponent-one was added — the note used to claim \"And a^1 = a\" while only ever drilling a^0. The id still says zero-and-one; rename to skill.zero-exponent? Nothing requires it, so the rename is free."
+        },
+        {
+          "id": "skill.exponent-one",
+          "name": {
+            "en": "Exponent 1",
+            "de": "Exponent 1"
+          },
+          "note": {
+            "en": "The exponent counts factors, so one factor is just the number itself: $a^1 = a$. Read backwards it is how a bare symbol joins a power law — the exponent that is not written is a $1$.",
+            "de": "Der Exponent zählt die Faktoren, ein Faktor ist also die Zahl selbst: $a^1 = a$. Rückwärts gelesen kommt so ein blosses Zeichen in ein Potenzgesetz hinein — der nicht geschriebene Exponent ist eine $1$."
+          },
+          "stimulus": "a^1",
+          "right": [
+            "a"
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted"
+            }
+          ],
+          "requires": [
+            "skill.exponent-as-repeated-product"
+          ],
+          "rules": [
+            "rule.exponent-one"
+          ],
+          "restsOn": [
+            "def.pow"
           ]
         },
         {
@@ -1152,7 +1243,8 @@
             "skill.root-of-a-product"
           ],
           "rules": [
-            "rule.only-multiplication-distributes"
+            "rule.only-multiplication-distributes",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "ix.root"
@@ -1279,6 +1371,36 @@
           "rules": [
             "rule.divide-by-one-and-self"
           ]
+        },
+        {
+          "id": "skill.divide-by-self",
+          "name": {
+            "en": "A quantity over itself",
+            "de": "Eine Grösse durch sich selbst"
+          },
+          "note": {
+            "en": "$\\frac{a}{a} = 1$ for every $a$ except $0$ — not because the same thing stands above and below, but because that is the inverse property read off directly. Which is why $\\frac{0}{0}$ is not $1$.",
+            "de": "$\\frac{a}{a} = 1$ für jedes $a$ ausser $0$ — nicht weil oben und unten dasselbe steht, sondern weil das direkt die Inversen-Eigenschaft ist. Darum ist $\\frac{0}{0}$ auch nicht $1$."
+          },
+          "stimulus": "\\frac{a}{a}",
+          "right": [
+            "1"
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted"
+            }
+          ],
+          "requires": [
+            "skill.division-variants"
+          ],
+          "rules": [
+            "rule.divide-by-one-and-self"
+          ],
+          "restsOn": [
+            "th.divide-by-one"
+          ],
+          "conditions": "a \\ne 0"
         },
         {
           "id": "skill.splitting-a-fraction",
@@ -1662,7 +1784,8 @@
             "skill.difference-of-squares"
           ],
           "rules": [
-            "rule.difference-of-squares"
+            "rule.difference-of-squares",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "th.difference-of-squares",
