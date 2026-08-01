@@ -281,6 +281,7 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
         :id="r.id" :name="r.name" :record="r.raw"
         :kind="stripKind(r)"
         :targeted="r.id === targetId"
+        :marks-title="r.reversible === undefined ? undefined : (r.reversible ? L.bothWays : L.oneWay)"
       >
         <template #folds>
           <RefFold :label="L.rests" :links="r.restsOn" />
@@ -294,6 +295,19 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 
         <template #strip-right>
           <span v-if="inspect && r.contrast" class="badge">contrast</span>
+        </template>
+
+        <!-- WHICH WAY THE CLAIM READS, on the NAME because that is what it
+             qualifies: ↔ says one competence covers both directions (3×x and 3x
+             are the same recognition), → says the reverse is a different skill
+             with a different name (expanding against factoring). The `marks`
+             slot renders inside the heading, which is where /mistakes already
+             puts its frequency stars — same idea, a mark on the subject rather
+             than a line of its own.
+             Undeclared renders nothing: an empty cell is a question here as
+             everywhere, and a terminal claim has no direction to reverse. -->
+        <template v-if="r.reversible !== undefined" #marks>
+          <span class="dir">{{ r.reversible ? '↔' : '→' }}</span>
         </template>
 
         <!-- THE GOOD HALF: the problem solved correctly, then the rule that
@@ -342,28 +356,9 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
           <div v-if="r.conditions" class="quant">{{ L.cond }} <MathExpr :latex="r.conditions" /></div>
-          <!-- WHICH WAY THE CLAIM READS, as a grey glyph trailing the last rule.
-               ↔ says one competence covers both directions (3×x and 3x are the
-               same recognition); → says the reverse is a different skill with a
-               different name (expanding against factoring).
-               ⚠️ IT QUALIFIES THE SKILL, NOT THE RULE it happens to trail — it
-               rides the last line because that is where the eye already is, and
-               it stays OUTSIDE the RouterLink so it is not clickable, which is
-               the tell that it belongs to the row rather than to the link.
-               Undeclared renders nothing: an empty cell is a question here as
-               everywhere, and a terminal claim has no direction at all. -->
-          <div v-for="(x, i) in r.rules" :key="x.id" class="ruleline">
-            <RouterLink class="line" :to="x.to">
-              <span class="arrow">→</span><span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
-            </RouterLink><span
-              v-if="i === r.rules.length - 1 && r.reversible !== undefined"
-              class="dir" :title="r.reversible ? L.bothWays : L.oneWay"
-            >{{ r.reversible ? '↔' : '→' }}</span>
-          </div>
-          <!-- A skill citing no rule still has a direction to report. -->
-          <div v-if="!r.rules.length && r.reversible !== undefined" class="ruleline">
-            <span class="dir lone" :title="r.reversible ? L.bothWays : L.oneWay">{{ r.reversible ? '↔' : '→' }}</span>
-          </div>
+          <RouterLink v-for="x in r.rules" :key="x.id" class="line" :to="x.to">
+            <span class="arrow">→</span><span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
+          </RouterLink>
         </div>
 
         <!-- THE BAD HALF: the tempting solution, then the belief it comes from.
@@ -466,11 +461,12 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    Flex rather than a third grid column so the marker sits against the formula
    at any width and drops beneath it on a phone instead of squeezing the maths. */
 .f.terminal { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
-.ruleline { display: flex; align-items: baseline; gap: .35rem; }
-/* Grey and small: it is a qualifier on the row, not a second link. Kept out of
-   the RouterLink so it never highlights or navigates with the rule beside it. */
-.dir { color: var(--text-faint); font-size: .82rem; line-height: 1; cursor: default; }
-.dir.lone { padding-left: 1.1rem; }
+/* The direction mark on the name: grey and quiet, a qualifier on the subject
+   rather than a second thing to read. `.marks` is sized for a row of ★ at
+   .62rem, where a single arrow glyph disappears — so this one overrides back up
+   to something legible, and cancels the slot's optical lift, which exists to
+   sit stars on the name's x-height and pushes an arrow visibly high. */
+.dir { font-size: 1.15rem; line-height: 1; transform: translateY(.16em); color: var(--text-faint); }
 .stop { color: var(--text-muted); font-size: .78rem; font-family: var(--font-content); white-space: nowrap; }
 /* Each chunk boxed just enough to read as one object — the whole point of a
    chunking skill is that `3x` is ONE thing, so the grouping has to be visible
