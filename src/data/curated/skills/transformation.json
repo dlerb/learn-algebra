@@ -43,7 +43,7 @@
             }
           ],
           "requires": [
-            "skill.common-factor",
+            "skill.sum-with-shared-factor",
             "skill.expand-distribute",
             "skill.chunks-in-product"
           ],

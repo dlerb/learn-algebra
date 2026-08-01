@@ -1247,7 +1247,8 @@
       "note": {
         "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
         "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen."
-      }
+      },
+      "todo": "NOW UNCITED, deliberately. Its two citers were chunking skills that produce a decomposition and stop, while this says what to do NEXT; they cite the precedence rules instead. Three of its four branches (product, power, quotient) never had a citer at all. What it really is: a mapping from dominant operation to RULE FAMILY — sum → distributing, power → power-laws, quotient → fraction-laws — which restates the family structure as prose, which is why it has no summarizes and no latex. Author intent (2026-08-01): it may come back as a FAMILY rather than a rule, and the family is closer to PRECEDENCE than to tool choice. Decide with the block question, not before."
     },
     {
       "id": "rule.nothing-to-do",

@@ -277,7 +277,9 @@
             "skill.product",
             "skill.power-of-a-product"
           ],
-          "rules": [],
+          "rules": [
+            "rule.exponent-binds-tighter"
+          ],
           "restsOn": [
             "ix.pow",
             "th.negative-base"
@@ -542,10 +544,10 @@
       },
       "skills": [
         {
-          "id": "skill.common-factor",
+          "id": "skill.sum-with-shared-factor",
           "name": {
-            "en": "Common factor",
-            "de": "Gemeinsamer Faktor"
+            "en": "Sum with a shared factor",
+            "de": "Summe mit gemeinsamem Faktor"
           },
           "note": {
             "en": "Dominant operation: a sum. The shape is special: all chunks share a factor (3, a, 2x, (x+1)). Recognising it unlocks factoring it out.",
@@ -560,9 +562,7 @@
           "requires": [
             "skill.sum-of-products"
           ],
-          "rules": [
-            "rule.dominant-op-tools"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.precedence",
             "ix.juxtaposition",
@@ -590,7 +590,7 @@
             "skill.sum-of-products"
           ],
           "rules": [
-            "rule.dominant-op-tools"
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "ix.precedence",
