@@ -1,6 +1,7 @@
 # Restructuring `right[]` — plan
 
-*Written 2026-08-01, during the rules/mistakes revision. Not yet implemented.*
+*Written 2026-08-01, during the rules/mistakes revision.*
+**Step 1 is BUILT (2026-08-01).** Steps 2 and 3 are not — see Phases.
 
 ## Why
 
@@ -39,7 +40,17 @@ const rightForm = z.object({
   rule: z.string().optional(),    // the ONE rule this form adds — see below
 })
 right: z.array(rightForm).default([])
+
+// and the mirror, changed at the same time:
+wrongForm = { latex: z.string(), mistake: z.string() }   // latex now REQUIRED
 ```
+
+⚠️ Making `wrong[].latex` required **reversed a decision recorded in the schema on
+2026-07-30** ("Do NOT put `\ldots` in here to fill it — the field means 'the false
+claim', and the whole point of these entries is that there is none"). That argument
+is still true about the maths; it was overturned because absence is
+indistinguishable from unfinished authoring and an explicit marker is not. The
+schema note records the reversal rather than deleting the argument.
 
 Symmetric with `wrong[]` in shape and in rendering. `skill.rules` **stays** (see
 "strategy rules"), and the reverse index on `/rules` becomes the union of the two.
@@ -142,10 +153,16 @@ Data: 82 right entries and 78 skills' `rules[]`, across the three `skills/*.json
 
 ## Phases
 
-**Step 1 — mechanical, no content decisions.** Wrap all 82 strings into `{latex}`
-objects; the five terminal skills gain their `∎` entry; `rules[]` stays skill-level
-and authored. Schema, both validators and the view updated. Fully scripted through
-`serializeContent`, everything green, one revert undoes it. ~1 hour.
+**Step 1 — mechanical, no content decisions. ✅ DONE 2026-08-01** (`f315dec`).
+86 strings wrapped, 5 terminal sentinels, 10 inexpressible sentinels; schema, both
+validators, the view and `citations.ts` updated; `rules[]` untouched at skill
+level. The data and the code had to land in one commit — the schema change breaks
+`pnpm validate` until the data matches, so they are not separable.
+
+⚠️ THE INVARIANT THAT PROVED IT: `pnpm validate` said **78 checked** before and
+after. Terminal skills gained five right entries, but they are skipped, so any
+movement in that number would have meant something started or stopped being
+compared.
 
 **Step 2 — attribution, during the fluency pass.** As each skill is read, move the
 rule it *adds* onto the form and drop what it inherits. Both fields coexist; an audit
@@ -177,3 +194,33 @@ Rule→rule dependency edges in `rules.json`. The tower already carries both
 dependency graphs (`derivedFrom` = why this is true, `basedOn` = what you must be
 able to read), used almost disjointly, and rules inherit them through `summarizes` —
 33 and 19 rules respectively. See the `tower-inheritance` decision.
+
+
+## What the flag added afterwards
+
+`reversible` (2026-08-01, `30da609`) turned out to name the distinction this
+document could previously only describe in prose:
+
+- a **↔** skill's `right[]` is a set of ALTERNATIVES — four notations for one
+  product, three placements of one minus. Wrapping the strings is the whole job.
+- a **→** skill's `right[]` is often a CHAIN, where each step has its own rule.
+  That is where step 2's attribution has real work.
+
+Swept over the twelve skills with more than one right form, five are chains and
+seven are alternatives:
+
+```
+coefficient-negative-one   (-1)·a → (-1)a → -1a → -a    three steps, three rules
+coefficient-zero           0·x → 0x → 0                 notation, then evaluation
+redundant-brackets         ((a+b)) → (a+b) → a+b        same move twice
+minus-over-sum             two steps, and DIRECTION-MIXED   (todo)
+minus-over-difference      two steps, and DIRECTION-MIXED   (todo)
+```
+
+The last two carry `todo`s: some of their steps reverse and some do not, which
+under one-flag-per-skill is a reason to split rather than to pick a flag.
+
+`negative-numbers` (`-3` → `(-3)`, `0 - 3`) is a borderline the sweep flagged but
+did not decide: both forms reverse, so `↔` stands, but `(-3)` is a notation variant
+while `0 - 3` re-expresses the negative as a subtraction — not the same kind of
+right form in one list.
