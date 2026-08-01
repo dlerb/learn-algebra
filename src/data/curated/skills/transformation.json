@@ -149,8 +149,7 @@
           ],
           "wrong": [
             {
-              "latex": "\\frac{a + k}{b + k} = \\frac{a}{b}",
-              "mistake": "anti.cancel-over-sum"
+              "mistake": "omi.no-move-attempted"
             }
           ],
           "requires": [

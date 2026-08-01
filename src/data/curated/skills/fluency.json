@@ -776,22 +776,22 @@
           "conditions": "c \\ne 0"
         },
         {
-          "id": "skill.multiplying-into-a-bracket",
+          "id": "skill.expand-distribute",
           "name": {
-            "en": "Multiplying into a bracket",
-            "de": "In eine Klammer hineinmultiplizieren"
+            "en": "Expand: multiply into a bracket",
+            "de": "Ausmultiplizieren: in eine Klammer hinein"
           },
           "note": {
-            "en": "Multiplication distributes to every term inside: the 2 hits both the $x$ and the 1.",
-            "de": "Die Multiplikation verteilt sich auf jeden Term darin: die 2 trifft sowohl das $x$ als auch die 1."
+            "en": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$, and with a number in front no differently: $2(x+1) = 2x + 2$. The commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
+            "de": "Die ausmultiplizierte Form herstellen: der Faktor aussen landet auf jedem Term darin. $a(b+c) = ab + ac$, und mit einer Zahl davor nicht anders: $2(x+1) = 2x + 2$. Der häufigste Fehltritt ist, nach dem ersten Term aufzuhören ($a(b+c) \\to ab + c$). Ein führendes Minus ist der Faktor $-1$: $-(b+c) = -b - c$."
           },
-          "stimulus": "2(x + 1)",
+          "stimulus": "a(b + c)",
           "right": [
-            "2x + 2"
+            "ab + ac"
           ],
           "wrong": [
             {
-              "latex": "2(x + 1) = 2x + 1",
+              "latex": "a(b + c) = ab + c",
               "mistake": "anti.partial-distribution"
             }
           ],
@@ -805,36 +805,6 @@
             "ax.distributivity",
             "ix.juxtaposition",
             "ix.brackets"
-          ]
-        },
-        {
-          "id": "skill.expand-distribute",
-          "name": {
-            "en": "Expand: multiply into a bracket",
-            "de": "Ausmultiplizieren: in eine Klammer hinein"
-          },
-          "note": {
-            "en": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$. This is the active twin of recognising $2(x+1) = 2x+2$ — there you check equality, here you generate it — and the commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
-            "de": "Die ausmultiplizierte Form herstellen: der Faktor aussen landet auf jedem Term darin. $a(b+c) = ab + ac$. Das ist das aktive Gegenstück zum Erkennen von $2(x+1) = 2x+2$ — dort prüfst du die Gleichheit, hier erzeugst du sie — und der häufigste Fehltritt ist, nach dem ersten Term aufzuhören ($a(b+c) \\to ab + c$). Ein führendes Minus ist der Faktor $-1$: $-(b+c) = -b - c$."
-          },
-          "stimulus": "a(b + c)",
-          "right": [
-            "ab + ac"
-          ],
-          "wrong": [
-            {
-              "latex": "a(b + c) = ab + c",
-              "mistake": "anti.partial-distribution"
-            }
-          ],
-          "requires": [
-            "skill.multiplying-into-a-bracket"
-          ],
-          "rules": [
-            "rule.only-multiplication-distributes"
-          ],
-          "restsOn": [
-            "ax.distributivity"
           ]
         }
       ]
@@ -1810,6 +1780,7 @@
             "skill.expand-binomial-square"
           ],
           "rules": [
+            "rule.binomial-square",
             "rule.binomials-read-backwards"
           ],
           "restsOn": [
