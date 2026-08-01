@@ -1247,10 +1247,29 @@
       "note": {
         "en": "Sum or difference: collect like terms, look for common factors. Product: expand or factor. Power: power rules. Quotient: fraction manipulation.",
         "de": "Summe oder Differenz: gleichartige Terme zusammenfassen, gemeinsame Faktoren suchen. Produkt: ausmultiplizieren oder faktorisieren. Potenz: Potenzregeln. Quotient: Bruchrechnen."
-      }
+      },
+      "todo": "NOW UNCITED, deliberately. Its two citers were chunking skills that produce a decomposition and stop, while this says what to do NEXT; they cite the precedence rules instead. Three of its four branches (product, power, quotient) never had a citer at all. What it really is: a mapping from dominant operation to RULE FAMILY — sum → distributing, power → power-laws, quotient → fraction-laws — which restates the family structure as prose, which is why it has no summarizes and no latex. Author intent (2026-08-01): it may come back as a FAMILY rather than a rule, and the family is closer to PRECEDENCE than to tool choice. Decide with the block question, not before."
+    },
+    {
+      "id": "rule.nothing-to-do",
+      "kind": "is",
+      "rule": {
+        "en": "Not every term can be simplified",
+        "de": "Nicht jeder Term lässt sich vereinfachen"
+      },
+      "shortName": {
+        "en": "Finished form",
+        "de": "Fertiger Term"
+      },
+      "note": {
+        "en": "Some forms are already finished: $2 + 3x$, $\\sqrt{a+b}$, $a^2 + b^2$. No rule reaches them, and recognising that is itself the answer. The mistake is to force a move no rule licenses — which is where $2 + 3x = 5x$ comes from.",
+        "de": "Manche Terme sind bereits fertig: $2 + 3x$, $\\sqrt{a+b}$, $a^2 + b^2$. Keine Regel greift, und genau das zu erkennen ist die Antwort. Der Fehler ist, einen Schritt zu erzwingen, den keine Regel erlaubt — daher kommt $2 + 3x = 5x$."
+      },
+      "summarizes": []
     },
     {
       "id": "rule.unlike-terms-stay",
+      "todo": "Sentence and formula disagree: the sentence states what you may NOT do (leave unlike terms), the latex shows what you MAY do (collect like ones). Decide which rule this is. If it becomes the collecting rule, it also has a tower anchor its neighbours lack — the latex is ax.distributivity read backwards — and summarizes should stop being empty. Cited by 3 skills, 1 mistake.",
       "kind": "do",
       "rule": {
         "en": "Leave unlike terms alone",

@@ -32,7 +32,9 @@
           },
           "stimulus": "ab + ac",
           "right": [
-            "a(b + c)"
+            {
+              "latex": "a(b + c)"
+            }
           ],
           "wrong": [
             {
@@ -41,7 +43,7 @@
             }
           ],
           "requires": [
-            "skill.common-factor",
+            "skill.sum-with-shared-factor",
             "skill.expand-distribute",
             "skill.chunks-in-product"
           ],
@@ -50,7 +52,8 @@
           ],
           "restsOn": [
             "ax.distributivity"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.factor-quadratic",
@@ -64,7 +67,9 @@
           },
           "stimulus": "x^2 + 5x + 6",
           "right": [
-            "(x + 2)(x + 3)"
+            {
+              "latex": "(x + 2)(x + 3)"
+            }
           ],
           "wrong": [
             {
@@ -83,7 +88,8 @@
           "restsOn": [
             "ax.distributivity",
             "th.collect-like-terms"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -110,7 +116,9 @@
           },
           "stimulus": "3x + 2x",
           "right": [
-            "5x"
+            {
+              "latex": "5x"
+            }
           ],
           "wrong": [
             {
@@ -131,7 +139,8 @@
           ],
           "restsOn": [
             "th.collect-like-terms"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.cancel-common-factor",
@@ -145,12 +154,14 @@
           },
           "stimulus": "\\frac{ak}{bk}",
           "right": [
-            "\\frac{a}{b}"
+            {
+              "latex": "\\frac{a}{b}"
+            }
           ],
           "wrong": [
             {
-              "latex": "\\frac{a + k}{b + k} = \\frac{a}{b}",
-              "mistake": "anti.cancel-over-sum"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -164,7 +175,8 @@
           "restsOn": [
             "th.cancel-common-factor"
           ],
-          "conditions": "b \\ne 0,\\ k \\ne 0"
+          "conditions": "b \\ne 0,\\ k \\ne 0",
+          "reversible": false
         },
         {
           "id": "skill.combine-fractions",
@@ -178,7 +190,9 @@
           },
           "stimulus": "\\frac{a}{b} + \\frac{c}{d}",
           "right": [
-            "\\frac{ad + bc}{bd}"
+            {
+              "latex": "\\frac{ad + bc}{bd}"
+            }
           ],
           "wrong": [
             {
@@ -197,7 +211,8 @@
             "th.fraction-multiply",
             "th.fraction-divide",
             "th.fraction-add"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -224,7 +239,9 @@
           },
           "stimulus": "x^2 - 1",
           "right": [
-            "(x+1)(x-1)"
+            {
+              "latex": "(x+1)(x-1)"
+            }
           ],
           "wrong": [
             {
@@ -236,14 +253,13 @@
             "skill.difference",
             "skill.product"
           ],
-          "rules": [
-            "rule.dominant-op-last"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.precedence",
             "ix.brackets",
             "th.difference-of-squares"
-          ]
+          ],
+          "reversible": true
         }
       ]
     }

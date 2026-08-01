@@ -8,7 +8,7 @@ import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
 import type { WrongForm } from '../data/skill.schema'
 import { skills, groups, processes, rules, mistakes, rawById, skillTree } from '../data'
-import { loc, type Skill, type LocalizedString, type GroupDef, type RuleDef } from '../data/skill.schema'
+import { loc, TERMINAL, INEXPRESSIBLE, type Skill, type LocalizedString, type GroupDef, type RuleDef, type RightForm } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
@@ -68,10 +68,12 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 // and `note` are still English-only — that is a content debt, not a view one.
 const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
-      guards: 'schützt vor', cond: 'sofern',
+      guards: 'schützt vor', cond: 'sofern', terminal: 'nichts zu tun',
+      bothWays: 'in beide Richtungen', oneWay: 'nur in diese Richtung',
       by: 'gliedern nach', byGroup: 'Thema', byProcess: 'Prozess', }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
-      guards: 'guards against', cond: 'provided',
+      guards: 'guards against', cond: 'provided', terminal: 'nothing to do',
+      bothWays: 'reads both ways', oneWay: 'one direction only',
       by: 'section by', byGroup: 'topic', byProcess: 'process', })
 
 // Deep link from /rules, where each rule lists the skills that teach it.
@@ -159,7 +161,8 @@ const processTitle = new Map(processes.map((p: GroupDef) => [p.slug, t(p.title)]
 
 interface Row {
   id: string; process: string; group: string; name: string
-  stimulus: string; right: string[]; wrong: WrongForm[]; conditions?: string
+  stimulus: string; right: RightForm[]; wrong: WrongForm[]; conditions?: string
+  reversible?: boolean
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
@@ -185,6 +188,7 @@ function toRow(s: Skill): Row {
   return {
     id: s.id, process: s.process, group: s.group, name: t(s.name),
     stimulus: s.stimulus, right: s.right, wrong: s.wrong, conditions: s.conditions,
+    reversible: s.reversible,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
     paired: s.wrong.length > 0,
@@ -277,6 +281,7 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
         :id="r.id" :name="r.name" :record="r.raw"
         :kind="stripKind(r)"
         :targeted="r.id === targetId"
+        :marks-title="r.reversible === undefined ? undefined : (r.reversible ? L.bothWays : L.oneWay)"
       >
         <template #folds>
           <RefFold :label="L.rests" :links="r.restsOn" />
@@ -290,6 +295,19 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 
         <template #strip-right>
           <span v-if="inspect && r.contrast" class="badge">contrast</span>
+        </template>
+
+        <!-- WHICH WAY THE CLAIM READS, on the NAME because that is what it
+             qualifies: ↔ says one competence covers both directions (3×x and 3x
+             are the same recognition), → says the reverse is a different skill
+             with a different name (expanding against factoring). The `marks`
+             slot renders inside the heading, which is where /mistakes already
+             puts its frequency stars — same idea, a mark on the subject rather
+             than a line of its own.
+             Undeclared renders nothing: an empty cell is a question here as
+             everywhere, and a terminal claim has no direction to reverse. -->
+        <template v-if="r.reversible !== undefined" #marks>
+          <span class="dir">{{ r.reversible ? '↔' : '→' }}</span>
         </template>
 
         <!-- THE GOOD HALF: the problem solved correctly, then the rule that
@@ -307,11 +325,15 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                commutativity. -->
           <div v-for="(x, i) in r.right" :key="i" class="stmt">
             <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
-            <span class="f"><MathExpr :latex="`${r.stimulus} = ${x}`" display /></span>
-          </div>
-          <div v-if="!r.right.length" class="stmt">
-            <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
-            <span class="f"><MathExpr :latex="r.stimulus" display /></span>
+            <!-- ⚠️ THE SENTINEL IS NOT AN OPERAND. Every other entry composes
+                 `stimulus = form`; ∎ must not, because `2 + 3x = ∎` is a claim
+                 about the empty set and a false one. The stimulus stands alone
+                 and the mark carries the rest. -->
+            <span v-if="x.latex === TERMINAL" class="f terminal">
+              <MathExpr :latex="r.stimulus" display />
+              <span class="stop"><MathExpr :latex="TERMINAL" /></span>
+            </span>
+            <span v-else class="f"><MathExpr :latex="`${r.stimulus} = ${x.latex}`" display /></span>
           </div>
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
@@ -340,8 +362,8 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                instance. -->
           <div v-for="(w, i) in r.wrong" :key="i" class="stmt">
             <span class="mark bad">✗</span>
-            <span v-if="w.latex" class="f"><MathExpr :latex="w.latex" display /></span>
-            <span v-else class="f nothing">…</span>
+            <span v-if="w.latex === INEXPRESSIBLE" class="f nothing">…</span>
+            <span v-else class="f"><MathExpr :latex="w.latex" display /></span>
           </div>
           <!-- The same two shapes, mirrored. EVIDENCED, never invented: only the
                9 of 20 that cite a mistake carry one, so 11 rows show a right
@@ -417,6 +439,17 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    the form the student never wrote. Muted, because it is an ABSENCE and must not
    read as loudly as a wrong formula sitting under the same mark. */
 .f.nothing { color: var(--text-faint); font-family: var(--font-content); letter-spacing: .1em; }
+/* The terminal row: formula, then the stop where the right-hand side would be.
+   Flex rather than a third grid column so the marker sits against the formula
+   at any width and drops beneath it on a phone instead of squeezing the maths. */
+.f.terminal { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
+/* The direction mark on the name: grey and quiet, a qualifier on the subject
+   rather than a second thing to read. `.marks` is sized for a row of ★ at
+   .62rem, where a single arrow glyph disappears — so this one overrides back up
+   to something legible, and cancels the slot's optical lift, which exists to
+   sit stars on the name's x-height and pushes an arrow visibly high. */
+.dir { font-size: 1.15rem; line-height: 1; transform: translateY(.16em); color: var(--text-faint); }
+.stop { color: var(--text-muted); font-size: .78rem; font-family: var(--font-content); white-space: nowrap; }
 /* Each chunk boxed just enough to read as one object — the whole point of a
    chunking skill is that `3x` is ONE thing, so the grouping has to be visible
    without a bracket, which would say something different. */

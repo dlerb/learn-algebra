@@ -27,6 +27,7 @@
 
 import { ComputeEngine } from '@cortex-js/compute-engine'
 import { skills } from '../src/data/index'
+import { TERMINAL } from '../src/data/skill.schema'
 
 const ce = new ComputeEngine()
 
@@ -63,13 +64,18 @@ for (const s of skills) {
   if (CANNOT_DECIDE[s.id]) continue
   const lhs = ce.parse(s.stimulus, { canonical: true })
   for (const [i, r] of s.right.entries()) {
+    // ⚠️ BEFORE ce.parse, NEVER AFTER. The sentinel is not an expression: CE reads
+    // \blacksquare as an Error node, returns `undefined` from isEqual — undecided,
+    // not false, which is the green-by-luck hazard this file's header warns about —
+    // and prints a "compilation fallback" line to stderr on every single run.
+    if (r.latex === TERMINAL) continue
     checked++
     try {
-      if (!lhs.isEqual(ce.parse(r, { canonical: true }))) {
-        issues.push(`${s.id}: right[${i}] "${r}" is not equal to the stimulus "${s.stimulus}"`)
+      if (!lhs.isEqual(ce.parse(r.latex, { canonical: true }))) {
+        issues.push(`${s.id}: right[${i}] "${r.latex}" is not equal to the stimulus "${s.stimulus}"`)
       }
     } catch (e) {
-      issues.push(`${s.id}: right[${i}] "${r}" — CE threw: ${(e as Error).message}`)
+      issues.push(`${s.id}: right[${i}] "${r.latex}" — CE threw: ${(e as Error).message}`)
     }
   }
 }

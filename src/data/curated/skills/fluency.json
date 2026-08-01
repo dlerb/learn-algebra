@@ -28,10 +28,18 @@
           },
           "stimulus": "3 \\times x",
           "right": [
-            "3 \\cdot x",
-            "3x",
-            "x \\cdot 3",
-            "(3)(x)"
+            {
+              "latex": "3 \\cdot x"
+            },
+            {
+              "latex": "3x"
+            },
+            {
+              "latex": "x \\cdot 3"
+            },
+            {
+              "latex": "(3)(x)"
+            }
           ],
           "wrong": [
             {
@@ -45,7 +53,8 @@
           "restsOn": [
             "ix.juxtaposition",
             "ix.coefficient-front"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.product-with-brackets",
@@ -59,9 +68,15 @@
           },
           "stimulus": "2 \\times (x+1)",
           "right": [
-            "2 \\cdot (x+1)",
-            "2(x+1)",
-            "(x+1) \\cdot 2"
+            {
+              "latex": "2 \\cdot (x+1)"
+            },
+            {
+              "latex": "2(x+1)"
+            },
+            {
+              "latex": "(x+1) \\cdot 2"
+            }
           ],
           "wrong": [
             {
@@ -73,13 +88,13 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition",
             "rule.implicit-op-before-bracket"
           ],
           "restsOn": [
             "ix.juxtaposition",
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-negative-one",
@@ -93,9 +108,15 @@
           },
           "stimulus": "(-1) \\cdot a",
           "right": [
-            "(-1)a",
-            "-1a",
-            "-a"
+            {
+              "latex": "(-1)a"
+            },
+            {
+              "latex": "-1a"
+            },
+            {
+              "latex": "-a"
+            }
           ],
           "wrong": [
             {
@@ -108,14 +129,14 @@
             "skill.negative-numbers"
           ],
           "rules": [
-            "rule.juxtaposition",
-            "rule.three-minuses"
+            "rule.invisible-one"
           ],
           "restsOn": [
             "th.negative-one-times",
             "ix.invisible-one",
             "ix.juxtaposition"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-zero",
@@ -129,8 +150,12 @@
           },
           "stimulus": "0 \\cdot x",
           "right": [
-            "0x",
-            "0"
+            {
+              "latex": "0x"
+            },
+            {
+              "latex": "0"
+            }
           ],
           "wrong": [
             {
@@ -142,12 +167,46 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition"
+            "rule.zero-times"
           ],
           "restsOn": [
             "th.zero-times",
             "ix.juxtaposition"
-          ]
+          ],
+          "reversible": true
+        },
+        {
+          "id": "skill.coefficient-one",
+          "name": {
+            "en": "Coefficient of 1",
+            "de": "Koeffizient 1"
+          },
+          "note": {
+            "en": "A coefficient of $1$ is never written: $1a$ is just $a$. Leaving it standing is not wrong, but it hides the term you are about to work with.",
+            "de": "Der Koeffizient $1$ wird nie geschrieben: $1a$ ist einfach $a$. Ihn stehen zu lassen ist nicht falsch, verdeckt aber den Term, mit dem man weiterarbeitet."
+          },
+          "stimulus": "1 \\cdot a",
+          "right": [
+            {
+              "latex": "a"
+            }
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
+            }
+          ],
+          "requires": [
+            "skill.explicit-vs-implicit-product"
+          ],
+          "rules": [
+            "rule.neutral-elements"
+          ],
+          "restsOn": [
+            "ax.one-neutral"
+          ],
+          "reversible": true
         },
         {
           "id": "skill.repeated-addition",
@@ -161,7 +220,9 @@
           },
           "stimulus": "x + x",
           "right": [
-            "2x"
+            {
+              "latex": "2x"
+            }
           ],
           "wrong": [
             {
@@ -183,7 +244,9 @@
             "pre.variables",
             "def.multiple",
             "ix.juxtaposition"
-          ]
+          ],
+          "todo": "REVERSE PAIR with skill.coefficient-vs-exponent (`2a → a + a`). Both are marked ↔, which makes one of them redundant — merge, or mark both → and keep them as a pair.",
+          "reversible": true
         }
       ]
     },
@@ -209,7 +272,11 @@
             "de": "$2 + 3x$ ist ein fertiges Objekt. Nur gleichartige Terme lassen sich zusammenfassen ($x + x = 2x$); $2$ und $3x$ sind nicht gleichartig."
           },
           "stimulus": "2 + 3x",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "2 + 3x = 5x",
@@ -220,12 +287,44 @@
             "skill.repeated-addition"
           ],
           "rules": [
-            "rule.unlike-terms-stay"
+            "rule.unlike-terms-stay",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "th.collect-like-terms",
             "ix.juxtaposition"
           ]
+        },
+        {
+          "id": "skill.add-zero",
+          "name": {
+            "en": "Adding 0",
+            "de": "Null addieren"
+          },
+          "note": {
+            "en": "Adding zero changes nothing: $a + 0$ is $a$. Worth clearing away — a $+\\,0$ left standing looks like a term still waiting to be combined.",
+            "de": "Null addieren ändert nichts: $a + 0$ ist $a$. Man schreibt es weg — ein stehengebliebenes $+\\,0$ sieht aus wie ein Term, der noch zusammengefasst werden will."
+          },
+          "stimulus": "a + 0",
+          "right": [
+            {
+              "latex": "a"
+            }
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
+            }
+          ],
+          "requires": [],
+          "rules": [
+            "rule.neutral-elements"
+          ],
+          "restsOn": [
+            "ax.zero-neutral"
+          ],
+          "reversible": true
         },
         {
           "id": "skill.unlike-variable-terms",
@@ -238,7 +337,11 @@
             "de": "$3x + 2y$ lässt sich nicht zu einem Term zusammenfassen — $x$ und $y$ sind verschiedene Objekte. $5xy$ wäre ein Produkt, also etwas ganz anderes."
           },
           "stimulus": "3x + 2y",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "3x + 2y = 5xy",
@@ -249,7 +352,8 @@
             "skill.number-plus-term"
           ],
           "rules": [
-            "rule.unlike-terms-stay"
+            "rule.unlike-terms-stay",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "th.collect-like-terms",
@@ -267,7 +371,11 @@
             "de": "$x^2 + x$ hat zwei ungleichartige Terme. Exponenten wachsen beim Multiplizieren von Potenzen ($x^2 \\cdot x = x^3$), nie beim Addieren."
           },
           "stimulus": "x^2 + x",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "x^2 + x = x^3",
@@ -280,6 +388,9 @@
           ],
           "restsOn": [
             "th.collect-like-terms"
+          ],
+          "rules": [
+            "rule.nothing-to-do"
           ]
         }
       ]
@@ -307,8 +418,12 @@
           },
           "stimulus": "-3",
           "right": [
-            "(-3)",
-            "0 - 3"
+            {
+              "latex": "(-3)"
+            },
+            {
+              "latex": "0 - 3"
+            }
           ],
           "wrong": [
             {
@@ -322,22 +437,24 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtraction-as-adding-opposite",
           "name": {
-            "en": "Subtracting vs. adding a negative",
-            "de": "Subtrahieren und das Negative addieren"
+            "en": "Adding a negative vs. subtracting",
+            "de": "Das Negative addieren und subtrahieren"
           },
           "note": {
-            "en": "Subtracting is the same as adding the opposite: a - b = a + (-b). The minus and the number belong together.",
-            "de": "Subtrahieren ist dasselbe wie das Gegenteil addieren: $a - b = a + (-b)$. Das Minus gehört zur Zahl."
+            "en": "Adding the opposite is the same as subtracting: $a + (-b) = a - b$. The minus and the number belong together, which is why the bracket may go.",
+            "de": "Das Gegenteil addieren ist dasselbe wie subtrahieren: $a + (-b) = a - b$. Das Minus gehört zur Zahl, darum darf die Klammer weg."
           },
-          "stimulus": "a - b",
+          "stimulus": "a + (-b)",
           "right": [
-            "a + (-b)",
-            "a + (-1) \\cdot b"
+            {
+              "latex": "a - b"
+            }
           ],
           "wrong": [
             {
@@ -358,7 +475,8 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.minus-over-sum",
@@ -372,8 +490,12 @@
           },
           "stimulus": "-(a + b)",
           "right": [
-            "(-1)(a + b)",
-            "-a - b"
+            {
+              "latex": "(-1)(a + b)"
+            },
+            {
+              "latex": "-a - b"
+            }
           ],
           "wrong": [
             {
@@ -393,7 +515,9 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "todo": "MIXED DIRECTIONS — one flag per skill, and this one needs two: `(-1)(a + b)` is a reading step that reverses freely (rewriting the leading minus as a factor), while `-a - b` is the distribution, whose reverse is factoring a minus out. Split into the reading and the move, or drop the intermediate form.",
+          "reversible": false
         },
         {
           "id": "skill.minus-over-difference",
@@ -407,8 +531,12 @@
           },
           "stimulus": "-(a - b)",
           "right": [
-            "-a + b",
-            "b - a"
+            {
+              "latex": "-a + b"
+            },
+            {
+              "latex": "b - a"
+            }
           ],
           "wrong": [
             {
@@ -420,15 +548,17 @@
             "skill.coefficient-negative-one"
           ],
           "rules": [
-            "rule.three-minuses",
-            "rule.implicit-op-before-bracket"
+            "rule.implicit-op-before-bracket",
+            "rule.minus-over-bracket"
           ],
           "restsOn": [
             "th.minus-over-sum",
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "todo": "MIXED DIRECTIONS, same as minus-over-sum: `-a + b` is the distribution (one-way) and `b - a` is commutativity applied after it (reverses freely). Two steps, two directions, one skill.",
+          "reversible": false
         },
         {
           "id": "skill.double-negative",
@@ -442,7 +572,9 @@
           },
           "stimulus": "a - (-b)",
           "right": [
-            "a + b"
+            {
+              "latex": "a + b"
+            }
           ],
           "wrong": [
             {
@@ -457,14 +589,13 @@
           "requires": [
             "skill.subtraction-as-adding-opposite"
           ],
-          "rules": [
-            "rule.three-minuses"
-          ],
+          "rules": [],
           "restsOn": [
             "def.sub",
             "th.minus-in-product",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.negative-times-negative",
@@ -478,7 +609,9 @@
           },
           "stimulus": "(-a)(-b)",
           "right": [
-            "ab"
+            {
+              "latex": "ab"
+            }
           ],
           "wrong": [
             {
@@ -499,7 +632,8 @@
             "ix.juxtaposition",
             "th.negative-one-times",
             "def.sub"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.minus-on-fraction",
@@ -513,8 +647,12 @@
           },
           "stimulus": "-\\frac{a}{b}",
           "right": [
-            "\\frac{-a}{b}",
-            "\\frac{a}{-b}"
+            {
+              "latex": "\\frac{-a}{b}"
+            },
+            {
+              "latex": "\\frac{a}{-b}"
+            }
           ],
           "wrong": [
             {
@@ -534,7 +672,8 @@
             "th.negative-one-times",
             "def.sub",
             "ix.fraction-bar"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtracting-a-sum",
@@ -548,7 +687,9 @@
           },
           "stimulus": "a - (b + c)",
           "right": [
-            "a - b - c"
+            {
+              "latex": "a - b - c"
+            }
           ],
           "wrong": [
             {
@@ -567,7 +708,8 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.subtracting-a-difference",
@@ -581,7 +723,9 @@
           },
           "stimulus": "a - (b - c)",
           "right": [
-            "a - b + c"
+            {
+              "latex": "a - b + c"
+            }
           ],
           "wrong": [
             {
@@ -600,7 +744,8 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -623,12 +768,17 @@
           },
           "stimulus": "(a + b)",
           "right": [
-            "[a + b]",
-            "\\{a + b\\}"
+            {
+              "latex": "[a + b]"
+            },
+            {
+              "latex": "\\{a + b\\}"
+            }
           ],
           "restsOn": [
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.redundant-brackets",
@@ -642,8 +792,12 @@
           },
           "stimulus": "((a + b))",
           "right": [
-            "(a + b)",
-            "a + b"
+            {
+              "latex": "(a + b)"
+            },
+            {
+              "latex": "a + b"
+            }
           ],
           "wrong": [
             {
@@ -653,7 +807,8 @@
           ],
           "restsOn": [
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.precedence-brackets",
@@ -667,7 +822,9 @@
           },
           "stimulus": "a + b \\cdot c",
           "right": [
-            "a + bc"
+            {
+              "latex": "a + bc"
+            }
           ],
           "wrong": [
             {
@@ -681,7 +838,8 @@
           "restsOn": [
             "ix.precedence",
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.fraction-bar-grouping",
@@ -695,7 +853,9 @@
           },
           "stimulus": "\\frac{a+b}{c}",
           "right": [
-            "(a+b) \\div c"
+            {
+              "latex": "(a+b) \\div c"
+            }
           ],
           "wrong": [
             {
@@ -716,40 +876,8 @@
           "restsOn": [
             "ix.fraction-bar"
           ],
-          "conditions": "c \\ne 0"
-        },
-        {
-          "id": "skill.multiplying-into-a-bracket",
-          "name": {
-            "en": "Multiplying into a bracket",
-            "de": "In eine Klammer hineinmultiplizieren"
-          },
-          "note": {
-            "en": "Multiplication distributes to every term inside: the 2 hits both the $x$ and the 1.",
-            "de": "Die Multiplikation verteilt sich auf jeden Term darin: die 2 trifft sowohl das $x$ als auch die 1."
-          },
-          "stimulus": "2(x + 1)",
-          "right": [
-            "2x + 2"
-          ],
-          "wrong": [
-            {
-              "latex": "2(x + 1) = 2x + 1",
-              "mistake": "anti.partial-distribution"
-            }
-          ],
-          "requires": [
-            "skill.product-with-brackets"
-          ],
-          "rules": [
-            "rule.implicit-op-before-bracket",
-            "rule.only-multiplication-distributes"
-          ],
-          "restsOn": [
-            "ax.distributivity",
-            "ix.juxtaposition",
-            "ix.brackets"
-          ]
+          "conditions": "c \\ne 0",
+          "reversible": true
         },
         {
           "id": "skill.expand-distribute",
@@ -758,12 +886,14 @@
             "de": "Ausmultiplizieren: in eine Klammer hinein"
           },
           "note": {
-            "en": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$. This is the active twin of recognising $2(x+1) = 2x+2$ — there you check equality, here you generate it — and the commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
-            "de": "Die ausmultiplizierte Form herstellen: der Faktor aussen landet auf jedem Term darin. $a(b+c) = ab + ac$. Das ist das aktive Gegenstück zum Erkennen von $2(x+1) = 2x+2$ — dort prüfst du die Gleichheit, hier erzeugst du sie — und der häufigste Fehltritt ist, nach dem ersten Term aufzuhören ($a(b+c) \\to ab + c$). Ein führendes Minus ist der Faktor $-1$: $-(b+c) = -b - c$."
+            "en": "Produce the multiplied-out form: the outside factor lands on every term inside. $a(b+c) = ab + ac$, and with a number in front no differently: $2(x+1) = 2x + 2$. The commonest slip is stopping after the first term ($a(b+c) \\to ab + c$). A leading minus is the factor $-1$: $-(b+c) = -b - c$.",
+            "de": "Die ausmultiplizierte Form herstellen: der Faktor aussen landet auf jedem Term darin. $a(b+c) = ab + ac$, und mit einer Zahl davor nicht anders: $2(x+1) = 2x + 2$. Der häufigste Fehltritt ist, nach dem ersten Term aufzuhören ($a(b+c) \\to ab + c$). Ein führendes Minus ist der Faktor $-1$: $-(b+c) = -b - c$."
           },
           "stimulus": "a(b + c)",
           "right": [
-            "ab + ac"
+            {
+              "latex": "ab + ac"
+            }
           ],
           "wrong": [
             {
@@ -772,14 +902,17 @@
             }
           ],
           "requires": [
-            "skill.multiplying-into-a-bracket"
+            "skill.product-with-brackets"
           ],
           "rules": [
             "rule.only-multiplication-distributes"
           ],
           "restsOn": [
-            "ax.distributivity"
-          ]
+            "ax.distributivity",
+            "ix.juxtaposition",
+            "ix.brackets"
+          ],
+          "reversible": false
         }
       ]
     },
@@ -802,7 +935,9 @@
           },
           "stimulus": "a^2",
           "right": [
-            "a \\cdot a"
+            {
+              "latex": "a \\cdot a"
+            }
           ],
           "wrong": [
             {
@@ -818,7 +953,8 @@
           ],
           "rules": [
             "rule.power-vs-coefficient"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-vs-exponent",
@@ -832,7 +968,9 @@
           },
           "stimulus": "2a",
           "right": [
-            "a + a"
+            {
+              "latex": "a + a"
+            }
           ],
           "wrong": [
             {
@@ -856,7 +994,8 @@
             "def.pow",
             "ix.juxtaposition",
             "ix.invisible-one"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.negated-square-vs-negative-base",
@@ -870,7 +1009,9 @@
           },
           "stimulus": "-a^2",
           "right": [
-            "-(a^2)"
+            {
+              "latex": "-(a^2)"
+            }
           ],
           "wrong": [
             {
@@ -890,7 +1031,8 @@
             "th.negative-base",
             "th.negative-one-times",
             "def.sub"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.power-of-a-product",
@@ -904,7 +1046,9 @@
           },
           "stimulus": "(ab)^2",
           "right": [
-            "a^2 b^2"
+            {
+              "latex": "a^2 b^2"
+            }
           ],
           "wrong": [
             {
@@ -923,21 +1067,24 @@
             "pl.of-product",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.zero-and-one-exponent",
           "name": {
-            "en": "Zero and one as exponents",
-            "de": "Null und Eins als Exponenten"
+            "en": "Exponent 0",
+            "de": "Exponent 0"
           },
           "note": {
-            "en": "Any nonzero base to the power 0 is 1. And $a^1 = a$.",
-            "de": "Jede Basis ausser null hoch 0 ist 1. Und $a^1 = a$."
+            "en": "Any nonzero base to the power $0$ is $1$: $a^0 = 1$.",
+            "de": "Jede Basis ausser null hoch $0$ ist $1$: $a^0 = 1$."
           },
           "stimulus": "a^0",
           "right": [
-            "1"
+            {
+              "latex": "1"
+            }
           ],
           "wrong": [
             {
@@ -954,7 +1101,42 @@
           ],
           "rules": [
             "rule.exponent-zero"
-          ]
+          ],
+          "todo": "Name and note narrowed to a^0 when skill.exponent-one was added — the note used to claim \"And a^1 = a\" while only ever drilling a^0. The id still says zero-and-one; rename to skill.zero-exponent? Nothing requires it, so the rename is free.",
+          "reversible": false
+        },
+        {
+          "id": "skill.exponent-one",
+          "name": {
+            "en": "Exponent 1",
+            "de": "Exponent 1"
+          },
+          "note": {
+            "en": "The exponent counts factors, so one factor is just the number itself: $a^1 = a$. Read backwards it is how a bare symbol joins a power law — the exponent that is not written is a $1$.",
+            "de": "Der Exponent zählt die Faktoren, ein Faktor ist also die Zahl selbst: $a^1 = a$. Rückwärts gelesen kommt so ein blosses Zeichen in ein Potenzgesetz hinein — der nicht geschriebene Exponent ist eine $1$."
+          },
+          "stimulus": "a^1",
+          "right": [
+            {
+              "latex": "a"
+            }
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
+            }
+          ],
+          "requires": [
+            "skill.exponent-as-repeated-product"
+          ],
+          "rules": [
+            "rule.exponent-one"
+          ],
+          "restsOn": [
+            "def.pow"
+          ],
+          "reversible": true
         },
         {
           "id": "skill.negative-exponent",
@@ -968,7 +1150,9 @@
           },
           "stimulus": "a^{-n}",
           "right": [
-            "\\frac{1}{a^n}"
+            {
+              "latex": "\\frac{1}{a^n}"
+            }
           ],
           "wrong": [
             {
@@ -989,7 +1173,8 @@
             "def.pow-neg",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.fractional-exponent-root",
@@ -1003,12 +1188,17 @@
           },
           "stimulus": "a^{m/n}",
           "right": [
-            "\\sqrt[n]{a^m}",
-            "(\\sqrt[n]{a})^m"
+            {
+              "latex": "\\sqrt[n]{a^m}"
+            },
+            {
+              "latex": "(\\sqrt[n]{a})^m"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1021,7 +1211,8 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.negative-fractional-exponent",
@@ -1035,12 +1226,17 @@
           },
           "stimulus": "a^{-m/n}",
           "right": [
-            "\\frac{1}{\\sqrt[n]{a^m}}",
-            "\\frac{1}{a^{m/n}}"
+            {
+              "latex": "\\frac{1}{\\sqrt[n]{a^m}}"
+            },
+            {
+              "latex": "\\frac{1}{a^{m/n}}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1056,41 +1252,8 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
-          ]
-        },
-        {
-          "id": "skill.power-of-a-sum",
-          "name": {
-            "en": "Exponent on a sum",
-            "de": "Exponent auf einer Summe"
-          },
-          "note": {
-            "en": "A power does not distribute over $+$: $(a+b)^2$ means $(a+b)(a+b)$. Contrast $(ab)^2 = a^2b^2$ — over $\\times$ it works, over $+$ it never does.",
-            "de": "Eine Potenz verteilt sich nicht über $+$: $(a+b)^2$ heisst $(a+b)(a+b)$. Vergleiche $(ab)^2 = a^2b^2$ — über $\\times$ geht es, über $+$ nie."
-          },
-          "stimulus": "(a+b)^2",
-          "right": [
-            "(a+b)(a+b)"
           ],
-          "wrong": [
-            {
-              "latex": "(a+b)^2 = a^2 + b^2",
-              "mistake": "anti.power-over-sum"
-            }
-          ],
-          "requires": [
-            "skill.exponent-as-repeated-product",
-            "skill.product-with-brackets"
-          ],
-          "rules": [
-            "rule.only-multiplication-distributes"
-          ],
-          "restsOn": [
-            "def.pow",
-            "th.binomial-square",
-            "ix.pow",
-            "th.negative-base"
-          ]
+          "reversible": true
         },
         {
           "id": "skill.root-of-a-product",
@@ -1104,11 +1267,14 @@
           },
           "stimulus": "\\sqrt{ab}",
           "right": [
-            "\\sqrt{a} \\cdot \\sqrt{b}"
+            {
+              "latex": "\\sqrt{a} \\cdot \\sqrt{b}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1120,7 +1286,8 @@
           "restsOn": [
             "th.root-of-product",
             "ix.root"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.root-of-a-sum",
@@ -1133,7 +1300,11 @@
             "de": "Eine Wurzel zerfällt NICHT über $+$. Probier $a = 9$, $b = 16$: $\\sqrt{25} = 5$, aber $3 + 4 = 7$."
           },
           "stimulus": "\\sqrt{a+b}",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}",
@@ -1152,7 +1323,8 @@
             "skill.root-of-a-product"
           ],
           "rules": [
-            "rule.only-multiplication-distributes"
+            "rule.only-multiplication-distributes",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "ix.root"
@@ -1171,7 +1343,9 @@
           },
           "stimulus": "x^a \\cdot x^b",
           "right": [
-            "x^{a+b}"
+            {
+              "latex": "x^{a+b}"
+            }
           ],
           "wrong": [
             {
@@ -1187,7 +1361,8 @@
           ],
           "restsOn": [
             "pl.same-base"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -1205,13 +1380,14 @@
             "de": "Schreibweisen der Division"
           },
           "note": {
-            "en": "Division has many faces: $a \\div b = a : b = a/b$. All the same object. (The colon is the primary-school division sign.)",
-            "de": "Die Division hat viele Gesichter: $a \\div b = a : b = a/b$. Alles dasselbe Objekt. (Der Doppelpunkt ist das Divisionszeichen aus der Primarschule.)"
+            "en": "Division has two faces: $a : b = \\frac{a}{b}$. The same object. (The colon is the primary-school division sign; the bar is what you write from here on.)",
+            "de": "Die Division hat zwei Gesichter: $a : b = \\frac{a}{b}$. Dasselbe Objekt. (Der Doppelpunkt ist das Divisionszeichen aus der Primarschule; ab jetzt schreibt man den Bruchstrich.)"
           },
-          "stimulus": "a \\div b",
+          "stimulus": "a : b",
           "right": [
-            "a : b",
-            "\\frac{a}{b}"
+            {
+              "latex": "\\frac{a}{b}"
+            }
           ],
           "wrong": [
             {
@@ -1222,7 +1398,9 @@
           "restsOn": [
             "ix.division-symbols",
             "def.div"
-          ]
+          ],
+          "reversible": true,
+          "todo": "ELIMINATE THE COLON. `a : b` should go the way `a \\div b` just went — the fraction bar is the notation this course writes, and a second primary-school sign earns nothing. ⚠️ NOTE THIS REVERSES THE 2026-08-01 DECISION that made `:` the stimulus here; that was a step on the way, not the destination. If the colon goes entirely, this skill probably goes with it — check what still needs teaching about division notation once only the bar remains, and note it is currently required by 8 skills. It is also the reason division-variants sits in validate's CANNOT_DECIDE (CE has no colon-as-division operator), so removing it wins back a CE check."
         },
         {
           "id": "skill.fraction-as-reciprocal-product",
@@ -1236,11 +1414,14 @@
           },
           "stimulus": "\\frac{a}{b}",
           "right": [
-            "a \\cdot \\frac{1}{b}"
+            {
+              "latex": "a \\cdot \\frac{1}{b}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1248,7 +1429,8 @@
           ],
           "restsOn": [
             "def.div"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.divide-by-one",
@@ -1262,7 +1444,9 @@
           },
           "stimulus": "\\frac{a}{1}",
           "right": [
-            "a"
+            {
+              "latex": "a"
+            }
           ],
           "wrong": [
             {
@@ -1278,7 +1462,42 @@
           ],
           "rules": [
             "rule.divide-by-one-and-self"
-          ]
+          ],
+          "reversible": true
+        },
+        {
+          "id": "skill.divide-by-self",
+          "name": {
+            "en": "A quantity over itself",
+            "de": "Eine Grösse durch sich selbst"
+          },
+          "note": {
+            "en": "$\\frac{a}{a} = 1$ for every $a$ except $0$ — not because the same thing stands above and below, but because that is the inverse property read off directly. Which is why $\\frac{0}{0}$ is not $1$.",
+            "de": "$\\frac{a}{a} = 1$ für jedes $a$ ausser $0$ — nicht weil oben und unten dasselbe steht, sondern weil das direkt die Inversen-Eigenschaft ist. Darum ist $\\frac{0}{0}$ auch nicht $1$."
+          },
+          "stimulus": "\\frac{a}{a}",
+          "right": [
+            {
+              "latex": "1"
+            }
+          ],
+          "wrong": [
+            {
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
+            }
+          ],
+          "requires": [
+            "skill.division-variants"
+          ],
+          "rules": [
+            "rule.divide-by-one-and-self"
+          ],
+          "restsOn": [
+            "th.divide-by-one"
+          ],
+          "conditions": "a \\ne 0",
+          "reversible": true
         },
         {
           "id": "skill.splitting-a-fraction",
@@ -1292,11 +1511,14 @@
           },
           "stimulus": "\\frac{a+b}{c}",
           "right": [
-            "\\frac{a}{c} + \\frac{b}{c}"
+            {
+              "latex": "\\frac{a}{c} + \\frac{b}{c}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1309,7 +1531,8 @@
             "th.split-numerator",
             "ax.distributivity",
             "ix.fraction-bar"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.no-splitting-the-denominator",
@@ -1323,7 +1546,9 @@
           },
           "stimulus": "\\frac{c}{a+b}",
           "right": [
-            "c \\div (a+b)"
+            {
+              "latex": "c \\div (a+b)"
+            }
           ],
           "wrong": [
             {
@@ -1341,7 +1566,8 @@
             "th.split-numerator",
             "ix.fraction-bar"
           ],
-          "conditions": "a+b \\ne 0"
+          "conditions": "a+b \\ne 0",
+          "reversible": true
         },
         {
           "id": "skill.no-cancelling-in-a-sum",
@@ -1355,7 +1581,9 @@
           },
           "stimulus": "\\frac{3x+2}{3}",
           "right": [
-            "x + \\frac{2}{3}"
+            {
+              "latex": "x + \\frac{2}{3}"
+            }
           ],
           "wrong": [
             {
@@ -1367,14 +1595,14 @@
             "skill.splitting-a-fraction"
           ],
           "rules": [
-            "rule.split-numerator",
             "rule.fraction-cancel"
           ],
           "restsOn": [
             "th.split-numerator",
             "th.cancel-common-factor",
             "ix.fraction-bar"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -1397,14 +1625,17 @@
           },
           "stimulus": "a + b",
           "right": [
-            "b + a"
+            {
+              "latex": "b + a"
+            }
           ],
           "restsOn": [
             "ax.add-commutative"
           ],
           "rules": [
             "rule.only-plus-and-times-commute"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.multiplication-commutative",
@@ -1418,7 +1649,9 @@
           },
           "stimulus": "ab",
           "right": [
-            "ba"
+            {
+              "latex": "ba"
+            }
           ],
           "wrong": [
             {
@@ -1435,7 +1668,8 @@
           "restsOn": [
             "ax.mul-commutative",
             "ix.juxtaposition"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtraction-not-commutative",
@@ -1449,7 +1683,9 @@
           },
           "stimulus": "a - b",
           "right": [
-            "-(b - a)"
+            {
+              "latex": "-(b - a)"
+            }
           ],
           "wrong": [
             {
@@ -1461,12 +1697,13 @@
             "skill.minus-over-difference"
           ],
           "rules": [
-            "rule.three-minuses"
+            "rule.only-plus-and-times-commute"
           ],
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtraction-not-associative",
@@ -1480,7 +1717,9 @@
           },
           "stimulus": "(a - b) - c",
           "right": [
-            "a - b - c"
+            {
+              "latex": "a - b - c"
+            }
           ],
           "wrong": [
             {
@@ -1497,35 +1736,8 @@
           "restsOn": [
             "ax.add-associative",
             "def.sub"
-          ]
-        },
-        {
-          "id": "skill.division-not-commutative",
-          "name": {
-            "en": "Division is not commutative",
-            "de": "Die Division ist nicht vertauschbar"
-          },
-          "note": {
-            "en": "Division does not commute: swapping numerator and denominator gives the reciprocal, not the same value.",
-            "de": "Die Division ist nicht vertauschbar: Zähler und Nenner zu tauschen gibt den Kehrwert, nicht denselben Wert."
-          },
-          "stimulus": "a \\div b",
-          "right": [
-            "\\frac{a}{b}"
           ],
-          "wrong": [
-            {
-              "latex": "\\frac{a}{b} = \\frac{b}{a}",
-              "mistake": "anti.commute-everything"
-            }
-          ],
-          "requires": [
-            "skill.division-variants"
-          ],
-          "restsOn": [
-            "def.div",
-            "ix.division-symbols"
-          ]
+          "reversible": true
         },
         {
           "id": "skill.division-not-associative",
@@ -1539,7 +1751,9 @@
           },
           "stimulus": "(a \\div b) \\div c",
           "right": [
-            "\\frac{a}{bc}"
+            {
+              "latex": "\\frac{a}{bc}"
+            }
           ],
           "wrong": [
             {
@@ -1548,7 +1762,7 @@
             }
           ],
           "requires": [
-            "skill.division-not-commutative"
+            "skill.division-variants"
           ],
           "rules": [
             "rule.only-plus-and-times-associate"
@@ -1556,7 +1770,8 @@
           "restsOn": [
             "ax.mul-associative",
             "def.div"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -1583,7 +1798,9 @@
           },
           "stimulus": "(a + b)^2",
           "right": [
-            "a^2 + 2ab + b^2"
+            {
+              "latex": "a^2 + 2ab + b^2"
+            }
           ],
           "wrong": [
             {
@@ -1599,7 +1816,8 @@
           ],
           "restsOn": [
             "th.binomial-square"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.difference-of-squares",
@@ -1613,7 +1831,9 @@
           },
           "stimulus": "a^2 - b^2",
           "right": [
-            "(a + b)(a - b)"
+            {
+              "latex": "(a + b)(a - b)"
+            }
           ],
           "wrong": [
             {
@@ -1634,7 +1854,8 @@
             "ix.precedence",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.sum-of-squares",
@@ -1647,7 +1868,11 @@
             "de": "Eine FERTIGE Form. $a^2 - b^2$ zerfällt, $a^2 + b^2$ nicht — über den reellen Zahlen kann es das nicht, denn es ist positiv für alle $a$ und $b$, die nicht beide null sind. Zu erkennen, dass hier nichts zu tun ist, IST die Fertigkeit: verlockend sind die 3. binomische Formel trotzdem zu holen und die Summe als ein Quadrat zu lesen, das sie nicht ist."
           },
           "stimulus": "a^2 + b^2",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "a^2 + b^2 = (a + b)(a - b)",
@@ -1662,7 +1887,8 @@
             "skill.difference-of-squares"
           ],
           "rules": [
-            "rule.difference-of-squares"
+            "rule.difference-of-squares",
+            "rule.nothing-to-do"
           ],
           "restsOn": [
             "th.difference-of-squares",
@@ -1681,7 +1907,9 @@
           },
           "stimulus": "a^2 + 2ab + b^2",
           "right": [
-            "(a + b)^2"
+            {
+              "latex": "(a + b)^2"
+            }
           ],
           "wrong": [
             {
@@ -1702,7 +1930,8 @@
             "ix.precedence",
             "ix.pow",
             "op.add"
-          ]
+          ],
+          "reversible": false
         }
       ]
     }

@@ -32,7 +32,9 @@
           },
           "stimulus": "a + b",
           "right": [
-            "(a) + (b)"
+            {
+              "latex": "(a) + (b)"
+            }
           ],
           "requires": [
             "skill.explicit-vs-implicit-product"
@@ -44,7 +46,8 @@
             "ax.add-associative",
             "ax.add-commutative",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.difference",
@@ -58,7 +61,9 @@
           },
           "stimulus": "a - b",
           "right": [
-            "(a) - (b)"
+            {
+              "latex": "(a) - (b)"
+            }
           ],
           "requires": [
             "skill.explicit-vs-implicit-product"
@@ -69,7 +74,8 @@
           "restsOn": [
             "def.sub",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.product",
@@ -83,7 +89,9 @@
           },
           "stimulus": "ab",
           "right": [
-            "(a) \\cdot (b)"
+            {
+              "latex": "(a) \\cdot (b)"
+            }
           ],
           "requires": [
             "skill.explicit-vs-implicit-product",
@@ -98,7 +106,8 @@
             "ix.juxtaposition",
             "ix.brackets",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.quotient",
@@ -112,7 +121,9 @@
           },
           "stimulus": "\\frac{a}{b}",
           "right": [
-            "\\frac{(a)}{(b)}"
+            {
+              "latex": "\\frac{(a)}{(b)}"
+            }
           ],
           "requires": [
             "skill.division-variants"
@@ -124,7 +135,8 @@
             "def.div",
             "ix.fraction-bar",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.power",
@@ -138,7 +150,9 @@
           },
           "stimulus": "a^2",
           "right": [
-            "(a)^{(2)}"
+            {
+              "latex": "(a)^{(2)}"
+            }
           ],
           "requires": [
             "skill.exponent-as-repeated-product"
@@ -150,7 +164,8 @@
             "def.pow",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -177,7 +192,9 @@
           },
           "stimulus": "3x + 2y",
           "right": [
-            "(3x) + (2y)"
+            {
+              "latex": "(3x) + (2y)"
+            }
           ],
           "wrong": [
             {
@@ -196,7 +213,8 @@
             "ix.precedence",
             "ix.juxtaposition",
             "op.add"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.product-with-inner-sum",
@@ -210,7 +228,9 @@
           },
           "stimulus": "3(x+1)",
           "right": [
-            "(3) \\cdot (x+1)"
+            {
+              "latex": "(3) \\cdot (x+1)"
+            }
           ],
           "wrong": [
             {
@@ -228,7 +248,8 @@
           "restsOn": [
             "ix.brackets",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-times-power",
@@ -242,7 +263,9 @@
           },
           "stimulus": "2x^2",
           "right": [
-            "(2) \\cdot (x^2)"
+            {
+              "latex": "(2) \\cdot (x^2)"
+            }
           ],
           "wrong": [
             {
@@ -255,12 +278,13 @@
             "skill.power-of-a-product"
           ],
           "rules": [
-            "rule.dominant-op-last"
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.leading-minus",
@@ -274,7 +298,9 @@
           },
           "stimulus": "-3x + 2y",
           "right": [
-            "(-3x) + (2y)"
+            {
+              "latex": "(-3x) + (2y)"
+            }
           ],
           "wrong": [
             {
@@ -286,14 +312,13 @@
             "skill.sum-of-products",
             "skill.coefficient-negative-one"
           ],
-          "rules": [
-            "rule.dominant-op-last"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.precedence",
             "def.sub",
             "ix.coefficient-front"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.power-with-inner-sum",
@@ -307,7 +332,9 @@
           },
           "stimulus": "(x+1)^2",
           "right": [
-            "(x+1)^{(2)}"
+            {
+              "latex": "(x+1)^{(2)}"
+            }
           ],
           "wrong": [
             {
@@ -320,14 +347,13 @@
             "skill.product-with-inner-sum",
             "skill.exponent-as-repeated-product"
           ],
-          "rules": [
-            "rule.bracket-chunk"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.brackets",
             "ix.pow",
             "ix.power-precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.complex-quotient",
@@ -341,7 +367,9 @@
           },
           "stimulus": "\\frac{3x+2}{x-1}",
           "right": [
-            "\\frac{(3x+2)}{(x-1)}"
+            {
+              "latex": "\\frac{(3x+2)}{(x-1)}"
+            }
           ],
           "wrong": [
             {
@@ -360,7 +388,8 @@
             "ix.fraction-bar",
             "ix.brackets",
             "def.div"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -383,7 +412,9 @@
           },
           "stimulus": "3x + 2y - z",
           "right": [
-            "(3x) + (2y) + (-z)"
+            {
+              "latex": "(3x) + (2y) + (-z)"
+            }
           ],
           "wrong": [
             {
@@ -401,7 +432,8 @@
             "ix.precedence",
             "ix.juxtaposition",
             "def.sub"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.chunks-in-product",
@@ -415,7 +447,9 @@
           },
           "stimulus": "3 \\cdot x \\cdot (x+1)",
           "right": [
-            "(3) \\cdot (x) \\cdot (x+1)"
+            {
+              "latex": "(3) \\cdot (x) \\cdot (x+1)"
+            }
           ],
           "requires": [
             "skill.product-with-brackets"
@@ -427,39 +461,8 @@
             "ix.brackets",
             "ix.precedence",
             "op.mul"
-          ]
-        },
-        {
-          "id": "skill.implicit-chunking",
-          "name": {
-            "en": "Implicit chunking — multiplication precedence",
-            "de": "Unsichtbare Bausteine — Vorrang der Multiplikation"
-          },
-          "note": {
-            "en": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
-            "de": "Keine Klammern, und doch sind die Bausteine $3x$ und $2y$: das $\\cdot$ ist innerhalb jedes Terms schon aufgebraucht."
-          },
-          "stimulus": "3x + 2y",
-          "right": [
-            "(3x) + (2y)"
           ],
-          "wrong": [
-            {
-              "latex": "3x + 2y = 5xy",
-              "mistake": "anti.conjoining"
-            }
-          ],
-          "requires": [
-            "skill.precedence-brackets"
-          ],
-          "rules": [
-            "rule.multiplication-binds-tighter"
-          ],
-          "restsOn": [
-            "ax.add-associative",
-            "ax.add-commutative",
-            "ix.precedence"
-          ]
+          "reversible": true
         },
         {
           "id": "skill.bracket-as-chunk",
@@ -473,7 +476,9 @@
           },
           "stimulus": "3(x+1) - 2(x-1)",
           "right": [
-            "(3(x+1)) - (2(x-1))"
+            {
+              "latex": "(3(x+1)) - (2(x-1))"
+            }
           ],
           "wrong": [
             {
@@ -491,7 +496,8 @@
             "ix.brackets",
             "ix.juxtaposition",
             "def.sub"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -503,10 +509,10 @@
       },
       "skills": [
         {
-          "id": "skill.common-factor",
+          "id": "skill.sum-with-shared-factor",
           "name": {
-            "en": "Common factor",
-            "de": "Gemeinsamer Faktor"
+            "en": "Sum with a shared factor",
+            "de": "Summe mit gemeinsamem Faktor"
           },
           "note": {
             "en": "Dominant operation: a sum. The shape is special: all chunks share a factor (3, a, 2x, (x+1)). Recognising it unlocks factoring it out.",
@@ -514,20 +520,20 @@
           },
           "stimulus": "3x + 6",
           "right": [
-            "(3x) + (6)"
+            {
+              "latex": "(3x) + (6)"
+            }
           ],
           "requires": [
             "skill.sum-of-products"
           ],
-          "rules": [
-            "rule.dominant-op-last",
-            "rule.dominant-op-tools"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.precedence",
             "ix.juxtaposition",
             "op.add"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.quadratic-form",
@@ -541,20 +547,22 @@
           },
           "stimulus": "x^2 + 3x + 2",
           "right": [
-            "(x^2) + (3x) + (2)"
+            {
+              "latex": "(x^2) + (3x) + (2)"
+            }
           ],
           "requires": [
             "skill.sum-of-products"
           ],
           "rules": [
-            "rule.dominant-op-last",
-            "rule.dominant-op-tools"
+            "rule.exponent-binds-tighter"
           ],
           "restsOn": [
             "ix.precedence",
             "ix.pow",
             "op.add"
-          ]
+          ],
+          "reversible": true
         }
       ]
     }

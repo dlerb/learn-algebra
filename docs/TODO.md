@@ -4,46 +4,121 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🔵 NEXT SESSION — TWO CANDIDATES (author's handover, 2026-07-31)
+## 🔵 NEXT SESSION — THE REVISION (author's handover, 2026-08-01)
 
-**Pick one; they are not related and neither blocks the other.**
+**The format work is finished. What remains is editorial, and it is the whole job.**
 
-### A. Further revision of rules · mistakes · skills
+`right[]` is now `{latex, rule?}` and `wrong[]` is `{latex, mistake}` — one shape for both
+halves of a row, with `\blacksquare` and `\ldots` as the two sentinels (see
+`docs/right_forms.md`). `right[].rule` is deliberately **empty**: attribution is judgement and
+belongs to this pass.
 
-Editorial, and the day just showed the method works. The live leads, all measured and all in
-HOUSEKEEPING below with their evidence:
+### The three tools, and what each answers
 
-- **22 rules cited by no mistake and no skill** — mostly power laws, fraction laws and binomial
-  formulas. ⚠️ **This is a COVERAGE gap, not a citation gap**: the rules are right, no skill
-  teaches that ground yet. Authoring power/fraction skills is the work, not authoring rules.
-- **9 mistakes still have no family**, and 7 correctly have no `shortName`. Both may simply be
-  the honest end state — *better none than a contrived one* — but neither has been re-read since
-  the families landed.
-- **`rule.unlike-terms-stay` summarizes nothing**, the only one of 62. Its latex `ax + bx =
-  (a+b)x` is distributivity backwards, so `ax.distributivity` + `th.collect-like-terms` is the
-  obvious fix; left alone because `anti.conjoining`'s note says it "links to no true law", which
-  is true of the MISTAKE and not of the rule.
-- **`sum-of-products` vs `implicit-chunking` still share a stimulus and a `right[]`** (below).
-- **2 skills no mistake reaches**: `skill.bracket-types`, `skill.addition-commutative`.
+```
+pnpm who-cites <id>          everything that cites it, with a line of the CITER's body —
+                             read this BEFORE any split or merge
+pnpm who-cites --inherited   the worksheet: citations a prerequisite already teaches
+pnpm who-cites --audit       coverage, least-cited first, family heads counted out
+pnpm todos                   the 7 open questions; --strict is the gate before main
+```
 
-⚠️ **The two rules the day produced apply to any such pass**: an entry carrying two latex forms
-is usually two entries (held five times), and a skill citing a DECODER where its form-stating
-rule sits uncited (found five times).
+### ⚠️ WHAT TO LOOK OUT FOR — the rules this pass produced, each held more than once
 
-### B. The schema attached to each skill
+1. **A citation a prerequisite already teaches is not automatically noise.** Three verdicts, and
+   only the stimulus can decide: **drop** (true inheritance), **replace** (the citation is
+   *wrong*, not redundant — `coefficient-zero` cited `juxtaposition` while its own note said
+   "zero times anything is zero"), **keep** (a boundary — `no-splitting-the-denominator` cites
+   `split-numerator` to say where it STOPS).
+2. **When a skill's rule list feels wrong, the rule it needs often does not exist.** Held four
+   times. `sum-with-shared-factor` cites nothing today because "a familiar shape inside a sum is
+   worth naming" is not in the pool.
+3. **Prose that the data does not encode is a lie waiting to be found.** `zero-and-one-exponent`
+   claimed `a^1 = a` while only ever drilling `a^0`; `expand-distribute` claimed to be "the
+   active twin" of a skill with identical fields. Both were merged or narrowed.
+4. **Two skills sharing a starting form are a chain, a substitution instance, or a duplicate** —
+   never two questions. Five collisions, five resolutions, zero needing the rule relaxed. The
+   pair (process, stimulus) is what must be unique; fluency-vs-chunking on one form is fine.
+5. **A wrong entry must be the wrong KIND.** A chunking wrong is a false DECOMPOSITION
+   (`3x + 2y = (3x)·(2y)`), not a false value. 8 of 9 already were; the one exception was a
+   duplicate skill and is gone.
+6. **`reversible` is a merge detector.** Two skills marked `→` that are each other's reverse are
+   a legitimate pair (`expand-binomial-square` / `perfect-square-trinomial`). Two marked `↔`
+   sharing a claim are a duplicate — which is what `repeated-addition` vs `coefficient-vs-exponent`
+   still is.
 
-⚠️ **AMBIGUOUS AS STATED — ASK BEFORE STARTING.** Two different things could be meant:
+### The live leads, measured
 
-1. **JSON Schema for IDE authoring** — the existing item near the end of HOUSEKEEPING:
-   `z.toJSONSchema(skill, { io: 'input' })` registered in `.vscode/settings.json` so authoring
-   `src/data/curated/skills/*.json` gets autocomplete and inline validation. Mechanical, small,
-   and pure authoring ergonomics.
-2. **The per-skill DRILL schema** — what a `task` looks like for a given skill, which is the
-   half of the drill thread that was never built. ⚠️ `task` was deliberately excluded from the
-   skill model ("`task` belongs to the drill"), and the drill layer's shape is still open —
-   which is exactly why `legacy/errors_legacy.json` was parked whole rather than migrated.
+- **20 rules cited by no mistake and no skill.** ⚠️ A COVERAGE gap: the rules are right, no skill
+  teaches that ground. **Author skills, not rules.** Mostly power laws and fraction laws.
+- **11 skills / 12 inherited citations left** on `--inherited`: 3 boundary keeps and 8 judgement
+  calls, including `cancel-common-factor`, whose `requires` edge points at the BOUNDARY skill
+  (`no-cancelling-in-a-sum`) rather than the positive case — that edge looks backwards.
+- **7 open `todo`s**, each written where the question is: `unlike-terms-stay` (sentence and
+  formula disagree), `zero-and-one-exponent` (id still says zero-and-one), `minus-over-sum` and
+  `minus-over-difference` (DIRECTION-MIXED — two steps, two directions, one flag), 
+  `repeated-addition` (reverse pair), `division-variants` (eliminate the colon), 
+  `dominant-op-tools` (now uncited; may return as a FAMILY, closer to precedence).
+- **Five chains wearing one skill**, from the sweep in `docs/right_forms.md`:
+  `coefficient-negative-one`, `coefficient-zero`, `redundant-brackets`, and the two mixed ones.
+  These are where `right[].rule` attribution has real work; the other seven multi-form skills are
+  alternatives, where wrapping was the whole job.
+- **7 chunking skills show no wrong.** The five basic forms may be honest; `sum-with-shared-factor`,
+  `quadratic-form` and `chunks-in-product` are recognition skills whose failure is inaction —
+  `omi.no-move-attempted`, rendering as `✗ …`. `sum-with-shared-factor` is currently invisible
+  from both pools: no rule, no mistake.
+- **The block question is parked, not answered.** `docs/right_forms.md` and the
+  `tower-inheritance` decision both feed it; `dominant-op-tools` is the entry that most wants it.
 
-These are unrelated in size and risk: (1) is an afternoon, (2) reopens the drill design.
+### What is NOT open
+
+Rule→rule dependency edges in `rules.json`. The tower already carries both graphs — card
+`derivedFrom` (why this is true) and card `basedOn` (what you must be able to read) — used almost
+disjointly, and rules inherit them through `summarizes`: 33 and 19 rules respectively. ⚠️ `basedOn`
+IS the "fluency permeates everything" intuition, measured: its fan-in across the pool is the
+reading rules.
+
+---
+---
+
+## ✅ DONE 2026-08-01 — TOOLING, THE FORMAT ALIGNMENT, AND A DENOISING PASS
+
+Everything below is merged and green. Recorded because the *reasons* are what stop each being
+re-litigated.
+
+**TWO TOOLS.** `who-cites` (`src/data/citations.ts` + the CLI) — the reverse index, 747 edges
+over 282 entities, every edge carrying a line of the CITER's body because "which half of the
+split did this one mean" is not answerable from an id. And the `"todo"` key, safe because no
+schema calls `.strict()` and `content-format.mjs` is plain `JSON.stringify`, with
+`pnpm todos --strict` as the gate so annotations cannot outlive the work.
+
+**FOUR CLEANUP SKILLS + `rule.nothing-to-do`.** `1·a`, `a+0`, `a^1`, `a/a` had no skill; the
+group already held the 0 and −1 cases. ⚠️ Every CE pair tested **25 times** before authoring —
+this check has been green by luck before.
+
+**28 INHERITED CITATIONS FOUND, 15 RESOLVED.** 11 drops and 4 repairs, where in three of four
+the skill's own data named the right rule. The remaining 13 are judgement and stay open.
+
+**FIVE STARTING-FORM COLLISIONS, FIVE RESOLUTIONS, ZERO NEEDING THE RULE RELAXED.**
+`multiplying-into-a-bracket` merged into `expand-distribute`; `power-of-a-sum`,
+`division-not-commutative` and `implicit-chunking` deleted; `subtraction-as-adding-opposite`
+FLIPPED to `a + (-b)`; `common-factor` renamed `sum-with-shared-factor` (it collided with
+`factor-common` — same two words reversed).
+
+**`reversible` ON ALL 67 NON-TERMINAL SKILLS.** Does reading the claim backwards give the same
+skill? ⚠️ Not a statement about drills — `task` still belongs to the drill. Rendered as ↔ / →
+on the skill NAME via LayerRow's existing `marks` slot. Terminal skills are EXCLUDED, not
+undeclared: `2 + 3x → ⊘` cannot be read backwards, and counting them would leave a burndown that
+never reaches zero.
+
+**THE FORMAT ALIGNMENT** (`docs/right_forms.md`, step 1 of 3). 86 strings wrapped, 5 terminal
+sentinels, 10 inexpressible ones. ⚠️ Reversed a 2026-07-30 decision against `\ldots` in
+`wrong[].latex`; the schema note records the reversal and the objection rather than deleting the
+argument. The deciding reason was SYMMETRY, reaffirmed by the author after the objection was
+raised. ⚠️ The invariant that proved the migration: `pnpm validate` said **78 checked** before
+and after.
+
+**THE TOWER'S TWO DEPENDENCY GRAPHS, MEASURED.** See "What is NOT open" above.
 
 ---
 
