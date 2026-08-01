@@ -68,10 +68,10 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 // and `note` are still English-only — that is a content debt, not a view one.
 const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
-      guards: 'schützt vor', cond: 'sofern',
+      guards: 'schützt vor', cond: 'sofern', terminal: 'nichts zu tun',
       by: 'gliedern nach', byGroup: 'Thema', byProcess: 'Prozess', }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
-      guards: 'guards against', cond: 'provided',
+      guards: 'guards against', cond: 'provided', terminal: 'nothing to do',
       by: 'section by', byGroup: 'topic', byProcess: 'process', })
 
 // Deep link from /rules, where each rule lists the skills that teach it.
@@ -309,9 +309,31 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
             <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
             <span class="f"><MathExpr :latex="`${r.stimulus} = ${x}`" display /></span>
           </div>
+          <!-- ✓ STAYS, AND THE STOP SITS WHERE THE RIGHT-HAND SIDE WOULD BE. The
+               stimulus IS the correct answer here, so the mark column keeps
+               saying so and stays aligned with the ✗ opposite it; what the row
+               has to add is that the answer slot is empty ON PURPOSE, which is
+               the one thing a bare stimulus cannot say for itself.
+               ⚠️ NO `=` BEFORE IT, and the marker is prose rather than a symbol
+               CE could parse. `2 + 3x = \varnothing` is a false claim about the
+               empty set, and the reason the glyph is kept out of `right[]` is
+               that it is not an expression — composing one here would put the
+               sentinel back, one layer up. Same discipline as the ✗ column,
+               which writes `…` rather than inventing a symbol for inaction. -->
           <div v-if="!r.right.length" class="stmt">
             <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
-            <span class="f"><MathExpr :latex="r.stimulus" display /></span>
+            <span class="f terminal">
+              <MathExpr :latex="r.stimulus" display />
+              <!-- ∎ IS BORROWED, NOT INVENTED. The QED tombstone means "this is
+                   complete, nothing follows" — which is what a finished form is,
+                   and why the rule beneath is called Finished form. The prose it
+                   replaced repeated that rule; symbol plus named rule is the same
+                   pairing the ✗ column already uses (`…` plus the named mistake),
+                   so the words stay one line away rather than on every row.
+                   ⚠️ NOT ∅ or ⊥, which are false rather than empty: they claim the
+                   term equals the empty set, or is false. -->
+              <span class="stop" :title="L.terminal"><MathExpr latex="\blacksquare" /></span>
+            </span>
           </div>
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
@@ -417,6 +439,11 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    the form the student never wrote. Muted, because it is an ABSENCE and must not
    read as loudly as a wrong formula sitting under the same mark. */
 .f.nothing { color: var(--text-faint); font-family: var(--font-content); letter-spacing: .1em; }
+/* The terminal row: formula, then the stop where the right-hand side would be.
+   Flex rather than a third grid column so the marker sits against the formula
+   at any width and drops beneath it on a phone instead of squeezing the maths. */
+.f.terminal { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
+.stop { color: var(--text-muted); font-size: .78rem; font-family: var(--font-content); white-space: nowrap; }
 /* Each chunk boxed just enough to read as one object — the whole point of a
    chunking skill is that `3x` is ONE thing, so the grouping has to be visible
    without a bracket, which would say something different. */
