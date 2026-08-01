@@ -8,7 +8,7 @@ import LayerRow from '../components/LayerRow.vue'
 import RefFold from '../components/RefFold.vue'
 import type { WrongForm } from '../data/skill.schema'
 import { skills, groups, processes, rules, mistakes, rawById, skillTree } from '../data'
-import { loc, type Skill, type LocalizedString, type GroupDef, type RuleDef } from '../data/skill.schema'
+import { loc, TERMINAL, INEXPRESSIBLE, type Skill, type LocalizedString, type GroupDef, type RuleDef, type RightForm } from '../data/skill.schema'
 import { cardIndex } from '../data/layers'
 import { lang } from '../lang'
 import { inspect } from '../inspect'
@@ -161,7 +161,7 @@ const processTitle = new Map(processes.map((p: GroupDef) => [p.slug, t(p.title)]
 
 interface Row {
   id: string; process: string; group: string; name: string
-  stimulus: string; right: string[]; wrong: WrongForm[]; conditions?: string
+  stimulus: string; right: RightForm[]; wrong: WrongForm[]; conditions?: string
   reversible?: boolean
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
@@ -325,33 +325,15 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                commutativity. -->
           <div v-for="(x, i) in r.right" :key="i" class="stmt">
             <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
-            <span class="f"><MathExpr :latex="`${r.stimulus} = ${x}`" display /></span>
-          </div>
-          <!-- ✓ STAYS, AND THE STOP SITS WHERE THE RIGHT-HAND SIDE WOULD BE. The
-               stimulus IS the correct answer here, so the mark column keeps
-               saying so and stays aligned with the ✗ opposite it; what the row
-               has to add is that the answer slot is empty ON PURPOSE, which is
-               the one thing a bare stimulus cannot say for itself.
-               ⚠️ NO `=` BEFORE IT, and the marker is prose rather than a symbol
-               CE could parse. `2 + 3x = \varnothing` is a false claim about the
-               empty set, and the reason the glyph is kept out of `right[]` is
-               that it is not an expression — composing one here would put the
-               sentinel back, one layer up. Same discipline as the ✗ column,
-               which writes `…` rather than inventing a symbol for inaction. -->
-          <div v-if="!r.right.length" class="stmt">
-            <span class="mark good">{{ r.paired ? '✓' : '' }}</span>
-            <span class="f terminal">
+            <!-- ⚠️ THE SENTINEL IS NOT AN OPERAND. Every other entry composes
+                 `stimulus = form`; ∎ must not, because `2 + 3x = ∎` is a claim
+                 about the empty set and a false one. The stimulus stands alone
+                 and the mark carries the rest. -->
+            <span v-if="x.latex === TERMINAL" class="f terminal">
               <MathExpr :latex="r.stimulus" display />
-              <!-- ∎ IS BORROWED, NOT INVENTED. The QED tombstone means "this is
-                   complete, nothing follows" — which is what a finished form is,
-                   and why the rule beneath is called Finished form. The prose it
-                   replaced repeated that rule; symbol plus named rule is the same
-                   pairing the ✗ column already uses (`…` plus the named mistake),
-                   so the words stay one line away rather than on every row.
-                   ⚠️ NOT ∅ or ⊥, which are false rather than empty: they claim the
-                   term equals the empty set, or is false. -->
-              <span class="stop" :title="L.terminal"><MathExpr latex="\blacksquare" /></span>
+              <span class="stop"><MathExpr :latex="TERMINAL" /></span>
             </span>
+            <span v-else class="f"><MathExpr :latex="`${r.stimulus} = ${x.latex}`" display /></span>
           </div>
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
@@ -380,8 +362,8 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                instance. -->
           <div v-for="(w, i) in r.wrong" :key="i" class="stmt">
             <span class="mark bad">✗</span>
-            <span v-if="w.latex" class="f"><MathExpr :latex="w.latex" display /></span>
-            <span v-else class="f nothing">…</span>
+            <span v-if="w.latex === INEXPRESSIBLE" class="f nothing">…</span>
+            <span v-else class="f"><MathExpr :latex="w.latex" display /></span>
           </div>
           <!-- The same two shapes, mirrored. EVIDENCED, never invented: only the
                9 of 20 that cite a mistake carry one, so 11 rows show a right

@@ -32,7 +32,9 @@
           },
           "stimulus": "a + b",
           "right": [
-            "(a) + (b)"
+            {
+              "latex": "(a) + (b)"
+            }
           ],
           "requires": [
             "skill.explicit-vs-implicit-product"
@@ -59,7 +61,9 @@
           },
           "stimulus": "a - b",
           "right": [
-            "(a) - (b)"
+            {
+              "latex": "(a) - (b)"
+            }
           ],
           "requires": [
             "skill.explicit-vs-implicit-product"
@@ -85,7 +89,9 @@
           },
           "stimulus": "ab",
           "right": [
-            "(a) \\cdot (b)"
+            {
+              "latex": "(a) \\cdot (b)"
+            }
           ],
           "requires": [
             "skill.explicit-vs-implicit-product",
@@ -115,7 +121,9 @@
           },
           "stimulus": "\\frac{a}{b}",
           "right": [
-            "\\frac{(a)}{(b)}"
+            {
+              "latex": "\\frac{(a)}{(b)}"
+            }
           ],
           "requires": [
             "skill.division-variants"
@@ -142,7 +150,9 @@
           },
           "stimulus": "a^2",
           "right": [
-            "(a)^{(2)}"
+            {
+              "latex": "(a)^{(2)}"
+            }
           ],
           "requires": [
             "skill.exponent-as-repeated-product"
@@ -182,7 +192,9 @@
           },
           "stimulus": "3x + 2y",
           "right": [
-            "(3x) + (2y)"
+            {
+              "latex": "(3x) + (2y)"
+            }
           ],
           "wrong": [
             {
@@ -216,7 +228,9 @@
           },
           "stimulus": "3(x+1)",
           "right": [
-            "(3) \\cdot (x+1)"
+            {
+              "latex": "(3) \\cdot (x+1)"
+            }
           ],
           "wrong": [
             {
@@ -249,7 +263,9 @@
           },
           "stimulus": "2x^2",
           "right": [
-            "(2) \\cdot (x^2)"
+            {
+              "latex": "(2) \\cdot (x^2)"
+            }
           ],
           "wrong": [
             {
@@ -280,7 +296,9 @@
           },
           "stimulus": "-3x + 2y",
           "right": [
-            "(-3x) + (2y)"
+            {
+              "latex": "(-3x) + (2y)"
+            }
           ],
           "wrong": [
             {
@@ -312,7 +330,9 @@
           },
           "stimulus": "(x+1)^2",
           "right": [
-            "(x+1)^{(2)}"
+            {
+              "latex": "(x+1)^{(2)}"
+            }
           ],
           "wrong": [
             {
@@ -345,7 +365,9 @@
           },
           "stimulus": "\\frac{3x+2}{x-1}",
           "right": [
-            "\\frac{(3x+2)}{(x-1)}"
+            {
+              "latex": "\\frac{(3x+2)}{(x-1)}"
+            }
           ],
           "wrong": [
             {
@@ -388,7 +410,9 @@
           },
           "stimulus": "3x + 2y - z",
           "right": [
-            "(3x) + (2y) + (-z)"
+            {
+              "latex": "(3x) + (2y) + (-z)"
+            }
           ],
           "wrong": [
             {
@@ -421,7 +445,9 @@
           },
           "stimulus": "3 \\cdot x \\cdot (x+1)",
           "right": [
-            "(3) \\cdot (x) \\cdot (x+1)"
+            {
+              "latex": "(3) \\cdot (x) \\cdot (x+1)"
+            }
           ],
           "requires": [
             "skill.product-with-brackets"
@@ -448,7 +474,9 @@
           },
           "stimulus": "3x + 2y",
           "right": [
-            "(3x) + (2y)"
+            {
+              "latex": "(3x) + (2y)"
+            }
           ],
           "wrong": [
             {
@@ -481,7 +509,9 @@
           },
           "stimulus": "3(x+1) - 2(x-1)",
           "right": [
-            "(3(x+1)) - (2(x-1))"
+            {
+              "latex": "(3(x+1)) - (2(x-1))"
+            }
           ],
           "wrong": [
             {
@@ -523,7 +553,9 @@
           },
           "stimulus": "3x + 6",
           "right": [
-            "(3x) + (6)"
+            {
+              "latex": "(3x) + (6)"
+            }
           ],
           "requires": [
             "skill.sum-of-products"
@@ -550,7 +582,9 @@
           },
           "stimulus": "x^2 + 3x + 2",
           "right": [
-            "(x^2) + (3x) + (2)"
+            {
+              "latex": "(x^2) + (3x) + (2)"
+            }
           ],
           "requires": [
             "skill.sum-of-products"

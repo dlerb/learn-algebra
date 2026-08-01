@@ -83,6 +83,12 @@ function collect(): Citation[] {
   for (const s of skills) {
     const ctx = `${s.stimulus}   (${EN(s.name)})`
     for (const r of s.rules) add(s.id, 'skill', r, 'rule', 'rules', ctx)
+    // Form-level attribution, authored during the revision: the rule THIS form
+    // adds. Its context is the form itself rather than the stimulus — that is the
+    // whole point of moving the citation down here.
+    s.right.forEach((f, i) => {
+      if (f.rule) add(s.id, 'skill', f.rule, 'rule', `right[${i}].rule`, f.latex)
+    })
     for (const c of s.restsOn) add(s.id, 'skill', c, 'card', 'restsOn', ctx)
     for (const p of s.requires) add(s.id, 'skill', p, 'skill', 'requires', ctx)
     // `mistakes` on a skill is DERIVED from wrong[]; the authored site is the

@@ -32,7 +32,9 @@
           },
           "stimulus": "ab + ac",
           "right": [
-            "a(b + c)"
+            {
+              "latex": "a(b + c)"
+            }
           ],
           "wrong": [
             {
@@ -65,7 +67,9 @@
           },
           "stimulus": "x^2 + 5x + 6",
           "right": [
-            "(x + 2)(x + 3)"
+            {
+              "latex": "(x + 2)(x + 3)"
+            }
           ],
           "wrong": [
             {
@@ -112,7 +116,9 @@
           },
           "stimulus": "3x + 2x",
           "right": [
-            "5x"
+            {
+              "latex": "5x"
+            }
           ],
           "wrong": [
             {
@@ -148,11 +154,14 @@
           },
           "stimulus": "\\frac{ak}{bk}",
           "right": [
-            "\\frac{a}{b}"
+            {
+              "latex": "\\frac{a}{b}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -181,7 +190,9 @@
           },
           "stimulus": "\\frac{a}{b} + \\frac{c}{d}",
           "right": [
-            "\\frac{ad + bc}{bd}"
+            {
+              "latex": "\\frac{ad + bc}{bd}"
+            }
           ],
           "wrong": [
             {
@@ -228,7 +239,9 @@
           },
           "stimulus": "x^2 - 1",
           "right": [
-            "(x+1)(x-1)"
+            {
+              "latex": "(x+1)(x-1)"
+            }
           ],
           "wrong": [
             {

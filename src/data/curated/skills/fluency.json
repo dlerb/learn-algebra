@@ -28,10 +28,18 @@
           },
           "stimulus": "3 \\times x",
           "right": [
-            "3 \\cdot x",
-            "3x",
-            "x \\cdot 3",
-            "(3)(x)"
+            {
+              "latex": "3 \\cdot x"
+            },
+            {
+              "latex": "3x"
+            },
+            {
+              "latex": "x \\cdot 3"
+            },
+            {
+              "latex": "(3)(x)"
+            }
           ],
           "wrong": [
             {
@@ -60,9 +68,15 @@
           },
           "stimulus": "2 \\times (x+1)",
           "right": [
-            "2 \\cdot (x+1)",
-            "2(x+1)",
-            "(x+1) \\cdot 2"
+            {
+              "latex": "2 \\cdot (x+1)"
+            },
+            {
+              "latex": "2(x+1)"
+            },
+            {
+              "latex": "(x+1) \\cdot 2"
+            }
           ],
           "wrong": [
             {
@@ -94,9 +108,15 @@
           },
           "stimulus": "(-1) \\cdot a",
           "right": [
-            "(-1)a",
-            "-1a",
-            "-a"
+            {
+              "latex": "(-1)a"
+            },
+            {
+              "latex": "-1a"
+            },
+            {
+              "latex": "-a"
+            }
           ],
           "wrong": [
             {
@@ -130,8 +150,12 @@
           },
           "stimulus": "0 \\cdot x",
           "right": [
-            "0x",
-            "0"
+            {
+              "latex": "0x"
+            },
+            {
+              "latex": "0"
+            }
           ],
           "wrong": [
             {
@@ -163,11 +187,14 @@
           },
           "stimulus": "1 \\cdot a",
           "right": [
-            "a"
+            {
+              "latex": "a"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -193,7 +220,9 @@
           },
           "stimulus": "x + x",
           "right": [
-            "2x"
+            {
+              "latex": "2x"
+            }
           ],
           "wrong": [
             {
@@ -243,7 +272,11 @@
             "de": "$2 + 3x$ ist ein fertiges Objekt. Nur gleichartige Terme lassen sich zusammenfassen ($x + x = 2x$); $2$ und $3x$ sind nicht gleichartig."
           },
           "stimulus": "2 + 3x",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "2 + 3x = 5x",
@@ -274,11 +307,14 @@
           },
           "stimulus": "a + 0",
           "right": [
-            "a"
+            {
+              "latex": "a"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [],
@@ -301,7 +337,11 @@
             "de": "$3x + 2y$ lässt sich nicht zu einem Term zusammenfassen — $x$ und $y$ sind verschiedene Objekte. $5xy$ wäre ein Produkt, also etwas ganz anderes."
           },
           "stimulus": "3x + 2y",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "3x + 2y = 5xy",
@@ -331,7 +371,11 @@
             "de": "$x^2 + x$ hat zwei ungleichartige Terme. Exponenten wachsen beim Multiplizieren von Potenzen ($x^2 \\cdot x = x^3$), nie beim Addieren."
           },
           "stimulus": "x^2 + x",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "x^2 + x = x^3",
@@ -374,8 +418,12 @@
           },
           "stimulus": "-3",
           "right": [
-            "(-3)",
-            "0 - 3"
+            {
+              "latex": "(-3)"
+            },
+            {
+              "latex": "0 - 3"
+            }
           ],
           "wrong": [
             {
@@ -404,7 +452,9 @@
           },
           "stimulus": "a + (-b)",
           "right": [
-            "a - b"
+            {
+              "latex": "a - b"
+            }
           ],
           "wrong": [
             {
@@ -440,8 +490,12 @@
           },
           "stimulus": "-(a + b)",
           "right": [
-            "(-1)(a + b)",
-            "-a - b"
+            {
+              "latex": "(-1)(a + b)"
+            },
+            {
+              "latex": "-a - b"
+            }
           ],
           "wrong": [
             {
@@ -477,8 +531,12 @@
           },
           "stimulus": "-(a - b)",
           "right": [
-            "-a + b",
-            "b - a"
+            {
+              "latex": "-a + b"
+            },
+            {
+              "latex": "b - a"
+            }
           ],
           "wrong": [
             {
@@ -514,7 +572,9 @@
           },
           "stimulus": "a - (-b)",
           "right": [
-            "a + b"
+            {
+              "latex": "a + b"
+            }
           ],
           "wrong": [
             {
@@ -549,7 +609,9 @@
           },
           "stimulus": "(-a)(-b)",
           "right": [
-            "ab"
+            {
+              "latex": "ab"
+            }
           ],
           "wrong": [
             {
@@ -585,8 +647,12 @@
           },
           "stimulus": "-\\frac{a}{b}",
           "right": [
-            "\\frac{-a}{b}",
-            "\\frac{a}{-b}"
+            {
+              "latex": "\\frac{-a}{b}"
+            },
+            {
+              "latex": "\\frac{a}{-b}"
+            }
           ],
           "wrong": [
             {
@@ -621,7 +687,9 @@
           },
           "stimulus": "a - (b + c)",
           "right": [
-            "a - b - c"
+            {
+              "latex": "a - b - c"
+            }
           ],
           "wrong": [
             {
@@ -655,7 +723,9 @@
           },
           "stimulus": "a - (b - c)",
           "right": [
-            "a - b + c"
+            {
+              "latex": "a - b + c"
+            }
           ],
           "wrong": [
             {
@@ -698,8 +768,12 @@
           },
           "stimulus": "(a + b)",
           "right": [
-            "[a + b]",
-            "\\{a + b\\}"
+            {
+              "latex": "[a + b]"
+            },
+            {
+              "latex": "\\{a + b\\}"
+            }
           ],
           "restsOn": [
             "ix.brackets"
@@ -718,8 +792,12 @@
           },
           "stimulus": "((a + b))",
           "right": [
-            "(a + b)",
-            "a + b"
+            {
+              "latex": "(a + b)"
+            },
+            {
+              "latex": "a + b"
+            }
           ],
           "wrong": [
             {
@@ -744,7 +822,9 @@
           },
           "stimulus": "a + b \\cdot c",
           "right": [
-            "a + bc"
+            {
+              "latex": "a + bc"
+            }
           ],
           "wrong": [
             {
@@ -773,7 +853,9 @@
           },
           "stimulus": "\\frac{a+b}{c}",
           "right": [
-            "(a+b) \\div c"
+            {
+              "latex": "(a+b) \\div c"
+            }
           ],
           "wrong": [
             {
@@ -809,7 +891,9 @@
           },
           "stimulus": "a(b + c)",
           "right": [
-            "ab + ac"
+            {
+              "latex": "ab + ac"
+            }
           ],
           "wrong": [
             {
@@ -851,7 +935,9 @@
           },
           "stimulus": "a^2",
           "right": [
-            "a \\cdot a"
+            {
+              "latex": "a \\cdot a"
+            }
           ],
           "wrong": [
             {
@@ -882,7 +968,9 @@
           },
           "stimulus": "2a",
           "right": [
-            "a + a"
+            {
+              "latex": "a + a"
+            }
           ],
           "wrong": [
             {
@@ -921,7 +1009,9 @@
           },
           "stimulus": "-a^2",
           "right": [
-            "-(a^2)"
+            {
+              "latex": "-(a^2)"
+            }
           ],
           "wrong": [
             {
@@ -956,7 +1046,9 @@
           },
           "stimulus": "(ab)^2",
           "right": [
-            "a^2 b^2"
+            {
+              "latex": "a^2 b^2"
+            }
           ],
           "wrong": [
             {
@@ -990,7 +1082,9 @@
           },
           "stimulus": "a^0",
           "right": [
-            "1"
+            {
+              "latex": "1"
+            }
           ],
           "wrong": [
             {
@@ -1023,11 +1117,14 @@
           },
           "stimulus": "a^1",
           "right": [
-            "a"
+            {
+              "latex": "a"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1053,7 +1150,9 @@
           },
           "stimulus": "a^{-n}",
           "right": [
-            "\\frac{1}{a^n}"
+            {
+              "latex": "\\frac{1}{a^n}"
+            }
           ],
           "wrong": [
             {
@@ -1089,12 +1188,17 @@
           },
           "stimulus": "a^{m/n}",
           "right": [
-            "\\sqrt[n]{a^m}",
-            "(\\sqrt[n]{a})^m"
+            {
+              "latex": "\\sqrt[n]{a^m}"
+            },
+            {
+              "latex": "(\\sqrt[n]{a})^m"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1122,12 +1226,17 @@
           },
           "stimulus": "a^{-m/n}",
           "right": [
-            "\\frac{1}{\\sqrt[n]{a^m}}",
-            "\\frac{1}{a^{m/n}}"
+            {
+              "latex": "\\frac{1}{\\sqrt[n]{a^m}}"
+            },
+            {
+              "latex": "\\frac{1}{a^{m/n}}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1158,11 +1267,14 @@
           },
           "stimulus": "\\sqrt{ab}",
           "right": [
-            "\\sqrt{a} \\cdot \\sqrt{b}"
+            {
+              "latex": "\\sqrt{a} \\cdot \\sqrt{b}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1188,7 +1300,11 @@
             "de": "Eine Wurzel zerfällt NICHT über $+$. Probier $a = 9$, $b = 16$: $\\sqrt{25} = 5$, aber $3 + 4 = 7$."
           },
           "stimulus": "\\sqrt{a+b}",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "\\sqrt{a+b} = \\sqrt{a} + \\sqrt{b}",
@@ -1227,7 +1343,9 @@
           },
           "stimulus": "x^a \\cdot x^b",
           "right": [
-            "x^{a+b}"
+            {
+              "latex": "x^{a+b}"
+            }
           ],
           "wrong": [
             {
@@ -1267,7 +1385,9 @@
           },
           "stimulus": "a : b",
           "right": [
-            "\\frac{a}{b}"
+            {
+              "latex": "\\frac{a}{b}"
+            }
           ],
           "wrong": [
             {
@@ -1294,11 +1414,14 @@
           },
           "stimulus": "\\frac{a}{b}",
           "right": [
-            "a \\cdot \\frac{1}{b}"
+            {
+              "latex": "a \\cdot \\frac{1}{b}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1321,7 +1444,9 @@
           },
           "stimulus": "\\frac{a}{1}",
           "right": [
-            "a"
+            {
+              "latex": "a"
+            }
           ],
           "wrong": [
             {
@@ -1352,11 +1477,14 @@
           },
           "stimulus": "\\frac{a}{a}",
           "right": [
-            "1"
+            {
+              "latex": "1"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1383,11 +1511,14 @@
           },
           "stimulus": "\\frac{a+b}{c}",
           "right": [
-            "\\frac{a}{c} + \\frac{b}{c}"
+            {
+              "latex": "\\frac{a}{c} + \\frac{b}{c}"
+            }
           ],
           "wrong": [
             {
-              "mistake": "omi.no-move-attempted"
+              "mistake": "omi.no-move-attempted",
+              "latex": "\\ldots"
             }
           ],
           "requires": [
@@ -1415,7 +1546,9 @@
           },
           "stimulus": "\\frac{c}{a+b}",
           "right": [
-            "c \\div (a+b)"
+            {
+              "latex": "c \\div (a+b)"
+            }
           ],
           "wrong": [
             {
@@ -1448,7 +1581,9 @@
           },
           "stimulus": "\\frac{3x+2}{3}",
           "right": [
-            "x + \\frac{2}{3}"
+            {
+              "latex": "x + \\frac{2}{3}"
+            }
           ],
           "wrong": [
             {
@@ -1490,7 +1625,9 @@
           },
           "stimulus": "a + b",
           "right": [
-            "b + a"
+            {
+              "latex": "b + a"
+            }
           ],
           "restsOn": [
             "ax.add-commutative"
@@ -1512,7 +1649,9 @@
           },
           "stimulus": "ab",
           "right": [
-            "ba"
+            {
+              "latex": "ba"
+            }
           ],
           "wrong": [
             {
@@ -1544,7 +1683,9 @@
           },
           "stimulus": "a - b",
           "right": [
-            "-(b - a)"
+            {
+              "latex": "-(b - a)"
+            }
           ],
           "wrong": [
             {
@@ -1576,7 +1717,9 @@
           },
           "stimulus": "(a - b) - c",
           "right": [
-            "a - b - c"
+            {
+              "latex": "a - b - c"
+            }
           ],
           "wrong": [
             {
@@ -1608,7 +1751,9 @@
           },
           "stimulus": "(a \\div b) \\div c",
           "right": [
-            "\\frac{a}{bc}"
+            {
+              "latex": "\\frac{a}{bc}"
+            }
           ],
           "wrong": [
             {
@@ -1653,7 +1798,9 @@
           },
           "stimulus": "(a + b)^2",
           "right": [
-            "a^2 + 2ab + b^2"
+            {
+              "latex": "a^2 + 2ab + b^2"
+            }
           ],
           "wrong": [
             {
@@ -1684,7 +1831,9 @@
           },
           "stimulus": "a^2 - b^2",
           "right": [
-            "(a + b)(a - b)"
+            {
+              "latex": "(a + b)(a - b)"
+            }
           ],
           "wrong": [
             {
@@ -1719,7 +1868,11 @@
             "de": "Eine FERTIGE Form. $a^2 - b^2$ zerfällt, $a^2 + b^2$ nicht — über den reellen Zahlen kann es das nicht, denn es ist positiv für alle $a$ und $b$, die nicht beide null sind. Zu erkennen, dass hier nichts zu tun ist, IST die Fertigkeit: verlockend sind die 3. binomische Formel trotzdem zu holen und die Summe als ein Quadrat zu lesen, das sie nicht ist."
           },
           "stimulus": "a^2 + b^2",
-          "right": [],
+          "right": [
+            {
+              "latex": "\\blacksquare"
+            }
+          ],
           "wrong": [
             {
               "latex": "a^2 + b^2 = (a + b)(a - b)",
@@ -1754,7 +1907,9 @@
           },
           "stimulus": "a^2 + 2ab + b^2",
           "right": [
-            "(a + b)^2"
+            {
+              "latex": "(a + b)^2"
+            }
           ],
           "wrong": [
             {

@@ -81,16 +81,56 @@ export type SkillProcess = z.infer<typeof skillProcess>
 // field exists to remove. Name WHICH move was wrong; the level above is the
 // mistake's `family`.
 //
-// ⚠️ `latex` IS OPTIONAL, and absent means INEXPRESSIBLE, not missing. A
-// recognition skill fails by inaction: the student writes nothing, so there is no
-// false claim to show, and the view draws an ellipsis under the ✗. Do NOT put
-// `\ldots` in here to fill it — the field means "the false claim", and the whole
-// point of these entries is that there is none.
+// ── THE TWO SENTINELS (2026-08-01) ──────────────────────────────────────────
+// A claim that cannot be written still has to occupy its slot, and both sides of
+// a row have such a case: a finished form has nothing it may become, and a
+// failure of inaction has no false claim to show. Both are written EXPLICITLY.
+//
+// ⚠️ THIS REVERSES A DECISION RECORDED HERE ON 2026-07-30, which said of
+// `wrong[].latex`: "Do NOT put `\ldots` in here to fill it — the field means 'the
+// false claim', and the whole point of these entries is that there is none." That
+// argument is still true about the MATHS and was overturned on other grounds:
+// absence is indistinguishable from unfinished authoring, an explicit marker is
+// not, and the two sides of a row should have one shape rather than two. The
+// honest cost is that `latex` no longer means only "the false claim" — it means
+// "what to draw in the claim's place", which the sentinel names.
+//
+// ⚠️ NOT EXPRESSIONS, and no consumer may treat them as such. `\blacksquare` is
+// the QED tombstone (this is complete, nothing follows) and `\ldots` is the
+// ellipsis the ✗ column already drew; neither is a term, neither may be composed
+// into an equation (`2 + 3x = \varnothing` would be a false claim about the empty
+// set), and the CE equality check MUST skip TERMINAL before parsing it — CE reads
+// it as an Error node, returns `undefined` from isEqual, and prints a compilation
+// fallback on every run. A drill generating options from `right[]` has the same
+// obligation, which is why these are exported constants and never literals.
+export const TERMINAL = '\\blacksquare'
+export const INEXPRESSIBLE = '\\ldots'
+
+// ⚠️ SINGULAR `mistake`, ALWAYS — see the note above. `latex` is REQUIRED since
+// 2026-08-01, carrying INEXPRESSIBLE where the student writes nothing.
 const wrongForm = z.object({
-  latex: z.string().optional(),
+  latex: z.string(),
   mistake: z.string(),
 })
 export type WrongForm = z.infer<typeof wrongForm>
+
+// ── A RIGHT FORM (2026-08-01) ───────────────────────────────────────────────
+// Symmetric with `wrongForm`: always a latex, plus at most one pool reference.
+//
+// `rule` is the ONE rule THIS form adds, and singular for the reason `mistake`
+// is: measured across 78 skills, not one needed two rules on a single form. The
+// twelve that looked like it were four terminal skills whose why-rule is already
+// reachable through the ✗ side, three compressed chains, four strategy rules that
+// qualify the skill rather than the form, and one mis-citation.
+//
+// ⚠️ OPTIONAL WHILE THE REVISION RUNS. Attribution is judgement — which half of a
+// chain a rule licenses — and the skill-level `rules[]` still carries what has
+// not been moved. See docs/right_forms.md for the burndown.
+const rightForm = z.object({
+  latex: z.string(),
+  rule: z.string().optional(),
+})
+export type RightForm = z.infer<typeof rightForm>
 
 export const skill = z.object({
   // ⚠️ THE ID NO LONGER CARRIES THE CLASSIFICATION (2026-07-30). It used to be
@@ -135,7 +175,7 @@ export const skill = z.object({
   // the two a student is asked for is the drill's business, not the skill's. The
   // notation is not invented — `rule.multiplication-binds-tighter` has carried
   // `3x + 2y = (3x) + (2y)` since the rules pool was built.
-  right: z.array(z.string()).default([]),
+  right: z.array(rightForm).default([]),
   // ⚠️ ASYMMETRIC WITH `right[]` ON PURPOSE: a wrong entry is a COMPLETE false
   // claim, not a bare form. The ✓ side always shares the stimulus — that is what
   // makes it a right answer FOR this stimulus — but the ✗ side often attacks a
@@ -598,6 +638,15 @@ export function validateRuleRefs(skills: Skill[], rules: RulesFile): void {
   if (dupId) throw new Error(`Duplicate rule id "${dupId}".`)
 
   const ids = new Set(rules.map(m => m.id))
+  // Form-level attribution, authored during the revision — a `rule` on a right
+  // form resolves in the same pool as the skill-level list.
+  for (const f of skills) {
+    for (const [i, r] of f.right.entries()) {
+      if (r.rule && !ids.has(r.rule)) {
+        throw new Error(`Skill "${f.id}" right[${i}] cites unknown rule "${r.rule}".`)
+      }
+    }
+  }
   for (const f of skills) {
     for (const m of f.rules) {
       if (!ids.has(m)) {
@@ -823,7 +872,8 @@ export function auditCoverage(
   // claim that can be read backwards: the question is malformed rather than
   // unanswered, and counting them would leave a burndown that can never reach
   // zero — which is how a report stops being read.
-  const undeclared = skills.filter(f => f.reversible === undefined && f.right.length > 0)
+  const undeclared = skills.filter(f =>
+    f.reversible === undefined && !f.right.some(r => r.latex === TERMINAL) && f.right.length > 0)
   if (undeclared.length > 0) {
     lines.push(`${undeclared.length}/${skills.length} skills have not declared `
       + `\`reversible\` — whether reading the claim backwards is the same skill.`)
@@ -837,16 +887,24 @@ export function auditCoverage(
 // hold skill ids and must resolve; the requires graph must be acyclic — the
 // only ordering a skill carries (a dependency partial order, not a sequence).
 
-/** THE ONE SHAPE INVARIANT: a skill must show SOMETHING. An empty `right[]` is a
- *  statement ("this form is finished") and an empty `wrong[]` is a statement
- *  ("nothing tempting to show"), but both empty is a skill that renders as a bare
- *  name and says nothing at all. Same family as the ✗/✓ rule on /errors — the
- *  marks come as a pair or not at all, and this is what stops "not at all" from
- *  quietly becoming the whole row. */
+/** THE ONE SHAPE INVARIANT: a skill must show SOMETHING. An empty `wrong[]` is a
+ *  statement ("nothing tempting to show"), but both sides empty is a skill that
+ *  renders as a bare name and says nothing at all. Same family as the ✗/✓ rule on
+ *  /errors — the marks come as a pair or not at all, and this is what stops "not
+ *  at all" from quietly becoming the whole row.
+ *
+ *  ⚠️ "FINISHED" IS NO LONGER AN EMPTY `right[]` (2026-08-01). It is one entry
+ *  carrying TERMINAL, which is why the sentinel is also checked here: a chain that
+ *  stops dead halfway — a real form, then ∎, then more — is not a claim anyone can
+ *  read, and nothing else would catch it. */
 export function validateStacks(skills: Skill[]): void {
   for (const f of skills) {
     if (f.right.length === 0 && f.wrong.length === 0) {
       throw new Error(`Skill "${f.id}" has neither a right nor a wrong form — it would render as a bare name.`)
+    }
+    const terminal = f.right.findIndex(r => r.latex === TERMINAL)
+    if (terminal !== -1 && f.right.length > 1) {
+      throw new Error(`Skill "${f.id}" has ${TERMINAL} at right[${terminal}] alongside ${f.right.length - 1} other form(s) — "nothing to do" is the whole answer or it is not the answer.`)
     }
   }
 }
@@ -928,8 +986,10 @@ export function validateLatexCompiles(
   for (const f of skills) {
     if (f.conditions) check(f.id, 'conditions', f.conditions)
     check(f.id, 'stimulus', f.stimulus)
-    f.right.forEach((r, i) => check(f.id, `right[${i}]`, r))
-    f.wrong.forEach((w, i) => { if (w.latex) check(f.id, `wrong[${i}]`, w.latex) })
+    // The sentinels are KaTeX-valid (verified) but carry no maths; checking them
+    // 91 times over would only prove that \blacksquare still compiles.
+    f.right.forEach((r, i) => { if (r.latex !== TERMINAL) check(f.id, `right[${i}]`, r.latex) })
+    f.wrong.forEach((w, i) => { if (w.latex !== INEXPRESSIBLE) check(f.id, `wrong[${i}]`, w.latex) })
     for (const m of proseMath(f.note)) check(f.id, 'note', m)
   }
   for (const e of mistakes) {
