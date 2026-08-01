@@ -465,41 +465,6 @@
           "reversible": true
         },
         {
-          "id": "skill.implicit-chunking",
-          "name": {
-            "en": "Implicit chunking — multiplication precedence",
-            "de": "Unsichtbare Bausteine — Vorrang der Multiplikation"
-          },
-          "note": {
-            "en": "No brackets, yet the chunks are $3x$ and $2y$: the $\\cdot$ is used up inside each term.",
-            "de": "Keine Klammern, und doch sind die Bausteine $3x$ und $2y$: das $\\cdot$ ist innerhalb jedes Terms schon aufgebraucht."
-          },
-          "stimulus": "3x + 2y",
-          "right": [
-            {
-              "latex": "(3x) + (2y)"
-            }
-          ],
-          "wrong": [
-            {
-              "latex": "3x + 2y = 5xy",
-              "mistake": "anti.conjoining"
-            }
-          ],
-          "requires": [
-            "skill.precedence-brackets"
-          ],
-          "rules": [
-            "rule.multiplication-binds-tighter"
-          ],
-          "restsOn": [
-            "ax.add-associative",
-            "ax.add-commutative",
-            "ix.precedence"
-          ],
-          "reversible": true
-        },
-        {
           "id": "skill.bracket-as-chunk",
           "name": {
             "en": "Bracket as a single chunk",
