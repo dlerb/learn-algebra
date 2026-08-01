@@ -1279,7 +1279,8 @@
             "ix.division-symbols",
             "def.div"
           ],
-          "reversible": true
+          "reversible": true,
+          "todo": "ELIMINATE THE COLON. `a : b` should go the way `a \\div b` just went — the fraction bar is the notation this course writes, and a second primary-school sign earns nothing. ⚠️ NOTE THIS REVERSES THE 2026-08-01 DECISION that made `:` the stimulus here; that was a step on the way, not the destination. If the colon goes entirely, this skill probably goes with it — check what still needs teaching about division notation once only the bar remains, and note it is currently required by 8 skills. It is also the reason division-variants sits in validate's CANNOT_DECIDE (CE has no colon-as-division operator), so removing it wins back a CE check."
         },
         {
           "id": "skill.fraction-as-reciprocal-product",
