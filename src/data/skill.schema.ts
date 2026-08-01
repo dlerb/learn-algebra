@@ -819,7 +819,11 @@ export function auditCoverage(
 
   // Undeclared `reversible` is an open question, not a default — see the field's
   // note. Reported so the burndown is visible while the revision fills it in.
-  const undeclared = skills.filter(f => f.reversible === undefined)
+  // ⚠️ TERMINAL SKILLS ARE EXCLUDED, not merely undeclared. `2 + 3x → ⊘` is not a
+  // claim that can be read backwards: the question is malformed rather than
+  // unanswered, and counting them would leave a burndown that can never reach
+  // zero — which is how a report stops being read.
+  const undeclared = skills.filter(f => f.reversible === undefined && f.right.length > 0)
   if (undeclared.length > 0) {
     lines.push(`${undeclared.length}/${skills.length} skills have not declared `
       + `\`reversible\` — whether reading the claim backwards is the same skill.`)

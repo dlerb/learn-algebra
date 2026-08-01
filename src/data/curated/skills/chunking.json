@@ -44,7 +44,8 @@
             "ax.add-associative",
             "ax.add-commutative",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.difference",
@@ -69,7 +70,8 @@
           "restsOn": [
             "def.sub",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.product",
@@ -98,7 +100,8 @@
             "ix.juxtaposition",
             "ix.brackets",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.quotient",
@@ -124,7 +127,8 @@
             "def.div",
             "ix.fraction-bar",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.power",
@@ -150,7 +154,8 @@
             "def.pow",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -196,7 +201,8 @@
             "ix.precedence",
             "ix.juxtaposition",
             "op.add"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.product-with-inner-sum",
@@ -228,7 +234,8 @@
           "restsOn": [
             "ix.brackets",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-times-power",
@@ -258,7 +265,8 @@
           "restsOn": [
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.leading-minus",
@@ -289,7 +297,8 @@
             "ix.precedence",
             "def.sub",
             "ix.coefficient-front"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.power-with-inner-sum",
@@ -321,7 +330,8 @@
             "ix.brackets",
             "ix.pow",
             "ix.power-precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.complex-quotient",
@@ -354,7 +364,8 @@
             "ix.fraction-bar",
             "ix.brackets",
             "def.div"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -395,7 +406,8 @@
             "ix.precedence",
             "ix.juxtaposition",
             "def.sub"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.chunks-in-product",
@@ -421,7 +433,8 @@
             "ix.brackets",
             "ix.precedence",
             "op.mul"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.implicit-chunking",
@@ -453,7 +466,8 @@
             "ax.add-associative",
             "ax.add-commutative",
             "ix.precedence"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.bracket-as-chunk",
@@ -485,7 +499,8 @@
             "ix.brackets",
             "ix.juxtaposition",
             "def.sub"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -520,7 +535,8 @@
             "ix.precedence",
             "ix.juxtaposition",
             "op.add"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.quadratic-form",
@@ -546,7 +562,8 @@
             "ix.precedence",
             "ix.pow",
             "op.add"
-          ]
+          ],
+          "reversible": true
         }
       ]
     }

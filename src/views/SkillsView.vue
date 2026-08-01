@@ -342,18 +342,27 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
           <!-- The tower's quantifier line, for the four skills with a domain
                caveat. It qualifies the form, so it sits under it. -->
           <div v-if="r.conditions" class="quant">{{ L.cond }} <MathExpr :latex="r.conditions" /></div>
-          <RouterLink v-for="x in r.rules" :key="x.id" class="line" :to="x.to">
-            <span class="arrow">→</span><span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
-          </RouterLink>
-          <!-- WHICH WAY THE CLAIM READS. ↔ says one competence covers both
-               directions (3×x and 3x are the same recognition); → says the
-               reverse is a different skill with a different name (expanding
-               against factoring). Undeclared renders NOTHING rather than
-               guessing — an empty cell is a question here as everywhere.
-               Sits under the rules because it qualifies the whole claim, not
-               any single rule; the glyph is the label, with the words on hover. -->
-          <div v-if="r.reversible !== undefined" class="dir" :title="r.reversible ? L.bothWays : L.oneWay">
-            <span class="sym">{{ r.reversible ? '↔' : '→' }}</span>{{ r.reversible ? L.bothWays : L.oneWay }}
+          <!-- WHICH WAY THE CLAIM READS, as a grey glyph trailing the last rule.
+               ↔ says one competence covers both directions (3×x and 3x are the
+               same recognition); → says the reverse is a different skill with a
+               different name (expanding against factoring).
+               ⚠️ IT QUALIFIES THE SKILL, NOT THE RULE it happens to trail — it
+               rides the last line because that is where the eye already is, and
+               it stays OUTSIDE the RouterLink so it is not clickable, which is
+               the tell that it belongs to the row rather than to the link.
+               Undeclared renders nothing: an empty cell is a question here as
+               everywhere, and a terminal claim has no direction at all. -->
+          <div v-for="(x, i) in r.rules" :key="x.id" class="ruleline">
+            <RouterLink class="line" :to="x.to">
+              <span class="arrow">→</span><span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
+            </RouterLink><span
+              v-if="i === r.rules.length - 1 && r.reversible !== undefined"
+              class="dir" :title="r.reversible ? L.bothWays : L.oneWay"
+            >{{ r.reversible ? '↔' : '→' }}</span>
+          </div>
+          <!-- A skill citing no rule still has a direction to report. -->
+          <div v-if="!r.rules.length && r.reversible !== undefined" class="ruleline">
+            <span class="dir lone" :title="r.reversible ? L.bothWays : L.oneWay">{{ r.reversible ? '↔' : '→' }}</span>
           </div>
         </div>
 
@@ -457,8 +466,11 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    Flex rather than a third grid column so the marker sits against the formula
    at any width and drops beneath it on a phone instead of squeezing the maths. */
 .f.terminal { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
-.dir { margin-top: .2rem; padding-left: 1.1rem; font-size: .78rem; color: var(--text-faint); }
-.dir .sym { display: inline-block; min-width: 1.1rem; margin-left: -1.1rem; font-size: .95rem; color: var(--text-muted); }
+.ruleline { display: flex; align-items: baseline; gap: .35rem; }
+/* Grey and small: it is a qualifier on the row, not a second link. Kept out of
+   the RouterLink so it never highlights or navigates with the rule beside it. */
+.dir { color: var(--text-faint); font-size: .82rem; line-height: 1; cursor: default; }
+.dir.lone { padding-left: 1.1rem; }
 .stop { color: var(--text-muted); font-size: .78rem; font-family: var(--font-content); white-space: nowrap; }
 /* Each chunk boxed just enough to read as one object — the whole point of a
    chunking skill is that `3x` is ONE thing, so the grouping has to be visible

@@ -79,7 +79,8 @@
           "restsOn": [
             "ix.juxtaposition",
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-negative-one",
@@ -114,7 +115,8 @@
             "th.negative-one-times",
             "ix.invisible-one",
             "ix.juxtaposition"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-zero",
@@ -146,7 +148,8 @@
           "restsOn": [
             "th.zero-times",
             "ix.juxtaposition"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-one",
@@ -175,7 +178,8 @@
           ],
           "restsOn": [
             "ax.one-neutral"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.repeated-addition",
@@ -211,7 +215,9 @@
             "pre.variables",
             "def.multiple",
             "ix.juxtaposition"
-          ]
+          ],
+          "todo": "REVERSE PAIR with skill.coefficient-vs-exponent (`2a → a + a`). Both are marked ↔, which makes one of them redundant — merge, or mark both → and keep them as a pair.",
+          "reversible": true
         }
       ]
     },
@@ -281,7 +287,8 @@
           ],
           "restsOn": [
             "ax.zero-neutral"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.unlike-variable-terms",
@@ -382,7 +389,8 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtraction-as-adding-opposite",
@@ -417,7 +425,8 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.minus-over-sum",
@@ -452,7 +461,9 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "todo": "MIXED DIRECTIONS — one flag per skill, and this one needs two: `(-1)(a + b)` is a reading step that reverses freely (rewriting the leading minus as a factor), while `-a - b` is the distribution, whose reverse is factoring a minus out. Split into the reading and the move, or drop the intermediate form.",
+          "reversible": false
         },
         {
           "id": "skill.minus-over-difference",
@@ -487,7 +498,9 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "todo": "MIXED DIRECTIONS, same as minus-over-sum: `-a + b` is the distribution (one-way) and `b - a` is commutativity applied after it (reverses freely). Two steps, two directions, one skill.",
+          "reversible": false
         },
         {
           "id": "skill.double-negative",
@@ -521,7 +534,8 @@
             "def.sub",
             "th.minus-in-product",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.negative-times-negative",
@@ -556,7 +570,8 @@
             "ix.juxtaposition",
             "th.negative-one-times",
             "def.sub"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.minus-on-fraction",
@@ -591,7 +606,8 @@
             "th.negative-one-times",
             "def.sub",
             "ix.fraction-bar"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtracting-a-sum",
@@ -624,7 +640,8 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.subtracting-a-difference",
@@ -657,7 +674,8 @@
             "th.negative-one-times",
             "def.sub",
             "ix.brackets"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -685,7 +703,8 @@
           ],
           "restsOn": [
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.redundant-brackets",
@@ -710,7 +729,8 @@
           ],
           "restsOn": [
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.precedence-brackets",
@@ -738,7 +758,8 @@
           "restsOn": [
             "ix.precedence",
             "ix.brackets"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.fraction-bar-grouping",
@@ -773,7 +794,8 @@
           "restsOn": [
             "ix.fraction-bar"
           ],
-          "conditions": "c \\ne 0"
+          "conditions": "c \\ne 0",
+          "reversible": true
         },
         {
           "id": "skill.expand-distribute",
@@ -845,7 +867,8 @@
           ],
           "rules": [
             "rule.power-vs-coefficient"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.coefficient-vs-exponent",
@@ -883,7 +906,8 @@
             "def.pow",
             "ix.juxtaposition",
             "ix.invisible-one"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.negated-square-vs-negative-base",
@@ -917,7 +941,8 @@
             "th.negative-base",
             "th.negative-one-times",
             "def.sub"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.power-of-a-product",
@@ -950,7 +975,8 @@
             "pl.of-product",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.zero-and-one-exponent",
@@ -982,7 +1008,8 @@
           "rules": [
             "rule.exponent-zero"
           ],
-          "todo": "Name and note narrowed to a^0 when skill.exponent-one was added — the note used to claim \"And a^1 = a\" while only ever drilling a^0. The id still says zero-and-one; rename to skill.zero-exponent? Nothing requires it, so the rename is free."
+          "todo": "Name and note narrowed to a^0 when skill.exponent-one was added — the note used to claim \"And a^1 = a\" while only ever drilling a^0. The id still says zero-and-one; rename to skill.zero-exponent? Nothing requires it, so the rename is free.",
+          "reversible": false
         },
         {
           "id": "skill.exponent-one",
@@ -1011,7 +1038,8 @@
           ],
           "restsOn": [
             "def.pow"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.negative-exponent",
@@ -1046,7 +1074,8 @@
             "def.pow-neg",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.fractional-exponent-root",
@@ -1078,7 +1107,8 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.negative-fractional-exponent",
@@ -1113,7 +1143,8 @@
             "def.pow-rat",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.root-of-a-product",
@@ -1143,7 +1174,8 @@
           "restsOn": [
             "th.root-of-product",
             "ix.root"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.root-of-a-sum",
@@ -1211,7 +1243,8 @@
           ],
           "restsOn": [
             "pl.same-base"
-          ]
+          ],
+          "reversible": true
         }
       ]
     },
@@ -1245,7 +1278,8 @@
           "restsOn": [
             "ix.division-symbols",
             "def.div"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.fraction-as-reciprocal-product",
@@ -1271,7 +1305,8 @@
           ],
           "restsOn": [
             "def.div"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.divide-by-one",
@@ -1301,7 +1336,8 @@
           ],
           "rules": [
             "rule.divide-by-one-and-self"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.divide-by-self",
@@ -1363,7 +1399,8 @@
             "th.split-numerator",
             "ax.distributivity",
             "ix.fraction-bar"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.no-splitting-the-denominator",
@@ -1395,7 +1432,8 @@
             "th.split-numerator",
             "ix.fraction-bar"
           ],
-          "conditions": "a+b \\ne 0"
+          "conditions": "a+b \\ne 0",
+          "reversible": true
         },
         {
           "id": "skill.no-cancelling-in-a-sum",
@@ -1427,7 +1465,8 @@
             "th.split-numerator",
             "th.cancel-common-factor",
             "ix.fraction-bar"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -1457,7 +1496,8 @@
           ],
           "rules": [
             "rule.only-plus-and-times-commute"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.multiplication-commutative",
@@ -1488,7 +1528,8 @@
           "restsOn": [
             "ax.mul-commutative",
             "ix.juxtaposition"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtraction-not-commutative",
@@ -1519,7 +1560,8 @@
           "restsOn": [
             "def.sub",
             "th.negative-one-times"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.subtraction-not-associative",
@@ -1550,7 +1592,8 @@
           "restsOn": [
             "ax.add-associative",
             "def.sub"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.division-not-associative",
@@ -1581,7 +1624,8 @@
           "restsOn": [
             "ax.mul-associative",
             "def.div"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -1624,7 +1668,8 @@
           ],
           "restsOn": [
             "th.binomial-square"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.difference-of-squares",
@@ -1659,7 +1704,8 @@
             "ix.precedence",
             "ix.pow",
             "th.negative-base"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.sum-of-squares",
@@ -1728,7 +1774,8 @@
             "ix.precedence",
             "ix.pow",
             "op.add"
-          ]
+          ],
+          "reversible": false
         }
       ]
     }

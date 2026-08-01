@@ -50,7 +50,8 @@
           ],
           "restsOn": [
             "ax.distributivity"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.factor-quadratic",
@@ -83,7 +84,8 @@
           "restsOn": [
             "ax.distributivity",
             "th.collect-like-terms"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -131,7 +133,8 @@
           ],
           "restsOn": [
             "th.collect-like-terms"
-          ]
+          ],
+          "reversible": false
         },
         {
           "id": "skill.cancel-common-factor",
@@ -163,7 +166,8 @@
           "restsOn": [
             "th.cancel-common-factor"
           ],
-          "conditions": "b \\ne 0,\\ k \\ne 0"
+          "conditions": "b \\ne 0,\\ k \\ne 0",
+          "reversible": false
         },
         {
           "id": "skill.combine-fractions",
@@ -196,7 +200,8 @@
             "th.fraction-multiply",
             "th.fraction-divide",
             "th.fraction-add"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -240,7 +245,8 @@
             "ix.precedence",
             "ix.brackets",
             "th.difference-of-squares"
-          ]
+          ],
+          "reversible": true
         }
       ]
     }
