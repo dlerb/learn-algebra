@@ -69,9 +69,11 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 const L = computed(() => lang.value === 'de'
   ? { rests: 'stützt sich auf', teaches: 'lehrt', requires: 'setzt voraus', requiredBy: 'Grundlage für',
       guards: 'schützt vor', cond: 'sofern', terminal: 'nichts zu tun',
+      bothWays: 'in beide Richtungen', oneWay: 'nur in diese Richtung',
       by: 'gliedern nach', byGroup: 'Thema', byProcess: 'Prozess', }
   : { rests: 'rests on', teaches: 'teaches', requires: 'requires', requiredBy: 'required by',
       guards: 'guards against', cond: 'provided', terminal: 'nothing to do',
+      bothWays: 'reads both ways', oneWay: 'one direction only',
       by: 'section by', byGroup: 'topic', byProcess: 'process', })
 
 // Deep link from /rules, where each rule lists the skills that teach it.
@@ -160,6 +162,7 @@ const processTitle = new Map(processes.map((p: GroupDef) => [p.slug, t(p.title)]
 interface Row {
   id: string; process: string; group: string; name: string
   stimulus: string; right: string[]; wrong: WrongForm[]; conditions?: string
+  reversible?: boolean
   requires: { id: string; name: string; to: string }[]
   requiredBy: { id: string; name: string; to: string }[]
   restsOn: { id: string; name: string; to: string }[]
@@ -185,6 +188,7 @@ function toRow(s: Skill): Row {
   return {
     id: s.id, process: s.process, group: s.group, name: t(s.name),
     stimulus: s.stimulus, right: s.right, wrong: s.wrong, conditions: s.conditions,
+    reversible: s.reversible,
     requires: skillLinks(s.requires), requiredBy: rby,
     restsOn: cardLinks(s.restsOn), rules: ruleLinks(s.rules), errors,
     paired: s.wrong.length > 0,
@@ -341,6 +345,16 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
           <RouterLink v-for="x in r.rules" :key="x.id" class="line" :to="x.to">
             <span class="arrow">→</span><span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
           </RouterLink>
+          <!-- WHICH WAY THE CLAIM READS. ↔ says one competence covers both
+               directions (3×x and 3x are the same recognition); → says the
+               reverse is a different skill with a different name (expanding
+               against factoring). Undeclared renders NOTHING rather than
+               guessing — an empty cell is a question here as everywhere.
+               Sits under the rules because it qualifies the whole claim, not
+               any single rule; the glyph is the label, with the words on hover. -->
+          <div v-if="r.reversible !== undefined" class="dir" :title="r.reversible ? L.bothWays : L.oneWay">
+            <span class="sym">{{ r.reversible ? '↔' : '→' }}</span>{{ r.reversible ? L.bothWays : L.oneWay }}
+          </div>
         </div>
 
         <!-- THE BAD HALF: the tempting solution, then the belief it comes from.
@@ -443,6 +457,8 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
    Flex rather than a third grid column so the marker sits against the formula
    at any width and drops beneath it on a phone instead of squeezing the maths. */
 .f.terminal { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
+.dir { margin-top: .2rem; padding-left: 1.1rem; font-size: .78rem; color: var(--text-faint); }
+.dir .sym { display: inline-block; min-width: 1.1rem; margin-left: -1.1rem; font-size: .95rem; color: var(--text-muted); }
 .stop { color: var(--text-muted); font-size: .78rem; font-family: var(--font-content); white-space: nowrap; }
 /* Each chunk boxed just enough to read as one object — the whole point of a
    chunking skill is that `3x` is ONE thing, so the grouping has to be visible

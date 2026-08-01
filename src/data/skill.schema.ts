@@ -147,6 +147,28 @@ export const skill = z.object({
   rules: z.array(z.string()).default([]),        // rule ids (rules.json) — the DO/IS sentences this skill teaches
   restsOn: z.array(z.string()).default([]),      // card ids (src/data/layers.ts): the axioms/definitions/theorems it is justified by and the notation conventions (`ix.`) it obeys — which is which is read off the card prefix. Merged 2026-07-24 from the old justifiedBy + governedBy
   conditions: z.string().optional(),    // domain caveat, pure LaTeX
+  // ── DOES THE CLAIM READ BOTH WAYS? (2026-08-01) ──────────────────────────
+  // `stimulus → right[]` has a direction. This says whether reading it backwards
+  // is the SAME skill or a different one — which is the question that decides
+  // how many skills a rule needs, and it kept coming up unnamed:
+  //
+  //   true   `3 \times x` ↔ `3x`. Recognition runs both ways; a student who can
+  //          read one direction can read the other, and splitting would be two
+  //          entries for one capability.
+  //   false  `a(b+c) → ab + ac` is expanding; `ab + ac → a(b+c)` is factoring.
+  //          Same rule, same equation, different mental process and different
+  //          name — which is why expand-distribute and factor-common are two
+  //          skills and stay two.
+  //
+  // ⚠️ NOT A STATEMENT ABOUT DRILLS. The skill layer says nothing about how a
+  // student is asked (skill_model: `task` belongs to the drill). This is a claim
+  // about the CAPABILITY: whether one competence covers both readings. A drill
+  // may well use it, but that is downstream and none of this layer's business.
+  //
+  // ⚠️ OPTIONAL, AND UNDECLARED IS NOT `false`. An empty cell is a question, as
+  // everywhere else in this data — the coverage audit reports how many are still
+  // open rather than letting the default quietly answer for the author.
+  reversible: z.boolean().optional(),
 }).transform(s => ({
   ...s,
   // ── `mistakes` IS DERIVED, NEVER AUTHORED (2026-07-30) ───────────────────
@@ -794,6 +816,14 @@ export function auditCoverage(
   }
   const parts = Object.entries(dirty).filter(([, n]) => n > 0).map(([k, n]) => `${k}: ${n}`)
   if (parts.length > 0) lines.push(`Prose fields with unmigrated unicode math (→ inline $…$): ${parts.join(', ')}`)
+
+  // Undeclared `reversible` is an open question, not a default — see the field's
+  // note. Reported so the burndown is visible while the revision fills it in.
+  const undeclared = skills.filter(f => f.reversible === undefined)
+  if (undeclared.length > 0) {
+    lines.push(`${undeclared.length}/${skills.length} skills have not declared `
+      + `\`reversible\` — whether reading the claim backwards is the same skill.`)
+  }
   return lines
 }
 

@@ -45,7 +45,8 @@
           "restsOn": [
             "ix.juxtaposition",
             "ix.coefficient-front"
-          ]
+          ],
+          "reversible": true
         },
         {
           "id": "skill.product-with-brackets",
@@ -804,7 +805,8 @@
             "ax.distributivity",
             "ix.juxtaposition",
             "ix.brackets"
-          ]
+          ],
+          "reversible": false
         }
       ]
     },
@@ -1329,7 +1331,8 @@
           "restsOn": [
             "th.divide-by-one"
           ],
-          "conditions": "a \\ne 0"
+          "conditions": "a \\ne 0",
+          "reversible": true
         },
         {
           "id": "skill.splitting-a-fraction",
