@@ -73,7 +73,6 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition",
             "rule.implicit-op-before-bracket"
           ],
           "restsOn": [
@@ -108,8 +107,7 @@
             "skill.negative-numbers"
           ],
           "rules": [
-            "rule.juxtaposition",
-            "rule.three-minuses"
+            "rule.invisible-one"
           ],
           "restsOn": [
             "th.negative-one-times",
@@ -142,7 +140,7 @@
             "skill.explicit-vs-implicit-product"
           ],
           "rules": [
-            "rule.juxtaposition"
+            "rule.zero-times"
           ],
           "restsOn": [
             "th.zero-times",
@@ -481,8 +479,8 @@
             "skill.coefficient-negative-one"
           ],
           "rules": [
-            "rule.three-minuses",
-            "rule.implicit-op-before-bracket"
+            "rule.implicit-op-before-bracket",
+            "rule.minus-over-bracket"
           ],
           "restsOn": [
             "th.minus-over-sum",
@@ -518,9 +516,7 @@
           "requires": [
             "skill.subtraction-as-adding-opposite"
           ],
-          "rules": [
-            "rule.three-minuses"
-          ],
+          "rules": [],
           "restsOn": [
             "def.sub",
             "th.minus-in-product",
@@ -803,7 +799,6 @@
             "skill.product-with-brackets"
           ],
           "rules": [
-            "rule.implicit-op-before-bracket",
             "rule.only-multiplication-distributes"
           ],
           "restsOn": [
@@ -1489,7 +1484,6 @@
             "skill.splitting-a-fraction"
           ],
           "rules": [
-            "rule.split-numerator",
             "rule.fraction-cancel"
           ],
           "restsOn": [
@@ -1583,7 +1577,7 @@
             "skill.minus-over-difference"
           ],
           "rules": [
-            "rule.three-minuses"
+            "rule.only-plus-and-times-commute"
           ],
           "restsOn": [
             "def.sub",
@@ -1816,7 +1810,6 @@
             "skill.expand-binomial-square"
           ],
           "rules": [
-            "rule.binomial-square",
             "rule.binomials-read-backwards"
           ],
           "restsOn": [

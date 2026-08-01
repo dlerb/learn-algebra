@@ -236,9 +236,7 @@
             "skill.difference",
             "skill.product"
           ],
-          "rules": [
-            "rule.dominant-op-last"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.precedence",
             "ix.brackets",

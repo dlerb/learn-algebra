@@ -254,9 +254,7 @@
             "skill.product",
             "skill.power-of-a-product"
           ],
-          "rules": [
-            "rule.dominant-op-last"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.pow",
             "th.negative-base"
@@ -286,9 +284,7 @@
             "skill.sum-of-products",
             "skill.coefficient-negative-one"
           ],
-          "rules": [
-            "rule.dominant-op-last"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.precedence",
             "def.sub",
@@ -320,9 +316,7 @@
             "skill.product-with-inner-sum",
             "skill.exponent-as-repeated-product"
           ],
-          "rules": [
-            "rule.bracket-chunk"
-          ],
+          "rules": [],
           "restsOn": [
             "ix.brackets",
             "ix.pow",
@@ -520,7 +514,6 @@
             "skill.sum-of-products"
           ],
           "rules": [
-            "rule.dominant-op-last",
             "rule.dominant-op-tools"
           ],
           "restsOn": [
@@ -547,7 +540,6 @@
             "skill.sum-of-products"
           ],
           "rules": [
-            "rule.dominant-op-last",
             "rule.dominant-op-tools"
           ],
           "restsOn": [
