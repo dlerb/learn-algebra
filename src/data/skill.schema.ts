@@ -215,6 +215,27 @@ export const skill = z.object({
   // ⚠️ OPTIONAL, AND UNDECLARED IS NOT `false`. An empty cell is a question, as
   // everywhere else in this data — the coverage audit reports how many are still
   // open rather than letting the default quietly answer for the author.
+  //
+  // ── WHEN THE TWO DIRECTIONS NEED DIFFERENT RULES (2026-08-02) ────────────
+  // A backward reading that needs a rule the forward one does not is NOT a hole
+  // in this flag — it is the DETECTOR that says you are looking at two skills.
+  // The pool already works that way: `expand-binomial-square` cites
+  // `binomial-square`, while its reverse `perfect-square-trinomial` cites that
+  // AND `binomials-read-backwards`, so the second rule is what makes them a pair
+  // rather than one entry marked ↔. Direction does NOT go inside a skill.
+  //
+  // Nothing else needs a direction either, and this was measured rather than
+  // assumed. The ✗ side already carries it: a `wrong` is a full false equation,
+  // so it names its own direction, and 8 of the 50 ↔ skills already hold a
+  // backwards-read error (`coefficient-vs-exponent` holds both `2a = a^2` and
+  // `a^2 = 2a`). The ✓ side has none to carry: `stimulus = form` is an equality.
+  // What is left is `rules[]`, and `rule.involutive` is how that is checked
+  // instead of encoded — see the field, and auditCoverage's report.
+  //
+  // ⚠️ THE OPERATIVE HALF OF THE TEST BELOW IS THE NAME. "Different mental
+  // process" is hard to adjudicate; "the classroom has two words for it" is
+  // observable — expand/factor, kürzen/erweitern. `root-of-a-product` cites a
+  // one-way rule but has only one name, so it stays ↔.
   reversible: z.boolean().optional(),
 }).transform(s => ({
   ...s,
@@ -375,6 +396,34 @@ export const ruleDef = z.object({
   // entry below is in documented classroom use. German is the richer side, which
   // makes this the first field where the German column leads.
   mnemonic: z.object({ en: z.string().optional(), de: z.string().optional() }).optional(),
+  // ── IS THE MOVE ITS OWN INVERSE? (2026-08-02) ────────────────────────────
+  // DO RULES ONLY, and validateRuleDirections enforces that: an IS sentence
+  // says what a form MEANS, and a meaning has no direction to have.
+  //
+  // THE TEST IS MECHANICAL, not editorial: apply the rewrite to its own output
+  // and see whether you get the input back.
+  //   true   `a + b = b + a` — swapping swaps back. Regrouping regroups back.
+  //          Moving a lone minus moves it back. Root-and-power in either order
+  //          is its own reverse, and its sentence says so out loud.
+  //   false  `\frac{a+b}{c} = \frac{a}{c} + \frac{b}{c}` — you cannot split a
+  //          split. Forward and backward are two moves with two names, which is
+  //          usually two words in the classroom: kürzen/erweitern,
+  //          ausmultiplizieren/faktorisieren.
+  //
+  // WHY THE POOL NEEDS IT: `skill.reversible` says a capability reads both ways,
+  // and it was measured against this pool on 2026-08-02 — 34 of the 50 ↔ skills
+  // cite only IS rules, while 14 of the 19 → skills cite a DO rule. The flag is
+  // very nearly the register axis seen from the skill side. This field turns
+  // "very nearly" into something checkable: a ↔ skill citing a ONE-WAY DO rule
+  // is the pairing that cannot be right by construction, and auditCoverage
+  // reports exactly those.
+  //
+  // ⚠️ UNDECLARED IS A QUESTION, not `false` — the same discipline as
+  // `reversible` and every other optional field here. Two DO rules are
+  // undeclared on purpose: `dominant-op-tools` and `unlike-terms-stay` both
+  // carry open `todo`s about what rule they even are, and answering a harder
+  // question about them first would be inventing an answer.
+  involutive: z.boolean().optional(),
 })
 export type RuleDef = z.infer<typeof ruleDef>
 
@@ -623,6 +672,19 @@ export function validateFamilies(
 
 export function validateRuleFamilies(rules: RulesFile): void {
   validateFamilies(rules, 'Rule')
+}
+
+/** `involutive` is a claim about a MOVE, so only a DO sentence can make it.
+ *  Declaring it on an IS sentence is not a wrong answer but a wrong question —
+ *  a reading has no direction to reverse — and it would also poison the audit,
+ *  which reads "not involutive" as "one-way" and would then flag skills for
+ *  citing a rule that never moved anything. */
+export function validateRuleDirections(rules: RulesFile): void {
+  for (const r of rules) {
+    if (r.involutive !== undefined && r.kind !== 'do') {
+      throw new Error(`Rule "${r.id}" declares \`involutive\` but is an IS sentence — only a move has a direction.`)
+    }
+  }
 }
 
 /** Every rule a sheet names must exist — a sheet owns nothing, so a dangling
@@ -884,6 +946,37 @@ export function auditCoverage(
   if (undeclared.length > 0) {
     lines.push(`${undeclared.length}/${skills.length} skills have not declared `
       + `\`reversible\` — whether reading the claim backwards is the same skill.`)
+  }
+
+  // ── ↔ AGAINST A ONE-WAY MOVE (2026-08-02) ──────────────────────────────────
+  // The one pairing the two direction fields can make that cannot be right: the
+  // skill says one capability covers both readings, and the rule it teaches says
+  // the reverse move is a different move. One of the two is wrong, and which is
+  // a judgement — the `reversible` note gives the test (does the classroom have
+  // two words for it?) and names the third answer, that the backward reading
+  // needs a rule the forward one does not and the skill is really a pair.
+  //
+  // NOT A VALIDATOR. Three of these are live today and at least one is a
+  // deliberate keep: `no-splitting-the-denominator` cites `split-numerator` to
+  // say where splitting STOPS, which is a boundary citation and not a claim to
+  // perform the move at all. A rule that throws would force that to be
+  // mis-authored to get past it.
+  const oneWay = new Map(rules.filter(r => r.kind === 'do' && r.involutive === false).map(r => [r.id, r]))
+  const mismatched = skills
+    .filter(f => f.reversible === true)
+    .map(f => ({ id: f.id, cited: f.rules.filter(r => oneWay.has(r)) }))
+    .filter(x => x.cited.length > 0)
+  if (mismatched.length > 0) {
+    lines.push(`↔ skills citing a one-way rule (${mismatched.length}): ` +
+      mismatched.map(x => `${x.id} → ${x.cited.join(', ')}`).join(' | '))
+  }
+  // The burndown for the field the line above reads. Undeclared DO rules are
+  // invisible to it — they are neither involutive nor one-way — so the count is
+  // how much of that audit is currently switched off.
+  const undecidedRules = rules.filter(r => r.kind === 'do' && !r.head && r.involutive === undefined)
+  if (undecidedRules.length > 0) {
+    lines.push(`${undecidedRules.length} DO rules have not declared \`involutive\` — ` +
+      `the line above cannot see them: ${undecidedRules.map(r => r.id).join(', ')}`)
   }
   return lines
 }

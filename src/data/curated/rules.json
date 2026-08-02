@@ -101,7 +101,8 @@
       "summarizes": [
         "ax.add-commutative",
         "ax.mul-commutative"
-      ]
+      ],
+      "involutive": true
     },
     {
       "id": "rule.only-plus-and-times-associate",
@@ -126,7 +127,8 @@
       "summarizes": [
         "ax.add-associative",
         "ax.mul-associative"
-      ]
+      ],
+      "involutive": true
     },
     {
       "id": "rule.zero-and-one",
@@ -206,7 +208,8 @@
       "family": "rule.zero-and-one",
       "summarizes": [
         "th.zero-product"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.three-minuses",
@@ -283,7 +286,8 @@
       "family": "rule.minus-rules",
       "summarizes": [
         "th.minus-in-product"
-      ]
+      ],
+      "involutive": true
     },
     {
       "id": "rule.minus-over-bracket",
@@ -306,7 +310,8 @@
       "family": "rule.minus-rules",
       "summarizes": [
         "th.minus-over-sum"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.subtract-a-bracket",
@@ -330,7 +335,8 @@
       "family": "rule.minus-rules",
       "summarizes": [
         "th.subtract-a-sum"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.no-adjacent-operators",
@@ -553,7 +559,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "pl.same-base"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.same-base-divide",
@@ -576,7 +583,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "th.pow-quotient-same-base"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.power-over-product",
@@ -599,7 +607,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "pl.of-product"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.root-over-product",
@@ -622,7 +631,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "th.root-of-product"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.power-over-quotient",
@@ -645,7 +655,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "th.pow-of-quotient"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.root-over-quotient",
@@ -668,7 +679,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "th.root-of-quotient"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.power-of-power",
@@ -691,7 +703,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "pl.of-power"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.root-of-power",
@@ -714,7 +727,8 @@
       "family": "rule.power-laws",
       "summarizes": [
         "th.root-power-order"
-      ]
+      ],
+      "involutive": true
     },
     {
       "id": "rule.power-vs-coefficient",
@@ -834,7 +848,8 @@
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-multiply"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.fraction-divide",
@@ -861,7 +876,8 @@
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-divide"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.double-fraction",
@@ -905,7 +921,8 @@
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-add"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.fraction-plus-whole",
@@ -924,7 +941,8 @@
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.fraction-add"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.fraction-cancel",
@@ -947,7 +965,8 @@
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.cancel-common-factor"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.split-numerator",
@@ -966,7 +985,8 @@
       "family": "rule.fraction-laws",
       "summarizes": [
         "th.split-numerator"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.fraction-minus-moves",
@@ -1024,7 +1044,8 @@
       "family": "rule.binomial-formulas",
       "summarizes": [
         "th.binomial-square"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.square-of-difference",
@@ -1046,7 +1067,8 @@
       "family": "rule.binomial-formulas",
       "summarizes": [
         "th.square-of-difference"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.difference-of-squares",
@@ -1068,7 +1090,8 @@
       "family": "rule.binomial-formulas",
       "summarizes": [
         "th.difference-of-squares"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.binomials-read-backwards",
@@ -1089,7 +1112,8 @@
       "summarizes": [
         "th.difference-of-squares",
         "th.binomial-square"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.root-bar-brackets",
@@ -1311,7 +1335,8 @@
       "summarizes": [
         "ax.distributivity",
         "th.collect-like-terms"
-      ]
+      ],
+      "involutive": false
     },
     {
       "id": "rule.variable-is-a-fixed-number",

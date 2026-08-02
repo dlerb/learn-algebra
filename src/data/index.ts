@@ -4,7 +4,7 @@
 import {
   parseSkillTree, parseRuleTree, parseSheetTree,
   parseMistakeTree,
-  validateUniqueIds, validateProcesses, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateFamilies, validateSkillLinks, validateStacks,
+  validateUniqueIds, validateProcesses, validateRuleRefs, validateSheetRefs, validateRuleFamilies, validateRuleDirections, validateFamilies, validateSkillLinks, validateStacks,
   validateLayerRefs, validateLatexCompiles, validateMistakeRefs, auditCoverage,
   type GroupsFile, type RulesFile, type RuleTree, type SheetDef, type SheetTree,
   type MistakeDef, type MistakeTree,
@@ -76,6 +76,7 @@ validateProcesses(processes)
 validateRuleRefs(skills, rules)
 validateSheetRefs(sheets, rules)
 validateRuleFamilies(rules)
+validateRuleDirections(rules)
 validateFamilies(mistakes, 'Mistake')
 validateSkillLinks(skills)
 validateStacks(skills)
