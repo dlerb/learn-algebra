@@ -1068,6 +1068,80 @@ from S.13 on, several answers are right and differ in quality. Everything above 
 one answer; strategy does not. That is a different kind of exercise and probably a different
 kind of screen.
 
+## When this becomes data — decided 2026-08-02, not yet built
+
+Nothing here is implemented. It is written down so the review pass has it in front of it and
+so none of it gets re-argued.
+
+### The shape
+
+```
+item
+  id             SLUG, kebab-case, stable            ← never the number
+  section        "N1" · "P1" · "R" · "E" · "C" · "S1"
+  latex          the equation — the item's identity
+  note           {en, de}                            the sentence after the dash
+  right[]        {latex, rule?}                      the equivalence drill's answer key
+  wrong[]        {latex, mistake?}                   the distractor bank
+  basedOnRules[] slugs
+  basedOnCards[] card ids — ONLY where there is no rule
+  basedOnSkills[] slugs — the ⇐ marks
+  tags[]         ["multiplication", "brackets"]      filtering only
+
+rule
+  id             slug
+  text           {de, en}                            German is the authored side
+  limitOf        slug of the rule this one limits    ← what ".2" encodes today
+  basedOnCards[] optional
+
+section
+  id · title {en, de} · blurb? {en, de}
+```
+
+### The decisions behind it
+
+- **No `name` field.** An item is a formula plus a sentence; a name would be a third thing
+  restating the second, 190 times, with nothing checking it. `shortName` optional, authored
+  only where a link needs something shorter than the note — the discipline `rules.json` already
+  uses.
+- **`id` is a slug; ORDER IS ARRAY POSITION; the number is DERIVED.** Reorder the array and the
+  numbers recompute. Renumbering stops being a task — which matters, because two renumbering
+  accidents happened in this file on the day it was written.
+- **`.1`/`.2` becomes `limitOf`.** The pairing is real structure and is currently living inside
+  a string. Explicit, checkable, and it survives reordering.
+- **`section` is a field, not an id prefix**, for the same reason.
+- **V2 is admitted as a SKILL** — "how many summands does `a - (b+c)` have?" is a drill
+  question, and it is the one V entry that is a *doing* rather than a naming. V0 and V1 stay
+  glossary.
+- **Retired from the old skill schema**: `process` (the section is the process), `group` (topic
+  returns as a `tag`, which is the honest role it always had — a filter, never a spine), and
+  **`reversible`** (direction is now the bucket: an R item reads both ways, an E/C pair is one
+  law in two directions). `mistakes` stays derived from `wrong[]`.
+
+### The invariant, as an audit line and not a validator
+
+> **Every item reaches the tower** — directly by `basedOnCards`, or through its rule's
+> `summarizes`, or through a `basedOnSkills` prerequisite that does.
+
+Measured today: all 90 T items have a rule; 29 of 53 N items have a card and only 6 have a
+rule; **18 of 20 P items have neither**, and that is correct rather than a gap — P states
+nothing new, it APPLIES N, and its `⇐` marks are its anchor. Some items are legitimately
+unanchored (N1.9, "the dot is what this course writes", is a course decision), which is why
+this warns rather than throws.
+
+### How the slugs get added
+
+1. **Draft mechanically, correct by hand.** A slug per item, generated from its note, appended
+   to the line as `` `#number-times-letter` `` — greppable, and visually distinct from the
+   `[…]` reference tags. The author overrules on the way through; naming an item and reviewing
+   it are the same act.
+2. **Cross-references stay NUMERIC in the markdown.** `⇐ N4.2` is not rewritten by hand — the
+   converter maps number → slug once, at conversion.
+3. **A check for uniqueness and kebab-case**, run before conversion.
+4. **After conversion the JSON is the source and this file keeps the arguments** — the ladder,
+   the vinculum, why "term" is banned — the way `content_model.md` relates to the data. Plus a
+   script asserting every id in one exists in the other, or the file quietly rots.
+
 ## What left N, and why
 
 Each failed N's test: it needs a law to be true, so it is a move, and it is in T if it is
