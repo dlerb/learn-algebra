@@ -23,22 +23,16 @@
             "de": "Explizite und implizite Multiplikation"
           },
           "note": {
-            "en": "Symbols next to each other, or joined by $\\cdot$ or $\\times$, all mean multiply. $3x$ is a product, not a two-digit number.",
-            "de": "Zeichen nebeneinander, oder mit $\\cdot$ oder $\\times$ verbunden, bedeuten alle mal. $3x$ ist ein Produkt, keine zweistellige Zahl."
+            "en": "Symbols next to each other mean multiply, and $\\cdot$ says the same thing out loud. $3x$ is a product, not a two-digit number.",
+            "de": "Zeichen nebeneinander bedeuten mal, und $\\cdot$ sagt dasselbe ausgeschrieben. $3x$ ist ein Produkt, keine zweistellige Zahl."
           },
-          "stimulus": "3 \\times x",
+          "stimulus": "3x",
           "right": [
             {
               "latex": "3 \\cdot x"
             },
             {
-              "latex": "3x"
-            },
-            {
               "latex": "x \\cdot 3"
-            },
-            {
-              "latex": "(3)(x)"
             }
           ],
           "wrong": [
@@ -53,46 +47,6 @@
           "restsOn": [
             "ix.juxtaposition",
             "ix.coefficient-front"
-          ],
-          "reversible": true
-        },
-        {
-          "id": "skill.product-with-brackets",
-          "name": {
-            "en": "Multiplication with brackets",
-            "de": "Multiplikation mit Klammern"
-          },
-          "note": {
-            "en": "A number against a bracket means multiply: $2(x+1)$ is 2 times $(x+1)$.",
-            "de": "Eine Zahl direkt vor einer Klammer heisst mal: $2(x+1)$ ist 2 mal $(x+1)$."
-          },
-          "stimulus": "2 \\times (x+1)",
-          "right": [
-            {
-              "latex": "2 \\cdot (x+1)"
-            },
-            {
-              "latex": "2(x+1)"
-            },
-            {
-              "latex": "(x+1) \\cdot 2"
-            }
-          ],
-          "wrong": [
-            {
-              "latex": "2(x+1) = 2 + (x+1)",
-              "mistake": "mis.juxtaposition-as-plus"
-            }
-          ],
-          "requires": [
-            "skill.explicit-vs-implicit-product"
-          ],
-          "rules": [
-            "rule.implicit-op-before-bracket"
-          ],
-          "restsOn": [
-            "ix.juxtaposition",
-            "ix.brackets"
           ],
           "reversible": true
         },
@@ -902,7 +856,7 @@
             }
           ],
           "requires": [
-            "skill.product-with-brackets"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.only-multiplication-distributes"
@@ -1057,8 +1011,8 @@
             }
           ],
           "requires": [
-            "skill.product-with-brackets",
-            "skill.exponent-as-repeated-product"
+            "skill.exponent-as-repeated-product",
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.exponent-binds-tighter"
