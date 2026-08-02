@@ -961,6 +961,38 @@ block vocabulary can, because it is the only one in which the bracket question h
 - **S.15** `a^2 + b^2` matches no binomial formula, however much it looks like one ⇐ C.18
 - **S.16** what is inserted must be **one block** or become one: you cannot read `2x+3` as the `a` of `ab` and write `2x+3b` `[§19]`
 
+### S3 · Strategy — WHICH rule, when several fit
+
+⚠️ **A NOTE, NOT A SECTION. Nothing here is written yet.** Parked so it is not lost, because
+S.13 is where the file stops being grammar and nothing after this point follows from the
+sections above.
+
+The grammar answers *may I?* — every rule in T is a permission, and a move is legal or it is
+not. It never answers *should I?*, and from S.13 on that is the only question left:
+
+- `x^2 - 4` matches **§33** (difference of squares) and also **§34** (find the pair). Both are
+  correct; one is faster.
+- `3(x+2) + 6` can be expanded first `[§6.1]` or factored first `[§13]`. Both are correct; one
+  leads somewhere.
+- `\frac{a^2 - b^2}{a - b}` cannot be cancelled until it is factored `[§17.1, §33]` — here the
+  order is not taste, it is the difference between finishing and not.
+
+What a strategy layer would have to hold, none of it decided:
+
+1. **Goal states.** "Simplified" is undefined in this file. Every T rule is legal in both
+   directions, so without a target *expand* and *collect* are equally valid forever. Probably
+   the first thing to write, and probably the hardest.
+2. **Ordering heuristics** — factor before cancelling; collect before expanding; look for a
+   familiar shape before grinding.
+3. **Recognition-first.** `rule.dominant-op-tools` in the old pool tried to say this (main
+   operation → which family of tools) and carries a `todo` questioning whether it is a rule at
+   all. It may be the seed of this section rather than a rule.
+4. **Dead ends and backtracking** — the first move that is legal and useless.
+
+⚠️ It is also the first place where a DRILL cannot mark by comparing to one right answer:
+several answers are right and they differ in quality. That is a different kind of exercise from
+everything the grammar produces, and worth knowing before the drill layer is designed.
+
 ## What left N, and why
 
 Each failed N's test: it needs a law to be true, so it is a move, and it is in T if it is
