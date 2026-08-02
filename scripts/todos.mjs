@@ -21,9 +21,28 @@
 // app AND survives formatting is one nobody will notice again. `--strict` exits
 // non-zero while any remain: run it before merging the pass to main, so the
 // annotations cannot outlive the work they describe.
+//
+//   pnpm todos             what is still open
+//   pnpm todos --resolved  what this branch has already answered, and where
+//   pnpm todos --strict    the gate before main
+//
+// ── WHY `--resolved` IS DERIVED FROM GIT (2026-08-02) ────────────────────────
+// The obvious alternative was to mark a finished note `DONE` and leave it in the
+// file. Rejected, three reasons: it breaks `--strict` (the gate then only catches
+// the notes somebody remembered to mark, and a forgotten one is indistinguishable
+// from open work), the markers accumulate until nobody reads them, and — the one
+// that decides it — a DONE note says what was INTENDED while the entry says what
+// was DONE, with nothing checking the two against each other. This pass has
+// already found that exact gap three times in prose that outlived its data.
+//
+// So the answer is not stored, it is READ BACK: a todo is resolved when a commit
+// removed it, which git records exactly and which no author can forget to write
+// down. Same move as deriving `skill.mistakes` from `wrong[]` — the fact has one
+// home, and it is the one that cannot drift.
 
 import fs from 'node:fs'
-import { contentFiles } from './content-format.mjs'
+import { execFileSync } from 'node:child_process'
+import { contentFiles, CONTENT_ROOT } from './content-format.mjs'
 
 const KEY = 'todo'
 
@@ -42,6 +61,67 @@ function scan(node, id = null, path = '$', out = []) {
     if (k !== KEY) scan(v, here, `${path}.${k}`, out)
   }
   return out
+}
+
+/** Every `id` in a parsed file, so a resolved todo can say whether its ENTRY
+ *  survived. A note that vanished because the skill it hung off was deleted is
+ *  answered, but not in the same way as one whose entry was rewritten. */
+function idsIn(node, out = new Set()) {
+  if (Array.isArray(node)) { node.forEach(v => idsIn(v, out)); return out }
+  if (node === null || typeof node !== 'object') return out
+  if (typeof node.id === 'string') out.add(node.id)
+  for (const v of Object.values(node)) idsIn(v, out)
+  return out
+}
+
+const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trimEnd()
+/** A file as it stood at a revision, or null where it did not exist (a commit
+ *  that created it, or the root commit's parent). */
+function showJson(rev, file) {
+  try { return JSON.parse(git('show', `${rev}:${file}`)) } catch { return null }
+}
+
+// ── --resolved: the todos this branch has already answered ──────────────────
+// `-S` narrows the walk to commits whose diff changes the COUNT of `"todo":`,
+// which is every commit that added or removed one — a handful, not the whole
+// history. Merges carry no diff of their own and are skipped, so what is
+// reported is always the commit that did the work, never the merge that landed
+// it. Newest first, because the question is usually "what did we just do".
+function reportResolved() {
+  const shas = git('log', '--format=%H', '-S', '"todo":', '--', CONTENT_ROOT).split('\n').filter(Boolean)
+  let n = 0
+  for (const sha of shas) {
+    const [short, date, subject] = git('show', '-s', '--format=%h%x00%ad%x00%s', '--date=short', sha).split('\0')
+    const files = git('diff-tree', '--no-commit-id', '--name-only', '-r', sha, '--', CONTENT_ROOT)
+      .split('\n').filter(f => f.endsWith('.json'))
+    const hits = []
+    for (const file of files) {
+      const before = showJson(`${sha}^`, file), after = showJson(sha, file)
+      if (before === null) continue
+      // Keyed by id where there is one — a `path` shifts when anything above it
+      // is added or removed, an id does not.
+      const stillThere = new Set(scan(after ?? {}).map(t => t.id ?? t.path))
+      const survivingIds = idsIn(after ?? {})
+      for (const t of scan(before)) {
+        const key = t.id ?? t.path
+        if (stillThere.has(key)) continue          // reworded, not resolved — still open
+        hits.push({ file, ...t, gone: t.id !== null && !survivingIds.has(t.id) })
+      }
+    }
+    if (hits.length === 0) continue
+    console.log(`\n\x1b[1m${short}\x1b[0m  \x1b[2m${date}\x1b[0m  ${subject}`)
+    for (const h of hits) {
+      console.log(`  \x1b[36m${h.id ?? h.path}\x1b[0m \x1b[2m${h.file}\x1b[0m${h.gone ? ' \x1b[2m(entry removed)\x1b[0m' : ''}`)
+      console.log(`      ${h.text}`)
+      n++
+    }
+  }
+  console.log(n === 0 ? '\n✓ no todos resolved on this branch yet.' : `\n${n} todo(s) resolved.`)
+}
+
+if (process.argv.includes('--resolved')) {
+  reportResolved()
+  process.exit(0)
 }
 
 const found = contentFiles().flatMap(file => {
