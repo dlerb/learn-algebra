@@ -213,14 +213,14 @@ each is a symbol you must be able to write back in.
 - **N6.2** `a^2 = a \cdot a` — the smallest case, automatic `[ix.pow]`
 - **N6.3** base and exponent are two slots that do not draw from the same place: `2^3` and `3^2` `[§5]` `[ix.pow]`
 - **N6.4** `\sqrt[n]{a} = a^{1/n}` — radical and exponent are two spellings of one thing `[ix.root]`
-- **N6.5** `\sqrt{a+b}` — the radical bar is a bracket: everything under it is one object `[no card]`
+- **N6.5** `\sqrt{a+b}` — the radical bar is a bracket: everything under it is one object `[§0.2]` `[no card]`
 - **N6.6** `\sqrt{a} \cdot b` against `\sqrt{ab}` — where the bar ends is the whole question `[no card]`
 - **N6.7** `a^{b^c}` is read TOP-DOWN, `a^{(b^c)}`, never `(a^b)^c`: `3^{3^3} = 3^{27}`, which is 7 625 597 484 987 and not 19 683 `[no card]`
 
 ### N7 · Division and the fraction bar
 
 - **N7.1** `\frac{a}{b} = a : b = a/b` — spellings of one operation `[ix.division-symbols]` ⚠️ *`\div` retired; the open todo on `division-variants` proposes retiring `:` too*
-- **N7.2** `\frac{a+b}{c} = (a+b) : c` — the bar is a bracket you do not write `[ix.fraction-bar]`
+- **N7.2** `\frac{a+b}{c} = (a+b) : c` — the bar is a bracket you do not write `[§0.1]` `[ix.fraction-bar]`
 - **N7.3** `\frac{c}{a+b} = c : (a+b)` — it groups below the bar just as hard `[ix.fraction-bar]`
 - **N7.4** writing a stacked fraction on one line makes the brackets reappear `[ix.fraction-bar]`
 - **N7.5** `\frac{1}{2}x` against `\frac{1}{2x}` — where the bar ends, again `[no card]`
@@ -228,7 +228,7 @@ each is a symbol you must be able to write back in.
 - **N7.7** `\frac{a}{b}` is one object, one number — not an unfinished division `[no card]`
 - **N7.8** **The bar's extent is the fraction's scope**, and it settles the reading in both directions: sideways, `\frac{1}{2}x` against `\frac{1}{2x}` `[N7.5]`; upward, a superscript ABOVE the bar and within its span belongs to the numerator, one PAST the bar's right end belongs to the whole fraction `[no card]`
 - **N7.9** `\frac{a^2}{b}` against `\left(\frac{a}{b}\right)^2` — where the exponent is written decides what it is applied to. ⚠️ `\frac{a^2}{b}` needs NO bracket around `a^2`: the bar already brackets the numerator, so `\frac{(a^2)}{b}` is a bracket that changes no reading `[N3.4]`. The brackets in the second are needed because the exponent stands outside the bar `[no card]`
-- **N7.10** in handwriting the bar has no precise right end, which is the real reason to write `\left(\frac{a}{b}\right)^n` rather than trust the geometry. ⚠️ Typeset, the bare form is NOT ambiguous — it reads as the whole fraction — and it is worth not marking it wrong `[no card]`
+- **N7.10** in handwriting the bar has no precise right end — but that is the writer's to fix, not the reader's to guess `[§0.3]`. It is the real reason to write `\left(\frac{a}{b}\right)^n` rather than trust the geometry. ⚠️ Typeset, the bare form is NOT ambiguous — it reads as the whole fraction — and it is worth not marking it wrong `[no card]`
 
 ---
 
@@ -457,6 +457,38 @@ twin in its text instead.
 
 German first, because that is the language a student reads them in.
 
+### Reading — the grouping symbols
+
+⚠️ **Numbered from zero so that the move rules keep their numbers.** These come FIRST when the
+set is re-based: the notation rules precede the moves, as N precedes T.
+
+**§0.1 · Der Bruchstrich**
+> **Alles, was über und unter dem Bruchstrich steht, gehört zum Bruch.**
+>
+> *Everything above and below the fraction bar belongs to the fraction.* — N7.2, N7.3, N7.7,
+> and it is what P.9 reads
+
+**§0.2 · Der Wurzelstrich**
+> **Alles, was unter dem waagrechten Strich der Wurzel steht, gehört unter die Wurzel.**
+>
+> *Everything under the horizontal bar of the root belongs under the root.* — N6.5, N6.6, P.10.
+> The same sentence twice, because it is the same symbol twice `[V1: the vinculum]`.
+
+**§0.3 · Die Länge des Strichs ist die Aussage** *(and this one is about WRITING)*
+> **Der Strich sagt, wie weit er reicht. Wer ihn von Hand zeichnet, sagt mit seiner Länge
+> etwas — also muss er genau so lang sein, wie er reichen soll.**
+>
+> *The bar states its own reach. Drawn by hand, its length says something — so it has to be
+> exactly as long as it is meant to reach.* — N7.8, N7.9, N7.10, N6.6
+
+⚠️ **§0.3 IS A THIRD KIND OF MISTAKE, and the pools have no room for it yet.** Every entry in
+`mistakes.json` is a misreading or a wrong move — something done to an expression that was
+already on the page. This one is a mistake of **production**: the student means the right
+thing and draws a bar that says a different one. `mis.fraction-bar-grouping-lost` and
+`mis.root-scope` are its reading-side cousins and are not the same failure. Worth its own
+entry when the pool is rebuilt, and worth saying to a class as a demand rather than a
+subtlety: **the length of the bar is under your hand, so it is not too much to ask.**
+
 ### Rearranging
 
 **§1.1 · Reihenfolge**
@@ -648,7 +680,7 @@ German first, because that is the language a student reads them in.
 
 | section | items | rules |
 |---------|-------|-------|
-| V, N (39), P (20) | 59 | reached only where §3 and §5 land — 4 items |
+| V, N (44), P (20) | 64 | **§0.1–§0.3** for the grouping symbols, plus where §3 and §5 land |
 | **R** | 21 | **§1.1–§5** |
 | **E** | 21 | **§6.1–§11** |
 | **C** | 19 | **§12.1–§17.2** |
