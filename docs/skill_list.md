@@ -534,14 +534,14 @@ German first, because that is the language a student reads them in.
 ⚠️ **Numbered from zero so that the move rules keep their numbers.** These come FIRST when the
 set is re-based: the notation rules precede the moves, as N precedes T.
 
-**§0.1 · Der Bruchstrich**
+**§0.1 · Der Bruchstrich** `#fraction-bar-groups`
 > **Alles, was über und unter dem Bruchstrich steht, gehört zum Bruch und bildet einen Block.
 > Also genau lesen — und genau zeichnen.**
 >
 > *Everything above and below the fraction bar belongs to the fraction and forms one block. So
 > read it exactly — and draw it exactly.* — N7.2, N7.3, N7.7, N7.8; read by P.9
 
-**§0.2 · Der Wurzelstrich**
+**§0.2 · Der Wurzelstrich** `#root-bar-groups`
 > **Alles, was unter dem waagrechten Strich der Wurzel steht, gehört unter die Wurzel und
 > bildet einen Block. Also genau lesen — und genau zeichnen.**
 >
@@ -569,31 +569,31 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 
 ### Rearranging
 
-**§1.1 · Reihenfolge**
+**§1.1 · Reihenfolge** `#order-is-free`
 > **In einer Summe dürfen die Summanden in beliebiger Reihenfolge stehen. In einem Produkt
 > dürfen die Faktoren in beliebiger Reihenfolge stehen.**
 >
 > *In a sum the summands may stand in any order; in a product, the factors.* — R.1–R.5, R.11, R.14
 
-**§1.2 · … aber nicht in einer Differenz oder einem Quotienten**
+**§1.2 · … aber nicht in einer Differenz oder einem Quotienten** `#order-is-not-free-in-a-difference`
 > **Solange ein Minus oder ein Bruchstrich trennt, darf die Reihenfolge nicht geändert werden:
 > `a - b \neq b - a`, `\frac{a}{b} \neq \frac{b}{a}`.**
 >
 > *While a minus or a bar still separates, the order may not be changed.* — R.15–R.18
 
-**§2.1 · Klammern**
+**§2.1 · Klammern** `#grouping-is-free`
 > **In einer Summe dürfen Klammern, die nur Summanden zusammenfassen, weggelassen oder anders
 > gesetzt werden. In einem Produkt gilt dasselbe für Faktoren.**
 >
 > *In a sum, brackets that only group summands may be dropped or set differently; in a product
 > the same holds for factors.* — R.6–R.10
 
-**§2.2 · … aber nicht in einer Differenz oder einem Quotienten**
+**§2.2 · … aber nicht in einer Differenz oder einem Quotienten** `#grouping-is-not-free-in-a-difference`
 > **`(a - b) - c \neq a - (b - c)`, `(a : b) : c \neq a : (b : c)`.**
 >
 > *Grouping may not be moved while a minus or a bar separates.* — R.19–R.21
 
-**§3 · Das Minus gehört zum Block** *(the pivot — the highest-value sentence here)*
+**§3 · Das Minus gehört zum Block** *(the pivot — the highest-value sentence here)* `#minus-belongs-to-its-block`
 > **Ein Minus gehört zu dem Block, der ihm folgt. Danach ist die Differenz eine Summe, und
 > §1.1 und §2.1 gelten.**
 >
@@ -601,14 +601,14 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > licenses N5.2 and P.14. It is what lets §1.1 reach `a - b + c` at all, and it is why §1.2
 > exists: **a student who absorbs the minus first never meets the boundary.**
 
-**§4 · Der Bruchstrich ebenso** *(the same trick one level up)*
+**§4 · Der Bruchstrich ebenso** *(the same trick one level up)* `#dividing-is-multiplying-by-the-reciprocal`
 > **Durch `b` teilen heisst mit `\frac{1}{b}` malnehmen. Danach ist der Quotient ein Produkt,
 > und §1.1 und §2.1 gelten.**
 >
 > *Dividing by `b` is multiplying by `1/b`; the quotient is then a product.* — R.13.
 > ⚠️ **Writing this rule is what found R.13** — the item did not exist until the rule needed one.
 
-**§5 · Potenz**
+**§5 · Potenz** `#power-slots-do-not-swap`
 > **In einer Potenz darf nichts vertauscht werden: Basis und Exponent sind verschiedene
 > Rollen. `2^3 \neq 3^2`.**
 >
@@ -618,20 +618,20 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 
 ### Expanding
 
-**§6.1 · Ausmultiplizieren**
+**§6.1 · Ausmultiplizieren** `#a-factor-reaches-every-summand`
 > **Ist ein Block eines Produkts eine Summe, so wird der andere Block mit JEDEM Summanden
 > einzeln multipliziert.**
 >
 > *If one block of a product is a sum, the other multiplies EVERY summand.* — E.1–E.7. The word
 > carrying the weight is *jedem*. Reversed by §13.
 
-**§6.2 · … und nur ein Faktor tut das**
+**§6.2 · … und nur ein Faktor tut das** `#nothing-else-reaches-in`
 > **Nur ein Faktor erreicht jeden Summanden. Eine Potenz und eine Wurzel tun das nicht:
 > `(a+b)^2 \neq a^2 + b^2`, `\sqrt{a+b} \neq \sqrt{a} + \sqrt{b}`.**
 >
 > *Only a factor reaches every summand; a power and a root do not.* — E.19–E.21
 
-**§7 · Jeder mit jedem**
+**§7 · Jeder mit jedem** `#both-sums-multiply-out`
 > **Sind beide Blöcke Summen, so wird jeder Summand des einen mit jedem Summanden des anderen
 > multipliziert.**
 >
@@ -639,19 +639,19 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > — E.8. It is §6.1 twice, but it has its own classroom name and its own count ("vier
 > Produkte"), so it is its own sentence.
 
-**§8.1 · Summe über dem Bruchstrich**
+**§8.1 · Summe über dem Bruchstrich** `#a-sum-over-the-bar-splits`
 > **Ist der Zähler eine Summe, darf jeder Summand einzeln über den Nenner geschrieben werden.**
 >
 > *If the numerator is a sum, each summand may be written over the denominator on its own.*
 > — E.9. ⚠️ **Derivable: §4 then §6.1** — dividing by `c` is multiplying by `\frac{1}{c}`, and
 > then the factor reaches every summand.
 
-**§8.2 · … aber nie unter dem Bruchstrich**
+**§8.2 · … aber nie unter dem Bruchstrich** `#a-sum-under-the-bar-does-not-split`
 > **Eine Summe im NENNER wird nicht zerlegt: `\frac{c}{a+b} \neq \frac{c}{a} + \frac{c}{b}`.**
 >
 > *A sum in the denominator does not split.* — E.18
 
-**§9 · Minus vor der Klammer**
+**§9 · Minus vor der Klammer** `#a-leading-minus-is-a-factor`
 > **Ein Minus vor einer Klammer ist der Faktor `(-1)`. Multipliziert man aus, wird aus jedem
 > Summanden seine Gegenzahl.**
 >
@@ -659,13 +659,13 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > opposite.* — E.6, E.10–E.13. Stated with *Gegenzahl* rather than "sign", because a numeral
 > has no sign inside it: there is one unary minus and it belongs to a block `[§3]`.
 
-**§10 · Potenz auffalten**
+**§10 · Potenz auffalten** `#a-power-may-be-unfolded`
 > **Eine Potenz darf in ihre Faktoren aufgefaltet werden — ganz oder teilweise:
 > `a^3 = a \cdot a \cdot a = a \cdot a^2`.**
 >
 > *A power may be unfolded into its factors, wholly or partly.* — E.14, E.15. Reversed by §15.
 
-**§11 · Vielfaches auffalten**
+**§11 · Vielfaches auffalten** `#a-multiple-may-be-unfolded`
 > **Ein Vielfaches darf in Summanden aufgefaltet werden — ganz oder teilweise:
 > `3a = a + a + a = a + 2a`.**
 >
@@ -674,7 +674,7 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 
 ### Collecting
 
-**§12.1 · Gleichartige Summanden**
+**§12.1 · Gleichartige Summanden** `#alike-summands-collect`
 > **Zwei Summanden sind gleichartig, wenn sie sich nur in der Zahl davor unterscheiden.
 > Gleichartige Summanden werden zusammengefasst: die Zahlen werden addiert, der Rest bleibt
 > stehen.**
@@ -683,7 +683,7 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > the numbers and keeping the rest.* — C.1–C.4. The definition is half the rule, which is why
 > it is inside it.
 
-**§12.2 · … und nur Gleichartiges**
+**§12.2 · … und nur Gleichartiges** `#unalike-summands-stay`
 > **Summanden, die sich in mehr als der Zahl davor unterscheiden, bleiben stehen:
 > `2 + 3x`, `3x + 2y`, `x^2 + x`, `a^2 + b^2`.**
 >
@@ -691,37 +691,37 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > ⚠️ Say the companion out loud: **nicht zusammenfassbar heisst nicht unveränderbar** —
 > `x^2 + x` does not collect and still factors `[§13]`.
 
-**§13 · Gemeinsamer Faktor**
+**§13 · Gemeinsamer Faktor** `#a-shared-factor-comes-out`
 > **Steht in jedem Summanden derselbe Faktor, darf er vor die Klammer gezogen werden.**
 >
 > *If every summand contains the same factor, it may be pulled out in front of a bracket.*
 > — C.5–C.7. The reverse of §6.1, and the harder direction: §6.1 is carried out, this must
 > first be **seen**.
 
-**§14 · Zahlen zusammenrechnen**
+**§14 · Zahlen zusammenrechnen** `#numbers-in-a-product-multiply`
 > **In einem Produkt dürfen die Zahlen zusammengerechnet werden — die Faktoren dürfen ja in
 > beliebiger Reihenfolge stehen `[§1.1]`.**
 >
 > *In a product the numbers may be multiplied together, since the factors may stand in any
 > order.* — C.8, C.9, C.12
 
-**§15 · Gleiche Faktoren werden zur Potenz**
+**§15 · Gleiche Faktoren werden zur Potenz** `#equal-factors-make-a-power`
 > **Gleiche Faktoren in einem Produkt werden als Potenz geschrieben: `a \cdot a = a^2`.**
 >
 > *Equal factors in a product are written as a power.* — C.10, C.12, C.13. The reverse of §10.
 
-**§16 · Gleiche Summanden werden zum Vielfachen**
+**§16 · Gleiche Summanden werden zum Vielfachen** `#equal-summands-make-a-multiple`
 > **Gleiche Summanden werden als Vielfaches geschrieben: `a + a = 2a`.**
 >
 > *Equal summands are written as a multiple.* — C.11. The reverse of §11.
 
-**§17.1 · Kürzen**
+**§17.1 · Kürzen** `#cancel-a-shared-whole-factor`
 > **Gekürzt wird ein Faktor, den der GANZE Zähler und der GANZE Nenner haben:
 > `\frac{ak}{bk} = \frac{a}{b}`.**
 >
 > *Cancel a factor shared by the whole numerator and the whole denominator.* — C.14
 
-**§17.2 · … nie ein einzelner Summand**
+**§17.2 · … nie ein einzelner Summand** `#never-cancel-a-summand`
 > **`\frac{3x+2}{3}` bleibt: die `3` ist kein Faktor des ganzen Zählers.**
 >
 > *Never a single summand.* — C.19. This pair is the clearest case for the `.1`/`.2`
@@ -730,14 +730,14 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 
 ### Substituting
 
-**§18 · Einsetzen**
+**§18 · Einsetzen** `#any-expression-may-be-substituted`
 > **Wo ein einzelner Buchstabe steht, darf ein ganzer Term stehen. Die Regel gilt weiter.**
 >
 > *Where a single letter stands, a whole expression may stand. The rule still holds.* — S.1.
 > The sentence that makes every rule above infinitely applicable, and the one a student who
 > "knows the formula but cannot use it" is missing.
 
-**§19 · Klammern beim Einsetzen**
+**§19 · Klammern beim Einsetzen** `#bracket-what-you-substitute`
 > **Setze ein und frage dann: Ändert das Weglassen der Klammer die Lesart? Wenn ja, bleibt sie.
 > Wenn nein, kommt sie weg.**
 >
@@ -745,7 +745,7 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > ⚠️ Nothing new: this is V2 applied at the substitution site. Over the bar and under the root
 > the answer is always "no brackets", because there is already one `[§0.1, §0.2]`.
 
-**§20 · Passt die Regel?**
+**§20 · Passt die Regel?** `#a-rule-fits-slot-by-slot`
 > **Eine Regel passt, wenn jeder Buchstabe durch genau einen Block ersetzt werden kann — und
 > derselbe Buchstabe überall durch denselben Block. Sonst passt sie nicht, auch wenn sie fast
 > passt.**
@@ -761,7 +761,7 @@ direction earns its own rule when the classroom has its own word for it (ausmult
 ausklammern, kürzen / erweitern). "Potenzgesetz" has one name and is read both ways, so one
 sentence serves both, and the two directions are two ITEMS in E and C.
 
-**§21 · Gleiche Basis**
+**§21 · Gleiche Basis** `#same-base-adds-exponents`
 > **Potenzen mit gleicher Basis werden multipliziert, indem man die Exponenten addiert:
 > `a^m \cdot a^n = a^{m+n}`. Rückwärts gelesen zerlegt sie eine Potenz.**
 >
@@ -769,24 +769,24 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > ⚠️ Boundaries C.33 and C.34 belong with it: different bases do not collect, and a SUM of
 > powers is not what this rule is about.
 
-**§22 · Gleiche Basis, geteilt**
+**§22 · Gleiche Basis, geteilt** `#same-base-subtracts-exponents`
 > **Beim Dividieren werden die Exponenten subtrahiert: `\frac{a^m}{a^n} = a^{m-n}`.**
 >
 > *Dividing: subtract the exponents.* — C.21. ⚠️ **Not a fourth law**: it is §21 after §4,
 > and worth showing that way once.
 
-**§23 · Potenz einer Potenz**
+**§23 · Potenz einer Potenz** `#powers-multiply-exponents`
 > **Bei einer Potenz einer Potenz werden die Exponenten multipliziert: `(a^m)^n = a^{mn}`.**
 >
 > *A power of a power: multiply the exponents.* — C.22
 
-**§24 · Potenz eines Produkts**
+**§24 · Potenz eines Produkts** `#a-power-reaches-every-factor`
 > **Eine Potenz erreicht jeden FAKTOR: `(ab)^n = a^n b^n`, und ebenso Zähler und Nenner.**
 >
 > *A power reaches every factor — and numerator and denominator alike.* — E.22, E.23, C.23.
 > ⚠️ Its limit is already written: §6.2. A power reaches every factor and NO summand.
 
-**§25 · Wurzel ist Potenz**
+**§25 · Wurzel ist Potenz** `#a-root-is-a-power`
 > **`\sqrt[n]{a} = a^{1/n}`. Damit sind die Wurzelgesetze keine neuen Gesetze — es sind die
 > Potenzgesetze mit einem Bruch im Exponenten.**
 >
@@ -794,20 +794,20 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > — R.23, E.24, E.25. **The most economical sentence in the set**: it retires four rules
 > before they are written, and it is `ix.root`'s own argument.
 
-**§26 · Wurzel und Potenz vertauschen**
+**§26 · Wurzel und Potenz vertauschen** `#root-and-power-commute`
 > **`\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}` — erst wurzeln oder erst potenzieren, das
 > Ergebnis ist dasselbe.**
 >
 > *Root first or power first: same answer.* — R.24. ⚠️ Its own reverse, which is why its item
 > sits in R.
 
-**§27 · Negativer Exponent**
+**§27 · Negativer Exponent** `#a-negative-exponent-is-a-reciprocal`
 > **`a^{-n} = \frac{1}{a^n}` — ein negativer Exponent ist der Kehrwert, kein negatives
 > Ergebnis.**
 >
 > *A negative exponent means the reciprocal, not a negative result.* — R.22
 
-**§28 · Exponent null**
+**§28 · Exponent null** `#exponent-zero-is-forced`
 > **`a^0 = 1` — nicht verordnet, sondern erzwungen: `a^m \cdot a^0 = a^m` `[§21]`, also muss
 > `a^0` gleich `1` sein.**
 >
@@ -815,20 +815,20 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 
 ### The fraction laws
 
-**§29 · Brüche multiplizieren**
+**§29 · Brüche multiplizieren** `#fractions-multiply-straight-across`
 > **Zähler mal Zähler, Nenner mal Nenner: `\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}`.
 > Dafür braucht es KEINEN gemeinsamen Nenner.**
 >
 > *Numerator times numerator, denominator times denominator — no common denominator needed.*
 > — C.24
 
-**§30 · Brüche dividieren**
+**§30 · Brüche dividieren** `#flip-and-multiply`
 > **Durch einen Bruch teilen heisst mit seinem Kehrwert malnehmen — und zwar mit dem Kehrwert
 > dessen, durch das man teilt.**
 >
 > *Dividing by a fraction is multiplying by its reciprocal — of the one you divide BY.* — E.27
 
-**§31 · Brüche addieren**
+**§31 · Brüche addieren** `#fractions-need-one-denominator`
 > **Gleicher Nenner: Zähler addieren. Ungleicher Nenner: zuerst gleichnamig machen. Eine ganze
 > Zahl ist ein Bruch mit Nenner `1`.**
 >
@@ -837,7 +837,7 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > adding asks for the denominators** — that is the whole difference and it is why one feels
 > easy and the other does not.
 
-**§32 · Doppelbruch**
+**§32 · Doppelbruch** `#the-main-bar-decides`
 > **Im Doppelbruch entscheidet der HAUPTBRUCHSTRICH — der längere. `\frac{\frac{a}{b}}{c}` und
 > `\frac{a}{\frac{b}{c}}` sind verschiedene Zahlen.**
 >
@@ -846,14 +846,14 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 
 ### The binomial formulas
 
-**§33 · Die binomischen Formeln**
+**§33 · Die binomischen Formeln** `#the-binomial-formulas`
 > **`(a+b)^2 = a^2 + 2ab + b^2`, `(a-b)^2 = a^2 - 2ab + b^2`, `(a+b)(a-b) = a^2 - b^2`.
 > Vorwärts gelesen multipliziert man aus, rückwärts gelesen faktorisiert man.**
 >
 > *Forwards they expand, backwards they factorise.* — E.28–E.30, C.29–C.31.
 > ⚠️ The second is the first with `b := -b` `[S.1]` — one formula, not three.
 
-**§34 · Das Paar finden**
+**§34 · Das Paar finden** `#find-the-pair`
 > **`x^2 + px + q = (x+m)(x+n)`, wenn `m \cdot n = q` und `m + n = p`. Beide Bedingungen
 > müssen gelten, sonst ist das Paar falsch.**
 >
@@ -1131,7 +1131,12 @@ this warns rather than throws.
 
 ### How the slugs get added
 
-1. ✅ **DONE 2026-08-02 — all 179 drafted, none duplicated, all kebab-case.** Each line ends in
+1. ✅ **DONE 2026-08-02 — 179 item slugs and 42 rule slugs, none duplicated across either
+   space, all kebab-case.** Rule slugs are English like the items' (the id is developer-facing;
+   the German title is the student-facing name, exactly as `rules.json` already does it), and
+   they are worded so no rule collides with the item it licenses — §6.1 is
+   `a-factor-reaches-every-summand` where E.1 is `multiply-into-a-sum`.
+   The old note: Each line ends in
    `` `#slug` ``, greppable and visually distinct from the `[…]` reference tags. **They are a
    first draft and the review overrules them** — naming an item and reviewing it are the same
    act, and the author knows which handle a class would recognise.
