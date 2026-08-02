@@ -236,6 +236,7 @@ each is a symbol you must be able to write back in.
 - **N6.4** `\sqrt[n]{a} = a^{1/n}` — radical and exponent are two spellings of one thing `[ix.root]`
 - **N6.5** `\sqrt{a+b}` — the radical bar is a bracket: everything under it is one object `[§0.2]` `[no card]`
 - **N6.6** `\sqrt{a} \cdot b` against `\sqrt{ab}` — where the bar ends is the whole question `[no card]`
+- **N6.8** `a^0 = 1` — read it off the same-base rule rather than as a decree: `a^m \cdot a^0 = a^{m+0} = a^m`, so `a^0` can only be `1` `[§28]` `[no card]`
 - **N6.7** `a^{b^c}` is read TOP-DOWN, `a^{(b^c)}`, never `(a^b)^c`: `3^{3^3} = 3^{27}`, which is 7 625 597 484 987 and not 19 683 `[no card]`
 
 ### N7 · Division and the fraction bar
@@ -405,6 +406,12 @@ the same three buckets rather than getting sections of their own.
 - **R.20** `(8 - 3) - 2 \neq 8 - (3 - 2)` — the number check `[§2.2]`
 - **R.21** `(a : b) : c \neq a : (b : c)` — division does not associate `[§2.2]` `[assoc]`
 
+*The power spellings — same rung on the ladder, so rearranging `[V1]`:*
+
+- **R.22** `a^{-n} = \frac{1}{a^n}` — a negative exponent is the reciprocal spelling `[§27]` `[rule.minus-in-exponent]`
+- **R.23** `\sqrt[n]{a} = a^{1/n}` — radical and fractional exponent are two spellings of one thing ⇐ N6.4 `[§25]` `[ix.root]`
+- **R.24** `\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}` — root and power in either order. ⚠️ *Involutive: the move is its own reverse, which is exactly why it lands in R and not in E or C* `[§26]` `[rule.root-of-power]`
+
 ### E · Expanding — the blocks grow
 
 - **E.1** `a(b + c) = ab + ac` — multiply into a sum `[§6.1]` `[distr, ax.distributivity]`
@@ -432,6 +439,22 @@ the same three buckets rather than getting sections of their own.
 - **E.20** `\sqrt{a + b}` — nothing to expand, and nothing to do `[§6.2]`
 - **E.21** only multiplication reaches into a sum — not a power, not a root `[§6.2]`
 
+*The power and root laws that open — container → product, so expanding `[V1]`:*
+
+- **E.22** `(ab)^n = a^n b^n` — the power reaches every factor `[§24]` `[rule.power-over-product]`
+- **E.23** `\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}` — top and bottom each. ⚠️ *Not a new law: it is E.22 with a reciprocal `[§4]`* `[§24]` `[rule.power-over-quotient]`
+- **E.24** `\sqrt[n]{ab} = \sqrt[n]{a} \cdot \sqrt[n]{b}` — ⚠️ *and not a new law either: it is E.22 read with `n = \frac{1}{2}` `[R.23]`* `[§24, §25]` `[rule.root-over-product]`
+- **E.25** `\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}` — E.23 the same way `[§24, §25]` `[rule.root-over-quotient]`
+- **E.26** `a^{m+n} = a^m \cdot a^n` — split an exponent sum. The general form of E.15 `[§21]` `[rule.same-base]`
+- **E.27** `\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}` — dividing by a fraction opens into a product `[§30]` `[rule.fraction-divide]`
+
+*The binomial formulas, expanding:*
+
+- **E.28** `(a+b)^2 = a^2 + 2ab + b^2` — container(1) → sum(3) `[§33]` `[rule.binomial-square]`
+- **E.29** `(a-b)^2 = a^2 - 2ab + b^2` — ⚠️ *the same formula with `b := -b` `[S.1]`, not a second one to learn* `[§33]` `[rule.square-of-difference]`
+- **E.30** `(a+b)(a-b) = a^2 - b^2` — product(2) → sum(2), still up the ladder `[§33]` `[rule.difference-of-squares]`
+- **E.31** `(x+m)(x+n) = x^2 + (m+n)x + mn` `[§34]` `[rule.quadratic-pair]`
+
 ### C · Collecting — the blocks shrink
 
 - **C.1** `3x + 2x = 5x` — collect like summands; distributivity read backwards `[§12.1]` `[distr]`
@@ -457,6 +480,34 @@ the same three buckets rather than getting sections of their own.
 - **C.17** `x^2 + x` — same letter, different power, does not collect. ⚠️ *And yet C.7 factors it. Not a contradiction and worth saying out loud: **nicht zusammenfassbar, aber ausklammerbar** — collecting and factoring are different questions* `[§12.2]`
 - **C.18** `a^2 + b^2` — nothing to pull out, nothing to collect `[§12.2]`
 - **C.19** `\frac{3x + 2}{3}` — a sum over a number does not cancel summand by summand `[§17.2]`
+
+*The power laws that close — product → container, so collecting `[V1]`:*
+
+- **C.20** `a^m \cdot a^n = a^{m+n}` — same base: add the exponents `[§21]` `[rule.same-base]`
+- **C.21** `\frac{a^m}{a^n} = a^{m-n}` — ⚠️ *not a fourth law: C.20 after `[§4]`* `[§22]` `[rule.same-base-divide]`
+- **C.22** `(a^m)^n = a^{mn}` — the tower gets one storey shorter `[§23]` `[rule.power-of-power]`
+- **C.23** `a^n b^n = (ab)^n` — E.22 read backwards `[§24]` `[rule.power-over-product]`
+
+*The fraction laws that close:*
+
+- **C.24** `\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}` — product(2) → container(1). ⚠️ *Multiplying fractions needs nothing first, which is what "no common denominator" really means* `[§29]` `[rule.fraction-multiply]`
+- **C.25** `\frac{a}{b} + \frac{c}{b} = \frac{a+c}{b}` — same denominator, add the numerators `[§31]` `[rule.fraction-common-denominator]`
+- **C.26** `\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}` — different denominators: make them the same first `[§31]` `[rule.fraction-common-denominator]`
+- **C.27** `c + \frac{a}{b} = \frac{cb+a}{b}` — a whole number is a fraction over `1` `[§31]` `[rule.fraction-plus-whole]`
+- **C.28** `\frac{\frac{a}{b}}{c} = \frac{a}{bc}` — a double fraction collapses; which bar is the main one decides everything ⇐ N7.6 `[§32]` `[rule.double-fraction]`
+
+*The binomial formulas, collecting — the harder direction, because the shape must be SEEN:*
+
+- **C.29** `a^2 + 2ab + b^2 = (a+b)^2` — sum(3) → container(1) `[§33]` `[rule.binomials-read-backwards]`
+- **C.30** `a^2 - 2ab + b^2 = (a-b)^2` `[§33]` `[rule.binomials-read-backwards]`
+- **C.31** `a^2 - b^2 = (a+b)(a-b)` — sum(2) → product(2), down the ladder `[§33]` `[rule.binomials-read-backwards]`
+- **C.32** `x^2 + 5x + 6 = (x+2)(x+3)` — find the pair: product `6`, sum `5` `[§34]` `[rule.quadratic-pair]`
+
+*Boundaries — powers and fractions that do not collect:*
+
+- **C.33** `a^m \cdot b^n` — different bases do not collect `[§21]`
+- **C.34** `a^m + a^n` — same base, but a SUM: the power laws are about products `[§21]`
+- **C.35** `\frac{a+b}{a+c} \neq \frac{b}{c}` — the `a` is a summand, not a factor of the whole ⇐ C.19 `[§17.2]`
 
 ## Rules in student language — first draft
 
@@ -703,47 +754,157 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > same block throughout. Otherwise it does not fit, however nearly it does.* — S.9–S.12, S.14,
 > S.15
 
+### The power and root laws
+
+⚠️ **One rule per LAW, not per direction — and that is the same test as everywhere else.** A
+direction earns its own rule when the classroom has its own word for it (ausmultiplizieren /
+ausklammern, kürzen / erweitern). "Potenzgesetz" has one name and is read both ways, so one
+sentence serves both, and the two directions are two ITEMS in E and C.
+
+**§21 · Gleiche Basis**
+> **Potenzen mit gleicher Basis werden multipliziert, indem man die Exponenten addiert:
+> `a^m \cdot a^n = a^{m+n}`. Rückwärts gelesen zerlegt sie eine Potenz.**
+>
+> *Same base, multiplied: add the exponents; read backwards it splits one.* — C.20, E.26.
+> ⚠️ Boundaries C.33 and C.34 belong with it: different bases do not collect, and a SUM of
+> powers is not what this rule is about.
+
+**§22 · Gleiche Basis, geteilt**
+> **Beim Dividieren werden die Exponenten subtrahiert: `\frac{a^m}{a^n} = a^{m-n}`.**
+>
+> *Dividing: subtract the exponents.* — C.21. ⚠️ **Not a fourth law**: it is §21 after §4,
+> and worth showing that way once.
+
+**§23 · Potenz einer Potenz**
+> **Bei einer Potenz einer Potenz werden die Exponenten multipliziert: `(a^m)^n = a^{mn}`.**
+>
+> *A power of a power: multiply the exponents.* — C.22
+
+**§24 · Potenz eines Produkts**
+> **Eine Potenz erreicht jeden FAKTOR: `(ab)^n = a^n b^n`, und ebenso Zähler und Nenner.**
+>
+> *A power reaches every factor — and numerator and denominator alike.* — E.22, E.23, C.23.
+> ⚠️ Its limit is already written: §6.2. A power reaches every factor and NO summand.
+
+**§25 · Wurzel ist Potenz**
+> **`\sqrt[n]{a} = a^{1/n}`. Damit sind die Wurzelgesetze keine neuen Gesetze — es sind die
+> Potenzgesetze mit einem Bruch im Exponenten.**
+>
+> *A root is a power with a fraction in the exponent, so the root laws are not new laws.*
+> — R.23, E.24, E.25. **The most economical sentence in the set**: it retires four rules
+> before they are written, and it is `ix.root`'s own argument.
+
+**§26 · Wurzel und Potenz vertauschen**
+> **`\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}` — erst wurzeln oder erst potenzieren, das
+> Ergebnis ist dasselbe.**
+>
+> *Root first or power first: same answer.* — R.24. ⚠️ Its own reverse, which is why its item
+> sits in R.
+
+**§27 · Negativer Exponent**
+> **`a^{-n} = \frac{1}{a^n}` — ein negativer Exponent ist der Kehrwert, kein negatives
+> Ergebnis.**
+>
+> *A negative exponent means the reciprocal, not a negative result.* — R.22
+
+**§28 · Exponent null**
+> **`a^0 = 1` — nicht verordnet, sondern erzwungen: `a^m \cdot a^0 = a^m` `[§21]`, also muss
+> `a^0` gleich `1` sein.**
+>
+> *Forced by §21 rather than decreed.* — N6.8
+
+### The fraction laws
+
+**§29 · Brüche multiplizieren**
+> **Zähler mal Zähler, Nenner mal Nenner: `\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}`.
+> Dafür braucht es KEINEN gemeinsamen Nenner.**
+>
+> *Numerator times numerator, denominator times denominator — no common denominator needed.*
+> — C.24
+
+**§30 · Brüche dividieren**
+> **Durch einen Bruch teilen heisst mit seinem Kehrwert malnehmen — und zwar mit dem Kehrwert
+> dessen, durch das man teilt.**
+>
+> *Dividing by a fraction is multiplying by its reciprocal — of the one you divide BY.* — E.27
+
+**§31 · Brüche addieren**
+> **Gleicher Nenner: Zähler addieren. Ungleicher Nenner: zuerst gleichnamig machen. Eine ganze
+> Zahl ist ein Bruch mit Nenner `1`.**
+>
+> *Same denominator: add the numerators. Different: make them the same first.* — C.25–C.27.
+> ⚠️ Beside §29 this is the pair worth teaching together: **multiplying asks nothing first,
+> adding asks for the denominators** — that is the whole difference and it is why one feels
+> easy and the other does not.
+
+**§32 · Doppelbruch**
+> **Im Doppelbruch entscheidet der HAUPTBRUCHSTRICH — der längere. `\frac{\frac{a}{b}}{c}` und
+> `\frac{a}{\frac{b}{c}}` sind verschiedene Zahlen.**
+>
+> *In a double fraction the main bar — the longer one — decides.* — C.28, N7.6. ⚠️ Another
+> place where the length of a stroke is the whole meaning `[§0.1]`.
+
+### The binomial formulas
+
+**§33 · Die binomischen Formeln**
+> **`(a+b)^2 = a^2 + 2ab + b^2`, `(a-b)^2 = a^2 - 2ab + b^2`, `(a+b)(a-b) = a^2 - b^2`.
+> Vorwärts gelesen multipliziert man aus, rückwärts gelesen faktorisiert man.**
+>
+> *Forwards they expand, backwards they factorise.* — E.28–E.30, C.29–C.31.
+> ⚠️ The second is the first with `b := -b` `[S.1]` — one formula, not three.
+
+**§34 · Das Paar finden**
+> **`x^2 + px + q = (x+m)(x+n)`, wenn `m \cdot n = q` und `m + n = p`. Beide Bedingungen
+> müssen gelten, sonst ist das Paar falsch.**
+>
+> *Both conditions or the pair is wrong.* — E.31, C.32
+
 ### What this draft shows
 
-- **Seventeen numbers, twenty-one sentences, covering all 111 items of R, E and C**, and
-  reaching four more in N and P. Today's pool is 63 entries — so it was never far wrong in
-  SIZE. It is wrong in VOCABULARY: it talks about operations where it should talk about blocks
-  and types.
-- **Writing the rule first found four missing items**, every one by the same route — the rule
-  needed something to license and there was nothing there:
-  - **R.13** `\frac{a}{b} = a \cdot \frac{1}{b}` (§4) — the quotient→product conversion
-  - **E.6** `-3(x+2) = -3x - 6` (§6.1, §9) — a NEGATIVE factor reaching every summand
-  - **E.7** `x(x+1) = x^2 + x` (§6.1) — a VARIABLE factor, where the first product becomes a power
-  - **C.14** `\frac{ak}{bk} = \frac{a}{b}` (§17.1) — cancelling was missing entirely, with only
-    its boundary present
-
-  Keep working in that direction: **write the rule, then hunt for the item.** A gap is
-  invisible from the item side and obvious from the rule side.
-- **Three direction pairs**: §6.1/§13, §10/§15, §11/§16 — one law read two ways, landing in
-  different buckets. That is the E/C split reappearing in the rules layer exactly where the
-  item layer predicted it would.
-- **§3, §4 and §8.1 are derivations rather than new content** (§8.1 is §4 then §6.1; §3 and §4
-  are the two conversions). A student needs all three as sentences anyway — but recording which
-  are load-bearing and which are convenience is what decides the cuts when the sheet is one
-  page.
-- **§5 licenses no move at all.** A rule may exist purely to forbid, which is another sign the
-  rules layer is not parallel to T.
+- **Forty-two rules, 186 items.** Today's pool is 63 rules — so the sizes were never far
+  apart. What differs is the vocabulary: the pool talks about operations, these talk about
+  blocks and types.
+- **THE LADDER HELD.** This was the falsification test — R/E/C was invented on three basic
+  laws and claimed to sort every move. Thirty-four power, root, fraction and binomial moves
+  were added and **not one needed a new bucket or a special case.** Two that looked awkward
+  resolved cleanly: `\left(\frac{a}{b}\right)^n` (container → container) is E once read through
+  §4, and `\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}` is R — which the involutive audit had
+  already said, from the other side, three days earlier.
+- **Writing the rules first kept finding items.** Six more this round: `a^{m+n} = a^m a^n`
+  (E.26), the root laws as instances rather than laws (E.24, E.25), `a^0 = 1` derived rather
+  than decreed (N6.8), and the two power boundaries C.33/C.34 — *different bases do not
+  collect*, and *a SUM of powers is not what the power laws are about* — which no item had
+  covered and which is where half of `anti.exponent-arithmetic` lives.
+- **§25 is the most economical sentence in the set.** *Eine Wurzel ist eine Potenz* retires the
+  four root laws before they are written: they become instances of §21 and §24 with a fraction
+  in the exponent. That is `ix.root`'s own argument, and it is the strongest case in the file
+  for teaching the exponent form early.
+- **Three rules are derivations and should be labelled as such**: §22 is §21 after §4, §23's
+  root twin is §25, and §8.1 is §4 then §6.1. A student needs each as a sentence, but knowing
+  which are load-bearing decides what survives when the sheet is one page.
+- **§29 beside §31 is the pair worth teaching together**, and the ladder is what makes the
+  contrast sayable: multiplying fractions asks nothing first, adding them asks for the
+  denominators. Same bucket, different cost.
+- **One rule per LAW, not per direction** — a direction earns its own rule only when the
+  classroom has its own word for it (ausmultiplizieren / ausklammern, kürzen / erweitern).
+  "Potenzgesetz" has one name, so §21 serves both directions and the two readings are two
+  ITEMS. That is the same name-test that decides `reversible` in the old skill schema.
 
 ### Coverage
 
 | section | items | rules |
 |---------|-------|-------|
-| V, N (44), P (20) | 64 | **§0.1, §0.2** for the grouping symbols, plus where §3 and §5 land |
-| **R** | 21 | **§1.1–§5** |
-| **E** | 21 | **§6.1–§11** |
-| **C** | 19 | **§12.1–§17.2** |
+| V, N (45), P (20) | 65 | **§0.1, §0.2**, plus where §3, §5, §27, §28 land |
+| **R** | 24 | **§1.1–§5**, §26, §27 |
+| **E** | 31 | **§6.1–§11**, §21, §24, §25, §30, §33, §34 |
+| **C** | 35 | **§12.1–§17.2**, §21–§24, §29, §31–§34 |
 | **S** | 16 | **§18–§20** |
 
-**Not yet touched, and the next block of work:** the power laws, the root laws, the fraction
-laws and the binomial formulas. They are moves, so they sort into E and C by the same test —
-`x^a \cdot x^b = x^{a+b}` collects, `(ab)^n = a^n b^n` expands, `(a+b)^2 = a^2+2ab+b^2` expands
-and its reverse collects. **Known missing item, spotted while writing §10:** `(ab)^2 = a^2 b^2`
-has a notation line (N4.6) but no move.
+**Done as of 2026-08-02** — the power, root, fraction and binomial laws are in, and the ladder
+took them without a special case. **What is left:** the strategy layer that S.13 opens (an
+expression matches several rules — which to take), and the mistakes, which are not in this file
+at all. The boundaries here are their skeleton: every `\neq` item is a mistake waiting to be
+written from the other side.
 
 ---
 
