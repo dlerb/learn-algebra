@@ -177,80 +177,80 @@ removing it *is* the move, so it is E. Count them the other way and both answers
 
 ### N1 · Multiplication that is not written
 
-- **N1.1** `3a = 3 \cdot a` — a number against a letter is a product `[ix.juxtaposition]`
-- **N1.2** `ab = a \cdot b` — a letter against a letter is a product `[no card]`
-- **N1.3** `3(x+1) = 3 \cdot (x+1)` — a number against a bracket is a product `[no card]`
-- **N1.4** `a(x+1) = a \cdot (x+1)` — a letter against a bracket is a product `[no card]`
-- **N1.5** `(x+1)(x+2) = (x+1) \cdot (x+2)` — a bracket against a bracket is a product `[no card]`
-- **N1.6** `2\sqrt{3} = 2 \cdot \sqrt{3}` — a number against a root is a product `[no card]`
-- **N1.7** `3a`, not `a3` — the coefficient is written in front `[ix.coefficient-front]`
-- **N1.8** `a3` reads as a name, not as a product `[ix.coefficient-front]`
-- **N1.9** `a \cdot b` — the dot is what this course writes; `\times` and `*` are read, never written `[no card]`
-- **N1.10** ⚠️ **the one exception, and it contradicts N1.1**: `2\tfrac{1}{2} = 2 + \tfrac{1}{2}` — in a mixed number, side by side means PLUS. *Decide: teach it as the trap it is, or refuse the notation and always write `\tfrac{5}{2}`.* `[no card]`
+- **N1.1** `3a = 3 \cdot a` — a number against a letter is a product `[ix.juxtaposition]` `#number-times-letter`
+- **N1.2** `ab = a \cdot b` — a letter against a letter is a product `[no card]` `#letter-times-letter`
+- **N1.3** `3(x+1) = 3 \cdot (x+1)` — a number against a bracket is a product `[no card]` `#number-times-bracket`
+- **N1.4** `a(x+1) = a \cdot (x+1)` — a letter against a bracket is a product `[no card]` `#letter-times-bracket`
+- **N1.5** `(x+1)(x+2) = (x+1) \cdot (x+2)` — a bracket against a bracket is a product `[no card]` `#bracket-times-bracket`
+- **N1.6** `2\sqrt{3} = 2 \cdot \sqrt{3}` — a number against a root is a product `[no card]` `#number-times-root`
+- **N1.7** `3a`, not `a3` — the coefficient is written in front `[ix.coefficient-front]` `#coefficient-in-front`
+- **N1.8** `a3` reads as a name, not as a product `[ix.coefficient-front]` `#letter-then-number-is-a-name`
+- **N1.9** `a \cdot b` — the dot is what this course writes; `\times` and `*` are read, never written `[no card]` `#the-dot-we-write`
+- **N1.10** ⚠️ **the one exception, and it contradicts N1.1**: `2\tfrac{1}{2} = 2 + \tfrac{1}{2}` — in a mixed number, side by side means PLUS. *Decide: teach it as the trap it is, or refuse the notation and always write `\tfrac{5}{2}`.* `[no card]` `#mixed-number-means-plus`
 
 ### N2 · Marks that are omitted
 
 A `1` that is present in the value and absent from the page. Three of them, and no more —
 each is a symbol you must be able to write back in.
 
-- **N2.1** `a = 1 \cdot a` — the coefficient `1` is never written `[ix.invisible-one]`
-- **N2.2** `a = a^1` — the exponent `1` is never written `[ix.invisible-one → ix.pow]`
-- **N2.3** `\sqrt{a} = \sqrt[2]{a}` — the root index `2` is never written `[ix.root]`
+- **N2.1** `a = 1 \cdot a` — the coefficient `1` is never written `[ix.invisible-one]` `#unwritten-coefficient-one`
+- **N2.2** `a = a^1` — the exponent `1` is never written `[ix.invisible-one → ix.pow]` `#unwritten-exponent-one`
+- **N2.3** `\sqrt{a} = \sqrt[2]{a}` — the root index `2` is never written `[ix.root]` `#unwritten-root-index`
 
 ### N3 · Brackets
 
-- **N3.1** `a \cdot (b + c)` — brackets say what to compute first `[ix.brackets]`
-- **N3.2** `(a + b)` is **one object** — a whole bracket is a single thing `[no card]`
-- **N3.3** `(a+b) = [a+b] = \{a+b\}` — round, square and curly do one job; the shape only helps the eye when they nest `[no card]`
-- **N3.4** `((a+b)) = (a+b)` — a second bracket around a bracket adds no reading `[no card]`
+- **N3.1** `a \cdot (b + c)` — brackets say what to compute first `[ix.brackets]` `#brackets-say-what-first`
+- **N3.2** `(a + b)` is **one object** — a whole bracket is a single thing `[no card]` `#bracket-is-one-block`
+- **N3.3** `(a+b) = [a+b] = \{a+b\}` — round, square and curly do one job; the shape only helps the eye when they nest `[no card]` `#bracket-shapes`
+- **N3.4** `((a+b)) = (a+b)` — a second bracket around a bracket adds no reading `[no card]` `#doubled-bracket`
 
 ### N4 · Precedence — the grouping nobody writes
 
-- **N4.1** **Two tiers, not one chain.** First the **grouping symbols** `[V1]` — written brackets, the fraction bar, the radical, the superscript position — which group by geometry and are settled before any ranking is consulted. Then, among what is left on the line: `\text{power} \succ \cdot \; / \; : \; \succ + \; -`, same rung read left to right `[ix.precedence, ix.power-precedence]`
-- **N4.1a** the classroom form: **Klammern → Potenz → Punkt → Strich**, *wobei Bruchstrich und Wurzelstrich Klammern sind* — that rider is the whole content, and it is what English curricula patch PEMDAS into **G**EMDAS for `[V1]`
-- **N4.1b** `\cdot`, `/` and `:` share ONE rung: `a / b \cdot c = (a/b) \cdot c`, never `a/(b \cdot c)`. ⚠️ The stacked bar is NOT on this rung — it is a grouping symbol, which is why `\frac{a}{b} \cdot c` needs no brackets and `a / b \cdot c` does `[no card]`
-- **N4.2** `a + b \cdot c = a + (b \cdot c)` — a product inside a sum needs no brackets `[ix.precedence]`
-- **N4.3** `a \cdot b^n = a \cdot (b^n)` — the exponent reaches only what it touches `[ix.power-precedence]`
-- **N4.4** `3a^2 = 3 \cdot (a^2)`, and `(3a)^2` is a different term `[ix.power-precedence]`
-- **N4.5** `ab^2 = a \cdot (b^2)` — **the power binds to the closest BLOCK before it** `[ix.power-precedence]`
-- **N4.5a** and "block" is the word that makes it exceptionless. `-2a^2 = -2(a^2)`: nothing is grouped, so the closest block is the atom `a`. `\left(\frac{a}{b}\right)^2`: the bar has ALREADY grouped, so the closest block is the whole fraction — and *not* the numerator. Same rule, opposite-looking answers; "closest symbol" is a shortcut that holds only while nothing has been grouped `[no card]`
-- **N4.6** `(ab)^2` — a bracket is the only way to give the exponent more than one symbol `[ix.power-precedence]`
-- **N4.7** `-a^2 = -(a^2)`, and `(-a)^2` is a different term `[ix.power-precedence]`
-- **N4.8** `a - b - c = (a - b) - c` — a chain of one operator is read left to right `[ix.left-to-right]`
-- **N4.9** `a : b : c = (a : b) : c` — the same for division, where it bites hardest `[ix.left-to-right]`
+- **N4.1** **Two tiers, not one chain.** First the **grouping symbols** `[V1]` — written brackets, the fraction bar, the radical, the superscript position — which group by geometry and are settled before any ranking is consulted. Then, among what is left on the line: `\text{power} \succ \cdot \; / \; : \; \succ + \; -`, same rung read left to right `[ix.precedence, ix.power-precedence]` `#two-tiers`
+- **N4.1a** the classroom form: **Klammern → Potenz → Punkt → Strich**, *wobei Bruchstrich und Wurzelstrich Klammern sind* — that rider is the whole content, and it is what English curricula patch PEMDAS into **G**EMDAS for `[V1]` `#klammer-potenz-punkt-strich`
+- **N4.1b** `\cdot`, `/` and `:` share ONE rung: `a / b \cdot c = (a/b) \cdot c`, never `a/(b \cdot c)`. ⚠️ The stacked bar is NOT on this rung — it is a grouping symbol, which is why `\frac{a}{b} \cdot c` needs no brackets and `a / b \cdot c` does `[no card]` `#times-and-divide-share-a-rung`
+- **N4.2** `a + b \cdot c = a + (b \cdot c)` — a product inside a sum needs no brackets `[ix.precedence]` `#product-inside-a-sum`
+- **N4.3** `a \cdot b^n = a \cdot (b^n)` — the exponent reaches only what it touches `[ix.power-precedence]` `#exponent-reaches-what-it-touches`
+- **N4.4** `3a^2 = 3 \cdot (a^2)`, and `(3a)^2` is a different term `[ix.power-precedence]` `#coefficient-is-outside-the-power`
+- **N4.5** `ab^2 = a \cdot (b^2)` — **the power binds to the closest BLOCK before it** `[ix.power-precedence]` `#power-binds-closest-block`
+- **N4.5a** and "block" is the word that makes it exceptionless. `-2a^2 = -2(a^2)`: nothing is grouped, so the closest block is the atom `a`. `\left(\frac{a}{b}\right)^2`: the bar has ALREADY grouped, so the closest block is the whole fraction — and *not* the numerator. Same rule, opposite-looking answers; "closest symbol" is a shortcut that holds only while nothing has been grouped `[no card]` `#closest-block-not-closest-symbol`
+- **N4.6** `(ab)^2` — a bracket is the only way to give the exponent more than one symbol `[ix.power-precedence]` `#bracket-widens-the-power`
+- **N4.7** `-a^2 = -(a^2)`, and `(-a)^2` is a different term `[ix.power-precedence]` `#negated-square`
+- **N4.8** `a - b - c = (a - b) - c` — a chain of one operator is read left to right `[ix.left-to-right]` `#chain-left-to-right`
+- **N4.9** `a : b : c = (a : b) : c` — the same for division, where it bites hardest `[ix.left-to-right]` `#division-chain-left-to-right`
 
 ### N5 · The minus sign
 
-- **N5.1** `-3` is a negative number; `a - b` is a subtraction — two jobs, one glyph `[no card]`
-- **N5.2** `a + (-b) = a - b` — an operator and a unary minus never stand side by side `[§3]` `[ix.no-adjacent-operator]`
-- **N5.3** `a \cdot (-b)` — a negative used as a factor takes brackets, so it reads as one factor `[ix.negative-factor]`
-- **N5.4** `-a = (-1) \cdot a` — a leading minus is a coefficient of `-1` `[ix.negative-factor]`
-- **N5.5** `-3x = (-3) \cdot x` — with a number in front, the minus joins the coefficient `[ix.negative-factor]`
-- **N5.6** `-(a+b) = (-1) \cdot (a+b)` — in front of a bracket it is that same factor, and nothing has been done to the bracket yet `[ix.negative-factor]`
+- **N5.1** `-3` is a negative number; `a - b` is a subtraction — two jobs, one glyph `[no card]` `#minus-has-two-jobs`
+- **N5.2** `a + (-b) = a - b` — an operator and a unary minus never stand side by side `[§3]` `[ix.no-adjacent-operator]` `#no-two-operators-side-by-side`
+- **N5.3** `a \cdot (-b)` — a negative used as a factor takes brackets, so it reads as one factor `[ix.negative-factor]` `#negative-factor-takes-brackets`
+- **N5.4** `-a = (-1) \cdot a` — a leading minus is a coefficient of `-1` `[ix.negative-factor]` `#leading-minus-is-minus-one`
+- **N5.5** `-3x = (-3) \cdot x` — with a number in front, the minus joins the coefficient `[ix.negative-factor]` `#minus-joins-the-coefficient`
+- **N5.6** `-(a+b) = (-1) \cdot (a+b)` — in front of a bracket it is that same factor, and nothing has been done to the bracket yet `[ix.negative-factor]` `#minus-before-a-bracket-is-a-factor`
 
 ### N6 · Powers and roots
 
-- **N6.1** `a^n` — read "*a* to the *n*-th": `n` factors of `a` `[ix.pow]`
-- **N6.2** `a^2 = a \cdot a` — the smallest case, automatic `[ix.pow]`
-- **N6.3** base and exponent are two slots that do not draw from the same place: `2^3` and `3^2` `[§5]` `[ix.pow]`
-- **N6.4** `\sqrt[n]{a} = a^{1/n}` — radical and exponent are two spellings of one thing `[ix.root]`
-- **N6.5** `\sqrt{a+b}` — the radical bar is a bracket: everything under it is one object `[§0.2]` `[no card]`
-- **N6.6** `\sqrt{a} \cdot b` against `\sqrt{ab}` — where the bar ends is the whole question `[no card]`
-- **N6.8** `a^0 = 1` — read it off the same-base rule rather than as a decree: `a^m \cdot a^0 = a^{m+0} = a^m`, so `a^0` can only be `1` `[§28]` `[no card]`
-- **N6.7** `a^{b^c}` is read TOP-DOWN, `a^{(b^c)}`, never `(a^b)^c`: `3^{3^3} = 3^{27}`, which is 7 625 597 484 987 and not 19 683 `[no card]`
+- **N6.1** `a^n` — read "*a* to the *n*-th": `n` factors of `a` `[ix.pow]` `#reading-a-power`
+- **N6.2** `a^2 = a \cdot a` — the smallest case, automatic `[ix.pow]` `#square-is-two-factors`
+- **N6.3** base and exponent are two slots that do not draw from the same place: `2^3` and `3^2` `[§5]` `[ix.pow]` `#base-and-exponent-are-two-slots`
+- **N6.4** `\sqrt[n]{a} = a^{1/n}` — radical and exponent are two spellings of one thing `[ix.root]` `#radical-is-a-fractional-exponent`
+- **N6.5** `\sqrt{a+b}` — the radical bar is a bracket: everything under it is one object `[§0.2]` `[no card]` `#radical-bar-is-a-bracket`
+- **N6.6** `\sqrt{a} \cdot b` against `\sqrt{ab}` — where the bar ends is the whole question `[no card]` `#where-the-radical-bar-ends`
+- **N6.8** `a^0 = 1` — read it off the same-base rule rather than as a decree: `a^m \cdot a^0 = a^{m+0} = a^m`, so `a^0` can only be `1` `[§28]` `[no card]` `#exponent-zero-is-one`
+- **N6.7** `a^{b^c}` is read TOP-DOWN, `a^{(b^c)}`, never `(a^b)^c`: `3^{3^3} = 3^{27}`, which is 7 625 597 484 987 and not 19 683 `[no card]` `#exponent-tower-reads-top-down`
 
 ### N7 · Division and the fraction bar
 
-- **N7.1** `\frac{a}{b} = a : b = a/b` — spellings of one operation `[ix.division-symbols]` ⚠️ *`\div` retired; the open todo on `division-variants` proposes retiring `:` too*
-- **N7.2** `\frac{a+b}{c} = (a+b) : c` — the bar is a bracket you do not write `[§0.1]` `[ix.fraction-bar]`
-- **N7.3** `\frac{c}{a+b} = c : (a+b)` — it groups below the bar just as hard `[ix.fraction-bar]`
-- **N7.4** writing a stacked fraction on one line makes the brackets reappear `[ix.fraction-bar]`
-- **N7.5** `\frac{1}{2}x` against `\frac{1}{2x}` — where the bar ends, again `[no card]`
-- **N7.6** `\frac{\frac{a}{b}}{c}` against `\frac{a}{\frac{b}{c}}` — the main bar is the long one, and the two are different numbers `[no card]`
-- **N7.7** `\frac{a}{b}` is one object, one number — not an unfinished division `[no card]`
-- **N7.8** **The bar's extent is the fraction's scope**, and it settles the reading in both directions: sideways, `\frac{1}{2}x` against `\frac{1}{2x}` `[N7.5]`; upward, a superscript ABOVE the bar and within its span belongs to the numerator, one PAST the bar's right end belongs to the whole fraction `[no card]`
-- **N7.9** `\frac{a^2}{b}` against `\left(\frac{a}{b}\right)^2` — where the exponent is written decides what it is applied to. ⚠️ `\frac{a^2}{b}` needs NO bracket around `a^2`: the bar already brackets the numerator, so `\frac{(a^2)}{b}` is a bracket that changes no reading `[N3.4]`. The brackets in the second are needed because the exponent stands outside the bar `[no card]`
-- **N7.10** in handwriting the bar has no precise right end — but that is the writer's to fix, not the reader's to guess `[§0.1]`. It is the real reason to write `\left(\frac{a}{b}\right)^n` rather than trust the geometry. ⚠️ Typeset, the bare form is NOT ambiguous — it reads as the whole fraction — and it is worth not marking it wrong `[no card]`
+- **N7.1** `\frac{a}{b} = a : b = a/b` — spellings of one operation `[ix.division-symbols]` ⚠️ *`\div` retired; the open todo on `division-variants` proposes retiring `:` too* `#spellings-of-division`
+- **N7.2** `\frac{a+b}{c} = (a+b) : c` — the bar is a bracket you do not write `[§0.1]` `[ix.fraction-bar]` `#bar-brackets-the-numerator`
+- **N7.3** `\frac{c}{a+b} = c : (a+b)` — it groups below the bar just as hard `[ix.fraction-bar]` `#bar-brackets-the-denominator`
+- **N7.4** writing a stacked fraction on one line makes the brackets reappear `[ix.fraction-bar]` `#on-one-line-brackets-reappear`
+- **N7.5** `\frac{1}{2}x` against `\frac{1}{2x}` — where the bar ends, again `[no card]` `#where-the-bar-ends-sideways`
+- **N7.6** `\frac{\frac{a}{b}}{c}` against `\frac{a}{\frac{b}{c}}` — the main bar is the long one, and the two are different numbers `[no card]` `#which-bar-is-the-main-one`
+- **N7.7** `\frac{a}{b}` is one object, one number — not an unfinished division `[no card]` `#fraction-is-one-number`
+- **N7.8** **The bar's extent is the fraction's scope**, and it settles the reading in both directions: sideways, `\frac{1}{2}x` against `\frac{1}{2x}` `[N7.5]`; upward, a superscript ABOVE the bar and within its span belongs to the numerator, one PAST the bar's right end belongs to the whole fraction `[no card]` `#the-bars-extent-is-its-scope`
+- **N7.9** `\frac{a^2}{b}` against `\left(\frac{a}{b}\right)^2` — where the exponent is written decides what it is applied to. ⚠️ `\frac{a^2}{b}` needs NO bracket around `a^2`: the bar already brackets the numerator, so `\frac{(a^2)}{b}` is a bracket that changes no reading `[N3.4]`. The brackets in the second are needed because the exponent stands outside the bar `[no card]` `#exponent-inside-or-outside-the-bar`
+- **N7.10** in handwriting the bar has no precise right end — but that is the writer's to fix, not the reader's to guess `[§0.1]`. It is the real reason to write `\left(\frac{a}{b}\right)^n` rather than trust the geometry. ⚠️ Typeset, the bare form is NOT ambiguous — it reads as the whole fraction — and it is worth not marking it wrong `[no card]` `#handwritten-bar-needs-care`
 
 ---
 
@@ -282,29 +282,29 @@ move.* Seeing structure is reading.
 
 ### P1 · What is this expression?
 
-- **P.1** `3x + 2y` → a **sum**. One seam, and it is the answer
-- **P.2** `3x \cdot 2y` → a **product**
-- **P.3** `a \cdot b + c` → a **sum** — `\cdot` binds stronger, so `a \cdot b` is one block and the `+` is the seam ⇐ N4.2
-- **P.4** `3(x+1)` → a **product**; the `+` is inside a block, not a seam ⇐ N3.1
-- **P.5** `2x^2` → a **product**, not a power — the exponent reaches only `x` ⇐ N4.4
-- **P.6** `(x+1)^2` → a **power**, because the bracket made the sum into one block ⇐ N4.6
-- **P.7** `-3x + 2y` → a **sum**; the leading minus is part of the first block, not a seam ⇐ N5.4
-- **P.8** `a - b` → a **difference**, which is a sum once the minus joins the block after it ⇐ V0
-- **P.9** `\frac{3x+2}{x-1}` → a **quotient**; neither the `+` nor the `-` is a seam ⇐ N7.2
-- **P.10** `\sqrt{a+b}` → a **root**, and the `+` is under the bar, inside one block ⇐ N6.5
-- **P.11** `x`, `7` → an **atom**: no seam, and saying so is an answer, not a failure
-- **P.12** the whole procedure, in order: **brackets first, then the loosest-binding operator is the seam** ⇐ N3.1 + N4.1
+- **P.1** `3x + 2y` → a **sum**. One seam, and it is the answer `#type-of-a-sum`
+- **P.2** `3x \cdot 2y` → a **product** `#type-of-a-product`
+- **P.3** `a \cdot b + c` → a **sum** — `\cdot` binds stronger, so `a \cdot b` is one block and the `+` is the seam ⇐ N4.2 `#type-when-times-binds-tighter`
+- **P.4** `3(x+1)` → a **product**; the `+` is inside a block, not a seam ⇐ N3.1 `#type-of-a-bracketed-product`
+- **P.5** `2x^2` → a **product**, not a power — the exponent reaches only `x` ⇐ N4.4 `#type-of-a-coefficient-times-power`
+- **P.6** `(x+1)^2` → a **power**, because the bracket made the sum into one block ⇐ N4.6 `#type-of-a-bracket-raised`
+- **P.7** `-3x + 2y` → a **sum**; the leading minus is part of the first block, not a seam ⇐ N5.4 `#type-with-a-leading-minus`
+- **P.8** `a - b` → a **difference**, which is a sum once the minus joins the block after it ⇐ V0 `#type-of-a-difference`
+- **P.9** `\frac{3x+2}{x-1}` → a **quotient**; neither the `+` nor the `-` is a seam ⇐ N7.2 `#type-of-a-quotient`
+- **P.10** `\sqrt{a+b}` → a **root**, and the `+` is under the bar, inside one block ⇐ N6.5 `#type-of-a-root`
+- **P.11** `x`, `7` → an **atom**: no seam, and saying so is an answer, not a failure `#type-of-an-atom`
+- **P.12** the whole procedure, in order: **brackets first, then the loosest-binding operator is the seam** ⇐ N3.1 + N4.1 `#how-to-find-the-type`
 
 ### P2 · What the blocks are
 
-- **P.13** `3x + 2y` → two summands, `3x` and `2y`
-- **P.14** `3x - 2y` → two summands, `3x` and `-2y` — the sign travels with the block `[§3]` ⇐ N5.4
-- **P.15** `3 \cdot x \cdot (x+1)` → three factors, `3`, `x`, `(x+1)`
-- **P.16** `\frac{3x+2}{x-1}` → two blocks, the numerator and the denominator
-- **P.17** `(x+1)^2` → two slots, the base `(x+1)` and the exponent `2` `[§5]` ⇐ N6.3
-- **P.18** `a + (b+c)` → 3 summands, but `a - (b+c)` → 2 ⇐ V2
-- **P.19** `3(x+1) - 2(x-1)` → two summands first, and only then two factors inside each — the parse is recursive
-- **P.20** `3x` inside `3x + 2y` → parse a block with the same two questions, until you reach atoms
+- **P.13** `3x + 2y` → two summands, `3x` and `2y` `#summands-of-a-sum`
+- **P.14** `3x - 2y` → two summands, `3x` and `-2y` — the sign travels with the block `[§3]` ⇐ N5.4 `#summands-carry-their-sign`
+- **P.15** `3 \cdot x \cdot (x+1)` → three factors, `3`, `x`, `(x+1)` `#factors-of-a-product`
+- **P.16** `\frac{3x+2}{x-1}` → two blocks, the numerator and the denominator `#blocks-of-a-quotient`
+- **P.17** `(x+1)^2` → two slots, the base `(x+1)` and the exponent `2` `[§5]` ⇐ N6.3 `#slots-of-a-power`
+- **P.18** `a + (b+c)` → 3 summands, but `a - (b+c)` → 2 ⇐ V2 `#blocks-through-a-bracket`
+- **P.19** `3(x+1) - 2(x-1)` → two summands first, and only then two factors inside each — the parse is recursive `#parsing-is-recursive`
+- **P.20** `3x` inside `3x + 2y` → parse a block with the same two questions, until you reach atoms `#parse-a-block-again`
 
 ## T · Transforming an expression
 
@@ -378,136 +378,136 @@ the same three buckets rather than getting sections of their own.
 
 ### R · Rearranging — the blocks stay, the order changes
 
-- **R.1** `a + b = b + a` — two summands may be swapped `[§1.1]` `[comm, ax.add-commutative]`
-- **R.2** `ab = ba` — two factors may be swapped `[§1.1]` `[comm, ax.mul-commutative]`
-- **R.3** `3x` and `x \cdot 3` are the same expression — recognise a swap that has already happened `[§1.1]` `[comm]`
-- **R.4** `a^2 b = b a^2` — a power is one factor, and swaps like any other `[§1.1]` `[comm]`
-- **R.5** `y \cdot 3 = 3y` — swap so the coefficient comes first, which is what N1.7 asks for `[§1.1]` `[comm]`
-- **R.6** `(a + b) + c = a + (b + c)` — a sum may be regrouped `[§2.1]` `[assoc, ax.add-associative]`
-- **R.7** `(ab)c = a(bc)` — a product may be regrouped `[§2.1]` `[assoc, ax.mul-associative]`
-- **R.8** `a + (b + c) = a + b + c` — a bracket regrouping a pure sum comes off `[§2.1]` `[assoc]` *(not N4.8: the convention says `a+b+c` MEANS `(a+b)+c`; this says the other grouping has the same value)*
-- **R.9** `a(bc) = abc` — the same in a pure product `[§2.1]` `[assoc]`
-- **R.10** `17 + (3 + 8) = (17 + 3) + 8` — regroup to make the arithmetic easy `[§2.1]` `[assoc]`
-- **R.11** `a + b + c = c + b + a` — reorder a chain of three ⇐ R.1 + R.6 `[§1.1, §2.1]` `[comm, assoc]`
+- **R.1** `a + b = b + a` — two summands may be swapped `[§1.1]` `[comm, ax.add-commutative]` `#swap-two-summands`
+- **R.2** `ab = ba` — two factors may be swapped `[§1.1]` `[comm, ax.mul-commutative]` `#swap-two-factors`
+- **R.3** `3x` and `x \cdot 3` are the same expression — recognise a swap that has already happened `[§1.1]` `[comm]` `#recognise-a-swap`
+- **R.4** `a^2 b = b a^2` — a power is one factor, and swaps like any other `[§1.1]` `[comm]` `#swap-a-power-factor`
+- **R.5** `y \cdot 3 = 3y` — swap so the coefficient comes first, which is what N1.7 asks for `[§1.1]` `[comm]` `#swap-coefficient-to-front`
+- **R.6** `(a + b) + c = a + (b + c)` — a sum may be regrouped `[§2.1]` `[assoc, ax.add-associative]` `#regroup-a-sum`
+- **R.7** `(ab)c = a(bc)` — a product may be regrouped `[§2.1]` `[assoc, ax.mul-associative]` `#regroup-a-product`
+- **R.8** `a + (b + c) = a + b + c` — a bracket regrouping a pure sum comes off `[§2.1]` `[assoc]` *(not N4.8: the convention says `a+b+c` MEANS `(a+b)+c`; this says the other grouping has the same value)* `#drop-a-sum-bracket`
+- **R.9** `a(bc) = abc` — the same in a pure product `[§2.1]` `[assoc]` `#drop-a-product-bracket`
+- **R.10** `17 + (3 + 8) = (17 + 3) + 8` — regroup to make the arithmetic easy `[§2.1]` `[assoc]` `#regroup-for-easy-arithmetic`
+- **R.11** `a + b + c = c + b + a` — reorder a chain of three ⇐ R.1 + R.6 `[§1.1, §2.1]` `[comm, assoc]` `#reorder-a-chain-of-three`
 
 *The two conversions — they change what the expression IS, and everything above depends on them:*
 
-- **R.12** `a - b = a + (-b)` — a difference read as a sum, each minus absorbed into the block after it `[§3]` `[def.sub]`
-- **R.13** `\frac{a}{b} = a \cdot \frac{1}{b}` — a quotient read as a product `[§4]` `[def.div]`
-- **R.14** `-b + a = a - b` — the conversion used: once it is a sum, §1.1 applies ⇐ R.12 `[§3, §1.1]` `[comm]`
+- **R.12** `a - b = a + (-b)` — a difference read as a sum, each minus absorbed into the block after it `[§3]` `[def.sub]` `#difference-as-a-sum`
+- **R.13** `\frac{a}{b} = a \cdot \frac{1}{b}` — a quotient read as a product `[§4]` `[def.div]` `#quotient-as-a-product`
+- **R.14** `-b + a = a - b` — the conversion used: once it is a sum, §1.1 applies ⇐ R.12 `[§3, §1.1]` `[comm]` `#commute-after-converting`
 
 *Boundaries — what may not be rearranged while it is still a difference or a quotient:*
 
-- **R.15** `a - b \neq b - a` — subtraction does not commute `[§1.2]` `[comm]`
-- **R.16** `8 - 3 \neq 3 - 8` — and the check is a number, not an argument `[§1.2]`
-- **R.17** `\frac{a}{b} \neq \frac{b}{a}` — division does not commute `[§1.2]` `[comm]`
-- **R.18** `\frac{8}{2} \neq \frac{2}{8}` — checked the same way `[§1.2]`
-- **R.19** `(a - b) - c \neq a - (b - c)` — subtraction does not associate `[§2.2]` `[assoc]`
-- **R.20** `(8 - 3) - 2 \neq 8 - (3 - 2)` — the number check `[§2.2]`
-- **R.21** `(a : b) : c \neq a : (b : c)` — division does not associate `[§2.2]` `[assoc]`
+- **R.15** `a - b \neq b - a` — subtraction does not commute `[§1.2]` `[comm]` `#subtraction-does-not-commute`
+- **R.16** `8 - 3 \neq 3 - 8` — and the check is a number, not an argument `[§1.2]` `#subtraction-number-check`
+- **R.17** `\frac{a}{b} \neq \frac{b}{a}` — division does not commute `[§1.2]` `[comm]` `#division-does-not-commute`
+- **R.18** `\frac{8}{2} \neq \frac{2}{8}` — checked the same way `[§1.2]` `#division-number-check`
+- **R.19** `(a - b) - c \neq a - (b - c)` — subtraction does not associate `[§2.2]` `[assoc]` `#subtraction-does-not-associate`
+- **R.20** `(8 - 3) - 2 \neq 8 - (3 - 2)` — the number check `[§2.2]` `#association-number-check`
+- **R.21** `(a : b) : c \neq a : (b : c)` — division does not associate `[§2.2]` `[assoc]` `#division-does-not-associate`
 
 *The power spellings — same rung on the ladder, so rearranging `[V1]`:*
 
-- **R.22** `a^{-n} = \frac{1}{a^n}` — a negative exponent is the reciprocal spelling `[§27]` `[rule.minus-in-exponent]`
-- **R.23** `\sqrt[n]{a} = a^{1/n}` — radical and fractional exponent are two spellings of one thing ⇐ N6.4 `[§25]` `[ix.root]`
-- **R.24** `\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}` — root and power in either order. ⚠️ *Involutive: the move is its own reverse, which is exactly why it lands in R and not in E or C* `[§26]` `[rule.root-of-power]`
+- **R.22** `a^{-n} = \frac{1}{a^n}` — a negative exponent is the reciprocal spelling `[§27]` `[rule.minus-in-exponent]` `#negative-exponent-is-reciprocal`
+- **R.23** `\sqrt[n]{a} = a^{1/n}` — radical and fractional exponent are two spellings of one thing ⇐ N6.4 `[§25]` `[ix.root]` `#radical-as-power`
+- **R.24** `\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}` — root and power in either order. ⚠️ *Involutive: the move is its own reverse, which is exactly why it lands in R and not in E or C* `[§26]` `[rule.root-of-power]` `#root-and-power-either-order`
 
 ### E · Expanding — the blocks grow
 
-- **E.1** `a(b + c) = ab + ac` — multiply into a sum `[§6.1]` `[distr, ax.distributivity]`
-- **E.2** `a(b - c) = ab - ac` — into a difference `[§6.1]` `[distr]`
-- **E.3** `(b + c)a = ba + ca` — the factor may stand on the right `[§6.1]` `[distr]`
-- **E.4** `3(x + 2) = 3x + 6` — with a number, where the arithmetic gets done too `[§6.1]` `[distr]`
-- **E.5** `a(b + c + d) = ab + ac + ad` — a longer sum, every summand `[§6.1]` `[distr]`
-- **E.6** `-3(x + 2) = -3x - 6` — a negative factor also reaches every summand `[§6.1, §9]` `[distr]`
-- **E.7** `x(x + 1) = x^2 + x` — a variable factor; the first product becomes a power ⇐ E.1 + C.10 `[§6.1]` `[distr]`
-- **E.8** `(a + b)(c + d) = ac + ad + bc + bd` — every summand of the one against every summand of the other `[§7]` `[distr, comm]`
-- **E.9** `\frac{a + b}{c} = \frac{a}{c} + \frac{b}{c}` — a sum over the bar splits `[§8.1]` `[distr]`
-- **E.10** `-(a + b) = -a - b` — the leading minus is the factor `(-1)` ⇐ N5.6 `[§9]` `[distr]`
-- **E.11** `-(a - b) = -a + b` — the same, and the last block is where the marks go ⇐ N5.6 `[§9]` `[distr]`
-- **E.12** `a - (b + c) = a - b - c` ⇐ R.12 + E.10 `[§3, §9]` `[distr]`
-- **E.13** `a - (b - c) = a - b + c` ⇐ R.12 + E.11 `[§3, §9]` `[distr]`
-- **E.14** `a^2 = a \cdot a` — unfold the smallest power. *The atom: the same identity as N6.1, used in a direction* ⇐ N6.1 `[§10]` `[ix.pow]`
-- **E.15** `a^3 = a \cdot a^2` — **peel one factor off a power** and keep the rest as a power. The general move, and the useful one — it is what makes `\frac{a^3}{a^2}` collapse `[§10]` `[ix.pow]`
-- **E.16** `2a = a + a` — unfold the smallest multiple. *The additive atom* ⇐ N1.1 `[§11]` `[th.multiple-is-product]`
-- **E.17** `3a = a + 2a` — **peel one summand off a multiple** and keep the rest as a multiple. What makes `3a - a` visible `[§11]` `[th.multiple-is-product]`
+- **E.1** `a(b + c) = ab + ac` — multiply into a sum `[§6.1]` `[distr, ax.distributivity]` `#multiply-into-a-sum`
+- **E.2** `a(b - c) = ab - ac` — into a difference `[§6.1]` `[distr]` `#multiply-into-a-difference`
+- **E.3** `(b + c)a = ba + ca` — the factor may stand on the right `[§6.1]` `[distr]` `#factor-on-the-right`
+- **E.4** `3(x + 2) = 3x + 6` — with a number, where the arithmetic gets done too `[§6.1]` `[distr]` `#multiply-a-number-into-a-sum`
+- **E.5** `a(b + c + d) = ab + ac + ad` — a longer sum, every summand `[§6.1]` `[distr]` `#multiply-into-a-longer-sum`
+- **E.6** `-3(x + 2) = -3x - 6` — a negative factor also reaches every summand `[§6.1, §9]` `[distr]` `#multiply-a-negative-into-a-sum`
+- **E.7** `x(x + 1) = x^2 + x` — a variable factor; the first product becomes a power ⇐ E.1 + C.10 `[§6.1]` `[distr]` `#multiply-a-variable-into-a-sum`
+- **E.8** `(a + b)(c + d) = ac + ad + bc + bd` — every summand of the one against every summand of the other `[§7]` `[distr, comm]` `#every-summand-against-every`
+- **E.9** `\frac{a + b}{c} = \frac{a}{c} + \frac{b}{c}` — a sum over the bar splits `[§8.1]` `[distr]` `#split-the-numerator`
+- **E.10** `-(a + b) = -a - b` — the leading minus is the factor `(-1)` ⇐ N5.6 `[§9]` `[distr]` `#minus-over-a-sum`
+- **E.11** `-(a - b) = -a + b` — the same, and the last block is where the marks go ⇐ N5.6 `[§9]` `[distr]` `#minus-over-a-difference`
+- **E.12** `a - (b + c) = a - b - c` ⇐ R.12 + E.10 `[§3, §9]` `[distr]` `#subtract-a-sum`
+- **E.13** `a - (b - c) = a - b + c` ⇐ R.12 + E.11 `[§3, §9]` `[distr]` `#subtract-a-difference`
+- **E.14** `a^2 = a \cdot a` — unfold the smallest power. *The atom: the same identity as N6.1, used in a direction* ⇐ N6.1 `[§10]` `[ix.pow]` `#unfold-a-square`
+- **E.15** `a^3 = a \cdot a^2` — **peel one factor off a power** and keep the rest as a power. The general move, and the useful one — it is what makes `\frac{a^3}{a^2}` collapse `[§10]` `[ix.pow]` `#peel-a-factor-off-a-power`
+- **E.16** `2a = a + a` — unfold the smallest multiple. *The additive atom* ⇐ N1.1 `[§11]` `[th.multiple-is-product]` `#unfold-a-double`
+- **E.17** `3a = a + 2a` — **peel one summand off a multiple** and keep the rest as a multiple. What makes `3a - a` visible `[§11]` `[th.multiple-is-product]` `#peel-a-summand-off-a-multiple`
 
 *Boundaries — what does not expand:*
 
-- **E.18** `\frac{c}{a + b} \neq \frac{c}{a} + \frac{c}{b}` — never under the bar `[§8.2]`
-- **E.19** `(a + b)^2 \neq a^2 + b^2` — a power does not reach the summands one at a time `[§6.2]`
-- **E.20** `\sqrt{a + b}` — nothing to expand, and nothing to do `[§6.2]`
-- **E.21** only multiplication reaches into a sum — not a power, not a root `[§6.2]`
+- **E.18** `\frac{c}{a + b} \neq \frac{c}{a} + \frac{c}{b}` — never under the bar `[§8.2]` `#never-split-the-denominator`
+- **E.19** `(a + b)^2 \neq a^2 + b^2` — a power does not reach the summands one at a time `[§6.2]` `#power-does-not-reach-summands`
+- **E.20** `\sqrt{a + b}` — nothing to expand, and nothing to do `[§6.2]` `#root-of-a-sum-stays`
+- **E.21** only multiplication reaches into a sum — not a power, not a root `[§6.2]` `#only-a-factor-reaches-in`
 
 *The power and root laws that open — container → product, so expanding `[V1]`:*
 
-- **E.22** `(ab)^n = a^n b^n` — the power reaches every factor `[§24]` `[rule.power-over-product]`
-- **E.23** `\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}` — top and bottom each. ⚠️ *Not a new law: it is E.22 with a reciprocal `[§4]`* `[§24]` `[rule.power-over-quotient]`
-- **E.24** `\sqrt[n]{ab} = \sqrt[n]{a} \cdot \sqrt[n]{b}` — ⚠️ *and not a new law either: it is E.22 read with `n = \frac{1}{2}` `[R.23]`* `[§24, §25]` `[rule.root-over-product]`
-- **E.25** `\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}` — E.23 the same way `[§24, §25]` `[rule.root-over-quotient]`
-- **E.26** `a^{m+n} = a^m \cdot a^n` — split an exponent sum. The general form of E.15 `[§21]` `[rule.same-base]`
-- **E.27** `\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}` — dividing by a fraction opens into a product `[§30]` `[rule.fraction-divide]`
+- **E.22** `(ab)^n = a^n b^n` — the power reaches every factor `[§24]` `[rule.power-over-product]` `#power-of-a-product`
+- **E.23** `\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}` — top and bottom each. ⚠️ *Not a new law: it is E.22 with a reciprocal `[§4]`* `[§24]` `[rule.power-over-quotient]` `#power-of-a-quotient`
+- **E.24** `\sqrt[n]{ab} = \sqrt[n]{a} \cdot \sqrt[n]{b}` — ⚠️ *and not a new law either: it is E.22 read with `n = \frac{1}{2}` `[R.23]`* `[§24, §25]` `[rule.root-over-product]` `#root-of-a-product`
+- **E.25** `\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}` — E.23 the same way `[§24, §25]` `[rule.root-over-quotient]` `#root-of-a-quotient`
+- **E.26** `a^{m+n} = a^m \cdot a^n` — split an exponent sum. The general form of E.15 `[§21]` `[rule.same-base]` `#split-an-exponent-sum`
+- **E.27** `\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}` — dividing by a fraction opens into a product `[§30]` `[rule.fraction-divide]` `#divide-by-a-fraction`
 
 *The binomial formulas, expanding:*
 
-- **E.28** `(a+b)^2 = a^2 + 2ab + b^2` — container(1) → sum(3) `[§33]` `[rule.binomial-square]`
-- **E.29** `(a-b)^2 = a^2 - 2ab + b^2` — ⚠️ *the same formula with `b := -b` `[S.1]`, not a second one to learn* `[§33]` `[rule.square-of-difference]`
-- **E.30** `(a+b)(a-b) = a^2 - b^2` — product(2) → sum(2), still up the ladder `[§33]` `[rule.difference-of-squares]`
-- **E.31** `(x+m)(x+n) = x^2 + (m+n)x + mn` `[§34]` `[rule.quadratic-pair]`
+- **E.28** `(a+b)^2 = a^2 + 2ab + b^2` — container(1) → sum(3) `[§33]` `[rule.binomial-square]` `#square-of-a-sum`
+- **E.29** `(a-b)^2 = a^2 - 2ab + b^2` — ⚠️ *the same formula with `b := -b` `[S.1]`, not a second one to learn* `[§33]` `[rule.square-of-difference]` `#square-of-a-difference`
+- **E.30** `(a+b)(a-b) = a^2 - b^2` — product(2) → sum(2), still up the ladder `[§33]` `[rule.difference-of-squares]` `#sum-times-difference`
+- **E.31** `(x+m)(x+n) = x^2 + (m+n)x + mn` `[§34]` `[rule.quadratic-pair]` `#product-of-two-binomials`
 
 ### C · Collecting — the blocks shrink
 
-- **C.1** `3x + 2x = 5x` — collect like summands; distributivity read backwards `[§12.1]` `[distr]`
-- **C.2** `x + 2x = 3x` — collecting needs the invisible one back first ⇐ N2.1 `[§12.1]` `[distr]`
-- **C.3** `ab + ba = 2ab` — they are alike only once one of them is swapped ⇐ R.2 `[§1.1, §12.1]` `[comm, distr]`
-- **C.4** `3x + 2 + 5x = 8x + 2` — reorder, then collect what matches ⇐ R.11 + C.1 `[§1.1, §12.1]` `[comm, assoc, distr]`
-- **C.5** `ab + ac = a(b + c)` — pull out a common factor. *A different skill from E.1: it must be **found**, not carried out* `[§13]` `[distr]`
-- **C.6** `3x + 6 = 3(x + 2)` — with a number, finding it means seeing the divisor `[§13]` `[distr]`
-- **C.7** `x^2 + x = x(x + 1)` — pull out a variable factor; seeing it needs `x^2 = x \cdot x` ⇐ C.5 + E.14 `[§13]` `[distr]`
-- **C.8** `2 \cdot 3x = 6x` — regroup so the numbers meet, then multiply them `[§14]` `[assoc]`
-- **C.9** `3x \cdot 2y = 6xy` — sort the factors, then group the numbers ⇐ R.2 + R.7 `[§1.1, §14]` `[comm, assoc]`
-- **C.10** `a \cdot a = a^2` — repeated factors become a power ⇐ N6.1 `[§15]` `[ix.pow]`
-- **C.11** `a + a = 2a` — repeated summands become a multiple `[§16]` `[th.multiple-is-product]`
-- **C.12** `x \cdot 3 \cdot x = 3x^2` — sort, then fuse the equal factors ⇐ R.2 + C.10 `[§1.1, §14, §15]` `[comm, assoc]`
-- **C.13** `abca = a^2bc` — the same on a longer product ⇐ R.2 + C.10. *Purely a move: it never touches N, because the notation reading is one of its prerequisites rather than what it is* `[§1.1, §15]`
-- **C.14** `\frac{ak}{bk} = \frac{a}{b}` — cancel a factor the whole numerator and the whole denominator share `[§17.1]`
+- **C.1** `3x + 2x = 5x` — collect like summands; distributivity read backwards `[§12.1]` `[distr]` `#collect-like-summands`
+- **C.2** `x + 2x = 3x` — collecting needs the invisible one back first ⇐ N2.1 `[§12.1]` `[distr]` `#collect-with-the-invisible-one`
+- **C.3** `ab + ba = 2ab` — they are alike only once one of them is swapped ⇐ R.2 `[§1.1, §12.1]` `[comm, distr]` `#collect-after-a-swap`
+- **C.4** `3x + 2 + 5x = 8x + 2` — reorder, then collect what matches ⇐ R.11 + C.1 `[§1.1, §12.1]` `[comm, assoc, distr]` `#reorder-then-collect`
+- **C.5** `ab + ac = a(b + c)` — pull out a common factor. *A different skill from E.1: it must be **found**, not carried out* `[§13]` `[distr]` `#pull-out-a-common-factor`
+- **C.6** `3x + 6 = 3(x + 2)` — with a number, finding it means seeing the divisor `[§13]` `[distr]` `#pull-out-a-number`
+- **C.7** `x^2 + x = x(x + 1)` — pull out a variable factor; seeing it needs `x^2 = x \cdot x` ⇐ C.5 + E.14 `[§13]` `[distr]` `#pull-out-a-variable`
+- **C.8** `2 \cdot 3x = 6x` — regroup so the numbers meet, then multiply them `[§14]` `[assoc]` `#multiply-the-numbers`
+- **C.9** `3x \cdot 2y = 6xy` — sort the factors, then group the numbers ⇐ R.2 + R.7 `[§1.1, §14]` `[comm, assoc]` `#sort-then-multiply-numbers`
+- **C.10** `a \cdot a = a^2` — repeated factors become a power ⇐ N6.1 `[§15]` `[ix.pow]` `#equal-factors-become-a-power`
+- **C.11** `a + a = 2a` — repeated summands become a multiple `[§16]` `[th.multiple-is-product]` `#equal-summands-become-a-multiple`
+- **C.12** `x \cdot 3 \cdot x = 3x^2` — sort, then fuse the equal factors ⇐ R.2 + C.10 `[§1.1, §14, §15]` `[comm, assoc]` `#sort-then-fuse-factors`
+- **C.13** `abca = a^2bc` — the same on a longer product ⇐ R.2 + C.10. *Purely a move: it never touches N, because the notation reading is one of its prerequisites rather than what it is* `[§1.1, §15]` `#sort-and-fuse-a-longer-product`
+- **C.14** `\frac{ak}{bk} = \frac{a}{b}` — cancel a factor the whole numerator and the whole denominator share `[§17.1]` `#cancel-a-common-factor`
 
 *Boundaries — what does not collect. Every one of these is an expression a student wants to
 "finish" and cannot:*
 
-- **C.15** `2 + 3x` — a number and a variable summand do not collect `[§12.2]`
-- **C.16** `3x + 2y` — different letters do not collect `[§12.2]`
-- **C.17** `x^2 + x` — same letter, different power, does not collect. ⚠️ *And yet C.7 factors it. Not a contradiction and worth saying out loud: **nicht zusammenfassbar, aber ausklammerbar** — collecting and factoring are different questions* `[§12.2]`
-- **C.18** `a^2 + b^2` — nothing to pull out, nothing to collect `[§12.2]`
-- **C.19** `\frac{3x + 2}{3}` — a sum over a number does not cancel summand by summand `[§17.2]`
+- **C.15** `2 + 3x` — a number and a variable summand do not collect `[§12.2]` `#number-and-term-stay`
+- **C.16** `3x + 2y` — different letters do not collect `[§12.2]` `#different-letters-stay`
+- **C.17** `x^2 + x` — same letter, different power, does not collect. ⚠️ *And yet C.7 factors it. Not a contradiction and worth saying out loud: **nicht zusammenfassbar, aber ausklammerbar** — collecting and factoring are different questions* `[§12.2]` `#different-powers-stay`
+- **C.18** `a^2 + b^2` — nothing to pull out, nothing to collect `[§12.2]` `#sum-of-squares-stays`
+- **C.19** `\frac{3x + 2}{3}` — a sum over a number does not cancel summand by summand `[§17.2]` `#no-cancelling-a-summand`
 
 *The power laws that close — product → container, so collecting `[V1]`:*
 
-- **C.20** `a^m \cdot a^n = a^{m+n}` — same base: add the exponents `[§21]` `[rule.same-base]`
-- **C.21** `\frac{a^m}{a^n} = a^{m-n}` — ⚠️ *not a fourth law: C.20 after `[§4]`* `[§22]` `[rule.same-base-divide]`
-- **C.22** `(a^m)^n = a^{mn}` — the tower gets one storey shorter `[§23]` `[rule.power-of-power]`
-- **C.23** `a^n b^n = (ab)^n` — E.22 read backwards `[§24]` `[rule.power-over-product]`
+- **C.20** `a^m \cdot a^n = a^{m+n}` — same base: add the exponents `[§21]` `[rule.same-base]` `#same-base-multiplied`
+- **C.21** `\frac{a^m}{a^n} = a^{m-n}` — ⚠️ *not a fourth law: C.20 after `[§4]`* `[§22]` `[rule.same-base-divide]` `#same-base-divided`
+- **C.22** `(a^m)^n = a^{mn}` — the tower gets one storey shorter `[§23]` `[rule.power-of-power]` `#power-of-a-power`
+- **C.23** `a^n b^n = (ab)^n` — E.22 read backwards `[§24]` `[rule.power-over-product]` `#collect-into-a-power-of-a-product`
 
 *The fraction laws that close:*
 
-- **C.24** `\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}` — product(2) → container(1). ⚠️ *Multiplying fractions needs nothing first, which is what "no common denominator" really means* `[§29]` `[rule.fraction-multiply]`
-- **C.25** `\frac{a}{b} + \frac{c}{b} = \frac{a+c}{b}` — same denominator, add the numerators `[§31]` `[rule.fraction-common-denominator]`
-- **C.26** `\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}` — different denominators: make them the same first `[§31]` `[rule.fraction-common-denominator]`
-- **C.27** `c + \frac{a}{b} = \frac{cb+a}{b}` — a whole number is a fraction over `1` `[§31]` `[rule.fraction-plus-whole]`
-- **C.28** `\frac{\frac{a}{b}}{c} = \frac{a}{bc}` — a double fraction collapses; which bar is the main one decides everything ⇐ N7.6 `[§32]` `[rule.double-fraction]`
+- **C.24** `\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}` — product(2) → container(1). ⚠️ *Multiplying fractions needs nothing first, which is what "no common denominator" really means* `[§29]` `[rule.fraction-multiply]` `#multiply-fractions`
+- **C.25** `\frac{a}{b} + \frac{c}{b} = \frac{a+c}{b}` — same denominator, add the numerators `[§31]` `[rule.fraction-common-denominator]` `#add-fractions-same-denominator`
+- **C.26** `\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}` — different denominators: make them the same first `[§31]` `[rule.fraction-common-denominator]` `#add-fractions-different-denominator`
+- **C.27** `c + \frac{a}{b} = \frac{cb+a}{b}` — a whole number is a fraction over `1` `[§31]` `[rule.fraction-plus-whole]` `#whole-number-plus-fraction`
+- **C.28** `\frac{\frac{a}{b}}{c} = \frac{a}{bc}` — a double fraction collapses; which bar is the main one decides everything ⇐ N7.6 `[§32]` `[rule.double-fraction]` `#collapse-a-double-fraction`
 
 *The binomial formulas, collecting — the harder direction, because the shape must be SEEN:*
 
-- **C.29** `a^2 + 2ab + b^2 = (a+b)^2` — sum(3) → container(1) `[§33]` `[rule.binomials-read-backwards]`
-- **C.30** `a^2 - 2ab + b^2 = (a-b)^2` `[§33]` `[rule.binomials-read-backwards]`
-- **C.31** `a^2 - b^2 = (a+b)(a-b)` — sum(2) → product(2), down the ladder `[§33]` `[rule.binomials-read-backwards]`
-- **C.32** `x^2 + 5x + 6 = (x+2)(x+3)` — find the pair: product `6`, sum `5` `[§34]` `[rule.quadratic-pair]`
+- **C.29** `a^2 + 2ab + b^2 = (a+b)^2` — sum(3) → container(1) `[§33]` `[rule.binomials-read-backwards]` `#trinomial-to-a-square`
+- **C.30** `a^2 - 2ab + b^2 = (a-b)^2` `[§33]` `[rule.binomials-read-backwards]` `#trinomial-to-a-square-of-a-difference`
+- **C.31** `a^2 - b^2 = (a+b)(a-b)` — sum(2) → product(2), down the ladder `[§33]` `[rule.binomials-read-backwards]` `#difference-of-squares-factored`
+- **C.32** `x^2 + 5x + 6 = (x+2)(x+3)` — find the pair: product `6`, sum `5` `[§34]` `[rule.quadratic-pair]` `#factor-by-finding-the-pair`
 
 *Boundaries — powers and fractions that do not collect:*
 
-- **C.33** `a^m \cdot b^n` — different bases do not collect `[§21]`
-- **C.34** `a^m + a^n` — same base, but a SUM: the power laws are about products `[§21]`
-- **C.35** `\frac{a+b}{a+c} \neq \frac{b}{c}` — the `a` is a summand, not a factor of the whole ⇐ C.19 `[§17.2]`
+- **C.33** `a^m \cdot b^n` — different bases do not collect `[§21]` `#different-bases-stay`
+- **C.34** `a^m + a^n` — same base, but a SUM: the power laws are about products `[§21]` `#sum-of-powers-stays`
+- **C.35** `\frac{a+b}{a+c} \neq \frac{b}{c}` — the `a` is a summand, not a factor of the whole ⇐ C.19 `[§17.2]` `#no-cancelling-over-a-sum`
 
 ## Rules in student language — first draft
 
@@ -938,28 +938,28 @@ block vocabulary can, because it is the only one in which the bracket question h
 
 ### S1 · Putting an expression where an atom stood
 
-- **S.1** `a(b+c) = ab+ac` with `a := 2x` — the rule is not about the letter, and this is the claim the whole section rests on `[§18]`
-- **S.2** decide the bracket by asking whether removing it changes the reading ⇐ V2, N3.4 `[§19]`
-- **S.3** `a := 2x+3` into `a(b+c)` → `(2x+3)(b+c)` — **brackets**: a sum inside a product `[§19]`
-- **S.4** `a := 2x` into `a(b+c)` → `2x(b+c)` — **none**: a product inside a product changes nothing `[§19]`
-- **S.5** `a := 2x` into `a^2` → `(2x)^2` — **brackets**: `2x^2` would be `2(x^2)` ⇐ N4.5 `[§19]`
-- **S.6** `a := x+1` into `\frac{a}{b}` → `\frac{x+1}{b}` — **none**: the bar is already the bracket ⇐ §0.1 `[§19]`
-- **S.7** `a := x+1` into `\sqrt{a}` → `\sqrt{x+1}` — **none**, and for the same reason ⇐ §0.2 `[§19]`
-- **S.8** `a := b+c` into `-a` → `-(b+c)` — **brackets** `[§19]`
-- **S.9** a letter that occurs twice is replaced **everywhere or nowhere**: `a \cdot a = a^2` with `a := 2x` gives `(2x)(2x) = (2x)^2` `[§20]`
+- **S.1** `a(b+c) = ab+ac` with `a := 2x` — the rule is not about the letter, and this is the claim the whole section rests on `[§18]` `#a-rule-holds-for-any-expression`
+- **S.2** decide the bracket by asking whether removing it changes the reading ⇐ V2, N3.4 `[§19]` `#bracket-by-the-reading-test`
+- **S.3** `a := 2x+3` into `a(b+c)` → `(2x+3)(b+c)` — **brackets**: a sum inside a product `[§19]` `#substitute-a-sum-into-a-product`
+- **S.4** `a := 2x` into `a(b+c)` → `2x(b+c)` — **none**: a product inside a product changes nothing `[§19]` `#substitute-a-product-into-a-product`
+- **S.5** `a := 2x` into `a^2` → `(2x)^2` — **brackets**: `2x^2` would be `2(x^2)` ⇐ N4.5 `[§19]` `#substitute-into-a-base`
+- **S.6** `a := x+1` into `\frac{a}{b}` → `\frac{x+1}{b}` — **none**: the bar is already the bracket ⇐ §0.1 `[§19]` `#substitute-into-a-numerator`
+- **S.7** `a := x+1` into `\sqrt{a}` → `\sqrt{x+1}` — **none**, and for the same reason ⇐ §0.2 `[§19]` `#substitute-under-a-root`
+- **S.8** `a := b+c` into `-a` → `-(b+c)` — **brackets** `[§19]` `#substitute-behind-a-minus`
+- **S.9** a letter that occurs twice is replaced **everywhere or nowhere**: `a \cdot a = a^2` with `a := 2x` gives `(2x)(2x) = (2x)^2` `[§20]` `#replace-every-occurrence`
 
 ### S2 · Reading a rule as a pattern — the other direction
 
-- **S.10** `(2x+3)^2` is `(a+b)^2` with `a := 2x`, `b := 3` — the same claim read backwards, and the harder half: it must be **found** `[§20]`
-- **S.11** report what each letter must be: `9x^2 - 4` against `a^2 - b^2` gives `a := 3x`, `b := 2` `[§20]`
-- **S.12** check **every** slot, not the shape of two: `x^2 + 6x + 9` matches `(a+b)^2` with `a := x`, `b := 3`, because `2ab` really is `6x` and `b^2` really is `9` `[§20]`
-- **S.13** one expression may match several rules; which to take is a **choice**, and the first thing in this file that grammar cannot settle
+- **S.10** `(2x+3)^2` is `(a+b)^2` with `a := 2x`, `b := 3` — the same claim read backwards, and the harder half: it must be **found** `[§20]` `#recognise-a-rules-shape`
+- **S.11** report what each letter must be: `9x^2 - 4` against `a^2 - b^2` gives `a := 3x`, `b := 2` `[§20]` `#report-what-each-letter-is`
+- **S.12** check **every** slot, not the shape of two: `x^2 + 6x + 9` matches `(a+b)^2` with `a := x`, `b := 3`, because `2ab` really is `6x` and `b^2` really is `9` `[§20]` `#check-every-slot`
+- **S.13** one expression may match several rules; which to take is a **choice**, and the first thing in this file that grammar cannot settle `#several-rules-may-fit`
 
 *Boundaries — when a shape nearly matches:*
 
-- **S.14** `x^2 + 5x + 6` is not a perfect square: `b^2 = 6` and `2b = 5` cannot both hold. Nearly-matching is not matching `[§20]`
-- **S.15** `a^2 + b^2` matches no binomial formula, however much it looks like one ⇐ C.18
-- **S.16** what is inserted must be **one block** or become one: you cannot read `2x+3` as the `a` of `ab` and write `2x+3b` `[§19]`
+- **S.14** `x^2 + 5x + 6` is not a perfect square: `b^2 = 6` and `2b = 5` cannot both hold. Nearly-matching is not matching `[§20]` `#a-near-miss-is-a-miss`
+- **S.15** `a^2 + b^2` matches no binomial formula, however much it looks like one ⇐ C.18 `#sum-of-squares-matches-nothing`
+- **S.16** what is inserted must be **one block** or become one: you cannot read `2x+3` as the `a` of `ab` and write `2x+3b` `[§19]` `#what-is-inserted-must-be-one-block`
 
 ### S3 · Strategy — WHICH rule, when several fit
 
@@ -1131,10 +1131,10 @@ this warns rather than throws.
 
 ### How the slugs get added
 
-1. **Draft mechanically, correct by hand.** A slug per item, generated from its note, appended
-   to the line as `` `#number-times-letter` `` — greppable, and visually distinct from the
-   `[…]` reference tags. The author overrules on the way through; naming an item and reviewing
-   it are the same act.
+1. ✅ **DONE 2026-08-02 — all 179 drafted, none duplicated, all kebab-case.** Each line ends in
+   `` `#slug` ``, greppable and visually distinct from the `[…]` reference tags. **They are a
+   first draft and the review overrules them** — naming an item and reviewing it are the same
+   act, and the author knows which handle a class would recognise.
 2. **Cross-references stay NUMERIC in the markdown.** `⇐ N4.2` is not rewritten by hand — the
    converter maps number → slug once, at conversion.
 3. **A check for uniqueness and kebab-case**, run before conversion.
