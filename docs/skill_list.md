@@ -90,7 +90,32 @@ So the English side means two different things by one word, and the German side 
 inconsistent about which word names the block. **This file uses `expression` for the whole and
 never bare "term"**; the pools should be swept the same way when the rebuild lands.
 
-### V1 · Counting through a bracket
+### V1 · Two kinds of operator, and how many blocks each gives
+
+Not every operator separates. This is the distinction the counting rests on, and it was
+missing until `(ab)^n` forced it out:
+
+| | operators | what they do | blocks at the top |
+|---|---|---|---|
+| **separating** | `+` `-` `\cdot` | sit BETWEEN blocks of the same kind, any number of them — you can walk along the seam | as many as there are: summands, factors |
+| **containing** | the fraction bar, the exponent position, the radical | WRAP their parts. No seam to walk along, and the two parts are not the same kind of thing | **one** — the whole thing is a single block |
+
+So `(ab)^n` is **one block**: nothing separates at the top. `a^n \cdot b^n` is **two blocks**:
+the `\cdot` is a seam and the powers are the glue inside. Likewise `\frac{a}{b} \cdot
+\frac{c}{d}` is two blocks and `\frac{ac}{bd}` is one.
+
+**A container's parts still exist — one level down.** A quotient has a numerator and a
+denominator `[P.16]`, a power has a base and an exponent `[P.17]`. They are simply not blocks
+of the expression they sit in; you reach them by descending, not by counting.
+
+⚠️ **Why the bar is one block, stated properly.** Not because `:` binds tighter than `\cdot` —
+there is no such rung, they are the same level read left to right. Because **the bar is a
+bracket you do not write** `[N7.2]`: `\frac{a}{b}` is `(\frac{a}{b})`. And that settles the
+apparent clash with V2 below rather than creating one — a bar is a bracket that can NEVER be
+removed, so V2's rule counts it without a special case.
+
+### V2 · Counting through a bracket
+
 
 `a + (b + c)` is **three** summands, not two. The rule, and it is not a convenience:
 
@@ -188,7 +213,7 @@ each is a symbol you must be able to write back in.
 
 ## P · Parsing — naming the blocks
 
-The step every T item spends and no item states. V1 already does it — "count the summands,
+The step every T item spends and no item states. V2 already does it — "count the summands,
 flattening a bracket only where it changes nothing" *is* a parse — so this section is not new
 material, it is the assumption written down and made practisable.
 
@@ -234,7 +259,7 @@ move.* Seeing structure is reading.
 - **P.15** `3 \cdot x \cdot (x+1)` → three factors, `3`, `x`, `(x+1)`
 - **P.16** `\frac{3x+2}{x-1}` → two blocks, the numerator and the denominator
 - **P.17** `(x+1)^2` → two slots, the base `(x+1)` and the exponent `2` `[§5]` ⇐ N6.3
-- **P.18** `a + (b+c)` → 3 summands, but `a - (b+c)` → 2 ⇐ V1
+- **P.18** `a + (b+c)` → 3 summands, but `a - (b+c)` → 2 ⇐ V2
 - **P.19** `3(x+1) - 2(x-1)` → two summands first, and only then two factors inside each — the parse is recursive
 - **P.20** `3x` inside `3x + 2y` → parse a block with the same two questions, until you reach atoms
 
@@ -251,22 +276,37 @@ doing and the word they would use for it:
 | **E · expanding** | more blocks | ausmultiplizieren |
 | **C · collecting** | fewer blocks | zusammenfassen, ausklammern |
 
-**The test, in full.** It reads V's words, and V exists because this test needed them:
+**THE TEST.** It reads V's words, and V exists because this test needed them. The types sit on
+a ladder, loosest first — which is the inverse of binding strength:
 
-1. Count the **summands** on both sides, flattening brackets by V1.
-2. More on the right → **E**. Fewer → **C**.
-3. Equal, and each side is a single summand → count its **factors**. More → **E**. Fewer → **C**.
-4. Equal again → **R**.
+> **sum ⟶ product ⟶ container** (quotient, power, root) **⟶ atom**
 
-Something you look at, not something you judge — the standard `rule.involutive` is held to.
-The three cases that decide the shape of the test:
+1. Name each side's **type** `[V0]` and count its **blocks** `[V1, V2]`.
+2. **The type moved UP the ladder → E. Down → C.**
+3. Same type: **more blocks → E, fewer → C.**
+4. Same type and same count: **descend into the blocks and ask again.**
+5. Nothing differs at any level — only order or grouping — → **R**.
 
-- `a - (b+c) = a - b - c` — 2 summands against 3, so **E**, even though nothing was multiplied
-  and no symbol was added. Step 1 alone gets it right.
-- `2 \cdot 3x = 6x` — one summand each side, 3 factors against 2, so **C**. That is step 3, and
-  it is why step 3 exists.
-- `a \cdot a = a^2` — one summand each side, 2 factors against 1, so **C**; read the other way
-  it is 1 against 2, so **E**. Step 3 has to be symmetric or the same equation gets two answers.
+That is *ausmultiplizieren* against *zusammenfassen* made mechanical: **expanding opens an
+expression up the ladder, collecting closes it down, rearranging leaves it where it is.**
+
+Worked, including the three cases that forced this shape:
+
+| move | left | right | why |
+|------|------|-------|-----|
+| `a(b+c) = ab+ac` | product, 2 | sum, 2 | **up** the ladder → E, though the count never moved |
+| `(ab)^n = a^n b^n` | container, 1 | product, 2 | up → E |
+| `x^a x^b = x^{a+b}` | product, 2 | container, 1 | **down** → C |
+| `2 \cdot 3x = 6x` | product, 3 | product, 2 | same type, fewer → C |
+| `a+(b+c) = a+b+c` | sum, 3 | sum, 3 | same, same → descend → nothing differs → R |
+| `\frac{ak}{bk} = \frac{a}{b}` | container, 1 | container, 1 | descend: numerator `ak` (2) against `a` (1) → C |
+| `a - (b+c) = a-b-c` | sum, 2 | sum, 3 | same type, more → E |
+
+⚠️ **This corrected an earlier reading of `\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}`.** It
+was called rearranging, by applying §4 first and counting afterwards — but applying §4 is
+already a move. Counted as written it is product(2) → container(1): **down the ladder,
+collecting**. Adding fractions is collecting too. What separates the two is not the bucket but
+the COST — one needs a common denominator and the other does not.
 
 **⚠️ WHERE N AND T MEET.** `a \cdot a = a^2` is also N6.2, where it says what the notation
 *means*. That is not a duplicate: **N states the identity, T is the act of using it in a
@@ -677,7 +717,16 @@ admission that it is a course decision rather than a mathematical convention.
    expression aloud" and "estimate the answer"; they may need a section of their own.
 5. ~~Does C.6 belong in C?~~ **Answered by step 3 of the test**: summands first, factors
    second. `2 \cdot 3x = 6x` is collecting at the factor level.
-6. **Does N keep both directions of an identity, or only the meaning?** Decided as: N states
+6. ⚠️ **OPEN, awaiting review — R.13 no longer classifies as R.** Under the ladder,
+   `\frac{a}{b} = a \cdot \frac{1}{b}` is container(1) → product(2), which is UP, so expanding.
+   Note the asymmetry it exposes: `a - b = a + (-b)` stays put because difference and sum share
+   a rung, while quotient and product do not — so §3 and §4 are not the same trick after all,
+   and only one of them opens the expression. Two ways out: **(a)** move R.13 into E and add
+   the missing C twin `a \cdot \frac{1}{b} = \frac{a}{b}` (folding a product back into a
+   fraction, which is not in the list — the fifth item found by rule-first); **(b)** give the
+   conversions their own class outside R/E/C, since both change what the expression IS rather
+   than how much of it there is. Leaning (a): three buckets, one test.
+7. **Does N keep both directions of an identity, or only the meaning?** Decided as: N states
    what the notation means, T holds the two moves (E.12/C.10, E.13/C.11), `⇐` pointing back.
    The alternative — N owns the identity and T cites it without items of its own — would leave
    C.12 (`abca = a^2bc`) depending on something no item performs.
