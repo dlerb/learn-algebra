@@ -90,29 +90,43 @@ So the English side means two different things by one word, and the German side 
 inconsistent about which word names the block. **This file uses `expression` for the whole and
 never bare "term"**; the pools should be swept the same way when the rebuild lands.
 
-### V1 · Two kinds of operator, and how many blocks each gives
+### V1 · Separating operators and grouping symbols
 
 Not every operator separates. This is the distinction the counting rests on, and it was
 missing until `(ab)^n` forced it out:
 
-| | operators | what they do | blocks at the top |
+| | which | what they do | blocks at the top |
 |---|---|---|---|
-| **separating** | `+` `-` `\cdot` | sit BETWEEN blocks of the same kind, any number of them — you can walk along the seam | as many as there are: summands, factors |
-| **containing** | the fraction bar, the exponent position, the radical | WRAP their parts. No seam to walk along, and the two parts are not the same kind of thing | **one** — the whole thing is a single block |
+| **separating operators** | `+` `-` `\cdot` (and `/` `:` on a line) | sit BETWEEN blocks of the same kind, any number of them — you can walk along the seam | as many as there are: summands, factors |
+| **grouping symbols** | written brackets · the fraction bar · the radical · the superscript position | group what is written INSIDE them, by geometry. No seam, and the two parts need not be the same kind of thing | **one** — the whole thing is a single block |
 
 So `(ab)^n` is **one block**: nothing separates at the top. `a^n \cdot b^n` is **two blocks**:
 the `\cdot` is a seam and the powers are the glue inside. Likewise `\frac{a}{b} \cdot
 \frac{c}{d}` is two blocks and `\frac{ac}{bd}` is one.
 
-**A container's parts still exist — one level down.** A quotient has a numerator and a
+**A grouping symbol's parts still exist — one level down.** A quotient has a numerator and a
 denominator `[P.16]`, a power has a base and an exponent `[P.17]`. They are simply not blocks
 of the expression they sit in; you reach them by descending, not by counting.
 
-⚠️ **Why the bar is one block, stated properly.** Not because `:` binds tighter than `\cdot` —
-there is no such rung, they are the same level read left to right. Because **the bar is a
-bracket you do not write** `[N7.2]`: `\frac{a}{b}` is `(\frac{a}{b})`. And that settles the
-apparent clash with V2 below rather than creating one — a bar is a bracket that can NEVER be
-removed, so V2's rule counts it without a special case.
+**"Grouping symbol" is the standard term, not ours.** English curricula patch PEMDAS into
+**G**EMDAS for exactly this reason, and list the fraction bar with the brackets; the German
+rule carries the same rider — *die Seiten eines Bruchstrichs und der Strich des Wurzelzeichens
+werden wie Klammern behandelt*. The student-facing sentence is therefore already in the
+language: **Bruchstrich und Wurzelstrich sind Klammern.**
+
+⚠️ **And the bar is not LIKE a bracket, it WAS one.** The horizontal line has a name — the
+**vinculum** — and before parentheses were adopted in the eighteenth century it *was* the
+bracketing device: `a - \overline{b + c}` meant `a - (b+c)`. Parentheses replaced it almost
+everywhere, and it survives in exactly the two places this file keeps arguing about, over the
+radicand and between numerator and denominator. So N7.2's "a bracket you do not write" is not
+an analogy — it is the older bracket that never got replaced there. Which is also why the
+fraction bar and the root bar behave identically `[N6.5, N7.2]`: they are the same symbol.
+
+⚠️ **Why the bar is one block, stated on the right ground.** NOT because `:` binds tighter than
+`\cdot` — there is no such rung, they share one and are read left to right `[N4.1b]`. Because
+the bar is a grouping symbol. And that settles the apparent clash with V2 rather than creating
+one: the bar is a bracket that can never be removed, so V2's rule counts it with no special
+case.
 
 ### V2 · Counting through a bracket
 
@@ -171,11 +185,14 @@ each is a symbol you must be able to write back in.
 
 ### N4 · Precedence — the grouping nobody writes
 
-- **N4.1** `\text{power} \succ \cdot \succ +` — the whole ranking, in one line `[ix.precedence, ix.power-precedence]`
+- **N4.1** **Two tiers, not one chain.** First the **grouping symbols** `[V1]` — written brackets, the fraction bar, the radical, the superscript position — which group by geometry and are settled before any ranking is consulted. Then, among what is left on the line: `\text{power} \succ \cdot \; / \; : \; \succ + \; -`, same rung read left to right `[ix.precedence, ix.power-precedence]`
+- **N4.1a** the classroom form: **Klammern → Potenz → Punkt → Strich**, *wobei Bruchstrich und Wurzelstrich Klammern sind* — that rider is the whole content, and it is what English curricula patch PEMDAS into **G**EMDAS for `[V1]`
+- **N4.1b** `\cdot`, `/` and `:` share ONE rung: `a / b \cdot c = (a/b) \cdot c`, never `a/(b \cdot c)`. ⚠️ The stacked bar is NOT on this rung — it is a grouping symbol, which is why `\frac{a}{b} \cdot c` needs no brackets and `a / b \cdot c` does `[no card]`
 - **N4.2** `a + b \cdot c = a + (b \cdot c)` — a product inside a sum needs no brackets `[ix.precedence]`
 - **N4.3** `a \cdot b^n = a \cdot (b^n)` — the exponent reaches only what it touches `[ix.power-precedence]`
 - **N4.4** `3a^2 = 3 \cdot (a^2)`, and `(3a)^2` is a different term `[ix.power-precedence]`
-- **N4.5** `ab^2 = a \cdot (b^2)` — it binds to the one symbol before it, not to the product `[ix.power-precedence]`
+- **N4.5** `ab^2 = a \cdot (b^2)` — **the power binds to the closest BLOCK before it** `[ix.power-precedence]`
+- **N4.5a** and "block" is the word that makes it exceptionless. `-2a^2 = -2(a^2)`: nothing is grouped, so the closest block is the atom `a`. `\left(\frac{a}{b}\right)^2`: the bar has ALREADY grouped, so the closest block is the whole fraction — and *not* the numerator. Same rule, opposite-looking answers; "closest symbol" is a shortcut that holds only while nothing has been grouped `[no card]`
 - **N4.6** `(ab)^2` — a bracket is the only way to give the exponent more than one symbol `[ix.power-precedence]`
 - **N4.7** `-a^2 = -(a^2)`, and `(-a)^2` is a different term `[ix.power-precedence]`
 - **N4.8** `a - b - c = (a - b) - c` — a chain of one operator is read left to right `[ix.left-to-right]`
@@ -198,6 +215,7 @@ each is a symbol you must be able to write back in.
 - **N6.4** `\sqrt[n]{a} = a^{1/n}` — radical and exponent are two spellings of one thing `[ix.root]`
 - **N6.5** `\sqrt{a+b}` — the radical bar is a bracket: everything under it is one object `[no card]`
 - **N6.6** `\sqrt{a} \cdot b` against `\sqrt{ab}` — where the bar ends is the whole question `[no card]`
+- **N6.7** `a^{b^c}` is read TOP-DOWN, `a^{(b^c)}`, never `(a^b)^c`: `3^{3^3} = 3^{27}`, which is 7 625 597 484 987 and not 19 683 `[no card]`
 
 ### N7 · Division and the fraction bar
 
@@ -208,6 +226,9 @@ each is a symbol you must be able to write back in.
 - **N7.5** `\frac{1}{2}x` against `\frac{1}{2x}` — where the bar ends, again `[no card]`
 - **N7.6** `\frac{\frac{a}{b}}{c}` against `\frac{a}{\frac{b}{c}}` — the main bar is the long one, and the two are different numbers `[no card]`
 - **N7.7** `\frac{a}{b}` is one object, one number — not an unfinished division `[no card]`
+- **N7.8** **The bar's extent is the fraction's scope**, and it settles the reading in both directions: sideways, `\frac{1}{2}x` against `\frac{1}{2x}` `[N7.5]`; upward, a superscript ABOVE the bar and within its span belongs to the numerator, one PAST the bar's right end belongs to the whole fraction `[no card]`
+- **N7.9** `\frac{a^2}{b}` against `\left(\frac{a}{b}\right)^2` — where the exponent is written decides what it is applied to. ⚠️ `\frac{a^2}{b}` needs NO bracket around `a^2`: the bar already brackets the numerator, so `\frac{(a^2)}{b}` is a bracket that changes no reading `[N3.4]`. The brackets in the second are needed because the exponent stands outside the bar `[no card]`
+- **N7.10** in handwriting the bar has no precise right end, which is the real reason to write `\left(\frac{a}{b}\right)^n` rather than trust the geometry. ⚠️ Typeset, the bare form is NOT ambiguous — it reads as the whole fraction — and it is worth not marking it wrong `[no card]`
 
 ---
 
@@ -701,9 +722,17 @@ admission that it is a course decision rather than a mathematical convention.
 5. **The two jobs of the minus glyph** (N5.1). The tower has the unary minus and subtraction
    separately; nothing says the reader must decide which one a given `-` is.
 6. **The radical bar as a bracket** (N6.5, N6.6). `ix.fraction-bar` does exactly this job for
-   the fraction bar; the root has no counterpart, and it is the same convention.
-7. **Reading a stacked fraction** (N7.5–N7.7): where a bar ends, which bar is the main one,
-   and that a fraction is one number.
+   the fraction bar; the root has no counterpart — and they are the SAME SYMBOL, the vinculum,
+   so one card should cover both. **The first one to write.**
+7. **Reading a stacked fraction** (N7.5–N7.10): where a bar ends, which bar is the main one,
+   that a fraction is one number, and that the bar's extent settles the reading upward as well
+   as sideways.
+8. **The two tiers of the order of operations** (N4.1, N4.1a, N4.1b). `ix.precedence` and
+   `ix.power-precedence` give the ranking; nothing in the tower says the grouping symbols are
+   settled FIRST, or that `\cdot`, `/` and `:` share one rung while the stacked bar does not.
+9. **The power binds to the closest BLOCK** (N4.5a) — the refinement that makes `-2a^2` and
+   `\left(\frac{a}{b}\right)^2` one rule instead of two.
+10. **`a^{b^c}` reads top-down** (N6.7).
 
 ## Open questions
 
