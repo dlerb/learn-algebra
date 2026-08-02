@@ -41,6 +41,12 @@ This section exists because that assumption was hidden and got caught.
 | **block** | Block, Baustein | one of the parts an expression separates into. A block is itself an expression, and you move it without opening it |
 | **summand** | Summand | a block of a sum. `3x + 2y` has two |
 | **factor** | Faktor | a block of a product. `3xy` has three |
+| **atom** | Atom | a block with nothing inside: ONE number or ONE letter. `7` and `x` are atoms; `3x` is not (two blocks), `a^2` is not (a power over an atom). It is where descending stops |
+
+⚠️ **Blocks nest, and the counting only ever looks at ONE level.** `(ab)^n` is **one** block —
+a power — whose base is a block containing **two**. Saying "one block" is never a claim that
+there is nothing inside; it is a claim about the top. You reach the rest by descending, which
+is step 4 of the test.
 
 ### V0 · What an expression IS — the five types
 
@@ -109,10 +115,25 @@ denominator `[P.16]`, a power has a base and an exponent `[P.17]`. They are simp
 of the expression they sit in; you reach them by descending, not by counting.
 
 **"Grouping symbol" is the standard term, not ours.** English curricula patch PEMDAS into
-**G**EMDAS for exactly this reason, and list the fraction bar with the brackets; the German
-rule carries the same rider — *die Seiten eines Bruchstrichs und der Strich des Wurzelzeichens
-werden wie Klammern behandelt*. The student-facing sentence is therefore already in the
-language: **Bruchstrich und Wurzelstrich sind Klammern.**
+**G**EMDAS for exactly this reason and list the fraction bar with the brackets; the German rule
+carries the same rider — *die Seiten eines Bruchstrichs und der Strich des Wurzelzeichens
+werden wie Klammern behandelt*.
+
+⚠️ **But "der Bruchstrich ist eine Klammer" is too loose to say to a class, and it was in this
+file until 2026-08-02.** A bracket is a PAIR of marks: one opens, one closes, and the region
+between them is the block. A bar is one stroke. What plays the part of the two marks is:
+
+> **Wo der Strich anfängt und wo er aufhört — das ist die Klammer.**
+
+That is not a metaphor. `a - \overline{b+c}` delimited exactly the region a pair would, and the
+delimiters were the two ends of the stroke. Two consequences worth saying out loud:
+
+- **Length is meaning.** With `(` and `)` the delimiters are glyphs you cannot draw sloppily.
+  With a bar they are the ends of one stroke, so a bar drawn too short or too long says
+  something else `[§0.1, §0.2]`.
+- **A fraction bar is two brackets in one stroke** — it delimits the region above AND the
+  region below, which no bracket pair does. The root is the ordinary case: the hook opens and
+  the right end of the bar closes.
 
 ⚠️ **And the bar is not LIKE a bracket, it WAS one.** The horizontal line has a name — the
 **vinculum** — and before parentheses were adopted in the eighteenth century it *was* the
@@ -228,7 +249,7 @@ each is a symbol you must be able to write back in.
 - **N7.7** `\frac{a}{b}` is one object, one number — not an unfinished division `[no card]`
 - **N7.8** **The bar's extent is the fraction's scope**, and it settles the reading in both directions: sideways, `\frac{1}{2}x` against `\frac{1}{2x}` `[N7.5]`; upward, a superscript ABOVE the bar and within its span belongs to the numerator, one PAST the bar's right end belongs to the whole fraction `[no card]`
 - **N7.9** `\frac{a^2}{b}` against `\left(\frac{a}{b}\right)^2` — where the exponent is written decides what it is applied to. ⚠️ `\frac{a^2}{b}` needs NO bracket around `a^2`: the bar already brackets the numerator, so `\frac{(a^2)}{b}` is a bracket that changes no reading `[N3.4]`. The brackets in the second are needed because the exponent stands outside the bar `[no card]`
-- **N7.10** in handwriting the bar has no precise right end — but that is the writer's to fix, not the reader's to guess `[§0.3]`. It is the real reason to write `\left(\frac{a}{b}\right)^n` rather than trust the geometry. ⚠️ Typeset, the bare form is NOT ambiguous — it reads as the whole fraction — and it is worth not marking it wrong `[no card]`
+- **N7.10** in handwriting the bar has no precise right end — but that is the writer's to fix, not the reader's to guess `[§0.1]`. It is the real reason to write `\left(\frac{a}{b}\right)^n` rather than trust the geometry. ⚠️ Typeset, the bare form is NOT ambiguous — it reads as the whole fraction — and it is worth not marking it wrong `[no card]`
 
 ---
 
@@ -463,30 +484,36 @@ German first, because that is the language a student reads them in.
 set is re-based: the notation rules precede the moves, as N precedes T.
 
 **§0.1 · Der Bruchstrich**
-> **Alles, was über und unter dem Bruchstrich steht, gehört zum Bruch.**
+> **Alles, was über und unter dem Bruchstrich steht, gehört zum Bruch und bildet einen Block.
+> Also genau lesen — und genau zeichnen.**
 >
-> *Everything above and below the fraction bar belongs to the fraction.* — N7.2, N7.3, N7.7,
-> and it is what P.9 reads
+> *Everything above and below the fraction bar belongs to the fraction and forms one block. So
+> read it exactly — and draw it exactly.* — N7.2, N7.3, N7.7, N7.8; read by P.9
 
 **§0.2 · Der Wurzelstrich**
-> **Alles, was unter dem waagrechten Strich der Wurzel steht, gehört unter die Wurzel.**
+> **Alles, was unter dem waagrechten Strich der Wurzel steht, gehört unter die Wurzel und
+> bildet einen Block. Also genau lesen — und genau zeichnen.**
 >
-> *Everything under the horizontal bar of the root belongs under the root.* — N6.5, N6.6, P.10.
-> The same sentence twice, because it is the same symbol twice `[V1: the vinculum]`.
+> *Everything under the horizontal bar of the root belongs under the root and forms one block.
+> So read it exactly — and draw it exactly.* — N6.5, N6.6, P.10
 
-**§0.3 · Die Länge des Strichs ist die Aussage** *(and this one is about WRITING)*
-> **Der Strich sagt, wie weit er reicht. Wer ihn von Hand zeichnet, sagt mit seiner Länge
-> etwas — also muss er genau so lang sein, wie er reichen soll.**
->
-> *The bar states its own reach. Drawn by hand, its length says something — so it has to be
-> exactly as long as it is meant to reach.* — N7.8, N7.9, N7.10, N6.6
+⚠️ **Deliberately the same sentence twice**, because it is the same symbol twice — the vinculum
+`[V1]`. And the tail is not decoration: *wo der Strich anfängt und wo er aufhört, ist die
+Klammer*, so a bar drawn carelessly says something the student did not mean.
 
-⚠️ **§0.3 IS A THIRD KIND OF MISTAKE, and the pools have no room for it yet.** Every entry in
-`mistakes.json` is a misreading or a wrong move — something done to an expression that was
-already on the page. This one is a mistake of **production**: the student means the right
-thing and draws a bar that says a different one. `mis.fraction-bar-grouping-lost` and
-`mis.root-scope` are its reading-side cousins and are not the same failure. Worth its own
-entry when the pool is rebuilt, and worth saying to a class as a demand rather than a
+⚠️ **"Draw it exactly" is a rule for the teacher's mouth, not for a drill — and that is a
+category, not an exception.** An app that takes clicks and typed answers cannot observe a
+student DRAWING, so no **production** skill can be drilled here. The reading half survives as
+items and is perfectly drillable (given two bars of different length, which fraction is this? —
+N7.8, N7.9). Only the writing demand rides along in the rule's tail. ⚠️ **Expect this again:**
+"write the brackets when you raise a fraction to a power" `[N7.10]` is the same shape, and so
+is every future rule about how something must be written down rather than read or transformed.
+
+⚠️ **It is also a kind of MISTAKE the pools cannot hold.** Every entry in `mistakes.json` is a
+misreading or a wrong move — something done to an expression already on the page. Drawing a
+bar of the wrong length is neither: the student means the right thing and writes one that says
+something else. `mis.fraction-bar-grouping-lost` and `mis.root-scope` are its reading-side
+cousins, not the same failure. And it is worth saying to a class as a demand rather than a
 subtlety: **the length of the bar is under your hand, so it is not too much to ask.**
 
 ### Rearranging
@@ -680,7 +707,7 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 
 | section | items | rules |
 |---------|-------|-------|
-| V, N (44), P (20) | 64 | **§0.1–§0.3** for the grouping symbols, plus where §3 and §5 land |
+| V, N (44), P (20) | 64 | **§0.1, §0.2** for the grouping symbols, plus where §3 and §5 land |
 | **R** | 21 | **§1.1–§5** |
 | **E** | 21 | **§6.1–§11** |
 | **C** | 19 | **§12.1–§17.2** |
