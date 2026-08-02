@@ -91,13 +91,35 @@ const items = computed(() => mistakes.map(m => ({
   raw: m,
 })))
 
+// ── ORDER WITHIN A SECTION: THE OTHER AXIS, THEN THE FILE (2026-08-02) ───────
+// It used to be frequency, everywhere on this page — the most-often-made first.
+// That reading now lives entirely in the ★ column, which carries it row by row
+// anyway; what the sequence carries instead is the coordinate the headings did
+// NOT spend, so a topic section runs family by family and a family section runs
+// topic by topic. Underneath the rank, the order mistakes.json lists them in.
+// `sort` is stable, so one rank key is the whole sort.
+// The rule-broken sectioning takes `topic` as its other axis: `family` is the
+// nearer neighbour of "the law you break" and would mostly re-say the heading,
+// while the classroom topic is the coordinate that section cannot see.
+type Item = (typeof items.value)[number]
+const FAMILY_ORDER = mistakes.filter(m => m.head).map(m => m.id)
+const familyRank = (i: Item) => {
+  const at = FAMILY_ORDER.indexOf(i.raw.family ?? '')
+  return at === -1 ? FAMILY_ORDER.length : at   // no family last, as `fam-none` is
+}
+const topicRank = (i: Item) => {
+  const at = TOPICS.indexOf(i.topic ?? '')
+  return at === -1 ? TOPICS.length : at
+}
+const rankedBy = (rank: (i: Item) => number, list: Item[]) =>
+  [...list].sort((a, b) => rank(a) - rank(b))
+
 const topicSections = computed(() => TOPICS
   .map(slug => ({
     slug,
     title: TOPIC_TITLE[slug] ? t(TOPIC_TITLE[slug]) : slug,
     note: undefined as string | undefined,
-    // Within a topic the most-often-made comes first, as on /errors.
-    items: items.value.filter(i => i.topic === slug).sort((a, b) => b.frequency - a.frequency)
+    items: rankedBy(familyRank, items.value.filter(i => i.topic === slug))
       .map(i => ({ item: i, primary: true })),
   }))
   .filter(s => s.items.length > 0))
@@ -157,14 +179,14 @@ const brokenRuleSections = computed(() => {
       // wreckage laid out beneath it.
       title: r ? t(r.rule) : ruleId,
       note: r ? t(r.note) : undefined,
-      items: [...ms].sort((a, b) => b.frequency - a.frequency).map(item => {
+      items: rankedBy(topicRank, ms).map(item => {
         const primary = !claimed.has(item.id)
         claimed.add(item.id)
         return { item, primary }
       }),
     }
   })
-  const rest = items.value.filter(m => !claimed.has(m.id)).sort((a, b) => b.frequency - a.frequency)
+  const rest = rankedBy(topicRank, items.value.filter(m => !claimed.has(m.id)))
   if (rest.length) {
     out.push({
       slug: 'by-loners', title: t(LONERS), note: t(LONERS_NOTE),
@@ -193,8 +215,7 @@ const familySections = computed(() => {
     // the sentence otherwise. Same rule as everywhere else the pools are read.
     title: h.shortName?.[lang.value] ?? t(h.mistake),
     note: t(h.note) as string | undefined,
-    items: items.value.filter(i => i.raw.family === h.id)
-      .sort((a, b) => b.frequency - a.frequency)
+    items: rankedBy(topicRank, items.value.filter(i => i.raw.family === h.id))
       .map(item => ({ item, primary: true })),
   })).filter(s => s.items.length > 0)
     .sort((a, b) => b.items.length - a.items.length)
@@ -202,8 +223,7 @@ const familySections = computed(() => {
   // A mistake with no family is not a defect either — 9 of 38 are singular
   // enough that no shape holds them, and saying so is more honest than
   // inventing a family to absorb them.
-  const rest = items.value.filter(i => !i.raw.head && !i.raw.family)
-    .sort((a, b) => b.frequency - a.frequency)
+  const rest = rankedBy(topicRank, items.value.filter(i => !i.raw.head && !i.raw.family))
   if (rest.length) {
     out.push({
       slug: 'fam-none', title: t(L_NOFAM.title), note: t(L_NOFAM.note),
@@ -225,6 +245,23 @@ const sectionBy = ref<'topic' | 'rule' | 'family'>('topic')
 const sections = computed(() => sectionBy.value === 'topic' ? topicSections.value
   : sectionBy.value === 'rule' ? brokenRuleSections.value
   : familySections.value)
+
+// ── WHAT THE STRIP SAYS: EVERY COORDINATE THE HEADING DOES NOT (2026-08-02) ──
+// The same rule /rules and /skills follow. A row carries a `topic` and a
+// `family`; a heading spends at most one of them; the strip shows what is left.
+// Under a topic heading that is the family, under a family heading the topic, and
+// under a BROKEN RULE — which is neither — it is both, because that sectioning is
+// derived from `breaks` and can say nothing about either coordinate.
+// It is also what makes the within-section order readable: the rows are sorted by
+// the key the strip now prints. Content, so neither is gated on inspect; the
+// authored `kind` (mis/anti/omi/sal) moves to the strip's right, where the rest
+// of the inspect-only plumbing already lives.
+const familyName = (m: MistakeDef) => m.shortName?.[lang.value] ?? t(m.mistake)
+const familyTitle = new Map(mistakes.filter(m => m.head).map(m => [m.id, familyName(m)]))
+const stripTopic = (i: Item) => sectionBy.value === 'topic' || !i.topic ? undefined
+  : (TOPIC_TITLE[i.topic] ? t(TOPIC_TITLE[i.topic]) : i.topic)
+const stripFamily = (i: Item) => sectionBy.value === 'family' || !i.raw.family ? undefined
+  : familyTitle.get(i.raw.family)
 const brokenRuleCount = computed(() => brokenRuleSections.value.filter(s => s.slug !== 'by-loners').length)
 
 const orphans = computed(() => items.value.filter(i => i.orphan).length)
@@ -271,7 +308,7 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
       <LayerRow
         v-for="{ item: m, primary } in s.items" :key="m.id + s.slug"
         :id="m.id" :name="m.mistake" :record="m.raw"
-        :kind="inspect ? m.kind : undefined"
+        :kind="stripTopic(m)"
         :marks-title="`${m.frequency} of 3 — how often the sources flag it`"
         :targeted="m.id === targetId"
       >
@@ -285,11 +322,20 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
         </template>
 
         <template #folds>
+          <!-- The shape it belongs to, ahead of the reference folds and styled
+               exactly as /rules styles its family tag: the pools are symmetric
+               and so is their chrome. -->
+          <span v-if="stripFamily(m)" class="fam">{{ stripFamily(m) }}</span>
           <RefFold :label="L.corrupts" :links="m.corrupts" />
           <RefFold :label="L.taught" :links="m.guardedBy" derived />
         </template>
 
         <template #strip-right>
+          <!-- The authored taxonomy — misconception, antipattern, omission,
+               salience. An author's word, never a student's, so it sits with the
+               json fold rather than at the head of the strip where the two
+               reader-facing coordinates now are. -->
+          <span v-if="inspect" class="tax">{{ m.kind }}</span>
           <!-- A mistake that breaks two rules belongs to both families and is
                shown under both. Marked, so a second sighting reads as structure
                rather than as a duplicated row. -->
@@ -312,10 +358,15 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
 
         <!-- AUTHORED, hence no arrow — this is `breaks`, the one edge that runs
              from one pool into another. It is the mirror of /rules' `prevents`
-             column read the other way, so the two pages can never disagree. -->
+             column read the other way, so the two pages can never disagree.
+             ⚠️ The comment said that from the first commit and the markup
+             printed an arrow anyway until 2026-08-02, which is exactly the
+             "prose the data does not encode" failure the revision keeps
+             finding — here between a comment and its own template. -->
+
         <div v-if="m.breaks.length" class="cell rule-cell">
           <RouterLink v-for="r in m.breaks" :key="r.id" class="rule-line" :to="r.to">
-            <span class="arrow">→</span>{{ r.text }}
+            {{ r.text }}
           </RouterLink>
         </div>
       </LayerRow>
@@ -358,10 +409,12 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
   padding: .35rem .55rem; border-radius: 6px; border-left: 2px solid var(--border-strong);
   background: var(--band); color: var(--text-muted);
 }
-.rule-line { display: block; color: var(--text-muted); text-decoration: none; text-indent: -.9rem; padding-left: .9rem; }
+/* Flush, since the arrow that the hanging indent was hanging off is gone: the
+   band and the .4rem between entries already separate one quoted rule from the
+   next, and an indent with nothing in it reads as a missing glyph. */
+.rule-line { display: block; color: var(--text-muted); text-decoration: none; }
 .rule-line + .rule-line { margin-top: .4rem; }
-.rule-line:hover, .rule-line:hover .arrow { color: var(--accent); }
-.arrow { color: var(--text-faint); margin-right: .35rem; }
+.rule-line:hover { color: var(--accent); }
 
 /* The sectioning switch — the tower's filter chips, same control as /skills'. */
 .filters { margin-top: 1rem; display: grid; gap: .4rem; }
@@ -376,6 +429,13 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
    strip with the other structural markers — it is a fact about the grouping,
    not about the mistake. */
 .again { font-size: .58rem; color: var(--text-faint); white-space: nowrap; font-style: italic; }
+
+/* The family tag, byte-identical to /rules' — the two pages are read side by
+   side and their strips must weigh the same. */
+.fam { font-size: .62rem; font-weight: 600; color: var(--text-muted); letter-spacing: .01em; }
+/* The taxonomy word, in the inspect-only band: fainter than the tag at the head
+   of the strip, because it is the file's word and not the reader's. */
+.tax { font-size: .58rem; color: var(--text-faint); white-space: nowrap; }
 
 .orphan-chip { font-size: .72rem; font-weight: 600; padding: .16rem .5rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn-fg); border: 1px solid var(--warn-border); white-space: nowrap; }
 </style>

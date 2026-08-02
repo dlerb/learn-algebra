@@ -40,10 +40,12 @@ const t = (ls: LocalizedString) => loc(ls, lang.value)
 const L = computed(() => lang.value === 'de'
   ? { reads: 'fasst zusammen', drills: 'geübt in',  prevents: 'verhindert', sheet: 'Merkblatt',
       by: 'gliedern nach', byFlat: 'gar nicht', byFamily: 'Familie', byKind: 'Register',
-      isTitle: 'Was eine Form IST', doTitle: 'Was man TUT', noFamily: 'Ohne Familie' }
+      isTitle: 'Was eine Form IST', doTitle: 'Was man TUT', noFamily: 'Ohne Familie',
+      isTag: 'IST', doTag: 'TUT' }
   : { reads: 'summarises',      drills: 'drilled by', prevents: 'prevents',   sheet: 'Cheat sheet',
       by: 'section by', byFlat: 'nothing', byFamily: 'family', byKind: 'register',
-      isTitle: 'What a form IS', doTitle: 'What to DO', noFamily: 'No family' })
+      isTitle: 'What a form IS', doTitle: 'What to DO', noFamily: 'No family',
+      isTag: 'IS', doTag: 'DO' })
 
 const route = useRoute()
 const targetId = computed(() => route.hash.slice(1))
@@ -127,15 +129,34 @@ const orphans = computed(() => items.value.filter(i => i.orphan).length)
 const heads = computed(() => rules.filter(r => r.head))
 const members = computed(() => items.value.filter(i => !i.raw.head))
 
+// ── ORDER WITHIN A SECTION: THE OTHER AXIS, THEN THE FILE (2026-08-02) ───────
+// The two axes cross-cut, so whichever one the headings spend, the other still
+// sorts the rows under them — a family section runs IS-sentences then DO-, a
+// register section runs family by family. Underneath that, the order rules.json
+// lists them in, never the alphabet: the file's order is authored and a revision
+// pass reads the file. `sort` is stable, so a single rank key is the whole sort.
+// FLAT IS UNTOUCHED, deliberately — it is the registry as authored, and a
+// secondary key would make it a third sectioning wearing no headings.
+type Item = (typeof items.value)[number]
+const kindRank = (i: Item) => (i.kind === 'is' ? 0 : 1)
+// Family order = the order the HEADS stand in the file, which is the order the
+// family sections themselves come in; no family sorts last, as `fam-none` does.
+const familyRank = (i: Item) => {
+  const at = heads.value.findIndex(h => h.id === i.raw.family)
+  return at === -1 ? heads.value.length : at
+}
+const rankedBy = (rank: (i: Item) => number, list: Item[]) =>
+  [...list].sort((a, b) => rank(a) - rank(b))
+
 const familySections = computed(() => {
   const out = heads.value.map(h => ({
     slug: `fam-${h.id}`,
     title: t(h.rule),
     note: t(h.note) as string | undefined,
-    items: members.value.filter(i => i.raw.family === h.id),
+    items: rankedBy(kindRank, members.value.filter(i => i.raw.family === h.id)),
   })).filter(x => x.items.length > 0)
   const rest = members.value.filter(i => !i.raw.family)
-  if (rest.length) out.push({ slug: 'fam-none', title: L.value.noFamily, note: undefined, items: rest })
+  if (rest.length) out.push({ slug: 'fam-none', title: L.value.noFamily, note: undefined, items: rankedBy(kindRank, rest) })
   return out
 })
 
@@ -144,15 +165,31 @@ const familySections = computed(() => {
 // not read — the same order the skill processes are in.
 const kindSections = computed(() => ([
   { slug: 'kind-is', title: L.value.isTitle, note: undefined as string | undefined,
-    items: members.value.filter(i => i.kind === 'is') },
+    items: rankedBy(familyRank, members.value.filter(i => i.kind === 'is')) },
   { slug: 'kind-do', title: L.value.doTitle, note: undefined as string | undefined,
-    items: members.value.filter(i => i.kind === 'do') },
+    items: rankedBy(familyRank, members.value.filter(i => i.kind === 'do')) },
 ] as const).filter(x => x.items.length > 0))
 
 const sectionBy = ref<'flat' | 'family' | 'kind'>('flat')
 const sections = computed(() => sectionBy.value === 'family' ? familySections.value
   : sectionBy.value === 'kind' ? kindSections.value
   : [{ slug: 'all', title: undefined as string | undefined, note: undefined as string | undefined, items: items.value }])
+
+// ── WHAT THE STRIP SAYS: EVERY COORDINATE THE HEADING DOES NOT (2026-08-02) ──
+// The /skills rule, applied to a page with two axes instead of one: a row carries
+// both `kind` and `family`, the heading spends at most one of them, and the strip
+// shows whichever is left. So a family section is tagged IS/DO, a register
+// section is tagged with the family, and FLAT — which has no heading at all —
+// carries both, as it must.
+// This is also what makes the new within-section order legible: the key the rows
+// are sorted by is now printed on every row. Content, not plumbing, so neither is
+// gated on inspect — and the register tag replaces the raw `is`/`do` that used to
+// sit in the strip under inspect, which said the same thing in the file's words.
+// SHORT CAPS, not the section titles: "What a form IS" is a heading and reads as
+// one; repeated down 55 rows it would be the loudest thing in the strip. The caps
+// are the heading's own emphasised word, so the tag and the heading match.
+const stripRegister = (kind: string) =>
+  sectionBy.value === 'kind' ? undefined : (kind === 'is' ? L.value.isTag : L.value.doTag)
 
 // FOUR COLUMNS: the sentence | its formula | its gloss | the mistakes it prevents.
 // The maths column arrived with `latex` (2026-07-28) and changes what the page
@@ -203,7 +240,7 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
       <LayerRow
         v-for="m in s.items" :key="m.id + s.slug"
         :id="m.id" :name="m.rule" :record="m.raw"
-        :kind="inspect ? m.kind : undefined"
+        :kind="stripRegister(m.kind)"
         :targeted="m.id === targetId"
       >
         <!-- THE CLASSROOM PHRASING, in the rail directly under the name. It is
@@ -222,8 +259,10 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
 
         <template #folds>
           <!-- The pool it belongs to, ahead of the reference folds: it is what
-               the sentence is CALLED, not somewhere else to go. -->
-          <span v-if="m.family.length" class="fam">{{ m.family.join(' · ') }}</span>
+               the sentence is CALLED, not somewhere else to go. Dropped when the
+               section heading IS the family — a row that repeats its own heading
+               teaches nothing and makes the strip longer. -->
+          <span v-if="m.family.length && sectionBy !== 'family'" class="fam">{{ m.family.join(' · ') }}</span>
           <RefFold :label="L.reads" :links="m.reads" />
           <RefFold :label="L.drills" :links="m.skills" derived />
         </template>
@@ -248,7 +287,12 @@ const COLS = 'minmax(0, 22rem) minmax(0, 18rem) minmax(0, 22rem) minmax(0, 22rem
         <!-- THE PITCH OF THE WHOLE LAYER: learn this one sentence and these
              mistakes stop happening. Derived, hence the arrows — it is
              `error.rules` read backwards, so it can never disagree with what
-             /errors shows. Uncapped, because nothing prevents more than three;
+             /errors shows. These are now the ONLY inline arrows on the three
+             curated pages: /skills' rule and mistake lists and /mistakes' broken
+             rules lost theirs on 2026-08-02 because they are authored, which
+             makes the glyph mean one thing again — RefFold's → and this one say
+             "nobody typed this edge here".
+             Uncapped, because nothing prevents more than three;
              the old card-mediated version needed a cap of four. -->
         <div v-if="m.errors.length" class="cell prevents">
           <span class="label">{{ L.prevents }}</span>

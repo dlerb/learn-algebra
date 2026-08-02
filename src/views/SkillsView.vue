@@ -205,8 +205,18 @@ function toRow(s: Skill): Row {
   }
 }
 
-// Skills sort by name within a section; the layer carries no drilling sequence.
-const byName = (a: Skill, b: Skill) => t(a.name).localeCompare(t(b.name))
+// AUTHORED ORDER WITHIN A SECTION since 2026-08-02, where it used to be
+// alphabetical by name. The rule on all three curated pages is now the same:
+// cluster by the COMPLEMENTARY coordinate, then fall back to the order the file
+// lists them in — a revision pass reads the file, so the page should too, and an
+// alphabet is an order that means nothing here.
+// ⚠️ On this page that rule needs no sort at all, and the reason is structural:
+// a `group` lives inside exactly one process file, so every row under a group
+// heading already shares one process, and `skills` is flattened process-file by
+// process-file, so a process section already arrives group-clustered in the
+// file's own group order. Sorting by the other coordinate would be a no-op
+// dressed up as a decision. If a group is ever authored under two processes,
+// this is where the real sort has to appear.
 
 // TWO SECTIONINGS OF ONE LIST, which no other layer has: `group` is the
 // classroom topic and `kind` the strategy type, they cross-cut, and both are
@@ -218,7 +228,7 @@ const sectionBy = ref<'group' | 'process'>('group')
 interface Sec { slug: string; title: string; blurb?: string; items: Row[] }
 const sectionsOf = (reg: GroupDef[], key: 'group' | 'process') =>
   reg
-    .map(g => ({ slug: g.slug, title: t(g.title), blurb: g.blurb ? t(g.blurb) : undefined, items: skills.filter(s => s[key] === g.slug).sort(byName).map(toRow) }))
+    .map(g => ({ slug: g.slug, title: t(g.title), blurb: g.blurb ? t(g.blurb) : undefined, items: skills.filter(s => s[key] === g.slug).map(toRow) }))
     .filter(s => s.items.length > 0)
 
 const sections = computed<Sec[]>(() =>
@@ -339,7 +349,7 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                caveat. It qualifies the form, so it sits under it. -->
           <div v-if="r.conditions" class="quant">{{ L.cond }} <MathExpr :latex="r.conditions" /></div>
           <RouterLink v-for="x in r.rules" :key="x.id" class="line" :to="x.to">
-            <span class="arrow">→</span><span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
+            <span v-if="x.family.length" class="fam">{{ x.family.join(' · ') }}</span>{{ x.name }}
           </RouterLink>
         </div>
 
@@ -377,7 +387,7 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
                form, which is exactly what the ✓ block one column left already
                says. The right half showing the wrong move IS the fix. -->
           <RouterLink v-for="e in r.errors" :key="e.id" class="line" :to="e.to">
-            <span class="arrow">→</span>{{ e.name }}<span class="freq">{{ '\u2605'.repeat(e.frequency) }}</span>
+            {{ e.name }}<span class="freq">{{ '\u2605'.repeat(e.frequency) }}</span>
           </RouterLink>
         </div>
 
@@ -401,8 +411,8 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 /* THE TWO BLOCKS. No fill — 74 rows of two large tinted fields would be the
    loudest thing on the page, and the taste record already says anything filled
    inside a panel risks reading as a hole punched through it. A 2px rule at the
-   left edge is enough to say which half you are in, because the ✓/✗ marks and
-   the arrows are already carrying the signal. Colour stays on its one axis:
+   left edge is enough to say which half you are in, because the ✓/✗ marks are
+   already carrying the signal. Colour stays on its one axis:
    green for what to do, red for what went wrong.
    `align-content: start` is load-bearing, not tidiness: the two blocks are
    stretched to the height of the taller one, and with the default `stretch` the
@@ -462,14 +472,22 @@ const COLS = 'minmax(0, 13rem) minmax(0, 33rem) minmax(0, 33rem)'
 /* THE SENTENCE UNDER THE FORM — the rule that licenses it, the belief it comes
    from. Quoted from another pool, so it takes the content serif and the muted
    voice of a quotation; the whole line is the link, because it is one short
-   sentence and a separate affordance under it would be chrome around nothing. */
+   sentence and a separate affordance under it would be chrome around nothing.
+   ⚠️ NO LEADING ARROW (2026-08-02). The arrow is the app's mark for a DERIVED
+   pointer — RefFold swaps its ▸ for a → on exactly that distinction — and both
+   of these lists are AUTHORED: `skill.rules` and `skill.mistakes` are in the
+   skill's own json. Marking them derived said the row was computed from
+   somewhere else, which is the opposite of the truth and hid the one thing a
+   revision pass needs to see, that these citations are somebody's judgement.
+   Flush at 1.1rem with the arrow gone: the hanging indent existed to make room
+   for a marker, and without one the lines simply align with the formula column
+   above them, as `.quant` does. */
 .line {
-  display: block; margin-top: .3rem; padding-left: 1.9rem; text-indent: -.8rem;
+  display: block; margin-top: .3rem; padding-left: 1.1rem;
   font-family: var(--font-content); font-size: .84rem; line-height: 1.5;
   color: var(--text-muted); text-decoration: none;
 }
-.line:hover, .line:hover .arrow { color: var(--accent); }
-.arrow { color: var(--text-faint); margin-right: .35rem; }
+.line:hover { color: var(--accent); }
 /* The mistake's own ★ carried across, so the list is weighted as well as
    ordered: it says which belief is worth dislodging first. */
 .freq { font-size: .7rem; color: var(--text-faint); letter-spacing: .06em; margin-left: .4rem; white-space: nowrap; }
