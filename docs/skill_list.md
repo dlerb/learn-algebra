@@ -677,6 +677,32 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > numbering: the mistake happens *inside* the legal move, so the two sentences are useless
 > apart.
 
+### Substituting
+
+**§18 · Einsetzen**
+> **Wo ein einzelner Buchstabe steht, darf ein ganzer Term stehen. Die Regel gilt weiter.**
+>
+> *Where a single letter stands, a whole expression may stand. The rule still holds.* — S.1.
+> The sentence that makes every rule above infinitely applicable, and the one a student who
+> "knows the formula but cannot use it" is missing.
+
+**§19 · Klammern beim Einsetzen**
+> **Setze ein und frage dann: Ändert das Weglassen der Klammer die Lesart? Wenn ja, bleibt sie.
+> Wenn nein, kommt sie weg.**
+>
+> *Substitute, then ask whether removing the bracket would change the reading.* — S.2–S.8, S.16.
+> ⚠️ Nothing new: this is V2 applied at the substitution site. Over the bar and under the root
+> the answer is always "no brackets", because there is already one `[§0.1, §0.2]`.
+
+**§20 · Passt die Regel?**
+> **Eine Regel passt, wenn jeder Buchstabe durch genau einen Block ersetzt werden kann — und
+> derselbe Buchstabe überall durch denselben Block. Sonst passt sie nicht, auch wenn sie fast
+> passt.**
+>
+> *A rule fits when every letter can be replaced by exactly one block, the same letter by the
+> same block throughout. Otherwise it does not fit, however nearly it does.* — S.9–S.12, S.14,
+> S.15
+
 ### What this draft shows
 
 - **Seventeen numbers, twenty-one sentences, covering all 111 items of R, E and C**, and
@@ -711,7 +737,7 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 | **R** | 21 | **§1.1–§5** |
 | **E** | 21 | **§6.1–§11** |
 | **C** | 19 | **§12.1–§17.2** |
-| S | stub | none |
+| **S** | 16 | **§18–§20** |
 
 **Not yet touched, and the next block of work:** the power laws, the root laws, the fraction
 laws and the binomial formulas. They are moves, so they sort into E and C by the same test —
@@ -721,33 +747,58 @@ has a notation line (N4.6) but no move.
 
 ---
 
-## S · Substitution — a letter may stand for a whole expression
+## S · Substitution — an expression may stand where an atom stood
 
-**NOT WRITTEN YET.** What is settled is the boundary, and it is worth stating before the items
-exist, because everything above was sorted by staying on the near side of it.
+The first section that is not grammar. Everything above works on an expression as written; this
+one changes what may be written.
 
-> **Every law in T is written with letters, and holds when each letter is replaced by ANY
-> expression.** `(a+b)^2 = a^2 + 2ab + b^2` is not a fact about `a` and `b`; it is a fact about
-> any two expressions, so it settles `(2x + 3y)^2` as well.
+> **Every rule in T is stated with atoms, and holds when any atom is replaced by any
+> expression.** `a(b+c) = ab + ac` is not a fact about three letters. It settles
+> `2x(y+3) = 2xy + 6x` and every other instance there will ever be.
 
-**Why this is not grammar.** Using it needs three things at once: a parse (P — what would `a`
-have to be?), a law (T — which one has this shape?), and a choice (which of the several
-readings is worth taking). The first two are grammar; the third is strategy, and it is the
-first place in this list where a student can be *correct and unhelpful*.
+**Why it is not grammar.** Using it needs three things at once: a parse (P — what would `a`
+have to be?), a rule (T — which one has this shape?), and a choice (which of several readings
+is worth taking). The first two are grammar; the third is strategy, and this is the first place
+in the list where a student can be **correct and unhelpful**.
 
-It is also the leap that explains the most common wall in the first year: a student recites
-the binomial formula perfectly and then cannot touch `(2x+3)^2`, because they learned it as a
-fact about the letters `a` and `b`.
+**What is genuinely new here is smaller than it looks — and it is not the bracket rule.** The
+only question substitution raises is when the inserted expression needs brackets, and that is
+`[V2]` unchanged: **keep the bracket exactly when removing it would change the reading.**
+Nothing new to learn, one thing to apply in a new place. A student who has done N3.4, V2 and
+§0.1 already owns every answer below.
 
-Candidates, in the order they would probably be written:
+⚠️ **And the difficulty is SYNTACTIC, not semantic.** Küchemann's levels of letter-use — letter
+ignored, as object, as specific unknown, as generalised number, as variable, as parameter — are
+all about what a letter *denotes*, and by that account this step needs nothing new: `2x+3`
+denotes a number, so a generalised-number reading already licenses it. The wall is elsewhere.
+It is seeing that the written form `2x+3` may occupy the position a single letter held, and
+that doing so sometimes needs a bracket. A semantic account of letters cannot teach that; the
+block vocabulary can, because it is the only one in which the bracket question has an answer.
 
-- read a law's letters as slots: `(a+b)^2` with `a := 2x`, `b := 3`
-- match a written expression against a law's shape, and report what each letter must be
-- see a repeated compound as one object: `(x+1)` in `3(x+1)^2 - 2(x+1)`
-- name a compound and put it back afterwards
-- and the boundary: when a shape *nearly* matches and the law does not apply
+### S1 · Putting an expression where an atom stood
 
----
+- **S.1** `a(b+c) = ab+ac` with `a := 2x` — the rule is not about the letter, and this is the claim the whole section rests on `[§18]`
+- **S.2** decide the bracket by asking whether removing it changes the reading ⇐ V2, N3.4 `[§19]`
+- **S.3** `a := 2x+3` into `a(b+c)` → `(2x+3)(b+c)` — **brackets**: a sum inside a product `[§19]`
+- **S.4** `a := 2x` into `a(b+c)` → `2x(b+c)` — **none**: a product inside a product changes nothing `[§19]`
+- **S.5** `a := 2x` into `a^2` → `(2x)^2` — **brackets**: `2x^2` would be `2(x^2)` ⇐ N4.5 `[§19]`
+- **S.6** `a := x+1` into `\frac{a}{b}` → `\frac{x+1}{b}` — **none**: the bar is already the bracket ⇐ §0.1 `[§19]`
+- **S.7** `a := x+1` into `\sqrt{a}` → `\sqrt{x+1}` — **none**, and for the same reason ⇐ §0.2 `[§19]`
+- **S.8** `a := b+c` into `-a` → `-(b+c)` — **brackets** `[§19]`
+- **S.9** a letter that occurs twice is replaced **everywhere or nowhere**: `a \cdot a = a^2` with `a := 2x` gives `(2x)(2x) = (2x)^2` `[§20]`
+
+### S2 · Reading a rule as a pattern — the other direction
+
+- **S.10** `(2x+3)^2` is `(a+b)^2` with `a := 2x`, `b := 3` — the same claim read backwards, and the harder half: it must be **found** `[§20]`
+- **S.11** report what each letter must be: `9x^2 - 4` against `a^2 - b^2` gives `a := 3x`, `b := 2` `[§20]`
+- **S.12** check **every** slot, not the shape of two: `x^2 + 6x + 9` matches `(a+b)^2` with `a := x`, `b := 3`, because `2ab` really is `6x` and `b^2` really is `9` `[§20]`
+- **S.13** one expression may match several rules; which to take is a **choice**, and the first thing in this file that grammar cannot settle
+
+*Boundaries — when a shape nearly matches:*
+
+- **S.14** `x^2 + 5x + 6` is not a perfect square: `b^2 = 6` and `2b = 5` cannot both hold. Nearly-matching is not matching `[§20]`
+- **S.15** `a^2 + b^2` matches no binomial formula, however much it looks like one ⇐ C.18
+- **S.16** what is inserted must be **one block** or become one: you cannot read `2x+3` as the `a` of `ab` and write `2x+3b` `[§19]`
 
 ## What left N, and why
 
