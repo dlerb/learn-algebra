@@ -1036,6 +1036,33 @@ directly, it is markable against a single answer, and it is **the bridge to S**:
 can name what a move does can be asked *which do you want here* — and "do I want to open or
 close?" is where choosing a rule starts. Worth building before S is written, not after.
 
+### The drill types, as far as they are known
+
+Kept as a list because it is clearly not closed. **A drill is a TYPE plus a filtered set of
+items** — "equivalent or not, over everything tagged multiplication" — so the item layer owes
+the drill layer nothing but the tags to filter on.
+
+1. **Equivalent or not.** Two forms, same or different. The broadest by far, because nearly
+   every item is an equation and the `\neq` items are the distractor bank.
+2. **What did that move do?** — rearranged, expanded, collected. Drills the ladder `[T]`,
+   marks against one answer, and is **the bridge to S**: a student who can name what a move
+   does can be asked which they want.
+3. **What IS this?** — the type, six options `[P1]`.
+4. **Which decomposition?** — the blocks `[P2]`.
+5. **Put the brackets in** — insert brackets so the expression says what it already says
+   (redundant, `[N3.4]`), or so it says something else. Drills grouping directly, and it is the
+   only type so far that asks for PRODUCTION of notation rather than recognition — which is the
+   category §0.1's tail says this app cannot otherwise reach.
+6. **How many ways?** — rewrite an expression without changing it, as many ways as possible.
+   Open-ended, scores by count, and drills R specifically: it is the only type where "more
+   answers" is the goal rather than one.
+7. **Which rule licenses this?** — show a step, pick the `§`. The reverse index of type 2, and
+   the one that makes the rule sheet worth having.
+
+⚠️ **Types 5 and 6 do not mark against a single answer either** — 5 has several correct
+bracketings, 6 has no fixed count. They are not strategy, but they share strategy's marking
+problem, so whatever solves it there probably serves here too.
+
 ⚠️ **And the limit, stated once so the drill layer is not designed around a false hope:**
 from S.13 on, several answers are right and differ in quality. Everything above marks against
 one answer; strategy does not. That is a different kind of exercise and probably a different
