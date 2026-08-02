@@ -94,8 +94,7 @@
             }
           ],
           "requires": [
-            "skill.explicit-vs-implicit-product",
-            "skill.product-with-brackets"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.dominant-op-last"
@@ -239,8 +238,7 @@
             }
           ],
           "requires": [
-            "skill.product",
-            "skill.product-with-brackets"
+            "skill.product"
           ],
           "rules": [
             "rule.bracket-chunk"
@@ -452,7 +450,7 @@
             }
           ],
           "requires": [
-            "skill.product-with-brackets"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.bracket-chunk"
@@ -487,7 +485,7 @@
             }
           ],
           "requires": [
-            "skill.product-with-brackets"
+            "skill.explicit-vs-implicit-product"
           ],
           "rules": [
             "rule.bracket-chunk"

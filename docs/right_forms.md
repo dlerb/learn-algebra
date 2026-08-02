@@ -182,11 +182,18 @@ judgement work is then spent on a skill that is later merged away.
 1. **`rule` singular or `rules` array on a form.** The measurement says singular is
    sufficient and would force the same denoising `wrong[]` got. Recorded here as
    singular; reversible before step 2 begins, expensive after.
-2. **`\times`.** Two stimuli use it (`explicit-vs-implicit-product`,
-   `product-with-brackets`) and exist *to* introduce it. Dropping it is a teaching
-   decision, not a data fix. Note that `2(x+1)` is already taken as a stimulus by
-   `multiplying-into-a-bracket`, so `product-with-brackets` cannot simply adopt it —
-   the options are keep `×`, take `2 \cdot (x+1)`, or merge the two skills.
+2. ~~**`\times`.**~~ **RESOLVED 2026-08-02, and by the third option: merge.** The
+   teaching decision went against `×` — it is a primary-school sign this course does
+   not write, the same verdict the colon is heading for. `explicit-vs-implicit-product`
+   now takes the base form `3x` as its stimulus with `3 \cdot x` and `x \cdot 3` as
+   its right forms, and `product-with-brackets` is DELETED: a bracket around an
+   operand is a variation of the same product, not a second skill, so the six
+   `requires` edges that pointed at it now point at the base skill (two of them
+   simply dropped, already reaching it through `skill.product`). `(3)(x)` went with
+   it — brackets used as separators are a bracket question, not a notation-for-times
+   question. ⚠️ The variation itself is now UNAUTHORED: nothing in the data says
+   `2(x+1)` is the same product with a bracketed operand, and it waits on whatever
+   generates variations for the drill.
 
 ## Not in scope
 
