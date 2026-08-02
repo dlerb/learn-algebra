@@ -1,5 +1,11 @@
 # Tier 2 — The Grammar (production rules)
 
+> ⚠️ **SUPERSEDED 2026-08-02 by `docs/skill_list.md`.** It called this correctly three weeks
+> early — "the backbone Tier 2 was missing is a grammar" — and the rebuild is that grammar,
+> written out: V·N·P·T, blocks, types, and 42 rules. What this sketch got wrong is the shape:
+> it wanted recursive production rules per operator construct, and what the material actually
+> needed was a TYPE per expression plus a rule per permission. Kept for rationale only.
+
 > ⚠️ **EXPLORATORY — not built, may never be.** Its "metapattern" vocabulary also predates the 2026-07-27 rename to the `rules.json` DO/IS registry. A design sketch (2026-07-12)
 > for a possible Tier-2 backbone. It is under active question and *partly
 > superseded*: precedence turned out to be a *convention*, not "the grammar

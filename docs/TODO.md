@@ -4,82 +4,64 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🔵 NEXT SESSION — THE REVISION (author's handover, 2026-08-01)
+## 🔵 NEXT SESSION — THE REBUILD (2026-08-02)
 
-**The format work is finished. What remains is editorial, and it is the whole job.**
+⚠️ **THE IN-PLACE REVISION OF `src/data/curated/skills/` IS ABANDONED.** It stalled for a
+reason worth stating: the groups are TOPICS (`multiplication`, `minus-sign`, `exponents`,
+`fractions`) and the real axis cuts across every one of them, so each regrouping moved the same
+problem somewhere else. The handover below it — the three tools, the citation verdicts, the
+seven todos — is still true of the DATA and is preserved further down; it just is not the work.
 
-`right[]` is now `{latex, rule?}` and `wrong[]` is `{latex, mistake}` — one shape for both
-halves of a row, with `\blacksquare` and `\ldots` as the two sentinels (see
-`docs/right_forms.md`). `right[].rule` is deliberately **empty**: attribution is judgement and
-belongs to this pass.
-
-### The three tools, and what each answers
+**The work is `docs/skill_list.md`**, the skill layer rewritten from scratch and held OUTSIDE
+`src/data` until it settles. **186 items, 42 rules.**
 
 ```
-pnpm who-cites <id>          everything that cites it, with a line of the CITER's body —
-                             read this BEFORE any split or merge
-pnpm who-cites --inherited   the worksheet: citations a prerequisite already teaches
-pnpm who-cites --audit       coverage, least-cited first, family heads counted out
-pnpm todos                   the 7 open questions; --strict is the gate before main
+V   the words: expression · block · summand · factor · atom
+    V0 the five TYPES (sum · difference · product · quotient · power)
+    V1 separating operators vs GROUPING SYMBOLS — a container is ONE block
+    V2 counting through a bracket
+N   notation, 45 items — what a mark on the page MEANS
+P   parsing, 20 items — what IS this expression, and what are its blocks
+T   transforming, 90 items — R (rearranging) · E (expanding) · C (collecting)
+S   substitution, 16 items — an expression may stand where an atom stood
+    S3 STRATEGY — parked, not written: which rule when several fit
+§   42 rules in student language, German first, conditioned on the TYPE
 ```
 
-### ⚠️ WHAT TO LOOK OUT FOR — the rules this pass produced, each held more than once
+### The four things that decide everything else
 
-1. **A citation a prerequisite already teaches is not automatically noise.** Three verdicts, and
-   only the stimulus can decide: **drop** (true inheritance), **replace** (the citation is
-   *wrong*, not redundant — `coefficient-zero` cited `juxtaposition` while its own note said
-   "zero times anything is zero"), **keep** (a boundary — `no-splitting-the-denominator` cites
-   `split-numerator` to say where it STOPS).
-2. **When a skill's rule list feels wrong, the rule it needs often does not exist.** Held four
-   times. `sum-with-shared-factor` cites nothing today because "a familiar shape inside a sum is
-   worth naming" is not in the pool.
-3. **Prose that the data does not encode is a lie waiting to be found.** `zero-and-one-exponent`
-   claimed `a^1 = a` while only ever drilling `a^0`; `expand-distribute` claimed to be "the
-   active twin" of a skill with identical fields. Both were merged or narrowed.
-4. **Two skills sharing a starting form are a chain, a substitution instance, or a duplicate** —
-   never two questions. Five collisions, five resolutions, zero needing the rule relaxed. The
-   pair (process, stimulus) is what must be unique; fluency-vs-chunking on one form is fine.
-5. **A wrong entry must be the wrong KIND.** A chunking wrong is a false DECOMPOSITION
-   (`3x + 2y = (3x)·(2y)`), not a false value. 8 of 9 already were; the one exception was a
-   duplicate skill and is gone.
-6. **`reversible` is a merge detector.** Two skills marked `→` that are each other's reverse are
-   a legitimate pair (`expand-binomial-square` / `perfect-square-trinomial`). Two marked `↔`
-   sharing a claim are a duplicate — which is what `repeated-addition` vs `coefficient-vs-exponent`
-   still is.
+1. **V·N·P·T is THE GRAMMAR; fluency is NOT a section.** Fluency is *automaticity*, a property
+   an item can have. `fluency.json` was named for a degree of mastery and then filled by topic,
+   which is how the binomial formulas ended up beside `3x = 3 \cdot x`.
+2. **The R/E/C test is mechanical, and it survived its falsification test.** Types sit on a
+   ladder — **sum ⟶ product ⟶ container ⟶ atom**, the inverse of binding strength. Up → E,
+   down → C, same type more blocks → E, fewer → C, same and same → descend, nothing differs →
+   R. Invented on three laws, then 34 power/root/fraction/binomial moves were added and none
+   needed a special case.
+3. **WRITE THE RULE FIRST, THEN HUNT FOR THE ITEM.** Ten items were found this way and none
+   from the item side — including **cancelling**, which was missing entirely while its boundary
+   was present. A gap is invisible from the item side and obvious from the rule side.
+4. **Rules are stated over BLOCKS and conditioned on the TYPE**, never over operations. `.1` is
+   a permission and `.2` its limit, numbered together because the mistake is usually made
+   inside the legal move.
 
-### The live leads, measured
+### 🔵 What is open, in the order it probably goes
 
-- **20 rules cited by no mistake and no skill.** ⚠️ A COVERAGE gap: the rules are right, no skill
-  teaches that ground. **Author skills, not rules.** Mostly power laws and fraction laws.
-- **11 skills / 12 inherited citations left** on `--inherited`: 3 boundary keeps and 8 judgement
-  calls, including `cancel-common-factor`, whose `requires` edge points at the BOUNDARY skill
-  (`no-cancelling-in-a-sum`) rather than the positive case — that edge looks backwards.
-- **7 open `todo`s**, each written where the question is: `unlike-terms-stay` (sentence and
-  formula disagree), `zero-and-one-exponent` (id still says zero-and-one), `minus-over-sum` and
-  `minus-over-difference` (DIRECTION-MIXED — two steps, two directions, one flag), 
-  `repeated-addition` (reverse pair), `division-variants` (eliminate the colon), 
-  `dominant-op-tools` (now uncited; may return as a FAMILY, closer to precedence).
-- **Five chains wearing one skill**, from the sweep in `docs/right_forms.md`:
-  `coefficient-negative-one`, `coefficient-zero`, `redundant-brackets`, and the two mixed ones.
-  These are where `right[].rule` attribution has real work; the other seven multi-form skills are
-  alternatives, where wrapping was the whole job.
-- **7 chunking skills show no wrong.** The five basic forms may be honest; `sum-with-shared-factor`,
-  `quadratic-form` and `chunks-in-product` are recognition skills whose failure is inaction —
-  `omi.no-move-attempted`, rendering as `✗ …`. `sum-with-shared-factor` is currently invisible
-  from both pools: no rule, no mistake.
-- **The block question is parked, not answered.** `docs/right_forms.md` and the
-  `tower-inheritance` decision both feed it; `dominant-op-tools` is the entry that most wants it.
-
-### What is NOT open
-
-Rule→rule dependency edges in `rules.json`. The tower already carries both graphs — card
-`derivedFrom` (why this is true) and card `basedOn` (what you must be able to read) — used almost
-disjointly, and rules inherit them through `summarizes`: 33 and 19 rules respectively. ⚠️ `basedOn`
-IS the "fluency permeates everything" intuition, measured: its fan-in across the pool is the
-reading rules.
-
----
----
+- **[ ] The app question, and it needs brainstorming.** The content is arguably all here. What
+  is not decided: which of this becomes JSON layers, what classification fields the items need,
+  and whether the existing seven-page shell renders it or something smaller does.
+- **[ ] The drills.** They fall out of a milestone more obviously than they ever did from the
+  old layer — but see S3: **strategy is the first place a drill cannot mark against one right
+  answer**, because several answers are right and differ in quality.
+- **[ ] The mistakes.** Not in `skill_list.md` at all. Its boundaries are their skeleton —
+  every `\neq` item is a mistake waiting to be written from the other side — and one kind has
+  no home yet: **mistakes of PRODUCTION** (a hand-drawn bar of the wrong length), which the
+  pool cannot express and this app cannot drill.
+- **[ ] The tower gaps.** Ten notation conventions have no `ix.` card. First to write: **the
+  vinculum** — `ix.fraction-bar` and the radical are two cards for one symbol.
+- **[ ] Sweep "term" out of the pools.** EN *term* = a block of a sum, DE *Term* = the whole,
+  and `rules.json` already uses `Summanden` in one entry and `Terme` in another for the same
+  concept.
 
 ## ✅ DONE 2026-08-01 — TOOLING, THE FORMAT ALIGNMENT, AND A DENOISING PASS
 
