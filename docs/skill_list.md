@@ -993,6 +993,54 @@ What a strategy layer would have to hold, none of it decided:
 several answers are right and they differ in quality. That is a different kind of exercise from
 everything the grammar produces, and worth knowing before the drill layer is designed.
 
+## D · Milestones and drills
+
+**The sections ARE the milestones, in their own order, and teaching runs the same sequence:**
+
+> **N → P1 → P2 → R → E → C**, and S is not touched until all six are standing.
+
+⚠️ **Verified against the `⇐` edges, not assumed.** Of every prerequisite written in this file,
+exactly **one runs backwards**: **E.7** (`x(x+1) = x^2 + x`) needs **C.10** (`a \cdot a = a^2`),
+because the first product has to become a power. So E.7 is the one item that cannot be taught
+in its own milestone — defer it to C, or drop it as a compound. That is the same check
+`validateSkillLinks` performs on the old layer's processes, and it wants to exist here too
+before the milestones are built on.
+
+### The drill that covers most of it: **equivalent or not**
+
+Show two forms, ask whether they say the same thing. It fits every section because nearly every
+item in this file IS an equation, and the distractors are already written — **the boundaries
+and the `\neq` items are the distractor bank.**
+
+| milestone | the question | distractors come from |
+|---|---|---|
+| **N** | is `3x` the same as `3 + x`? | N's own wrong readings; `mis.juxtaposition-as-plus` and its family |
+| **P1** | what IS this — sum, difference, product, quotient, power, atom? | the tempting operator: `3(x+1)` looks like a sum, `2x^2` like a power |
+| **P2** | which decomposition is right? | the old `chunking.json` right[] forms are literally the answer key |
+| **R** | is this rearrangement legal? | R.15–R.21, the whole "not in a difference or quotient" family |
+| **E** | is this expansion legal? | E.18–E.21: Freshman's dream, and never under the bar |
+| **C** | is this collected correctly? | C.15–C.18, C.33–C.35: what does not collect |
+
+### ⚠️ Five items the equivalence drill cannot hold
+
+Not everything here is an equation. **N1.7** (`3a`, not `a3`), **N1.9** (the dot is what this
+course writes), **N4.1**, **N4.1a**, **N4.1b** (the two tiers and the ranking) state a
+convention or a procedure, and there is no second form to compare against. They need a
+different question — "what does this say?", or a ranking to put in order — or they are teacher's
+material and not drilled at all. Decide per item; do not stretch the format over them.
+
+### The second drill type, which R/E/C earn: **what did that move DO?**
+
+Show one legal step and ask: rearranged, expanded, or collected? It drills the ladder `[T]`
+directly, it is markable against a single answer, and it is **the bridge to S**: a student who
+can name what a move does can be asked *which do you want here* — and "do I want to open or
+close?" is where choosing a rule starts. Worth building before S is written, not after.
+
+⚠️ **And the limit, stated once so the drill layer is not designed around a false hope:**
+from S.13 on, several answers are right and differ in quality. Everything above marks against
+one answer; strategy does not. That is a different kind of exercise and probably a different
+kind of screen.
+
 ## What left N, and why
 
 Each failed N's test: it needs a law to be true, so it is a move, and it is in T if it is
