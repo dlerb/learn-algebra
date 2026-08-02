@@ -45,7 +45,28 @@ S   substitution, 16 items — an expression may stand where an atom stood
    a permission and `.2` its limit, numbered together because the mistake is usually made
    inside the legal move.
 
-### 🔵 What is open, in the order it probably goes
+### 🔵 IMMEDIATE — the author's review pass
+
+**`docs/skill_list.md` is finished as a draft and waiting to be read.** 179 items, 42 rules,
+every one carrying a `#slug` (drafted 2026-08-02, mine, and the review overrules them). Nothing
+is implemented and nothing should be until this pass is done.
+
+What the pass decides, roughly in order of consequence:
+
+- **Are the items the right SIZE?** Granularity was the author's instruction — when in doubt,
+  split — and the file follows it. Six lines for juxtaposition, four for the exponent's reach.
+  If a drill would never separate two of them, they are one item with two examples.
+- **Are the slugs right?** They are literal by design (`number-times-letter`,
+  `a-near-miss-is-a-miss`) because a plain handle is easy to overrule and a clever one is not.
+  ⚠️ Look at `#klammer-potenz-punkt-strich` (the only German item slug), the three
+  `*-number-check` slugs (one skill applied three times?), and §4/§30, which are one trick at
+  two levels and may want naming as a pair.
+- **Do the notes say what the formula says?** Every "prose the data does not encode" bug this
+  project has found came from these drifting apart.
+- **The open questions at the foot of the file**, seven of them, including whether R.13 is
+  really E (open question 6) and where the number-checks live.
+
+### 🔵 What is open after it, in the order it probably goes
 
 - **[ ] The app question, and it needs brainstorming.** The content is arguably all here. What
   is not decided: which of this becomes JSON layers, what classification fields the items need,
