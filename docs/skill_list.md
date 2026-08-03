@@ -36,11 +36,25 @@ cards, collected at the bottom.
 
 Everything below is machinery for one purpose, and it is worth saying before the machinery:
 
-> **A block is an island. You may work on it on its own, and whatever it becomes, it goes back
-> in the same place — the rest of the expression neither notices nor changes.**
+> **A block is an island. You may work on it on its own, and whatever it becomes goes back in
+> the same place — the REST of the expression neither notices nor changes. But check its walls
+> on the way back in.**
 
 That is the permission the whole file rests on. It is why $3(x+1) - 2(x-1)$ is workable at all:
 you are never facing the whole thing, only one island at a time.
+
+⚠️ **The second sentence is not a hedge, and leaving it off makes the first one FALSE at the
+boundary.** Rewriting a block can change its top operator, and a block that no longer outranks
+its surroundings has to be walled. Take $2x - 2(x+1)$: the island $2(x+1)$ expands to $2x+2$
+quite correctly, but put back bare it reads $(2x-2x)+2$. It was a product and it is now a sum,
+and a sum in that position is outbid `[§0.4]`, so it needs a wall it did not need a moment ago —
+$2x - (2x+2)$.
+
+⚠️ **And that question is not asked anywhere else in this file.** §0.4 and S.2 both ask whether
+an INSERTED expression needs walls; nothing asks it after a REWRITE. Same question, same
+criterion, different trigger — and the trigger is the half that is not automatic. It is
+probably a rule aimed at the outside of a block rather than at its inside. See the brainstorm
+at the foot of this file.
 
 ⚠️ **And it is S read backwards.** S.1 says a rule stated over letters holds when a letter is
 replaced by any expression. The island principle says a part may be rewritten in place. **Same
@@ -1600,3 +1614,155 @@ admission that it is a course decision rather than a mathematical convention.
    (multiply in), by the rule that a backward reading with its own classroom name is its own
    skill — and here the two directions now land in different BUCKETS, which is the strongest
    evidence yet that the rule is right.
+
+---
+
+## 🧠 Brainstorm — walls on blocks, and what each container is FOR
+
+**The author's, 2026-08-03. Nothing here is decided and nothing is implemented.** Recorded
+because two of the three threads land on parts of the file that are already written, and one of
+them says something in V is too strong.
+
+### 1 · Do BLOCKS have walls?
+
+Only if the block is itself a container — walls are not something a block has by being a block.
+In $2x - \sqrt{y}$ the two blocks are $2x$, which has none, and $\sqrt{y}$, which has its own.
+
+⚠️ **And here is the catch, which is new: REWRITING a block in place can create the need for
+walls that were not there before.**
+
+$$2x - 2(x+1)$$
+
+The second block is $2(x+1)$. Expand it on its own — legitimately, it is an island — and it
+becomes $2x+2$. Put that back bare and you have written
+
+$$2x - 2x + 2 \qquad \text{which reads } (2x-2x)+2 \text{ — wrong}$$
+
+when what the island principle promised was $2x - (2x+2)$. **The block's top operator changed**
+— it was a product, it is now a sum — and a sum in that position is outbid, so it needs a wall
+it did not need a moment ago.
+
+⚠️ **THIS QUALIFIES THE ISLAND PRINCIPLE AT THE TOP OF V, WHICH IS CURRENTLY TOO STRONG.** It
+says the rest of the expression "neither notices nor changes". True of the *rest*; not true of
+the *boundary*. The honest version:
+
+> A block is an island. Work on it alone, and what it becomes goes back in the same place —
+> **but check its walls on the way back in.** Rewriting can change a block's top operator, and
+> a block that no longer outranks its surroundings must be walled.
+
+**So a rule is missing, and it is one "aimed at the outside".** Everything the file has about
+brackets is aimed inward — §0.4 asks whether an INSERTED expression needs walls `[S.2]`. Nothing
+asks the question after a rewrite, which is the same question with the same answer and a
+different trigger. It is not automatic and it does not come for free.
+
+⚠️ **A mistake-layer consequence worth chasing: two different mistakes produce the same
+string.** $2x - 2(x+1) = 2x - 2x + 2$ can be *failing to distribute the minus over the second
+summand*, or *expanding the block correctly and dropping its walls*. Same wrong page, different
+repair. The pool almost certainly only has the first.
+
+### 2 · Does the structural vocabulary earn its keep?
+
+The claim: yes, because it is **load-bearing rather than descriptive**. "Container" is not a
+label for a family of shapes — it carries one property they all share and then divides them by
+the properties they do not.
+
+**Shared by every container:** invariance to position `[V1]`.
+
+**Different for each container:** what may be done INSIDE it, and this is where the power laws,
+the root laws and the fraction laws stop being a list to memorise. Each container distributes
+over ONE inner operation in ONE slot, and refuses the other:
+
+| container | slot | inner $+$ | inner $\cdot$ |
+|---|---|---|---|
+| **power** | base | ✗ $(a+b)^2 \neq a^2+b^2$ `[E.23]` | ✓ $(ab)^n = a^n b^n$ `[E.26]` |
+| **power** | exponent | ✓ $a^{m+n} = a^m a^n$ `[E.30]` | ✓ $a^{mn} = (a^m)^n$ `[C.27]` |
+| **root** | radicand | ✗ $\sqrt{a+b}$ `[E.24]` | ✓ $\sqrt[n]{ab} = \sqrt[n]{a}\sqrt[n]{b}$ `[E.28]` |
+| **fraction** | numerator | ✓ $\frac{a+b}{c} = \frac{a}{c}+\frac{b}{c}$ `[E.9]` | — |
+| **fraction** | denominator | ✗ $\frac{c}{a+b}$ `[E.22]` | ✓ $\frac{c}{ab} = \frac{c}{a}\cdot\frac{1}{b}$ |
+| **bracket** | its one chamber | — it performs no operation, so there is nothing to distribute over | — |
+
+⚠️ **The brainstorm's original form said "a container over a multiplication splits, over a sum
+it does not". That is right for the power and the root and BACKWARDS for the fraction
+numerator**, where a sum splits and is the whole of §8.1. The correction makes the structure
+better, not worse: the rule is not *sums never split*, it is **each container has its own
+operation and its own slot**, which is why §8.1 and §8.2 are a pair and why §6.2 exists.
+
+**And the deeper pattern, if it holds:** a container TRANSLATES one operation into another. An
+exponent's $+$ becomes a $\cdot$ outside `[E.30]`; an exponent's $\cdot$ becomes a nesting
+`[C.27]`; a numerator's $+$ stays a $+$ `[E.9]`. Worth testing against the rest of the law
+layer — if it survives, the power and fraction laws are one idea with five instances rather
+than five laws.
+
+**Inside a block there are only the three moves** — expanding, collecting, rearranging `[T]`.
+Nothing else has turned up, which is the ladder's falsification test passing from a third
+direction.
+
+### 3 · The consequence for S3, which is currently parked and empty
+
+> **Which of the three moves is the right one is often decided by the container the block is
+> IN.**
+
+That is the first concrete principle S3 has had. S3 asks *which rule, when several fit* and
+currently answers "undecided, and goal states are probably the hardest part". This says goal
+states are not free-floating — **the container sets them**:
+
+- inside a **fraction** → factor, because factoring is what lets you cancel `[§17.1]`
+- under a **root** → factor, because factoring is what lets you pull something out
+- in a bare **sum** you are trying to shorten → expand, because expanding is what lets you
+  collect like summands
+- in a **power's base** → depends, and this is the one to think about
+
+⚠️ Not a claim that strategy reduces to a lookup table. But it converts "which move do I want?"
+from taste into a question about **where you are standing**, and that is structural — which was
+the point of the whole vocabulary.
+
+### 4 · Reading of the above — what is solid, what is a correction, what is untested
+
+Written by Claude, 2026-08-03, kept separate so the brainstorm above stays the author's. Five
+verdicts and their grounds.
+
+**① The island defect is real, and it has been FIXED in V rather than left here.** The
+principle claimed the rest of the expression "neither notices nor changes"; that holds for the
+rest and fails at the boundary, and $2x - 2(x+1)$ is a two-line proof. The qualified form is now
+at the top of V. ⚠️ **Note what kind of error it was**: not a wrong claim about algebra, but a
+promise stated without its precondition — the most expensive kind in a file whose method is
+*write the rule first*, because a rule that overpromises still produces items that are each
+individually correct.
+
+**② The missing rule is genuinely missing, and its shape is predictable.** Every bracket
+question here points inward, at something being INSERTED — §0.4, S.2, S.3–S.8. The rewrite case
+has the same criterion (does the block's top operator get outbid where it stands?) and no home.
+Writing it should follow the file's own method — state the rule, then hunt the items — and the
+items are likely to be several: the minus case above, the same over a fraction bar, the same
+under a root.
+
+**③ The "multiplication splits, a sum does not" claim was BACKWARDS for the fraction, and the
+correction is the interesting part.** Power and root distribute over $\cdot$ and refuse $+$; the
+fraction numerator does the opposite `[§8.1]`, and the denominator refuses both `[§8.2]`. So the
+generalisation is not about which operation is friendly — it is that **each container has its
+own operation in its own slot**, which is exactly why §8.1/§8.2 are a numbered pair and why §6.2
+must exist separately. Stated the first way the rule would have been memorable, wrong, and would
+have licensed refusing $\frac{a+b}{c} = \frac{a}{c}+\frac{b}{c}$.
+
+**④ The translation pattern is the biggest claim in the section and it is UNTESTED.** *A
+container translates one operation into another* — exponent-$+$ to outer-$\cdot$ `[E.30]`,
+exponent-$\cdot$ to nesting `[C.27]`, numerator-$+$ to outer-$+$ `[E.9]`. If it survives the
+whole law layer it is worth more than anything else here: the power and fraction laws collapse
+from five laws into one idea with five instances — the same economy §25 achieved when *eine
+Wurzel ist eine Potenz* retired the four root laws before they were written. **Test it the way
+the ladder was tested**: assert it, throw every law in T at it, and look for the one needing a
+special case. Until then it is a conjecture, and this file has been wrong before about patterns
+that looked this clean.
+
+**⑤ The S3 consequence is the most immediately usable thing in the brainstorm.** S3 is parked
+with its hardest problem named — *goal states are undefined; every T rule is legal in both
+directions, so without a target expand and collect are equally valid forever*. **The container
+supplies the target.** In a fraction you factor because factoring is what permits cancelling;
+under a root because that is what permits extracting; in a sum you are shortening, so you expand
+in order to collect. That converts *which move do I want* into *where am I standing*, which the
+grammar can answer — and S3 was parked precisely because nothing in the grammar seemed to reach
+it.
+
+⚠️ **What it does NOT solve, so the parking notice stays accurate.** S.13's real difficulty is
+that several answers are right and differ in quality, and a container-keyed target does not rank
+two legal moves inside the same container. The marking problem is untouched.
