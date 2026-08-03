@@ -483,6 +483,29 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > all about numerals.* — N1.1–N1.7. The six forms it ranges over are `[V5]`, and the name is
 > the one `rule.juxtaposition` already carries in the pool rather than a new coinage.
 
+**§0.4 · Zwei Sorten Klammern** `#two-kinds-of-required-bracket`
+> **Manche Klammern muss man setzen, weil der Term sonst etwas ANDERES bedeutet. Andere setzt
+> man, weil man zwei Rechenzeichen nicht nebeneinander schreibt — der Term wäre auch ohne sie
+> eindeutig.**
+>
+> **Nötig:** $(-b)^2$ — ohne Klammer heisst $-b^2$ etwas anderes `[N4.7]`.
+> **Nur Schreibweise:** $1 - (-3)$ — $1--3$ wäre lesbar, aber so schreibt man nicht `[N5.2]`.
+>
+> *Some brackets are required because the reading changes without them; others because we do
+> not write two operation signs side by side.* — N4.7, N5.2, N5.3, N5.5
+
+⚠️ **The distinction is binding strength, and only the first kind is grammar.** A block keeps
+its wall exactly where it lands somewhere that binds TIGHTER than its own top operator `[V1]`.
+The unary minus binds looser than a power, so $-b$ as a base must be walled or it says
+something else. After a binary minus nothing competes, so $1--3$ is unambiguous — parsers and
+calculators accept it — and the bracket is legibility.
+
+⚠️ **Why it earns a rule of its own.** A student told "you must bracket" in both cases learns
+one demand where there are two, and cannot tell which one to relax when notation gets dense.
+The first kind can be drilled against a right answer; the second is a writing habit, which is
+the same production/reading split §0.1's tail already names — the third instance of it, and the
+reason this section is called *Lesen und Schreiben*.
+
 ⚠️ **The `.1`/`.2` convention collides in this section.** Everywhere else `.1` is a permission
 and `.2` its limit; in §0 the second digit already names WHICH grouping symbol. So §0.3's
 exceptions ride inside the rule instead of becoming a §0.3.2. Worth fixing when the set is
@@ -790,7 +813,7 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 
 ### What this draft shows
 
-- **Forty-three rules, 181 items** (counted 2026-08-03, not estimated). ⚠️ **The old "186" was
+- **Forty-four rules, 181 items** (counted 2026-08-03, not estimated). ⚠️ **The old "186" was
   wrong** — the true figure before §0.3 landed was 179, which is exactly the number of slugs
   the slug pass produced, so the slug count had been right and the prose had not. Today's pool
   is 63 rules — so the sizes were never far
@@ -841,7 +864,7 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 
 | section | items | rules |
 |---------|-------|-------|
-| V, N (50), P (21) | 71 | **§0.1–§0.3**, plus where §5, §27, §28 land |
+| V, N (50), P (21) | 71 | **§0.1–§0.4**, plus where §5, §27, §28 land |
 | **R** | 19 | §1.1, §1.2, §2.1, §2.2, §5, §26, §27 — **no longer §3, §4, or dropping a bracket** |
 | **E** | 35 | **§2.1, §3, §4**, §6.1–§11, §21, §24, §25, §30, §33, §34 |
 | **C** | 40 | **§2.1, §3, §4**, §12.1–§17.2, §21–§24, §29, §31–§34 |
@@ -907,15 +930,15 @@ each is a symbol you must be able to write back in.
 - **N4.5** $ab^2 = a \cdot (b^2)$ — **the power binds to the closest BLOCK before it** `[ix.power-precedence]` `#power-binds-closest-block`
 - **N4.5a** and "block" is the word that makes it exceptionless. $2x^3 = 2 \cdot (x^3)$ and $-2a^2 = -2(a^2)$: nothing is grouped, so the closest block is the atom, and the coefficient stays outside. $\left(\frac{a}{b}\right)^2$: the bar has ALREADY grouped, so the closest block is the whole fraction — and *not* the numerator. Same rule, opposite-looking answers; "closest symbol" is a shortcut that holds only while nothing has been grouped `[no card]` `#closest-block-not-closest-symbol`
 - **N4.6** $(ab)^2$ — a bracket is the only way to give the exponent more than the closest block: **it builds the wall the power has not got** `[V3]` `[ix.power-precedence]` `#bracket-widens-the-power`
-- **N4.7** $-a^2 = -(a^2)$, and $(-a)^2$ is a different term `[ix.power-precedence]` `#negated-square`
+- **N4.7** $-a^2 = -(a^2)$, and $(-a)^2$ is a different term — so the bracket here is **grammar**: without it the expression says something else `[§0.4]` `[ix.power-precedence]` `#negated-square`
 - **N4.8** $a - b - c = (a - b) - c$ — a chain of one operator is read left to right `[ix.left-to-right]` `#chain-left-to-right`
 - **N4.9** $a : b : c = (a : b) : c$ — the same for division, where it bites hardest `[ix.left-to-right]` `#division-chain-left-to-right`
 
 ### N5 · The minus sign
 
 - **N5.1** $-3$ is a negative number; $a - b$ is a subtraction — two jobs, one glyph `[no card]` `#minus-has-two-jobs`
-- **N5.2** $a + (-b) = a - b$ — an operator and a unary minus never stand side by side `[§3]` `[ix.no-adjacent-operator]` `#no-two-operators-side-by-side`
-- **N5.3** $a \cdot (-b)$ — a negative used as a factor takes brackets, so it reads as one factor `[ix.negative-factor]` `#negative-factor-takes-brackets`
+- **N5.2** $a + (-b) = a - b$ — an operator and a unary minus never stand side by side. ⚠️ *A writing habit, not grammar: $1--3$ is unambiguous and still not written* `[§0.4]` `[§3]` `[ix.no-adjacent-operator]` `#no-two-operators-side-by-side`
+- **N5.3** $a \cdot (-b)$ — a negative used as a factor takes brackets, so it reads as one factor. ⚠️ *Also a writing habit — $a \cdot -b$ is unambiguous* `[§0.4]` `[ix.negative-factor]` `#negative-factor-takes-brackets`
 - **N5.4** $-a = (-1) \cdot a$ — a leading minus is a coefficient of $-1$ `[ix.negative-factor]` `#leading-minus-is-minus-one`
 - **N5.5** $-3x = (-3) \cdot x$ — with a number in front, the minus joins the coefficient `[ix.negative-factor]` `#minus-joins-the-coefficient`
 - **N5.6** $-(a+b) = (-1) \cdot (a+b)$ — in front of a bracket it is that same factor, and nothing has been done to the bracket yet `[ix.negative-factor]` `#minus-before-a-bracket-is-a-factor`
