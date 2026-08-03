@@ -32,36 +32,103 @@ cards, collected at the bottom.
 
 ## V · The words this file uses
 
-The T buckets count *blocks*, so the blocks need names before the counting means anything.
-This section exists because that assumption was hidden and got caught.
+### Why split an expression at all
+
+Everything below is machinery for one purpose, and it is worth saying before the machinery:
+
+> **A block is an island. You may work on it on its own, and whatever it becomes, it goes back
+> in the same place — the rest of the expression neither notices nor changes.**
+
+That is the permission the whole file rests on. It is why $3(x+1) - 2(x-1)$ is workable at all:
+you are never facing the whole thing, only one island at a time.
+
+⚠️ **And it is S read backwards.** S.1 says a rule stated over letters holds when a letter is
+replaced by any expression. The island principle says a part may be rewritten in place. **Same
+fact, two directions** — which is why S is not a late extra bolted onto the grammar, but the
+thing V has been building towards since its first line.
+
+### The words
+
+**Two different questions, and the words must not be mixed.** *What an expression IS* is
+settled by what sits at its top `[V1, V2]`. *What a part DOES* is settled by the split it came
+from. An expression can be both at once: $\frac{a}{b}$ in $\frac{a}{b} + c$ **is** a container
+and **acts as** a summand.
 
 | word | German | what it is |
 |------|--------|-----------|
 | **expression** | Term | anything written: $a$, $3x$, $3x + 2y$ are all expressions. Scale-free — an expression is made of expressions |
-| **block** | Block, Baustein | one of the parts an expression separates into. A block is itself an expression, and you move it without opening it |
+| **block** | Block, Baustein | ⚠️ a ROLE, not a kind: one of the parts you get when you SPLIT an expression `[V1]`. Always a block *of* something. A block is itself an expression, and you move it without opening it |
 | **summand** | Summand | a block of a sum. $3x + 2y$ has two |
 | **factor** | Faktor | a block of a product. $3xy$ has three |
-| **atom** | Atom | a block with nothing inside: ONE number or ONE letter. $7$ and $x$ are atoms; $3x$ is not (two blocks), $a^2$ is not (a power over an atom). It is where descending stops |
+| **container** | Container | an expression with WALLS and something inside — a bracket, a fraction, a root, a power `[V1]`. Wherever it appears as a part, it appears as exactly ONE block |
+| **slot** | Platz | a place INSIDE a container — numerator and denominator, base and exponent `[V2]`. A slot holds a block |
+| **atom** | Atom | an expression with **nothing inside**: ONE numeral or ONE letter. $7$ and $x$ are atoms; $3x$ is not (it splits into two), $a^2$ is not (a container). **It is where descending stops** |
+
+⚠️ **"Is $X$ a block?" is a malformed question**, and asking it is what muddled this section
+for a day. $2x$ SPLITS into two blocks, always. $2x$ APPEARS AS one block of $3x + 2x$. Both
+are true and they are different questions; only the second is about context.
 
 ⚠️ **Blocks nest, and the counting only ever looks at ONE level.** $(ab)^n$ is **one** block —
 a power — whose base is a block containing **two**. Saying "one block" is never a claim that
 there is nothing inside; it is a claim about the top. You reach the rest by descending, which
 is step 4 of the test.
 
-⚠️ **A minus is not part of an atom — it lives one level up.** Stated here rather than left to
-N5, because the counting depends on it:
+⚠️ **THE MINUS: one glyph, and its POSITION says which job it is doing.** This is N5.1 made
+load-bearing, and it is the whole answer to "how many blocks has $3x - 2y$":
 
-- As a **summand**, $-a$ is ONE block: the minus belongs to the block that follows it `[§3]`,
-  which is why $3x - 2y$ has two summands, $3x$ and $-2y$ `[P.14]`.
-- **Descend into that block** and it is a product of two factors, $(-1)$ and $a$ `[N5.4]`. One
-  block, two factors, one level apart — the nesting above, nothing new.
-- So **$-3$ is not an atom.** An atom is ONE numeral or ONE letter; the atom inside $-3$ is
-  $3$, and the minus is the block wrapping it. That follows from this project's notation
-  reckoning — there is one unary minus and no sign living inside a numeral — and it is worth
-  saying out loud, because a student will call $-3$ a number and be right. It is a number; it
-  is not an atom.
+> **A minus with something to its left is a SEAM. A minus with nothing to its left belongs to
+> the block that follows it.**
 
-### V0 · What an expression IS — the five types
+- $3x - 2y$ is a **difference**: the minus separates, and the blocks are $3x$ and $2y$ — which
+  is what a student reads off the page, and it is right `[P.14]`.
+- $-3x + 2y$ is a **sum**: the leading minus has nothing to its left, so it is part of the
+  first block, $-3x$ `[P.7]`.
+- $a + (-b)$ is a **sum** whose second block is $(-b)$.
+
+⚠️ **$3x - 2y$ and $3x + (-2y)$ are the same value in two spellings, and their blocks differ.**
+Nothing is absorbed until §3 is actually applied — **§3 is a MOVE, not a reading** `[E.18]`.
+Same discipline the ladder already enforces one level up: *count as written, do not convert and
+then count* `[T]`.
+
+⚠️ **A minus is never part of an ATOM.** Descend into $-a$ and it is a product of two factors,
+$(-1)$ and $a$ `[N5.4]`. So **$-3$ is not an atom**: an atom is ONE numeral or ONE letter, the
+atom inside $-3$ is $3$, and the minus is the block wrapping it. That follows from this
+project's notation reckoning — one unary minus, no sign living inside a numeral — and it is
+worth saying out loud, because a student will call $-3$ a number and be right. It is a number;
+it is not an atom.
+
+### V1 · What sits at the top — the four shapes
+
+**An expression is classified by the shape of its topmost operator**, and there are only four.
+This is the axis V2 and V3 were both circling: V2 names the TYPE, V3 names the MARK, and this
+names the SHAPE that decides how both behave.
+
+| shape | example | splits into blocks? | ever needs brackets? |
+|-------|---------|--------------------|----------------------|
+| **nothing at all** | $x$, $7$ | no — nothing inside | **never** — an atom |
+| **circumfix** — walls around it | $(a+b)$, $\frac{a}{b}$, $\sqrt{a}$, $x^2$ | no — open it first | **never** — a container |
+| **prefix** — before one operand | $-a$, $-3$ | no — but it HAS a top operator | ⚠️ **sometimes** |
+| **infix** — a seam between operands | $a+b$, $a-b$, $2x$, $a : b$ | **yes** — that is the split | sometimes |
+
+⚠️ **The names are not ours.** *Infix* and *prefix* are standard; the walling shape is
+**circumfix** in linguistics and **matchfix** in Mathematica. The category is open — $|x|$ would
+join it if absolute value ever arrives.
+
+**This is what "resistant to position" actually rests on**, and it is not walls as such:
+
+> **An expression never needs brackets exactly when it has no top operator that could be
+> outbid** — either nothing at all (atom), or walls, which bind maximally by construction.
+
+⚠️ **So $-a$ is NOT a container**, and the shape column says why: prefix, no walls. Its operator
+binds looser than a power, so it can be outbid — which is precisely why $(-b)^2$ needs its
+brackets while $\sqrt{b}^2$ does not. Nothing splits $-a$, and it is still not safe to move.
+
+⚠️ **And the power is a HYBRID, which is why it is awkward everywhere in this file.** The
+superscript position is circumfix around the EXPONENT only; on the base side there is no wall
+at all, and what bounds it is the closest-block rule `[N4.5, V3]`. Circumfix on one side, not
+the other. Every power oddity in N4 traces back to this one asymmetry.
+
+### V2 · What an expression IS — the five types
 
 Read off the page, and load-bearing rather than vocabulary for its own sake: **every rule
 below is conditioned on the type**, so naming it is the first move and not a formality.
@@ -69,7 +136,7 @@ below is conditioned on the type**, so naming it is the first move and not a for
 | type | German | separated by | its parts are called | and they are |
 |------|--------|--------------|----------------------|--------------|
 | **sum** | Summe | $+$ | summands (Summanden) | blocks |
-| **difference** | Differenz | $-$ | summands, once the sign is absorbed | blocks |
+| **difference** | Differenz | $-$ | the blocks either side of the minus — summands only after §3 `[E.18]` | blocks |
 | **product** | Produkt | $\cdot$ or nothing at all | factors (Faktoren) | blocks |
 | **quotient** | Quotient | the bar, or $:$ | numerator and denominator (Zähler, Nenner) | **slots** |
 | **power** | Potenz | *nothing — the position is the operator* | base and exponent (Basis, Exponent) | **slots** |
@@ -87,7 +154,7 @@ they sit in, $(ab)^n$ would count TWO and the ladder's "container = one block" c
 ⚠️ **The root is missing from this table, and the file uses it as a sixth type** — P.10 answers
 "a root", and the ladder says *container (quotient, power, root)*. It is not a sixth type: a
 root IS a power, $\sqrt[n]{a} = a^{1/n}$ `[§25]`, so it belongs in the power row and appears as
-its own written form in `[V3]`. ⚠️ *Author to confirm — the alternative is to admit six types
+its own written form in `[V5]`. ⚠️ *Author to confirm — the alternative is to admit six types
 and say so in this table.*
 
 **How the type is found: brackets first `[N3.1]`, then binding strength `[N4.1]`.** The
@@ -107,6 +174,13 @@ product whose blocks may be reciprocals `[def.div]`. Neither conversion is free 
 move — but once made, the sum-and-product rules apply and nothing else has to be learned. That
 is why $a - b$ can be reordered at all, and it is the same trick twice, one level apart.
 
+⚠️ **And it really is the SAME trick, which this file doubted for a day.** Counted as written,
+both conversions OPEN the expression — $b \to (-b)$ turns an atom into a product, and
+$\frac{a}{b} \to a \cdot \frac{1}{b}$ turns one container into two factors. So both are
+expanding `[E.18, E.19]`, both have a collecting twin `[C.15, C.17]`, and §3 and §4 are
+symmetric after all. The asymmetry once recorded here came from counting one of them after
+converting and the other as written.
+
 **Power is the odd one out and stays odd**: no symbol separates its two blocks, the position
 does, and the two blocks are not interchangeable in any way. $2^3 \neq 3^2$.
 
@@ -125,7 +199,7 @@ So the English side means two different things by one word, and the German side 
 inconsistent about which word names the block. **This file uses `expression` for the whole and
 never bare "term"**; the pools should be swept the same way when the rebuild lands.
 
-### V1 · Separating operators and grouping symbols
+### V3 · Separating operators and grouping symbols
 
 Not every operator separates. This is the distinction the counting rests on, and it was
 missing until $(ab)^n$ forced it out:
@@ -143,12 +217,64 @@ $\frac{a}{b} \cdot \frac{c}{d}$ is two blocks and $\frac{ac}{bd}$ is one.
 denominator `[P.16]`, a power has a base and an exponent `[P.17]`. They are simply not blocks
 of the expression they sit in; you reach them by descending, not by counting.
 
+**Three spellings of one quotient, and they do NOT have the same blocks:**
+
+| written | blocks | why |
+|---|---|---|
+| $\frac{a}{b}$ | **one** | the bar is a grouping symbol. NOT an atom — inside are two SLOTS, numerator and denominator, each holding an atom here |
+| $a : b$ | **two**, $a$ and $b$ | the colon is a separating operator, so it is a seam like any other |
+| $a \cdot \frac{1}{b}$ | **two**, $a$ and $\frac{1}{b}$ | a product; the second block is a container holding two atoms |
+
+Same value, three forms, one block or two. **This is exactly why §4 is a move and not a
+reading** — going from the first row to the third opens the expression `[E.19]` — and it is the
+minus story one level up `[V2]`.
+
 **And the grouping symbol is PART OF the block it makes.** The block in $3(x+1)$ is $(x+1)$,
 not $x+1$ — a block is a piece of written notation you move without opening, and $x+1$ moved
 on its own does not survive the trip. The same for the bar and the radical: $\frac{a}{b}$ is
 the block, bar included. ⚠️ **But only a bracket that SURVIVES belongs to anything.** In
-$a + (b+c)$ the bracket is flattened `[V2]` and is part of nothing at all. So the counting
+$a + (b+c)$ the bracket is flattened `[V4]` and is part of nothing at all. So the counting
 decides which brackets exist, and the survivors join their block.
+
+**A CONTAINER IS A BLOCK WITH WALLS.**
+
+That is the whole idea, and the walls are what make it **resistant to position**. Said
+carefully, because "is one block" is the malformed phrasing V warns about: $2x$ **splits** into
+two blocks and merely *appears as* one block of the sum it sits in, while $\frac{a}{b}$
+**appears as exactly one block in every context there is** — nothing splits it until you open
+it. That difference is the walls.
+
+| container | its walls | chambers |
+|---|---|---|
+| **bracket** $(x+1)$ | the two marks | one, unnamed |
+| **fraction** $\frac{a}{b}$ | the two ends of the stroke | **two** — the bar is wall AND divider |
+| **root** $\sqrt{a+b}$ | the hook opens, the right end of the bar closes | one, under a roof |
+| **power** $b^2$ | ⚠️ **one wall only** — see below | one, the exponent |
+
+The chambers are the slots `[V2]`. A bracket has one and it has no name, which is exactly why a
+bracket adds no meaning and why a second one around it adds no reading `[N3.4]`.
+
+⚠️ **The bracket is the container that creates no TYPE.** A bar makes a quotient, a radical
+makes a root, the superscript makes a power — the bracket makes nothing new, it only walls off
+what is already there. That is why the ladder's container rung lists quotient, power and root
+and not the bracket `[T]`, and it is precisely what the open V4 question turns on.
+
+⚠️ **The power has one wall, and this is where the model has to be exact.** The exponent is
+walled by being raised. The BASE end has no mark at all — what bounds it is the binding rule,
+*the closest block* `[N4.5]`. Three cases, one rule:
+
+- **nothing is grouped** → the closest block is an atom: $2x^3 = 2 \cdot (x^3)$, and $-2a^2 =
+  -2(a^2)$. The $2$ is outside because $x$ is already a whole block on its own `[N4.5a]`
+- **a grouping symbol has already closed something** → that whole container is the closest
+  block: $\left(\frac{a}{b}\right)^2$ squares the fraction, not the numerator `[N4.5a]`
+- **you want more than the closest block** → **a bracket is how you build the missing wall
+  yourself**: $(ab)^2$ `[N4.6]`
+
+So N4.6 is not a separate rule to learn. A bracket supplies the wall the power hasn't got.
+
+⚠️ **Walls only protect you if they are drawn honestly.** A bar drawn too long or too short
+moves the wall, and then it is a different container — §0.1's *genau zeichnen*, and the reason
+the length of a stroke is the meaning `[§0.1, §0.2]`.
 
 **"Grouping symbol" is the standard term, not ours.** English curricula patch PEMDAS into
 **G**EMDAS for exactly this reason and list the fraction bar with the brackets; the German rule
@@ -181,49 +307,68 @@ fraction bar and the root bar behave identically `[N6.5, N7.2]`: they are the sa
 
 ⚠️ **Why the bar is one block, stated on the right ground.** NOT because $:$ binds tighter than
 $\cdot$ — there is no such rung, they share one and are read left to right `[N4.1b]`. Because
-the bar is a grouping symbol. And that settles the apparent clash with V2 rather than creating
-one: the bar is a bracket that can never be removed, so V2's rule counts it with no special
+the bar is a grouping symbol. And that settles the apparent clash with V4 rather than creating
+one: the bar is a bracket that can never be removed, so V4's rule counts it with no special
 case.
 
-### V2 · Counting through a bracket
+### V4 · Counting through a bracket
 
 
-$a + (b + c)$ is **three** summands, not two. The rule, and it is not a convenience:
+$a + (b + c)$ is **two** blocks, $a$ and $(b+c)$. There is nothing to decide and nothing to
+test first:
 
-> **A bracket is flattened when removing it changes nothing, and counted when it does not.**
+> **Split at the loosest-binding top operator. A bracket is a wall, so nothing inside it is
+> ever a block of what is outside.**
 
-That is N3.4's ground — a bracket that alters no reading is not there — so the counting rule
-is not a new idea, it is an existing item doing a second job.
+⚠️ **THIS REVERSES THE RULE THIS SECTION CARRIED UNTIL 2026-08-03**, which read *"a bracket is
+flattened when removing it changes nothing, and counted when it does not"* — and gave three
+summands here. The reversal is worth its own paragraph, below, because the old rule was not
+silly; it bought something real.
 
 | expression | blocks | why |
 |---|---|---|
-| $a + (b + c)$ | 3 summands | $+$ in front of a $+$ bracket: drop it, nothing changes |
-| $a - (b + c)$ | **2** summands | drop it and every inner sign flips — the bracket is load-bearing |
-| $a \cdot (b \cdot c)$ | 3 factors | same operator, drops freely |
-| $a \cdot (b + c)$ | **2** factors | different operator; the sum is one factor |
+| $a + (b + c)$ | **2**: $a$, $(b+c)$ | the bracket is a wall `[V1]`; what is inside is one level down |
+| $a - (b + c)$ | **2**: $a$, $-(b+c)$ | same count — the minus joins the block, it does not change the split |
+| $a \cdot (b \cdot c)$ | **2**: $a$, $(b \cdot c)$ | a wall is a wall whatever it groups |
+| $a + b + c$ | **3** | no walls at all, so three blocks — and this is a DIFFERENT expression from the first row |
+| $a \cdot (b + c)$ | **2** factors | unchanged by the reversal |
 
-**This is what makes R.8 rearranging and E.9 expanding**, which is the whole reason it has to
-be stated. $a + (b+c) = a + b + c$ is 3 against 3 — nothing was gained, only the grouping
-moved, so it is R. $a - (b+c) = a - b - c$ is 2 against 3 — the bracket was load-bearing and
-removing it *is* the move, so it is E. Count them the other way and both answers flip.
+**Why the old rule existed, and what it cost.** It was there to make dropping a harmless
+bracket come out as *rearranging*: $a + (b+c) = a+b+c$ counted 3 against 3, so R. But it worked
+by **removing a bracket first and counting afterwards** — normalise, then count — which is
+exactly the *convert-then-count* error the ladder was corrected for twice, on §4 and then on §3
+`[T]`. This was the last place it survived.
 
-**What the flattening guarantees.** Once a sum has been counted, **no summand is itself a bare
-sum**, and no factor of a product is itself a bare product — a same-operator bracket always
-flattens, so it never survives to make one. Worth saying to a class: *wenn du zerlegt hast,
-ist kein Summand mehr eine Summe.*
+**What the reversal buys.**
 
-⚠️ **Unless it stands in brackets — and then look at what is HOLDING the bracket there.** A
-bracket only survives when something is attached to it, and that something changes what the
-block is: in $a - (b+c)$ the surviving summand is $-(b+c)$, which is a PRODUCT `[N5.6]`, not a
-sum. Strip the attachment and the bracket flattens again. Which is close to an argument for why
-brackets exist at all — **they are the only way to put a sum inside a sum.** ⚠️ *Claimed here,
-not yet checked item by item; the review should try to break it.*
+- **One rule instead of two.** Counting no longer needs a hypothetical (*would removing this
+  bracket change the reading?*) run before you are allowed to count. Find the loosest operator,
+  count the seams. A first-year student can do that; the hypothetical is a mini-proof.
+- ***Klammern auflösen* stops being split across two buckets.** Under the old rule
+  $a + (b+c) = a+b+c$ was R while $a - (b+c) = a-b-c$ was E — one classroom act, two answers.
+  Now both are E `[E.20, E.12]`, and both have a collecting twin: putting a bracket in
+  `[C.18]`.
+- **The context-dependence goes.** $(x+1)$ used to be one block as a factor and two standing
+  alone. Now it is one block always, which is what "container" already claimed `[V1]`.
 
-### V3 · The written forms — what can stand beside what
+**What it costs, stated so nobody re-litigates it.** $a + (b+c) = a + b + c$ is now
+**expanding** — 2 blocks against 3. That reads oddly beside *ausmultiplizieren* until you say
+it as *Klammer auflösen*, which is what it is.
 
-V0 says what an expression IS; this says what it LOOKS like, which is the question `[§0.3]`
+**What the walls guarantee.** No block of a sum is itself a bare sum, and no block of a product
+is itself a bare product — not because anything flattens, but because **a bare sum inside a sum
+has nothing separating it from the outside**, so its summands simply belong to the outer sum.
+To put a sum inside a sum you must wall it. Worth saying to a class: *wenn du zerlegt hast,
+ist kein Summand mehr eine Summe — ausser er steht in Klammern.*
+
+⚠️ **And that is close to an argument for why brackets exist at all**: they are the only way to
+make a sum a block of a sum. The old rule obscured this by throwing such brackets away.
+
+### V5 · The written forms — what can stand beside what
+
+V2 says what an expression IS; this says what it LOOKS like, which is the question `[§0.3]`
 has to answer before it can range over anything. **Nothing here is invented**: it is V's two
-atoms plus V1's grouping symbols, collected in one place for the first time.
+atoms plus V3's grouping symbols, collected in one place for the first time.
 
 | form | German | example | it is |
 |------|--------|---------|-------|
@@ -265,7 +410,7 @@ table is.
 ## Rules in student language — first draft
 
 **Written from scratch; the existing pool is deliberately not consulted.** One sentence per
-permission, **conditioned on the type** `[V0]` and stated over blocks:
+permission, **conditioned on the type** `[V2]` and stated over blocks:
 
 > **In a `<type>`, you may `<move>`.**
 
@@ -307,7 +452,7 @@ live, so the heading says so.
 > So read it exactly — and draw it exactly.* — N6.5, N6.6, P.10
 
 ⚠️ **Deliberately the same sentence twice**, because it is the same symbol twice — the vinculum
-`[V1]`. And the tail is not decoration: *wo der Strich anfängt und wo er aufhört, ist die
+`[V3]`. And the tail is not decoration: *wo der Strich anfängt und wo er aufhört, ist die
 Klammer*, so a bar drawn carelessly says something the student did not mean.
 
 ⚠️ **"Draw it exactly" is a rule for the teacher's mouth, not for a drill — and that is a
@@ -335,8 +480,31 @@ subtlety: **the length of the bar is under your hand, so it is not too much to a
 > wäre eine gemischte Zahl — **die schreiben wir nicht.**
 >
 > *Two blocks side by side mean times, and it must be clear what a block is. The exceptions are
-> all about numerals.* — N1.1–N1.7. The six forms it ranges over are `[V3]`, and the name is
+> all about numerals.* — N1.1–N1.7. The six forms it ranges over are `[V5]`, and the name is
 > the one `rule.juxtaposition` already carries in the pool rather than a new coinage.
+
+**§0.4 · Zwei Sorten Klammern** `#two-kinds-of-required-bracket`
+> **Manche Klammern muss man setzen, weil der Term sonst etwas ANDERES bedeutet. Andere setzt
+> man, weil man zwei Rechenzeichen nicht nebeneinander schreibt — der Term wäre auch ohne sie
+> eindeutig.**
+>
+> **Nötig:** $(-b)^2$ — ohne Klammer heisst $-b^2$ etwas anderes `[N4.7]`.
+> **Nur Schreibweise:** $1 - (-3)$ — $1--3$ wäre lesbar, aber so schreibt man nicht `[N5.2]`.
+>
+> *Some brackets are required because the reading changes without them; others because we do
+> not write two operation signs side by side.* — N4.7, N5.2, N5.3, N5.5
+
+⚠️ **The distinction is binding strength, and only the first kind is grammar.** A block keeps
+its wall exactly where it lands somewhere that binds TIGHTER than its own top operator `[V1]`.
+The unary minus binds looser than a power, so $-b$ as a base must be walled or it says
+something else. After a binary minus nothing competes, so $1--3$ is unambiguous — parsers and
+calculators accept it — and the bracket is legibility.
+
+⚠️ **Why it earns a rule of its own.** A student told "you must bracket" in both cases learns
+one demand where there are two, and cannot tell which one to relax when notation gets dense.
+The first kind can be drilled against a right answer; the second is a writing habit, which is
+the same production/reading split §0.1's tail already names — the third instance of it, and the
+reason this section is called *Lesen und Schreiben*.
 
 ⚠️ **The `.1`/`.2` convention collides in this section.** Everywhere else `.1` is a permission
 and `.2` its limit; in §0 the second digit already names WHICH grouping symbol. So §0.3's
@@ -349,40 +517,48 @@ re-based — the pairing is real structure and this is the one place it cannot b
 > **In einer Summe dürfen die Summanden in beliebiger Reihenfolge stehen. In einem Produkt
 > dürfen die Faktoren in beliebiger Reihenfolge stehen.**
 >
-> *In a sum the summands may stand in any order; in a product, the factors.* — R.1–R.5, R.11, R.14
+> *In a sum the summands may stand in any order; in a product, the factors.* — R.1–R.5, R.9,
+> and C.16 where the swap is spent
 
 **§1.2 · … aber nicht in einer Differenz oder einem Quotienten** `#order-is-not-free-in-a-difference`
 > **Solange ein Minus oder ein Bruchstrich trennt, darf die Reihenfolge nicht geändert werden:
 > $a - b \neq b - a$, $\frac{a}{b} \neq \frac{b}{a}$.**
 >
-> *While a minus or a bar still separates, the order may not be changed.* — R.15–R.18
+> *While a minus or a bar still separates, the order may not be changed.* — R.10–R.13
 
 **§2.1 · Klammern** `#grouping-is-free`
 > **In einer Summe dürfen Klammern, die nur Summanden zusammenfassen, weggelassen oder anders
 > gesetzt werden. In einem Produkt gilt dasselbe für Faktoren.**
 >
 > *In a sum, brackets that only group summands may be dropped or set differently; in a product
-> the same holds for factors.* — R.6–R.10
+> the same holds for factors.* — R.6, R.7, R.8; and E.20, E.21 with C.18, C.19, which is
+> where dropping and setting a bracket now live `[V4]`
 
 **§2.2 · … aber nicht in einer Differenz oder einem Quotienten** `#grouping-is-not-free-in-a-difference`
 > **$(a - b) - c \neq a - (b - c)$, $(a : b) : c \neq a : (b : c)$.**
 >
-> *Grouping may not be moved while a minus or a bar separates.* — R.19–R.21
+> *Grouping may not be moved while a minus or a bar separates.* — R.14–R.16
 
 **§3 · Das Minus gehört zum Block** *(the pivot — the highest-value sentence here)* `#minus-belongs-to-its-block`
 > **Ein Minus gehört zu dem Block, der ihm folgt. Danach ist die Differenz eine Summe, und
 > §1.1 und §2.1 gelten.**
 >
-> *A minus belongs to the block that follows it; the difference is then a sum.* — R.12, R.14;
-> licenses N5.2 and P.14. It is what lets §1.1 reach $a - b + c$ at all, and it is why §1.2
-> exists: **a student who absorbs the minus first never meets the boundary.**
+> *A minus belongs to the block that follows it; the difference is then a sum.* — E.18, C.15,
+> C.16; licenses N5.2 and P.14a. It is what lets §1.1 reach $a - b + c$ at all, and it is why
+> §1.2 exists: **a student who absorbs the minus first never meets the boundary.**
+>
+> ⚠️ **This rule is a MOVE, and the sentence has to be read that way.** *Gehört zu* describes
+> what is true AFTER it is applied, not what the page already says: until then $3x - 2y$ is a
+> difference with blocks $3x$ and $2y$ `[P.14]`. The §1.2 line above is the proof — a boundary
+> that only exists before the absorption needs the un-absorbed reading to be a real state.
 
 **§4 · Der Bruchstrich ebenso** *(the same trick one level up)* `#dividing-is-multiplying-by-the-reciprocal`
 > **Durch $b$ teilen heisst mit $\frac{1}{b}$ malnehmen. Danach ist der Quotient ein Produkt,
 > und §1.1 und §2.1 gelten.**
 >
-> *Dividing by $b$ is multiplying by $1/b$; the quotient is then a product.* — R.13.
-> ⚠️ **Writing this rule is what found R.13** — the item did not exist until the rule needed one.
+> *Dividing by $b$ is multiplying by $1/b$; the quotient is then a product.* — E.19, C.17.
+> ⚠️ **Writing this rule is what found E.19** — the item did not exist until the rule needed
+> one, and applying the ladder to it later found C.17 the same way.
 
 **§5 · Potenz** `#power-slots-do-not-swap`
 > **In einer Potenz darf nichts vertauscht werden: Basis und Exponent sind verschiedene
@@ -405,7 +581,7 @@ re-based — the pairing is real structure and this is the one place it cannot b
 > **Nur ein Faktor erreicht jeden Summanden. Eine Potenz und eine Wurzel tun das nicht:
 > $(a+b)^2 \neq a^2 + b^2$, $\sqrt{a+b} \neq \sqrt{a} + \sqrt{b}$.**
 >
-> *Only a factor reaches every summand; a power and a root do not.* — E.19–E.21
+> *Only a factor reaches every summand; a power and a root do not.* — E.23–E.25
 
 **§7 · Jeder mit jedem** `#both-sums-multiply-out`
 > **Sind beide Blöcke Summen, so wird jeder Summand des einen mit jedem Summanden des anderen
@@ -425,7 +601,7 @@ re-based — the pairing is real structure and this is the one place it cannot b
 **§8.2 · … aber nie unter dem Bruchstrich** `#a-sum-under-the-bar-does-not-split`
 > **Eine Summe im NENNER wird nicht zerlegt: $\frac{c}{a+b} \neq \frac{c}{a} + \frac{c}{b}$.**
 >
-> *A sum in the denominator does not split.* — E.18
+> *A sum in the denominator does not split.* — E.22
 
 **§9 · Minus vor der Klammer** `#a-leading-minus-is-a-factor`
 > **Ein Minus vor einer Klammer ist der Faktor $(-1)$. Multipliziert man aus, wird aus jedem
@@ -463,7 +639,7 @@ re-based — the pairing is real structure and this is the one place it cannot b
 > **Summanden, die sich in mehr als der Zahl davor unterscheiden, bleiben stehen:
 > $2 + 3x$, $3x + 2y$, $x^2 + x$, $a^2 + b^2$.**
 >
-> *Summands differing in more than the number in front stay as they are.* — C.15–C.18.
+> *Summands differing in more than the number in front stay as they are.* — C.20–C.23.
 > ⚠️ Say the companion out loud: **nicht zusammenfassbar heisst nicht unveränderbar** —
 > $x^2 + x$ does not collect and still factors `[§13]`.
 
@@ -500,7 +676,7 @@ re-based — the pairing is real structure and this is the one place it cannot b
 **§17.2 · … nie ein einzelner Summand** `#never-cancel-a-summand`
 > **$\frac{3x+2}{3}$ bleibt: die $3$ ist kein Faktor des ganzen Zählers.**
 >
-> *Never a single summand.* — C.19. This pair is the clearest case for the `.1`/`.2`
+> *Never a single summand.* — C.24. This pair is the clearest case for the `.1`/`.2`
 > numbering: the mistake happens *inside* the legal move, so the two sentences are useless
 > apart.
 
@@ -518,7 +694,7 @@ re-based — the pairing is real structure and this is the one place it cannot b
 > Wenn nein, kommt sie weg.**
 >
 > *Substitute, then ask whether removing the bracket would change the reading.* — S.2–S.8, S.16.
-> ⚠️ Nothing new: this is V2 applied at the substitution site. Over the bar and under the root
+> ⚠️ Nothing new: this is V4 applied at the substitution site. Over the bar and under the root
 > the answer is always "no brackets", because there is already one `[§0.1, §0.2]`.
 
 **§20 · Passt die Regel?** `#a-rule-fits-slot-by-slot`
@@ -541,25 +717,25 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > **Potenzen mit gleicher Basis werden multipliziert, indem man die Exponenten addiert:
 > $a^m \cdot a^n = a^{m+n}$. Rückwärts gelesen zerlegt sie eine Potenz.**
 >
-> *Same base, multiplied: add the exponents; read backwards it splits one.* — C.20, E.26.
-> ⚠️ Boundaries C.33 and C.34 belong with it: different bases do not collect, and a SUM of
+> *Same base, multiplied: add the exponents; read backwards it splits one.* — C.25, E.30.
+> ⚠️ Boundaries C.38 and C.39 belong with it: different bases do not collect, and a SUM of
 > powers is not what this rule is about.
 
 **§22 · Gleiche Basis, geteilt** `#same-base-subtracts-exponents`
 > **Beim Dividieren werden die Exponenten subtrahiert: $\frac{a^m}{a^n} = a^{m-n}$.**
 >
-> *Dividing: subtract the exponents.* — C.21. ⚠️ **Not a fourth law**: it is §21 after §4,
+> *Dividing: subtract the exponents.* — C.26. ⚠️ **Not a fourth law**: it is §21 after §4,
 > and worth showing that way once.
 
 **§23 · Potenz einer Potenz** `#powers-multiply-exponents`
 > **Bei einer Potenz einer Potenz werden die Exponenten multipliziert: $(a^m)^n = a^{mn}$.**
 >
-> *A power of a power: multiply the exponents.* — C.22
+> *A power of a power: multiply the exponents.* — C.27
 
 **§24 · Potenz eines Produkts** `#a-power-reaches-every-factor`
 > **Eine Potenz erreicht jeden FAKTOR: $(ab)^n = a^n b^n$, und ebenso Zähler und Nenner.**
 >
-> *A power reaches every factor — and numerator and denominator alike.* — E.22, E.23, C.23.
+> *A power reaches every factor — and numerator and denominator alike.* — E.26, E.27, C.28.
 > ⚠️ Its limit is already written: §6.2. A power reaches every factor and NO summand.
 
 **§25 · Wurzel ist Potenz** `#a-root-is-a-power`
@@ -567,21 +743,21 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > Potenzgesetze mit einem Bruch im Exponenten.**
 >
 > *A root is a power with a fraction in the exponent, so the root laws are not new laws.*
-> — R.23, E.24, E.25. **The most economical sentence in the set**: it retires four rules
+> — R.18, E.28, E.29. **The most economical sentence in the set**: it retires four rules
 > before they are written, and it is `ix.root`'s own argument.
 
 **§26 · Wurzel und Potenz vertauschen** `#root-and-power-commute`
 > **$\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}$ — erst wurzeln oder erst potenzieren, das
 > Ergebnis ist dasselbe.**
 >
-> *Root first or power first: same answer.* — R.24. ⚠️ Its own reverse, which is why its item
+> *Root first or power first: same answer.* — R.19. ⚠️ Its own reverse, which is why its item
 > sits in R.
 
 **§27 · Negativer Exponent** `#a-negative-exponent-is-a-reciprocal`
 > **$a^{-n} = \frac{1}{a^n}$ — ein negativer Exponent ist der Kehrwert, kein negatives
 > Ergebnis.**
 >
-> *A negative exponent means the reciprocal, not a negative result.* — R.22
+> *A negative exponent means the reciprocal, not a negative result.* — R.17
 
 **§28 · Exponent null** `#exponent-zero-is-forced`
 > **$a^0 = 1$ — nicht verordnet, sondern erzwungen: $a^m \cdot a^0 = a^m$ `[§21]`, also muss
@@ -596,19 +772,19 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > Dafür braucht es KEINEN gemeinsamen Nenner.**
 >
 > *Numerator times numerator, denominator times denominator — no common denominator needed.*
-> — C.24
+> — C.29
 
 **§30 · Brüche dividieren** `#flip-and-multiply`
 > **Durch einen Bruch teilen heisst mit seinem Kehrwert malnehmen — und zwar mit dem Kehrwert
 > dessen, durch das man teilt.**
 >
-> *Dividing by a fraction is multiplying by its reciprocal — of the one you divide BY.* — E.27
+> *Dividing by a fraction is multiplying by its reciprocal — of the one you divide BY.* — E.31
 
 **§31 · Brüche addieren** `#fractions-need-one-denominator`
 > **Gleicher Nenner: Zähler addieren. Ungleicher Nenner: zuerst gleichnamig machen. Eine ganze
 > Zahl ist ein Bruch mit Nenner $1$.**
 >
-> *Same denominator: add the numerators. Different: make them the same first.* — C.25–C.27.
+> *Same denominator: add the numerators. Different: make them the same first.* — C.30–C.32.
 > ⚠️ Beside §29 this is the pair worth teaching together: **multiplying asks nothing first,
 > adding asks for the denominators** — that is the whole difference and it is why one feels
 > easy and the other does not.
@@ -617,7 +793,7 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > **Im Doppelbruch entscheidet der HAUPTBRUCHSTRICH — der längere. $\frac{\frac{a}{b}}{c}$ und
 > $\frac{a}{\frac{b}{c}}$ sind verschiedene Zahlen.**
 >
-> *In a double fraction the main bar — the longer one — decides.* — C.28, N7.6. ⚠️ Another
+> *In a double fraction the main bar — the longer one — decides.* — C.33, N7.6. ⚠️ Another
 > place where the length of a stroke is the whole meaning `[§0.1]`.
 
 ### The binomial formulas
@@ -626,23 +802,38 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 > **$(a+b)^2 = a^2 + 2ab + b^2$, $(a-b)^2 = a^2 - 2ab + b^2$, $(a+b)(a-b) = a^2 - b^2$.
 > Vorwärts gelesen multipliziert man aus, rückwärts gelesen faktorisiert man.**
 >
-> *Forwards they expand, backwards they factorise.* — E.28–E.30, C.29–C.31.
+> *Forwards they expand, backwards they factorise.* — E.32–E.34, C.34–C.36.
 > ⚠️ The second is the first with $b := -b$ `[S.1]` — one formula, not three.
 
 **§34 · Das Paar finden** `#find-the-pair`
 > **$x^2 + px + q = (x+m)(x+n)$, wenn $m \cdot n = q$ und $m + n = p$. Beide Bedingungen
 > müssen gelten, sonst ist das Paar falsch.**
 >
-> *Both conditions or the pair is wrong.* — E.31, C.32
+> *Both conditions or the pair is wrong.* — E.35, C.37
 
 ### What this draft shows
 
-- **Forty-three rules, 176 items** (counted 2026-08-03, not estimated). ⚠️ **The old "186" was
+- **Forty-four rules, 181 items** (counted 2026-08-03, not estimated). ⚠️ **The old "186" was
   wrong** — the true figure before §0.3 landed was 179, which is exactly the number of slugs
   the slug pass produced, so the slug count had been right and the prose had not. Today's pool
   is 63 rules — so the sizes were never far
   apart. What differs is the vocabulary: the pool talks about operations, these talk about
   blocks and types.
+- **THE FLATTENING RULE IS GONE, 2026-08-03, and it was the last normalise-then-count.** V4 used
+  to drop a bracket that changed no reading and count afterwards; now a wall is a wall and
+  $a + (b+c)$ is TWO blocks. What it buys: counting stops needing a hypothetical run before you
+  may count, *Klammer auflösen* stops being split across two buckets (E.20 and E.12 are now
+  both E, with twins C.18 and C.19), and $(x+1)$ stops being one block in context and two
+  standing alone. What it costs, said plainly: dropping a harmless bracket is now EXPANDING.
+  ⚠️ **The bracket also joins the ladder's container rung**, and step 4 had to say that it
+  descends by MATCHING blocks, not pairing them left to right — otherwise associativity returns
+  no verdict. Neither is a special case; both are the test written down more exactly.
+- **THE LADDER WAS TURNED ON ITSELF, 2026-08-03, and moved three items.** The two conversions
+  had been counted after converting rather than as written — the same error the fraction
+  product was corrected for weeks earlier. Counted honestly they OPEN, so §3 and §4 became
+  **E.18/E.19** with twins **C.15/C.17**, and the asymmetry open question 6 recorded turned out
+  to be an artefact of counting the two of them differently. ⚠️ **No new bucket, no special
+  case, no change to the test** — one of its inputs is simply applied everywhere now.
 - **THE LADDER HELD.** This was the falsification test — R/E/C was invented on three basic
   laws and claimed to sort every move. Thirty-four power, root, fraction and binomial moves
   were added and **not one needed a new bucket or a special case.** Two that looked awkward
@@ -650,8 +841,8 @@ sentence serves both, and the two directions are two ITEMS in E and C.
   §4, and $\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}$ is R — which the involutive audit had
   already said, from the other side, three days earlier.
 - **Writing the rules first kept finding items.** Six more this round: $a^{m+n} = a^m a^n$
-  (E.26), the root laws as instances rather than laws (E.24, E.25), $a^0 = 1$ derived rather
-  than decreed (N6.8), and the two power boundaries C.33/C.34 — *different bases do not
+  (E.30), the root laws as instances rather than laws (E.28, E.29), $a^0 = 1$ derived rather
+  than decreed (N6.8), and the two power boundaries C.38/C.39 — *different bases do not
   collect*, and *a SUM of powers is not what the power laws are about* — which no item had
   covered and which is where half of `anti.exponent-arithmetic` lives.
 - **§25 is the most economical sentence in the set.** *Eine Wurzel ist eine Potenz* retires the
@@ -673,13 +864,13 @@ sentence serves both, and the two directions are two ITEMS in E and C.
 
 | section | items | rules |
 |---------|-------|-------|
-| V, N (50), P (20) | 70 | **§0.1–§0.3**, plus where §3, §5, §27, §28 land |
-| **R** | 24 | **§1.1–§5**, §26, §27 |
-| **E** | 31 | **§6.1–§11**, §21, §24, §25, §30, §33, §34 |
-| **C** | 35 | **§12.1–§17.2**, §21–§24, §29, §31–§34 |
+| V, N (50), P (21) | 71 | **§0.1–§0.4**, plus where §5, §27, §28 land |
+| **R** | 19 | §1.1, §1.2, §2.1, §2.2, §5, §26, §27 — **no longer §3, §4, or dropping a bracket** |
+| **E** | 35 | **§2.1, §3, §4**, §6.1–§11, §21, §24, §25, §30, §33, §34 |
+| **C** | 40 | **§2.1, §3, §4**, §12.1–§17.2, §21–§24, §29, §31–§34 |
 | **S** | 16 | **§18–§20** |
 
-- **The blocks got named, 2026-08-03.** V3 collects the six written forms, §0.3 states
+- **The blocks got named, 2026-08-03.** V5 collects the six written forms, §0.3 states
   juxtaposition once, and N1 went from ten items to seven — six of which had been an ad-hoc
   slice of a 36-cell cross-product. **The enumeration is what produced the finding**: every
   exception is about numerals, so the rule's limit is one sentence rather than a list. Same
@@ -700,11 +891,11 @@ written from the other side.
 
 ⚠️ **Was six items, now one.** N1.1–N1.6 used to enumerate pairs — number·letter,
 letter·letter, number·bracket, letter·bracket, bracket·bracket, number·root — which is six of
-the thirty-six pairs `[V3]` allows, picked ad hoc. They are one skill over different forms, and
+the thirty-six pairs `[V5]` allows, picked ad hoc. They are one skill over different forms, and
 difficulty between them is a binding range, not a second item. What survives beside the merged
 item is only what the rule does NOT predict.
 
-- **N1.1** $3a = 3 \cdot a$, $ab = a \cdot b$, $3(x+1)$, $a(x+1)$, $(x+1)(x+2)$, $2\sqrt{3}$, $a\frac{c}{d}$, $ab^2$ — **two blocks side by side are a product**, whatever the two forms are `[V3]` `[§0.3]` `[ix.juxtaposition]` `#blocks-side-by-side-are-a-product`
+- **N1.1** $3a = 3 \cdot a$, $ab = a \cdot b$, $3(x+1)$, $a(x+1)$, $(x+1)(x+2)$, $2\sqrt{3}$, $a\frac{c}{d}$, $ab^2$ — **two blocks side by side are a product**, whatever the two forms are `[V5]` `[§0.3]` `[ix.juxtaposition]` `#blocks-side-by-side-are-a-product`
 - **N1.2** $23 \neq 2 \cdot 3$ — a numeral is ONE atom however many digits it has, so two numerals never stand side by side `[§0.3]` `[no card]` `#a-numeral-is-one-atom`
 - **N1.3** $3a$, not $a3$ — the numeral is written in front `[§0.3]` `[ix.coefficient-front]` `#coefficient-in-front`
 - **N1.4** $a3$ reads as a NAME, not as a product — worth meeting now rather than later, because it comes back as $a_1$ `[§0.3]` `[ix.coefficient-front]` `#letter-then-number-is-a-name`
@@ -726,28 +917,28 @@ each is a symbol you must be able to write back in.
 - **N3.1** $a \cdot (b + c)$ — brackets say what to compute first `[ix.brackets]` `#brackets-say-what-first`
 - **N3.2** $(a + b)$ is **one object** — a whole bracket is a single thing `[no card]` `#bracket-is-one-block`
 - **N3.3** $(a+b) = [a+b] = \{a+b\}$ — round, square and curly do one job; the shape only helps the eye when they nest `[no card]` `#bracket-shapes`
-- **N3.4** $((a+b)) = (a+b)$ — a second bracket around a bracket adds no reading `[no card]` `#doubled-bracket`
+- **N3.4** $((a+b)) = (a+b)$ — a second bracket around a bracket adds no reading. ⚠️ *It states an IDENTITY; taking the outer wall off is a move, one wall fewer, so it collects `[V4, C.18]`* `[no card]` `#doubled-bracket`
 
 ### N4 · Precedence — the grouping nobody writes
 
-- **N4.1** **Two tiers, not one chain.** First the **grouping symbols** `[V1]` — written brackets, the fraction bar, the radical, the superscript position — which group by geometry and are settled before any ranking is consulted. Then, among what is left on the line: $\text{power} \succ \cdot \; / \; : \; \succ + \; -$, same rung read left to right `[ix.precedence, ix.power-precedence]` `#two-tiers`
-- **N4.1a** the classroom form: **Klammern → Potenz → Punkt → Strich**, *wobei Bruchstrich und Wurzelstrich Klammern sind* — that rider is the whole content, and it is what English curricula patch PEMDAS into **G**EMDAS for `[V1]` `#klammer-potenz-punkt-strich`
+- **N4.1** **Two tiers, not one chain.** First the **grouping symbols** `[V3]` — written brackets, the fraction bar, the radical, the superscript position — which group by geometry and are settled before any ranking is consulted. Then, among what is left on the line: $\text{power} \succ \cdot \; / \; : \; \succ + \; -$, same rung read left to right `[ix.precedence, ix.power-precedence]` `#two-tiers`
+- **N4.1a** the classroom form: **Klammern → Potenz → Punkt → Strich**, *wobei Bruchstrich und Wurzelstrich Klammern sind* — that rider is the whole content, and it is what English curricula patch PEMDAS into **G**EMDAS for `[V3]` `#klammer-potenz-punkt-strich`
 - **N4.1b** $\cdot$, $/$ and $:$ share ONE rung: $a / b \cdot c = (a/b) \cdot c$, never $a/(b \cdot c)$. ⚠️ The stacked bar is NOT on this rung — it is a grouping symbol, which is why $\frac{a}{b} \cdot c$ needs no brackets and $a / b \cdot c$ does `[no card]` `#times-and-divide-share-a-rung`
 - **N4.2** $a + b \cdot c = a + (b \cdot c)$ — a product inside a sum needs no brackets `[ix.precedence]` `#product-inside-a-sum`
 - **N4.3** $a \cdot b^n = a \cdot (b^n)$ — the exponent reaches only what it touches `[ix.power-precedence]` `#exponent-reaches-what-it-touches`
 - **N4.4** $3a^2 = 3 \cdot (a^2)$, and $(3a)^2$ is a different term `[ix.power-precedence]` `#coefficient-is-outside-the-power`
 - **N4.5** $ab^2 = a \cdot (b^2)$ — **the power binds to the closest BLOCK before it** `[ix.power-precedence]` `#power-binds-closest-block`
-- **N4.5a** and "block" is the word that makes it exceptionless. $-2a^2 = -2(a^2)$: nothing is grouped, so the closest block is the atom $a$. $\left(\frac{a}{b}\right)^2$: the bar has ALREADY grouped, so the closest block is the whole fraction — and *not* the numerator. Same rule, opposite-looking answers; "closest symbol" is a shortcut that holds only while nothing has been grouped `[no card]` `#closest-block-not-closest-symbol`
-- **N4.6** $(ab)^2$ — a bracket is the only way to give the exponent more than one symbol `[ix.power-precedence]` `#bracket-widens-the-power`
-- **N4.7** $-a^2 = -(a^2)$, and $(-a)^2$ is a different term `[ix.power-precedence]` `#negated-square`
+- **N4.5a** and "block" is the word that makes it exceptionless. $2x^3 = 2 \cdot (x^3)$ and $-2a^2 = -2(a^2)$: nothing is grouped, so the closest block is the atom, and the coefficient stays outside. $\left(\frac{a}{b}\right)^2$: the bar has ALREADY grouped, so the closest block is the whole fraction — and *not* the numerator. Same rule, opposite-looking answers; "closest symbol" is a shortcut that holds only while nothing has been grouped `[no card]` `#closest-block-not-closest-symbol`
+- **N4.6** $(ab)^2$ — a bracket is the only way to give the exponent more than the closest block: **it builds the wall the power has not got** `[V3]` `[ix.power-precedence]` `#bracket-widens-the-power`
+- **N4.7** $-a^2 = -(a^2)$, and $(-a)^2$ is a different term — so the bracket here is **grammar**: without it the expression says something else `[§0.4]` `[ix.power-precedence]` `#negated-square`
 - **N4.8** $a - b - c = (a - b) - c$ — a chain of one operator is read left to right `[ix.left-to-right]` `#chain-left-to-right`
 - **N4.9** $a : b : c = (a : b) : c$ — the same for division, where it bites hardest `[ix.left-to-right]` `#division-chain-left-to-right`
 
 ### N5 · The minus sign
 
 - **N5.1** $-3$ is a negative number; $a - b$ is a subtraction — two jobs, one glyph `[no card]` `#minus-has-two-jobs`
-- **N5.2** $a + (-b) = a - b$ — an operator and a unary minus never stand side by side `[§3]` `[ix.no-adjacent-operator]` `#no-two-operators-side-by-side`
-- **N5.3** $a \cdot (-b)$ — a negative used as a factor takes brackets, so it reads as one factor `[ix.negative-factor]` `#negative-factor-takes-brackets`
+- **N5.2** $a + (-b) = a - b$ — an operator and a unary minus never stand side by side. ⚠️ *A writing habit, not grammar: $1--3$ is unambiguous and still not written* `[§0.4]` `[§3]` `[ix.no-adjacent-operator]` `#no-two-operators-side-by-side`
+- **N5.3** $a \cdot (-b)$ — a negative used as a factor takes brackets, so it reads as one factor. ⚠️ *Also a writing habit — $a \cdot -b$ is unambiguous* `[§0.4]` `[ix.negative-factor]` `#negative-factor-takes-brackets`
 - **N5.4** $-a = (-1) \cdot a$ — a leading minus is a coefficient of $-1$ `[ix.negative-factor]` `#leading-minus-is-minus-one`
 - **N5.5** $-3x = (-3) \cdot x$ — with a number in front, the minus joins the coefficient `[ix.negative-factor]` `#minus-joins-the-coefficient`
 - **N5.6** $-(a+b) = (-1) \cdot (a+b)$ — in front of a bracket it is that same factor, and nothing has been done to the bracket yet `[ix.negative-factor]` `#minus-before-a-bracket-is-a-factor`
@@ -780,12 +971,12 @@ each is a symbol you must be able to write back in.
 
 ## P · Parsing — naming the blocks
 
-The step every T item spends and no item states. V2 already does it — "count the summands,
+The step every T item spends and no item states. V4 already does it — "count the summands,
 flattening a bracket only where it changes nothing" *is* a parse — so this section is not new
 material, it is the assumption written down and made practisable.
 
 Two questions, in this order, and the second cannot be asked before the first: **what is this
-expression** — a sum, a difference, a product, a quotient or a power `[V0]` — and **what are
+expression** — a sum, a difference, a product, a quotient or a power `[V2]` — and **what are
 its blocks**. Everything in T counts blocks, so a student who cannot do P cannot do T except
 by imitation, which is exactly what a student who "knows the rule but not when to use it" is
 doing.
@@ -799,7 +990,7 @@ carries no claim about importance, and it is the sentence every rule is conditio
 ⚠️ **This is where the old `chunking.json` lands**, nearly line for line: `basic-forms`,
 `misleading-forms` and `finding-the-parts` are all "name the blocks", drawn as bracketed
 answers rather than said. And `basic-forms` is `sum, difference, product, quotient, power` —
-the type list of V0, authored two months ago under another name. It was never a process
+the type list of V2, authored two months ago under another name. It was never a process
 between fluency and transformation: it is the reading step of the grammar, and the old model's
 own defence gives it away — *fluency lets you see the structure, structure lets you see the
 move.* Seeing structure is reading.
@@ -812,8 +1003,8 @@ move.* Seeing structure is reading.
 - **P.4** $3(x+1)$ → a **product**; the $+$ is inside a block, not a seam ⇐ N3.1 `#type-of-a-bracketed-product`
 - **P.5** $2x^2$ → a **product**, not a power — the exponent reaches only $x$ ⇐ N4.4 `#type-of-a-coefficient-times-power`
 - **P.6** $(x+1)^2$ → a **power**, because the bracket made the sum into one block ⇐ N4.6 `#type-of-a-bracket-raised`
-- **P.7** $-3x + 2y$ → a **sum**; the leading minus is part of the first block, not a seam ⇐ N5.4 `#type-with-a-leading-minus`
-- **P.8** $a - b$ → a **difference**, which is a sum once the minus joins the block after it ⇐ V0 `#type-of-a-difference`
+- **P.7** $-3x + 2y$ → a **sum**; the leading minus has nothing to its left, so it is part of the first block and not a seam ⇐ N5.1 + N5.4 `#type-with-a-leading-minus`
+- **P.8** $a - b$ → a **difference**, and it stays one until §3 is applied — *a sum once the minus joins the block after it* is the result of a MOVE, not of reading ⇐ V2 `#type-of-a-difference`
 - **P.9** $\frac{3x+2}{x-1}$ → a **quotient**; neither the $+$ nor the $-$ is a seam ⇐ N7.2 `#type-of-a-quotient`
 - **P.10** $\sqrt{a+b}$ → a **root**, and the $+$ is under the bar, inside one block ⇐ N6.5 `#type-of-a-root`
 - **P.11** $x$, $7$ → an **atom**: no seam, and saying so is an answer, not a failure `#type-of-an-atom`
@@ -822,11 +1013,12 @@ move.* Seeing structure is reading.
 ### P2 · What the blocks are
 
 - **P.13** $3x + 2y$ → two summands, $3x$ and $2y$ `#summands-of-a-sum`
-- **P.14** $3x - 2y$ → two summands, $3x$ and $-2y$ — the sign travels with the block `[§3]` ⇐ N5.4 `#summands-carry-their-sign`
+- **P.14** $3x - 2y$ → two blocks, $3x$ and $2y$ — a minus with something to its left is a SEAM, so it separates and nothing is absorbed ⇐ N5.1 `#blocks-of-a-difference`
+- **P.14a** $3x + (-2y)$ → two summands, $3x$ and $-2y$ — the same value written as a sum, and NOW the sign travels with the block. Parsing it needs no move; GETTING here from P.14 is §3 `[E.18]` ⇐ N5.4 `#summands-carry-their-sign`
 - **P.15** $3 \cdot x \cdot (x+1)$ → three factors, $3$, $x$, $(x+1)$ `#factors-of-a-product`
 - **P.16** $\frac{3x+2}{x-1}$ → two blocks, the numerator and the denominator `#blocks-of-a-quotient`
 - **P.17** $(x+1)^2$ → two slots, the base $(x+1)$ and the exponent $2$ `[§5]` ⇐ N6.3 `#slots-of-a-power`
-- **P.18** $a + (b+c)$ → 3 summands, but $a - (b+c)$ → 2 ⇐ V2 `#blocks-through-a-bracket`
+- **P.18** $a + (b+c)$ → 2 blocks, $a$ and $(b+c)$; $a + b + c$ → 3. **A wall is a wall, and the two are different expressions** ⇐ V4 `#blocks-through-a-bracket`
 - **P.19** $3(x+1) - 2(x-1)$ → two summands first, and only then two factors inside each — the parse is recursive `#parsing-is-recursive`
 - **P.20** $3x$ inside $3x + 2y$ → parse a block with the same two questions, until you reach atoms `#parse-a-block-again`
 
@@ -846,12 +1038,19 @@ doing and the word they would use for it:
 **THE TEST.** It reads V's words, and V exists because this test needed them. The types sit on
 a ladder, loosest first — which is the inverse of binding strength:
 
-> **sum ⟶ product ⟶ container** (quotient, power, root) **⟶ atom**
+> **sum ⟶ product ⟶ container ⟶ atom**
 
-1. Name each side's **type** `[V0]` and count its **blocks** `[V1, V2]`.
+where **container** is any expression a wall closes — a bracket, a fraction, a root, a power
+`[V1]`. ⚠️ **The bracket joined this rung on 2026-08-03**; before that the rung was listed as
+*quotient, power, root* and brackets were flattened away before counting `[V4]`.
+
+1. Name each side's **type** `[V2]` and count its **blocks** `[V3, V4]`.
 2. **The type moved UP the ladder → E. Down → C.**
 3. Same type: **more blocks → E, fewer → C.**
-4. Same type and same count: **descend into the blocks and ask again.**
+4. Same type and same count: **descend and ask again — MATCHING the blocks, not pairing them
+   off left to right.** $(a+b)+c = a+(b+c)$ has {container, atom} on both sides and is R;
+   compared position by position it would look like one block going down and another going up,
+   and the test would return nothing.
 5. Nothing differs at any level — only order or grouping — → **R**.
 
 That is *ausmultiplizieren* against *zusammenfassen* made mechanical: **expanding opens an
@@ -865,7 +1064,8 @@ Worked, including the three cases that forced this shape:
 | $(ab)^n = a^n b^n$ | container, 1 | product, 2 | up → E |
 | $x^a x^b = x^{a+b}$ | product, 2 | container, 1 | **down** → C |
 | $2 \cdot 3x = 6x$ | product, 3 | product, 2 | same type, fewer → C |
-| $a+(b+c) = a+b+c$ | sum, 3 | sum, 3 | same, same → descend → nothing differs → R |
+| $a+(b+c) = a+b+c$ | sum, **2** | sum, 3 | same type, more → **E** — *Klammer auflösen* `[E.20]` |
+| $(a+b)+c = a+(b+c)$ | sum, 2 | sum, 2 | same, same → descend, MATCHING: {container, atom} both sides → R |
 | $\frac{ak}{bk} = \frac{a}{b}$ | container, 1 | container, 1 | descend: numerator $ak$ (2) against $a$ (1) → C |
 | $a - (b+c) = a-b-c$ | sum, 2 | sum, 3 | same type, more → E |
 
@@ -874,6 +1074,17 @@ was called rearranging, by applying §4 first and counting afterwards — but ap
 already a move. Counted as written it is product(2) → container(1): **down the ladder,
 collecting**. Adding fractions is collecting too. What separates the two is not the bucket but
 the COST — one needs a common denominator and the other does not.
+
+⚠️ **And on 2026-08-03 the same rule was turned on the CONVERSIONS, which had been exempt.**
+$a - b = a + (-b)$ was called R by reading the difference as a sum before counting it — the
+identical mistake, one level down. Counted as written, $a - b$ is a difference with blocks $a$
+and $b$; descend and $b$ (an atom) becomes $(-b)$ (a product), so it **opens** `[E.18]`. Both
+conversions are now E with a C twin apiece, and §3 and §4 are symmetric again `[V2]`.
+
+⚠️ **This is the ladder's FIRST re-classification, so it is worth being clear what it cost.**
+Nothing structural: no new bucket, no special case, no change to the test. What changed is one
+input to it — *count as written* is now applied everywhere rather than everywhere except the
+two conversions. The test survived by being applied to itself.
 
 **⚠️ WHERE N AND T MEET.** $a \cdot a = a^2$ is also N6.2, where it says what the notation
 *means*. That is not a duplicate: **N states the identity, T is the act of using it in a
@@ -891,7 +1102,7 @@ direction. The student-facing axis has a formal shadow; it is not merely a conce
 
 **There is no "mixed" bucket.** A move that spends two buckets is a SEQUENCE, and the data
 already says that with `requires` — written `⇐` here. That is why $3x + 2 + 5x = 8x + 2$ is in
-C with `⇐ R.11 + C.1` rather than in a fourth section that would otherwise swallow the list.
+C with `⇐ R.9 + C.1` rather than in a fourth section that would otherwise swallow the list.
 
 **⚠️ THE AXIS IS BIGGER THAN THESE THREE LAWS.** It classifies the whole law layer, and the
 rest lands here as it is written: $(a+b)^2 = a^2 + 2ab + b^2$ is expanding, its reverse is
@@ -909,32 +1120,31 @@ the same three buckets rather than getting sections of their own.
 - **R.5** $y \cdot 3 = 3y$ — swap so the coefficient comes first, which is what N1.3 asks for `[§1.1]` `[comm]` `#swap-coefficient-to-front`
 - **R.6** $(a + b) + c = a + (b + c)$ — a sum may be regrouped `[§2.1]` `[assoc, ax.add-associative]` `#regroup-a-sum`
 - **R.7** $(ab)c = a(bc)$ — a product may be regrouped `[§2.1]` `[assoc, ax.mul-associative]` `#regroup-a-product`
-- **R.8** $a + (b + c) = a + b + c$ — a bracket regrouping a pure sum comes off `[§2.1]` `[assoc]` *(not N4.8: the convention says $a+b+c$ MEANS $(a+b)+c$; this says the other grouping has the same value)* `#drop-a-sum-bracket`
-- **R.9** $a(bc) = abc$ — the same in a pure product `[§2.1]` `[assoc]` `#drop-a-product-bracket`
-- **R.10** $17 + (3 + 8) = (17 + 3) + 8$ — regroup to make the arithmetic easy `[§2.1]` `[assoc]` `#regroup-for-easy-arithmetic`
-- **R.11** $a + b + c = c + b + a$ — reorder a chain of three ⇐ R.1 + R.6 `[§1.1, §2.1]` `[comm, assoc]` `#reorder-a-chain-of-three`
+- **R.8** $17 + (3 + 8) = (17 + 3) + 8$ — regroup to make the arithmetic easy `[§2.1]` `[assoc]` `#regroup-for-easy-arithmetic`
+- **R.9** $a + b + c = c + b + a$ — reorder a chain of three ⇐ R.1 + R.6 `[§1.1, §2.1]` `[comm, assoc]` `#reorder-a-chain-of-three`
 
-*The two conversions — they change what the expression IS, and everything above depends on them:*
-
-- **R.12** $a - b = a + (-b)$ — a difference read as a sum, each minus absorbed into the block after it `[§3]` `[def.sub]` `#difference-as-a-sum`
-- **R.13** $\frac{a}{b} = a \cdot \frac{1}{b}$ — a quotient read as a product `[§4]` `[def.div]` `#quotient-as-a-product`
-- **R.14** $-b + a = a - b$ — the conversion used: once it is a sum, §1.1 applies ⇐ R.12 `[§3, §1.1]` `[comm]` `#commute-after-converting`
+⚠️ **Two departures, both on 2026-08-03, and both for one reason: R is now only what leaves the
+BLOCKS THEMSELVES alone.** The two conversions went to `[E.18, E.19]` with twins
+`[C.15, C.16, C.17]` — counted as written they open the expression. And *dropping a bracket*
+went the same way `[E.22, E.23]` with twins `[C.20, C.21]`: once a bracket is a wall `[V4]`,
+taking it off changes the block count, so it is a move and not a re-placement. What is left
+here is swapping, and regrouping that keeps the walls where they are.
 
 *Boundaries — what may not be rearranged while it is still a difference or a quotient:*
 
-- **R.15** $a - b \neq b - a$ — subtraction does not commute `[§1.2]` `[comm]` `#subtraction-does-not-commute`
-- **R.16** $8 - 3 \neq 3 - 8$ — and the check is a number, not an argument `[§1.2]` `#subtraction-number-check`
-- **R.17** $\frac{a}{b} \neq \frac{b}{a}$ — division does not commute `[§1.2]` `[comm]` `#division-does-not-commute`
-- **R.18** $\frac{8}{2} \neq \frac{2}{8}$ — checked the same way `[§1.2]` `#division-number-check`
-- **R.19** $(a - b) - c \neq a - (b - c)$ — subtraction does not associate `[§2.2]` `[assoc]` `#subtraction-does-not-associate`
-- **R.20** $(8 - 3) - 2 \neq 8 - (3 - 2)$ — the number check `[§2.2]` `#association-number-check`
-- **R.21** $(a : b) : c \neq a : (b : c)$ — division does not associate `[§2.2]` `[assoc]` `#division-does-not-associate`
+- **R.10** $a - b \neq b - a$ — subtraction does not commute `[§1.2]` `[comm]` `#subtraction-does-not-commute`
+- **R.11** $8 - 3 \neq 3 - 8$ — and the check is a number, not an argument `[§1.2]` `#subtraction-number-check`
+- **R.12** $\frac{a}{b} \neq \frac{b}{a}$ — division does not commute `[§1.2]` `[comm]` `#division-does-not-commute`
+- **R.13** $\frac{8}{2} \neq \frac{2}{8}$ — checked the same way `[§1.2]` `#division-number-check`
+- **R.14** $(a - b) - c \neq a - (b - c)$ — subtraction does not associate `[§2.2]` `[assoc]` `#subtraction-does-not-associate`
+- **R.15** $(8 - 3) - 2 \neq 8 - (3 - 2)$ — the number check `[§2.2]` `#association-number-check`
+- **R.16** $(a : b) : c \neq a : (b : c)$ — division does not associate `[§2.2]` `[assoc]` `#division-does-not-associate`
 
-*The power spellings — same rung on the ladder, so rearranging `[V1]`:*
+*The power spellings — same rung on the ladder, so rearranging `[V3]`:*
 
-- **R.22** $a^{-n} = \frac{1}{a^n}$ — a negative exponent is the reciprocal spelling `[§27]` `[rule.minus-in-exponent]` `#negative-exponent-is-reciprocal`
-- **R.23** $\sqrt[n]{a} = a^{1/n}$ — radical and fractional exponent are two spellings of one thing ⇐ N6.4 `[§25]` `[ix.root]` `#radical-as-power`
-- **R.24** $\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}$ — root and power in either order. ⚠️ *Involutive: the move is its own reverse, which is exactly why it lands in R and not in E or C* `[§26]` `[rule.root-of-power]` `#root-and-power-either-order`
+- **R.17** $a^{-n} = \frac{1}{a^n}$ — a negative exponent is the reciprocal spelling `[§27]` `[rule.minus-in-exponent]` `#negative-exponent-is-reciprocal`
+- **R.18** $\sqrt[n]{a} = a^{1/n}$ — radical and fractional exponent are two spellings of one thing ⇐ N6.4 `[§25]` `[ix.root]` `#radical-as-power`
+- **R.19** $\left(\sqrt[n]{a}\right)^m = \sqrt[n]{a^m}$ — root and power in either order. ⚠️ *Involutive: the move is its own reverse, which is exactly why it lands in R and not in E or C* `[§26]` `[rule.root-of-power]` `#root-and-power-either-order`
 
 ### E · Expanding — the blocks grow
 
@@ -949,42 +1159,53 @@ the same three buckets rather than getting sections of their own.
 - **E.9** $\frac{a + b}{c} = \frac{a}{c} + \frac{b}{c}$ — a sum over the bar splits `[§8.1]` `[distr]` `#split-the-numerator`
 - **E.10** $-(a + b) = -a - b$ — the leading minus is the factor $(-1)$ ⇐ N5.6 `[§9]` `[distr]` `#minus-over-a-sum`
 - **E.11** $-(a - b) = -a + b$ — the same, and the last block is where the marks go ⇐ N5.6 `[§9]` `[distr]` `#minus-over-a-difference`
-- **E.12** $a - (b + c) = a - b - c$ ⇐ R.12 + E.10 `[§3, §9]` `[distr]` `#subtract-a-sum`
-- **E.13** $a - (b - c) = a - b + c$ ⇐ R.12 + E.11 `[§3, §9]` `[distr]` `#subtract-a-difference`
+- **E.12** $a - (b + c) = a - b - c$ ⇐ E.18 + E.10 `[§3, §9]` `[distr]` `#subtract-a-sum`
+- **E.13** $a - (b - c) = a - b + c$ ⇐ E.18 + E.11 `[§3, §9]` `[distr]` `#subtract-a-difference`
 - **E.14** $a^2 = a \cdot a$ — unfold the smallest power. *The atom: the same identity as N6.1, used in a direction* ⇐ N6.1 `[§10]` `[ix.pow]` `#unfold-a-square`
 - **E.15** $a^3 = a \cdot a^2$ — **peel one factor off a power** and keep the rest as a power. The general move, and the useful one — it is what makes $\frac{a^3}{a^2}$ collapse `[§10]` `[ix.pow]` `#peel-a-factor-off-a-power`
 - **E.16** $2a = a + a$ — unfold the smallest multiple. *The additive atom* ⇐ N1.1 `[§11]` `[th.multiple-is-product]` `#unfold-a-double`
 - **E.17** $3a = a + 2a$ — **peel one summand off a multiple** and keep the rest as a multiple. What makes $3a - a$ visible `[§11]` `[th.multiple-is-product]` `#peel-a-summand-off-a-multiple`
 
+*The two conversions — they change what the expression IS, and everything in R depends on them.
+Both OPEN it, which is why they sit here and not in R `[V2]`:*
+
+- **E.18** $a - b = a + (-b)$ — read a difference as a sum, the minus absorbed into the block after it. ⚠️ *Counted as written this opens: the block $b$ is an atom, $(-b)$ is a product* `[§3]` `[def.sub]` `#difference-as-a-sum`
+- **E.19** $\frac{a}{b} = a \cdot \frac{1}{b}$ — read a quotient as a product. ⚠️ *container(1) → product(2), the same opening one level up* `[§4]` `[def.div]` `#quotient-as-a-product`
+
+*Taking a wall down — **Klammer auflösen**. Two blocks become three, so it expands `[V4]`:*
+
+- **E.20** $a + (b + c) = a + b + c$ — a bracket around a pure sum comes off, and the summands join the outer sum `[§2.1]` `[assoc]` *(not N4.8: the convention says $a+b+c$ MEANS $(a+b)+c$; this says the other grouping has the same value)* `#drop-a-sum-bracket`
+- **E.21** $a(bc) = abc$ — the same in a pure product `[§2.1]` `[assoc]` `#drop-a-product-bracket`
+
 *Boundaries — what does not expand:*
 
-- **E.18** $\frac{c}{a + b} \neq \frac{c}{a} + \frac{c}{b}$ — never under the bar `[§8.2]` `#never-split-the-denominator`
-- **E.19** $(a + b)^2 \neq a^2 + b^2$ — a power does not reach the summands one at a time `[§6.2]` `#power-does-not-reach-summands`
-- **E.20** $\sqrt{a + b}$ — nothing to expand, and nothing to do `[§6.2]` `#root-of-a-sum-stays`
-- **E.21** only multiplication reaches into a sum — not a power, not a root `[§6.2]` `#only-a-factor-reaches-in`
+- **E.22** $\frac{c}{a + b} \neq \frac{c}{a} + \frac{c}{b}$ — never under the bar `[§8.2]` `#never-split-the-denominator`
+- **E.23** $(a + b)^2 \neq a^2 + b^2$ — a power does not reach the summands one at a time `[§6.2]` `#power-does-not-reach-summands`
+- **E.24** $\sqrt{a + b}$ — nothing to expand, and nothing to do `[§6.2]` `#root-of-a-sum-stays`
+- **E.25** only multiplication reaches into a sum — not a power, not a root `[§6.2]` `#only-a-factor-reaches-in`
 
-*The power and root laws that open — container → product, so expanding `[V1]`:*
+*The power and root laws that open — container → product, so expanding `[V3]`:*
 
-- **E.22** $(ab)^n = a^n b^n$ — the power reaches every factor `[§24]` `[rule.power-over-product]` `#power-of-a-product`
-- **E.23** $\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}$ — top and bottom each. ⚠️ *Not a new law: it is E.22 with a reciprocal `[§4]`* `[§24]` `[rule.power-over-quotient]` `#power-of-a-quotient`
-- **E.24** $\sqrt[n]{ab} = \sqrt[n]{a} \cdot \sqrt[n]{b}$ — ⚠️ *and not a new law either: it is E.22 read with $n = \frac{1}{2}$ `[R.23]`* `[§24, §25]` `[rule.root-over-product]` `#root-of-a-product`
-- **E.25** $\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}$ — E.23 the same way `[§24, §25]` `[rule.root-over-quotient]` `#root-of-a-quotient`
-- **E.26** $a^{m+n} = a^m \cdot a^n$ — split an exponent sum. The general form of E.15 `[§21]` `[rule.same-base]` `#split-an-exponent-sum`
-- **E.27** $\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}$ — dividing by a fraction opens into a product `[§30]` `[rule.fraction-divide]` `#divide-by-a-fraction`
+- **E.26** $(ab)^n = a^n b^n$ — the power reaches every factor `[§24]` `[rule.power-over-product]` `#power-of-a-product`
+- **E.27** $\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}$ — top and bottom each. ⚠️ *Not a new law: it is E.26 with a reciprocal `[§4]`* `[§24]` `[rule.power-over-quotient]` `#power-of-a-quotient`
+- **E.28** $\sqrt[n]{ab} = \sqrt[n]{a} \cdot \sqrt[n]{b}$ — ⚠️ *and not a new law either: it is E.26 read with $n = \frac{1}{2}$ `[R.18]`* `[§24, §25]` `[rule.root-over-product]` `#root-of-a-product`
+- **E.29** $\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}$ — E.27 the same way `[§24, §25]` `[rule.root-over-quotient]` `#root-of-a-quotient`
+- **E.30** $a^{m+n} = a^m \cdot a^n$ — split an exponent sum. The general form of E.15 `[§21]` `[rule.same-base]` `#split-an-exponent-sum`
+- **E.31** $\frac{a}{b} : \frac{c}{d} = \frac{a}{b} \cdot \frac{d}{c}$ — dividing by a fraction opens into a product `[§30]` `[rule.fraction-divide]` `#divide-by-a-fraction`
 
 *The binomial formulas, expanding:*
 
-- **E.28** $(a+b)^2 = a^2 + 2ab + b^2$ — container(1) → sum(3) `[§33]` `[rule.binomial-square]` `#square-of-a-sum`
-- **E.29** $(a-b)^2 = a^2 - 2ab + b^2$ — ⚠️ *the same formula with $b := -b$ `[S.1]`, not a second one to learn* `[§33]` `[rule.square-of-difference]` `#square-of-a-difference`
-- **E.30** $(a+b)(a-b) = a^2 - b^2$ — product(2) → sum(2), still up the ladder `[§33]` `[rule.difference-of-squares]` `#sum-times-difference`
-- **E.31** $(x+m)(x+n) = x^2 + (m+n)x + mn$ `[§34]` `[rule.quadratic-pair]` `#product-of-two-binomials`
+- **E.32** $(a+b)^2 = a^2 + 2ab + b^2$ — container(1) → sum(3) `[§33]` `[rule.binomial-square]` `#square-of-a-sum`
+- **E.33** $(a-b)^2 = a^2 - 2ab + b^2$ — ⚠️ *the same formula with $b := -b$ `[S.1]`, not a second one to learn* `[§33]` `[rule.square-of-difference]` `#square-of-a-difference`
+- **E.34** $(a+b)(a-b) = a^2 - b^2$ — product(2) → sum(2), still up the ladder `[§33]` `[rule.difference-of-squares]` `#sum-times-difference`
+- **E.35** $(x+m)(x+n) = x^2 + (m+n)x + mn$ `[§34]` `[rule.quadratic-pair]` `#product-of-two-binomials`
 
 ### C · Collecting — the blocks shrink
 
 - **C.1** $3x + 2x = 5x$ — collect like summands; distributivity read backwards `[§12.1]` `[distr]` `#collect-like-summands`
 - **C.2** $x + 2x = 3x$ — collecting needs the invisible one back first ⇐ N2.1 `[§12.1]` `[distr]` `#collect-with-the-invisible-one`
 - **C.3** $ab + ba = 2ab$ — they are alike only once one of them is swapped ⇐ R.2 `[§1.1, §12.1]` `[comm, distr]` `#collect-after-a-swap`
-- **C.4** $3x + 2 + 5x = 8x + 2$ — reorder, then collect what matches ⇐ R.11 + C.1 `[§1.1, §12.1]` `[comm, assoc, distr]` `#reorder-then-collect`
+- **C.4** $3x + 2 + 5x = 8x + 2$ — reorder, then collect what matches ⇐ R.9 + C.1 `[§1.1, §12.1]` `[comm, assoc, distr]` `#reorder-then-collect`
 - **C.5** $ab + ac = a(b + c)$ — pull out a common factor. *A different skill from E.1: it must be **found**, not carried out* `[§13]` `[distr]` `#pull-out-a-common-factor`
 - **C.6** $3x + 6 = 3(x + 2)$ — with a number, finding it means seeing the divisor `[§13]` `[distr]` `#pull-out-a-number`
 - **C.7** $x^2 + x = x(x + 1)$ — pull out a variable factor; seeing it needs $x^2 = x \cdot x$ ⇐ C.5 + E.14 `[§13]` `[distr]` `#pull-out-a-variable`
@@ -996,42 +1217,55 @@ the same three buckets rather than getting sections of their own.
 - **C.13** $abca = a^2bc$ — the same on a longer product ⇐ R.2 + C.10. *Purely a move: it never touches N, because the notation reading is one of its prerequisites rather than what it is* `[§1.1, §15]` `#sort-and-fuse-a-longer-product`
 - **C.14** $\frac{ak}{bk} = \frac{a}{b}$ — cancel a factor the whole numerator and the whole denominator share `[§17.1]` `#cancel-a-common-factor`
 
+*The two conversions read backwards — twins that were missing from the list until the ladder
+was applied to E.18 and E.19 `[V2]`:*
+
+- **C.15** $a + (-b) = a - b$ — fold a sum back into a difference; the reverse of E.18 `[§3]` `[def.sub]` `#sum-back-to-a-difference`
+- **C.16** $-b + a = a - b$ — swap first, then fold: this is what "once it is a sum, §1.1 applies" actually costs ⇐ R.1 + C.15 `[§1.1, §3]` `[comm]` `#commute-then-fold`
+- **C.17** $a \cdot \frac{1}{b} = \frac{a}{b}$ — fold a product back into one fraction; the reverse of E.19, and the item rule-first found `[§4]` `[def.div]` `#product-back-to-a-fraction`
+
+*Putting a wall up — **Klammer setzen**. The twins of E.20 and E.21, and neither existed until
+the wall reading forced them out:*
+
+- **C.18** $a + b + c = a + (b + c)$ — wall off two summands; three blocks become two `[§2.1]` `[assoc]` `#set-a-sum-bracket`
+- **C.19** $abc = a(bc)$ — the same in a product. ⚠️ *Rarely worth doing on its own — it earns its place as the FIRST STEP of regrouping for easy arithmetic* ⇐ R.8 `[§2.1]` `[assoc]` `#set-a-product-bracket`
+
 *Boundaries — what does not collect. Every one of these is an expression a student wants to
 "finish" and cannot:*
 
-- **C.15** $2 + 3x$ — a number and a variable summand do not collect `[§12.2]` `#number-and-term-stay`
-- **C.16** $3x + 2y$ — different letters do not collect `[§12.2]` `#different-letters-stay`
-- **C.17** $x^2 + x$ — same letter, different power, does not collect. ⚠️ *And yet C.7 factors it. Not a contradiction and worth saying out loud: **nicht zusammenfassbar, aber ausklammerbar** — collecting and factoring are different questions* `[§12.2]` `#different-powers-stay`
-- **C.18** $a^2 + b^2$ — nothing to pull out, nothing to collect `[§12.2]` `#sum-of-squares-stays`
-- **C.19** $\frac{3x + 2}{3}$ — a sum over a number does not cancel summand by summand `[§17.2]` `#no-cancelling-a-summand`
+- **C.20** $2 + 3x$ — a number and a variable summand do not collect `[§12.2]` `#number-and-term-stay`
+- **C.21** $3x + 2y$ — different letters do not collect `[§12.2]` `#different-letters-stay`
+- **C.22** $x^2 + x$ — same letter, different power, does not collect. ⚠️ *And yet C.7 factors it. Not a contradiction and worth saying out loud: **nicht zusammenfassbar, aber ausklammerbar** — collecting and factoring are different questions* `[§12.2]` `#different-powers-stay`
+- **C.23** $a^2 + b^2$ — nothing to pull out, nothing to collect `[§12.2]` `#sum-of-squares-stays`
+- **C.24** $\frac{3x + 2}{3}$ — a sum over a number does not cancel summand by summand `[§17.2]` `#no-cancelling-a-summand`
 
-*The power laws that close — product → container, so collecting `[V1]`:*
+*The power laws that close — product → container, so collecting `[V3]`:*
 
-- **C.20** $a^m \cdot a^n = a^{m+n}$ — same base: add the exponents `[§21]` `[rule.same-base]` `#same-base-multiplied`
-- **C.21** $\frac{a^m}{a^n} = a^{m-n}$ — ⚠️ *not a fourth law: C.20 after `[§4]`* `[§22]` `[rule.same-base-divide]` `#same-base-divided`
-- **C.22** $(a^m)^n = a^{mn}$ — the tower gets one storey shorter `[§23]` `[rule.power-of-power]` `#power-of-a-power`
-- **C.23** $a^n b^n = (ab)^n$ — E.22 read backwards `[§24]` `[rule.power-over-product]` `#collect-into-a-power-of-a-product`
+- **C.25** $a^m \cdot a^n = a^{m+n}$ — same base: add the exponents `[§21]` `[rule.same-base]` `#same-base-multiplied`
+- **C.26** $\frac{a^m}{a^n} = a^{m-n}$ — ⚠️ *not a fourth law: C.25 after `[§4]`* `[§22]` `[rule.same-base-divide]` `#same-base-divided`
+- **C.27** $(a^m)^n = a^{mn}$ — the tower gets one storey shorter `[§23]` `[rule.power-of-power]` `#power-of-a-power`
+- **C.28** $a^n b^n = (ab)^n$ — E.26 read backwards `[§24]` `[rule.power-over-product]` `#collect-into-a-power-of-a-product`
 
 *The fraction laws that close:*
 
-- **C.24** $\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}$ — product(2) → container(1). ⚠️ *Multiplying fractions needs nothing first, which is what "no common denominator" really means* `[§29]` `[rule.fraction-multiply]` `#multiply-fractions`
-- **C.25** $\frac{a}{b} + \frac{c}{b} = \frac{a+c}{b}$ — same denominator, add the numerators `[§31]` `[rule.fraction-common-denominator]` `#add-fractions-same-denominator`
-- **C.26** $\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}$ — different denominators: make them the same first `[§31]` `[rule.fraction-common-denominator]` `#add-fractions-different-denominator`
-- **C.27** $c + \frac{a}{b} = \frac{cb+a}{b}$ — a whole number is a fraction over $1$ `[§31]` `[rule.fraction-plus-whole]` `#whole-number-plus-fraction`
-- **C.28** $\frac{\frac{a}{b}}{c} = \frac{a}{bc}$ — a double fraction collapses; which bar is the main one decides everything ⇐ N7.6 `[§32]` `[rule.double-fraction]` `#collapse-a-double-fraction`
+- **C.29** $\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}$ — product(2) → container(1). ⚠️ *Multiplying fractions needs nothing first, which is what "no common denominator" really means* `[§29]` `[rule.fraction-multiply]` `#multiply-fractions`
+- **C.30** $\frac{a}{b} + \frac{c}{b} = \frac{a+c}{b}$ — same denominator, add the numerators `[§31]` `[rule.fraction-common-denominator]` `#add-fractions-same-denominator`
+- **C.31** $\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}$ — different denominators: make them the same first `[§31]` `[rule.fraction-common-denominator]` `#add-fractions-different-denominator`
+- **C.32** $c + \frac{a}{b} = \frac{cb+a}{b}$ — a whole number is a fraction over $1$ `[§31]` `[rule.fraction-plus-whole]` `#whole-number-plus-fraction`
+- **C.33** $\frac{\frac{a}{b}}{c} = \frac{a}{bc}$ — a double fraction collapses; which bar is the main one decides everything ⇐ N7.6 `[§32]` `[rule.double-fraction]` `#collapse-a-double-fraction`
 
 *The binomial formulas, collecting — the harder direction, because the shape must be SEEN:*
 
-- **C.29** $a^2 + 2ab + b^2 = (a+b)^2$ — sum(3) → container(1) `[§33]` `[rule.binomials-read-backwards]` `#trinomial-to-a-square`
-- **C.30** $a^2 - 2ab + b^2 = (a-b)^2$ `[§33]` `[rule.binomials-read-backwards]` `#trinomial-to-a-square-of-a-difference`
-- **C.31** $a^2 - b^2 = (a+b)(a-b)$ — sum(2) → product(2), down the ladder `[§33]` `[rule.binomials-read-backwards]` `#difference-of-squares-factored`
-- **C.32** $x^2 + 5x + 6 = (x+2)(x+3)$ — find the pair: product $6$, sum $5$ `[§34]` `[rule.quadratic-pair]` `#factor-by-finding-the-pair`
+- **C.34** $a^2 + 2ab + b^2 = (a+b)^2$ — sum(3) → container(1) `[§33]` `[rule.binomials-read-backwards]` `#trinomial-to-a-square`
+- **C.35** $a^2 - 2ab + b^2 = (a-b)^2$ `[§33]` `[rule.binomials-read-backwards]` `#trinomial-to-a-square-of-a-difference`
+- **C.36** $a^2 - b^2 = (a+b)(a-b)$ — sum(2) → product(2), down the ladder `[§33]` `[rule.binomials-read-backwards]` `#difference-of-squares-factored`
+- **C.37** $x^2 + 5x + 6 = (x+2)(x+3)$ — find the pair: product $6$, sum $5$ `[§34]` `[rule.quadratic-pair]` `#factor-by-finding-the-pair`
 
 *Boundaries — powers and fractions that do not collect:*
 
-- **C.33** $a^m \cdot b^n$ — different bases do not collect `[§21]` `#different-bases-stay`
-- **C.34** $a^m + a^n$ — same base, but a SUM: the power laws are about products `[§21]` `#sum-of-powers-stays`
-- **C.35** $\frac{a+b}{a+c} \neq \frac{b}{c}$ — the $a$ is a summand, not a factor of the whole ⇐ C.19 `[§17.2]` `#no-cancelling-over-a-sum`
+- **C.38** $a^m \cdot b^n$ — different bases do not collect `[§21]` `#different-bases-stay`
+- **C.39** $a^m + a^n$ — same base, but a SUM: the power laws are about products `[§21]` `#sum-of-powers-stays`
+- **C.40** $\frac{a+b}{a+c} \neq \frac{b}{c}$ — the $a$ is a summand, not a factor of the whole ⇐ C.24 `[§17.2]` `#no-cancelling-over-a-sum`
 
 ## S · Substitution — an expression may stand where an atom stood
 
@@ -1049,8 +1283,8 @@ in the list where a student can be **correct and unhelpful**.
 
 **What is genuinely new here is smaller than it looks — and it is not the bracket rule.** The
 only question substitution raises is when the inserted expression needs brackets, and that is
-`[V2]` unchanged: **keep the bracket exactly when removing it would change the reading.**
-Nothing new to learn, one thing to apply in a new place. A student who has done N3.4, V2 and
+`[V4]` unchanged: **keep the bracket exactly when removing it would change the reading.**
+Nothing new to learn, one thing to apply in a new place. A student who has done N3.4, V4 and
 §0.1 already owns every answer below.
 
 ⚠️ **And the difficulty is SYNTACTIC, not semantic.** Küchemann's levels of letter-use — letter
@@ -1064,7 +1298,7 @@ block vocabulary can, because it is the only one in which the bracket question h
 ### S1 · Putting an expression where an atom stood
 
 - **S.1** $a(b+c) = ab+ac$ with $a := 2x$ — the rule is not about the letter, and this is the claim the whole section rests on `[§18]` `#a-rule-holds-for-any-expression`
-- **S.2** decide the bracket by asking whether removing it changes the reading ⇐ V2, N3.4 `[§19]` `#bracket-by-the-reading-test`
+- **S.2** decide the bracket by asking whether the inserted expression would be OUTBID where it lands — it keeps its wall exactly when its own top operator binds looser than the context's `[V1]` ⇐ N3.4 `[§19]` `#bracket-by-the-reading-test`
 - **S.3** $a := 2x+3$ into $a(b+c)$ → $(2x+3)(b+c)$ — **brackets**: a sum inside a product `[§19]` `#substitute-a-sum-into-a-product`
 - **S.4** $a := 2x$ into $a(b+c)$ → $2x(b+c)$ — **none**: a product inside a product changes nothing `[§19]` `#substitute-a-product-into-a-product`
 - **S.5** $a := 2x$ into $a^2$ → $(2x)^2$ — **brackets**: $2x^2$ would be $2(x^2)$ ⇐ N4.5 `[§19]` `#substitute-into-a-base`
@@ -1083,7 +1317,7 @@ block vocabulary can, because it is the only one in which the bracket question h
 *Boundaries — when a shape nearly matches:*
 
 - **S.14** $x^2 + 5x + 6$ is not a perfect square: $b^2 = 6$ and $2b = 5$ cannot both hold. Nearly-matching is not matching `[§20]` `#a-near-miss-is-a-miss`
-- **S.15** $a^2 + b^2$ matches no binomial formula, however much it looks like one ⇐ C.18 `#sum-of-squares-matches-nothing`
+- **S.15** $a^2 + b^2$ matches no binomial formula, however much it looks like one ⇐ C.23 `#sum-of-squares-matches-nothing`
 - **S.16** what is inserted must be **one block** or become one: you cannot read $2x+3$ as the $a$ of $ab$ and write $2x+3b$ `[§19]` `#what-is-inserted-must-be-one-block`
 
 ### S3 · Strategy — WHICH rule, when several fit
@@ -1131,6 +1365,13 @@ in its own milestone — defer it to C, or drop it as a compound. That is the sa
 `validateSkillLinks` performs on the old layer's processes, and it wants to exist here too
 before the milestones are built on.
 
+⚠️ **Re-run after the conversions moved (2026-08-03): still exactly one, still E.7.** But the
+move left an ordering wrinkle INSIDE E that the milestone check cannot see: **E.12 and E.13
+need E.18**, which sits six items later. No milestone is violated — they are all in E — but
+"order is array position" makes that a real defect once this becomes data. The conversions
+belong at the FRONT of E; they are at E.18 only because inserting them there was the change
+that did not renumber thirty other items by hand.
+
 ### The drill that covers most of it: **equivalent or not**
 
 Show two forms, ask whether they say the same thing. It fits every section because nearly every
@@ -1142,9 +1383,9 @@ and the $\neq$ items are the distractor bank.**
 | **N** | is $3x$ the same as $3 + x$? | N's own wrong readings; `mis.juxtaposition-as-plus` and its family |
 | **P1** | what IS this — sum, difference, product, quotient, power, atom? | the tempting operator: $3(x+1)$ looks like a sum, $2x^2$ like a power |
 | **P2** | which decomposition is right? | the old `chunking.json` right[] forms are literally the answer key |
-| **R** | is this rearrangement legal? | R.15–R.21, the whole "not in a difference or quotient" family |
-| **E** | is this expansion legal? | E.18–E.21: Freshman's dream, and never under the bar |
-| **C** | is this collected correctly? | C.15–C.18, C.33–C.35: what does not collect |
+| **R** | is this rearrangement legal? | R.10–R.16, the whole "not in a difference or quotient" family |
+| **E** | is this expansion legal? | E.22–E.25: Freshman's dream, and never under the bar |
+| **C** | is this collected correctly? | C.20–C.23, C.38–C.40: what does not collect |
 
 ### ⚠️ Five items the equivalence drill cannot hold
 
@@ -1240,8 +1481,8 @@ section
 - **`.1`/`.2` becomes `limitOf`.** The pairing is real structure and is currently living inside
   a string. Explicit, checkable, and it survives reordering.
 - **`section` is a field, not an id prefix**, for the same reason.
-- **V2 is admitted as a SKILL** — "how many summands does $a - (b+c)$ have?" is a drill
-  question, and it is the one V entry that is a *doing* rather than a naming. V0 and V1 stay
+- **V4 is admitted as a SKILL** — "how many summands does $a - (b+c)$ have?" is a drill
+  question, and it is the one V entry that is a *doing* rather than a naming. V2 and V3 stay
   glossary.
 - **Retired from the old skill schema**: `process` (the section is the process), `group` (topic
   returns as a `tag`, which is the honest role it always had — a filter, never a spine), and
@@ -1302,7 +1543,7 @@ admission that it is a course decision rather than a mathematical convention.
    against a letter, from `th.multiple-is-product`. Letter·letter, anything·bracket and
    number·root are the same convention with a different justification — dropping a dot between
    two factors, which needs no theorem at all. ⚠️ **The card should be written over the six
-   FORMS `[V3]`, not over the pairs**, now that §0.3 states it once.
+   FORMS `[V5]`, not over the pairs**, now that §0.3 states it once.
 2. **Which multiplication sign this course writes** (N1.6) — a course decision, not a card.
 3. **A numeral is one atom, however many digits** (N1.2) — place value, and the tower does not
    say it. It is what makes "two numerals side by side" impossible rather than exceptional.
@@ -1336,21 +1577,21 @@ admission that it is a course decision rather than a mathematical convention.
 2. **N7.1** — does $:$ survive? If not, this line is the bar and the slash.
 3. **What comes next.** The equals sign as a claim, $\neq$/$<$/$>$, decimal comma vs point.
    Own section, or not skills at all? *(Naming the parts is answered — it is V.)*
-4. **Where do the number-checks live?** R.14, R.16, R.18 substitute numbers to settle a
+4. **Where do the number-checks live?** R.11, R.13, R.15 substitute numbers to settle a
    question. That is one skill — "test a claim with numbers" — applied three times, not three
    skills, and it only ever appears attached to something else. Cross-cutting, like "read the
    expression aloud" and "estimate the answer"; they may need a section of their own.
 5. ~~Does C.6 belong in C?~~ **Answered by step 3 of the test**: summands first, factors
    second. $2 \cdot 3x = 6x$ is collecting at the factor level.
-6. ⚠️ **OPEN, awaiting review — R.13 no longer classifies as R.** Under the ladder,
-   $\frac{a}{b} = a \cdot \frac{1}{b}$ is container(1) → product(2), which is UP, so expanding.
-   Note the asymmetry it exposes: $a - b = a + (-b)$ stays put because difference and sum share
-   a rung, while quotient and product do not — so §3 and §4 are not the same trick after all,
-   and only one of them opens the expression. Two ways out: **(a)** move R.13 into E and add
-   the missing C twin $a \cdot \frac{1}{b} = \frac{a}{b}$ (folding a product back into a
-   fraction, which is not in the list — the fifth item found by rule-first); **(b)** give the
-   conversions their own class outside R/E/C, since both change what the expression IS rather
-   than how much of it there is. Leaning (a): three buckets, one test.
+6. ✅ **ANSWERED 2026-08-03 — option (a), and it took BOTH conversions, not one.** The
+   question asked whether $\frac{a}{b} = a \cdot \frac{1}{b}$ still counted as R, and recorded
+   an asymmetry: $a - b = a + (-b)$ "stays put because difference and sum share a rung". **That
+   asymmetry was an artefact.** It came from counting the minus conversion AFTER absorbing and
+   the bar conversion AS WRITTEN. Count both as written and both open: $b \to (-b)$ is atom →
+   product, $\frac{a}{b} \to a \cdot \frac{1}{b}$ is container(1) → product(2). So §3 and §4
+   ARE the same trick at two levels, exactly as V2 always claimed. Now **E.18, E.19** with twins
+   **C.15, C.17** — and C.17 is the missing item the question predicted, found by rule-first for
+   the fifth time. Option (b) is dead: it existed to explain an asymmetry that is not there.
 7. **Does N keep both directions of an identity, or only the meaning?** Decided as: N states
    what the notation means, T holds the two moves (E.12/C.10, E.13/C.11), `⇐` pointing back.
    The alternative — N owns the identity and T cites it without items of its own — would leave
