@@ -13,7 +13,15 @@ problem somewhere else. The handover below it — the three tools, the citation 
 seven todos — is still true of the DATA and is preserved further down; it just is not the work.
 
 **The work is `docs/skill_list.md`**, the skill layer rewritten from scratch and held OUTSIDE
-`src/data` until it settles. **186 items, 42 rules.**
+`src/data` until it settles. **176 items, 43 rules** (counted 2026-08-03; the old "186" was
+wrong, and the slug pass's 179 had been the right figure all along).
+
+⚠️ **2026-08-03 — THE REVIEW PASS STARTED, and the first round is merged.** Maths in the file
+is now `$…$` KaTeX and backticks mean ids only. The author's five margin comments produced:
+**V3, the six written forms** · **§0.3 `Der unsichtbare Punkt`** · **N1 collapsed 10 → 7** ·
+block/slot separated as words · `-a` and the atom settled · the mixed number **refused**.
+**The author is re-reviewing the block sections next** — they are the anchor everything counts
+against, and the file's own order taught the counting before it ever named the forms.
 
 ```
 V   the words: expression · block · summand · factor · atom
@@ -71,6 +79,16 @@ What the pass decides, roughly in order of consequence:
 - **[ ] The app question, and it needs brainstorming.** The content is arguably all here. What
   is not decided: which of this becomes JSON layers, what classification fields the items need,
   and whether the existing seven-page shell renders it or something smaller does.
+- **[ ] The full block-form enumeration → the drill SLOT VOCABULARY.** `skill_list.md` V3 now
+  names six written forms (numeral · letter · bracket · fraction · root · power) and the four
+  behaviours they collapse to. **The 36-cell cross-product itself stays parked here, not in V**
+  — it is not skill material (nothing a student *does*), but it is exactly the slot vocabulary
+  thread 2 half-wrote as `numeral` / `variable` / `monomial` / `power` / `bracket-sum`. Two
+  things to carry over when it is built: **legal ≠ wanted** (the form list is a correctness
+  statement, `level` filters it for difficulty), and the three SHAPES an operator can have —
+  symmetric seam (`+`, `\cdot`, no left/right at all), asymmetric chain (`-`, `:`, first block
+  special), fixed roles (power, fraction). That last one is V1's grouping/separating split seen
+  from the operator side, and it is three cases rather than thirty-six.
 - **[ ] The drills.** They fall out of a milestone more obviously than they ever did from the
   old layer — but see S3: **strategy is the first place a drill cannot mark against one right
   answer**, because several answers are right and differ in quality.
