@@ -1355,6 +1355,18 @@ What a strategy layer would have to hold, none of it decided:
 1. **Goal states.** "Simplified" is undefined in this file. Every T rule is legal in both
    directions, so without a target *expand* and *collect* are equally valid forever. Probably
    the first thing to write, and probably the hardest.
+   - 🟢 **THE FIRST CONCRETE LEAD ON THIS, 2026-08-03 (the author's):** *which move is right is
+     often decided by the CONTAINER the block is in.* Goal states may not be free-floating —
+     the container may supply them. In a fraction you factor, because factoring is what permits
+     cancelling `[§17.1]`; under a root you factor, because that is what permits extracting; in
+     a bare sum you are shortening, so you expand in order to collect. That converts *which
+     move do I want* into *where am I standing*, which the grammar CAN answer — and this
+     section was parked precisely because nothing in the grammar seemed to reach it.
+   - ⚠️ **It does not solve S.13.** A container-keyed target says which direction to head; it
+     does not rank two legal moves inside the same container, which is where "correct and
+     unhelpful" lives. The marking problem below stands untouched.
+   - ⚠️ **And the classification it would need is NOT decided** — see the brainstorm at the
+     foot of this file. Recorded here as a lead, not as a design.
 2. **Ordering heuristics** — factor before cancelling; collect before expanding; look for a
    familiar shape before grinding.
 3. **Recognition-first.** `rule.dominant-op-tools` in the old pool tried to say this (main
@@ -1422,6 +1434,16 @@ can name what a move does can be asked *which do you want here* — and "do I wa
 close?" is where choosing a rule starts. Worth building before S is written, not after.
 
 ### The drill types, as far as they are known
+
+⚠️ **What the items are filtered BY is a live question, and topic is the weak answer.** *Every
+item about fractions* is a set of unrelated moves that happen to share a symbol. *Every item
+where a factor reaches every block inside a wall* is **one move in four costumes** —
+$a(b+c) = ab+ac$ `[E.1]`, $(ab)^n = a^n b^n$ `[E.26]`, $\frac{a+b}{c} = \frac{a}{c}+\frac{b}{c}$
+`[E.9]`, $\sqrt{ab} = \sqrt{a}\sqrt{b}$ `[E.28]` — which is exactly the thing a student needs
+to see and which topic scatters across four groups. §6.2 already says it as a rule; no field
+says it about the items. **A structural filter is worth more than a topical one**, and that is
+the argument for whatever classification eventually lands `[brainstorm]`. ⚠️ Not decided, and
+deliberately not built into the schema yet.
 
 Kept as a list because it is clearly not closed. **A drill is a TYPE plus a filtered set of
 items** — "equivalent or not, over everything tagged multiplication" — so the item layer owes
