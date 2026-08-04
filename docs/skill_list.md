@@ -1788,3 +1788,51 @@ it.
 ⚠️ **What it does NOT solve, so the parking notice stays accurate.** S.13's real difficulty is
 that several answers are right and differ in quality, and a container-keyed target does not rank
 two legal moves inside the same container. The marking problem is untouched.
+
+### 5 · Measured — is the structural position DERIVABLE? (2026-08-03)
+
+The axis the brainstorm points at — *where does a move sit relative to a wall* — was tested for
+derivability before deciding whether it needs a field. **All 94 T items hand-labelled** against
+a stated four-way criterion, then a heuristic run over the `latex` alone and compared.
+
+    between   no wall on either side
+    wall      a wall is built / removed / relocated / exchanged; nothing distributed
+    across    something is distributed INTO, or factored OUT OF, a walled region
+    inside    the move happens within one surviving container's slots
+    none      no relation stated (the boundary items)
+
+| axis | derivable from latex alone |
+|---|---|
+| **4-way** between · wall · across · inside | **71 %** |
+| **3-way** between · involves-a-wall · inside | **93 %** |
+| **2-way** block-level · container-level | **96 %** |
+
+⚠️ **So the answer depends entirely on how many values the axis has, and that is the finding.**
+A fine axis must be AUTHORED — 71 % is not a rate to build a drill filter on. A coarse one can
+be DERIVED with about five items to hand-check.
+
+**The 71 % fails systematically, not randomly.** Twenty of the twenty-seven misses are one
+confusion, `across` ↔ `wall`, from three causes:
+
+1. **Numerals and the minus are invisible to a surface count.** $3(x+2) = 3x+6$ distributes a
+   $3$, but the arithmetic hides the duplication; $-(a+b) = -a-b$ distributes a minus, which is
+   not a symbol to count; $x(x+1) = x^2+x$ has two $x$ a side because the exponent absorbed one.
+2. **Unfolding a power looks exactly like distributing.** $a^2 = a \cdot a$ doubles the $a$ with
+   nothing crossing anything.
+3. **Container exchange looks like crossing.** $a^{-n} = \frac{1}{a^n}$ and
+   $\sqrt[n]{a} = a^{1/n}$ respell one container as another; nothing moves in or out.
+
+⚠️ **§0.4 turns out to be load-bearing for DERIVATION, not only for teaching.** $a - b = a + (-b)$
+misderives because the test counts the bracket in $(-b)$ as a wall — and §0.4 has just
+established that it is a writing habit and not one. Marking the two kinds of bracket in the data
+would remove those misses outright. That is an argument for §0.4 becoming a field, quite
+separate from why it was written.
+
+⚠️ **Caveat on the number, because it changes how much to trust it.** The same author wrote the
+hand labels AND the heuristic, so this measures *can a mechanical rule reproduce that judgment*,
+not *is the axis objectively derivable*. The `wall`/`across` boundary is exactly where the
+labelling was least certain, so **71 % is the soft figure and 93 % / 96 % are the robust ones** —
+they do not depend on that boundary at all.
+
+**Script**: written to the session scratchpad, not committed. Re-deriving it is ten minutes; the
+numbers above are what matter.

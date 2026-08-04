@@ -16,25 +16,63 @@ seven todos — is still true of the DATA and is preserved further down; it just
 `src/data` until it settles. **176 items, 43 rules** (counted 2026-08-03; the old "186" was
 wrong, and the slug pass's 179 had been the right figure all along).
 
-⚠️ **2026-08-03 — THE REVIEW PASS STARTED, and the first round is merged.** Maths in the file
-is now `$…$` KaTeX and backticks mean ids only. The author's five margin comments produced:
-**V3, the six written forms** · **§0.3 `Der unsichtbare Punkt`** · **N1 collapsed 10 → 7** ·
-block/slot separated as words · `-a` and the atom settled · the mixed number **refused**.
-**The author is re-reviewing the block sections next** — they are the anchor everything counts
-against, and the file's own order taught the counting before it ever named the forms.
+⚠️ **2026-08-03 — THE REVIEW PASS IS RUNNING and five rounds are merged.** Read
+`docs/skill_list.md` top to bottom; V has been rebuilt and is where the work has been.
+
+**ROUND 1** — maths is `$…$` KaTeX, backticks mean ids only. The five margin comments produced
+**V5 the six written forms**, **§0.3 `Der unsichtbare Punkt`**, **N1 collapsed 10 → 7**, the
+mixed number **refused**.
+**ROUND 2** — **V1 · THE FOUR SHAPES** (nothing · circumfix · prefix · infix; the names are
+standard — circumfix in linguistics, matchfix in Mathematica). *Container* is a property of an
+EXPRESSION, *block* is a ROLE a part plays in a split; "is X a block?" is malformed. `-a` is
+prefix, NOT a container. The power is a HYBRID — circumfix around the exponent only — which is
+the one asymmetry every N4 power oddity traces back to. V now opens with **why you split**.
+**ROUND 3** — **the flattening rule is GONE.** `a + (b+c)` is TWO blocks. R.8/R.9 → E.20/E.21,
+twins C.18/C.19 forced out. The bracket joined the ladder's container rung; step 4 descends by
+MATCHING blocks, not left-to-right.
+**ROUND 4** — **§0.4, two kinds of required bracket**: grammar (`(-b)^2`) vs writing habit
+(`1-(-3)` — `1--3` is unambiguous).
+**ROUND 5** — the island principle **needed its precondition** and got it.
+
+🔵 **NEXT SESSION = A BRAINSTORM ON WALLS AND WALL-CROSSING, with examples.** The author's, and
+it is not written yet. Everything it needs is at the FOOT of `skill_list.md` under
+`🧠 Brainstorm — walls on blocks, and what each container is FOR`, in five parts: the author's
+three, then §4 (Claude's reading — what is solid, what is a correction, what is UNTESTED) and
+§5 (the derivability measurement).
+
+**Three things are open and none should be quietly decided:**
+
+1. **The structural-position axis** — *where does a move sit relative to a wall*. **Measured
+   2026-08-03: 4-way derives at 71 %, 3-way at 93 %, 2-way at 96 %.** So a fine axis must be
+   AUTHORED and a coarse one can be DERIVED. ⚠️ **Deliberately NOT added to any schema yet** —
+   the author is still thinking. Two notes point at it (S3's goal states, D's filtering
+   argument) and neither commits.
+2. **The translation conjecture** — *a container translates one operation into another*
+   (exponent-`+` → outer-`·`, numerator-`+` → outer-`+`). ⚠️ **UNTESTED.** If it holds, the
+   power and fraction laws collapse into one idea with five instances — the same economy §25
+   got. **Falsification-test it the way the ladder was**: assert it, throw all 35 E and 40 C
+   items at it, find the one needing a special case.
+3. **The rule aimed at the OUTSIDE of a block** — rewriting a block can change its top operator
+   and make walls necessary that were not (`2x - 2(x+1)`). §0.4 and S.2 both ask this of an
+   INSERTED expression; nothing asks it after a REWRITE. Rule not written, items not hunted.
 
 ```
-V   the words: expression · block · summand · factor · atom
-    V0 the five TYPES (sum · difference · product · quotient · power)
-    V1 separating operators vs GROUPING SYMBOLS — a container is ONE block
-    V2 counting through a bracket
-N   notation, 45 items — what a mark on the page MEANS
-P   parsing, 20 items — what IS this expression, and what are its blocks
-T   transforming, 90 items — R (rearranging) · E (expanding) · C (collecting)
+V   why you split (the ISLAND principle) · the words · block=ROLE, container=PROPERTY
+    V1 the four SHAPES at the top: nothing · circumfix · prefix · infix
+    V2 the five TYPES (sum · difference · product · quotient · power)
+    V3 separating operators vs grouping symbols; a container is A BLOCK WITH WALLS
+    V4 counting: a wall is a wall — a+(b+c) is TWO blocks
+    V5 the six written forms, and every exception is about NUMERALS
+N   notation, 50 items — what a mark on the page MEANS
+P   parsing, 21 items — what IS this expression, and what are its blocks
+T   transforming, 94 items — R (19) · E (35) · C (40)
 S   substitution, 16 items — an expression may stand where an atom stood
-    S3 STRATEGY — parked, not written: which rule when several fit
-§   42 rules in student language, German first, conditioned on the TYPE
+    S3 STRATEGY — parked; the ONE lead is that the CONTAINER may supply the goal state
+§   44 rules in student language, German first, conditioned on the TYPE
 ```
+⚠️ **V subsections were renumbered so reading order matches numbering.** Old `[V0]` is now
+`[V2]`, old `[V1]` is `[V3]`, and so on — anything remembered from before 2026-08-03 is off by
+one or two.
 
 ### The four things that decide everything else
 
