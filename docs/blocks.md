@@ -3,8 +3,9 @@
 The model, written for the class. Self-contained, no references. Nothing here is settled —
 this is the document we fiddle with until it is right.
 
-**The one image the whole thing runs on: things PULL at each other, and four special things
-hold against the pull.**
+**Two ideas carry the whole thing.** Things **PULL** at each other, and four special things
+hold against the pull `[§1–2]`. And those four are exactly the ones you may **replace by a
+letter** — which is why everything learned about rearranging keeps working `[§3–4]`.
 
 ---
 
@@ -13,11 +14,21 @@ hold against the pull.**
 *(For us, not for the class.)*
 
 1. **Teach that focusing on the VARIABLES is the wrong focus.** What matters is what pulls at
-   what, and what holds together.
-2. **Teach why that is the right thing to focus on.**
-3. **Teach what each of the four special things can do** — as a plain list, one list per thing.
-4. **Add no new abstraction.** End on the names they must own: *Kommutativgesetz*,
+   what, and what holds together `[§1–2]`.
+2. **Train rearranging and collecting FIRST** — numbers, letters, $+$, $-$, $\cdot$ **and
+   brackets**, but no Bruch, Potenz or Wurzel `[§3]`. This is the part that has to be
+   automatic, and it needs nothing from §4. ⚠️ The bracket appears here **as the class already
+   uses it** (*das gehört zusammen*); §4 does not introduce it, it **promotes** it.
+3. **Then the four**, introduced as *die, die man überall durch einen Buchstaben ersetzen darf*
+   — so that everything from §3 keeps working unchanged `[§4]`.
+4. **Then what each of the four can do** — one plain list each: the moves a letter cannot show
+   you, because they need the block opened `[§5]`.
+5. **Add no new abstraction.** End on the names they must own: *Kommutativgesetz*,
    *Assoziativgesetz*, *Distributivgesetz*, *ausmultiplizieren*, *ausklammern*.
+
+⚠️ **The §3/§4 boundary IS the substitution test.** A letter shows what may be done from the
+OUTSIDE; §5 is what you get by opening the block. That is why the document has two halves, and
+it is the reason to keep them apart rather than a defect.
 
 ⚠️ **The word budget is ZERO.** Every word below is one the student already has. Our own
 words — *Block*, *Wand* — are at the foot of the document and never reach the class.
@@ -29,8 +40,8 @@ would cost more than it saves.
 **The four things they have to be able to do:**
 
 1. see where the **multiplication** is, including where it is hidden `[§2]`
-2. **identify** the four special things `[§3]`
-3. **umstellen** — rearrange what is joined by $+$, $-$ and $\cdot$ `[§4]`
+2. **umstellen und zusammenfassen** — nur Atome, $+$, $-$, $\cdot$ `[§3]`
+3. **identify** the four special things, and that they behave like letters `[§4]`
 4. know the **laws of each of the four** `[§5]`
 
 ---
@@ -61,11 +72,12 @@ And therefore:
 
 ---
 
-## 2 · Zwei Zeichen, die man nicht schreibt
+## 2 · Drei Zeichen, die Ärger machen
 
-Beide sind da. Beide muss man sehen können.
+Zwei stehen nicht da und man muss sie trotzdem sehen. Das dritte steht da und hängt woanders,
+als man denkt.
 
-### Das Mal
+### Das Mal — es fehlt
 
 $$3x \;=\; 3\cdot x$$
 
@@ -79,7 +91,7 @@ $$3x \;=\; 3\cdot x$$
 | $\sqrt2\,\sqrt3$ | zwischen zwei Wurzeln |
 | $2\tfrac12$ | ⚠️ **kein Mal — das ist ein Plus.** Die einzige Ausnahme |
 
-### Die Klammer um ein einzelnes Zeichen
+### Die Klammer um ein einzelnes Zeichen — sie fehlt
 
 > **Steht in einer Klammer nur eine Zahl oder nur ein Buchstabe, schreibt man sie nicht.**
 
@@ -95,9 +107,118 @@ das $3x$ — die Klammer, die man nicht schreibt, geht nur um das $x$.
 
 ⚠️ Und deshalb braucht $(x+1)^2$ ihre Klammer wirklich: da drin steht mehr als ein Zeichen.
 
+### Das Minus — es hängt nach rechts
+
+Das Minus ist das Zeichen, das am meisten Ärger macht, und es hat nur **eine** Eigenschaft:
+
+> **Ein Minus gehört zu dem, was RECHTS davon steht** — und es ist ein $\cdot(-1)$.
+
+Mehr braucht man nicht. Alles Weitere ist dieselbe Regel an verschiedenen Stellen:
+
+| | woran es hängt | also |
+|---|---|---|
+| $a-b$ | am $b$ | zwei Summanden: $a$ und $-b$ |
+| $a-(b+c)$ | an der **ganzen Klammer** | $(-1)\cdot(b+c)$ — es muss zu **jedem** Summanden hinein |
+| $-a^2$ | an der **Potenz** $a^2$ | $-(a\cdot a)$ — die Basis ist nur ein Zeichen `[oben]` |
+| $(-a)^2$ | am $a$, **innerhalb** der Klammer | $(-a)\cdot(-a)$ |
+
+⚠️ **Die letzten zwei Zeilen sind derselbe Satz, zweimal angewendet** — und der ganze
+Unterschied zwischen $-9$ und $+9$. Es braucht dafür keine Extraregel für Minuszeichen; es
+braucht nur die Frage: **was steht rechts davon?**
+
 ---
 
-## 3 · Die vier, die zusammenhalten
+## 3 · Umstellen und Zusammenfassen
+
+**Was hier vorkommt:** Zahlen, Buchstaben, $+$, $-$, $\cdot$ — **und Klammern.** Kein Bruch,
+keine Potenz, keine Wurzel. Die kommen in §4, und dann gilt alles von hier unverändert weiter.
+
+### Die Klammer tut nur eines
+
+Sie ist die einzige der vier `[§4]`, die man schon aus der Primarschule kennt, und sie hat
+genau **eine** Aufgabe: **zusammenhalten**. Verschieden ist nur, ob überhaupt etwas gezogen
+hat:
+
+| | die Klammer ist | |
+|---|---|---|
+| $a\,(1+1+1)$ | **nötig** | ohne sie holt sich das Mal die erste $1$: $a\cdot1+1+1$ `[§1]` |
+| $17+(3+8)$ | **eine Hilfe** | es zieht nichts; sie sagt nur, was man zuerst rechnen will |
+| $a+(-b)$ | **Schreibweise** | $a+-b$ schreibt man nicht; gelesen ist es $a-b$ |
+
+> **Der Test ist immer derselbe: Klammer weg — steht dann noch dasselbe da?**
+> **Ja** → sie war eine Hilfe, man darf sie setzen und weglassen, wie man will.
+> **Nein** → sie war nötig, und dann gilt §5.1.
+
+⚠️ *(For us.)* **Das ist die Antwort auf «hat die Klammer Doppelfunktion?» — nein.** Sie hält
+zusammen, immer. Ob man sie *braucht*, entscheidet nicht die Klammer, sondern **was daneben
+steht**. Deshalb darf sie hier auftreten, lange bevor §4 sie zu einem der vier ernennt: in §3
+wird sie nur so benutzt, wie die Klasse sie ohnehin schon benutzt.
+
+Was durch **dasselbe** Zeichen verbunden ist, darf beliebig vertauscht und umgruppiert werden:
+
+$$3x \cdot 2 = 2 \cdot 3x \qquad a+b+c = c+b+a \qquad 17+(3+8) = (17+3)+8$$
+
+**Nur umstellen, was auf derselben Ebene steht.** In $3x+1$ verbindet das $+$ die Teile $3x$
+und $1$ — das $x$ allein ist keiner davon, die 3 hat es `[§1]`.
+
+**Umstellen braucht lauter Plus — also macht man sich lauter Plus.**
+
+Die Regel, die die Klasse gelernt hat, heisst: *nur wenn überall ein Plus steht, darf ich
+umstellen.* ⚠️ **Sie ist richtig, und sie bleibt so stehen.** Nur ist sie oft nicht erfüllt:
+
+$$a+a-b+a \qquad \text{— das } -b \text{ steht nicht zwischen zwei Plus}$$
+
+Dann **stellt man die Voraussetzung her**, indem man jeden Summanden mit seinem Zeichen in eine
+Klammer nimmt:
+
+$$a+a-b+a \;=\; a+a+(-b)+a$$
+
+Jetzt sind es vier Summanden, **alle mit $+$ verbunden**, und die Regel greift ohne Ausnahme:
+
+$$a+a+(-b)+a \;=\; a+a+a+(-b) \;=\; a+a+a-b \;=\; 3a-b$$
+
+⚠️ **Das ist keine neue Regel für Minuszeichen**, sondern ein Handgriff, der noch oft
+wiederkommt: **eine Regel hat eine Voraussetzung — ist sie nicht erfüllt, stellt man sie her.**
+Die Regel selbst wird nie angetastet. *(Später genauso mit $a=\frac a1$, wenn man Brüche
+addieren will `[§5.6]`.)*
+
+⚠️ **Und deshalb kann der häufigste Umstell-Fehler nicht passieren.** Wer $a+a-a+b$ schreibt,
+hat die **Buchstaben** vertauscht und die **Zeichen** stehen lassen. Wer zuerst $(-b)$
+hinschreibt, vertauscht ganze Summanden und kann das gar nicht mehr.
+
+⚠️ **Mit der Zeit lässt man den Zwischenschritt weg** und sieht $-b$ direkt als einen Summanden.
+Bis dahin ist er die sichere Variante — **und er ist nie falsch.**
+
+**Der letzte Schritt ist Ausklammern.**
+
+$$a+a+a \;=\; a\cdot1+a\cdot1+a\cdot1 \;=\; a\,(1+1+1) \;=\; 3a$$
+
+Deshalb wird $a+a$ zu $2a$ und **nicht** zu $a^2$: man klammert das $a$ aus, man multipliziert
+es nicht. *Zusammenfassen ist kein eigenes Gesetz — es ist §5.1 rückwärts.*
+
+> Das ist das **Kommutativgesetz** (vertauschen) und das **Assoziativgesetz** (umgruppieren).
+> Sie ändern nur, wo etwas steht — nie, was da ist.
+
+--> Drill
+
+---
+
+## 4 · Die vier, die zusammenhalten
+
+**Alles aus §3 gilt weiter, wenn an der Stelle eines Buchstabens etwas Grösseres steht** —
+solange das Grössere zusammenhält. Man setzt einfach einen Buchstaben dafür ein:
+
+$$3\sqrt{x+1} \;+\; 2\sqrt{x+1} \qquad\text{ist}\qquad 3u+2u \;=\; 5u \qquad\text{mit } u=\sqrt{x+1}$$
+
+Nichts Neues zu können: **Buchstaben hinschreiben, §3 anwenden, Buchstaben zurücknehmen** —
+$5\sqrt{x+1}$. Und genau das ist es, was ein Spezialblock kann:
+
+> **Ein Spezialblock ist etwas, das man ÜBERALL durch einen Buchstaben ersetzen darf.**
+
+⚠️ Bei $3x$ geht das auch — aber nur dort, wo nichts stärker zieht `[§1]`. **Bei den vieren
+geht es immer**, egal wohin man sie stellt. Das ist der ganze Unterschied.
+
+⚠️ Und deshalb ist $x^2+x^2$ gleich $2x^2$ und **nicht** $x^4$: es ist $u+u=2u$.
 
 So when is the 3 unable to take the $x$ away? When one of **four** things is around it:
 
@@ -190,6 +311,37 @@ steht, bestimmt, welche Liste aus §5 zuoberst gilt: bei einem Bruch die Bruch-L
 bei einer Wurzel die Wurzel-Liste `[§5.3]`. **Man sucht sich die Regel nicht aus — der
 äusserste Block sagt sie an.**
 
+**Drei kleine zum Selberprobieren.** *Bestimme die Spezialblöcke.*
+
+**1)** $-a+b$
+
+> **Keine.** Kein Klammer, kein Bruch, keine Potenz, keine Wurzel — **nichts zum Einrahmen.**
+> Zwei Summanden: $-a$ und $b$.
+
+⚠️ **«Keine» ist eine richtige Antwort**, und die erste, die man aushalten muss. Das Minus ist
+zwar ein verstecktes Mal `[§2]`, aber ein Mal ist kein Spezialblock.
+
+**2)** $a+a-b+a$
+
+> **Auch keine.** **Vier** Summanden: $a$, $a$, $-b$, $a$.
+
+⚠️ Der dritte heisst $-b$, nicht $b$ — **das Minus reist mit** `[§3]`. Und $a+a+a$ zu $3a$
+zusammenfassen kommt später: **hier wird nur gelesen, noch nicht umgeformt.**
+
+**3)** $-a^2$
+
+> **Einer:** die Potenz $a^2$. Das Minus steht **davor**, nicht drin.
+
+$$-a^2 \;=\; -{\color{gray}\boxed{\color{black}\bigcirc^{\bigcirc}}} \qquad\text{also}\qquad -(a)^2 \;=\; -(a\cdot a)$$
+
+Die Klammer um die Basis fehlt, weil da nur **ein** Zeichen steht `[§2]` — und genau deshalb
+gehört das $a$ zur Potenz und das Minus nicht. Der Unterschied ist kein Kleingedrucktes:
+
+| | Basis | mit $a=3$ |
+|---|---|---|
+| $-a^2 \;=\; -{\color{gray}\boxed{\color{black}\bigcirc^{\bigcirc}}}$ | $a$ — ein Zeichen, keine Klammer nötig | $-9$ |
+| $(-a)^2 \;=\; {\color{gray}\boxed{\color{black}(\bigcirc)^{\bigcirc}}}$ | $-a$ — **zwei** Zeichen, Klammer **muss** geschrieben werden | $+9$ |
+
 > **Die Übung ist immer dieselbe: Kästchen malen, dann zählen, was das $+$ und das $-$
 > verbinden — und wenn nur ein Kästchen dasteht, eine Ebene tiefer gehen.** --> Drill
 
@@ -201,28 +353,12 @@ the document, `\underbrace` is the portable version.
 
 ---
 
-## 4 · Umstellen
-
-What is joined by the **same** sign may be reordered and regrouped freely:
-
-$$3x \cdot 2 = 2 \cdot 3x \qquad a+b+c = c+b+a \qquad 17+(3+8) = (17+3)+8$$
-
-Two things to watch, and they are the two mistakes:
-
-**Das Minus reist mit.** In $3x-2y$ the parts are $3x$ and $-2y$, so the swap is
-$3x-2y = -2y+3x$, never $2y-3x$.
-
-**Nur umstellen, was auf derselben Ebene steht.** In $3x+1$ the $+$ joins $3x$ and $1$ — the
-$x$ alone is not one of them, the 3 has it.
-
-> Das ist das **Kommutativgesetz** (vertauschen) und das **Assoziativgesetz** (umgruppieren).
-> Sie ändern nur, wo etwas steht — nie, was da ist.
-
---> Drill
-
----
-
 ## 5 · Was jede der vier kann
+
+⚠️ **Bis hierher war jeder Block ein Buchstabe** `[§4]`, und das reichte für alles Umstellen und
+Zusammenfassen. Jetzt reicht es nicht mehr: **ein Buchstabe zeigt nur, was man von AUSSEN darf.**
+$\sqrt{ab}=\sqrt a\sqrt b$ sieht man einem $u$ nicht an. **Ab hier wird der Block geöffnet**,
+und jeder hat seine eigenen Regeln.
 
 Four lists. **Das ist der Stoff.**
 
@@ -238,15 +374,38 @@ ist einfacher, als es aussieht:
 Sie hält nur zusammen und tut sonst nichts — deshalb darf man sie setzen und weglassen, und
 deshalb ist ihre ganze Liste eine Liste über **Hinein und Hinaus**.
 
-**Weglassen, wenn nichts davor steht**
+**Ausmultiplizieren sind ZWEI Schritte, nicht einer**
 
-$$3+(4+5) = 3+4+5 \qquad a\cdot(b\cdot c) = a\cdot b\cdot c$$
+> **1. Was vor der Klammer steht, geht hinein — und zu JEDEM Summanden. Die Klammer BLEIBT.**
+> **2. Steht nichts mehr davor, darf die Klammer weg.**
 
-**Ausmultiplizieren** — was hineingeht, geht zu **jedem** Summanden
+$$a(b+c) \;\xrightarrow{\ 1.\ }\; (ab+ac) \;\xrightarrow{\ 2.\ }\; ab+ac$$
 
-$$a(b+c) = ab+ac$$
-$$-(a+b) = -a-b \qquad \text{(das ist } (-1)(a+b) \text{, siehe §2)}$$
-$$(a+b)(c+d) = ac+ad+bc+bd$$
+Schritt 2 hat eine einzige Frage — **steht noch etwas davor?**
+
+| vor der Klammer | | |
+|---|---|---|
+| **nichts, oder ein $+$** | Klammer darf **weg** | $a+(b+c) = a+b+c$ |
+| **ein $-$** | ein Faktor $-1$ `[§2]` — **erst hinein** | $a-(b+c) = a-b-c$ |
+| **eine Zahl, ein Buchstabe** | ein Faktor — **erst hinein** | $3(b+c) = 3b+3c$ |
+
+**Und jetzt das Beispiel, für das sich der ganze Aufwand lohnt.** Zweimal Schritt 1, und erst
+dann Schritt 2:
+
+$$2x-2(x+1) \;\xrightarrow{\ 1.\ }\; 2x-(2x+2) \;\xrightarrow{\ 1.\ }\; 2x+(-2x-2) \;\xrightarrow{\ 2.\ }\; 2x-2x-2$$
+
+⚠️ **Der häufigste Fehler der Mittelstufe kann so gar nicht mehr passieren.** Wer $2x-2x+2$
+schreibt, hat die Klammer in Schritt 1 fallen lassen — und in Schritt 1 fällt sie nie.
+
+> **Ein Block bleibt ein Block, solange man an seinem Inhalt arbeitet. Ihn wegzunehmen ist ein
+> eigener Schritt mit einer eigenen Frage.**
+
+⚠️ Steht in der Klammer ein **Produkt** statt einer Summe, gibt es nichts zu verteilen und die
+Klammer fällt einfach weg: $a\cdot(b\cdot c) = a\cdot b\cdot c$.
+
+**Zwei Klammern**
+
+$$(a+b)(c+d) = ac+ad+bc+bd \qquad\text{— jeder Summand zu jedem}$$
 
 **Die binomischen Formeln** — dasselbe, nur auswendig
 
@@ -256,13 +415,11 @@ $$(a+b)^2 = a^2+2ab+b^2 \qquad (a-b)^2 = a^2-2ab+b^2 \qquad (a+b)(a-b) = a^2-b^2
 
 $$ab+ac = a(b+c) \qquad 3x+3 = 3(x+1)$$
 
-**Klammer setzen, weil man muss.** Umformen kann ändern, *was* ein Teil ist — und dann zieht
-plötzlich etwas daran, das vorher nicht drankam:
-
-$$2x - \underbrace{2(x+1)}_{\text{ein Produkt}} \;\longrightarrow\; 2x - \underbrace{(2x+2)}_{\text{jetzt eine Summe — Klammer nötig}}$$
-
-Ohne die Klammer steht da $2x-2x+2$: das Minus hat sich das $2x$ geholt und das $+2$ stehen
-lassen. **Das ist §1, einen Schritt später.**
+⚠️ **Was man NICHT lernen muss: «hier braucht es jetzt eine Klammer».** In anderen Darstellungen
+steht an dieser Stelle eine Warnung — *umformen kann ändern, was ein Teil ist, und dann braucht
+es plötzlich eine Klammer, die es vorher nicht brauchte.* Das stimmt, und mit den zwei Schritten
+oben **kommt der Fall nicht vor**: die Klammer war nie weg, also muss man sie nie
+zurückholen. **Eine Regel weniger, weil eine Reihenfolge festgelegt ist.**
 
 **Bedingungen: keine.** Alles oben gilt für alle Zahlen, immer. Die Klammer teilt nicht und
 zieht keine Wurzel — es gibt also nichts, was verboten sein könnte.
@@ -395,6 +552,33 @@ sein. Und bei $\sqrt{ab}=\sqrt a\sqrt b$, wo aus einer Bedingung zwei werden.
 
 > **Wer etwas wegkürzt, wegteilt oder auseinandernimmt, muss die Bedingung mitnehmen.**
 
+### 5.6 · Blöcke machen
+
+Bisher haben wir Blöcke **gesucht**. Man darf sie auch **machen** — und der Grund steht in den
+fünf Listen oben:
+
+> **Jeder Block hat seine eigene Liste. Man macht sich den Block, dessen Liste man braucht.**
+
+**Eine Klammer setzen, um Nachbarn zusammenzunehmen.** Erlaubt ist das, weil Umstellen erlaubt
+ist `[§3]`:
+
+$$3x+2+5x \;=\; (3x+5x)+2 \;=\; 8x+2$$
+
+**Etwas als Block schreiben, das keiner war.** Ein $a$ ist auch ein Bruch und auch eine Potenz:
+
+$$a \;=\; \frac a1 \qquad\qquad a \;=\; a^1$$
+
+Allein sieht das nach nichts aus. Es ist der Schlüssel, sobald man eine Liste braucht, die noch
+nicht gilt:
+
+$$a+\frac bc \;=\; \frac a1+\frac bc \;=\; \frac{ac+b}{c} \qquad\text{— erst jetzt gilt §5.2}$$
+
+$$a\cdot a^3 \;=\; a^1\cdot a^3 \;=\; a^4 \qquad\text{— erst jetzt gilt §5.4}$$
+
+⚠️ **Und der Fall, wo es NICHT nötig ist, obwohl es so aussieht.** $a+a-b+a$ verlangt keine
+Klammer und keinen gemachten Block — dort muss man nur das Minus richtig lesen `[§3]`.
+**Zuerst richtig lesen, erst dann etwas bauen.**
+
 ---
 
 ## 6 · Unsere Wörter
@@ -403,7 +587,7 @@ sein. Und bei $\sqrt{ab}=\sqrt a\sqrt b$, wo aus einer Bedingung zwei werden.
 
 - **Block** — one of the things a sign joins. In class always said with the name it already
   has: *Summand*, *Faktor*, *Basis*, *Zähler*.
-- **Wand** — what the four in §3 have in common. In class they are simply listed. We need the
+- **Wand** — what the four in §4 have in common. In class they are simply listed. We need the
   word because the data layer and the drill generator have to say *the parts of a split* and
   *the thing that resists a pull* without enumerating four cases every time.
 
