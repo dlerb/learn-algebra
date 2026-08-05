@@ -61,9 +61,13 @@ And therefore:
 
 ---
 
-## 2 · Wo steckt das Mal?
+## 2 · Zwei Zeichen, die man nicht schreibt
 
-The rule is useless if you cannot see the $\cdot$. It is usually not written:
+Beide sind da. Beide muss man sehen können.
+
+### Das Mal
+
+$$3x \;=\; 3\cdot x$$
 
 | | das versteckte Mal |
 |---|---|
@@ -74,6 +78,22 @@ The rule is useless if you cannot see the $\cdot$. It is usually not written:
 | $\dfrac{3x}{4}$ | der Bruchstrich **ist** ein $\cdot\frac14$ |
 | $\sqrt2\,\sqrt3$ | zwischen zwei Wurzeln |
 | $2\tfrac12$ | ⚠️ **kein Mal — das ist ein Plus.** Die einzige Ausnahme |
+
+### Die Klammer um ein einzelnes Zeichen
+
+> **Steht in einer Klammer nur eine Zahl oder nur ein Buchstabe, schreibt man sie nicht.**
+
+| geschrieben | gemeint |
+|---|---|
+| $3x$ | $3\cdot(x)$ |
+| $x^2$ | $(x)^2$ |
+| $-x^2$ | $-(x)^2$, also $-(x\cdot x)$ |
+
+Das ist dieselbe Faulheit wie beim Mal, und sie ist genauso informativ: **steht keine Klammer
+da, dann ist drin genau ein Zeichen.** Deshalb ist in $3x^2$ nur das $x$ quadriert und nicht
+das $3x$ — die Klammer, die man nicht schreibt, geht nur um das $x$.
+
+⚠️ Und deshalb braucht $(x+1)^2$ ihre Klammer wirklich: da drin steht mehr als ein Zeichen.
 
 ---
 
@@ -88,23 +108,29 @@ still pulls — it just cannot get in. *Der 3er kriegt nicht das $x$, sondern da
 
 **Und so sehen die vier aus, wenn man wegdenkt, was drin steht:**
 
+**Rot sind die Zeichen, die den Block ausmachen. Die $\bigcirc$ sind seine Plätze.**
+
 | | Form | Plätze |
 |---|---|---|
-| **Klammer** | $(\bigcirc)$ | einer |
-| **Bruch** | $\dfrac{\bigcirc}{\bigcirc}$ | zwei: oben und unten |
-| **Potenz** | $\bigcirc^{\bigcirc}$ | zwei: Basis und Exponent |
-| **Wurzel** | $\sqrt{\bigcirc}$ | einer |
+| **Klammer** | ${\color{red}(}\bigcirc{\color{red})}$ | einer |
+| **Bruch** | ${\color{red}\dfrac{\color{black}\bigcirc}{\color{black}\bigcirc}}$ | zwei: oben und unten |
+| **Potenz** | ${\color{red}(}\bigcirc{\color{red})}^{\bigcirc}$ | zwei: Basis und Exponent |
+| **Wurzel** | ${\color{red}\sqrt{\color{black}\bigcirc}}$ | einer |
 
 **Das ist die ganze Liste.** In jedes $\bigcirc$ darf alles hinein — eine Zahl, ein Buchstabe,
 eine Summe, wieder ein Block. Und was drin steht, ist geschützt.
 
-⚠️ **Und jetzt sieht man, warum die Potenz die schiefe unter den vieren ist.** Der Exponent
-steht wirklich auf einem Platz: $2^{\,x+1}$ ist $2^{\bigcirc}$. Die Basis nicht —
+⚠️ **Auf dem Papier fehlt bei der Potenz die Klammer meistens**, weil in der Basis nur ein
+Zeichen steht `[§2]`. $x^2$ ist $(x)^2$, und $(x+1)^2$ schreibt seine Klammer, weil da mehr
+drin steht. **Es ist derselbe Block, einmal faul und einmal vollständig geschrieben.**
 
-$$x^2 \;=\; \bigcirc^2 \quad\text{aber}\quad (x+1)^2 \;=\; (\bigcirc)^2$$
+⚠️ **Die Potenz hat zwei Wände, aber nur eine kann man anmalen.** Die Klammer ist ein Zeichen.
+Das Hochstellen des Exponenten ist keins — es ist eine **Stelle**. Deshalb ist es die einzige
+Wand, die man beim Schreiben verlieren kann:
 
-Beim zweiten musste eine **Klammer** her, damit die Basis überhaupt einen Platz hat. **Eine
-Potenz schützt ihren Exponenten, nicht ihre Basis.**
+$$x^{2y} \qquad\text{gegen}\qquad x^2y$$
+
+Dieselben drei Zeichen; nur die Höhe des $y$ entscheidet. **Hier hilft nur: genau zeichnen.**
 
 **These four are the only things on the page that hold against a pull.** Recognising them is
 half of reading algebra; the other half is §5, what each of them can do.
@@ -309,7 +335,7 @@ $$\sqrt{(-2)(-3)} = \sqrt6 \quad\text{geht.}\qquad \sqrt{-2}\,\sqrt{-3} \quad\te
 **Auseinandernehmen macht die Bedingung strenger.** Das ist der einzige Ort in diesem
 Dokument, wo ein Schritt erlaubt aussieht und trotzdem verboten ist.
 
-### 5.4 · Die Potenz — $\bigcirc^{\bigcirc}$
+### 5.4 · Die Potenz — $(\bigcirc)^{\bigcirc}$
 
 $$a^m\cdot a^n = a^{m+n} \qquad \frac{a^m}{a^n} = a^{m-n} \qquad (a^m)^n = a^{m\cdot n}$$
 
