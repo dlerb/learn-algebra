@@ -4,6 +4,83 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## 🧱 `docs/blocks.md` — THE MODEL FOR THE CLASS (2026-08-04/05, `056b27e` + `fab4322`)
+
+**The walls brainstorm happened and did not stay in `skill_list.md`.** It produced a **second,
+separate document**, `docs/blocks.md`, written in the voice the class actually gets. It is not
+a section of the skill list and it is not data — it is prose, and that is what keeps it safe
+for now.
+
+**The image the whole thing runs on:** things PULL at each other, and four special things hold
+against the pull. `x+1` survives `3(x+1)` and does **not** survive `3x+1` — *in `3x+1` gibt es
+kein `x+1`*. Punkt vor Strich re-read as *das Mal zieht stärker als das Plus und das Minus*.
+
+**Decisions, in the order they were forced:**
+
+- **The word budget for the class is ZERO.** Every student-facing word already exists:
+  *Summand, Faktor, Basis, Exponent, Zähler, Nenner, Term, Klammer, Bruch, Potenz, Wurzel*.
+- ⚠️ **`Container` is RETIRED, `Block` survives** — and the test that decided it: §5's central
+  sentence is *die Buchstaben in den Gesetzen sind Blöcke*, and in `3(2x+5y)` the thing that
+  must stand where `b` stands is `2x`, **which has no walls**. Only *Block* can say it.
+- ⚠️ **`Block` and `Wand` are OURS**, §6 — for the data layer and the drill generator, never
+  for the class. The price is stated there: a fifth resister (`|x|`, `f(…)`) arrives as a new
+  fact instead of an instance.
+- ⚠️ **§5 deliberately does NOT unify the four mechanisms.** Four flat lists — *das ist der
+  Stoff*. The unification is real and it is ours; pushing it costs more than it saves.
+- **Wurzel is taught BEFORE Potenz**, and the Potenz points back with a three-row table showing
+  the root laws as rows of the power list. ⚠️ **The third row is the one that kips**
+  (`((-3)^2)^{1/2} = 3` but `(-3)^{2·½} = -3`), so `√(a²)=a` needing `a≥0` arrives as a
+  consequence rather than as a nitpick.
+- **Side conditions have a concrete home: exactly TWO forbidden acts** — *durch 0 teilen*, and
+  *die Wurzel aus einer negativen Zahl*. Every condition in §5 is one of them. **§5.5: the
+  condition survives the step that erased it** (`x(x-1)/x = x-1` holds only for `x≠0`).
+- ⚠️ **NO PRECEDENCE LADDER IS NEEDED.** `3x^2` was briefly explained with "Potenz vor Punkt";
+  that was wrong. **Blocks resolve FIRST, and the pull rule applies to what is left**, so
+  `3x^2` never reaches the pull rule at all.
+- ⚠️ **Two marks are not written, and the second one is new**: the `·`, and **the bracket
+  around a single sign**. `3x = 3·(x)`, `x^2 = (x)^2`, `-x^2 = -(x)^2`. No bracket means
+  exactly one sign inside — which is why only the `x` is squared in `3x^2`.
+- ⚠️ **The power is NOT structurally irregular** — both slots are walled, and the *schiefe unter
+  den vieren* warning was DELETED. It is irregular in **notation**, on both sides: one wall
+  dropped by convention, the other carried by **position** (`x^{2y}` vs `x^2y`). Only one of
+  its two walls can be painted, and that is the fact, not a rendering limitation.
+
+**Notation used in the file** (all verified through `node_modules/katex`, 186 snippets, 0 fail):
+`○` = a slot · `□` = a whole block · grey `\boxed{}` = how far a block reaches · **red = the
+marks that MAKE the block**. ⚠️ `\colorbox` needs `$…$` inside `$$…$$` and breaks previews;
+`{\color{gray}\boxed{\color{black}…}}` stays in math mode and works everywhere.
+
+🔵 **THE ONE THING NOT DONE, and it is the important one: `blocks.md` has never met a real
+mistake.** Every example in it was constructed to make the model look right. **Take the 38
+entries of `mistakes.json` and ask of each: does this model predict it, prevent it, or miss
+it?** That is the project's own method (the ladder survived it; the position axis was measured
+by it), and until it is run, *this helps avoid mistakes* is a hypothesis with good anecdotes.
+Expect Lesefehler to fall out cleanly, forced-move mostly, and **Freshman's dream to come down
+entirely to whether the §5 lists are memorised** — which would itself be a finding.
+
+**Four smaller things left open:**
+
+1. ⚠️ **`blocks.md` §2 contains the mixed number `2½`; ROUND 1 of the skill_list review
+   REFUSED the mixed number.** Either that refusal was narrower than it reads, or this
+   reintroduced it. Unresolved.
+2. ⚠️ **`blocks.md` and `skill_list.md` now DISAGREE.** V says *block is a ROLE; "is X a block?"
+   is malformed*. `blocks.md` says a block is plainly a part a split produces, and the role is
+   *Faktor*/*Summand*/*Basis*. The second is better — the first was making the
+   block/container-contextuality point in role vocabulary that does not fit it — but V is
+   load-bearing and the collision is not yet resolved.
+3. **`blocks.md` §5's law lists overlap the tower's `terms` and `powers` layers.** Which is
+   canonical when they disagree? Safe while it is prose; **must be answered before any of it
+   becomes data.**
+4. **It is really two documents.** §1–§4 is a reading model that runs on the pull image; §5 is
+   a law reference where the image does no work at all and would read identically without it.
+   The header claims one image runs the whole thing. Either say so plainly, or find out whether
+   §5 can be reached from the image — I suspect it cannot, and that is worth knowing.
+
+`blocks.md`'s own §7 keeps four more: equations · binomische Formeln vs `(a+b)(c+d)` · whether
+the Rückblick is a lesson or a remark · whether §1 is the app's opening screen.
+
+---
+
 ## 🔵 NEXT SESSION — THE REBUILD (2026-08-02)
 
 ⚠️ **THE IN-PLACE REVISION OF `src/data/curated/skills/` IS ABANDONED.** It stalled for a
@@ -34,11 +111,12 @@ MATCHING blocks, not left-to-right.
 (`1-(-3)` — `1--3` is unambiguous).
 **ROUND 5** — the island principle **needed its precondition** and got it.
 
-🔵 **NEXT SESSION = A BRAINSTORM ON WALLS AND WALL-CROSSING, with examples.** The author's, and
-it is not written yet. Everything it needs is at the FOOT of `skill_list.md` under
-`🧠 Brainstorm — walls on blocks, and what each container is FOR`, in five parts: the author's
-three, then §4 (Claude's reading — what is solid, what is a correction, what is UNTESTED) and
-§5 (the derivability measurement).
+~~🔵 NEXT SESSION = A BRAINSTORM ON WALLS AND WALL-CROSSING.~~ ✅ **HAPPENED 2026-08-04/05 —
+and it left this file.** It produced `docs/blocks.md` instead; see the section at the top. The
+five-part brainstorm at the FOOT of `skill_list.md` is still the record of where it started,
+and §4/§5 there (Claude's reading, the derivability measurement) are unaffected. ⚠️ **But the
+three open items below were NOT what the brainstorm turned out to be about** — it went to the
+class-facing model, not to the axis. They are still open, and still unquietly so.
 
 **Three things are open and none should be quietly decided:**
 
