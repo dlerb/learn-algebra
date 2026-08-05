@@ -4,16 +4,33 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🧱 `docs/blocks.md` — THE MODEL FOR THE CLASS (2026-08-04/05, `056b27e` + `fab4322`)
+## 🧱 `docs/blocks.md` — THE MODEL FOR THE CLASS (2026-08-04/05, `056b27e` → `59a41da`)
 
 **The walls brainstorm happened and did not stay in `skill_list.md`.** It produced a **second,
 separate document**, `docs/blocks.md`, written in the voice the class actually gets. It is not
 a section of the skill list and it is not data — it is prose, and that is what keeps it safe
 for now.
 
-**The image the whole thing runs on:** things PULL at each other, and four special things hold
-against the pull. `x+1` survives `3(x+1)` and does **not** survive `3x+1` — *in `3x+1` gibt es
-kein `x+1`*. Punkt vor Strich re-read as *das Mal zieht stärker als das Plus und das Minus*.
+**TWO ideas carry it, not one.**
+
+1. **The PULL.** `x+1` survives `3(x+1)` and does **not** survive `3x+1` — *in `3x+1` gibt es
+   kein `x+1`*. Punkt vor Strich re-read as *das Mal zieht stärker als das Plus und das Minus*.
+2. **The LETTER.** *Ein Spezialblock ist etwas, das man ÜBERALL durch einen Buchstaben ersetzen
+   darf.* `3√(x+1) + 2√(x+1)` is `3u+2u = 5u`.
+
+**⚠️ THE SPINE, after the 2026-08-05 restructure — §3 and §4 SWAPPED:**
+
+    §1 pull · §2 die drei Zeichen · §3 UMSTELLEN (atoms + brackets, no Bruch/Potenz/Wurzel)
+    §4 DIE VIER, motivated by the letter · §5 the four lists · §6 unsere Wörter · §7 open
+
+**Rearranging is trained FIRST and needs nothing from §4.** The four then arrive **motivated** —
+they are what lets everything from §3 keep working. `x²+x² = 2x²` and not `x⁴` falls out as
+`u+u = 2u` in one line.
+
+⚠️ **The substitution test IS the §3/§4 boundary, and it RESOLVED the old open item 4.** A
+letter shows only what may be done from **outside**; `√(ab)=√a√b` is invisible to a `u`. §5 is
+exactly the moves that need the block **opened**. So the document is not two documents — it is
+two levels with a boundary the student can test — and §0 now records that as a design decision.
 
 **Decisions, in the order they were forced:**
 
@@ -44,8 +61,34 @@ kein `x+1`*. Punkt vor Strich re-read as *das Mal zieht stärker als das Plus un
   den vieren* warning was DELETED. It is irregular in **notation**, on both sides: one wall
   dropped by convention, the other carried by **position** (`x^{2y}` vs `x^2y`). Only one of
   its two walls can be painted, and that is the fact, not a rendering limitation.
+- **The MINUS has exactly one property** (§2): *ein Minus gehört zu dem, was RECHTS davon
+  steht, und ist ein `·(-1)`*. Four rows generate everything — `a-b` · `a-(b+c)` · `-a²` ·
+  `(-a)²` — including the `-9` / `+9` difference. **No extra rule for minus signs anywhere.**
+- ⚠️ **THE BRACKET HAS NO DOUBLE DUTY.** It does one thing, *zusammenhalten*; what varies is
+  whether anything was pulling. **One test: Klammer weg — steht dann noch dasselbe da?**
+  `a(1+1+1)` **nötig** · `17+(3+8)` **eine Hilfe** · `a+(-b)` **Schreibweise**. This is also why
+  §3 may use brackets before §4 exists: **§4 does not INTRODUCE the bracket, it PROMOTES it** —
+  it is the one of the four the class has had since primary school.
+- ⚠️ **`das Minus reist mit` is GONE as a rearranging rule.** The class's own rule (*nur wenn
+  überall ein Plus steht*) **stays untouched and unqualified**; when its precondition fails you
+  **make it hold**: `a+a-b+a = a+a+(-b)+a`. ⚠️ **Same move as `a = a/1`** before adding
+  fractions — *eine Regel hat eine Voraussetzung; ist sie nicht erfüllt, stellt man sie her.*
+  ⚠️ **Preparsing everything into `a+(-b)` was considered and REFUSED** — that is
+  normalise-then-count, killed once already when the flattening rule died. The minus rule is a
+  **reading** rule; the written `(-b)` is a *Lesehilfe* you drop with practice.
+- ⚠️ **AUSMULTIPLIZIEREN IS TWO STEPS, and this deletes a rule.** *1. Was vor der Klammer steht,
+  geht hinein — die Klammer BLEIBT. 2. Steht nichts mehr davor, darf die Klammer weg.* Then
+  `2x-2(x+1)` **cannot** produce `2x-2x+2`, and **«Klammer setzen, weil man muss» was DELETED**:
+  the wall was never gone, so it never has to be brought back. **One rule fewer because an order
+  is fixed.** (Step 2's table: nothing/`+` → weg · `-` → factor `-1`, erst hinein · a factor →
+  erst hinein. The earlier "`+` is a factor `+1`" unification was WRONG and is gone.)
+- **Zusammenfassen is not its own law.** `a+a+a = a·1+a·1+a·1 = a(1+1+1) = 3a` is ausklammern —
+  which is also why `a+a` is `2a` and **not** `a²`.
+- **§5.6 `Blöcke machen` (new):** you may **make** a block, not only find one — *man macht sich
+  den Block, dessen Liste man braucht* (`a = a/1`, `a = a^1`, grouping neighbours in a bracket).
+  ⚠️ With the counter-case stated: `a+a-b+a` needs **no** made block.
 
-**Notation used in the file** (all verified through `node_modules/katex`, 186 snippets, 0 fail):
+**Notation used in the file** (all verified through `node_modules/katex`, 263 snippets, 0 fail):
 `○` = a slot · `□` = a whole block · grey `\boxed{}` = how far a block reaches · **red = the
 marks that MAKE the block**. ⚠️ `\colorbox` needs `$…$` inside `$$…$$` and breaks previews;
 `{\color{gray}\boxed{\color{black}…}}` stays in math mode and works everywhere.
@@ -58,7 +101,8 @@ by it), and until it is run, *this helps avoid mistakes* is a hypothesis with go
 Expect Lesefehler to fall out cleanly, forced-move mostly, and **Freshman's dream to come down
 entirely to whether the §5 lists are memorised** — which would itself be a finding.
 
-**Four smaller things left open:**
+**Three smaller things left open** (the fourth — *it is really two documents* — was **resolved**
+by the restructure; see the spine above):
 
 1. ⚠️ **`blocks.md` §2 contains the mixed number `2½`; ROUND 1 of the skill_list review
    REFUSED the mixed number.** Either that refusal was narrower than it reads, or this
@@ -71,10 +115,12 @@ entirely to whether the §5 lists are memorised** — which would itself be a fi
 3. **`blocks.md` §5's law lists overlap the tower's `terms` and `powers` layers.** Which is
    canonical when they disagree? Safe while it is prose; **must be answered before any of it
    becomes data.**
-4. **It is really two documents.** §1–§4 is a reading model that runs on the pull image; §5 is
-   a law reference where the image does no work at all and would read identically without it.
-   The header claims one image runs the whole thing. Either say so plainly, or find out whether
-   §5 can be reached from the image — I suspect it cannot, and that is worth knowing.
+
+⚠️ **A pattern worth noticing, because it is what this model turns out to be good at.** Twice
+now a rule was **removed** rather than added — *Klammer setzen weil man muss* (by fixing the
+order of two steps) and *das Minus reist mit* (by making a precondition hold instead of
+qualifying a rule). In both cases the mistake became **unproducible** rather than merely warned
+against. **That is the thing to try first when the next difficulty comes up.**
 
 `blocks.md`'s own §7 keeps four more: equations · binomische Formeln vs `(a+b)(c+d)` · whether
 the Rückblick is a lesson or a remark · whether §1 is the app's opening screen.
