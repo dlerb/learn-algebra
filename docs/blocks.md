@@ -16,22 +16,22 @@ letter** — which is why everything learned about rearranging keeps working `[�
 1. **Teach that focusing on the VARIABLES is the wrong focus.** What matters is what pulls at
    what, and what holds together `[§1–2]`.
 2. **Train rearranging and collecting FIRST** — numbers, letters, $+$, $-$, $\cdot$ **and
-   brackets**, but no Bruch, Potenz or Wurzel `[§3]`. This is the part that has to be
+   brackets**, but no fraction, power or root `[§3]`. This is the part that has to be
    automatic, and it needs nothing from §4. ⚠️ The bracket appears here **as the class already
-   uses it** (*das gehört zusammen*); §4 does not introduce it, it **promotes** it.
-3. **Then the four**, introduced as *die, die man überall durch einen Buchstaben ersetzen darf*
-   — so that everything from §3 keeps working unchanged `[§4]`.
+   uses it** (*this belongs together*); §4 does not introduce it, it **promotes** it.
+3. **Then the four**, introduced as *the ones you may replace by a letter anywhere* — so that
+   everything from §3 keeps working unchanged `[§4]`.
 4. **Then what each of the four can do** — one plain list each: the moves a letter cannot show
    you, because they need the block opened `[§5]`.
-5. **Add no new abstraction.** End on the names they must own: *Kommutativgesetz*,
-   *Assoziativgesetz*, *Distributivgesetz*, *ausmultiplizieren*, *ausklammern*.
+5. **Add no new abstraction.** End on the names they must own: *commutative law*, *associative
+   law*, *distributive law*, *expanding*, *factoring out*.
 
 ⚠️ **The §3/§4 boundary IS the substitution test.** A letter shows what may be done from the
 OUTSIDE; §5 is what you get by opening the block. That is why the document has two halves, and
 it is the reason to keep them apart rather than a defect.
 
 ⚠️ **The word budget is ZERO.** Every word below is one the student already has. Our own
-words — *Block*, *Wand* — are at the foot of the document and never reach the class.
+words — *block*, *wall* — are at the foot of the document and never reach the class.
 
 ⚠️ **§5 does NOT try to show that the four are the same mechanism underneath.** They are four
 lists. The unification is real and it is ours; it is not how the class thinks, and pushing it
@@ -40,13 +40,13 @@ would cost more than it saves.
 **The four things they have to be able to do:**
 
 1. see where the **multiplication** is, including where it is hidden `[§2]`
-2. **umstellen und zusammenfassen** — nur Atome, $+$, $-$, $\cdot$ `[§3]`
+2. **rearrange and collect** — atoms only, $+$, $-$, $\cdot$ `[§3]`
 3. **identify** the four special things, and that they behave like letters `[§4]`
 4. know the **laws of each of the four** `[§5]`
 
 ---
 
-## 1 · Punkt zieht stärker als Strich
+## 1 · Multiplication pulls stronger than plus or minus
 
 Write down
 
@@ -54,445 +54,445 @@ $$x+1$$
 
 It says: **add 1 to $x$.**
 
-Now put a 3 in front.
+Now look at
 
 $$3x+1$$
 
-**It does not say that any more.** The 1 is now added to $3x$.
+We still see the $x+1$ in the expression, but in algebra speech it no longer says *add 1 to
+$x$*. The 1 is now added to $3x$.
 
-Here is what happened. **The 3 pulls at the $x$.** The $+$ is holding on to the $x$ as well —
-but it is weaker, so it lets go. The $x$ goes over to the 3.
+Here is what happened. **By convention the 3 pulls at the $x$ stronger than the $+$ does**,
+meaning we first work out $3x$ and then add 1. This is the rule everyone already knows:
 
-> **Punkt vor Strich heisst: das Mal zieht stärker als das Plus und das Minus.**
+> **Multiplication pulls stronger than plus and minus.**
 
 And therefore:
 
-> **In $3x+1$ gibt es kein $x+1$.** The marks are on the page, side by side. The thing is not
-> there.
+> **In $3x+1$ there is no $x+1$.**
 
 ---
 
-## 2 · Drei Zeichen, die Ärger machen
+## 2 · Three signs that cause confusion
 
-Zwei stehen nicht da und man muss sie trotzdem sehen. Das dritte steht da und hängt woanders,
-als man denkt.
+Two of them are not written down and you have to see them anyway. The third is written down
+and belongs somewhere other than you think.
 
-### Das Mal — es fehlt
+### The times sign is usually not written
 
 $$3x \;=\; 3\cdot x$$
 
-| | das versteckte Mal |
-|---|---|
-| $3x$ | zwischen Zahl und Buchstabe |
-| $3(x+1)$ | vor der Klammer |
-| $-x$ | **das Minus ist ein $\cdot(-1)$** |
-| $x^2$ | die Potenz **ist** ein Produkt: $x\cdot x$ |
-| $\dfrac{3x}{4}$ | der Bruchstrich **ist** ein $\cdot\frac14$ |
-| $\sqrt2\,\sqrt3$ | zwischen zwei Wurzeln |
-| $2\tfrac12$ | ⚠️ **kein Mal — das ist ein Plus.** Die einzige Ausnahme |
+| | the hidden times sign |
+| --- | --- |
+| $3x$ | between a number and a letter |
+| $3(x{+}1)$ | in front of a bracket |
+| $-x$ | the minus is a $(-1)\cdot$ |
+| $2\tfrac12$ | ⚠️ no times sign — this is a plus. The only exception, and we forbid this notation. |
 
-### Die Klammer um ein einzelnes Zeichen — sie fehlt
+### A bracket around a single sign is not written either
 
-> **Steht in einer Klammer nur eine Zahl oder nur ein Buchstabe, schreibt man sie nicht.**
+> **If a bracket contains only one number or only one letter, it is not written.**
 
-| geschrieben | gemeint |
+| written | meant |
 |---|---|
 | $3x$ | $3\cdot(x)$ |
 | $x^2$ | $(x)^2$ |
-| $-x^2$ | $-(x)^2$, also $-(x\cdot x)$ |
+| $-x^2$ | $-(x)^2$, that is $-(x\cdot x)$ |
 
-Das ist dieselbe Faulheit wie beim Mal, und sie ist genauso informativ: **steht keine Klammer
-da, dann ist drin genau ein Zeichen.** Deshalb ist in $3x^2$ nur das $x$ quadriert und nicht
-das $3x$ — die Klammer, die man nicht schreibt, geht nur um das $x$.
+This is the same laziness as with the times sign, and it is just as informative: **if no
+bracket is there, then exactly one sign is inside.** That is why in $3x^2$ only the $x$ is
+squared and not the $3x$ — the bracket nobody writes goes around the $x$ alone.
 
-⚠️ Und deshalb braucht $(x+1)^2$ ihre Klammer wirklich: da drin steht mehr als ein Zeichen.
+⚠️ And that is why $(x+1)^2$ really needs its bracket: there is more than one sign inside.
 
-### Das Minus — es hängt nach rechts
+### The minus belongs to what is on its right
 
-Das Minus ist das Zeichen, das am meisten Ärger macht, und es hat nur **eine** Eigenschaft:
+The minus is the sign that causes the most trouble, and it has only **one** property:
 
-> **Ein Minus gehört zu dem, was RECHTS davon steht** — und es ist ein $\cdot(-1)$.
+> **A minus belongs to whatever stands to its RIGHT** — and it is a $\cdot(-1)$.
 
-Mehr braucht man nicht. Alles Weitere ist dieselbe Regel an verschiedenen Stellen:
+Nothing else is needed. Everything further is the same rule in different places:
 
-| | woran es hängt | also |
+| | what it belongs to | so |
 |---|---|---|
-| $a-b$ | am $b$ | zwei Summanden: $a$ und $-b$ |
-| $a-(b+c)$ | an der **ganzen Klammer** | $(-1)\cdot(b+c)$ — es muss zu **jedem** Summanden hinein |
-| $-a^2$ | an der **Potenz** $a^2$ | $-(a\cdot a)$ — die Basis ist nur ein Zeichen `[oben]` |
-| $(-a)^2$ | am $a$, **innerhalb** der Klammer | $(-a)\cdot(-a)$ |
+| $a-b$ | to the $b$ | two summands: $a$ and $-b$ |
+| $a-(b+c)$ | to the **whole bracket** | $(-1)\cdot(b+c)$ — it must go in to **every** summand |
+| $-a^2$ | to the **power** $a^2$ | $-(a\cdot a)$ — the base is only one sign `[above]` |
+| $(-a)^2$ | to the $a$, **inside** the bracket | $(-a)\cdot(-a)$ |
 
-⚠️ **Die letzten zwei Zeilen sind derselbe Satz, zweimal angewendet** — und der ganze
-Unterschied zwischen $-9$ und $+9$. Es braucht dafür keine Extraregel für Minuszeichen; es
-braucht nur die Frage: **was steht rechts davon?**
+⚠️ **The last two rows are the same sentence applied twice** — and they are the whole
+difference between $-9$ and $+9$. No extra rule for minus signs is needed; only the question
+**what stands to its right?**
 
 ---
 
-## 3 · Umstellen und Zusammenfassen
+## 3 · Rearranging and collecting
 
-**Was hier vorkommt:** Zahlen, Buchstaben, $+$, $-$, $\cdot$ — **und Klammern.** Kein Bruch,
-keine Potenz, keine Wurzel. Die kommen in §4, und dann gilt alles von hier unverändert weiter.
+**What appears here:** numbers, letters, $+$, $-$, $\cdot$ — **and brackets.** No fraction, no
+power, no root. Those come in §4, and then everything from here still holds unchanged.
 
-### Die Klammer tut nur eines
+### The bracket does only one thing
 
-Sie ist die einzige der vier `[§4]`, die man schon aus der Primarschule kennt, und sie hat
-genau **eine** Aufgabe: **zusammenhalten**. Verschieden ist nur, ob überhaupt etwas gezogen
-hat:
+It is the only one of the four `[§4]` that everybody already knows from primary school, and it
+has exactly **one** job: **holding together**. All that differs is whether anything was pulling
+at all:
 
-| | die Klammer ist | |
+| | the bracket is | |
 |---|---|---|
-| $a\,(1+1+1)$ | **nötig** | ohne sie holt sich das Mal die erste $1$: $a\cdot1+1+1$ `[§1]` |
-| $17+(3+8)$ | **eine Hilfe** | es zieht nichts; sie sagt nur, was man zuerst rechnen will |
-| $a+(-b)$ | **Schreibweise** | $a+-b$ schreibt man nicht; gelesen ist es $a-b$ |
+| $a\,(1+1+1)$ | **necessary** | without it the times sign takes the first $1$: $a\cdot1+1+1$ `[§1]` |
+| $17+(3+8)$ | **a help** | nothing pulls; it only says what you want to work out first |
+| $a+(-b)$ | **notation** | one does not write $a+-b$; read, it is $a-b$ |
 
-> **Der Test ist immer derselbe: Klammer weg — steht dann noch dasselbe da?**
-> **Ja** → sie war eine Hilfe, man darf sie setzen und weglassen, wie man will.
-> **Nein** → sie war nötig, und dann gilt §5.1.
+> **The test is always the same: take the bracket away — does it still say the same thing?**
+> **Yes** → it was a help; you may put it in and leave it out as you like.
+> **No** → it was necessary, and then §5.1 applies.
 
-⚠️ *(For us.)* **Das ist die Antwort auf «hat die Klammer Doppelfunktion?» — nein.** Sie hält
-zusammen, immer. Ob man sie *braucht*, entscheidet nicht die Klammer, sondern **was daneben
-steht**. Deshalb darf sie hier auftreten, lange bevor §4 sie zu einem der vier ernennt: in §3
-wird sie nur so benutzt, wie die Klasse sie ohnehin schon benutzt.
+⚠️ *(For us.)* **This is the answer to "does the bracket have a double duty?" — no.** It holds
+together, always. Whether you *need* it is decided not by the bracket but by **what stands
+next to it**. That is why it may appear here, long before §4 appoints it one of the four: in §3
+it is used only the way the class already uses it.
 
-Was durch **dasselbe** Zeichen verbunden ist, darf beliebig vertauscht und umgruppiert werden:
+### Rearranging
+
+What is joined by the **same** sign may be swapped and regrouped freely:
 
 $$3x \cdot 2 = 2 \cdot 3x \qquad a+b+c = c+b+a \qquad 17+(3+8) = (17+3)+8$$
 
-**Nur umstellen, was auf derselben Ebene steht.** In $3x+1$ verbindet das $+$ die Teile $3x$
-und $1$ — das $x$ allein ist keiner davon, die 3 hat es `[§1]`.
+**Only rearrange what is on the same level.** In $3x+1$ the $+$ joins the parts $3x$ and $1$ —
+the $x$ on its own is not one of them, the 3 has it `[§1]`.
 
-**Umstellen braucht lauter Plus — also macht man sich lauter Plus.**
+**Rearranging needs all plus — so you make yourself all plus.**
 
-Die Regel, die die Klasse gelernt hat, heisst: *nur wenn überall ein Plus steht, darf ich
-umstellen.* ⚠️ **Sie ist richtig, und sie bleibt so stehen.** Nur ist sie oft nicht erfüllt:
+The rule the class has learned is: *only when there is a plus everywhere may I rearrange.*
+⚠️ **It is correct, and it stays exactly as it is.** It is simply often not satisfied:
 
-$$a+a-b+a \qquad \text{— das } -b \text{ steht nicht zwischen zwei Plus}$$
+$$a+a-b+a \qquad \text{— the } -b \text{ does not stand between two plus signs}$$
 
-Dann **stellt man die Voraussetzung her**, indem man jeden Summanden mit seinem Zeichen in eine
-Klammer nimmt:
+So you **make the precondition hold**, by putting each summand together with its sign into a
+bracket:
 
 $$a+a-b+a \;=\; a+a+(-b)+a$$
 
-Jetzt sind es vier Summanden, **alle mit $+$ verbunden**, und die Regel greift ohne Ausnahme:
+Now there are four summands, **all joined by $+$**, and the rule applies without exception:
 
 $$a+a+(-b)+a \;=\; a+a+a+(-b) \;=\; a+a+a-b \;=\; 3a-b$$
 
-⚠️ **Das ist keine neue Regel für Minuszeichen**, sondern ein Handgriff, der noch oft
-wiederkommt: **eine Regel hat eine Voraussetzung — ist sie nicht erfüllt, stellt man sie her.**
-Die Regel selbst wird nie angetastet. *(Später genauso mit $a=\frac a1$, wenn man Brüche
-addieren will `[§5.6]`.)*
+⚠️ **This is not a new rule for minus signs**, but a move that comes back often: **a rule has a
+precondition — if it is not satisfied, you make it hold.** The rule itself is never touched.
+*(Later exactly the same with $a=\frac a1$, when you want to add fractions `[§5.6]`.)*
 
-⚠️ **Und deshalb kann der häufigste Umstell-Fehler nicht passieren.** Wer $a+a-a+b$ schreibt,
-hat die **Buchstaben** vertauscht und die **Zeichen** stehen lassen. Wer zuerst $(-b)$
-hinschreibt, vertauscht ganze Summanden und kann das gar nicht mehr.
+⚠️ **And this is why the commonest rearranging mistake cannot happen.** Whoever writes
+$a+a-a+b$ has swapped the **letters** and left the **signs** standing. Whoever writes $(-b)$
+first is swapping whole summands and can no longer do that at all.
 
-⚠️ **Mit der Zeit lässt man den Zwischenschritt weg** und sieht $-b$ direkt als einen Summanden.
-Bis dahin ist er die sichere Variante — **und er ist nie falsch.**
+⚠️ **In time you drop the intermediate step** and see $-b$ directly as one summand. Until then
+it is the safe version — **and it is never wrong.**
 
-**Der letzte Schritt ist Ausklammern.**
+### Collecting
+
+**The last step is factoring out.**
 
 $$a+a+a \;=\; a\cdot1+a\cdot1+a\cdot1 \;=\; a\,(1+1+1) \;=\; 3a$$
 
-Deshalb wird $a+a$ zu $2a$ und **nicht** zu $a^2$: man klammert das $a$ aus, man multipliziert
-es nicht. *Zusammenfassen ist kein eigenes Gesetz — es ist §5.1 rückwärts.*
+That is why $a+a$ becomes $2a$ and **not** $a^2$: you factor the $a$ out, you do not multiply
+it. *Collecting is not a law of its own — it is §5.1 backwards.*
 
-> Das ist das **Kommutativgesetz** (vertauschen) und das **Assoziativgesetz** (umgruppieren).
-> Sie ändern nur, wo etwas steht — nie, was da ist.
+> That is the **commutative law** (swapping) and the **associative law** (regrouping).
+> They change only where something stands — never what is there.
 
 --> Drill
 
 ---
 
-## 4 · Die vier, die zusammenhalten
+## 4 · The four that hold together
 
-**Alles aus §3 gilt weiter, wenn an der Stelle eines Buchstabens etwas Grösseres steht** —
-solange das Grössere zusammenhält. Man setzt einfach einen Buchstaben dafür ein:
+**Everything from §3 still holds when something bigger stands in the place of a letter** — as
+long as the bigger thing holds together. You simply put a letter in for it:
 
-$$3\sqrt{x+1} \;+\; 2\sqrt{x+1} \qquad\text{ist}\qquad 3u+2u \;=\; 5u \qquad\text{mit } u=\sqrt{x+1}$$
+$$3\sqrt{x+1} \;+\; 2\sqrt{x+1} \qquad\text{is}\qquad 3u+2u \;=\; 5u \qquad\text{with } u=\sqrt{x+1}$$
 
-Nichts Neues zu können: **Buchstaben hinschreiben, §3 anwenden, Buchstaben zurücknehmen** —
-$5\sqrt{x+1}$. Und genau das ist es, was ein Spezialblock kann:
+Nothing new to be able to do: **write a letter, apply §3, take the letter back** —
+$5\sqrt{x+1}$. And that is exactly what a special block can do:
 
-> **Ein Spezialblock ist etwas, das man ÜBERALL durch einen Buchstaben ersetzen darf.**
+> **A special block is something you may replace by a letter ANYWHERE.**
 
-⚠️ Bei $3x$ geht das auch — aber nur dort, wo nichts stärker zieht `[§1]`. **Bei den vieren
-geht es immer**, egal wohin man sie stellt. Das ist der ganze Unterschied.
+⚠️ With $3x$ this works too — but only where nothing pulls harder `[§1]`. **With the four it
+always works**, wherever you put them. That is the whole difference.
 
-⚠️ Und deshalb ist $x^2+x^2$ gleich $2x^2$ und **nicht** $x^4$: es ist $u+u=2u$.
+⚠️ And that is why $x^2+x^2$ equals $2x^2$ and **not** $x^4$: it is $u+u=2u$.
 
 So when is the 3 unable to take the $x$ away? When one of **four** things is around it:
 
 $$3\,(x+1) \qquad 3\,\frac{x+1}{x} \qquad 3\,(x+1)^2 \qquad 3\sqrt{x+1}$$
 
-**Klammer · Bruch · Potenz · Wurzel.** In each of these the 1 is still added to the $x$. The 3
-still pulls — it just cannot get in. *Der 3er kriegt nicht das $x$, sondern das ganze $x+1$.*
+**Bracket · fraction · power · root.** In each of these the 1 is still added to the $x$. The 3
+still pulls — it just cannot get in. *The 3 does not get the $x$, it gets the whole $x+1$.*
 
-**Und so sehen die vier aus, wenn man wegdenkt, was drin steht:**
+**And this is what the four look like when you think away what is inside them.**
 
-**Rot sind die Zeichen, die den Block ausmachen. Die $\bigcirc$ sind seine Plätze.**
+**Red are the marks that make the block. The $\bigcirc$ are its slots.**
 
-| | Form | Plätze |
+| | form | slots |
 |---|---|---|
-| **Klammer** | ${\color{red}(}\bigcirc{\color{red})}$ | einer |
-| **Bruch** | ${\color{red}\dfrac{\color{black}\bigcirc}{\color{black}\bigcirc}}$ | zwei: oben und unten |
-| **Potenz** | ${\color{red}(}\bigcirc{\color{red})}^{\bigcirc}$ | zwei: Basis und Exponent |
-| **Wurzel** | ${\color{red}\sqrt{\color{black}\bigcirc}}$ | einer |
+| **bracket** | ${\color{red}(}\bigcirc{\color{red})}$ | one |
+| **fraction** | ${\color{red}\dfrac{\color{black}\bigcirc}{\color{black}\bigcirc}}$ | two: top and bottom |
+| **power** | ${\color{red}(}\bigcirc{\color{red})}^{\bigcirc}$ | two: base and exponent |
+| **root** | ${\color{red}\sqrt{\color{black}\bigcirc}}$ | one |
 
-**Das ist die ganze Liste.** In jedes $\bigcirc$ darf alles hinein — eine Zahl, ein Buchstabe,
-eine Summe, wieder ein Block. Und was drin steht, ist geschützt.
+**That is the whole list.** Into every $\bigcirc$ anything may go — a number, a letter, a sum,
+another block. And whatever is inside is protected.
 
-⚠️ **Auf dem Papier fehlt bei der Potenz die Klammer meistens**, weil in der Basis nur ein
-Zeichen steht `[§2]`. $x^2$ ist $(x)^2$, und $(x+1)^2$ schreibt seine Klammer, weil da mehr
-drin steht. **Es ist derselbe Block, einmal faul und einmal vollständig geschrieben.**
+⚠️ **On paper the power's bracket is usually missing**, because there is only one sign in the
+base `[§2]`. $x^2$ is $(x)^2$, and $(x+1)^2$ writes its bracket because there is more inside.
+**It is the same block, once written lazily and once written in full.**
 
-⚠️ **Die Potenz hat zwei Wände, aber nur eine kann man anmalen.** Die Klammer ist ein Zeichen.
-Das Hochstellen des Exponenten ist keins — es ist eine **Stelle**. Deshalb ist es die einzige
-Wand, die man beim Schreiben verlieren kann:
+⚠️ **The power has two walls, but only one of them can be painted.** The bracket is a mark. The
+raising of the exponent is not — it is a **place**. That is why it is the only wall you can
+lose while writing:
 
-$$x^{2y} \qquad\text{gegen}\qquad x^2y$$
+$$x^{2y} \qquad\text{against}\qquad x^2y$$
 
-Dieselben drei Zeichen; nur die Höhe des $y$ entscheidet. **Hier hilft nur: genau zeichnen.**
+The same three marks; only the height of the $y$ decides. **Here nothing helps but drawing it
+accurately.**
 
 **These four are the only things on the page that hold against a pull.** Recognising them is
 half of reading algebra; the other half is §5, what each of them can do.
 
 > Note: From now on when you look at an expression, observe where the *, +, - and the special blocks are. Of course special blocks can also contain +, *, and - and special blocks, but first just focus on the first level --> drill
 
-⚠️ **Zwei Zeichen, und sie bedeuten Verschiedenes.**
+⚠️ **Two marks, and they mean different things.**
 
-> $\bigcirc$ ist **ein Platz** in einem Block. $\square$ ist **ein ganzer Block**.
-> Der **Rahmen** zeigt, **wie weit** ein Block reicht.
+> $\bigcirc$ is **one slot** in a block. $\square$ is **a whole block**.
+> The **frame** shows **how far** a block reaches.
 
-**Ein ganzer Ausdruck, mit allen vieren drin:**
+**A whole expression, with all four of them in it:**
 
-$$3x \;-\; 2\underbrace{(x+1)}_{\text{Klammer}} \;+\; \underbrace{x^2}_{\text{Potenz}} \;-\; \underbrace{\frac{x-3}{x}}_{\text{Bruch}}\cdot\underbrace{\sqrt{x+4}}_{\text{Wurzel}}$$
+$$3x \;-\; 2\underbrace{(x+1)}_{\text{bracket}} \;+\; \underbrace{x^2}_{\text{power}} \;-\; \underbrace{\frac{x-3}{x}}_{\text{fraction}}\cdot\underbrace{\sqrt{x+4}}_{\text{root}}$$
 
-Rahmen drum, Inhalt raus — **jetzt sieht man beides auf einmal, die Grenze und die Plätze:**
+Frame around them, contents out — **now you see both at once, the boundary and the slots:**
 
 $$3x \;-\; 2\,{\color{gray}\boxed{\color{black}(\bigcirc)}} \;+\; {\color{gray}\boxed{\color{black}\bigcirc^{\bigcirc}}} \;-\; {\color{gray}\boxed{\color{black}\dfrac{\bigcirc}{\bigcirc}}}\cdot{\color{gray}\boxed{\color{black}\sqrt{\bigcirc}}}$$
 
-**Das ist die erste Ebene**, und sie ist auf einmal einfach: **vier Summanden**, und in ihnen
-nur Zahlen, Buchstaben, Mal — und vier Rahmen. Was *in* den Rahmen steht, ist die zweite Ebene
-und kommt später dran.
+**That is the first level**, and it is suddenly simple: **four summands**, and inside them only
+numbers, letters, times signs — and four frames. What stands *inside* the frames is the second
+level and comes later.
 
-Wer bloss zählen will, macht die Rahmen ganz zu:
+If you only want to count, close the frames completely:
 
-$$3x \;-\; 2\,\square \;+\; \square \;-\; \square\cdot\square \qquad\text{— vier Summanden.}$$
+$$3x \;-\; 2\,\square \;+\; \square \;-\; \square\cdot\square \qquad\text{— four summands.}$$
 
-⚠️ **Das $3x$ bekommt keinen Rahmen.** Es ist keiner der vier — es ist einfach eine Zahl mal
-einen Buchstaben. Es hält zwar auch zusammen, aber nur, **weil das Mal stärker zieht als das
-Plus** `[§1]`, nicht weil etwas drumherum steht. *Rahmen gibt es nur für die vier.*
+⚠️ **The $3x$ gets no frame.** It is none of the four — it is simply a number times a letter.
+It does hold together, but only **because the times sign pulls stronger than the plus** `[§1]`,
+not because something stands around it. *Frames exist only for the four.*
 
-**Noch einer, mit einem Block im Block:**
+**Another one, with a block inside a block:**
 
-$$\underbrace{\left(\frac{2x}{x-1}\right)^2}_{\text{Potenz}} \;-\; \underbrace{\sqrt x}_{\text{Wurzel}} \;+\; 4x \;-\; 5$$
+$$\underbrace{\left(\frac{2x}{x-1}\right)^2}_{\text{power}} \;-\; \underbrace{\sqrt x}_{\text{root}} \;+\; 4x \;-\; 5$$
 
 $${\color{gray}\boxed{\color{black}\left({\color{gray}\boxed{\color{black}\dfrac{\bigcirc}{\bigcirc}}}\right)^{\bigcirc}}} \;-\; {\color{gray}\boxed{\color{black}\sqrt{\bigcirc}}} \;+\; 4x \;-\; 5$$
 
-**Rahmen im Rahmen** — die Potenz hat einen Bruch als Basis. Zwei Blöcke ineinander, auf der
-ersten Ebene trotzdem **einer**: der äussere Rahmen ist ein einziger Summand.
+**A frame inside a frame** — the power has a fraction as its base. Two blocks inside one
+another, on the first level still **one**: the outer frame is a single summand.
 
-**Und der Fall, der am häufigsten vorkommt: zuoberst steht schon ein Block.**
+**And the case that comes up most often: a block is already the outermost thing.**
 
 $$\frac{5x-2(x+1)}{\sqrt{x+4}+1} \qquad\longrightarrow\qquad {\color{gray}\boxed{\color{black}\dfrac{\bigcirc}{\bigcirc}}}$$
 
-Die erste Ebene ist **ein einziger Rahmen** — der ganze Ausdruck ist ein Bruch. Kein Plus,
-kein Minus, kein Mal steht draussen. Alles Interessante ist eine Ebene tiefer, und dort macht
-man dasselbe noch einmal:
+The first level is **a single frame** — the whole expression is a fraction. No plus, no minus,
+no times sign stands outside. Everything interesting is one level deeper, and there you do the
+same thing again:
 
-$$\text{oben: } 5x-2(x+1) \;\to\; 5x-2\,{\color{gray}\boxed{\color{black}(\bigcirc)}} \qquad\qquad \text{unten: } \sqrt{x+4}+1 \;\to\; {\color{gray}\boxed{\color{black}\sqrt{\bigcirc}}}+1$$
+$$\text{top: } 5x-2(x+1) \;\to\; 5x-2\,{\color{gray}\boxed{\color{black}(\bigcirc)}} \qquad\qquad \text{bottom: } \sqrt{x+4}+1 \;\to\; {\color{gray}\boxed{\color{black}\sqrt{\bigcirc}}}+1$$
 
-Dasselbe bei einer Wurzel zuoberst: $\sqrt{\frac{2x}{x-1}-5}$ ist erste Ebene
-${\color{gray}\boxed{\color{black}\sqrt{\bigcirc}}}$, zweite Ebene
+The same with a root outermost: $\sqrt{\frac{2x}{x-1}-5}$ is first level
+${\color{gray}\boxed{\color{black}\sqrt{\bigcirc}}}$, second level
 ${\color{gray}\boxed{\color{black}\dfrac{\bigcirc}{\bigcirc}} - 5}$.
 
-⚠️ **Und das ist nicht nur Lesen — es sagt einem, was man überhaupt darf.** Wer zuoberst
-steht, bestimmt, welche Liste aus §5 zuoberst gilt: bei einem Bruch die Bruch-Liste `[§5.2]`,
-bei einer Wurzel die Wurzel-Liste `[§5.3]`. **Man sucht sich die Regel nicht aus — der
-äusserste Block sagt sie an.**
+⚠️ **And this is not only reading — it tells you what you are allowed to do at all.** Whatever
+stands outermost decides which list from §5 applies at the top: with a fraction the fraction
+list `[§5.2]`, with a root the root list `[§5.3]`. **You do not choose the rule — the outermost
+block announces it.**
 
-**Drei kleine zum Selberprobieren.** *Bestimme die Spezialblöcke.*
+**Three small ones to try yourself.** *Find the special blocks.*
 
 **1)** $-a+b$
 
-> **Keine.** Kein Klammer, kein Bruch, keine Potenz, keine Wurzel — **nichts zum Einrahmen.**
-> Zwei Summanden: $-a$ und $b$.
+> **None.** No bracket, no fraction, no power, no root — **nothing to frame.**
+> Two summands: $-a$ and $b$.
 
-⚠️ **«Keine» ist eine richtige Antwort**, und die erste, die man aushalten muss. Das Minus ist
-zwar ein verstecktes Mal `[§2]`, aber ein Mal ist kein Spezialblock.
+⚠️ **"None" is a correct answer**, and the first one you have to be able to live with. The
+minus is indeed a hidden times sign `[§2]`, but a times sign is not a special block.
 
 **2)** $a+a-b+a$
 
-> **Auch keine.** **Vier** Summanden: $a$, $a$, $-b$, $a$.
+> **Also none.** **Four** summands: $a$, $a$, $-b$, $a$.
 
-⚠️ Der dritte heisst $-b$, nicht $b$ — **das Minus reist mit** `[§3]`. Und $a+a+a$ zu $3a$
-zusammenfassen kommt später: **hier wird nur gelesen, noch nicht umgeformt.**
+⚠️ The third one is $-b$, not $b$ — the minus travels with it `[§3]`. And collecting $a+a+a$
+into $3a$ comes later: **here we are only reading, not yet transforming.**
 
 **3)** $-a^2$
 
-> **Einer:** die Potenz $a^2$. Das Minus steht **davor**, nicht drin.
+> **One:** the power $a^2$. The minus stands **in front of it**, not inside.
 
-$$-a^2 \;=\; -{\color{gray}\boxed{\color{black}\bigcirc^{\bigcirc}}} \qquad\text{also}\qquad -(a)^2 \;=\; -(a\cdot a)$$
+$$-a^2 \;=\; -{\color{gray}\boxed{\color{black}\bigcirc^{\bigcirc}}} \qquad\text{that is}\qquad -(a)^2 \;=\; -(a\cdot a)$$
 
-Die Klammer um die Basis fehlt, weil da nur **ein** Zeichen steht `[§2]` — und genau deshalb
-gehört das $a$ zur Potenz und das Minus nicht. Der Unterschied ist kein Kleingedrucktes:
+The bracket around the base is missing because there is only **one** sign in it `[§2]` — and
+exactly for that reason the $a$ belongs to the power and the minus does not. The difference is
+not small print:
 
-| | Basis | mit $a=3$ |
+| | base | with $a=3$ |
 |---|---|---|
-| $-a^2 \;=\; -{\color{gray}\boxed{\color{black}\bigcirc^{\bigcirc}}}$ | $a$ — ein Zeichen, keine Klammer nötig | $-9$ |
-| $(-a)^2 \;=\; {\color{gray}\boxed{\color{black}(\bigcirc)^{\bigcirc}}}$ | $-a$ — **zwei** Zeichen, Klammer **muss** geschrieben werden | $+9$ |
+| $-a^2 \;=\; -{\color{gray}\boxed{\color{black}\bigcirc^{\bigcirc}}}$ | $a$ — one sign, no bracket needed | $-9$ |
+| $(-a)^2 \;=\; {\color{gray}\boxed{\color{black}(\bigcirc)^{\bigcirc}}}$ | $-a$ — **two** signs, the bracket **must** be written | $+9$ |
 
-> **Die Übung ist immer dieselbe: Kästchen malen, dann zählen, was das $+$ und das $-$
-> verbinden — und wenn nur ein Kästchen dasteht, eine Ebene tiefer gehen.** --> Drill
+> **The exercise is always the same: draw the frames, then count what the $+$ and the $-$
+> join — and if only one frame is there, go one level deeper.** --> Drill
 
 ⚠️ *(For us.)* In the app the boxes are not needed — the four get a **grey background** in the
 real expression instead, which says the same thing without hiding anything. KaTeX does this
 with `\colorbox{#eee}{$\ldots$}`, or more simply with a CSS class on the rendered span. Here in
 the document, `\underbrace` is the portable version.
 
-
 ---
 
-## 5 · Was jede der vier kann
+## 5 · What each of the four can do
 
-⚠️ **Bis hierher war jeder Block ein Buchstabe** `[§4]`, und das reichte für alles Umstellen und
-Zusammenfassen. Jetzt reicht es nicht mehr: **ein Buchstabe zeigt nur, was man von AUSSEN darf.**
-$\sqrt{ab}=\sqrt a\sqrt b$ sieht man einem $u$ nicht an. **Ab hier wird der Block geöffnet**,
-und jeder hat seine eigenen Regeln.
+⚠️ **Up to here every block was a letter** `[§4]`, and that was enough for all rearranging and
+collecting. Now it is no longer enough: **a letter shows only what you may do from the
+OUTSIDE.** You cannot see $\sqrt{ab}=\sqrt a\sqrt b$ in a $u$. **From here the block is
+opened**, and each one has its own rules.
 
-Four lists. **Das ist der Stoff.**
+Four lists. **That is the syllabus.**
 
-Jede Liste endet mit ihren **Bedingungen**, denn manche Gesetze gelten nur manchmal. Und das
-ist einfacher, als es aussieht:
+Every list ends with its **conditions**, because some laws hold only sometimes. And that is
+simpler than it looks:
 
-> **In der ganzen Algebra gibt es nur zwei verbotene Dinge:**
-> **durch $0$ teilen — und die Wurzel aus einer negativen Zahl.**
-> **Jede Bedingung unten ist eines von diesen beiden.**
+> **In the whole of algebra there are only two forbidden things:**
+> **dividing by $0$ — and the root of a negative number.**
+> **Every condition below is one of these two.**
 
-### 5.1 · Die Klammer — $(\bigcirc)$
+### 5.1 · The bracket — $(\bigcirc)$
 
-Sie hält nur zusammen und tut sonst nichts — deshalb darf man sie setzen und weglassen, und
-deshalb ist ihre ganze Liste eine Liste über **Hinein und Hinaus**.
+It only holds together and does nothing else — which is why you may put it in and leave it out,
+and why its whole list is a list about **in and out**.
 
-**Ausmultiplizieren sind ZWEI Schritte, nicht einer**
+**Expanding is TWO steps, not one**
 
-> **1. Was vor der Klammer steht, geht hinein — und zu JEDEM Summanden. Die Klammer BLEIBT.**
-> **2. Steht nichts mehr davor, darf die Klammer weg.**
+> **1. Whatever stands in front of the bracket goes in — and to EVERY summand. The bracket STAYS.**
+> **2. Once nothing stands in front any more, the bracket may go.**
 
 $$a(b+c) \;\xrightarrow{\ 1.\ }\; (ab+ac) \;\xrightarrow{\ 2.\ }\; ab+ac$$
 
-Schritt 2 hat eine einzige Frage — **steht noch etwas davor?**
+Step 2 has a single question — **is anything still in front?**
 
-| vor der Klammer | | |
+| in front of the bracket | | |
 |---|---|---|
-| **nichts, oder ein $+$** | Klammer darf **weg** | $a+(b+c) = a+b+c$ |
-| **ein $-$** | ein Faktor $-1$ `[§2]` — **erst hinein** | $a-(b+c) = a-b-c$ |
-| **eine Zahl, ein Buchstabe** | ein Faktor — **erst hinein** | $3(b+c) = 3b+3c$ |
+| **nothing, or a $+$** | the bracket may **go** | $a+(b+c) = a+b+c$ |
+| **a $-$** | a factor $-1$ `[§2]` — **in first** | $a-(b+c) = a-b-c$ |
+| **a number, a letter** | a factor — **in first** | $3(b+c) = 3b+3c$ |
 
-**Und jetzt das Beispiel, für das sich der ganze Aufwand lohnt.** Zweimal Schritt 1, und erst
-dann Schritt 2:
+**And now the example the whole effort is worth it for.** Step 1 twice, and only then step 2:
 
 $$2x-2(x+1) \;\xrightarrow{\ 1.\ }\; 2x-(2x+2) \;\xrightarrow{\ 1.\ }\; 2x+(-2x-2) \;\xrightarrow{\ 2.\ }\; 2x-2x-2$$
 
-⚠️ **Der häufigste Fehler der Mittelstufe kann so gar nicht mehr passieren.** Wer $2x-2x+2$
-schreibt, hat die Klammer in Schritt 1 fallen lassen — und in Schritt 1 fällt sie nie.
+⚠️ **The commonest mistake of the middle years cannot happen this way.** Whoever writes
+$2x-2x+2$ has dropped the bracket in step 1 — and in step 1 it never drops.
 
-> **Ein Block bleibt ein Block, solange man an seinem Inhalt arbeitet. Ihn wegzunehmen ist ein
-> eigener Schritt mit einer eigenen Frage.**
+> **A block stays a block as long as you are working on its contents. Taking it away is a
+> separate step with a question of its own.**
 
-⚠️ Steht in der Klammer ein **Produkt** statt einer Summe, gibt es nichts zu verteilen und die
-Klammer fällt einfach weg: $a\cdot(b\cdot c) = a\cdot b\cdot c$.
+⚠️ If a **product** stands in the bracket instead of a sum, there is nothing to distribute and
+the bracket simply falls away: $a\cdot(b\cdot c) = a\cdot b\cdot c$.
 
-**Zwei Klammern**
+**Two brackets**
 
-$$(a+b)(c+d) = ac+ad+bc+bd \qquad\text{— jeder Summand zu jedem}$$
+$$(a+b)(c+d) = ac+ad+bc+bd \qquad\text{— every summand to every summand}$$
 
-**Die binomischen Formeln** — dasselbe, nur auswendig
+**The binomial formulas** — the same thing, only memorised
 
 $$(a+b)^2 = a^2+2ab+b^2 \qquad (a-b)^2 = a^2-2ab+b^2 \qquad (a+b)(a-b) = a^2-b^2$$
 
-**Ausklammern** — derselbe Weg zurück
+**Factoring out** — the same way back
 
 $$ab+ac = a(b+c) \qquad 3x+3 = 3(x+1)$$
 
-⚠️ **Was man NICHT lernen muss: «hier braucht es jetzt eine Klammer».** In anderen Darstellungen
-steht an dieser Stelle eine Warnung — *umformen kann ändern, was ein Teil ist, und dann braucht
-es plötzlich eine Klammer, die es vorher nicht brauchte.* Das stimmt, und mit den zwei Schritten
-oben **kommt der Fall nicht vor**: die Klammer war nie weg, also muss man sie nie
-zurückholen. **Eine Regel weniger, weil eine Reihenfolge festgelegt ist.**
+⚠️ **What you do NOT have to learn: "a bracket is needed here now".** In other presentations a
+warning stands at this point — *transforming can change what a part is, and then a bracket is
+suddenly needed that was not needed before.* That is true, and with the two steps above **the
+case does not arise**: the bracket was never gone, so it never has to be brought back. **One
+rule fewer, because an order has been fixed.**
 
-**Bedingungen: keine.** Alles oben gilt für alle Zahlen, immer. Die Klammer teilt nicht und
-zieht keine Wurzel — es gibt also nichts, was verboten sein könnte.
+**Conditions: none.** Everything above holds for all numbers, always. The bracket does not
+divide and does not take a root — so there is nothing that could be forbidden.
 
-> Alles hier ist das **Distributivgesetz**. Hinein heisst **ausmultiplizieren**, hinaus heisst
-> **ausklammern**.
+> Everything here is the **distributive law**. Going in is called **expanding**, coming out is
+> called **factoring out**.
 
-### 5.2 · Der Bruch — $\dfrac{\bigcirc}{\bigcirc}$
+### 5.2 · The fraction — $\dfrac{\bigcirc}{\bigcirc}$
 
-**Kürzen** — und nur das ist der Grund, warum §1 überhaupt wichtig ist:
+**Cancelling** — and this alone is the reason §1 matters at all:
 
 $$\frac{a\cdot k}{b\cdot k} = \frac ab \qquad\qquad \frac{3x}{x} = 3 \qquad\qquad \frac{x+1}{x} \neq 1+1$$
 
-- oben in $\frac{3x}{x}$ steht ein **Mal** — das $x$ ist ein **Faktor**
-- oben in $\frac{x+1}{x}$ steht ein **Plus** — das $x$ ist ein **Summand**
-- **Kürzen streicht Faktoren. Kein Faktor, kein Kürzen.**
+- on top in $\frac{3x}{x}$ there is a **times sign** — the $x$ is a **factor**
+- on top in $\frac{x+1}{x}$ there is a **plus** — the $x$ is a **summand**
+- **Cancelling deletes factors. No factor, no cancelling.**
 
-⚠️ Nichts am Buchstaben $x$ unterscheidet die beiden. Das Zeichen über dem Bruchstrich
-unterscheidet sie sofort.
+⚠️ Nothing about the letter $x$ tells the two apart. The sign above the fraction bar tells them
+apart instantly.
 
-**Erweitern**
+**Scaling up**
 
 $$\frac ab = \frac{a\cdot k}{b\cdot k}$$
 
-**Addieren**
+**Adding**
 
 $$\frac ac+\frac bc = \frac{a+b}{c} \qquad\qquad \frac ab+\frac cd = \frac{ad+bc}{bd}$$
 
-**Multiplizieren und dividieren**
+**Multiplying and dividing**
 
 $$\frac ab\cdot\frac cd = \frac{ac}{bd} \qquad\qquad \frac ab:\frac cd = \frac ab\cdot\frac dc$$
 
-**Auseinandernehmen — oben ja, unten nein**
+**Taking apart — on top yes, underneath no**
 
 $$\frac{a+b}{c} = \frac ac+\frac bc \qquad\qquad \frac{c}{a+b} \neq \frac ca+\frac cb$$
 
-**Bedingungen — alle vom selben Verbot: kein Nenner darf $0$ sein.**
+**Conditions — all from the same prohibition: no denominator may be $0$.**
 
 | | |
 |---|---|
-| $\dfrac ab$ | $b \neq 0$ — sonst gibt es den Bruch gar nicht |
-| kürzen und erweitern mit $k$ | $k \neq 0$ — man darf nicht mit $0$ streichen |
-| $\dfrac ab : \dfrac cd$ | $c \neq 0$ — ⚠️ **neu**, denn das $c$ stand vorher oben |
-| $\dfrac{c}{a+b}$ | $a+b \neq 0$ — nicht $a\neq0$ und $b\neq0$ |
+| $\dfrac ab$ | $b \neq 0$ — otherwise the fraction does not exist at all |
+| cancelling and scaling with $k$ | $k \neq 0$ — you may not cancel with $0$ |
+| $\dfrac ab : \dfrac cd$ | $c \neq 0$ — ⚠️ **new**, because the $c$ was on top before |
+| $\dfrac{c}{a+b}$ | $a+b \neq 0$ — not $a\neq0$ and $b\neq0$ |
 
-### 5.3 · Die Wurzel — $\sqrt{\bigcirc}$
+### 5.3 · The root — $\sqrt{\bigcirc}$
 
-> $\sqrt a$ ist die **nicht-negative** Zahl, deren Quadrat $a$ ist.
-> $\sqrt 9 = 3$, nicht $-3$. **Eine Wurzel gibt nie etwas Negatives zurück.**
+> $\sqrt a$ is the **non-negative** number whose square is $a$.
+> $\sqrt 9 = 3$, not $-3$. **A root never gives back anything negative.**
 
 $$\sqrt{ab} = \sqrt a\,\sqrt b \qquad \sqrt{\frac ab} = \frac{\sqrt a}{\sqrt b} \qquad \sqrt{a^2} = a$$
 
-**Und was nicht geht:**
+**And what does not work:**
 
 $$\sqrt{a+b} \neq \sqrt a+\sqrt b$$
 
-**Bedingungen — hier drohen beide Verbote auf einmal:**
+**Conditions — here both prohibitions threaten at once:**
 
 | | |
 |---|---|
 | $\sqrt a$ | $a \geq 0$ |
-| $\sqrt{\frac ab}$ | $a \geq 0$ **und** $b > 0$ — nicht nur $\neq 0$ |
-| $\sqrt{a^2} = a$ | **nur für $a\geq0$.** $\sqrt{(-3)^2} = \sqrt9 = 3$, nicht $-3$ |
+| $\sqrt{\frac ab}$ | $a \geq 0$ **and** $b > 0$ — not merely $\neq 0$ |
+| $\sqrt{a^2} = a$ | **only for $a\geq0$.** $\sqrt{(-3)^2} = \sqrt9 = 3$, not $-3$ |
 
-⚠️ **Und die eine, die man sich nicht denken kann.** $\sqrt{ab} = \sqrt a\sqrt b$ verlangt
-$a\geq0$ **und** $b\geq0$ — obwohl links $a\cdot b \geq 0$ genügen würde:
+⚠️ **And the one you cannot reason your way to.** $\sqrt{ab} = \sqrt a\sqrt b$ requires
+$a\geq0$ **and** $b\geq0$ — although on the left $a\cdot b \geq 0$ would be enough:
 
-$$\sqrt{(-2)(-3)} = \sqrt6 \quad\text{geht.}\qquad \sqrt{-2}\,\sqrt{-3} \quad\text{geht nicht.}$$
+$$\sqrt{(-2)(-3)} = \sqrt6 \quad\text{works.}\qquad \sqrt{-2}\,\sqrt{-3} \quad\text{does not.}$$
 
-**Auseinandernehmen macht die Bedingung strenger.** Das ist der einzige Ort in diesem
-Dokument, wo ein Schritt erlaubt aussieht und trotzdem verboten ist.
+**Taking apart makes the condition stricter.** This is the only place in this document where a
+step looks allowed and is forbidden anyway.
 
-### 5.4 · Die Potenz — $(\bigcirc)^{\bigcirc}$
+### 5.4 · The power — $(\bigcirc)^{\bigcirc}$
 
 $$a^m\cdot a^n = a^{m+n} \qquad \frac{a^m}{a^n} = a^{m-n} \qquad (a^m)^n = a^{m\cdot n}$$
 
@@ -500,98 +500,98 @@ $$(ab)^n = a^n b^n \qquad \left(\frac ab\right)^n = \frac{a^n}{b^n}$$
 
 $$a^0 = 1 \qquad a^{-n} = \frac1{a^n}$$
 
-**Und was nicht geht:**
+**And what does not work:**
 
 $$(a+b)^2 \neq a^2+b^2$$
 
-⚠️ Für $(a+b)^2$ gibt es kein Potenzgesetz — dafür gibt es die binomische Formel `[§5.1]`.
+⚠️ For $(a+b)^2$ there is no power law — for that there is the binomial formula `[§5.1]`.
 
-**Und jetzt der Rückblick auf §5.3:**
+**And now the look back at §5.3:**
 
 $$\sqrt a = a^{1/2} \qquad \sqrt[n]{a} = a^{1/n}$$
 
-**Die Wurzel ist der Exponent $\frac12$** — und damit sind die drei Wurzelgesetze gar keine
-eigenen Gesetze, sondern drei Zeilen von oben:
+**A root is the exponent $\frac12$** — and with that the three root laws are not laws of their
+own at all, but three lines from above:
 
-| aus §5.3 | ist | mit |
+| from §5.3 | is | with |
 |---|---|---|
 | $\sqrt{ab} = \sqrt a\sqrt b$ | $(ab)^n = a^nb^n$ | $n=\frac12$ |
 | $\sqrt{\frac ab} = \frac{\sqrt a}{\sqrt b}$ | $\left(\frac ab\right)^n = \frac{a^n}{b^n}$ | $n=\frac12$ |
 | $\sqrt{a^2} = a$ | $(a^m)^n = a^{mn}$ | $m=2,\; n=\frac12$ |
 
-**Bedingungen — zwei Sätze, und beide sagen nur, welches der zwei Verbote droht:**
+**Conditions — two sentences, and both only say which of the two prohibitions is threatening:**
 
-> **Sobald ein Exponent negativ ist, darf die Basis nicht $0$ sein** — denn $a^{-n}$ *ist* ein
-> Bruch, und $0$ darf nicht unten stehen.
-> **Sobald ein Exponent ein Bruch ist, darf die Basis nicht negativ sein** — denn ein Bruch im
-> Exponenten *ist* eine Wurzel `[§5.3]`.
+> **As soon as an exponent is negative, the base may not be $0$** — because $a^{-n}$ *is* a
+> fraction, and $0$ may not stand underneath.
+> **As soon as an exponent is a fraction, the base may not be negative** — because a fraction
+> in the exponent *is* a root `[§5.3]`.
 
-Damit sind alle Fälle abgedeckt: $a^0=1$, $a^{-n}=\frac1{a^n}$ und $\frac{a^m}{a^n}=a^{m-n}$
-brauchen $a\neq0$; $(a^m)^n = a^{mn}$ und $(ab)^n=a^nb^n$ brauchen $a,b\geq0$, sobald ein
-Exponent kein ganzes ist.
+That covers every case: $a^0=1$, $a^{-n}=\frac1{a^n}$ and $\frac{a^m}{a^n}=a^{m-n}$ need
+$a\neq0$; $(a^m)^n = a^{mn}$ and $(ab)^n=a^nb^n$ need $a,b\geq0$ as soon as one exponent is not
+a whole number.
 
-⚠️ **Die dritte Zeile der Tabelle ist genau der Fall, in dem das Gesetz kippt** — und die
-Bedingung dazu kennen sie schon aus §5.3:
+⚠️ **The third row of the table is exactly the case where the law tips over** — and they
+already know the condition for it from §5.3:
 
-$$\big((-3)^2\big)^{1/2} = \sqrt9 = 3 \qquad\text{aber}\qquad (-3)^{2\cdot\frac12} = -3$$
+$$\big((-3)^2\big)^{1/2} = \sqrt9 = 3 \qquad\text{but}\qquad (-3)^{2\cdot\frac12} = -3$$
 
-Deshalb steht bei $\sqrt{a^2}=a$ die Bedingung $a\geq0$ — nicht als Schikane, sondern weil
-$(a^m)^n = a^{mn}$ sie braucht.
+That is why $\sqrt{a^2}=a$ carries the condition $a\geq0$ — not as harassment, but because
+$(a^m)^n = a^{mn}$ needs it.
 
-### 5.5 · Bedingungen verschwinden nicht
+### 5.5 · Conditions do not disappear
 
-Die Bedingung liest man **am Schritt** ab, nicht am Resultat:
+You read the condition off **the step**, not off the result:
 
 $$\frac{x(x-1)}{x} = x-1$$
 
-Rechts steht $x-1$, und da ist nichts Verbotenes zu sehen. Trotzdem gilt die Zeile nur für
-$x \neq 0$ — **das $x$, das man gekürzt hat, ist weg, seine Bedingung nicht.**
+On the right stands $x-1$, and there is nothing forbidden to be seen. The line nevertheless
+holds only for $x \neq 0$ — **the $x$ you cancelled is gone, its condition is not.**
 
-Dasselbe bei $\frac ab : \frac cd$: das $c$ wandert nach unten, und ab da darf es nicht $0$
-sein. Und bei $\sqrt{ab}=\sqrt a\sqrt b$, wo aus einer Bedingung zwei werden.
+The same with $\frac ab : \frac cd$: the $c$ moves underneath, and from then on it may not be
+$0$. And with $\sqrt{ab}=\sqrt a\sqrt b$, where one condition becomes two.
 
-> **Wer etwas wegkürzt, wegteilt oder auseinandernimmt, muss die Bedingung mitnehmen.**
+> **Whoever cancels, divides or takes something apart has to take the condition along.**
 
-### 5.6 · Blöcke machen
+### 5.6 · Making blocks
 
-Bisher haben wir Blöcke **gesucht**. Man darf sie auch **machen** — und der Grund steht in den
-fünf Listen oben:
+Up to now we have **looked for** blocks. You may also **make** them — and the reason stands in
+the lists above:
 
-> **Jeder Block hat seine eigene Liste. Man macht sich den Block, dessen Liste man braucht.**
+> **Every block has its own list. You make yourself the block whose list you need.**
 
-**Eine Klammer setzen, um Nachbarn zusammenzunehmen.** Erlaubt ist das, weil Umstellen erlaubt
-ist `[§3]`:
+**Putting in a bracket to take neighbours together.** This is allowed because rearranging is
+allowed `[§3]`:
 
 $$3x+2+5x \;=\; (3x+5x)+2 \;=\; 8x+2$$
 
-**Etwas als Block schreiben, das keiner war.** Ein $a$ ist auch ein Bruch und auch eine Potenz:
+**Writing something as a block that was not one.** An $a$ is also a fraction and also a power:
 
 $$a \;=\; \frac a1 \qquad\qquad a \;=\; a^1$$
 
-Allein sieht das nach nichts aus. Es ist der Schlüssel, sobald man eine Liste braucht, die noch
-nicht gilt:
+On its own that looks like nothing. It is the key as soon as you need a list that does not yet
+apply:
 
-$$a+\frac bc \;=\; \frac a1+\frac bc \;=\; \frac{ac+b}{c} \qquad\text{— erst jetzt gilt §5.2}$$
+$$a+\frac bc \;=\; \frac a1+\frac bc \;=\; \frac{ac+b}{c} \qquad\text{— only now does §5.2 apply}$$
 
-$$a\cdot a^3 \;=\; a^1\cdot a^3 \;=\; a^4 \qquad\text{— erst jetzt gilt §5.4}$$
+$$a\cdot a^3 \;=\; a^1\cdot a^3 \;=\; a^4 \qquad\text{— only now does §5.4 apply}$$
 
-⚠️ **Und der Fall, wo es NICHT nötig ist, obwohl es so aussieht.** $a+a-b+a$ verlangt keine
-Klammer und keinen gemachten Block — dort muss man nur das Minus richtig lesen `[§3]`.
-**Zuerst richtig lesen, erst dann etwas bauen.**
+⚠️ **And the case where it is NOT necessary, although it looks as if it were.** $a+a-b+a$ needs
+no bracket and no made block — there you only have to read the minus correctly `[§3]`.
+**First read correctly, only then build something.**
 
 ---
 
-## 6 · Unsere Wörter
+## 6 · Our words
 
 *(For us. These never reach the class.)*
 
-- **Block** — one of the things a sign joins. In class always said with the name it already
-  has: *Summand*, *Faktor*, *Basis*, *Zähler*.
-- **Wand** — what the four in §4 have in common. In class they are simply listed. We need the
+- **block** — one of the things a sign joins. In class always said with the name it already
+  has: *summand*, *factor*, *base*, *numerator*.
+- **wall** — what the four in §4 have in common. In class they are simply listed. We need the
   word because the data layer and the drill generator have to say *the parts of a split* and
   *the thing that resists a pull* without enumerating four cases every time.
 
-⚠️ **What we give up by not teaching *Wand*:** a fifth resister — $|x|$, $f(\dots)$ — arrives
+⚠️ **What we give up by not teaching *wall*:** a fifth resister — $|x|$, $f(\dots)$ — arrives
 as a new fact instead of an instance. For a class that meets exactly these four, that is the
 right trade.
 
@@ -604,12 +604,16 @@ move seen four times. The class gets four lists. That is deliberate — see §0.
 
 1. Does the pull picture reach the **equation**? Solving is where they spend most of their
    time and the likeliest place for it to break. §5.5 is the half that already reaches it —
-   *Definitionsbereich* is exactly "die Bedingung mitnehmen".
-2. §5.1 has both *ausmultiplizieren* and the binomischen Formeln. Are the formulas worth
-   memorising separately, or is $(a+b)(c+d)$ enough and the rest arithmetic?
-3. ~~Which of Wurzel/Potenz comes first?~~ **Decided: Wurzel first, Potenz points back.** What
-   is left open is whether the Rückblick table in §5.4 is a *lesson* or only a *remark* — it
+   the *domain of definition* is exactly "take the condition along".
+2. §5.1 has both expanding and the binomial formulas. Are the formulas worth memorising
+   separately, or is $(a+b)(c+d)$ enough and the rest arithmetic?
+3. ~~Which of root/power comes first?~~ **Decided: root first, power points back.** What is
+   left open is whether the look-back table in §5.4 is a *lesson* or only a *remark* — it
    retro-compresses three laws they have already memorised, and that only pays if they are
    made to notice.
-4. Is §1 the opening screen of the **app**? Show $3(x+1)$ and $3x+1$, ask only *wo ist das
+4. Is §1 the opening screen of the **app**? Show $3(x+1)$ and $3x+1$, ask only *where is the
    $x+1$?*, and the whole idea is tested in one question.
+5. ⚠️ **The German version is now downstream of this one.** Terms that were chosen for German
+   and translate awkwardly: *erweitern* → "scaling up" (English has no clean partner for
+   "cancelling"), *ausmultiplizieren/ausklammern* → "expanding / factoring out". Decide whether
+   the German file is a translation of this one or a sibling with its own wording.
