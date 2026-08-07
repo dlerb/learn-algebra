@@ -60,9 +60,38 @@ $-3^2$, so the rule belongs in Part 2 — *the minus reaches as far as the next 
 where it can be justified on the spot. **Do not state it earlier; it would read as arbitrary
 and the class sniffs that out.**
 
-**What is derived rather than asserted** (each was a correction the author caught):
-$-1\cdot4 = -4$ comes from continuing the pattern $3\cdot4,\,2\cdot4,\,1\cdot4,\,0\cdot4$;
-the sign rule is then *mirroring twice brings you back*, not a fact to memorise.
+⚠️ **§4 WAS CIRCULAR AND WAS REBUILT (`d08aa78`).** It declared repeated adding unusable, then
+used a counting-down pattern — *which is repeated adding* — to fix the negative case, and then
+asserted *stretching by $0$ collapses everything* as if the stretch had produced $0\cdot4=0$.
+It had not.
+
+**Checked, not guessed:** a dilation with scale factor $k$ is *defined* as the map that
+**multiplies every distance by $k$** ([cuemath](https://www.cuemath.com/geometry/dilation-geometry/)),
+so stretching in its official sense **presupposes multiplication and cannot define it**. The
+genuinely non-circular geometric product is **Descartes'** — a unit segment plus similar
+triangles — which is far outside a nutshell. **So the stretch is a PICTURE, not a foundation**,
+and §4 now says so.
+
+**The rebuilt chain needs neither associativity nor commutativity:**
+
+| | |
+|---|---|
+| $3\cdot4$ · $0\cdot4$ · $4\cdot0$ | **definition**: repeated adding; *zero copies* never leaves $0$ |
+| $3\cdot-4$ | **definition**: $-4+-4+-4$, worked out with (3) **alone** |
+| $-3\cdot4$ | definition **runs out** — you cannot lay a distance out $-3$ times. The **pattern** forces $-12$ |
+
+Only a negative *first* factor needs the pattern. ⚠️ **"Three times as far" is now explicitly
+shorthand for "lay the distance out three times"** — read the other way it uses multiplying to
+explain multiplying. $1.2$ times as far = cut into ten parts, lay out twelve, so the account is
+complete and non-circular **for every number Part 0 meets** (whole and rational; irrational is
+out of scope *by choice*). The second Def is labelled a **choice**: *we are not discovering what
+$-3\cdot4$ means, we are choosing the only reading that keeps everything above true.*
+
+⚠️ **§6 IS NOW FOUR OBSERVATIONS**, because Part 1 rests on the two new ones: **order does not
+matter** and **grouping does not matter**. Shown on the line for $+$; ⚠️ **the line CANNOT show
+commutativity for $\cdot$** — the *rectangle of dots* does that instead, and it only counts
+whole numbers, so for $\frac13$ and $-4$ the laws are **carried over, not shown** (the same move
+as the negative factor in §4, and the file says so).
 
 **Both broken intuitions are named where they break**: *adding no longer always makes things
 bigger* (at $5+-3$), and *taking away runs out when what you take away is negative* (before the
