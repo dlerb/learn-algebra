@@ -101,6 +101,12 @@ The picture is worth keeping because it survives where the counting does not. *F
 >**Note:** For $1.2$ times as far, cut the distance from $0$ to $4$ into **ten equal parts** and lay out **twelve** of them. Any fraction works the same way: $\frac pq$ times as far means cut into $q$ parts and lay out $p$.
 >$$1.2\cdot 4 = 4.8 \qquad\qquad \tfrac13\cdot 12 = 4$$
 
+And here an old habit breaks:
+
+$$\tfrac12\cdot 4 = 2$$
+
+which is *smaller* than $4$. Multiplying does not always make things bigger. A factor bigger than $1$ stretches out, a factor between $0$ and $1$ pulls in, and $1$ itself changes nothing. That habit came from the days when every factor was a whole number — from multiplying being repeated adding. The same thing happened to adding and to taking away in (3).
+
 #### A negative factor
 
 Here the definition genuinely runs out. You cannot lay a distance out $-3$ times. So write down what is already fixed and see whether there is any room left. Each step down in the first factor takes away one $4$:
