@@ -205,6 +205,10 @@ For adding you can see it on the line. Two moves, one of $5$ and one of $3$: it 
 
 For multiplying the line does *not* show it — $3\cdot4$ lays the $4$-distance out three times, $4\cdot3$ lays the $3$-distance out four times, and nothing about the line makes those obviously equal. What shows it is a **rectangle of dots**: three rows of four is four columns of three, one and the same rectangle counted two ways.
 
+>**Note:** The rectangle can also be written out. Split each $4$ into $3+1$ and sort the pieces:
+>$$3\cdot4 \;=\; 4+4+4 \;=\; (3{+}1)+(3{+}1)+(3{+}1) \;=\; \underbrace{3+3+3}_{} \;+\; \underbrace{1+1+1}_{=\;3} \;=\; 3+3+3+3 \;=\; 4\cdot3$$
+>This is the same rectangle read down the columns instead of across the rows. And notice what the sorting step needs: *swapping and regrouping summands*. **Multiplication can be swapped because addition can** — the second rests on the first.
+
 >**Rule:** In a sum you may swap the summands, and in a product you may swap the factors.
 
 #### Grouping does not matter
