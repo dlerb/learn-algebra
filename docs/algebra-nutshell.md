@@ -92,14 +92,35 @@ This already covers a negative number, because (3) told us how to add one:
 
 $$3\cdot-4 \;=\; -4+-4+-4 \;=\; -4-4-4 \;=\; -12$$
 
-**On the line** it looks like this: three copies of the distance from $0$ to $4$, laid end to end, land you *three times as far from $0$* as $4$ is. Multiplying **stretches away from $0$**.
+**On the line** it looks like this: take the distance from $0$ to $4$ and **join** three copies of it, end to end. You land three times as far from $0$ as $4$ is. Multiplying **stretches away from $0$**.
 
->**Note:** *Three times as far* is shorthand for *lay the distance out three times*, and nothing more. Read the other way round it would be using multiplying to explain multiplying.
+>**Note:** *Three times as far* is shorthand for *join three copies*, and nothing more. Read the other way round it would be using multiplying to explain multiplying.
 
-The picture is worth keeping because it survives where the counting does not. *Four, one third times over* is not a picture of anything, but *one third as far* still is:
+Notice what the first factor is doing. It is not a point on the line at all — it is an **instruction**, and it says *how many*. The second factor and the answer are points; the first factor tells you what to do to one of them.
 
->**Note:** For $1.2$ times as far, cut the distance from $0$ to $4$ into **ten equal parts** and lay out **twelve** of them. Any fraction works the same way: $\frac pq$ times as far means cut into $q$ parts and lay out $p$.
->$$1.2\cdot 4 = 4.8 \qquad\qquad \tfrac13\cdot 12 = 4$$
+#### A factor that is not whole
+
+Here the definition runs out. *Add $12$, one third times over* is not a picture of anything. But there is a second instruction available, and it is the opposite of the first one:
+
+>**Def:** $\tfrac13\cdot 12$ means: **cut** the distance from $0$ to $12$ into three equal parts, and take one. $\;\tfrac13\cdot12 = 4$
+
+So the first factor names a number and one of two opposite jobs:
+
+| first factor | instruction |
+|---|---|
+| $3$ | **join** $3$ copies |
+| $\tfrac13$ | **cut** into $3$ parts |
+| $\tfrac pq$ | cut into $q$ parts, then join $p$ of those pieces |
+
+$$\tfrac23\cdot 12 = 8 \qquad\qquad 1.2\cdot 4 = 4.8 \qquad\qquad \tfrac12\cdot 4 = 2$$
+
+>**Note:** The last row covers everything, because a whole number is a fraction too: $3 = \tfrac31$. Cut into one part — that is, do not cut — and join three. **One recipe, and the two earlier ones are the cases where a verb does nothing.**
+
+>**Note:** This is the *of* you have used since primary school. *A third of $12$* is $4$, and *cut into three, take one* is exactly how you have always worked it out.
+
+>**Note:** Why should cutting be the right reading? Because the other order is already fixed and cannot be argued with. Twelve copies of $\tfrac13$, joined end to end, make $4$ — three thirds to each whole, four wholes:
+>$$12\cdot\tfrac13 \;=\; \underbrace{\tfrac13+\tfrac13+\cdots+\tfrac13}_{12} \;=\; 4$$
+>So if $\tfrac13\cdot12$ is to mean anything sensible, it must be $4$ as well — and cutting into three is what delivers it.
 
 And here an old habit breaks:
 
@@ -109,19 +130,19 @@ which is *smaller* than $4$. Multiplying does not always make things bigger. A f
 
 #### A negative factor
 
-Here the definition genuinely runs out. You cannot lay a distance out $-3$ times. So write down what is already fixed and see whether there is any room left. Each step down in the first factor takes away one $4$:
+Here both instructions run out. You cannot join $-3$ copies, and you cannot cut into $-3$ parts. So write down what is already fixed and see whether there is any room left. Each step down in the first factor takes away one $4$:
 
 $$3\cdot4 = 12 \quad 2\cdot4 = 8 \quad 1\cdot4 = 4 \quad 0\cdot4 = 0 \quad -1\cdot4 = -4 \quad -2\cdot4 = -8$$
 
 There is only one way to carry on, so we take it:
 
->**Def:** For a *negative* factor, lay the distance out as many times as its size says, and then **mirror** across $0$ (2). $\;-3\cdot4 = -12$
+>**Def:** For a *negative* factor, carry out the instruction its size gives — join or cut — and then **mirror** across $0$ (2). $\;-3\cdot4 = -12$
 
 >**Note:** We are not discovering what $-3\cdot4$ means — there is nothing there to discover. We are *choosing* the only reading that keeps everything above true.
 
 >**Rule:** A negative factor stretches *and mirrors*.
 
->**Note:** The mirror belongs to the *factor*, not to the number being stretched. In $3\cdot-4$ the factor is $3$, which is positive, so nothing is mirrored — the point $-4$ was already on the left, and it simply moves three times further out.
+>**Note:** The mirror belongs to the *factor*, not to the number being stretched. In $3\cdot-4$ the factor is $3$, which is positive, so nothing is mirrored — you simply join three copies of a distance that already runs to the left.
 >$$3\cdot-4 = -12$$
 
 With two negatives the mirror is applied twice, and *mirroring twice brings you back* (2):
@@ -141,17 +162,25 @@ $$-1\cdot-1 = 1 \qquad\qquad -3\cdot-4 = 12$$
 
 In (3) the two signs are neighbours and collapse into one. Here they are not neighbours at all — each belongs to its own number, and the $\cdot$ never goes away.
 
-Stretching the point $0$ leads nowhere, because $0$ is no distance from $0$ to begin with:
+Joining or cutting the point $0$ leads nowhere, because $0$ is no distance from $0$ to begin with:
 
 $$7\cdot 0 = 0 \qquad\qquad -3\cdot 0 = 0$$
 
 ### 5 · $\frac13$ is the undo of $\cdot\, 3$
 
->**Def:** $\frac13$ is the number that turns $3$ back into $1$.
+The two instructions in (4) are opposites, and that is the whole of this section:
+
+>**Rule:** Joining $3$ copies and cutting into $3$ parts undo each other. Do one, then the other, and you are back where you started.
+
+Cut $1$ into three parts and you have $\tfrac13$; join three of those parts and you have $1$ again:
 
 $$3\cdot\tfrac13 = 1$$
 
-Stretching by $3$ makes things three times as far from $0$; stretching by $\frac13$ brings them back. Every number has such an undo — with one exception, and (6) comes back to it.
+Nothing new has been claimed — it is the old meaning of $\tfrac13$ read with a times sign. But it gives the fraction a second description, and this one turns out to be the useful one:
+
+>**Def:** $\frac13$ is the number that *undoes* $\cdot\,3$. Multiply by $3$, then by $\frac13$, and you are back where you started.
+
+Every number has such an undo — with one exception, and (6) comes back to it.
 
 Dividing is not a new operation either:
 
