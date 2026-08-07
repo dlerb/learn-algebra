@@ -4,6 +4,92 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## 🔢 `docs/algebra-nutshell.md` — PART 0, WHAT NUMBERS MEAN (2026-08-06/07, `5e1f9bf`)
+
+**A new document, UPSTREAM of `blocks.md`**, and the one being written together with the
+author, section by section. Planned shape, all in the one file:
+
+    Part 0 · numbers, before any letter          ← WRITTEN
+    Part 1 · algebra WITHOUT special blocks (bracket allowed)
+    Part 2 · the special blocks, designed to be invariant
+
+⚠️ **The Part 1 / Part 2 split is the author's, and it moves things.** Part 1 is *reading ·
+rearranging · collecting · AND expanding/factoring out* — the distributive law needs nothing
+but the bracket, so §5.1 of `blocks.md` belongs in Part 1 and Part 2's list section has
+**three** blocks, not four. Part 2's thesis: *everything from Part 1 still applies when a
+letter is replaced by a special block.* ⚠️ **Part 1 has no side conditions at all** — no
+dividing, no roots — which is a good sign the seam is in the right place.
+
+**Part 0's spine is the number line and ONE image, the MIRROR.** A number is a point; $-3$ is
+$3$ mirrored across $0$, so the negative sign is an *instruction*, not part of the digit.
+Adding is moving; multiplying is stretching; $\frac13$ is the undo of $\cdot 3$; $0$ has no
+undo, which is the single origin of every "not allowed" later.
+
+⚠️ **NO LETTER APPEARS IN ANY FORMULA UNTIL §8**, which is the section that introduces them.
+That is deliberate and it is what makes §8's licence — *a letter stands for a number, so
+anything true for all numbers is a rule for letters* — have something real to license.
+
+**Two definitions carry the weight, and they are symmetric:**
+
+> *Def.* $5+3$ = start at $5$ and make the move that takes you from $0$ to $3$.
+> *Def.* $5-3$ = start at $5$ and make the move that takes you from $0$ to the **mirror** of $3$.
+
+⚠️ **Neither definition ever counts steps in a direction.** That is the whole point and it was
+arrived at by hitting the wall twice: *"move right by $-3$"* and *"go $-3$ steps to the left"*
+are not moves anybody can make, so a step-counting definition dies at $5--3$. Naming a move by
+its endpoint from $0$ survives. **If someone later "simplifies" this back to "three steps
+left", that is the bug.**
+
+**Two notational decisions, both argued and both easy to undo by accident:**
+
+1. ⚠️ **NO BRACKETS AROUND NEGATIVES.** We write $--3$, $5+-3$, $5--3$, $-3\cdot-4$ — never
+   $-(-3)$. They are unambiguous: position alone fixes each sign's role, since a minus with a
+   number to its left can only subtract and one with an operator to its left can only mirror.
+   Insisting would **contradict §7's own test** (take the bracket away and read again) and
+   would spend the signal that matters — **the ONE place a bracket around a negative changes
+   the answer is $(-3)^2$ against $-3^2$**, and that only lands if brackets are rare. The
+   common notation is noted so students recognise it elsewhere.
+2. ⚠️ **ONLY `\frac{}{}` FOR DIVISION**, never `:` or `/`. The bar holds top and bottom
+   together, so $12{:}3+1$ needs a convention and $\frac{12}{3}+1$ does not. **Choosing the
+   notation removes the question instead of answering it** — and it kills the left-to-right
+   rule for division outright.
+
+⚠️ **Deliberately NOT legislated: the unary minus's reach.** $-3\cdot2$ has two readings that
+always agree in value, so nothing in Part 0 can distinguish them. It only becomes detectable at
+$-3^2$, so the rule belongs in Part 2 — *the minus reaches as far as the next $+$ or $-$* —
+where it can be justified on the spot. **Do not state it earlier; it would read as arbitrary
+and the class sniffs that out.**
+
+**What is derived rather than asserted** (each was a correction the author caught):
+$-1\cdot4 = -4$ comes from continuing the pattern $3\cdot4,\,2\cdot4,\,1\cdot4,\,0\cdot4$;
+the sign rule is then *mirroring twice brings you back*, not a fact to memorise.
+
+**Both broken intuitions are named where they break**: *adding no longer always makes things
+bigger* (at $5+-3$), and *taking away runs out when what you take away is negative* (before the
+subtraction Def). ⚠️ The second doubles as the motivation for the definition's shape, in the
+student's own picture rather than as a teacher-facing digression.
+
+⚠️ **THE AUTHOR'S STYLE RULES FOR THIS FILE, learned the hard way — follow them:**
+
+- **`**Def:**` / `**Rule:**` / `**Note:**`** in blockquotes. Nothing else gets a label.
+- **Italics `*`, never bold `**`** in running text.
+- **Section references as `(3)`**, not `§3`.
+- **Numbers only** — no `a`, `b`, `x` anywhere in Part 0 before §8.
+- **One word for the image: *mirror*.** Never *reflect*, never *flip*.
+- ⚠️ **If the author has manually removed a sentence, DO NOT put it back.**
+
+🔵 **NEXT: the author drafts Part 1, Claude adds.** Two things already agreed for that draft —
+**the invisible coefficient 1** ($x = 1x$, currently used unlicensed in `blocks.md`'s
+$a\cdot1+a\cdot1+a\cdot1$), and the collecting rule: *two summands collect exactly when they
+are the same thing apart from a number in front*, which is also the sentence that transfers to
+Part 2 unchanged.
+
+⚠️ **`blocks.md` is now downstream of this file and overlaps it.** Nothing has been merged or
+retired yet. Deciding what `blocks.md` keeps once Parts 1–2 exist is an open job, not a
+formality.
+
+---
+
 ## 🧱 `docs/blocks.md` — THE MODEL FOR THE CLASS (2026-08-04/05, `056b27e` → `59a41da`)
 
 **The walls brainstorm happened and did not stay in `skill_list.md`.** It produced a **second,
