@@ -80,29 +80,49 @@ Which is which is never in doubt, because position decides it. The first minus h
 
 ### 4 · Multiplying is stretching
 
-For whole numbers you can read $3\cdot 4$ as *four, three times over*. That stops working as soon as the factor is $\frac13$ or $-2$, so use the picture that always works:
+Multiplying is repeated adding, and nothing new is needed to say so:
 
->**Def:** $3\cdot 4$ means: take $4$ and *stretch it away from $0$* by the factor $3$.
+>**Def:** $3\cdot 4$ ($3$ *times* $4$) means: add $4$ three times over. $\;3\cdot4 = 4+4+4$
 
-$$3\cdot 4 = 12$$
+$$3\cdot 4 = 12 \qquad\qquad 1\cdot 4 = 4 \qquad\qquad 0\cdot 4 = 0 \qquad\qquad 4\cdot 0 = 0$$
 
-What should a negative factor do? Nothing has to be decided — write the pattern down and there is only one way to continue it. Each step down in the first factor takes away one $4$:
+The last two are not special cases. *Zero copies of $4$* means you never leave $0$; and *four copies of $0$* is $0+0+0+0$, which also never leaves $0$.
 
-$$3\cdot4 = 12 \qquad 2\cdot4 = 8 \qquad 1\cdot4 = 4 \qquad 0\cdot4 = 0$$
+This already covers a negative number, because (3) told us how to add one:
 
-$$-1\cdot4 = -4 \qquad -2\cdot4 = -8$$
+$$3\cdot-4 \;=\; -4+-4+-4 \;=\; -4-4-4 \;=\; -12$$
+
+**On the line** it looks like this: three copies of the distance from $0$ to $4$, laid end to end, land you *three times as far from $0$* as $4$ is. Multiplying **stretches away from $0$**.
+
+>**Note:** *Three times as far* is shorthand for *lay the distance out three times*, and nothing more. Read the other way round it would be using multiplying to explain multiplying.
+
+The picture is worth keeping because it survives where the counting does not. *Four, one third times over* is not a picture of anything, but *one third as far* still is:
+
+>**Note:** For $1.2$ times as far, cut the distance from $0$ to $4$ into **ten equal parts** and lay out **twelve** of them. Any fraction works the same way: $\frac pq$ times as far means cut into $q$ parts and lay out $p$.
+>$$1.2\cdot 4 = 4.8 \qquad\qquad \tfrac13\cdot 12 = 4$$
+
+#### A negative factor
+
+Here the definition genuinely runs out. You cannot lay a distance out $-3$ times. So write down what is already fixed and see whether there is any room left. Each step down in the first factor takes away one $4$:
+
+$$3\cdot4 = 12 \quad 2\cdot4 = 8 \quad 1\cdot4 = 4 \quad 0\cdot4 = 0 \quad -1\cdot4 = -4 \quad -2\cdot4 = -8$$
+
+There is only one way to carry on, so we take it:
+
+>**Def:** For a *negative* factor, lay the distance out as many times as its size says, and then **mirror** across $0$ (2). $\;-3\cdot4 = -12$
+
+>**Note:** We are not discovering what $-3\cdot4$ means — there is nothing there to discover. We are *choosing* the only reading that keeps everything above true.
 
 >**Rule:** A negative factor stretches *and mirrors*.
 
-Now do the same on the other side. Each step down in the second factor adds one:
+>**Note:** The mirror belongs to the *factor*, not to the number being stretched. In $3\cdot-4$ the factor is $3$, which is positive, so nothing is mirrored — the point $-4$ was already on the left, and it simply moves three times further out.
+>$$3\cdot-4 = -12$$
 
-$$-1\cdot2 = -2 \qquad -1\cdot1 = -1 \qquad -1\cdot0 = 0 \qquad -1\cdot-1 = 1 \qquad -1\cdot-2 = 2$$
+With two negatives the mirror is applied twice, and *mirroring twice brings you back* (2):
 
-So the sign rule is nothing to memorise. It is *mirroring twice brings you back* (2), seen again:
+$$-1\cdot-1 = 1 \qquad\qquad -3\cdot-4 = 12$$
 
-$$-3\cdot-4 = 12$$
-
->**Rule:** $-\cdot-$ gives $+$, and $-\cdot+$ gives $-$.
+>**Rule:** And we have recovered another rule from primary school: $-\cdot-$ gives $+$, and $-\cdot+$ gives $-$.
 
 >**Note:** Multiplying by $-1$ *is* the mirror from (2). That is why the minus sign and the times sign keep turning into each other.
 
@@ -115,9 +135,9 @@ $$-3\cdot-4 = 12$$
 
 In (3) the two signs are neighbours and collapse into one. Here they are not neighbours at all — each belongs to its own number, and the $\cdot$ never goes away.
 
-Stretching by $0$ collapses everything onto $0$, whatever you started with:
+Stretching the point $0$ leads nowhere, because $0$ is no distance from $0$ to begin with:
 
-$$7\cdot 0 = 0 \qquad -3\cdot 0 = 0$$
+$$7\cdot 0 = 0 \qquad\qquad -3\cdot 0 = 0$$
 
 ### 5 · $\frac13$ is the undo of $\cdot\, 3$
 
@@ -155,7 +175,7 @@ This is not fussiness. The bar *holds the top and the bottom together*, so it sa
 
 That is why $:$ and $/$ are not used from here on, except where we are talking about them.
 
-### 6 · Two observations that run through everything
+### 6 · Four observations that run through everything
 
 Every number has a partner that cancels it out. For adding, it is the mirror image:
 
@@ -176,6 +196,28 @@ The exception is the only one in all of Part 0, and it is worth its own line:
 >**Rule:** $0$ has no undo. Stretching $0$ leaves it at $0$, whatever the factor, so no number turns $0$ into $1$. That means $\frac10$ does not exist, and *dividing by $0$ is not allowed*.
 
 Everything you will ever be told about "not allowed" in algebra comes back to this.
+
+#### Order does not matter
+
+$$5+3 \;=\; 3+5 \qquad\qquad 3\cdot4 \;=\; 4\cdot3$$
+
+For adding you can see it on the line. Two moves, one of $5$ and one of $3$: it makes no difference which you make first, you arrive at the same point.
+
+For multiplying the line does *not* show it — $3\cdot4$ lays the $4$-distance out three times, $4\cdot3$ lays the $3$-distance out four times, and nothing about the line makes those obviously equal. What shows it is a **rectangle of dots**: three rows of four is four columns of three, one and the same rectangle counted two ways.
+
+>**Rule:** In a sum you may swap the summands, and in a product you may swap the factors.
+
+#### Grouping does not matter
+
+$$(5+3)+2 \;=\; 5+(3+2) \qquad\qquad (3\cdot4)\cdot2 \;=\; 3\cdot(4\cdot2)$$
+
+For adding, again the line: three moves one after another, and where you pause makes no difference to where you end up.
+
+>**Rule:** In a sum of several numbers, and in a product of several numbers, it does not matter how you group them.
+
+>**Note:** The rectangle only counts whole numbers, and it cannot be drawn for $\frac13$ or for $-4$. For those the two rules are *carried over*, not shown — the same move as the negative factor in (4): we keep the rules that already hold and let them fix the rest. Nothing goes wrong if you do, and a great deal would go wrong if you did not.
+
+These last two look too obvious to write down. They are not — Part 1 is almost entirely built on them.
 
 ### 7 · Working things out: what comes first
 
