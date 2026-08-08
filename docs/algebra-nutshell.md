@@ -8,6 +8,8 @@ What numbers mean before any letter appears. We start with the positive whole nu
 
 >**Note:** You already know these numbers and how to work with them. This part does not define them again — it *draws* them on a line, so that what you **do** with them can be seen, and so that the rules in Part 1 look inevitable rather than arbitrary.
 
+>**Note:** That is why most of what follows is marked **Picture** and not **Def**. A *Picture* shows you something you already do. A **Def** appears only three times, at the three places where something genuinely had to be **chosen** — and each one says so.
+
 ### 1 · The number line
 
 >Every number is a *point on a line*. The number $0$ is the starting point of the line, and the step from $0$ to $1$ is a *unit step*. 
@@ -26,7 +28,7 @@ On the number line:
 
 Every rational point on the line is reached by these moves — *stepping*, *cutting*, *joining*, *mirroring*. The irrational points are on the line too; we will not discuss how they are reached.
 
->**Def:** A number on the number line further to the right of another number is *bigger*, a number further to the left of another number is *smaller*.
+>**Picture:** A number on the number line further to the right of another number is *bigger*, a number further to the left of another number is *smaller*.
 
 Example: $2$ is smaller than $3$, and both are bigger than $0$. $-2$ is bigger than $-3$ and both are smaller than $0$.
 
@@ -34,11 +36,11 @@ Example: $2$ is smaller than $3$, and both are bigger than $0$. $-2$ is bigger t
 
 (1) said how to *reach* each number. Those same moves are what adding uses. Every number carries one: $3$ carries *three unit steps to the right*, $-3$ carries *three unit steps to the left*, $\tfrac13$ carries *a third of a step to the right*. A move is a length and a direction, so it can be made from anywhere — not only from $0$.
 
->**Def:** $5+3$ ($5$ *plus* $3$) means: carry out $5$'s move, then $3$'s. Five unit steps to the right, then three more.
+>**Picture:** $5+3$ ($5$ *plus* $3$) means: **join** $5$'s move and $3$'s move — carry out one, then the other.
 
 $$5+3 = 8$$
 
-So adding is **joining** two moves end to end. The same word comes back in (4), there with copies of a single move.
+Five unit steps to the right, then three more. The word *join* comes back in (4), there with copies of a single move.
 
 Nothing new is needed for a negative number, because it carries a move like any other:
 
@@ -58,7 +60,7 @@ You already know subtracting as *taking away*: $5$ things, take $3$ away, $2$ le
 
 Subtracting is the same as adding, with one word changed:
 
->**Def:** $5-3$ ($5$ *minus* $3$) means: carry out $5$'s move, then $3$'s **mirrored** — same length, the other way.
+>**Picture:** $5-3$ ($5$ *minus* $3$) means: join $5$'s move and the **mirror** of $3$'s move — same length, the other way.
 
 $$5-3 = 2$$
 
@@ -88,7 +90,7 @@ Which is which is never in doubt, because position decides it. The first minus h
 
 Multiplying is repeated adding.
 
->**Def:** $3\cdot 4$ ($3$ *times* $4$) means: add $4$ three times over. $$\;3\cdot4 = 4+4+4$$
+>**Picture:** $3\cdot 4$ ($3$ *times* $4$) means: add $4$ three times over. $$\;3\cdot4 = 4+4+4$$
 
 $$3\cdot 4 = 12 \qquad 1\cdot 4 = 4 \qquad 3\cdot -4=-12 \qquad 0\cdot 4 = 0 \qquad 4\cdot 0 = 0$$
 
@@ -185,7 +187,7 @@ $$3\cdot\tfrac13 = 1$$
 
 Nothing new has been claimed — it is the old meaning of $\tfrac13$ read with a times sign. But it gives the fraction a second description, and this one turns out to be the useful one:
 
->**Def:** $\frac13$ is the number that *undoes* $\cdot\,3$. Multiply by $3$, then by $\frac13$, and you are back where you started.
+>**Picture:** $\frac13$ is the number that *undoes* $\cdot\,3$. Multiply by $3$, then by $\frac13$, and you are back where you started.
 
 Every number has such an undo — with one exception, and (6) comes back to it.
 
@@ -295,7 +297,7 @@ And for dividing there is nothing left to settle at all, because we write fracti
 
 #### Brackets
 
->**Def:** A bracket says: *this is one thing — deal with it first.*
+>**Picture:** A bracket says: *this is one thing — deal with it first.*
 
 $$(2+3)\cdot 4 \;=\; 5\cdot 4 \;=\; 20$$
 
