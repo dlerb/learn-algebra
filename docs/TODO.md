@@ -188,9 +188,34 @@ bigger* (at $5+-3$), and *taking away runs out when what you take away is negati
 subtraction Def). ⚠️ The second doubles as the motivation for the definition's shape, in the
 student's own picture rather than as a teacher-facing digression.
 
+⚠️ **`Picture:` vs `Def:` — THE LABELS NOW MEAN SOMETHING (`a13b92f`).** If Part 0 does not
+define the numbers, it does not define the operations either — the class already adds. So the
+label is **`Picture:`** wherever the text *shows* something they already do (6 places:
+bigger/smaller · $5+3$ · $5-3$ · $3\cdot4=4+4+4$ · $\tfrac13$ undoes $\cdot3$ · the bracket),
+and **`Def:`** survives at exactly **three** places, the ones where something had to be
+**chosen** rather than reported:
+
+| | |
+|---|---|
+| $\tfrac13\cdot12$ = cut into three | repeated adding cannot reach it |
+| a negative factor = join-or-cut **then mirror** | *"we are not discovering… we are choosing"* |
+| dividing = multiplying by the undo | division could have been primitive |
+
+⚠️ **Before this, `Def` marked nine things of five kinds and therefore flagged nothing.** A
+second framing Note at the top of Part 0 explains the two labels. **Keep `Def` rare** — in Part 1
+it will be common (expanding, factoring, collecting are rules, not pictures), and that contrast
+will itself be informative: *Part 0 shows, Part 1 decides.*
+
+⚠️ **THE ADDING/SUBTRACTING DEFS LEAD WITH `join`** — *join $5$'s move and $3$'s move* / *…and
+the **mirror** of $3$'s move*. Not just vocabulary: *"carry out $5$'s move, **then** $3$'s"*
+made addition sound **ordered**, which fights §6's *order does not matter*. ⚠️ The author's
+first phrasing (*carry out both, then join the moves*) was **not** taken — it describes three
+actions where there are two; the joining **is** doing one after the other.
+
 ⚠️ **THE AUTHOR'S STYLE RULES FOR THIS FILE, learned the hard way — follow them:**
 
-- **`**Def:**` / `**Rule:**` / `**Note:**`** in blockquotes. Nothing else gets a label.
+- **`**Picture:**` / `**Def:**` / `**Rule:**` / `**Note:**`** in blockquotes. Nothing else gets
+  a label, and **`Def` is reserved for a genuine choice**.
 - **Italics `*`, never bold `**`** in running text.
 - **Section references as `(3)`**, not `§3`.
 - **Numbers only** — no `a`, `b`, `x` anywhere in Part 0 before §8.
