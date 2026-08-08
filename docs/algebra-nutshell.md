@@ -6,57 +6,69 @@
 
 What numbers mean before any letter appears. We start with the positive whole numbers (natural numbers) on the number line and construct the negative and rational numbers from those, using simple images and instructions. Then we derive the typical calculation laws from these pictures. Not included in the discussion are the construction of the irrational numbers.
 
+>**Note:** You already know these numbers and how to work with them. This part does not define them again — it *draws* them on a line, so that what you **do** with them can be seen, and so that the rules in Part 1 look inevitable rather than arbitrary.
+
 ### 1 · The number line
 
 >Every number is a *point on a line*. The number $0$ is the starting point of the line, and the step from $0$ to $1$ is a *unit step*. 
 
+The line and its points are there already — you have used them since primary school. What matters here is **how you get to them**, because those few moves are what every rule later on is made of.
+
 On the number line:
 
-- $3$ is the point that is three unit steps to the *right* from $0$. Every natural number on the line tells you how many steps to the right you have to take to get to this point.
-- $\tfrac13$ ("$1$ over $3$") is the point you reach by *cutting* the unit step into *three equal parts* and taking the first one. In the same way $\tfrac35$ ("$3$ over $5$") is the point you reach by cutting the unit step into *five* parts and *joining three* of them — the number below says into how many parts to *cut*, the number above how many to *join*. A whole number needs no cutting: $3$ is three unit steps *joined*.
-- The point $-3$ (*negative $3$*) is the point you get by *mirroring point $3$ across $0$*: three steps to the left of $0$. So the negative sign is an *instruction* — mirror across $0$ — and not part of the digit: mirror $3$ and you get $-3$; mirror $-3$ and you get $3$ back: $--3=3$. Note that $--3$ needs no bracket — it is two mirrors applied one after the other. You will sometimes see it written $-(-3)$, but the bracket changes nothing here, so we leave it out. Also note that $-0=0$.
+- To find $3$, take three unit steps to the *right* from $0$. Every natural number says how many steps to take.
+- To find $\tfrac13$ ("$1$ over $3$"), *cut* the unit step into *three equal parts*; the first part ends at $\tfrac13$. To find $\tfrac35$ ("$3$ over $5$"), cut the unit step into *five* parts and *join three* copies of one such part. The number below says into how many parts to *cut*, the number above how many to *join*. A whole number needs no cutting: $3$ is three unit steps *joined*.
+- To find $-3$ (*negative $3$*), *mirror* the point $3$ across $0$: you land three steps to the left of $0$.
 
-We now have described all rational numbers on the number line. We will not discuss how the irrational numbers on the line are obtained.
+>**Note:** The negative sign is an *instruction* — mirror across $0$ — and not part of the digit. Mirror $3$ and you get $-3$; mirror $-3$ and you get $3$ back, so $--3=3$. And $0$ is its own mirror image: $-0=0$.
 
->**Def:** A number further to the right is *bigger*, a number further to the left is *smaller*.
+>**Note:** $--3$ needs no bracket — it is simply two mirrors, one after the other. You will sometimes see it written $-(-3)$, but the bracket changes nothing here, so we leave it out.
 
-Example: $2$ is smaller than $3$, and both are bigger than $0$. $-3$ is smaller than $-2$ and both are smaller than $0$.
+Every rational point on the line is reached by these moves — *stepping*, *cutting*, *joining*, *mirroring*. The irrational points are on the line too; we will not discuss how they are reached.
+
+>**Def:** A number on the number line further to the right of another number is *bigger*, a number further to the left of another number is *smaller*.
+
+Example: $2$ is smaller than $3$, and both are bigger than $0$. $-2$ is bigger than $-3$ and both are smaller than $0$.
 
 ### 3 · Adding and subtracting is moving
 
->**Def:** $5+3$ ($5$ *plus* $3$) means: start at $5$ and make the move that takes you from $0$ to $3$.
+(1) said how to *reach* each number. Those same moves are what adding uses. Every number carries one: $3$ carries *three unit steps to the right*, $-3$ carries *three unit steps to the left*, $\tfrac13$ carries *a third of a step to the right*. A move is a length and a direction, so it can be made from anywhere — not only from $0$.
 
-That move is three unit steps to the right (1), so
+>**Def:** $5+3$ ($5$ *plus* $3$) means: carry out $5$'s move, then $3$'s. Five unit steps to the right, then three more.
 
 $$5+3 = 8$$
 
-So adding is **joining** two moves end to end: the move to $5$, then the move to $3$. The same word comes back in (4), there with copies of a single move.
+So adding is **joining** two moves end to end. The same word comes back in (4), there with copies of a single move.
 
-What about $5+-3$? The move from $0$ to $-3$ is three unit steps to the *left*, since $-3$ is the mirror of $3$ (1). Starting at $5$ and making that move:
+Nothing new is needed for a negative number, because it carries a move like any other:
 
 $$5+-3 = 2$$
 
-Notice that $5+-3$ is *smaller* than $5$. Adding does not always make things bigger — it takes you whichever way the number lies from $0$. Only adding a positive number takes you to the right.
+Five to the right, then three to the *left*. Notice that this is *smaller* than $5$: adding does not always make things bigger — you go whichever way the second move points, and only a positive number points right.
 
 And we also have
 
 $$-5+3=-2\qquad -5+-3=-8$$
 
-Fractions are points on the line like any other (1), so they join in the same way. Three thirds fill the piece from $0$ to $1$ exactly:
+Fractions carry moves too (1). Three thirds fill the piece from $0$ to $1$ exactly:
 
 $$\tfrac13+\tfrac13 = \tfrac23 \qquad\qquad \tfrac13+\tfrac13+\tfrac13 = 1$$
 
-You already know subtracting as *taking away*: $5$ things, take $3$ away, $2$ left. On the line that is moving three unit steps to the left, so it is the same thing. It only runs out when what you take away is itself negative — taking away $-3$ things is not a picture of anything.
+You already know subtracting as *taking away*: $5$ things, take $3$ away, $2$ left. On the line that is going three unit steps to the left, so it is the same thing. It only runs out when what you take away is itself negative — taking away $-3$ things is not a picture of anything.
 
-So subtracting is defined in the same shape as adding, with the mirror put in:
+Subtracting is the same as adding, with one word changed:
 
->**Def:** $5-3$ ($5$ *minus* $3$) means: start at $5$ and make the move that takes you from $0$ to the *mirror image* of $3$. In short, $5-3 = 5+-3$.
+>**Def:** $5-3$ ($5$ *minus* $3$) means: carry out $5$'s move, then $3$'s **mirrored** — same length, the other way.
 
-Consequence:
+$$5-3 = 2$$
 
-$$5--3=5+3=8$$
+The two definitions differ only in that one word, which is why
 
-The definition says: make the move from $0$ to the mirror image of $-3$. The mirror of $-3$ is $3$ (1), and that move is three unit steps to the right — exactly what $5+3$ asks for.
+$$5-3 \;=\; 5+-3$$
+
+and it settles $5--3$ in one reading: $-3$ carries *three to the left*; mirrored, that is *three to the right*.
+
+$$5--3 = 8$$
 
 Thus we have recovered the rules you already know from primary school:
 
