@@ -29,6 +29,52 @@ undo, which is the single origin of every "not allowed" later.
 That is deliberate and it is what makes §8's licence — *a letter stands for a number, so
 anything true for all numbers is a rule for letters* — have something real to license.
 
+⚠️⚠️ **PART 0 IS A PICTURE, NOT A DEFINITION (2026-08-08, `130b090`) — THE SESSION'S LARGEST
+CLARIFICATION, AND IT CHANGES THE STANDARD.** The author's: *we are not defining the numbers;
+the students already have them. Part 0 draws them on a line so what they DO can be seen.* So the
+test is **"does the picture predict correctly, and does it ever mislead"** — NOT *is this a
+non-circular construction from primitives*, which it never was and could not be. ⚠️ **Several
+anxieties earlier in the session were misdirected**: a picture was being audited as a
+foundation. *Three unit steps* locating the point $3$ is viciously circular as a definition and
+perfectly fine as a picture.
+
+⚠️ **It also dissolves the point/instruction question that kept resurfacing.** Neither reading
+is a claim about what a number IS — the line **shows** a number as a place, an operation
+**uses** it as a doing, both pictures of one thing the student already had. **No new names.**
+*state* / *transformation* were considered and **refused**.
+
+**For the record, this is well-trodden ground** (checked, not guessed): **Gray & Tall's
+PROCEPT** (1994) is exactly the same-symbol-for-process-and-object observation, and their
+finding is that **the ambiguity is what fluency consists of**, not a defect to remove
+([JRME](https://pubs.nctm.org/view/journals/jrme/25/2/article-p116.xml)); **Vergnaud's additive
+conceptual field** has *state / transformation* as standard vocabulary
+([Vergnaud](https://www.gerard-vergnaud.org/texts/gvergnaud_2009_theory-conceptual-fields_human-development-52.pdf)).
+We are not inventing — we are **declining to import the names**.
+
+⚠️ **§1 IS THE VOCABULARY SECTION** and now says so. The line and its points are **given**; the
+bullets exist to plant the four moves the rest of the document runs on — **step · cut · join ·
+mirror**. All three bullets are now *"To find $3$, …"* rather than *"$3$ is the point that…"*,
+so **§1 makes no claim about what a number is**. Its closing line is about the moves (*every
+rational point is reached by these*), not about having constructed anything. The mirror's
+properties and the $--3$ notation decision moved out of the bullet into two Notes — different
+kinds of claim, one mathematical and one about writing. Also fixed: *"joining three of them"*
+capped the numerator at the denominator, so $\tfrac75$ was uncovered; now *"joining three
+copies of one such part"*.
+
+⚠️ **§3 REBUILT — the old Def did not make sense** (the author caught it): *"start at $5$ and
+make the move that takes you from $0$ to $3$"* tells you to be at $5$ and then make a move that
+starts at $0$. It was identifying the move and performing it in one phrase. **The licensing
+sentence is now explicit:**
+
+> A move is a length and a direction, so it can be made from anywhere — not only from $0$.
+
+Then the two Defs differ by **one word**: $5+3$ is *carry out $5$'s move, then $3$'s*; $5-3$ is
+*…then $3$'s **mirrored***. $5--3$ resolves in one reading, and $0+3=3$ stops being a special
+case. ⚠️ **Two framings tried and REJECTED, recorded so they are not re-proposed:** attaching
+the move to the **sign** ($+3$ as the unit — makes $+$ read as a sign, not an operator), and
+*"a number tells you a move"* (identifies point with vector silently — exactly the step a
+careful student balks at).
+
 ⚠️ **§1 WAS REBUILT ON THE UNIT STEP (2026-08-08, `4ede66e`)** and absorbed the old §2, so the
 mirror lives in the `-3` bullet and **there is no §2** — the numbering runs 1, 3, 4… §1 also
 states the scope openly: *all rational numbers are described; the irrationals are declined.*
