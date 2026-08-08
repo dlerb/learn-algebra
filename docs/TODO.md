@@ -29,6 +29,50 @@ undo, which is the single origin of every "not allowed" later.
 That is deliberate and it is what makes §8's licence — *a letter stands for a number, so
 anything true for all numbers is a rule for letters* — have something real to license.
 
+⚠️ **§1 WAS REBUILT ON THE UNIT STEP (2026-08-08, `4ede66e`)** and absorbed the old §2, so the
+mirror lives in the `-3` bullet and **there is no §2** — the numbering runs 1, 3, 4… §1 also
+states the scope openly: *all rational numbers are described; the irrationals are declined.*
+
+⚠️ **ARROWS WERE TRIED AND REJECTED.** *"A number has an arrow from 0 to it"* made §3's
+definitions one clause each — but the **unit step** gives the move its substance without making
+it a noun, which is the same gain and stays closer to canon. **Do not reintroduce arrows**: they
+were dropped as unnecessary, not as broken. A **step-size** phrasing for fractions (*three steps
+of a fifth the size*) was also tried and reverted — it reads the notation well but loses the
+**opposition** of cut/join, and that opposition is what makes §5's inverse free.
+
+⚠️ **ONE MEANING, NOT TWO ROLES (§4).** The author found a real equivocation: *a fifth* is a
+fifth of the **unit** in §1 and a fifth of the **operand** in §4. The fix removes the second
+role rather than managing it — $\tfrac23 = \tfrac23\cdot1$: **the point is the instruction
+carried out on $1$**, and §1 was simply the case where nobody wrote the operand. ⚠️ **This
+cannot be said in §1** — the times sign does not exist there. Two alternatives were **refused**:
+writing $\tfrac23\cdot1$ in §1 (the dot is not neutral — students read multiplication whatever
+we declare), and calling the fraction *an instruction like the minus* (wrong shape: in $-3$ the
+operand is written, in $\tfrac23$ it is not).
+
+⚠️ **THE ARCHITECTURE, found by the author from $n+0=n$:** the two neutral elements are the two
+instruction-readings, one per operation.
+
+| identity | reads a number as | section |
+|---|---|---|
+| $n+0=n$ | a **move**, applied to the origin | §3 · adding |
+| $n\cdot1=n$ | a **stretch**, applied to the unit step | §4 · multiplying |
+
+**$0$ is where moves start; $1$ is where stretches start** — which is why each operation has
+exactly one number that changes nothing. It also explains why **§1 mixes constructions** and why
+the mixture is right: wholes come additively (steps from $0$), fractions multiplicatively
+(cutting the unit), negatives by mirroring a number already built. Each kind gets the
+construction it actually comes from. ⚠️ §6 now carries this, which makes §6 a **foundation
+discovered late** rather than a list of consequences.
+
+⚠️ **This is the vector-space picture, and the author named it:** $+$ and $\cdot$ are the
+operations of a 1-dimensional vector space over $\mathbb R$. §3 is vector addition, §4 is
+**scalar** multiplication ($F\times V\to V$ — the first factor is a *different type*), §5's
+inverse and §6's commutativity are **field** facts, and §1's order is neither. **That is why the
+line kept working for §3–§4 and kept failing elsewhere**: scalars and points coincide only
+because $V=\mathbb R$ over $F=\mathbb R$. In particular the line *cannot* show
+$3\cdot4=4\cdot3$ — swapping factors swaps an instruction with a point — which is why §6 needs
+the rectangle. **Useful for predicting where the line will help in Part 1.**
+
 **Two definitions carry the weight, and they are symmetric:**
 
 > *Def.* $5+3$ = start at $5$ and make the move that takes you from $0$ to $3$.
