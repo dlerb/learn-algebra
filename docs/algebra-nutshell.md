@@ -4,55 +4,49 @@
 
 ## Part 0
 
-What numbers mean before any letter appears.
+What numbers mean before any letter appears. We start with the positive whole numbers (natural numbers) on the number line and construct the negative and rational numbers from those, using simple images and instructions. Then we derive the typical calculation laws from these pictures. Not included in the discussion are the construction of the irrational numbers.
 
 ### 1 · The number line
 
->Every number is a *point on a line*. That is all a number is here.
+>Every number is a *point on a line*. The number $0$ is the starting point of the line, and the step from $0$ to $1$ is a *unit step*. 
 
-- $0$ is the mark we start from.
-- $3$ is the point three steps to the *right* of $0$.
-- $-3$ (negative 3) is the point three steps to the *left* of $0$.
-- $1.5$ lies halfway between $1$ and $2$; every point on the line is a number.
+On the number line:
 
-$$\cdots\;-3\;\;-2\;\;-1\;\;\;0\;\;\;1\;\;\;2\;\;\;3\;\cdots$$
+- $3$ is the point that is three unit steps to the *right* from $0$. Every natural number on the line tells you how many steps to the right you have to take to get to this point.
+- $\tfrac13$ ("$1$ over $3$") is the point you reach by *cutting* the unit step into *three equal parts* and taking the first one. In the same way $\tfrac35$ ("$3$ over $5$") is the point you reach by cutting the unit step into *five* parts and *joining three* of them — the number below says into how many parts to *cut*, the number above how many to *join*. A whole number needs no cutting: $3$ is three unit steps *joined*.
+- The point $-3$ (*negative $3$*) is the point you get by *mirroring point $3$ across $0$*: three steps to the left of $0$. So the negative sign is an *instruction* — mirror across $0$ — and not part of the digit: mirror $3$ and you get $-3$; mirror $-3$ and you get $3$ back: $--3=3$. Note that $--3$ needs no bracket — it is two mirrors applied one after the other. You will sometimes see it written $-(-3)$, but the bracket changes nothing here, so we leave it out. Also note that $-0=0$.
+
+We now have described all rational numbers on the number line. We will not discuss how the irrational numbers on the line are obtained.
 
 >**Def:** A number further to the right is *bigger*, a number further to the left is *smaller*.
 
-Example: $-3$ is smaller than $-2$, and both are smaller than $0$.
-
-### 2 · The negative sign is a mirror
-
->**Note:** $-3$ is not "three with something stuck on it". It is the point you get by *mirroring $3$ across $0$*: three steps to the left of $0$, as in (1). So the negative sign is an *instruction* — mirror across $0$ — and not part of the digit.
-
-$$3 \;\xrightarrow{\text{ mirror }}\; -3 \qquad\qquad -3 \;\xrightarrow{\text{ mirror }}\; 3$$
-
-Two consequences:
-
-- Mirroring twice brings you back: $--3 = 3$.
-- $0$ is its own mirror image: $-0 = 0$.
-
->**Note:** $--3$ needs no bracket — it is two mirrors applied one after the other. You will sometimes see it written $-(-3)$, but the bracket changes nothing here, so we leave it out.
+Example: $2$ is smaller than $3$, and both are bigger than $0$. $-3$ is smaller than $-2$ and both are smaller than $0$.
 
 ### 3 · Adding and subtracting is moving
 
 >**Def:** $5+3$ ($5$ *plus* $3$) means: start at $5$ and make the move that takes you from $0$ to $3$.
 
-As we move $3$ steps to the right, we get
+That move is three unit steps to the right (1), so
 
 $$5+3 = 8$$
 
-What about $5+-3$? The move from $0$ to $-3$ is three steps to the left, since $-3$ is the mirror of $3$ (2). Starting at $5$ and making that move:
+So adding is **joining** two moves end to end: the move to $5$, then the move to $3$. The same word comes back in (4), there with copies of a single move.
+
+What about $5+-3$? The move from $0$ to $-3$ is three unit steps to the *left*, since $-3$ is the mirror of $3$ (1). Starting at $5$ and making that move:
 
 $$5+-3 = 2$$
 
-Notice that $5+-3$ is *smaller* than $5$. Adding does not always make things bigger — it moves you in whichever direction the number lies from $0$. Only adding a positive number moves you to the right.
+Notice that $5+-3$ is *smaller* than $5$. Adding does not always make things bigger — it takes you whichever way the number lies from $0$. Only adding a positive number takes you to the right.
 
 And we also have
 
 $$-5+3=-2\qquad -5+-3=-8$$
 
-You already know subtracting as *taking away*: $5$ things, take $3$ away, $2$ left. On the line that is moving $3$ steps to the left, so it is the same thing. It only runs out when what you take away is itself negative — taking away $-3$ things is not a picture of anything.
+Fractions are points on the line like any other (1), so they join in the same way. Three thirds fill the piece from $0$ to $1$ exactly:
+
+$$\tfrac13+\tfrac13 = \tfrac23 \qquad\qquad \tfrac13+\tfrac13+\tfrac13 = 1$$
+
+You already know subtracting as *taking away*: $5$ things, take $3$ away, $2$ left. On the line that is moving three unit steps to the left, so it is the same thing. It only runs out when what you take away is itself negative — taking away $-3$ things is not a picture of anything.
 
 So subtracting is defined in the same shape as adding, with the mirror put in:
 
@@ -62,7 +56,7 @@ Consequence:
 
 $$5--3=5+3=8$$
 
-The definition says: make the move from $0$ to the mirror image of $-3$. The mirror of $-3$ is $3$ (2), and the move from $0$ to $3$ is three steps to the right — which is exactly the move $5+3$ asks for.
+The definition says: make the move from $0$ to the mirror image of $-3$. The mirror of $-3$ is $3$ (1), and that move is three unit steps to the right — exactly what $5+3$ asks for.
 
 Thus we have recovered the rules you already know from primary school:
 
@@ -80,29 +74,22 @@ Which is which is never in doubt, because position decides it. The first minus h
 
 ### 4 · Multiplying is stretching
 
-Multiplying is repeated adding, and nothing new is needed to say so:
+Multiplying is repeated adding.
 
->**Def:** $3\cdot 4$ ($3$ *times* $4$) means: add $4$ three times over. $\;3\cdot4 = 4+4+4$
+>**Def:** $3\cdot 4$ ($3$ *times* $4$) means: add $4$ three times over. $$\;3\cdot4 = 4+4+4$$
 
-$$3\cdot 4 = 12 \qquad\qquad 1\cdot 4 = 4 \qquad\qquad 0\cdot 4 = 0 \qquad\qquad 4\cdot 0 = 0$$
+$$3\cdot 4 = 12 \qquad 1\cdot 4 = 4 \qquad 3\cdot -4=-12 \qquad 0\cdot 4 = 0 \qquad 4\cdot 0 = 0$$
 
-The last two are not special cases. *Zero copies of $4$* means you never leave $0$; and *four copies of $0$* is $0+0+0+0$, which also never leaves $0$.
+The last two are not special cases. *Zero copies of $4$* means you never leave $0$; and *four copies of $0$* is $0+0+0+0$, which also never leaves $0$. And it is $3\cdot -4= -4+-4+-4 = -12$.
 
-This already covers a negative number, because (3) told us how to add one:
+On the line $3\cdot 4$ looks like this: take the distance from $0$ to $4$ and *join* three copies of it, end to end. You land *three times* as far from $0$ as $4$ is. Multiplying *stretches away from $0$*. The first factor is not a point on the line, but an instruction that tells you how often to join copies. This factor is also called the *stretching factor*.
 
-$$3\cdot-4 \;=\; -4+-4+-4 \;=\; -4-4-4 \;=\; -12$$
 
-**On the line** it looks like this: take the distance from $0$ to $4$ and **join** three copies of it, end to end. You land three times as far from $0$ as $4$ is. Multiplying **stretches away from $0$**.
-
->**Note:** *Three times as far* is shorthand for *join three copies*, and nothing more. Read the other way round it would be using multiplying to explain multiplying.
-
-Notice what the first factor is doing. It is not a point on the line at all — it is an **instruction**, and it says *how many*. The second factor and the answer are points; the first factor tells you what to do to one of them.
-
-#### A factor that is not whole
+#### A stretching factor that is not whole
 
 Here the definition runs out. *Add $12$, one third times over* is not a picture of anything. But there is a second instruction available, and it is the opposite of the first one:
 
->**Def:** $\tfrac13\cdot 12$ means: **cut** the distance from $0$ to $12$ into three equal parts, and take one. $\;\tfrac13\cdot12 = 4$
+>**Def:** $\tfrac13\cdot 12$ means: **cut** the distance from $0$ to $12$ into three equal parts and take the first one. $\;\tfrac13\cdot12 = 4$
 
 So the first factor names a number and one of two opposite jobs:
 
@@ -110,13 +97,15 @@ So the first factor names a number and one of two opposite jobs:
 |---|---|
 | $3$ | **join** $3$ copies |
 | $\tfrac13$ | **cut** into $3$ parts |
-| $\tfrac pq$ | cut into $q$ parts, then join $p$ of those pieces |
+| $\tfrac35$ | **cut** into $5$ parts, then **join** $3$ copies of the first one |
 
-$$\tfrac23\cdot 12 = 8 \qquad\qquad 1.2\cdot 4 = 4.8 \qquad\qquad \tfrac12\cdot 4 = 2$$
+$$\tfrac23\cdot 12 = 8 \qquad\qquad \tfrac12\cdot 4 = 2$$
 
 >**Note:** The last row covers everything, because a whole number is a fraction too: $3 = \tfrac31$. Cut into one part — that is, do not cut — and join three. **One recipe, and the two earlier ones are the cases where a verb does nothing.**
 
->**Note:** This is the *of* you have used since primary school. *A third of $12$* is $4$, and *cut into three, take one* is exactly how you have always worked it out.
+>**Note:** A fraction has only *one* meaning, and it is the instruction. When it stands alone as a number, the instruction has simply been carried out on $1$:
+>$$\tfrac23 \;=\; \tfrac23\cdot 1$$
+>Cut the unit step into three, join two — which is exactly how (1) located the point. So there are not two kinds of fraction. There is one, and (1) was the case where the thing being cut was the unit step.
 
 >**Note:** Why should cutting be the right reading? Because the other order is already fixed and cannot be argued with. Twelve copies of $\tfrac13$, joined end to end, make $4$ — three thirds to each whole, four wholes:
 >$$12\cdot\tfrac13 \;=\; \underbrace{\tfrac13+\tfrac13+\cdots+\tfrac13}_{12} \;=\; 4$$
@@ -136,22 +125,28 @@ $$3\cdot4 = 12 \quad 2\cdot4 = 8 \quad 1\cdot4 = 4 \quad 0\cdot4 = 0 \quad -1\cd
 
 There is only one way to carry on, so we take it:
 
->**Def:** For a *negative* factor, carry out the instruction its size gives — join or cut — and then **mirror** across $0$ (2). $\;-3\cdot4 = -12$
+>**Def:** A *negative* factor is an instruction with **two steps**: carry out what its size says — join or cut — and then **mirror** across $0$ (1).
 
->**Note:** We are not discovering what $-3\cdot4$ means — there is nothing there to discover. We are *choosing* the only reading that keeps everything above true.
+So $-4$ says *join four copies, then mirror*, and you can watch it happen:
+
+$$-4\cdot3: \qquad 3 \;\xrightarrow{\ \text{join 4}\ }\; 12 \;\xrightarrow{\ \text{mirror}\ }\; -12$$
+
+>**Note:** We are not discovering what $-4\cdot3$ means — there is nothing there to discover. We are *choosing* the only reading that keeps everything above true.
+
+>**Note:** The answer is the same as $-(4\cdot3)$, but that is not the same way of looking at it. There the minus sits *outside* and mirrors the answer; here it belongs to the factor, and the factor stays what (4) said it was — **one instruction**, now with two steps. Keeping it inside is what lets $-4\cdot-3$ be read straight off: join four copies of the $(-3)$-distance, giving $-12$, then mirror, giving $12$. One mirror, and it comes from the factor.
 
 >**Rule:** A negative factor stretches *and mirrors*.
 
 >**Note:** The mirror belongs to the *factor*, not to the number being stretched. In $3\cdot-4$ the factor is $3$, which is positive, so nothing is mirrored — you simply join three copies of a distance that already runs to the left.
 >$$3\cdot-4 = -12$$
 
-With two negatives the mirror is applied twice, and *mirroring twice brings you back* (2):
+With two negatives the mirror is applied twice, and *mirroring twice brings you back* (1):
 
 $$-1\cdot-1 = 1 \qquad\qquad -3\cdot-4 = 12$$
 
 >**Rule:** And we have recovered another rule from primary school: $-\cdot-$ gives $+$, and $-\cdot+$ gives $-$.
 
->**Note:** Multiplying by $-1$ *is* the mirror from (2). That is why the minus sign and the times sign keep turning into each other.
+>**Note:** Multiplying by $-1$ *is* the mirror from (1). That is why the minus sign and the times sign keep turning into each other.
 
 >**Note:** This rule looks like the one in (3), and it is *not the same rule*. Tell them apart by asking what each sign is doing:
 
@@ -181,6 +176,16 @@ Nothing new has been claimed — it is the old meaning of $\tfrac13$ read with a
 >**Def:** $\frac13$ is the number that *undoes* $\cdot\,3$. Multiply by $3$, then by $\frac13$, and you are back where you started.
 
 Every number has such an undo — with one exception, and (6) comes back to it.
+
+#### Every fraction is built from the undo
+
+The table in (4) said $\tfrac35$ means *cut into five parts, then join three copies of the first one*. The cutting on its own is $\tfrac15$, and joining three of those is multiplying by $3$. Written with a times sign:
+
+$$\tfrac35 \;=\; 3\cdot\tfrac15 \qquad\qquad \tfrac23 = 2\cdot\tfrac13$$
+
+Every fraction splits like this: the number below is the cutting, the number above is the joining.
+
+>**Note:** This settles the signs without a single new rule. $\tfrac{-4}{3}$ is $-4\cdot\tfrac13$ — a *negative scaling factor* (4), so: cut into three, join four, mirror. And $\tfrac{4}{-3} = -\tfrac43$ likewise, and $\tfrac{-4}{-3} = \tfrac43$, because mirroring twice brings you back (1).
 
 Dividing is not a new operation either:
 
@@ -214,7 +219,7 @@ That is why $:$ and $/$ are not used from here on, except where we are talking a
 
 Every number has a partner that cancels it out. For adding, it is the mirror image:
 
-$$3+-3 = 0 \qquad\qquad 1.5+-1.5 = 0$$
+$$3+-3 = 0 \qquad\qquad \tfrac13+-\tfrac13 = 0$$
 
 and the same holds for every number. For multiplying, it is the undo:
 
@@ -223,6 +228,8 @@ $$3\cdot\tfrac13 = 1 \qquad\qquad 5\cdot\tfrac15 = 1$$
 and the same holds for every number *except one*. And each of the two operations has a number that changes nothing:
 
 $$3+0 = 3 \qquad\qquad 3\cdot 1 = 3$$
+
+These two are not just curiosities. **$0$ is where moves start from; $1$ is where stretches start from** — which is why each operation has exactly one number that changes nothing, and why a number can be read as an *instruction* at all. $3$ is a move applied to $0$ (three unit steps right) and a stretch applied to $1$ (join three copies). Adding (3) uses the first reading, multiplying (4) the second.
 
 *(The names, in case you meet them: $0$ and $1$ are the neutral elements, and the mirror image and the undo are the inverses. The names are not the point — the lines above are.)*
 
