@@ -64,23 +64,23 @@ Every rational number can now be reached: start at point $0$ and make one move.
 
 >**Picture:** The plus operator $+$ means: make the moves one after the other.
 
-- $3+4$ becomes $0\xrightarrow{3}\xrightarrow{4}$. Walking it out gives $0\xrightarrow{7}$, the number $7$.
-- $3+-4$ becomes $0\xrightarrow{3}\xrightarrow{-4}$. Walking it out gives $0\xleftarrow{1}$, the number $-1$.
-- $4+\tfrac23$ becomes $0\xrightarrow{4}\xrightarrow[3]{2}$. To count the steps as one move they must be the same size, so take $\tfrac13$ throughout: $0\xrightarrow[3]{12}\xrightarrow[3]{2}=0\xrightarrow[3]{14}$, the number $\tfrac{14}{3}$.
+- $3+4$ becomes $0\xrightarrow{3}\;\xrightarrow{4}$. Walking it out gives $0\xrightarrow{7}$, the number $7$.
+- $3+-4$ becomes $0\xrightarrow{3}\;\xrightarrow{-4}$. Walking it out gives $0\xleftarrow{1}$, the number $-1$.
+- $4+\tfrac23$ becomes $0\xrightarrow{4}\;\xrightarrow[3]{2}$. To count the steps as one move they must be the same size, so take $\tfrac13$ throughout: $0\xrightarrow[3]{12}\;\xrightarrow[3]{2}=0\xrightarrow[3]{14}$, the number $\tfrac{14}{3}$.
 
 >**Picture:** The minus operator $-$ means the same, except that the second arrow is *turned round*.
 
-- $4-3$ becomes $0\xrightarrow{4}\xleftarrow{3}$. Walking it out gives $0\xrightarrow{1}$, the number $1$.
-- $4--3$ becomes $0\xrightarrow{4}\xleftarrow{-3}$. The arrow points left and the minus turns it round again, so it is $3$ to the right: $0\xrightarrow{7}$, the number $7$.
+- $4-3$ becomes $0\xrightarrow{4}\;\xleftarrow{3}$. Walking it out gives $0\xrightarrow{1}$, the number $1$.
+- $4--3$ becomes $0\xrightarrow{4}\;\xleftarrow{-3}$. The arrow points left and the minus turns it round again, so it is $3$ to the right: $0\xrightarrow{7}$, the number $7$.
 
 The four cases side by side. Notice that the middle two land on the same number by different routes:
 
 | | | |
 |---|---|---|
-| $4+3$ | $0\xrightarrow{4}\xrightarrow{3}$ | $7$ |
-| $4+-3$ | $0\xrightarrow{4}\xrightarrow{-3}$ | $1$ |
-| $4-3$ | $0\xrightarrow{4}\xleftarrow{3}$ | $1$ |
-| $4--3$ | $0\xrightarrow{4}\xleftarrow{-3}$ | $7$ |
+| $4+3$ | $0\xrightarrow{4}\;\xrightarrow{3}$ | $7$ |
+| $4+-3$ | $0\xrightarrow{4}\;\xrightarrow{-3}$ | $1$ |
+| $4-3$ | $0\xrightarrow{4}\;\xleftarrow{3}$ | $1$ |
+| $4--3$ | $0\xrightarrow{4}\;\xleftarrow{-3}$ | $7$ |
 
 >**Rule:** $+-\ \rightarrow\ -\qquad -+\ \rightarrow\ -\qquad --\ \rightarrow\ +$
 
@@ -90,49 +90,98 @@ Sequences of arrows get long, so moves that are alike may be written on one arro
 
 >**Def: Compact form.** Moves may share an arrow when they run the *same way* and have the *same step size*.
 >
->- $0\xrightarrow{3}\xrightarrow{4}\quad=\quad0\xrightarrow{3\mid4}$
->- $0\xrightarrow{3}\xrightarrow{-4}\quad=\quad0\xrightarrow{3\mid-4}$
->- $0\xrightarrow[5]{3}\xrightarrow[5]{4}\quad=\quad0\xrightarrow[5]{3\mid4}$
+>- $0\xrightarrow{3}\;\xrightarrow{4}\quad=\quad0\xrightarrow{3\mid4}$
+>- $0\xrightarrow{3}\;\xrightarrow{-4}\quad=\quad0\xrightarrow{3\mid-4}$
+>- $0\xrightarrow[5]{3}\;\xrightarrow[5]{4}\quad=\quad0\xrightarrow[5]{3\mid4}$
 >
->$0\xrightarrow{4}\xleftarrow{3}$ does **not** compress: the arrows run different ways.
+>$0\xrightarrow{4}\;\xleftarrow{3}$ does **not** compress: the arrows run different ways.
 
 
 ### 3 · Visualising multiplication of numbers
 
->**Picture:** The multiplication $3\cdot4$ means: take the move of $4$ and make it $3$ times over.
+In $3\cdot4$ the two factors do different jobs. The $4$ is a *move*. The $3$ is an *instruction* telling you what to do with that move. We write an instruction in square brackets, in front of the arrow it acts on:
 
-- $3\cdot4$ becomes $0\xrightarrow{4\mid4\mid4}$, which is $0\xrightarrow{12}$, the number $12$.
-- $3\cdot-4$ becomes $0\xrightarrow{-4\mid-4\mid-4}$: three times a move that goes left, so $0\xleftarrow{12}$, the number $-12$.
+>**Def:** $[3]$ = "make the move that follows $3$ times over".
 
->**Picture:** A *negative* factor does the same and then turns the arrow round.
+$$3\cdot4 \quad\longrightarrow\quad 0\,[3]\xrightarrow{4} \quad\longrightarrow\quad 0\xrightarrow{4\mid4\mid4} \quad\longrightarrow\quad 0\xrightarrow{12}$$
 
-- $-3\cdot4$ becomes $0\xleftarrow{4\mid4\mid4}$, which is $0\xleftarrow{12}$, the number $-12$.
-- $-3\cdot-4$ becomes $0\xleftarrow{-4\mid-4\mid-4}$: the arrow points left and the minus on the number turns it round again, so $0\xrightarrow{12}$, the number $12$.
+>**Note:** The brackets are scaffolding. They make it visible that the first factor is not a move but something done *to* a move. Once that is second nature, they can be dropped.
 
-The four cases side by side. The **first** factor decides which way the arrow points, the **second** rides in the label:
+A *negative* instruction does the same and then turns the arrow round.
 
-| | | |
-|---|---|---|
-| $3\cdot4$ | $0\xrightarrow{4\mid4\mid4}$ | $12$ |
-| $3\cdot-4$ | $0\xrightarrow{-4\mid-4\mid-4}$ | $-12$ |
-| $-3\cdot4$ | $0\xleftarrow{4\mid4\mid4}$ | $-12$ |
-| $-3\cdot-4$ | $0\xleftarrow{-4\mid-4\mid-4}$ | $12$ |
+>**Def:** $[-3]$ = "make the move $3$ times over, then turn the arrow round".
+
+$$-3\cdot4 \quad\longrightarrow\quad 0\,[-3]\xrightarrow{4} \quad\longrightarrow\quad 0\xleftarrow{4\mid4\mid4} \quad\longrightarrow\quad 0\xleftarrow{12}$$
+
+The four cases side by side. The **instruction** decides which way the arrow points, the **move** carries its own sign in the label:
+
+| | | | |
+|---|---|---|---|
+| $3\cdot4$ | $0\,[3]\xrightarrow{4}$ | $0\xrightarrow{4\mid4\mid4}$ | $12$ |
+| $3\cdot-4$ | $0\,[3]\xrightarrow{-4}$ | $0\xrightarrow{-4\mid-4\mid-4}$ | $-12$ |
+| $-3\cdot4$ | $0\,[-3]\xrightarrow{4}$ | $0\xleftarrow{4\mid4\mid4}$ | $-12$ |
+| $-3\cdot-4$ | $0\,[-3]\xrightarrow{-4}$ | $0\xleftarrow{-4\mid-4\mid-4}$ | $12$ |
 
 >**Rule:** $\;+\cdot-\ \rightarrow\ -\qquad -\cdot+\ \rightarrow\ -\qquad -\cdot-\ \rightarrow\ +$
 
-As in (2), turning round twice leaves you facing the way you started. Notice also that the middle two rows land on the same number by different routes — one turns the arrow, the other the label.
+As in (2), turning round twice leaves you facing the way you started. The middle two rows land on the same number by different routes — one turns the arrow, the other the label.
 
-#### 3a · A factor that is not whole
+#### 3a · An instruction that is not whole
 
-Making a move "one third of a time" is not a picture of anything. But a fraction has a second job: it can change the *step size*, and that is written under the arrow.
+Making a move "one third of a time" is not a picture of anything. But an instruction can do a second thing besides saying how often: it can make the steps *smaller*.
 
->**Picture:** Multiplying by $\tfrac13$ cuts the step into three.
+>**Def:** $[\tfrac pq]$ = "take $p$ times as many steps, each one cut into $q$".
 
-- $\tfrac13\cdot12$ becomes $0\xrightarrow[3]{12}$: twelve steps, each a third of a unit, so $0\xrightarrow{4}$, the number $4$.
-- $\tfrac23\cdot12$ becomes $0\xrightarrow[3]{12\mid12}$: the move is made twice *and* the step is cut into three, so $0\xrightarrow{8}$, the number $8$.
+The cutting works on the steps the move *already has*, whatever size those are.
 
->**Def:** Multiplying by $\tfrac pq$ makes the move $p$ times and cuts the step size into $q$. $$\tfrac pq\cdot\ \text{move}\quad=\quad\xrightarrow[q]{\text{move}\mid\cdots\mid\text{move}}\ \ (p\ \text{times})$$
+- The move of $6$ steps in **units**, so cutting each step into three gives **thirds**.
+- The move of $\tfrac45$ steps in **fifths**, so cutting each step into three gives **a third of a fifth**.
 
->**Note:** A whole number is the case $q=1$: nothing is cut, and the move is simply made $p$ times. So (3) and (3a) are one rule, not two.
+And a third of a fifth is a **fifteenth**: cut the unit into five, then cut one of those fifths into three, and the unit stands cut into fifteen. That is the only thing to see here, and it can be counted.
 
-- $\tfrac{-2}{3}\cdot12$ becomes $0\xleftarrow[3]{12\mid12}$, the number $-8$: the minus turns the arrow round, exactly as before.
+$$\tfrac23\cdot6 \quad\longrightarrow\quad 0\,[\tfrac23]\xrightarrow{6} \quad\longrightarrow\quad 0\xrightarrow[3]{6\mid6} \quad\longrightarrow\quad 0\xrightarrow[3]{12} \;=\; 4$$
+
+$$\tfrac23\cdot\tfrac45 \quad\longrightarrow\quad 0\,[\tfrac23]\xrightarrow[5]{4} \quad\longrightarrow\quad 0\xrightarrow[15]{4\mid4} \quad\longrightarrow\quad 0\xrightarrow[15]{8} \;=\; \tfrac8{15}$$
+
+The middle step is where the work happens: the label doubles because there are twice as many steps, and the number below goes from $5$ to $15$ because each fifth was cut into three.
+
+>**Note:** A whole number is the case $q=1$ — nothing is cut, and the move is simply made $p$ times. So $[3]$ and $[\tfrac23]$ are one kind of instruction, not two.
+
+- $6\cdot\tfrac23$ becomes $0\,[6]\xrightarrow[3]{2}=0\xrightarrow[3]{2\mid2\mid2\mid2\mid2\mid2}=0\xrightarrow[3]{12}$ — the number $4$, the same arrow $\tfrac23\cdot6$ reached.
+- $-\tfrac23\cdot6$ becomes $0\,[-\tfrac23]\xrightarrow{6}=0\xleftarrow[3]{12}$, the number $-4$: the minus turns the arrow round, exactly as before.
+
+#### 3a′ · Two instructions in a row
+
+$2\cdot3\cdot4$ has one move and two instructions. They stand side by side, and the one **nearest the arrow** acts first:
+
+$$0\,[2][3]\xrightarrow{4} \;\to\; 0\,[2]\xrightarrow{4\mid4\mid4} \;\to\; 0\,[2]\xrightarrow{12} \;\to\; 0\xrightarrow{12\mid12} \;\to\; 0\xrightarrow{24}$$
+
+Take them the other way round and you get $0\,[3]\xrightarrow{8}$, then $0\xrightarrow{24}$ — the same arrow. So the order of the instructions makes no difference, which is $2\cdot(3\cdot4)=(2\cdot3)\cdot4$ as a picture.
+
+Two instructions in a row are themselves one instruction: making a move three times and then making *that* twice is making it six times.
+
+>**Rule:** $[2][3]=[6]$
+
+The same with cutting, and this is where it earns its keep:
+
+$$[\tfrac12][\tfrac23]$$
+
+Steps: twice as many, then as many again — twice as many in all. Cutting: into three, and then each of those into two — **into six**. So $[\tfrac12][\tfrac23]=[\tfrac26]=[\tfrac13]$, which is $\tfrac12\cdot\tfrac23=\tfrac13$.
+
+>**Note:** The denominators multiplied because *cutting composes*: cut into three, cut each into two, and you have cut into six. Nothing was multiplied but pieces counted.
+
+#### 3b · Why multiplication has to go first
+
+Adding *chains* arrows. Multiplying works *inside* one arrow. That alone settles which comes first, without a rule having to be handed down:
+
+- $3+4\cdot5$ becomes $0\xrightarrow{3}\;\xrightarrow{20}$ — two links, and $4\cdot5$ is what the second link is *made of*.
+- $3\cdot4+5$ becomes $0\xrightarrow{12}\;\xrightarrow{5}$ — again two links, and this time the product is the first one.
+
+In both, the $+$ says where one arrow ends and the next begins, so it can only cut the chain *between* the products, never through one. There is nowhere for $4\cdot5$ to be split across two arrows, because a product is not a chain of moves — it is one move.
+
+>**Rule:** *Punkt vor Strich.* Multiplication is done before addition — not by decree, but because a product is a single arrow and a sum is a chain of them.
+
+To make a sum into one link you have to say so, and that is what a bracket does:
+
+- $(3+4)\cdot5$ becomes $0\xrightarrow{35}$: the bracket makes $3+4$ into one move first, and the $5$ then multiplies *that*.
+
