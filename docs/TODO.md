@@ -12,12 +12,22 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 | | | |
 |---|---|---|
-| `docs/algebra-nutshell.md` | prose, complete §1–§8 | ⚠️ **do not delete** |
 | `docs/algebra-vec.md` | **arrow notation**, §1–§3 converted, §4–§8 still nutshell prose | **the active one** |
+| `docs/algebra-nutshell.md` | prose, complete §1–§8 | **superseded** — keep as the source to convert from |
 
-🔵 **THE NEXT JOB: convert §4–§8 of `algebra-vec.md` to arrows**, then decide what happens to
-the nutshell. ⚠️ **The relationship between the two files has never been declared** — successor
-or parallel experiment. Ask; do not assume.
+⚠️ **DECIDED 2026-08-10: `algebra-vec.md` SUPERSEDES the nutshell**, and is **the blueprint for
+everything else** — Part 1 and Part 2 are to be built on it. The nutshell stays only as the text
+§4–§8 are being converted *from*; it is not a parallel version to keep in step.
+
+🔵 **THE NEXT JOB: convert §4–§8 of `algebra-vec.md` to arrows.**
+
+⚠️ **Open, and the author's own doubt: how the arrows are actually USED in class.** They may be
+too abstract for students to own. The evidence so far is that the notation earns its keep at
+**explanations, not procedures** — the two places it has paid are precedence (§3b) and why
+denominators multiply (§3a′), both of which are things a teacher *shows* when someone is stuck,
+not something a student writes every time. Worth deciding whether the arrows are **a lens the
+teacher draws** or **a notation the class writes**; the first is a much smaller ask and keeps
+the whole benefit.
 
 **How to work on this file.** The author drafts, Claude adds and checks. ⚠️ **Read the style
 rules before editing** (they are further down and were learned the hard way): `Picture:` /
