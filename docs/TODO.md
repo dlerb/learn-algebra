@@ -33,6 +33,47 @@ answer each by a countable action rather than a metaphor:
 | why multiplying needs **no** common denominator | adding **chains** arrows so they must match; multiplying works **inside** one arrow, so there is nothing to match — the same distinction that gives Punkt vor Strich `[§3b]` |
 | why **cancelling down / scaling up** works | the same distance, re-cut: $\xrightarrow[6]{4}$ and $\xrightarrow[3]{2}$ reach the same point because two sixths make a third |
 
+🔵 **OPEN DESIGN QUESTION — a symbol for "applies to everything inside" (2026-08-10, to revisit).**
+The acid test for the formalism is $3(4+5)$ and $a(b+c)$. **The derivation already works**:
+$[3]$ on a chain is the chain three times over, and sorting the links gives
+$[3]\xrightarrow{a}$ beside $[3]\xrightarrow{b}$ — distributivity is *sorting a repeated chain*,
+using only the definition of $[p]$ and the reordering of moves from (2)/(6). ⚠️ **But deriving
+it is not the goal.** The notation should make a student apply $[3]$ to **both** arrows almost
+without thinking, so that $3(a+b)=3a+b$ cannot be written.
+
+**Two different problems hide in $3(a+b)$, and only the second causes the mistake:**
+
+| | |
+|---|---|
+| **scope** | how far does $[3]$ reach? |
+| **completeness** | did it reach *everything* in that scope? |
+
+$3a+b$ is a **completeness** failure. The student knows the bracket holds both and simply stops
+after the first sweep — and the wrong answer *looks finished*, which is why it survives.
+
+**Candidates tried so far** (all render in KaTeX):
+
+- **scope, drawn not delimited:** $0\overbrace{\xrightarrow{a}\;\xrightarrow{b}}^{[3]}$ — a brace
+  *spans*, where a bracket has to be paired up by eye.
+- **completeness, by making the copy the mandatory first move:**
+  $0\overbrace{\xrightarrow{a}\;\xrightarrow{b}}^{[3]}\to 0\,[3]\xrightarrow{a}\;[3]\xrightarrow{b}\to 0\xrightarrow{a\mid a\mid a}\;\xrightarrow{b\mid b\mid b}$.
+  The half-done state $0\,[3]\xrightarrow{a}\;\xrightarrow{b}$ is then **visibly** half-done —
+  the second arrow has a gap where its $[3]$ should be. This is the one that would kill
+  $3a+b$, and it turns distributivity into **a habit of the hand rather than a law of the head**.
+
+⚠️ **The author's intuition is that there is a better symbol** — one that *says* "something
+outside must be attached to every element inside", rather than a brace plus a rule.
+**Pointer for whoever picks this up:** the classic thing teachers draw is the **fan of curved
+arrows from the $3$ to each term** — that gesture *is* "outside applies to each inside". The
+question is whether it can become part of the notation instead of an annotation drawn over it.
+(Related precedent students already accept: $\mathrm{Ca(OH)_2}$, where the outside $2$ applies
+to everything in the bracket — though note it does **not** prevent the same mistake in
+chemistry, so scope-marking alone is not enough. Completeness has to be forced.)
+
+⚠️ **This would be the third time the winning move is the same**: remove the opportunity for the
+mistake rather than warn against it — as with the two-step bracket rule and the
+make-the-precondition-hold move.
+
 ⚠️ **And why the usual metaphors fail, which is worth knowing before replacing them.** *"$4--3$ is
 subtracting a debt of $3$ from savings of $4$"* only makes sense to someone who **already
 accepts** that removing a negative increases the total. It illustrates the rule to those who
