@@ -61,6 +61,29 @@ after the first sweep — and the wrong answer *looks finished*, which is why it
   the second arrow has a gap where its $[3]$ should be. This is the one that would kill
   $3a+b$, and it turns distributivity into **a habit of the hand rather than a law of the head**.
 
+🔵 **STRONGEST CANDIDATE SO FAR — STACK THE ARROWS IN A BRACKET** (the author's, 2026-08-10):
+
+$$0\,[3]\begin{pmatrix}\xrightarrow{4}\\ \xrightarrow{5}\end{pmatrix}\;\to\;0\begin{pmatrix}[3]\xrightarrow{4}\\ [3]\xrightarrow{5}\end{pmatrix}\;\to\;0\begin{pmatrix}\xrightarrow{4\mid4\mid4}\\ \xrightarrow{5\mid5\mid5}\end{pmatrix}$$
+
+Three reasons it beats the brace:
+
+1. ⚠️ **Vertical layout makes each element a separate line of work.** Horizontal $3(a+b)$ invites
+   left-to-right scanning that can stop early — there *is* a first term to stop after. A stack
+   has none, and a half-done job is glaringly asymmetric:
+   $0\begin{pmatrix}[3]\xrightarrow{a}\\ \xrightarrow{b}\end{pmatrix}$. **The error is visible
+   at a glance** — which is the property being hunted.
+2. ⚠️ **The precedent works, unlike $\mathrm{Ca(OH)_2}$.** A scalar before a bracketed column,
+   $3\begin{pmatrix}a\\b\end{pmatrix}$, is the *same shape*; students accept it and do **not**
+   systematically multiply only the top entry. **The difference is the vertical layout**, which
+   is evidence that layout — not scope-marking — is what does the work.
+3. **It makes commutativity honest.** A chain is written in an order but the order does not
+   matter; a stack has no first row, so *rows may be swapped* is obvious. The sorting step in
+   the distributivity derivation becomes visible instead of asserted.
+
+**Cost to weigh:** two layouts for one object — compact horizontal $\xrightarrow{a\mid b}$ and
+the stack. Probably right rather than a defect: **stack when distributing, compact otherwise**,
+as one unfolds a fraction to add and refolds after. All forms verified in KaTeX.
+
 ⚠️ **The author's intuition is that there is a better symbol** — one that *says* "something
 outside must be attached to every element inside", rather than a brace plus a rule.
 **Pointer for whoever picks this up:** the classic thing teachers draw is the **fan of curved
