@@ -21,6 +21,24 @@ everything else** — Part 1 and Part 2 are to be built on it. The nutshell stay
 
 🔵 **THE NEXT JOB: convert §4–§8 of `algebra-vec.md` to arrows.**
 
+⚠️ **WHY THE NOTATION IS WORTH IT — the author's list, and it doubles as a spec for §4–§8.**
+These are the questions heard *again and again* that are hard to answer well, and the arrows
+answer each by a countable action rather than a metaphor:
+
+| question | the arrow answer |
+|---|---|
+| why $--=+$ | turn round, turn round again — you face the way you started |
+| why denominators multiply | **cutting composes**: into three, then each into two, is into six `[§3a′]` |
+| why adding fractions needs a **common denominator** | ⚠️ §2's compression rule already says it, written long before fractions: *moves share an arrow only when they run the same way **and have the same step size***. You cannot count steps of two sizes as one total. |
+| why multiplying needs **no** common denominator | adding **chains** arrows so they must match; multiplying works **inside** one arrow, so there is nothing to match — the same distinction that gives Punkt vor Strich `[§3b]` |
+| why **cancelling down / scaling up** works | the same distance, re-cut: $\xrightarrow[6]{4}$ and $\xrightarrow[3]{2}$ reach the same point because two sixths make a third |
+
+⚠️ **And why the usual metaphors fail, which is worth knowing before replacing them.** *"$4--3$ is
+subtracting a debt of $3$ from savings of $4$"* only makes sense to someone who **already
+accepts** that removing a negative increases the total. It illustrates the rule to those who
+have it and explains nothing to those who do not. The arrow gives an **action**, not a story to
+believe.
+
 ⚠️ **Open, and the author's own doubt: how the arrows are actually USED in class.** They may be
 too abstract for students to own. The evidence so far is that the notation earns its keep at
 **explanations, not procedures** — the two places it has paid are precedence (§3b) and why
