@@ -4,7 +4,59 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
-## 🔢 `docs/algebra-nutshell.md` — PART 0, WHAT NUMBERS MEAN (2026-08-06/07, `5e1f9bf`)
+## ➡️ `docs/algebra-vec.md` — PART 0 IN ARROW NOTATION (2026-08-09, `c394838`) — **IN FLIGHT**
+
+⚠️ **This is `algebra-nutshell.md` rewritten with a NOTATION instead of prose.** §1–§3 are
+converted; **§4–§8 are still the nutshell's text and use no arrows yet.** The two
+`algebra-vec copy*.md` files in the working tree are the author's backups of the unconverted
+text — deliberately **not committed**. ⚠️ **The relationship between the two documents is not
+yet declared** — successor or parallel experiment. Do not retire the nutshell on the strength
+of this.
+
+**The notation.** A move is an arrow: direction from the arrow, steps above, cuts of the unit
+step below.
+
+    \xrightarrow{3}      3 unit steps right      \xrightarrow[3]{2}   cut unit step in 3, take 2 right
+    \xleftarrow{3}       3 unit steps left       0\xrightarrow{3}     the same, starting at the point 0
+
+⚠️ **BOTH ARROWS TAKE SIGNED LABELS, and the redundancy is the point:**
+
+> the **arrow** records the *operator*; the **label** records the *number's sign*
+
+so $4--3$ is $0\xrightarrow{4}\xleftarrow{-3}$ — both minuses on the page, in different places,
+visibly cancelling. **That is "the minus has two jobs" shown rather than explained.** ⚠️ I
+argued *against* the leftarrow (redundant · breaks "the label IS the number" · kills the compact
+form); **the author's argument beat all three** and the reversal is the right one.
+
+**Consequences already written in:** §1b softened (*the number is the arrow **and** its label*);
+the two writings stated equal outright ($\xrightarrow{-3}=\xleftarrow{3}$ — left implicit it
+reads as an inconsistency, stated it **is** the $+-\to-$ rule in picture form); the compact form
+keeps its condition (**same direction *and* same step size**, so $0\xrightarrow{4}\xleftarrow{3}$
+correctly does not compress).
+
+**The payoff: §2 and §3 have the SAME four-case table.**
+
+| | arrow | label |
+|---|---|---|
+| §2 · adding | the **operator** | the number's sign |
+| §3 · multiplying | the **first factor** | the second factor |
+
+So $-\cdot-\to+$ and $--\to+$ are visibly the same act — turning round twice.
+
+⚠️ **FIXED: the `4--3` example contradicted itself** — it displayed $0\xrightarrow{4}\xrightarrow{-3}$
+(which is $1$) and concluded $7$. It is the example the $--\to+$ rule rests on.
+
+**§3a — a fractional factor changes the STEP SIZE**, which the subscript already expresses:
+$\tfrac13\cdot12 = 0\xrightarrow[3]{12}$, twelve thirds, so $4$. General rule: **multiplying by
+$\tfrac pq$ makes the move $p$ times and cuts the step into $q$**, with a whole number as the
+case $q=1$. ⚠️ **So §3 and §3a are one rule — and here it falls out of the notation instead of
+needing the argument the nutshell had to construct.**
+
+🔵 **NEXT: convert §4–§8 to arrows**, and then decide what happens to `algebra-nutshell.md`.
+
+---
+
+## 🔢 `docs/algebra-nutshell.md` — PART 0, WHAT NUMBERS MEAN (2026-08-06/07, `5e1f9bf`) — ⚠️ possibly superseded by `algebra-vec.md`, see above
 
 **A new document, UPSTREAM of `blocks.md`**, and the one being written together with the
 author, section by section. Planned shape, all in the one file:
