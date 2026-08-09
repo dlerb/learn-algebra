@@ -4,6 +4,54 @@ Status legend: [ ] not started · [~] in progress · [x] done
 
 ---
 
+## 🤝 HANDOVER — START HERE (2026-08-10)
+
+**The active file is `docs/algebra-vec.md`.** Everything else below it is context or history.
+
+**Where things stand.** Part 0 (the numbers, before any letter) exists in **two** versions:
+
+| | | |
+|---|---|---|
+| `docs/algebra-nutshell.md` | prose, complete §1–§8 | ⚠️ **do not delete** |
+| `docs/algebra-vec.md` | **arrow notation**, §1–§3 converted, §4–§8 still nutshell prose | **the active one** |
+
+🔵 **THE NEXT JOB: convert §4–§8 of `algebra-vec.md` to arrows**, then decide what happens to
+the nutshell. ⚠️ **The relationship between the two files has never been declared** — successor
+or parallel experiment. Ask; do not assume.
+
+**How to work on this file.** The author drafts, Claude adds and checks. ⚠️ **Read the style
+rules before editing** (they are further down and were learned the hard way): `Picture:` /
+`Def:` / `Rule:` / `Note:` in blockquotes · italics not bold · section refs as `(3)` ·
+**numbers only, no letters** · **one word per idea** · **never restore a sentence the author
+has deleted**.
+
+⚠️ **Verify every edit** — the KaTeX check used all session:
+
+```
+node -e "const fs=require('fs'),katex=require('katex');const src=fs.readFileSync('docs/algebra-vec.md','utf8');
+let bad=0,n=0;for(const m of src.matchAll(/\\\$\\\$([\s\S]*?)\\\$\\\$/g)){n++;try{katex.renderToString(m[1],{displayMode:true,throwOnError:true});}catch(e){bad++;console.log('FAIL',e.message.slice(0,60));}}
+const r=src.replace(/\\\$\\\$[\s\S]*?\\\$\\\$/g,'');for(const m of r.matchAll(/\\\$([^\$\n]+)\\\$/g)){n++;try{katex.renderToString(m[1],{throwOnError:true});}catch(e){bad++;console.log('FAIL',e.message.slice(0,60));}}
+console.log(n+' snippets, '+bad+' failed');"
+```
+
+⚠️ **Two rendering traps, both hit this session.** `\raisebox`/`\colorbox`/`\fcolorbox` take
+**text-mode** arguments needing `$…$` inside, which markdown cuts in half — they can never work
+inline. **Four-space-indented bullets after a `>` line become a CODE BLOCK** and render nothing;
+write `>- item` with `>` on the blank line. Also: `\xrightarrow` is a **relation**, so it
+already carries spacing — write `0\xrightarrow{3}\;\xrightarrow{4}`, never `0\;\xrightarrow{…}`.
+
+**What is settled and must not be re-litigated** (each cost real time, each is recorded below
+with its reason): Part 0 is a **picture, not a definition** · the **leftarrow** and why both
+arrows take signed labels · the `[\,]` instruction as **scaffolding** · the subscript is a
+**size, not a count** · **cutting composes** is why denominators multiply · and the
+**arrow-times-arrow rule is deleted** and must stay deleted.
+
+**Untracked in the working tree:** `docs/algebra-vec copy*.md` are the author's backups of the
+unconverted nutshell text. Deliberately not committed. `.vscode/settings.json` has the author's
+cSpell additions, also uncommitted.
+
+---
+
 ## ➡️ `docs/algebra-vec.md` — PART 0 IN ARROW NOTATION (2026-08-09, `c394838`) — **IN FLIGHT**
 
 ⚠️ **This is `algebra-nutshell.md` rewritten with a NOTATION instead of prose.** §1–§3 are
