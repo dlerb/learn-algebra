@@ -52,6 +52,36 @@ $\tfrac pq$ makes the move $p$ times and cuts the step into $q$**, with a whole 
 case $q=1$. ⚠️ **So §3 and §3a are one rule — and here it falls out of the notation instead of
 needing the argument the nutshell had to construct.**
 
+⚠️ **THE `[\,]` INSTRUCTION (2026-08-10, `4b903af`).** In $3\cdot4$ the two factors do different
+jobs, and the notation now shows it: the first factor is an **instruction**, written in square
+brackets before the arrow it acts on.
+
+$$3\cdot4 \;\to\; 0\,[3]\xrightarrow{4} \;\to\; 0\xrightarrow{4\mid4\mid4} \;\to\; 0\xrightarrow{12}$$
+
+⚠️ **The brackets are SCAFFOLDING and the file says so** — they exist because otherwise
+"the first factor is an instruction" is inferred only from position. They are meant to be
+dropped later. **That matters: the denominator lesson below has to land while they are still
+up.**
+
+⚠️ **THE SUBSCRIPT IS A SIZE, NOT A COUNT — the author rejected the bookkeeping version.**
+"The number under the arrow counts cuts of the *unit* step, never of the current one" is true,
+and hides the geometry. Replaced by
+
+> $[\tfrac pq]$ = take $p$ times as many steps, each one **cut into $q$**
+
+where the cutting acts on whatever size the steps already have. The one thing to be seen is
+then a **count**: *a third of a fifth is a fifteenth — cut the unit into five, cut one fifth
+into three, and the unit stands cut into fifteen.* Both cases are shown as pipelines so
+$5\to15$ happens at a **visible transition**.
+
+⚠️ **§3a′ — WHY DENOMINATORS MULTIPLY, and it is the best thing in the document.**
+$[2][3]=[6]$; then $[\tfrac12][\tfrac23]$: cutting into three, then each of those into two, is
+cutting into **six**. **The denominators multiplied because cutting COMPOSES** — nothing
+multiplied, pieces counted. ⚠️ **This is NOT the arrow-times-arrow rule that was deleted**
+(`\xrightarrow[m]{n}\cdot\xrightarrow[q]{p}`): that multiplied two *moves*, which is no action;
+this composes two *instructions*, which is something you can carry out. **Do not conflate them
+and do not reinstate the deleted one.**
+
 🔵 **NEXT: convert §4–§8 to arrows**, and then decide what happens to `algebra-nutshell.md`.
 
 ---
