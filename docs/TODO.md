@@ -61,7 +61,9 @@ after the first sweep — and the wrong answer *looks finished*, which is why it
   the second arrow has a gap where its $[3]$ should be. This is the one that would kill
   $3a+b$, and it turns distributivity into **a habit of the hand rather than a law of the head**.
 
-🔵 **STRONGEST CANDIDATE SO FAR — STACK THE ARROWS IN A BRACKET** (the author's, 2026-08-10):
+🔵 **STACK THE ARROWS IN A BRACKET** (the author's, 2026-08-10) — ⚠️ *this was the strongest
+candidate when written; it was built out and then largely superseded the same day. Read it for
+the reasoning, then jump to **THE APPENDIX SESSION** below for where it ended up.*
 
 $$0\,[3]\begin{pmatrix}\xrightarrow{4}\\ \xrightarrow{5}\end{pmatrix}\;\to\;0\begin{pmatrix}[3]\xrightarrow{4}\\ [3]\xrightarrow{5}\end{pmatrix}\;\to\;0\begin{pmatrix}\xrightarrow{4\mid4\mid4}\\ \xrightarrow{5\mid5\mid5}\end{pmatrix}$$
 
@@ -110,6 +112,139 @@ denominators multiply (§3a′), both of which are things a teacher *shows* when
 not something a student writes every time. Worth deciding whether the arrows are **a lens the
 teacher draws** or **a notation the class writes**; the first is a much smaller ask and keeps
 the whole benefit.
+
+---
+
+## 🔵 THE APPENDIX SESSION — grids, axes, and the up arrow (2026-08-10)
+
+**Where it lives.** `docs/algebra-vec.md` now carries an **Appendix · Brackets as stacks** with
+seven sections, **A–G**, appended below §3b. All 259 KaTeX snippets in the file verify. ⚠️ **The
+appendix is exploratory and deliberately NOT merged into §1–§3** — A–E, F and G are three
+*rival* designs, not a sequence. Nothing above §3b was touched.
+
+| | what it is | status |
+|---|---|---|
+| **A–E** | the stack, built out: `\|` scrapped, the grid, the bordered table with margins | drafted |
+| **F** | *one meaning per direction* — across = add, down = multiply | drafted, rival to A–E |
+| **G** | the **up arrow** as the second axis; `[\;]` disappears | drafted, rival to F |
+
+### What A–E settled
+
+- **`\|` is scrapped.** `[3]\xrightarrow4` unfolds to a *column of three* $\xrightarrow4$, so the
+  compact form is not needed. It was doing two jobs — "so many times over" and "when may a chain
+  be one arrow". The column does the first; the second is restated as ⚠️ **a column becomes one
+  arrow only when its rows run the same way and have the same step size**, which *preserves the
+  common-denominator payoff* (arguably sharpens it: it is now literally "when may this column
+  become one row"). **Cost if adopted: 16 rewrite sites** in §2–§3a′.
+- **The grid is the OUTER PRODUCT, not matrix multiplication.** ⚠️ This matters because it
+  answers the "too many new rules" worry: no shared index, no dimension matching, no
+  non-commutativity. It is the *Einmaleins* table. **Genuinely new rules = two** — *an
+  instruction reaches every row* and *a column of instructions gives one row each* — and those
+  two **are** the two distributive laws, which the algebra carries anyway. The notation does not
+  add rules; it gives each law a shape.
+- ⚠️ **Completeness cannot be a glyph.** Only a *layout* can have a hole in it. A brace, a fan of
+  curved arrows, a new bracket — none can be visibly unfinished. This retires the hunt for a
+  "applies to everything inside" symbol recorded above: **the answer is geometry, not a glyph**,
+  and the teacher's fan of curved arrows is best read as a hand-drawn substitute for the grid.
+- ⚠️ **THE VECTOR PRECEDENT ARGUMENT IS WEAK — it was reason 2 for the stack, and it does not
+  hold.** In a vector the column *stays* a column with two components; here the column
+  *collapses to one number*. Same shape, opposite behaviour. A student who has met vectors reads
+  $(\xrightarrow4;\xrightarrow5)$ as two coordinates rather than two moves on one line. By Part
+  0's own test — *does it predict and never mislead* — this needs checking before the layout is
+  adopted. **Columns are not vectors**; keeping those apart is what makes the difference between
+  two new rules and many.
+- **The bordered table (D) beats the labels-inside grid (C).** Labels on the edges + margins:
+  the rotation of the second bracket is *drawn* rather than hidden, the headers *fix the grid's
+  shape* so a hole is a hole, and the last number comes from collapsing the margins (rule A,
+  twice) instead of a caption. ⚠️ **The two margins are the two orders of doing the brackets** —
+  row margin $= [2]\xrightarrow9,[3]\xrightarrow9$ (move bracket first), column margin
+  $= [5]\xrightarrow4,[5]\xrightarrow5$ (instruction bracket first), meeting at $45$ in the
+  corner. So the table *shows* that either bracket may go first. $\Sigma$ is flagged as the only
+  new glyph in Part 0 and **not yet earned**.
+
+### F — one meaning per direction
+
+The author's diagnosis: the grid "reads as *wow, what is this?*" and is **not a primary
+citizen**. Root cause — ⚠️ **the axes have no stable meanings**: across means *add* for moves but
+*multiply* for instructions, and down means *add* again. Fix:
+
+| direction | reading | operation |
+|---|---|---|
+| across | the walk | adding |
+| down | again | multiplying |
+
+Then $3\cdot4$ is three rows of $\xrightarrow4$ — **two-dimensional before any bracket exists**,
+which is the integration the author asked for. $3(4+5)$ is three rows of $\xrightarrow4\,\xrightarrow5$
+with *nothing introduced*; add across → three $\xrightarrow9$, add down → $\xrightarrow{12}$ and
+$\xrightarrow{15}$. **The distributive law is one rectangle added two ways.** $(2+3)\cdot4$ is
+the same picture cut *down the side* instead of across the top — so ⚠️ **the two bracket-forms
+are not two laws, they are two places to put the cut**. $(2+3)(4+5)$ cuts both edges, and the
+four blocks *are* the C3 grid, arrived at rather than posited. Commutativity becomes a **quarter
+turn** of the unit-step array (shown, where §3a′ can only assert it).
+
+⚠️ **The decision F hangs on: DOES THE WALK WRAP?** Row two starts back at the left instead of
+where row one ended, so the picture becomes a walk on ruled lines rather than one unbroken walk.
+Everything else in F follows; nothing in F works without it. Cost: the move-column of B dies,
+and §3/§3a/§3a′ are rewritten with $[\;]$ demoted to a row count.
+
+### G — the up arrow (the author's, and where it broke)
+
+Give the second direction its own arrow, grammar of §1 untouched: $\overset{3}{\big\uparrow}$,
+and a minus turns it round so $\overset{-3}{\big\uparrow}=\overset{3}{\big\downarrow}$ **for
+free**. Then $[\;]$ disappears entirely — *the instruction was only ever an arrow on the other
+axis*. Two wins:
+
+- **The four cases of §3 become four corners of the page** (up/down × right/left). *Turn round
+  twice* is then told **once for both** §2 and §3, because there is one grammar and two axes.
+- **Cutting composes, drawn.** $\tfrac23\cdot\tfrac45$ = the unit square cut 3 by 5 = fifteen
+  cells, eight covered. §3a *argues* the fifteenth; here it is a cell you can point at.
+
+⚠️ **Three breaks, found by the author:**
+
+1. **Three factors overflow the plane.** Consecutive arrows mean *plus* (§2) and that must hold
+   on both axes or it is not one grammar — so two up arrows are $3+5$, never $3\cdot5$, and
+   $3\cdot4\cdot5$ has nowhere to put its third number. Must be read $3\cdot(4\cdot5)$;
+   left-to-right reading is lost and $(3\cdot4)$ is not an arrow at all but a rectangle.
+   ⚠️ **This is a limit of the PLANE, not of any reading** — two axes hold two factors. It is
+   also why §3a′'s $[2][3]=[6]$ exists.
+2. ⚠️ **THE DECISIVE ONE. Unlike cuts leave the rows ragged, and that re-introduces a common
+   denominator INSIDE a product.** $(\tfrac23+\tfrac14)\cdot5$ is two rows in *thirds* then one
+   in *quarters*; by rule (A) they cannot be counted as one until they share a step size. But
+   **§3b established that multiplying never needs a common denominator** — one of the five
+   banked payoffs at the top of this handover. The picture would ask for the very thing it was
+   used to explain away. **Not a usability worry: the notation contradicting a result already
+   banked.**
+3. **KaTeX has no extensible vertical arrow.** $\xrightarrow{\;}$ has no vertical twin, so a
+   labelled up arrow is a fixed glyph and cannot grow beside a tall block.
+   `\left\uparrow…\right.` *does* stretch but takes no label easily. Caps how "drawn" the second
+   axis can get without leaving KaTeX for SVG.
+
+🔵 **WHERE IT LANDED — the open question to resume on.** Break 1 hits every reading equally;
+break 2 hits **copies** only. Read the up arrow as a **LENGTH on a second number line** and
+$\tfrac23+\tfrac14$ is one side of one rectangle, $\tfrac{11}{12}$ long, nothing ragged. So
+**break 2 decides between the readings, and it decides against copies**:
+
+| | copies reading | length / area reading |
+|---|---|---|
+| $\tfrac23\cdot\tfrac45$ | needs §3a's cross-axis rule | just a rectangle |
+| *cutting composes* | told | **drawn** |
+| $(\tfrac23+\tfrac14)\cdot5$ | ⚠️ ragged, needs a common denominator | one clean rectangle |
+| $2\cdot3\cdot4$ | fine (rows of rows) | needs volume, or off the plane and back |
+| Devlin's objection | still live | gone — it is scaling, not repeated addition |
+| countability | ⚠️ **you can count the copies** | ⚠️ **lost** |
+
+⚠️ **The cost of going to length, and it is the thing to weigh next:** Devlin's objection
+disappears, **but so does the count**. The whole reason the arrows beat the debt-metaphor is
+that they give a *countable action*; a length is not counted. **Decide that before committing.**
+
+⚠️ **KaTeX facts learned this session** (all verified, add to the traps list): `\\[2]` at the
+start of a matrix row is parsed as `\\` **with an optional length argument** — write `\\{}[2]`.
+An `array` preamble containing `|` (e.g. `{c|cc|c}`) **cannot go inside a markdown table**, the
+pipes collide — that is why D's comparison is stacked vertically rather than literally side by
+side. `\begin{array}` with `\hline`, `\bullet`/`\cdot` grids, `\overset{3}{\big\uparrow}` and
+`\left\uparrow…\right.` all render.
+
+---
 
 **How to work on this file.** The author drafts, Claude adds and checks. ⚠️ **Read the style
 rules before editing** (they are further down and were learned the hard way): `Picture:` /
